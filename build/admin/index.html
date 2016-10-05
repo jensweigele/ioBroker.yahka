@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+
+<link rel="stylesheet" type="text/css" href="../../lib/css/themes/jquery-ui/redmond/jquery-ui.min.css" />
+<script type="text/javascript" src="../../lib/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+<script type="text/javascript" src="../../lib/js/jquery-ui-1.10.3.full.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
+<script type="text/javascript" src="../../js/translate.js"></script>
+<script type="text/javascript" src="../../js/adapter-settings.js"></script>
+
+
+<script type="text/javascript" src="ext/metroui/js/metro.min.js"></script>
+<link rel="stylesheet" type="text/css" href="ext/metroui/css/metro.min.css"></link>
+<link rel="stylesheet" type="text/css" href="ext/metroui/css/metro-icons.min.css"></link>
+<link rel="stylesheet" type="text/css" href="ext/metroui/css/metro-colors.min.css"></link>
+<link rel="stylesheet" type="text/css" href="css/yahka.admin.css"></link>
+
+<script type="text/javascript" src="yahka.admin.js"></script>
+
+<script type="text/javascript">
+    var yahkaAdmin = new ioBroker_YahkaAdmin();
+
+    // Dictionary (systemDictionary is global variable from adapter-settings.js)
+    systemDictionary = {
+        "iobroker.yahka adapter settings": {
+            "de": "iobroker.yahka adapter settings",
+            "ru": "Пример"
+        },
+        "ConfigDescription": {
+            "de": "Hier kann die Zuordnung zwischen HomeKit Charakteristic und ioBroker State getroffen werden.",
+            "en": "The page below is used to assign ioBroker states to HomeKit characeteristics. "
+        },
+        "on save adapter restarts with new config immediately": {
+            "de": "Beim Speichern von Einstellungen der Adapter wird sofort neu gestartet.",
+            "ru": "Сразу после сохранения настроек драйвер перезапуститься с новыми значениями"
+        }
+    };
+
+    // the function loadSettings has to exist ...
+    function load(settings, onChange) {
+        yahkaAdmin.loadSettings(settings, onChange);
+    }
+
+    // ... and the function save has to exist.
+    // you have to make sure the callback is called with the settings object as first param!
+    function save(callback) {
+        yahkaAdmin.saveSettings(callback)
+    }
+</script>
+
+<div id="adapter-container" class="flex-container-col">
+    <div>
+        <img src="yahka.png" />
+        <h3 class="translate" style="display: inline; vertical-align: middle;">iobroker.yahka adapter settings</h3>
+        <div class="translate" data-lang="ConfigDescription">The page below is used to assign ioBroker states to HomeKit characeteristics.</div>
+    </div>
+    <div class="flex-grow flex-container-row bg-white">
+        <div class=" flex-grow flex-panel">
+            <div class="accordion" data-role="accordion">
+                <div class="frame">
+                    <div class="heading">
+                        <span class="translate">Bridge Properties</span>
+                    </div>
+                    <div class="content">
+                        <div>
+                            <div class="translate">Bridge name:<span class="edit-hint">descriptive only - displayed in homekit apps. Changes are only recognized after readding the bridge in the app.</span></div>
+                            <div class="input control flex-grow margin10">
+                                <input class="full-size" type="text" id="bridge_name"></input>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="translate">Manufacturer:<span class="edit-hint">descriptive only - displayed in some homekit apps</span></div>
+                            <div class="input control flex-grow  margin10">
+                                <input class="full-size" type="text" id="bridge_manufacturer"></input>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="translate">Model:<span class="edit-hint">descriptive only - displayed in some homekit apps</span></div>
+                            <div class="input controlflex-grow  margin10">
+                                <input class="full-size" type="text" id="bridge_model"></input>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="translate">Serial:<span class="edit-hint">descriptive only - displayed in some homekit apps</span></div>
+                            <div class="input controlflex-grow  margin10">
+                                <input class="full-size" type="text" id="bridge_serial"></input>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="translate">Username:<span class="edit-hint">needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b></span></div>
+                            <div class="input controlflex-grow  margin10">
+                                <input class="full-size" type="text" id="bridge_username"></input>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="translate">Pincode: <span class="edit-hint">needs to be in the form of 123-45-678</span></div>
+                            <div class="input controlflex-grow  margin10">
+                                <input class="full-size" type="text" id="bridge_pincode"></input>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="translate">Port: <span class="edit-hint">0 = random free port assigned by the operation system (default)</span></div>
+                            <div class="input controlflex-grow  margin10">
+                                <input class="full-size" type="number" id="bridge_port"></input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex-grow flex-container-col bg-white" id="yahka_bridge_frame">
+        <div class="flex-grow treeAndData flex-container-row">
+            <div class="flex-panel" style="min-width: 20%">
+                <div class="button-line">
+                    <button class="image-button primary" id="yahka_add_device"><span class="icon mif-plus bg-darkCobalt  fg-white"></span><span class="translate">Add Device</span></button>
+                    <button class="image-button danger" id="yahka_remove_device"><span class="icon mif-minus bg-darkCrimson  fg-white"></span><span class="translate">Remove Device</span></button>
+                </div>
+
+                <div class="listview" id="yahka_deviceList">
+                </div>
+            </div>
+            <div class=" flex-grow flex-panel">
+                <div class="button-line">
+                    <button class="image-button primary" id="yahka_add_service"><span class="icon mif-plus bg-darkCobalt  fg-white"></span><span class="translate">Add Service</span></button>
+                </div>
+                <div class="accordion" id="yahka_device_details" data-role="accordion">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <template id="yahka_devicelist_entry">
+        <div class="list device-entry">
+            <span class="icon list-icon"></span>
+            <span class="list-title"> </span>
+        </div>
+    </template>
+
+    <template id="yahka_device_info_panel">
+        <div class="frame" id="yahka_device_info_panel">
+            <div class="heading">
+                <span class="translate">Device Properties</span>
+            </div>
+
+            <div class="content">
+                <div>
+                    <div class="translate">Device name:</div>  
+                    <div class="input control flex-grow margin10">
+                        <input class="full-size" type="text" id="device_name"></input>
+                    </div>
+                </div>
+                <div>
+                    <div class="translate">Manufacturer:</div>  
+                    <div class="input control flex-grow  margin10">
+                        <input class="full-size" type="text" id="device_manufacturer"></input>
+                    </div>
+                </div>
+                <div>
+                    <div class="translate">Model:</div>  
+                    <div class="input controlflex-grow  margin10">
+                        <input class="full-size" type="text" id="device_model"></input>
+                    </div>
+                </div>
+                <div>
+                    <div class="translate">Serial:</div>  
+                    <div class="input controlflex-grow  margin10">
+                        <input class="full-size" type="text" id="device_serial"></input>
+                    </div>
+                </div> 
+                <div>
+                    <div class="translate">Categeory:</div>
+                    <div class="input controlflex-grow  margin10">
+                        <select class="full-size"  id="device_category"></select>
+                    </div>
+                </div>                 
+            </div> 
+        </div>
+    </template>
+
+    <template id="yahka_device_service_panel">
+        <div class="frame" id="yahka_service_panel">
+            <div class="heading">
+                <span class="translate">Service: </span><span id="yahka_service_caption"></span>
+                <a href="#" class="place-right" id="yakha_delete_service"><span class="mif-cross fg-red"></span></a>
+            </div>
+            <div class="content">
+                <div class="flex-container-row flex-grow flex-align-baseline">
+                    <div >Service name:</div>  
+                    <div class="input control flex-grow margin10">
+                        <input class="full-size" type="text" id="service_name"></input>
+                    </div>
+                    <div>Service Type:</div>  
+                    <div class="input control flex-grow  margin10">
+                        <select class="full-size"  id="service_type"></select>
+                    </div>
+                    <div>Service Subtype:</div>  
+                    <div class="input controlflex-grow  margin10">
+                        <input class="full-size" type="text" id="service_subtype"></input>
+                    </div>
+                </div>
+                <div><span class="translate">Characteristics Table</span> </div>
+                <div class="table" id="yahka_characteristic_table">
+                    <div class="header row">
+                        <div class="cell translate">Enabled</div>
+                        <div class="cell translate">Name</div>
+                        <div class="cell translate">1: InOutFunction / 2: ConversionFunction</div>
+                        <div class="cell translate">1: InOutParams / 2: ConversionParams</div>
+                        <div class="cell translate">...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="yahka_characteristic_row">
+        <div id="characteristic" class="row-group">
+            <div class="row">
+                <div class="cell center">
+                    <label class="input-control checkbox small-check">
+                        <input type="checkbox" id="characteristic_enabled">
+                        <span class="check"></span>
+                    </label>
+                </div>
+                <div class="cell">
+                    <span id="characteristic_name"></span>
+                    <span class="place-right">1: </span>
+                </div>
+                <div class="cell">
+                    <div class="input-control select full-width">
+                        <select id="characteristic_inoutfunction">
+                        </select>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="input-control auto-height full-width">
+                        <textarea id="characteristic_inoutparams" rows=1></textarea>
+                    </div>
+                </div>
+                <div class="cell">
+                    <button class="input-control button"><span class="mif-more-horiz"></span></button>
+                </div>
+            </div> 
+            <div class="row">
+                <div class="cell center">
+                </div>
+                <div class="cell">
+                    <span class="place-right">2: </span>
+                </div>
+                <div class="cell">
+                    <div class="input-control select full-width">
+                        <select  id="characteristic_conversionfunction">
+                        </select>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="input-control auto-height full-width">
+                        <textarea id="characteristic_conversionparams" rows=1></textarea>
+                    </div>
+                </div>
+                <div class="cell">
+                    <button class="input-control button"><span class="mif-more-horiz"></span></button>
+                </div>
+            </div>         
+        </div>
+    </template>
+
+
+
+
+</html>

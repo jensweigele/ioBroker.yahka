@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "sourceMap": true,
+        "allowJs": true,
+        "outDir": "./build/"
+    },
+    "compileOnSave": true,
+    "files": [
+        "yahka.homekit-bridge.ts",
+        "yahka.ioBroker-adapter.ts",
+        "main.ts",
+        "admin/yahka.admin.ts",
+        "yahka.meta-generator.ts"
+    ]
+}

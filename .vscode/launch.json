@@ -1,0 +1,65 @@
+{
+    "version": "0.2.0",
+    "configurations": [{
+            "name": "Launch",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/main.ts",
+            "stopOnEntry": false,
+            "args": ["1", "debug", "--force"],
+            "cwd": "${workspaceRoot}/../ioBroker/node_modules/iobroker.yahka",
+            "preLaunchTask": null, //"tsc",
+            "runtimeExecutable": null,
+            "runtimeArgs": [
+                "--nolazy"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "console": "internalConsole",
+            "sourceMaps": true,
+            "outDir": "${workspaceRoot}/../ioBroker/node_modules/iobroker.yahka"
+        },
+        {
+            "name": "Launch MetaGEn",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/yahka.meta-generator.ts",
+            "stopOnEntry": false,
+            "args": [],
+            "cwd": "${workspaceRoot}/../ioBroker/node_modules/iobroker.yahka",
+            "preLaunchTask": null, //"tsc",
+            "runtimeExecutable": null,
+            "runtimeArgs": [
+                "--nolazy"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "console": "internalConsole",
+            "sourceMaps": true,
+            "outDir": "${workspaceRoot}/../ioBroker/node_modules/iobroker.yahka"
+        },
+        {
+            "name": "Attach",
+            "type": "node",
+            "request": "attach",
+            "port": 5858,
+            "address": "localhost",
+            "restart": false,
+            "sourceMaps": false,
+            "outDir": null,
+            "localRoot": "${workspaceRoot}\\.out",
+            "remoteRoot": null
+        },
+        {
+            "name": "Attach to Process",
+            "type": "node",
+            "request": "attach",
+            "processId": "${command.PickProcess}",
+            "port": 5858,
+            "sourceMaps": false,
+            "outDir": null
+        }
+    ]
+}
