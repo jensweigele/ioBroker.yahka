@@ -1,43 +1,41 @@
 {
-  "name": "iobroker.yahka",
-  "version": "0.5.0",
-  "description": "ioBroker HomeKit Adapter",
-  "author": {
-    "name": "Jens Weigele",
-    "email": "iobroker.yahka@gmail.com"
-  },
-  "contributors": [
-    {
-      "name": "Jens Weigele",
-      "email": "iobroker.yahka@gmail.com"
-    }
-  ],
-  "homepage": "https://github.com/jensweigele/ioBroker.yahka",
-  "license": "MIT",
-  "keywords": [
-    "ioBroker",
-    "iobroker.yahka",
-    "Smart Home",
-    "home automation",
-    "siri",
-    "homekit"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jensweigele/ioBroker.yahka"
-  },
-  "dependencies": {
-    "hap-nodejs": "^0.4.8"
-  },
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-ts": "^6.0.0-beta.3",
-    "typescript": "^2.0.3"
-  },
-  "bugs": {
-    "url": "https://github.com/jensweigele/ioBroker.yahka/issues"
-  },
-  "readmeFilename": "README.md"
+    "name": "iobroker.yahka",
+    "version": "0.5.1",
+    "description": "ioBroker HomeKit Adapter",
+    "author": {
+        "name": "Jens Weigele",
+        "email": "iobroker.yahka@gmail.com"
+    },
+    "contributors": [{
+        "name": "Jens Weigele",
+        "email": "iobroker.yahka@gmail.com"
+    }],
+    "homepage": "https://github.com/jensweigele/ioBroker.yahka",
+    "license": "MIT",
+    "keywords": [
+        "ioBroker",
+        "iobroker.yahka",
+        "Smart Home",
+        "home automation",
+        "siri",
+        "homekit"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jensweigele/ioBroker.yahka"
+    },
+    "dependencies": {
+        "hap-nodejs": "^0.4.8"
+    },
+    "devDependencies": {
+        "grunt": "^0.4.5",
+        "grunt-contrib-clean": "^1.0.0",
+        "grunt-contrib-copy": "^1.0.0",
+        "grunt-ts": "^6.0.0-beta.3",
+        "typescript": "^2.0.3"
+    },
+    "bugs": {
+        "url": "https://github.com/jensweigele/ioBroker.yahka/issues"
+    },
+    "readmeFilename": "README.md"
 }
