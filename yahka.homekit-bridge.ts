@@ -113,9 +113,9 @@ export class THomeKitBridge {
 
 
         hapDevice.getService(HAPService.AccessoryInformation)
-            .setCharacteristic(HAPCharacteristic.Manufacturer, device.manufacturer)
-            .setCharacteristic(HAPCharacteristic.Model, device.model)
-            .setCharacteristic(HAPCharacteristic.SerialNumber, device.serial);
+            .setCharacteristic(HAPCharacteristic.Manufacturer, device.manufacturer || 'not configured')
+            .setCharacteristic(HAPCharacteristic.Model, device.model || 'not configured')
+            .setCharacteristic(HAPCharacteristic.SerialNumber, device.serial || 'not configured');
 
         hapDevice.on('identify', function (paired, callback) {
             console.log('device identify');

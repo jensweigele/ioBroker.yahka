@@ -40,9 +40,9 @@ var THomeKitBridge = (function () {
         var deviceID = HAP.uuid.generate(this.config.ident + ':' + device.name);
         var hapDevice = new HAP.Accessory(device.name, deviceID);
         hapDevice.getService(exports.HAPService.AccessoryInformation)
-            .setCharacteristic(exports.HAPCharacteristic.Manufacturer, device.manufacturer)
-            .setCharacteristic(exports.HAPCharacteristic.Model, device.model)
-            .setCharacteristic(exports.HAPCharacteristic.SerialNumber, device.serial);
+            .setCharacteristic(exports.HAPCharacteristic.Manufacturer, device.manufacturer || 'not configured')
+            .setCharacteristic(exports.HAPCharacteristic.Model, device.model || 'not configured')
+            .setCharacteristic(exports.HAPCharacteristic.SerialNumber, device.serial || 'not configured');
         hapDevice.on('identify', function (paired, callback) {
             console.log('device identify');
             callback();

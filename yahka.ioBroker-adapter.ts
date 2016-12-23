@@ -44,8 +44,14 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
 
         let bridgeConfig: hkBridge.Configuration.IBridgeConfig = config.bridge;
         if(!config.firstTimeInitialized) {
-            this.adapter.log.info('first time initialization');
-            bridgeConfig.ident = this.adapter.systemConfig.system.hostname + ':' + this.adapter.name + '.' + this.adapter.instance;
+            this.adapter.log.info('first time initialization, system config:' + JSON.stringify(this.adapter.systemConfig));
+            let hostName = "unknownHostname";
+            if(this.adapter.systemConfig != undefined)
+                if(this.adapter.systemConfig.system != undefined)
+                    if(this.adapter.systemConfig.system.hostname != undefined)
+                        hostName = this.adapter.systemConfig.system.hostname;
+
+            bridgeConfig.ident = hostName + ':' + this.adapter.name + '.' + this.adapter.instance;
             bridgeConfig.name = bridgeConfig.ident;
             bridgeConfig.serial = bridgeConfig.ident;  
             let usr = [];

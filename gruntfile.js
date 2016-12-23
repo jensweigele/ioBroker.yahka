@@ -15,6 +15,13 @@ module.exports = function(grunt) {
                     // copy files to build directory
                     { expand: true, src: ['*.png', 'io-package.json', 'package.json', 'lib/**', 'admin/**', '!**/*.ts'], dest: 'build/' }
                 ]
+            },
+            deployTestInstance: {
+                files: [
+                    // copy files to build directory
+                    { expand: true, cwd: 'build', src: ['**'], dest: '../ioBroker/node_modules/iobroker.yahka/' }
+                ]
+
             }
         },
 
@@ -27,17 +34,39 @@ module.exports = function(grunt) {
             build: {
                 tsconfig: true
             }
+        },
+
+        exec: {
+            refreshIOBroker: {
+                cwd: '../iobroker',
+                command: 'iobroker.bat upload yahka'
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-ts');
+    grunt.loadNpmTasks('grunt-exec');
 
-    grunt.registerTask('default', [
+    grunt.registerTask('buildOnly', [
         'clean:build',
         'ts:build',
         'clean:ts_nodeModules',
         'copy:build'
+    ]);
+
+    grunt.registerTask('DeployToTest', [
+        'copy:deployTestInstance',
+        'exec:refreshIOBroker'
+    ]);
+
+    grunt.registerTask('BuildAndDeployToTest', [
+        'clean:build',
+        'ts:build',
+        'clean:ts_nodeModules',
+        'copy:build',
+        'copy:deployTestInstance',
+        'exec:refreshIOBroker'
     ]);
 };

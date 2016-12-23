@@ -5,6 +5,13 @@
 
 ## Changelog
 
+### 0.5.2
+  (jw) fixed issues with empty characteristic values
+  (jw) fixed issue with empty adapter.systemConfig.system object
+
+### 0.5.1
+  (jw) fixed issue with wrongly displayed logo
+
 ### 0.5.0
   (jw) initial release
 
