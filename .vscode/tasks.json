@@ -8,6 +8,20 @@
     // "showOutput": "silent",
     // "problemMatcher": "$tsc",
     // "isWatching": false
+    "version": "0.1.0",
     "command": "grunt",
-    "isShellCommand": true
+    "isShellCommand": true,
+    "tasks": [
+        {
+            "taskName": "buildOnly",
+            "args": [],
+            "isBuildCommand": true,
+            "isWatching": false,
+            "problemMatcher": [
+                "$lessCompile",
+                "$tsc",
+                "$jshint"
+            ]
+        }
+    ]    
 }

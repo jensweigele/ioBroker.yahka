@@ -4,6 +4,7 @@ import * as hkBridge from './yahka.homekit-bridge';
 import * as mac from './node_modules/macaddress';
 import {functionFactory, IInternalInOutFunction} from './yahka.function-factory';
 
+
 interface ICustomCharacteristicConfig extends hkBridge.Configuration.ICharacteristicConfig {
     conversionFunction?: string;
     conversionParameters?: any;
@@ -26,6 +27,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
     stateToEventMap: Map<string, hkBridge.IInOutChangeNotify[]> = new Map<string, hkBridge.IInOutChangeNotify[]>();
     objectToEventMap: Map<string, hkBridge.IInOutChangeNotify[]> = new Map<string, hkBridge.IInOutChangeNotify[]>();
     bridge: hkBridge.THomeKitBridge = undefined;
+    verboseHAPLogging: boolean = false;    
 
     constructor(private adapter: ioBroker.IAdapter, private controllerPath) {
         adapter.on('ready', this.adapterReady.bind(this));
@@ -36,7 +38,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
     }
 
     private adapterReady() {
-        hkBridge.initHAP(this.controllerPath + '/' + this.adapter.systemConfig.dataDir + this.adapter.name + '.' + this.adapter.instance + '.hapdata');
+        hkBridge.initHAP(this.controllerPath + '/' + this.adapter.systemConfig.dataDir + this.adapter.name + '.' + this.adapter.instance + '.hapdata', this.handleHAPLogEvent.bind(this));
 
         this.adapter.log.info('adapter ready, checking config');
         let saveAdapterConfig = false;
@@ -44,7 +46,8 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
 
         let bridgeConfig: hkBridge.Configuration.IBridgeConfig = config.bridge;
         if(!config.firstTimeInitialized) {
-            this.adapter.log.info('first time initialization, system config:' + JSON.stringify(this.adapter.systemConfig));
+            this.adapter.log.info('first time initialization');
+            this.adapter.log.debug('system config:' + JSON.stringify(this.adapter.systemConfig));
             let hostName = "unknownHostname";
             if(this.adapter.systemConfig != undefined)
                 if(this.adapter.systemConfig.system != undefined)
@@ -60,12 +63,19 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
             bridgeConfig.username = usr.join(':');
             bridgeConfig.pincode = '123-45-678';
             bridgeConfig.port = 0;
+            bridgeConfig.verboseLogging = false;
             config.firstTimeInitialized = true;
             this.adapter.extendForeignObject('system.adapter.' + this.adapter.name + '.' + this.adapter.instance, { native: config }, undefined);
         }
-        
+        this.verboseHAPLogging = bridgeConfig.verboseLogging == true;
+
         this.adapter.log.info('creating bridge');
-        this.bridge = new hkBridge.THomeKitBridge(config.bridge, this);
+        this.bridge = new hkBridge.THomeKitBridge(config.bridge, this, this.adapter.log);
+    }
+
+    private handleHAPLogEvent(message) {
+        if (this.verboseHAPLogging)
+            this.adapter.log.debug(message);
     }
 
     private handleObjectChange(id: string, obj:ioBroker.IObject) {
@@ -89,9 +99,6 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
     private handleMessage(obj: any) {
         if (typeof obj == 'object' && obj.message) {
             if (obj.command == 'send') {
-                // e.g. send email or pushover or whatever
-                console.log('send command');
-
                 // Send response in callback if required
                 if (obj.callback)
                     this.adapter.sendTo(obj.from, obj.command, 'Message received', obj.callback);

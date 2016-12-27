@@ -13,7 +13,7 @@ module.exports = function(grunt) {
             build: {
                 files: [
                     // copy files to build directory
-                    { expand: true, src: ['*.png', 'io-package.json', 'package.json', 'lib/**', 'admin/**', '!**/*.ts'], dest: 'build/' }
+                    { expand: true, src: ['*.png', 'io-package.json', 'package.json', 'lib/**', 'admin/**', '!**/*.ts', 'README.md'], dest: 'build/' }
                 ]
             },
             deployTestInstance: {
@@ -40,7 +40,12 @@ module.exports = function(grunt) {
             refreshIOBroker: {
                 cwd: '../iobroker',
                 command: 'iobroker.bat upload yahka'
+            },
+            NPMPublish: {
+                cwd: 'build',
+                command: 'npm publish'
             }
+
         }
     });
 
@@ -69,4 +74,12 @@ module.exports = function(grunt) {
         'copy:deployTestInstance',
         'exec:refreshIOBroker'
     ]);
+
+    grunt.registerTask('NPMPublish', [
+        'clean:build',
+        'ts:build',
+        'clean:ts_nodeModules',
+        'copy:build',
+        'exec:NPMPublish'        
+    ])
 };

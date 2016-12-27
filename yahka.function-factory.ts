@@ -19,9 +19,10 @@ export interface IInternalInOutFunction extends IInOutFunction {
 
 
 class TIoBrokerInOutFunction_State implements IInternalInOutFunction {
+    protected debounceTimer = -1;
     public subscriptionRequests: ISubscriptionRequest[] = [];
     
-    constructor(protected adapter: ioBroker.IAdapter, protected stateName: string) {
+    constructor(protected adapter: ioBroker.IAdapter, protected stateName: string, protected deferedTime: number = 0) {
         this.addSubscriptionRequest(stateName);
     }
 
@@ -73,10 +74,33 @@ class TIoBrokerInOutFunction_State implements IInternalInOutFunction {
         this.adapter.log.debug('change event from ioBroker via [' + this.stateName + ']' + JSON.stringify(ioState));
         let newValue = this.getValueOnNotify(ioState);
         if(newValue !== undefined)
-            callback(newValue);
+            this.executeCallback(callback, newValue);
         else
             this.adapter.log.debug('state was filtered - notification is canceled');
     }         
+
+    executeCallback(callback: IInOutChangeNotify, plainIOValue: any) {
+        if(this.deferedTime > 0)
+            this.setupDeferedChangeEvent(callback, plainIOValue);
+        else
+            callback(plainIOValue);
+    }
+
+    setupDeferedChangeEvent(callback: IInOutChangeNotify, plainIOValue: any) {
+        this.cancelDeferedChangeEvent();
+        this.debounceTimer = setTimeout(this.deferedChangeEvent.bind(this, callback, plainIOValue), 150);
+    }
+
+    cancelDeferedChangeEvent() {
+        clearTimeout(this.debounceTimer);
+        this.debounceTimer = -1;
+    }    
+
+    deferedChangeEvent(callback: IInOutChangeNotify, plainIOValue: any) {
+        this.adapter.log.debug('[' + this.stateName  + '] firing defered change event:' + JSON.stringify(plainIOValue));
+        callback(plainIOValue);
+    }
+
 }
 
 class TIoBrokerInOutFunction_State_OnlyACK extends TIoBrokerInOutFunction_State {
@@ -108,12 +132,42 @@ class TIoBrokerInOutFunction_State_OnlyACK extends TIoBrokerInOutFunction_State 
     }
 } 
 
+class TIoBrokerInOutFunction_State_OnlyNotACK extends TIoBrokerInOutFunction_State {
+    protected lastNotAcknowledgedValue: any;
+    getValueOnRead(ioState: ioBroker.IState): any {
+        if(ioState)
+            if(ioState.ack) {
+                this.adapter.log.debug("faking CurrentState.Read for [" + this.stateName + ']: ' + JSON.stringify(this.lastNotAcknowledgedValue) );
+                return this.lastNotAcknowledgedValue;
+            } else {
+                this.lastNotAcknowledgedValue = ioState.val;
+                return ioState.val;
+            } 
+        else    
+            return null;
+    }
+
+    getValueOnNotify(ioState: ioBroker.IState): any {
+        if(ioState)
+            if(!ioState.ack) {
+                this.adapter.log.debug("discarding CurrentState.Notify for [" + this.stateName + ']');
+                return undefined;
+            } else {
+                this.lastNotAcknowledgedValue = ioState.val;
+                return ioState.val
+            }
+        else    
+            return null;
+    }
+} 
+
+
 class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition extends TIoBrokerInOutFunction_State {
     protected lastWorkingState: boolean = false;
     protected lastAcknowledgedValue: any = undefined;
     protected debounceTimer = -1;
     constructor(protected adapter: ioBroker.IAdapter, protected stateName: string, protected workingItem: string) {
-        super(adapter, stateName);
+        super(adapter, stateName, 0);
         this.addSubscriptionRequest(workingItem);
         adapter.getForeignState(workingItem, (error, ioState) => {
             if(ioState)
@@ -158,10 +212,7 @@ class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition extends TIoB
             this.adapter.log.debug('[' + this.stateName  + '] canceling target state change event - covering is working');
         }
     }
-
-     
 } 
-
 
 type TInOutFunctionCreateFunction = (adapter: ioBroker.IAdapter, parameters: any) => IInternalInOutFunction;
 var inOutFactory: IObjectDictionary<TInOutFunctionCreateFunction> = {
@@ -172,6 +223,14 @@ var inOutFactory: IObjectDictionary<TInOutFunctionCreateFunction> = {
 
         return new TIoBrokerInOutFunction_State(adapter, stateName);
     },
+
+    "ioBroker.State.Defered": function (adapter: ioBroker.IAdapter, parameters: any): IInternalInOutFunction {
+        if (typeof parameters !== "string")
+            return undefined;
+        let stateName: string = parameters;
+
+        return new TIoBrokerInOutFunction_State(adapter, stateName, 250);
+    },    
 
     "ioBroker.State.OnlyACK": function (adapter: ioBroker.IAdapter, parameters: any): IInternalInOutFunction {
         if (typeof parameters !== "string")
@@ -210,12 +269,12 @@ var inOutFactory: IObjectDictionary<TInOutFunctionCreateFunction> = {
     "const": function (adapter: ioBroker.IAdapter, parameters: any): IInternalInOutFunction {
         return {
             toIOBroker(ioValue: any, callback: () => void) {
-                console.log('inoutFunc: cons.toIOBroker: ', parameters);
+                console.log('inoutFunc: const.toIOBroker: ', parameters);
                 callback();
             },
 
             fromIOBroker(callback: (error: any, ioValue: any) => void) {
-                console.log('inoutFunc: cons.fromIOBroker: ', parameters);
+                console.log('inoutFunc: const.fromIOBroker: ', parameters);
                 callback(null, parameters);
             },
 

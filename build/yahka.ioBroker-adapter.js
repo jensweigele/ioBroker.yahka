@@ -14,6 +14,7 @@ var TIOBrokerAdapter = (function () {
         this.stateToEventMap = new Map();
         this.objectToEventMap = new Map();
         this.bridge = undefined;
+        this.verboseHAPLogging = false;
         adapter.on('ready', this.adapterReady.bind(this));
         adapter.on('objectChange', this.handleObjectChange.bind(this));
         adapter.on('stateChange', this.handleState.bind(this));
@@ -21,13 +22,14 @@ var TIOBrokerAdapter = (function () {
         adapter.on('unload', this.handleUnload.bind(this));
     }
     TIOBrokerAdapter.prototype.adapterReady = function () {
-        hkBridge.initHAP(this.controllerPath + '/' + this.adapter.systemConfig.dataDir + this.adapter.name + '.' + this.adapter.instance + '.hapdata');
+        hkBridge.initHAP(this.controllerPath + '/' + this.adapter.systemConfig.dataDir + this.adapter.name + '.' + this.adapter.instance + '.hapdata', this.handleHAPLogEvent.bind(this));
         this.adapter.log.info('adapter ready, checking config');
         var saveAdapterConfig = false;
         var config = this.adapter.config;
         var bridgeConfig = config.bridge;
         if (!config.firstTimeInitialized) {
-            this.adapter.log.info('first time initialization, system config:' + JSON.stringify(this.adapter.systemConfig));
+            this.adapter.log.info('first time initialization');
+            this.adapter.log.debug('system config:' + JSON.stringify(this.adapter.systemConfig));
             var hostName = "unknownHostname";
             if (this.adapter.systemConfig != undefined)
                 if (this.adapter.systemConfig.system != undefined)
@@ -42,11 +44,17 @@ var TIOBrokerAdapter = (function () {
             bridgeConfig.username = usr.join(':');
             bridgeConfig.pincode = '123-45-678';
             bridgeConfig.port = 0;
+            bridgeConfig.verboseLogging = false;
             config.firstTimeInitialized = true;
             this.adapter.extendForeignObject('system.adapter.' + this.adapter.name + '.' + this.adapter.instance, { native: config }, undefined);
         }
+        this.verboseHAPLogging = bridgeConfig.verboseLogging == true;
         this.adapter.log.info('creating bridge');
-        this.bridge = new hkBridge.THomeKitBridge(config.bridge, this);
+        this.bridge = new hkBridge.THomeKitBridge(config.bridge, this, this.adapter.log);
+    };
+    TIOBrokerAdapter.prototype.handleHAPLogEvent = function (message) {
+        if (this.verboseHAPLogging)
+            this.adapter.log.debug(message);
     };
     TIOBrokerAdapter.prototype.handleObjectChange = function (id, obj) {
         this.adapter.log.info('objectChange ' + id + ' ' + JSON.stringify(obj));
@@ -66,7 +74,6 @@ var TIOBrokerAdapter = (function () {
     TIOBrokerAdapter.prototype.handleMessage = function (obj) {
         if (typeof obj == 'object' && obj.message) {
             if (obj.command == 'send') {
-                console.log('send command');
                 if (obj.callback)
                     this.adapter.sendTo(obj.from, obj.command, 'Message received', obj.callback);
             }

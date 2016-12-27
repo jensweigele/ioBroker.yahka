@@ -6,9 +6,12 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var yahka_homekit_bridge_1 = require('./yahka.homekit-bridge');
 var TIoBrokerInOutFunction_State = (function () {
-    function TIoBrokerInOutFunction_State(adapter, stateName) {
+    function TIoBrokerInOutFunction_State(adapter, stateName, deferedTime) {
+        if (deferedTime === void 0) { deferedTime = 0; }
         this.adapter = adapter;
         this.stateName = stateName;
+        this.deferedTime = deferedTime;
+        this.debounceTimer = -1;
         this.subscriptionRequests = [];
         this.addSubscriptionRequest(stateName);
     }
@@ -56,9 +59,27 @@ var TIoBrokerInOutFunction_State = (function () {
         this.adapter.log.debug('change event from ioBroker via [' + this.stateName + ']' + JSON.stringify(ioState));
         var newValue = this.getValueOnNotify(ioState);
         if (newValue !== undefined)
-            callback(newValue);
+            this.executeCallback(callback, newValue);
         else
             this.adapter.log.debug('state was filtered - notification is canceled');
+    };
+    TIoBrokerInOutFunction_State.prototype.executeCallback = function (callback, plainIOValue) {
+        if (this.deferedTime > 0)
+            this.setupDeferedChangeEvent(callback, plainIOValue);
+        else
+            callback(plainIOValue);
+    };
+    TIoBrokerInOutFunction_State.prototype.setupDeferedChangeEvent = function (callback, plainIOValue) {
+        this.cancelDeferedChangeEvent();
+        this.debounceTimer = setTimeout(this.deferedChangeEvent.bind(this, callback, plainIOValue), 150);
+    };
+    TIoBrokerInOutFunction_State.prototype.cancelDeferedChangeEvent = function () {
+        clearTimeout(this.debounceTimer);
+        this.debounceTimer = -1;
+    };
+    TIoBrokerInOutFunction_State.prototype.deferedChangeEvent = function (callback, plainIOValue) {
+        this.adapter.log.debug('[' + this.stateName + '] firing defered change event:' + JSON.stringify(plainIOValue));
+        callback(plainIOValue);
     };
     return TIoBrokerInOutFunction_State;
 }());
@@ -95,11 +116,44 @@ var TIoBrokerInOutFunction_State_OnlyACK = (function (_super) {
     };
     return TIoBrokerInOutFunction_State_OnlyACK;
 }(TIoBrokerInOutFunction_State));
+var TIoBrokerInOutFunction_State_OnlyNotACK = (function (_super) {
+    __extends(TIoBrokerInOutFunction_State_OnlyNotACK, _super);
+    function TIoBrokerInOutFunction_State_OnlyNotACK() {
+        _super.apply(this, arguments);
+    }
+    TIoBrokerInOutFunction_State_OnlyNotACK.prototype.getValueOnRead = function (ioState) {
+        if (ioState)
+            if (ioState.ack) {
+                this.adapter.log.debug("faking CurrentState.Read for [" + this.stateName + ']: ' + JSON.stringify(this.lastNotAcknowledgedValue));
+                return this.lastNotAcknowledgedValue;
+            }
+            else {
+                this.lastNotAcknowledgedValue = ioState.val;
+                return ioState.val;
+            }
+        else
+            return null;
+    };
+    TIoBrokerInOutFunction_State_OnlyNotACK.prototype.getValueOnNotify = function (ioState) {
+        if (ioState)
+            if (!ioState.ack) {
+                this.adapter.log.debug("discarding CurrentState.Notify for [" + this.stateName + ']');
+                return undefined;
+            }
+            else {
+                this.lastNotAcknowledgedValue = ioState.val;
+                return ioState.val;
+            }
+        else
+            return null;
+    };
+    return TIoBrokerInOutFunction_State_OnlyNotACK;
+}(TIoBrokerInOutFunction_State));
 var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = (function (_super) {
     __extends(TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition, _super);
     function TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition(adapter, stateName, workingItem) {
         var _this = this;
-        _super.call(this, adapter, stateName);
+        _super.call(this, adapter, stateName, 0);
         this.adapter = adapter;
         this.stateName = stateName;
         this.workingItem = workingItem;
@@ -156,6 +210,12 @@ var inOutFactory = {
         var stateName = parameters;
         return new TIoBrokerInOutFunction_State(adapter, stateName);
     },
+    "ioBroker.State.Defered": function (adapter, parameters) {
+        if (typeof parameters !== "string")
+            return undefined;
+        var stateName = parameters;
+        return new TIoBrokerInOutFunction_State(adapter, stateName, 250);
+    },
     "ioBroker.State.OnlyACK": function (adapter, parameters) {
         if (typeof parameters !== "string")
             return undefined;
@@ -186,11 +246,11 @@ var inOutFactory = {
     "const": function (adapter, parameters) {
         return {
             toIOBroker: function (ioValue, callback) {
-                console.log('inoutFunc: cons.toIOBroker: ', parameters);
+                console.log('inoutFunc: const.toIOBroker: ', parameters);
                 callback();
             },
             fromIOBroker: function (callback) {
-                console.log('inoutFunc: cons.fromIOBroker: ', parameters);
+                console.log('inoutFunc: const.fromIOBroker: ', parameters);
                 callback(null, parameters);
             },
             subscriptionRequests: []

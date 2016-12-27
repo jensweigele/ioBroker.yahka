@@ -1,5 +1,9 @@
 /// <reference path="./typings/index.d.ts" />
+import debug = require('debug');
+debug.enable('*');
+import util = require('util');
 import HAP = require('./node_modules/hap-nodejs');
+
 
 export let HAPAccessory: any = HAP.Accessory;
 export let HAPService: any = HAP.Service;
@@ -42,6 +46,7 @@ export module Configuration {
         username: string;
         pincode: string;
         port: number;
+        verboseLogging: boolean;
         devices: (IDeviceConfig)[];
         [key: string]: any;
     }
@@ -64,6 +69,16 @@ export interface IHomeKitBridgeBinding {
     inOut: IInOutFunction;
 }
 
+export interface ILogger {
+    /** log message with debug level */
+    debug(message: string); 
+    /** log message with info level */
+    info(message: string);   
+    /** log message with info warn */
+    warn(message: string);        
+    /** log message with info error */
+    error(message: string);                 
+}
 
 export interface IHomeKitBridgeBindingFactory {
     CreateBinding(characteristicConfig: Configuration.ICharacteristicConfig, changeNotify: IInOutChangeNotify): IHomeKitBridgeBinding;
@@ -71,7 +86,7 @@ export interface IHomeKitBridgeBindingFactory {
 
 export class THomeKitBridge {
     private bridgeObject;
-    constructor(private config: Configuration.IBridgeConfig, private FBridgeFactory: IHomeKitBridgeBindingFactory) {
+    constructor(private config: Configuration.IBridgeConfig, private FBridgeFactory: IHomeKitBridgeBindingFactory, private FLogger: ILogger) {
         this.init();
     }
 
@@ -101,7 +116,7 @@ export class THomeKitBridge {
 
         // Listen for bridge identification event
         hapBridge.on('identify', (paired, callback) => {
-            console.log("Node Bridge identify:" + paired);
+            this.FLogger.debug("Node Bridge identify:" + paired);
             callback(); // success
         });
         return hapBridge;
@@ -118,7 +133,7 @@ export class THomeKitBridge {
             .setCharacteristic(HAPCharacteristic.SerialNumber, device.serial || 'not configured');
 
         hapDevice.on('identify', function (paired, callback) {
-            console.log('device identify');
+            this.FLogger.debug('device identify');
             callback(); // success
         });
 
@@ -153,7 +168,7 @@ export class THomeKitBridge {
     private initCharacteristic(hapService: IHAPService, characteristicConfig: Configuration.ICharacteristicConfig) {
         let hapCharacteristic = hapService.getCharacteristic(HAPCharacteristic[characteristicConfig.name]);
         if (!hapCharacteristic) {
-            console.log("unknown characteristic: " + characteristicConfig.name);
+            this.FLogger.warn("unknown characteristic: " + characteristicConfig.name);
             return;
         }
 
@@ -161,52 +176,52 @@ export class THomeKitBridge {
             return;
             
         hapCharacteristic.binding = this.FBridgeFactory.CreateBinding(characteristicConfig, (plainIOValue: any) => {
-            console.log('[' + characteristicConfig.name + '] got a change notify event, ioValue: ' + JSON.stringify(plainIOValue));
+            this.FLogger.debug('[' + characteristicConfig.name + '] got a change notify event, ioValue: ' + JSON.stringify(plainIOValue));
             let binding: IHomeKitBridgeBinding = hapCharacteristic.binding;
             if(!binding) {
-                console.log('[' + characteristicConfig.name + '] no binding!');
+                this.FLogger.error('[' + characteristicConfig.name + '] no binding!');
                 return;
             }
             
             let hkValue = binding.conversion.toHomeKit(plainIOValue);
-            console.log('[' + characteristicConfig.name + '] forwarding value from ioBroker (' + JSON.stringify(plainIOValue) + ') to homekit as (' + JSON.stringify(hkValue) + ')');
+            this.FLogger.debug('[' + characteristicConfig.name + '] forwarding value from ioBroker (' + JSON.stringify(plainIOValue) + ') to homekit as (' + JSON.stringify(hkValue) + ')');
             hapCharacteristic.setValue(hkValue, undefined, binding);
         });
 
         hapCharacteristic.on('set', (hkValue: any, callback: () => void, context: any) => {
-            console.log('[' + characteristicConfig.name + '] got a set event, hkValue: ' + JSON.stringify(hkValue));
+            this.FLogger.debug('[' + characteristicConfig.name + '] got a set event, hkValue: ' + JSON.stringify(hkValue));
             let binding: IHomeKitBridgeBinding = hapCharacteristic.binding;
             if(!binding) {
-                console.log('[' + characteristicConfig.name + '] no binding!');
+                this.FLogger.error('[' + characteristicConfig.name + '] no binding!');
                 callback();
                 return;
             }
 
             if(context === binding) {
-                console.log('[' + characteristicConfig.name + '] set was initiated from ioBroker - exiting here');
+                this.FLogger.debug('[' + characteristicConfig.name + '] set was initiated from ioBroker - exiting here');
                 callback();
                 return;
             }
 
             let ioValue = binding.conversion.toIOBroker(hkValue);
             binding.inOut.toIOBroker(ioValue, () => {
-                console.log('[' + characteristicConfig.name + '] set was accepted by ioBroker (value: ' + JSON.stringify(ioValue) + ')');
+                this.FLogger.debug('[' + characteristicConfig.name + '] set was accepted by ioBroker (value: ' + JSON.stringify(ioValue) + ')');
                 callback();
             });
         });
 
         hapCharacteristic.on('get', (hkCallback) => {
-            console.log('[' + characteristicConfig.name + '] got a get event');
+            this.FLogger.debug('[' + characteristicConfig.name + '] got a get event');
             let binding: IHomeKitBridgeBinding = hapCharacteristic.binding;
             if(!binding) {
-                console.log('[' + characteristicConfig.name + '] no binding!');
+                this.FLogger.error('[' + characteristicConfig.name + '] no binding!');
                 hkCallback('no binding', null);
                 return;
             }
             
             binding.inOut.fromIOBroker((ioBrokerError, ioValue) => {
                 let hkValue = binding.conversion.toHomeKit(ioValue);
-                console.log('[' + characteristicConfig.name + '] forwarding value from ioBroker (' + JSON.stringify(ioValue) + ') to homekit as (' + JSON.stringify(hkValue) + ')');
+                this.FLogger.debug('[' + characteristicConfig.name + '] forwarding value from ioBroker (' + JSON.stringify(ioValue) + ') to homekit as (' + JSON.stringify(hkValue) + ')');
                 hkCallback(ioBrokerError, hkValue);
             });
         });
@@ -215,9 +230,12 @@ export class THomeKitBridge {
 
 let hapInited: boolean = false;
 
-export function initHAP(storagePath: string) {
+export function initHAP(storagePath: string, HAPdebugLogMethod: Function) {
     if (hapInited)
         return;
     HAP.init(storagePath);
-    hapInited = true;
+    debug.log = function() {
+        HAPdebugLogMethod(util.format.apply(this, arguments));
+    };
+
 }

@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "yahka",
-        "version": "0.5.2",
+        "version": "0.5.3",
         "title": "Javascript/Node.js based yahka adapter",
         "desc": {
             "en": "ioBroker yet another homekit adapter",
@@ -11,12 +11,12 @@
         "mode": "daemon",
         "icon": "yahka.png",
         "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.yahka/master/admin/yahka.png",
+        "extIcon": "https://raw.githubusercontent.com/jensweigele/ioBroker.yahka/master/admin/yahka.png",
         "keywords": [
             "homekit",
             "siri"
         ],
-        "readme": "https://github.com/ioBroker/ioBroker.yahka/blob/master/README.md",
+        "readme": "https://github.com/jensweigele/ioBroker.yahka/blob/master/README.md",
         "loglevel": "info",
         "type": "common adapters"
     },
@@ -31,7 +31,7 @@
             "_id": "yahka.meta._inoutFunctions",
             "type": "meta",
             "common": {},
-            "native": ["", "const", "ioBroker.State", "ioBroker.State.OnlyACK", "ioBroker.homematic.WindowCovering.TargetPosition"]
+            "native": ["", "const", "ioBroker.State", "ioBroker.State.Defered", "ioBroker.State.OnlyACK", "ioBroker.homematic.WindowCovering.TargetPosition"]
         },
         {
             "_id": "yahka.meta._conversionFunctions",

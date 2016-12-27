@@ -1,6 +1,6 @@
 {
   "name": "iobroker.yahka",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "ioBroker HomeKit Adapter",
   "author": {
     "name": "Jens Weigele",
@@ -27,7 +27,9 @@
     "url": "https://github.com/jensweigele/ioBroker.yahka"
   },
   "dependencies": {
-    "hap-nodejs": "^0.4.8"
+    "debug": "^2.2.0",
+    "hap-nodejs": "^0.4.8",
+    "util": "^0.10.3"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
