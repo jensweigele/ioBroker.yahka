@@ -105,8 +105,16 @@ class ioBroker_YahkaPageBuilder {
                 input.value = value;
             else
                 input.value = "";    
-            input.addEventListener('input', this.handleBridgeMetaDataChange.bind(this, bridge, propertyName));                
-        }        
+            input.addEventListener("input", this.handleBridgeMetaDataChange.bind(this, bridge, propertyName));                
+        }      
+
+        let checkboxHelper = (selector: string, propertyName: string) => {
+            let input = <HTMLInputElement>document.querySelector(selector);
+
+            let value = bridge[propertyName];
+            input.checked = value; 
+            input.addEventListener("click", this.handleBridgeMetaDataChange.bind(this, bridge, propertyName));                
+        }                
         
         inputHelper('#bridge_name', 'name');
         inputHelper('#bridge_manufacturer', 'manufacturer');
@@ -115,6 +123,7 @@ class ioBroker_YahkaPageBuilder {
         inputHelper('#bridge_username', 'username');        
         inputHelper('#bridge_pincode', 'pincode');        
         inputHelper('#bridge_port', 'port');        
+        checkboxHelper('#bridge_verboseLogging', 'verboseLogging');
     }
 
 
@@ -532,8 +541,10 @@ class ioBroker_YahkaPageBuilder {
 
     handleBridgeMetaDataChange(bridgeConfig: hkBridge.Configuration.IBridgeConfig, propertyName: string, ev: Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
-        let inputValue = inputTarget.value;
-        bridgeConfig[propertyName] = inputValue;
+        if(inputTarget.type == "checkbox")
+            bridgeConfig[propertyName] = inputTarget.checked;
+        else
+            bridgeConfig[propertyName] = inputTarget.value;
         this.changeCallback();
     }
 

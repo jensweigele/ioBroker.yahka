@@ -315,6 +315,64 @@ var conversionFactory = {
                 return result;
             }
         };
+    },
+    "HomematicControlModeToHomekitHeathingCoolingState": function (adapter, parameters) {
+        return {
+            toHomeKit: function (value) {
+                var num = undefined;
+                if (typeof value !== 'number')
+                    num = parseInt(value);
+                else
+                    num = value;
+                var result = undefined;
+                switch (num) {
+                    case 0:
+                        result = yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.AUTO;
+                        break;
+                    case 1:
+                        result = yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.HEAT;
+                        break;
+                    case 2:
+                        result = yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.HEAT;
+                        break;
+                    case 3:
+                        result = yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.HEAT;
+                        break;
+                    default:
+                        result = yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.OFF;
+                        break;
+                }
+                adapter.log.debug('HomematicDirectionToHomekitHeatingCoolingState.toHomeKit, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
+                return result;
+            },
+            toIOBroker: function (value) {
+                var num = undefined;
+                if (typeof value !== 'number')
+                    num = parseInt(value);
+                else
+                    num = value;
+                var result = undefined;
+                switch (num) {
+                    case yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.OFF:
+                        result = 0;
+                        break;
+                    case yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.HEAT:
+                        result = 1;
+                        break;
+                    case yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.COOL:
+                        result = 0;
+                        break;
+                    case yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.AUTO:
+                        result = 0;
+                        break;
+                    default:
+                        result = 0;
+                        break;
+                }
+                adapter.log.debug('HomematicDirectionToHomekitHeatingCoolingState.toIOBroker, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
+                return result;
+            }
+        };
     }
 };
 exports.functionFactory = {

@@ -61,7 +61,13 @@ var ioBroker_YahkaPageBuilder = (function () {
                 input.value = value;
             else
                 input.value = "";
-            input.addEventListener('input', _this.handleBridgeMetaDataChange.bind(_this, bridge, propertyName));
+            input.addEventListener("input", _this.handleBridgeMetaDataChange.bind(_this, bridge, propertyName));
+        };
+        var checkboxHelper = function (selector, propertyName) {
+            var input = document.querySelector(selector);
+            var value = bridge[propertyName];
+            input.checked = value;
+            input.addEventListener("click", _this.handleBridgeMetaDataChange.bind(_this, bridge, propertyName));
         };
         inputHelper('#bridge_name', 'name');
         inputHelper('#bridge_manufacturer', 'manufacturer');
@@ -70,6 +76,7 @@ var ioBroker_YahkaPageBuilder = (function () {
         inputHelper('#bridge_username', 'username');
         inputHelper('#bridge_pincode', 'pincode');
         inputHelper('#bridge_port', 'port');
+        checkboxHelper('#bridge_verboseLogging', 'verboseLogging');
     };
     ioBroker_YahkaPageBuilder.prototype.bindBridgeButtons = function (bridge, bridgePane) {
         var _this = this;
@@ -419,8 +426,10 @@ var ioBroker_YahkaPageBuilder = (function () {
     };
     ioBroker_YahkaPageBuilder.prototype.handleBridgeMetaDataChange = function (bridgeConfig, propertyName, ev) {
         var inputTarget = ev.currentTarget;
-        var inputValue = inputTarget.value;
-        bridgeConfig[propertyName] = inputValue;
+        if (inputTarget.type == "checkbox")
+            bridgeConfig[propertyName] = inputTarget.checked;
+        else
+            bridgeConfig[propertyName] = inputTarget.value;
         this.changeCallback();
     };
     ioBroker_YahkaPageBuilder.prototype.handleDeviceMetaDataChange = function (deviceConfig, propertyName, ev) {

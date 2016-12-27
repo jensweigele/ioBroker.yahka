@@ -345,6 +345,67 @@ var conversionFactory: IObjectDictionary<TConversionFunctionCreateFunction> = {
                 return result;                
             }
         }
+    },
+
+    "HomematicControlModeToHomekitHeathingCoolingState": function(adapter: ioBroker.IAdapter, parameters: any): IConversionFunction {
+        return {
+            toHomeKit: (value) => {
+                let num = undefined;
+                if(typeof value !== 'number') 
+                    num = parseInt(value);
+                else 
+                    num = value;
+
+                let result = undefined;
+                switch(num) {
+                    case 0:
+                        result = HAPCharacteristic.TargetHeatingCoolingState.AUTO;
+                        break;
+                    case 1:
+                        result = HAPCharacteristic.TargetHeatingCoolingState.HEAT;
+                        break;
+                    case 2:
+                        result = HAPCharacteristic.TargetHeatingCoolingState.HEAT;
+                        break;
+                    case 3:
+                        result = HAPCharacteristic.TargetHeatingCoolingState.HEAT;
+                        break;
+                    default:
+                        result = HAPCharacteristic.TargetHeatingCoolingState.OFF;
+                        break;
+                }
+                adapter.log.debug('HomematicDirectionToHomekitHeatingCoolingState.toHomeKit, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
+                return result;
+            },
+            toIOBroker: (value) => {
+                let num = undefined;
+                if(typeof value !== 'number') 
+                    num = parseInt(value);
+                else 
+                    num = value;
+
+                let result = undefined;
+                switch(num) {
+                    case HAPCharacteristic.TargetHeatingCoolingState.OFF:
+                        result = 0;
+                        break;
+                    case HAPCharacteristic.TargetHeatingCoolingState.HEAT:
+                        result = 1;
+                        break;
+                    case HAPCharacteristic.TargetHeatingCoolingState.COOL:
+                        result = 0;
+                        break;
+                    case HAPCharacteristic.TargetHeatingCoolingState.AUTO:
+                        result = 0;
+                        break;
+                    default:
+                        result = 0;
+                        break;
+                }
+                adapter.log.debug('HomematicDirectionToHomekitHeatingCoolingState.toIOBroker, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
+                return result;                
+            }
+        }
     }
 }
 
