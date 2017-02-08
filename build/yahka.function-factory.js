@@ -1,10 +1,15 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var yahka_homekit_bridge_1 = require('./yahka.homekit-bridge');
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var yahka_homekit_bridge_1 = require("./yahka.homekit-bridge");
 var TIoBrokerInOutFunction_State = (function () {
     function TIoBrokerInOutFunction_State(adapter, stateName, deferedTime) {
         if (deferedTime === void 0) { deferedTime = 0; }
@@ -86,7 +91,7 @@ var TIoBrokerInOutFunction_State = (function () {
 var TIoBrokerInOutFunction_State_OnlyACK = (function (_super) {
     __extends(TIoBrokerInOutFunction_State_OnlyACK, _super);
     function TIoBrokerInOutFunction_State_OnlyACK() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     TIoBrokerInOutFunction_State_OnlyACK.prototype.getValueOnRead = function (ioState) {
         if (ioState)
@@ -119,7 +124,7 @@ var TIoBrokerInOutFunction_State_OnlyACK = (function (_super) {
 var TIoBrokerInOutFunction_State_OnlyNotACK = (function (_super) {
     __extends(TIoBrokerInOutFunction_State_OnlyNotACK, _super);
     function TIoBrokerInOutFunction_State_OnlyNotACK() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     TIoBrokerInOutFunction_State_OnlyNotACK.prototype.getValueOnRead = function (ioState) {
         if (ioState)
@@ -152,21 +157,21 @@ var TIoBrokerInOutFunction_State_OnlyNotACK = (function (_super) {
 var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = (function (_super) {
     __extends(TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition, _super);
     function TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition(adapter, stateName, workingItem) {
-        var _this = this;
-        _super.call(this, adapter, stateName, 0);
-        this.adapter = adapter;
-        this.stateName = stateName;
-        this.workingItem = workingItem;
-        this.lastWorkingState = false;
-        this.lastAcknowledgedValue = undefined;
-        this.debounceTimer = -1;
-        this.addSubscriptionRequest(workingItem);
+        var _this = _super.call(this, adapter, stateName, 0) || this;
+        _this.adapter = adapter;
+        _this.stateName = stateName;
+        _this.workingItem = workingItem;
+        _this.lastWorkingState = false;
+        _this.lastAcknowledgedValue = undefined;
+        _this.debounceTimer = -1;
+        _this.addSubscriptionRequest(workingItem);
         adapter.getForeignState(workingItem, function (error, ioState) {
             if (ioState)
                 _this.lastWorkingState = ioState.val;
             else
                 _this.lastWorkingState = undefined;
         });
+        return _this;
     }
     TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.subscriptionEvent = function (stateName, ioState, callback) {
         if (!ioState)

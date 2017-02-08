@@ -1,7 +1,7 @@
 "use strict";
-var Characteristic_1 = require('./node_modules/hap-nodejs/lib/Characteristic');
-var Service_1 = require('./node_modules/hap-nodejs/lib/Service');
-require('./node_modules/hap-nodejs/lib/gen/HomeKitTypes');
+var Characteristic_1 = require("./node_modules/hap-nodejs/lib/Characteristic");
+var Service_1 = require("./node_modules/hap-nodejs/lib/Service");
+require("./node_modules/hap-nodejs/lib/gen/HomeKitTypes");
 var availableServices = Object.keys(Service_1.Service);
 var availableCharacteristics = Object.keys(Characteristic_1.Characteristic);
 var result = {};

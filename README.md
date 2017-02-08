@@ -5,6 +5,13 @@
 
 ## Changelog
 
+### 0.5.4
+  (jw) improve logoutput
+  (jw) added HomematicControlModeToHomekitHeathingCoolingState mapping
+
+### 0.5.3
+  (jw) internal release
+
 ### 0.5.2
   (jw) fixed issues with empty characteristic values
   (jw) fixed issue with empty adapter.systemConfig.system object

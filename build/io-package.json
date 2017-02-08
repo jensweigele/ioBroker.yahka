@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "yahka",
-        "version": "0.5.3",
+        "version": "0.5.4",
         "title": "Javascript/Node.js based yahka adapter",
         "desc": {
             "en": "ioBroker yet another homekit adapter",

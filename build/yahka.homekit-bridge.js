@@ -1,8 +1,8 @@
 "use strict";
-var debug = require('debug');
+var debug = require("debug");
 debug.enable('*');
-var util = require('util');
-var HAP = require('./node_modules/hap-nodejs');
+var util = require("util");
+var HAP = require("./node_modules/hap-nodejs");
 exports.HAPAccessory = HAP.Accessory;
 exports.HAPService = HAP.Service;
 exports.HAPCharacteristic = HAP.Characteristic;
