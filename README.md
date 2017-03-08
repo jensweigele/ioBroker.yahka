@@ -2,6 +2,12 @@
 # iobroker.yahka
 =================
 
+## Installation
+Sometimes additonal libriaries are required:
+
+```
+sudo apt-get install libavahi-compat-libdnssd-dev
+```
 
 ## Changelog
 
