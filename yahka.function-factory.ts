@@ -22,7 +22,7 @@ class TIoBrokerInOutFunction_State implements IInternalInOutFunction {
     protected debounceTimer = -1;
     public subscriptionRequests: ISubscriptionRequest[] = [];
     
-    constructor(protected adapter: ioBroker.IAdapter, protected stateName: string, protected deferedTime: number = 0) {
+    constructor(protected adapter: ioBroker.IAdapter, protected stateName: string, protected deferredTime: number = 0) {
         this.addSubscriptionRequest(stateName);
     }
 
@@ -37,14 +37,14 @@ class TIoBrokerInOutFunction_State implements IInternalInOutFunction {
 
     getValueOnRead(ioState: ioBroker.IState): any {
         if(ioState)
-            return ioState.val
+            return ioState.val;
         else    
             return null;
     }
 
     getValueOnNotify(ioState: ioBroker.IState): any {
         if(ioState)
-            return ioState.val
+            return ioState.val;
         else    
             return null;
     }
@@ -80,24 +80,24 @@ class TIoBrokerInOutFunction_State implements IInternalInOutFunction {
     }         
 
     executeCallback(callback: IInOutChangeNotify, plainIOValue: any) {
-        if(this.deferedTime > 0)
-            this.setupDeferedChangeEvent(callback, plainIOValue);
+        if(this.deferredTime > 0)
+            this.setupDeferredChangeEvent(callback, plainIOValue);
         else
             callback(plainIOValue);
     }
 
-    setupDeferedChangeEvent(callback: IInOutChangeNotify, plainIOValue: any) {
-        this.cancelDeferedChangeEvent();
-        this.debounceTimer = setTimeout(this.deferedChangeEvent.bind(this, callback, plainIOValue), 150);
+    setupDeferredChangeEvent(callback: IInOutChangeNotify, plainIOValue: any) {
+        this.cancelDeferredChangeEvent();
+        this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback, plainIOValue), 150);
     }
 
-    cancelDeferedChangeEvent() {
+    cancelDeferredChangeEvent() {
         clearTimeout(this.debounceTimer);
         this.debounceTimer = -1;
     }    
 
-    deferedChangeEvent(callback: IInOutChangeNotify, plainIOValue: any) {
-        this.adapter.log.debug('[' + this.stateName  + '] firing defered change event:' + JSON.stringify(plainIOValue));
+    deferredChangeEvent(callback: IInOutChangeNotify, plainIOValue: any) {
+        this.adapter.log.debug('[' + this.stateName  + '] firing deferred change event:' + JSON.stringify(plainIOValue));
         callback(plainIOValue);
     }
 
@@ -109,7 +109,7 @@ class TIoBrokerInOutFunction_State_OnlyACK extends TIoBrokerInOutFunction_State 
         if(ioState)
             if(ioState.ack) {
                 this.lastAcknowledgedValue = ioState.val;
-                return ioState.val
+                return ioState.val;
             } else {
                 this.adapter.log.debug("faking CurrentState.Read for [" + this.stateName + ']: ' + JSON.stringify(this.lastAcknowledgedValue) );
                 return this.lastAcknowledgedValue;
@@ -122,7 +122,7 @@ class TIoBrokerInOutFunction_State_OnlyACK extends TIoBrokerInOutFunction_State 
         if(ioState)
             if(ioState.ack) {
                 this.lastAcknowledgedValue = ioState.val;
-                return ioState.val
+                return ioState.val;
             } else {
                 this.adapter.log.debug("discarding CurrentState.Notify for [" + this.stateName + ']');
                 return undefined;
@@ -171,7 +171,7 @@ class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition extends TIoB
         this.addSubscriptionRequest(workingItem);
         adapter.getForeignState(workingItem, (error, ioState) => {
             if(ioState)
-                this.lastWorkingState = ioState.val
+                this.lastWorkingState = ioState.val;
             else
                 this.lastWorkingState = undefined;
         });
@@ -184,27 +184,27 @@ class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition extends TIoB
         if(stateName == this.workingItem) {
             this.adapter.log.debug('[' + this.stateName  + '] got a working item change event: ' + JSON.stringify(ioState));
             this.lastWorkingState = ioState.val;
-            this.setupDeferedChangeEvent(callback);
+            this.setupDeferredChangeEvent(callback);
         } else if(stateName == this.stateName) {
             this.adapter.log.debug('[' + this.stateName  + '] got a target state change event:' + JSON.stringify(ioState));
             if (ioState.ack) {
                 this.lastAcknowledgedValue = ioState.val;
-                this.setupDeferedChangeEvent(callback);
+                this.setupDeferredChangeEvent(callback);
             }
         }
     }
 
-    setupDeferedChangeEvent(callback: IInOutChangeNotify) {
-        this.cancelDeferedChangeEvent();
-        this.debounceTimer = setTimeout(this.deferedChangeEvent.bind(this, callback), 150);
+    setupDeferredChangeEvent(callback: IInOutChangeNotify) {
+        this.cancelDeferredChangeEvent();
+        this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback), 150);
     }
 
-    cancelDeferedChangeEvent() {
+    cancelDeferredChangeEvent() {
         clearTimeout(this.debounceTimer);
         this.debounceTimer = -1;
     }    
 
-    deferedChangeEvent(callback: IInOutChangeNotify) {
+    deferredChangeEvent(callback: IInOutChangeNotify) {
         if(!this.lastWorkingState) { // only fire callback if the covering does not move
             this.adapter.log.debug('[' + this.stateName  + '] firing target state change event:' + JSON.stringify(this.lastAcknowledgedValue));
             callback(this.lastAcknowledgedValue);
@@ -224,6 +224,7 @@ var inOutFactory: IObjectDictionary<TInOutFunctionCreateFunction> = {
         return new TIoBrokerInOutFunction_State(adapter, stateName);
     },
 
+    // should be named Defered=>Deferred
     "ioBroker.State.Defered": function (adapter: ioBroker.IAdapter, parameters: any): IInternalInOutFunction {
         if (typeof parameters !== "string")
             return undefined;
@@ -281,7 +282,7 @@ var inOutFactory: IObjectDictionary<TInOutFunctionCreateFunction> = {
             subscriptionRequests: []
         }
     }
-}
+};
 
 type TConversionFunctionCreateFunction = (adapter: ioBroker.IAdapter, parameters: any) => IConversionFunction;
 var conversionFactory: IObjectDictionary<TConversionFunctionCreateFunction> = {
@@ -407,7 +408,7 @@ var conversionFactory: IObjectDictionary<TConversionFunctionCreateFunction> = {
             }
         }
     }
-}
+};
 
 
 export var functionFactory = {
@@ -422,5 +423,5 @@ export var functionFactory = {
         return conversionFactory[conversionFunction](adapter, conversionParameters);
     }
 
-}
+};
 

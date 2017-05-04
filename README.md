@@ -1,6 +1,10 @@
-![Logo](yahka.png)
+![Logo](admin/yahka.png)
 # iobroker.yahka
 =================
+
+[![NPM version](http://img.shields.io/npm/v/iobroker.yahka.svg)](https://www.npmjs.com/package/iobroker.yahka)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.yahka.svg)](https://www.npmjs.com/package/iobroker.yahka)
+[![Tests](https://travis-ci.org/ioBroker/ioBroker.yahka.svg?branch=master)](https://travis-ci.org/ioBroker/ioBroker.yahka)
 
 ## Installation
 Sometimes additonal libriaries are required:
@@ -9,7 +13,21 @@ Sometimes additonal libriaries are required:
 sudo apt-get install libavahi-compat-libdnssd-dev
 ```
 
+## Usage
+
+What is???:
+- ioBroker.State.Defered
+- ioBroker.State.OnlyACK
+- ioBroker.homematic.WindowCovering.TargetPosition
+
+- passthrough
+- HomematicDirectionToHomekitPositionState
+- HomematicControlModeToHomekitHeathingCoolingState
+
 ## Changelog
+
+### 0.5.5 (2017.05.04)
+  (bluefox) allow select ID in configuration dialog
 
 ### 0.5.4
   (jw) improve logoutput
@@ -31,7 +49,7 @@ sudo apt-get install libavahi-compat-libdnssd-dev
 ## License
 The MIT License (MIT)
 
-Copyright (c) 2016 Jens Weigele (iobroker.yahka@gmail.com)
+Copyright (c) 2016-2017 Jens Weigele (iobroker.yahka@gmail.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

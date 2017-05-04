@@ -25,6 +25,8 @@ interface ISelectListEntry {
 
 declare function getObject(id: string, callback: (error: any, object: any) => void);
 
+declare function translateFragment(fragment: DocumentFragment);
+
 var inoutFunctions: Array<string> = [];
 getObject('yahka.meta._inoutFunctions', (error, object) => {
     inoutFunctions = object.native;
@@ -72,7 +74,7 @@ class ioBroker_YahkaPageBuilder {
 
     constructor(private bridgeSettings: hkBridge.Configuration.IBridgeConfig, private changeCallback) {
         this.deviceListEntryTemplate = <HTMLTemplateElement>document.querySelector('#yahka_devicelist_entry');
-        this.deviceInfoPanelTemplate = <HTMLTemplateElement>document.querySelector('#yahka_device_info_panel');
+        this.deviceInfoPanelTemplate = <HTMLTemplateElement>document.querySelector('#yahka_device_info_panel_template');
         this.deviceServicePanelTemplate = <HTMLTemplateElement>document.querySelector('#yahka_device_service_panel');
         this.characteristicRow = <HTMLTemplateElement>document.querySelector('#yahka_characteristic_row');
         this.refreshBridgeFrame();
@@ -106,7 +108,7 @@ class ioBroker_YahkaPageBuilder {
             else
                 input.value = "";    
             input.addEventListener("input", this.handleBridgeMetaDataChange.bind(this, bridge, propertyName));                
-        }      
+        };      
 
         let checkboxHelper = (selector: string, propertyName: string) => {
             let input = <HTMLInputElement>document.querySelector(selector);
@@ -114,7 +116,7 @@ class ioBroker_YahkaPageBuilder {
             let value = bridge[propertyName];
             input.checked = value; 
             input.addEventListener("click", this.handleBridgeMetaDataChange.bind(this, bridge, propertyName));                
-        }                
+        };                
         
         inputHelper('#bridge_name', 'name');
         inputHelper('#bridge_manufacturer', 'manufacturer');
@@ -139,7 +141,7 @@ class ioBroker_YahkaPageBuilder {
                     serial: "",
                     category: 1,
                     services: []
-                } 
+                };
                 bridge.devices.push( newDevice );
                 this.setSelectedDeviceConfig(newDevice, true);
                 this.buildDeviceList(bridge, bridgePane);
@@ -163,7 +165,7 @@ class ioBroker_YahkaPageBuilder {
                         type: '',
                         characteristics: []
                     }
-                )
+                );
                 this.refreshDevicePane(dev, true);
                 this.changeCallback();
             });
@@ -194,7 +196,7 @@ class ioBroker_YahkaPageBuilder {
         // let addDeviceButton    = <HTMLElement>document.querySelector('#yahka_add_device');
         let addServiceButton   = <HTMLElement>parent.querySelector('#yahka_add_service');
         let removeDeviceButton = <HTMLElement>parent.querySelector('#yahka_remove_device');
-        console.log('refresh', parent, this.selectedDeviceConfig)
+        console.log('refresh', parent, this.selectedDeviceConfig);
         if(this.selectedDeviceConfig === undefined) {
             addServiceButton.setAttribute('disabled','');
             removeDeviceButton.setAttribute('disabled','');
@@ -213,6 +215,7 @@ class ioBroker_YahkaPageBuilder {
 
             let listItem = (<HTMLElement>deviceEntry.querySelector('.list'));
             this.refreshDeviceListEntry(deviceConfig, listItem);
+            translateFragment(deviceEntry);
             deviceList.appendChild(deviceEntry);           
         }
 
@@ -282,6 +285,7 @@ class ioBroker_YahkaPageBuilder {
     buildDeviceInformationPanel(deviceConfig: hkBridge.Configuration.IDeviceConfig, devicePane: HTMLElement): HTMLElement {
         let devInfoFragment = <DocumentFragment> document.importNode(this.deviceInfoPanelTemplate.content, true);
         let devInfoPanel = <HTMLElement>devInfoFragment.querySelector('#yahka_device_info_panel');
+        translateFragment(devInfoFragment);
         let inputHelper = (selector: string, propertyName: string, selectList?: IDictionary<ISelectListEntry>) => {
             let input = <HTMLSelectElement>devInfoPanel.querySelector(selector);
 
@@ -294,7 +298,7 @@ class ioBroker_YahkaPageBuilder {
             else
                 input.value = "";    
             input.addEventListener('input', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName));                
-        }        
+        };
         
         inputHelper('#device_name', 'name');
         inputHelper('#device_manufacturer', 'manufacturer');
@@ -309,7 +313,7 @@ class ioBroker_YahkaPageBuilder {
     createServicePanel(deviceConfig: hkBridge.Configuration.IDeviceConfig, serviceConfig: hkBridge.Configuration.IServiceConfig): HTMLElement {
         let servicePanel = <DocumentFragment> document.importNode(this.deviceServicePanelTemplate.content, true);
         let frameNode = <HTMLElement> servicePanel.querySelector('#yahka_service_panel');
-        
+        translateFragment(servicePanel);
         let inputHelper = (selector: string, configName: string, popuplateServices?: boolean, eventHandler?) => {
             let input = <HTMLSelectElement>frameNode.querySelector(selector);
             if(popuplateServices === true) {
@@ -328,7 +332,7 @@ class ioBroker_YahkaPageBuilder {
                 input.addEventListener('input', eventHandler);
             else
                 input.addEventListener('input', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));                
-        }
+        };
 
         this.refreshServicePanelCaption(serviceConfig, frameNode);
         inputHelper('#service_name', 'name');
@@ -439,6 +443,8 @@ class ioBroker_YahkaPageBuilder {
             table.removeChild(table.lastElementChild);
         for(let row of charRows) 
             table.appendChild(row[2]);
+        
+        
     }
 
     createCharacteristicRow(charDef: IHAPCharacteristicDefintion, serviceConfig: hkBridge.Configuration.IServiceConfig, charConfig: hkBridge.Configuration.ICharacteristicConfig): DocumentFragment {
@@ -447,6 +453,8 @@ class ioBroker_YahkaPageBuilder {
 
         let rowElement = <DocumentFragment>document.importNode(this.characteristicRow.content, true);
 
+        translateFragment(rowElement);
+        
         let bracketElement = <HTMLElement>rowElement.querySelector('#characteristic');
 
         let checkBox = <HTMLInputElement>rowElement.querySelector('#characteristic_enabled');
@@ -471,7 +479,7 @@ class ioBroker_YahkaPageBuilder {
                     input.value = "";                    
             }
             input.addEventListener('input', this.handleCharacteristicInputChange.bind(this, serviceConfig, name, configName));
-        }
+        };
 
         inputHelper('#characteristic_inoutfunction', 'inOutFunction', inoutFunctions); 
         inputHelper('#characteristic_inoutparams', 'inOutParameters', undefined); 
