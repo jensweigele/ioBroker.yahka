@@ -9,37 +9,41 @@ let result = {};
 let serviceDictionary = {};
 let charDictionary = {};
 
-for(let charName of availableCharacteristics) {
-    if(charName === 'super_')
+for (let charName of availableCharacteristics) {
+    if (charName === 'super_') {
         continue;
-    charDictionary[Characteristic[charName].UUID] = charName; 
+    }
+    charDictionary[Characteristic[charName].UUID] = charName;
 }
 
 
-for(let serviceName of availableServices) {
-    if(serviceName === 'super_')
+for (let serviceName of availableServices) {
+    if (serviceName === 'super_') {
         continue;
+    }
 
     let serviceDescriptor = {
         type: serviceName,
         characteristics: {}
     };
 
-    let serviceInstance = new  Service[serviceName]('', '');
-    for(let char of serviceInstance.characteristics) {
+    let serviceInstance = new Service[serviceName]('', '');
+    for (let char of serviceInstance.characteristics) {
         let charName = charDictionary[char.UUID];
-        if(charName === undefined)
+        if (charName === undefined) {
             continue;
-        let charDescriptor = { name: charName, optional: false};
+        }
+        let charDescriptor = {name: charName, optional: false};
         serviceDescriptor.characteristics[charName] = charDescriptor;
     }
-    for(let char of serviceInstance.optionalCharacteristics) {
+    for (let char of serviceInstance.optionalCharacteristics) {
         let charName = charDictionary[char.UUID];
-        if(charName === undefined)
+        if (charName === undefined) {
             continue;
-        let charDescriptor = { name: charName, optional: true};
-        serviceDescriptor.characteristics[charName] = charDescriptor;
-    }    
+        }
+        let charDescriptor_ = {name: charName, optional: true};
+        serviceDescriptor.characteristics[charName] = charDescriptor_;
+    }
 
     serviceDictionary[serviceName] = serviceDescriptor;
 }

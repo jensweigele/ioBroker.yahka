@@ -136,6 +136,7 @@
         CarbonDioxideSensor: 10,  // Sensor
         CarbonMonoxideSensor: 10, // Sensor
         ContactSensor: 10,        // Sensor
+        LightSensor: 10,          // Sensor
         Door: 12                  // door
     };
     /*
@@ -174,6 +175,7 @@
 
         var device = {
             manufacturer: man,
+            enabled: true,
             model: type,
             name: first ? first.common.name : type,
             serial: "NO_SERIAL",
@@ -237,6 +239,7 @@
         }
         return false;
     }
+
     function runWizard() {
         getObjects(function () {
             var settings = yahkaAdmin.settings;
@@ -279,9 +282,23 @@
                         addSensor(devices, channel, 'Thermostat', {CurrentTemperature: temp, TargetTemperature: obj, CurrentRelativeHumidity: hum});
                     } else if (obj.common.role === 'level.dimmer') {
                         addSensor(devices, channel, 'Lightbulb', {Brightness: obj});
+                    } else if (obj.common.role === 'level.blind') {
+                        addSensor(devices, channel, 'Window', {TargetPosition: obj});
                     } else if (obj.common.role === 'switch') {
                         // detect if this switch is not in enums.function.light
                         addSensor(devices, channel, 'Switch', {On: obj});
+                    } else if (obj.common.role === 'level.brightness') {
+                        bat = findRole(objects, channel, 'indicator.battery');
+                        addSensor(devices, channel, 'LightSensor', {CurrentAmbientLightLevel: obj, StatusLowBattery: bat});
+                    } else if (obj.common.role === 'sensor.window') {
+                        bat = findRole(objects, channel, 'indicator.battery');
+                        addSensor(devices, channel, 'ContactSensor', {ContactSensorState: obj, StatusLowBattery: bat});
+                    } else if (obj.common.role === 'sensor.window') {
+                        bat = findRole(objects, channel, 'indicator.battery');
+                        addSensor(devices, channel, 'ContactSensor', {ContactSensorState: obj, StatusLowBattery: bat});
+                    } else if (obj.common.role === 'sensor.fire') {
+                        bat = findRole(objects, channel, 'indicator.battery');
+                        addSensor(devices, channel, 'SmokeSensor', {SmokeDetected: obj, StatusLowBattery: bat});
                     }
                 }
             }
@@ -441,6 +458,12 @@
             </div>
 
             <div class="content">
+                <div>
+                    <div><label class="translate" for="device_enabled">Enabled:</label></div>
+                    <div class="input control flex-grow margin10">
+                        <input type="checkbox" id="device_enabled"/>
+                    </div>
+                </div>
                 <div>
                     <div><label class="translate" for="device_name">Device name:</label></div>
                     <div class="input control flex-grow margin10">

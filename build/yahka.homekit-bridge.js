@@ -2,7 +2,7 @@
 var debug = require("debug");
 debug.enable('*');
 var util = require("util");
-var HAP = require("./node_modules/hap-nodejs");
+var HAP = require("hap-nodejs");
 exports.HAPAccessory = HAP.Accessory;
 exports.HAPService = HAP.Service;
 exports.HAPCharacteristic = HAP.Characteristic;
@@ -18,6 +18,9 @@ var THomeKitBridge = (function () {
         if (this.config.devices)
             for (var _i = 0, _a = this.config.devices; _i < _a.length; _i++) {
                 var device = _a[_i];
+                if (device.enabled === false) {
+                    continue;
+                }
                 var hapDevice = this.createDevice(device);
                 this.bridgeObject.addBridgedAccessory(hapDevice);
             }
@@ -36,12 +39,13 @@ var THomeKitBridge = (function () {
             .setCharacteristic(exports.HAPCharacteristic.Model, this.config.model || "not configured")
             .setCharacteristic(exports.HAPCharacteristic.SerialNumber, this.config.serial || "not configured");
         hapBridge.on('identify', function (paired, callback) {
-            _this.FLogger.debug("Node Bridge identify:" + paired);
+            _this.FLogger.debug('Node Bridge identify:' + paired);
             callback();
         });
         return hapBridge;
     };
     THomeKitBridge.prototype.createDevice = function (device) {
+        var _this = this;
         var deviceID = HAP.uuid.generate(this.config.ident + ':' + device.name);
         var hapDevice = new HAP.Accessory(device.name, deviceID);
         hapDevice.getService(exports.HAPService.AccessoryInformation)
@@ -49,7 +53,7 @@ var THomeKitBridge = (function () {
             .setCharacteristic(exports.HAPCharacteristic.Model, device.model || 'not configured')
             .setCharacteristic(exports.HAPCharacteristic.SerialNumber, device.serial || 'not configured');
         hapDevice.on('identify', function (paired, callback) {
-            this.FLogger.debug('device identify');
+            _this.FLogger.debug('device identify');
             callback();
         });
         for (var _i = 0, _a = device.services; _i < _a.length; _i++) {
@@ -59,13 +63,13 @@ var THomeKitBridge = (function () {
         return hapDevice;
     };
     THomeKitBridge.prototype.initService = function (hapDevice, serviceConfig) {
-        if (!(serviceConfig.type in HAP.Service))
-            throw Error("unknown service type:" + serviceConfig.type);
+        if (!(serviceConfig.type in HAP.Service)) {
+            throw Error('unknown service type: ' + serviceConfig.type);
+        }
         var isNew = false;
         var hapService = hapDevice.getService(HAP.Service[serviceConfig.type]);
-        if (hapService !== undefined) {
-            if (hapService.subType !== serviceConfig.subType)
-                hapService = undefined;
+        if (hapService !== undefined && hapService.subType !== serviceConfig.subType) {
+            hapService = undefined;
         }
         if (hapService === undefined) {
             hapService = new HAP.Service[serviceConfig.type](serviceConfig.name, serviceConfig.subType);
@@ -75,8 +79,9 @@ var THomeKitBridge = (function () {
             var charactConfig = _a[_i];
             this.initCharacteristic(hapService, charactConfig);
         }
-        if (isNew)
+        if (isNew) {
             hapDevice.addService(hapService);
+        }
     };
     THomeKitBridge.prototype.initCharacteristic = function (hapService, characteristicConfig) {
         var _this = this;
@@ -137,8 +142,9 @@ var THomeKitBridge = (function () {
 exports.THomeKitBridge = THomeKitBridge;
 var hapInited = false;
 function initHAP(storagePath, HAPdebugLogMethod) {
-    if (hapInited)
+    if (hapInited) {
         return;
+    }
     HAP.init(storagePath);
     debug.log = function () {
         HAPdebugLogMethod(util.format.apply(this, arguments));

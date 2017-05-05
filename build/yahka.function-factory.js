@@ -11,11 +11,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var yahka_homekit_bridge_1 = require("./yahka.homekit-bridge");
 var TIoBrokerInOutFunction_State = (function () {
-    function TIoBrokerInOutFunction_State(adapter, stateName, deferedTime) {
-        if (deferedTime === void 0) { deferedTime = 0; }
+    function TIoBrokerInOutFunction_State(adapter, stateName, deferredTime) {
+        if (deferredTime === void 0) { deferredTime = 0; }
         this.adapter = adapter;
         this.stateName = stateName;
-        this.deferedTime = deferedTime;
+        this.deferredTime = deferredTime;
         this.debounceTimer = -1;
         this.subscriptionRequests = [];
         this.addSubscriptionRequest(stateName);
@@ -69,21 +69,21 @@ var TIoBrokerInOutFunction_State = (function () {
             this.adapter.log.debug('state was filtered - notification is canceled');
     };
     TIoBrokerInOutFunction_State.prototype.executeCallback = function (callback, plainIOValue) {
-        if (this.deferedTime > 0)
-            this.setupDeferedChangeEvent(callback, plainIOValue);
+        if (this.deferredTime > 0)
+            this.setupDeferredChangeEvent(callback, plainIOValue);
         else
             callback(plainIOValue);
     };
-    TIoBrokerInOutFunction_State.prototype.setupDeferedChangeEvent = function (callback, plainIOValue) {
-        this.cancelDeferedChangeEvent();
-        this.debounceTimer = setTimeout(this.deferedChangeEvent.bind(this, callback, plainIOValue), 150);
+    TIoBrokerInOutFunction_State.prototype.setupDeferredChangeEvent = function (callback, plainIOValue) {
+        this.cancelDeferredChangeEvent();
+        this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback, plainIOValue), 150);
     };
-    TIoBrokerInOutFunction_State.prototype.cancelDeferedChangeEvent = function () {
+    TIoBrokerInOutFunction_State.prototype.cancelDeferredChangeEvent = function () {
         clearTimeout(this.debounceTimer);
         this.debounceTimer = -1;
     };
-    TIoBrokerInOutFunction_State.prototype.deferedChangeEvent = function (callback, plainIOValue) {
-        this.adapter.log.debug('[' + this.stateName + '] firing defered change event:' + JSON.stringify(plainIOValue));
+    TIoBrokerInOutFunction_State.prototype.deferredChangeEvent = function (callback, plainIOValue) {
+        this.adapter.log.debug('[' + this.stateName + '] firing deferred change event:' + JSON.stringify(plainIOValue));
         callback(plainIOValue);
     };
     return TIoBrokerInOutFunction_State;
@@ -179,25 +179,25 @@ var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = (function (_
         if (stateName == this.workingItem) {
             this.adapter.log.debug('[' + this.stateName + '] got a working item change event: ' + JSON.stringify(ioState));
             this.lastWorkingState = ioState.val;
-            this.setupDeferedChangeEvent(callback);
+            this.setupDeferredChangeEvent(callback);
         }
         else if (stateName == this.stateName) {
             this.adapter.log.debug('[' + this.stateName + '] got a target state change event:' + JSON.stringify(ioState));
             if (ioState.ack) {
                 this.lastAcknowledgedValue = ioState.val;
-                this.setupDeferedChangeEvent(callback);
+                this.setupDeferredChangeEvent(callback);
             }
         }
     };
-    TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.setupDeferedChangeEvent = function (callback) {
-        this.cancelDeferedChangeEvent();
-        this.debounceTimer = setTimeout(this.deferedChangeEvent.bind(this, callback), 150);
+    TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.setupDeferredChangeEvent = function (callback) {
+        this.cancelDeferredChangeEvent();
+        this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback), 150);
     };
-    TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.cancelDeferedChangeEvent = function () {
+    TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.cancelDeferredChangeEvent = function () {
         clearTimeout(this.debounceTimer);
         this.debounceTimer = -1;
     };
-    TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.deferedChangeEvent = function (callback) {
+    TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.deferredChangeEvent = function (callback) {
         if (!this.lastWorkingState) {
             this.adapter.log.debug('[' + this.stateName + '] firing target state change event:' + JSON.stringify(this.lastAcknowledgedValue));
             callback(this.lastAcknowledgedValue);

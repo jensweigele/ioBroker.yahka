@@ -1,4 +1,6 @@
 "use strict";
+
+
 var inoutFunctions = [];
 getObject('yahka.meta._inoutFunctions', function (error, object) {
     inoutFunctions = object.native;
@@ -34,7 +36,7 @@ var ioBroker_YahkaPageBuilder = (function () {
         this.changeCallback = changeCallback;
         this.selectedDeviceConfig = undefined;
         this.deviceListEntryTemplate = document.querySelector('#yahka_devicelist_entry');
-        this.deviceInfoPanelTemplate = document.querySelector('#yahka_device_info_panel');
+        this.deviceInfoPanelTemplate = document.querySelector('#yahka_device_info_panel_template');
         this.deviceServicePanelTemplate = document.querySelector('#yahka_device_service_panel');
         this.characteristicRow = document.querySelector('#yahka_characteristic_row');
         this.refreshBridgeFrame();
@@ -57,10 +59,12 @@ var ioBroker_YahkaPageBuilder = (function () {
         var inputHelper = function (selector, propertyName) {
             var input = document.querySelector(selector);
             var value = bridge[propertyName];
-            if (value !== undefined)
+            if (value !== undefined) {
                 input.value = value;
-            else
-                input.value = "";
+            }
+            else {
+                input.value = '';
+            }
             input.addEventListener("input", _this.handleBridgeMetaDataChange.bind(_this, bridge, propertyName));
         };
         var checkboxHelper = function (selector, propertyName) {
@@ -89,6 +93,7 @@ var ioBroker_YahkaPageBuilder = (function () {
                     model: "",
                     name: "",
                     serial: "",
+                    enabled: true,
                     category: 1,
                     services: []
                 };
@@ -103,8 +108,9 @@ var ioBroker_YahkaPageBuilder = (function () {
                 e.preventDefault();
                 console.log('click');
                 var dev = _this.selectedDeviceConfig;
-                if (dev === undefined)
+                if (dev === undefined) {
                     return;
+                }
                 dev.services.push({
                     name: '',
                     subType: '',
@@ -153,6 +159,7 @@ var ioBroker_YahkaPageBuilder = (function () {
             var deviceEntry = document.importNode(this.deviceListEntryTemplate.content, true);
             var listItem = deviceEntry.querySelector('.list');
             this.refreshDeviceListEntry(deviceConfig, listItem);
+            translateFragment(deviceEntry);
             deviceList.appendChild(deviceEntry);
         }
         var deviceListClickHandler = this.handleDeviceListClick.bind(this, bridge);
@@ -178,8 +185,9 @@ var ioBroker_YahkaPageBuilder = (function () {
             return undefined;
         for (var _i = 0, _a = bridgeConfig.devices; _i < _a.length; _i++) {
             var devConfig = _a[_i];
-            if (devConfig.name == deviceIdent)
+            if (devConfig.name === deviceIdent) {
                 return devConfig;
+            }
         }
         return undefined;
     };
@@ -215,18 +223,29 @@ var ioBroker_YahkaPageBuilder = (function () {
         var _this = this;
         var devInfoFragment = document.importNode(this.deviceInfoPanelTemplate.content, true);
         var devInfoPanel = devInfoFragment.querySelector('#yahka_device_info_panel');
+        translateFragment(devInfoFragment);
         var inputHelper = function (selector, propertyName, selectList) {
             var input = devInfoPanel.querySelector(selector);
-            if (selectList)
+            if (selectList) {
                 _this.fillSelectByDict(input, selectList);
+            }
             var value = deviceConfig[propertyName];
-            if (value !== undefined)
-                input.value = value;
-            else
-                input.value = "";
-            input.addEventListener('input', _this.handleDeviceMetaDataChange.bind(_this, deviceConfig, propertyName));
+            if (input.type === 'checkbox') {
+                input.checked = value === undefined ? true : value;
+                input.addEventListener('change', _this.handleDeviceMetaDataChange.bind(_this, deviceConfig, propertyName));
+            }
+            else {
+                if (value !== undefined) {
+                    input.value = value;
+                }
+                else {
+                    input.value = '';
+                }
+                input.addEventListener('input', _this.handleDeviceMetaDataChange.bind(_this, deviceConfig, propertyName));
+            }
         };
         inputHelper('#device_name', 'name');
+        inputHelper('#device_enabled', 'enabled');
         inputHelper('#device_manufacturer', 'manufacturer');
         inputHelper('#device_model', 'model');
         inputHelper('#device_serial', 'serial');
@@ -238,6 +257,7 @@ var ioBroker_YahkaPageBuilder = (function () {
         var _this = this;
         var servicePanel = document.importNode(this.deviceServicePanelTemplate.content, true);
         var frameNode = servicePanel.querySelector('#yahka_service_panel');
+        translateFragment(servicePanel);
         var inputHelper = function (selector, configName, popuplateServices, eventHandler) {
             var input = frameNode.querySelector(selector);
             if (popuplateServices === true) {
@@ -246,10 +266,12 @@ var ioBroker_YahkaPageBuilder = (function () {
             }
             if (serviceConfig) {
                 var value = serviceConfig[configName];
-                if (value !== undefined)
+                if (value !== undefined) {
                     input.value = value;
-                else
-                    input.value = "";
+                }
+                else {
+                    input.value = '';
+                }
             }
             if (eventHandler !== undefined)
                 input.addEventListener('input', eventHandler);
@@ -283,27 +305,24 @@ var ioBroker_YahkaPageBuilder = (function () {
         return undefined;
     };
     ioBroker_YahkaPageBuilder.prototype.findConfigCharacteristic = function (service, characteristicName) {
-        if (!service)
+        if (!service) {
             return undefined;
+        }
         for (var _i = 0, _a = service.characteristics; _i < _a.length; _i++) {
             var cfg = _a[_i];
-            if (cfg.name == characteristicName)
+            if (cfg.name == characteristicName) {
                 return cfg;
+            }
         }
         return undefined;
     };
     ioBroker_YahkaPageBuilder.prototype.isEmptyCharacteristic = function (charConfig) {
-        if (charConfig === undefined)
-            return true;
-        if (charConfig.name === '')
-            return true;
-        if ((charConfig['inOutFunction'] === '') || (charConfig['inOutFunction'] === undefined))
-            return true;
-        return false;
+        return (charConfig === undefined || charConfig.name === '' || (charConfig['inOutFunction'] === '') || (charConfig['inOutFunction'] === undefined));
     };
     ioBroker_YahkaPageBuilder.prototype.removeCharacteristic = function (serviceConfig, charConfig) {
-        if (serviceConfig === undefined)
+        if (serviceConfig === undefined) {
             return;
+        }
         var idx = serviceConfig.characteristics.indexOf(charConfig);
         if (idx > -1) {
             serviceConfig.characteristics.splice(idx, 1);
@@ -341,8 +360,9 @@ var ioBroker_YahkaPageBuilder = (function () {
             return a[0].localeCompare(b[0]);
         });
         var table = servicePanel.querySelector('#yahka_characteristic_table');
-        while (table.childElementCount > 1)
+        while (table.childElementCount > 1) {
             table.removeChild(table.lastElementChild);
+        }
         for (var _b = 0, charRows_1 = charRows; _b < charRows_1.length; _b++) {
             var row = charRows_1[_b];
             table.appendChild(row[2]);
@@ -353,6 +373,7 @@ var ioBroker_YahkaPageBuilder = (function () {
         var name = charConfig ? charConfig.name : charDef.name;
         var enabled = charConfig ? charConfig.enabled : false;
         var rowElement = document.importNode(this.characteristicRow.content, true);
+        translateFragment(rowElement);
         var bracketElement = rowElement.querySelector('#characteristic');
         var checkBox = rowElement.querySelector('#characteristic_enabled');
         checkBox.checked = enabled;
@@ -434,7 +455,7 @@ var ioBroker_YahkaPageBuilder = (function () {
     };
     ioBroker_YahkaPageBuilder.prototype.handleDeviceMetaDataChange = function (deviceConfig, propertyName, ev) {
         var inputTarget = ev.currentTarget;
-        var inputValue = inputTarget.value;
+        var inputValue = (inputTarget.type === 'checkbox') ? inputTarget.checked : inputTarget.value;
         var listItem = document.querySelector('div.list[data-device-ident="' + deviceConfig.name + '"]');
         deviceConfig[propertyName] = inputValue;
         this.refreshDeviceListEntry(deviceConfig, listItem);

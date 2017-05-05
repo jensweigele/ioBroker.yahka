@@ -2,31 +2,31 @@
 import {IInOutFunction, IConversionFunction, HAPCharacteristic, IInOutChangeNotify} from './yahka.homekit-bridge';
 
 interface IObjectDictionary<T> {
-    [name: string]: T;
+    [name:string]:T;
 }
 
 type TSubscriptionType = 'state'|'object';
 
 export interface ISubscriptionRequest {
-    subscriptionType: TSubscriptionType;
-    subscriptionIdentifier: string;
-    subscriptionEvent: (ioValue: any, callback: IInOutChangeNotify) => void;
+    subscriptionType:TSubscriptionType;
+    subscriptionIdentifier:string;
+    subscriptionEvent:(ioValue:any, callback:IInOutChangeNotify) => void;
 }
 
 export interface IInternalInOutFunction extends IInOutFunction {
-    subscriptionRequests: ISubscriptionRequest[];
+    subscriptionRequests:ISubscriptionRequest[];
 }
 
 
 class TIoBrokerInOutFunction_State implements IInternalInOutFunction {
     protected debounceTimer = -1;
-    public subscriptionRequests: ISubscriptionRequest[] = [];
-    
-    constructor(protected adapter: ioBroker.IAdapter, protected stateName: string, protected deferredTime: number = 0) {
+    public subscriptionRequests:ISubscriptionRequest[] = [];
+
+    constructor(protected adapter:ioBroker.IAdapter, protected stateName:string, protected deferredTime:number = 0) {
         this.addSubscriptionRequest(stateName);
     }
 
-    addSubscriptionRequest(stateName: string) {
+    addSubscriptionRequest(stateName:string) {
         let subscriptionEvent = this.subscriptionEvent.bind(this, stateName);
         this.subscriptionRequests.push({
             subscriptionType: 'state',
@@ -35,17 +35,17 @@ class TIoBrokerInOutFunction_State implements IInternalInOutFunction {
         });
     }
 
-    getValueOnRead(ioState: ioBroker.IState): any {
-        if(ioState)
+    getValueOnRead(ioState:ioBroker.IState):any {
+        if (ioState)
             return ioState.val;
-        else    
+        else
             return null;
     }
 
-    getValueOnNotify(ioState: ioBroker.IState): any {
-        if(ioState)
+    getValueOnNotify(ioState:ioBroker.IState):any {
+        if (ioState)
             return ioState.val;
-        else    
+        else
             return null;
     }
 
@@ -62,7 +62,7 @@ class TIoBrokerInOutFunction_State implements IInternalInOutFunction {
         this.adapter.log.debug('reading state from ioBroker [' + this.stateName + ']');
         this.adapter.getForeignState(this.stateName, (error, ioState) => {
             this.adapter.log.debug('read state from ioBroker [' + this.stateName + ']: ' + JSON.stringify(ioState));
-            if (error) 
+            if (error)
                 this.adapter.log.error('... with error: ' + error);
 
             let value = this.getValueOnRead(ioState);
@@ -70,23 +70,23 @@ class TIoBrokerInOutFunction_State implements IInternalInOutFunction {
         });
     }
 
-    subscriptionEvent(stateName: string, ioState: ioBroker.IState, callback: IInOutChangeNotify) {
+    subscriptionEvent(stateName:string, ioState:ioBroker.IState, callback:IInOutChangeNotify) {
         this.adapter.log.debug('change event from ioBroker via [' + this.stateName + ']' + JSON.stringify(ioState));
         let newValue = this.getValueOnNotify(ioState);
-        if(newValue !== undefined)
+        if (newValue !== undefined)
             this.executeCallback(callback, newValue);
         else
             this.adapter.log.debug('state was filtered - notification is canceled');
-    }         
+    }
 
-    executeCallback(callback: IInOutChangeNotify, plainIOValue: any) {
-        if(this.deferredTime > 0)
+    executeCallback(callback:IInOutChangeNotify, plainIOValue:any) {
+        if (this.deferredTime > 0)
             this.setupDeferredChangeEvent(callback, plainIOValue);
         else
             callback(plainIOValue);
     }
 
-    setupDeferredChangeEvent(callback: IInOutChangeNotify, plainIOValue: any) {
+    setupDeferredChangeEvent(callback:IInOutChangeNotify, plainIOValue:any) {
         this.cancelDeferredChangeEvent();
         this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback, plainIOValue), 150);
     }
@@ -94,99 +94,102 @@ class TIoBrokerInOutFunction_State implements IInternalInOutFunction {
     cancelDeferredChangeEvent() {
         clearTimeout(this.debounceTimer);
         this.debounceTimer = -1;
-    }    
+    }
 
-    deferredChangeEvent(callback: IInOutChangeNotify, plainIOValue: any) {
-        this.adapter.log.debug('[' + this.stateName  + '] firing deferred change event:' + JSON.stringify(plainIOValue));
+    deferredChangeEvent(callback:IInOutChangeNotify, plainIOValue:any) {
+        this.adapter.log.debug('[' + this.stateName + '] firing deferred change event:' + JSON.stringify(plainIOValue));
         callback(plainIOValue);
     }
 
 }
 
 class TIoBrokerInOutFunction_State_OnlyACK extends TIoBrokerInOutFunction_State {
-    protected lastAcknowledgedValue: any;
-    getValueOnRead(ioState: ioBroker.IState): any {
-        if(ioState)
-            if(ioState.ack) {
+    protected lastAcknowledgedValue:any;
+
+    getValueOnRead(ioState:ioBroker.IState):any {
+        if (ioState)
+            if (ioState.ack) {
                 this.lastAcknowledgedValue = ioState.val;
                 return ioState.val;
             } else {
-                this.adapter.log.debug("faking CurrentState.Read for [" + this.stateName + ']: ' + JSON.stringify(this.lastAcknowledgedValue) );
+                this.adapter.log.debug("faking CurrentState.Read for [" + this.stateName + ']: ' + JSON.stringify(this.lastAcknowledgedValue));
                 return this.lastAcknowledgedValue;
             }
-        else    
+        else
             return null;
     }
 
-    getValueOnNotify(ioState: ioBroker.IState): any {
-        if(ioState)
-            if(ioState.ack) {
+    getValueOnNotify(ioState:ioBroker.IState):any {
+        if (ioState)
+            if (ioState.ack) {
                 this.lastAcknowledgedValue = ioState.val;
                 return ioState.val;
             } else {
                 this.adapter.log.debug("discarding CurrentState.Notify for [" + this.stateName + ']');
                 return undefined;
             }
-        else    
+        else
             return null;
     }
-} 
+}
 
 class TIoBrokerInOutFunction_State_OnlyNotACK extends TIoBrokerInOutFunction_State {
-    protected lastNotAcknowledgedValue: any;
-    getValueOnRead(ioState: ioBroker.IState): any {
-        if(ioState)
-            if(ioState.ack) {
-                this.adapter.log.debug("faking CurrentState.Read for [" + this.stateName + ']: ' + JSON.stringify(this.lastNotAcknowledgedValue) );
+    protected lastNotAcknowledgedValue:any;
+
+    getValueOnRead(ioState:ioBroker.IState):any {
+        if (ioState)
+            if (ioState.ack) {
+                this.adapter.log.debug("faking CurrentState.Read for [" + this.stateName + ']: ' + JSON.stringify(this.lastNotAcknowledgedValue));
                 return this.lastNotAcknowledgedValue;
             } else {
                 this.lastNotAcknowledgedValue = ioState.val;
                 return ioState.val;
-            } 
-        else    
+            }
+        else
             return null;
     }
 
-    getValueOnNotify(ioState: ioBroker.IState): any {
-        if(ioState)
-            if(!ioState.ack) {
+    getValueOnNotify(ioState:ioBroker.IState):any {
+        if (ioState)
+            if (!ioState.ack) {
                 this.adapter.log.debug("discarding CurrentState.Notify for [" + this.stateName + ']');
                 return undefined;
             } else {
                 this.lastNotAcknowledgedValue = ioState.val;
                 return ioState.val
             }
-        else    
+        else
             return null;
     }
-} 
+}
 
 
 class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition extends TIoBrokerInOutFunction_State {
-    protected lastWorkingState: boolean = false;
-    protected lastAcknowledgedValue: any = undefined;
+    protected lastWorkingState:boolean = false;
+    protected lastAcknowledgedValue:any = undefined;
     protected debounceTimer = -1;
-    constructor(protected adapter: ioBroker.IAdapter, protected stateName: string, protected workingItem: string) {
+
+    constructor(protected adapter:ioBroker.IAdapter, protected stateName:string, protected workingItem:string) {
         super(adapter, stateName, 0);
         this.addSubscriptionRequest(workingItem);
         adapter.getForeignState(workingItem, (error, ioState) => {
-            if(ioState)
+            if (ioState)
                 this.lastWorkingState = ioState.val;
             else
                 this.lastWorkingState = undefined;
         });
     }
 
-    subscriptionEvent(stateName: string, ioState: ioBroker.IState, callback: IInOutChangeNotify) {
+    subscriptionEvent(stateName:string, ioState:ioBroker.IState, callback:IInOutChangeNotify) {
         if (!ioState)
             return;
 
-        if(stateName == this.workingItem) {
-            this.adapter.log.debug('[' + this.stateName  + '] got a working item change event: ' + JSON.stringify(ioState));
+        if (stateName == this.workingItem) {
+            this.adapter.log.debug('[' + this.stateName + '] got a working item change event: ' + JSON.stringify(ioState));
             this.lastWorkingState = ioState.val;
             this.setupDeferredChangeEvent(callback);
-        } else if(stateName == this.stateName) {
-            this.adapter.log.debug('[' + this.stateName  + '] got a target state change event:' + JSON.stringify(ioState));
+        } else if (stateName == this.stateName) {
+            this.adapter.log.debug('[' + this.stateName + '] got a target state change event:' + JSON.stringify(ioState));
             if (ioState.ack) {
                 this.lastAcknowledgedValue = ioState.val;
                 this.setupDeferredChangeEvent(callback);
@@ -194,7 +197,7 @@ class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition extends TIoB
         }
     }
 
-    setupDeferredChangeEvent(callback: IInOutChangeNotify) {
+    setupDeferredChangeEvent(callback:IInOutChangeNotify) {
         this.cancelDeferredChangeEvent();
         this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback), 150);
     }
@@ -202,49 +205,49 @@ class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition extends TIoB
     cancelDeferredChangeEvent() {
         clearTimeout(this.debounceTimer);
         this.debounceTimer = -1;
-    }    
+    }
 
-    deferredChangeEvent(callback: IInOutChangeNotify) {
-        if(!this.lastWorkingState) { // only fire callback if the covering does not move
-            this.adapter.log.debug('[' + this.stateName  + '] firing target state change event:' + JSON.stringify(this.lastAcknowledgedValue));
+    deferredChangeEvent(callback:IInOutChangeNotify) {
+        if (!this.lastWorkingState) { // only fire callback if the covering does not move
+            this.adapter.log.debug('[' + this.stateName + '] firing target state change event:' + JSON.stringify(this.lastAcknowledgedValue));
             callback(this.lastAcknowledgedValue);
         } else {
-            this.adapter.log.debug('[' + this.stateName  + '] canceling target state change event - covering is working');
+            this.adapter.log.debug('[' + this.stateName + '] canceling target state change event - covering is working');
         }
     }
-} 
+}
 
-type TInOutFunctionCreateFunction = (adapter: ioBroker.IAdapter, parameters: any) => IInternalInOutFunction;
-var inOutFactory: IObjectDictionary<TInOutFunctionCreateFunction> = {
-    "ioBroker.State": function (adapter: ioBroker.IAdapter, parameters: any): IInternalInOutFunction {
+type TInOutFunctionCreateFunction = (adapter:ioBroker.IAdapter, parameters:any) => IInternalInOutFunction;
+var inOutFactory:IObjectDictionary<TInOutFunctionCreateFunction> = {
+    "ioBroker.State": function (adapter:ioBroker.IAdapter, parameters:any):IInternalInOutFunction {
         if (typeof parameters !== "string")
             return undefined;
-        let stateName: string = parameters;
+        let stateName:string = parameters;
 
         return new TIoBrokerInOutFunction_State(adapter, stateName);
     },
 
     // should be named Defered=>Deferred
-    "ioBroker.State.Defered": function (adapter: ioBroker.IAdapter, parameters: any): IInternalInOutFunction {
+    "ioBroker.State.Defered": function (adapter:ioBroker.IAdapter, parameters:any):IInternalInOutFunction {
         if (typeof parameters !== "string")
             return undefined;
-        let stateName: string = parameters;
+        let stateName:string = parameters;
 
         return new TIoBrokerInOutFunction_State(adapter, stateName, 250);
-    },    
+    },
 
-    "ioBroker.State.OnlyACK": function (adapter: ioBroker.IAdapter, parameters: any): IInternalInOutFunction {
+    "ioBroker.State.OnlyACK": function (adapter:ioBroker.IAdapter, parameters:any):IInternalInOutFunction {
         if (typeof parameters !== "string")
             return undefined;
-        let stateName: string = parameters;
+        let stateName:string = parameters;
 
         return new TIoBrokerInOutFunction_State_OnlyACK(adapter, stateName);
-    },    
+    },
 
-    "ioBroker.homematic.WindowCovering.TargetPosition": function (adapter: ioBroker.IAdapter, parameters: any): IInternalInOutFunction {
-        let p: Array<string>;
+    "ioBroker.homematic.WindowCovering.TargetPosition": function (adapter:ioBroker.IAdapter, parameters:any):IInternalInOutFunction {
+        let p:Array<string>;
 
-        if(typeof parameters === 'string')
+        if (typeof parameters === 'string')
             p = [parameters];
         else if (parameters instanceof Array)
             p = parameters;
@@ -253,10 +256,10 @@ var inOutFactory: IObjectDictionary<TInOutFunctionCreateFunction> = {
 
         if (p.length == 0)
             return undefined;
-        
-        let stateName: string = p[0];
-        let workingItemName: string;
-        if(p.length >= 2) 
+
+        let stateName:string = p[0];
+        let workingItemName:string;
+        if (p.length >= 2)
             workingItemName = p[1];
         else {
             let pathNames = stateName.split('.');
@@ -265,16 +268,16 @@ var inOutFactory: IObjectDictionary<TInOutFunctionCreateFunction> = {
         }
 
         return new TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition(adapter, stateName, workingItemName);
-    },    
+    },
 
-    "const": function (adapter: ioBroker.IAdapter, parameters: any): IInternalInOutFunction {
+    "const": function (adapter:ioBroker.IAdapter, parameters:any):IInternalInOutFunction {
         return {
-            toIOBroker(ioValue: any, callback: () => void) {
+            toIOBroker(ioValue:any, callback:() => void) {
                 console.log('inoutFunc: const.toIOBroker: ', parameters);
                 callback();
             },
 
-            fromIOBroker(callback: (error: any, ioValue: any) => void) {
+            fromIOBroker(callback:(error:any, ioValue:any) => void) {
                 console.log('inoutFunc: const.fromIOBroker: ', parameters);
                 callback(null, parameters);
             },
@@ -284,26 +287,26 @@ var inOutFactory: IObjectDictionary<TInOutFunctionCreateFunction> = {
     }
 };
 
-type TConversionFunctionCreateFunction = (adapter: ioBroker.IAdapter, parameters: any) => IConversionFunction;
-var conversionFactory: IObjectDictionary<TConversionFunctionCreateFunction> = {
-    "passthrough": function(adapter: ioBroker.IAdapter, parameters: any): IConversionFunction {
+type TConversionFunctionCreateFunction = (adapter:ioBroker.IAdapter, parameters:any) => IConversionFunction;
+var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
+    "passthrough": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
         return {
-            toHomeKit: (value: any) => value,
-            toIOBroker: (value: any) => value
+            toHomeKit: (value:any) => value,
+            toIOBroker: (value:any) => value
         }
     },
 
-    "HomematicDirectionToHomekitPositionState": function(adapter: ioBroker.IAdapter, parameters: any): IConversionFunction {
+    "HomematicDirectionToHomekitPositionState": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
         return {
             toHomeKit: (value) => {
                 let num = undefined;
-                if(typeof value !== 'number') 
+                if (typeof value !== 'number')
                     num = parseInt(value);
-                else 
+                else
                     num = value;
 
                 let result = undefined;
-                switch(num) {
+                switch (num) {
                     case 0:
                         result = HAPCharacteristic.PositionState.STOPPED;
                         break;
@@ -322,13 +325,13 @@ var conversionFactory: IObjectDictionary<TConversionFunctionCreateFunction> = {
             },
             toIOBroker: (value) => {
                 let num = undefined;
-                if(typeof value !== 'number') 
+                if (typeof value !== 'number')
                     num = parseInt(value);
-                else 
+                else
                     num = value;
 
                 let result = undefined;
-                switch(num) {
+                switch (num) {
                     case HAPCharacteristic.PositionState.STOPPED:
                         result = 0;
                         break;
@@ -343,22 +346,22 @@ var conversionFactory: IObjectDictionary<TConversionFunctionCreateFunction> = {
                         break;
                 }
                 adapter.log.debug('HomematicDirectionToHomekitPositionState.toIOBroker, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
-                return result;                
+                return result;
             }
         }
     },
 
-    "HomematicControlModeToHomekitHeathingCoolingState": function(adapter: ioBroker.IAdapter, parameters: any): IConversionFunction {
+    "HomematicControlModeToHomekitHeathingCoolingState": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
         return {
             toHomeKit: (value) => {
                 let num = undefined;
-                if(typeof value !== 'number') 
+                if (typeof value !== 'number')
                     num = parseInt(value);
-                else 
+                else
                     num = value;
 
                 let result = undefined;
-                switch(num) {
+                switch (num) {
                     case 0:
                         result = HAPCharacteristic.TargetHeatingCoolingState.AUTO;
                         break;
@@ -380,13 +383,13 @@ var conversionFactory: IObjectDictionary<TConversionFunctionCreateFunction> = {
             },
             toIOBroker: (value) => {
                 let num = undefined;
-                if(typeof value !== 'number') 
+                if (typeof value !== 'number')
                     num = parseInt(value);
-                else 
+                else
                     num = value;
 
                 let result = undefined;
-                switch(num) {
+                switch (num) {
                     case HAPCharacteristic.TargetHeatingCoolingState.OFF:
                         result = 0;
                         break;
@@ -404,7 +407,7 @@ var conversionFactory: IObjectDictionary<TConversionFunctionCreateFunction> = {
                         break;
                 }
                 adapter.log.debug('HomematicDirectionToHomekitHeatingCoolingState.toIOBroker, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
-                return result;                
+                return result;
             }
         }
     }
@@ -412,12 +415,12 @@ var conversionFactory: IObjectDictionary<TConversionFunctionCreateFunction> = {
 
 
 export var functionFactory = {
-    createInOutFunction: function (adapter: ioBroker.IAdapter, inOutFunction: string, inOutParameters?: any): IInternalInOutFunction {
+    createInOutFunction: function (adapter:ioBroker.IAdapter, inOutFunction:string, inOutParameters?:any):IInternalInOutFunction {
         if (!(inOutFunction in inOutFactory))
             return inOutFactory["const"](adapter, inOutParameters);
         return inOutFactory[inOutFunction](adapter, inOutParameters);
     },
-    createConversionFunction: function (adapter: ioBroker.IAdapter, conversionFunction: string, conversionParameters?: any): IConversionFunction {
+    createConversionFunction: function (adapter:ioBroker.IAdapter, conversionFunction:string, conversionParameters?:any):IConversionFunction {
         if (!(conversionFunction in conversionFactory))
             return conversionFactory["passthrough"](adapter, conversionParameters);
         return conversionFactory[conversionFunction](adapter, conversionParameters);
