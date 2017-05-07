@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 module.exports = function(grunt) {
 
@@ -26,7 +26,7 @@ module.exports = function(grunt) {
         },
 
         clean: {
-            build: ['build'],
+            build: ['build/**/*.*'],
             ts_nodeModules: ['build/node_modules']
         },
 
@@ -38,14 +38,13 @@ module.exports = function(grunt) {
 
         exec: {
             refreshIOBroker: {
-                cwd: '../iobroker',
+                cwd: '../../',
                 command: 'iobroker.bat upload yahka'
             },
             NPMPublish: {
                 cwd: 'build',
                 command: 'npm publish'
             }
-
         }
     });
 
@@ -58,9 +57,15 @@ module.exports = function(grunt) {
         'clean:build',
         'ts:build',
         'clean:ts_nodeModules',
+        'replace',
         'copy:build'
     ]);
-
+    grunt.registerTask('replace', function () {
+        var file = require('fs').readFileSync('./build/admin/yahka.admin.js');
+        file = file.toString().replace('Object.defineProperty(exports, "__esModule", { value: true });', '').replace('var $ = require("jquery");', '');
+        require('fs').writeFileSync('./build/admin/yahka.admin.js', file);   
+    });
+    
     grunt.registerTask('DeployToTest', [
         'copy:deployTestInstance',
         'exec:refreshIOBroker'
@@ -70,6 +75,7 @@ module.exports = function(grunt) {
         'clean:build',
         'ts:build',
         'clean:ts_nodeModules',
+        'replace',
         'copy:build',
         'copy:deployTestInstance',
         'exec:refreshIOBroker'
@@ -79,6 +85,7 @@ module.exports = function(grunt) {
         'clean:build',
         'ts:build',
         'clean:ts_nodeModules',
+        'replace',
         'copy:build',
         'exec:NPMPublish'        
     ])

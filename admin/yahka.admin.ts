@@ -1,78 +1,82 @@
 /// <reference path="../typings/index.d.ts" />
 import * as hkBridge from '../yahka.homekit-bridge';
+import * as $ from "jquery";
 
-type TIOBrokerAdminChangeCallback = (changeMarker?: boolean) => void;
-type TIOBrokerAdminSaveCallback = (settingsObject: any) => void;
+type TIOBrokerAdminChangeCallback = (changeMarker?:boolean) => void;
+type TIOBrokerAdminSaveCallback = (settingsObject:any) => void;
 
 interface IDictionary<T> {
-    [key: string]: T;
+    [key:string]:T;
 }
 
 interface IHAPCharacteristicDefintion {
-    name: string;
-    optional: boolean;
+    name:string;
+    optional:boolean;
 }
 
 interface IHAPServiceDefinition {
-    type: string;
-    characteristics: IDictionary<IHAPCharacteristicDefintion>;
+    type:string;
+    characteristics:IDictionary<IHAPCharacteristicDefintion>;
 }
 
 interface ISelectListEntry {
-    text: string,
-    [otherProps:string]: any;    
+    text:string,
+    [otherProps:string]:any;
 }
 
-declare function getObject(id: string, callback: (error: any, object: any) => void);
+declare function getObject(id:string, callback:(error:any, object:any) => void);
 
-var inoutFunctions: Array<string> = [];
+declare function translateFragment(fragment:DocumentFragment);
+
+var inoutFunctions:Array<string> = [];
 getObject('yahka.meta._inoutFunctions', (error, object) => {
     inoutFunctions = object.native;
 });
 
-let convFunctions: Array<string> = [];
+let convFunctions:Array<string> = [];
 getObject('yahka.meta._conversionFunctions', (error, object) => {
     convFunctions = object.native;
 });
 
-let HAPServiceDictionary: IDictionary<IHAPServiceDefinition> = {};
+let HAPServiceDictionary:IDictionary<IHAPServiceDefinition> = {};
 getObject('yahka.meta._serviceDictionary', (error, object) => {
     HAPServiceDictionary = object.native;
 });
 
-let accessoryCategories: IDictionary<ISelectListEntry> = {};
+let accessoryCategories:IDictionary<ISelectListEntry> = {};
 getObject('yahka.meta._accessoryCategories', (error, object) => {
     accessoryCategories = object.native;
 });
 
 
 class ioBroker_YahkaAdmin {
-    settings: any;
-    loadSettings(settingsObject: any, onChangeCallback: TIOBrokerAdminChangeCallback) { 
+    settings:any;
+
+    loadSettings(settingsObject:any, onChangeCallback:TIOBrokerAdminChangeCallback) {
         this.settings = settingsObject;
-        
+
         new ioBroker_YahkaPageBuilder(this.settings.bridge, onChangeCallback);
 
         onChangeCallback(false);
     }
 
 
-    saveSettings(callback: TIOBrokerAdminSaveCallback) {
+    saveSettings(callback:TIOBrokerAdminSaveCallback) {
         callback(this.settings);
     }
 }
 
 class ioBroker_YahkaPageBuilder {
-    deviceListEntryTemplate: HTMLTemplateElement;
-    deviceInfoPanelTemplate: HTMLTemplateElement;
-    deviceServicePanelTemplate: HTMLTemplateElement;
-    characteristicRow: HTMLTemplateElement;
+    deviceListEntryTemplate:HTMLTemplateElement;
+    deviceInfoPanelTemplate:HTMLTemplateElement;
+    deviceServicePanelTemplate:HTMLTemplateElement;
+    characteristicRow:HTMLTemplateElement;
 
-    selectedDeviceConfig: hkBridge.Configuration.IDeviceConfig = undefined;
+    selectedDeviceConfig:hkBridge.Configuration.IDeviceConfig = undefined;
 
-    constructor(private bridgeSettings: hkBridge.Configuration.IBridgeConfig, private changeCallback) {
+    constructor(private bridgeSettings:hkBridge.Configuration.IBridgeConfig, private changeCallback) {
         this.deviceListEntryTemplate = <HTMLTemplateElement>document.querySelector('#yahka_devicelist_entry');
-        this.deviceInfoPanelTemplate = <HTMLTemplateElement>document.querySelector('#yahka_device_info_panel');
+        this.deviceInfoPanelTemplate = <HTMLTemplateElement>document.querySelector('#yahka_device_info_panel_template');
         this.deviceServicePanelTemplate = <HTMLTemplateElement>document.querySelector('#yahka_device_service_panel');
         this.characteristicRow = <HTMLTemplateElement>document.querySelector('#yahka_characteristic_row');
         this.refreshBridgeFrame();
@@ -80,56 +84,57 @@ class ioBroker_YahkaPageBuilder {
 
     refreshBridgeFrame() {
         let bridgeFrame = <HTMLElement> document.querySelector('#yahka_bridge_frame');
-        
+
         this.refreshBridgeFields(this.bridgeSettings);
         this.buildDeviceList(this.bridgeSettings, bridgeFrame);
         this.bindBridgeButtons(this.bridgeSettings, bridgeFrame);
-        this.refreshBridgeButtons(bridgeFrame);        
+        this.refreshBridgeButtons(bridgeFrame);
 
         return bridgeFrame;
-    }    
-
-    setSelectedDeviceConfig(deviceConfig: hkBridge.Configuration.IDeviceConfig, AFocusLastPanel: boolean) {
-        this.selectedDeviceConfig = deviceConfig;
-        this.refreshDevicePane(deviceConfig, AFocusLastPanel);
-        this.refreshBridgeButtons(document.body);        
     }
 
-    refreshBridgeFields(bridge: hkBridge.Configuration.IBridgeConfig) {
+    setSelectedDeviceConfig(deviceConfig:hkBridge.Configuration.IDeviceConfig, AFocusLastPanel:boolean) {
+        this.selectedDeviceConfig = deviceConfig;
+        this.refreshDevicePane(deviceConfig, AFocusLastPanel);
+        this.refreshBridgeButtons(document.body);
+    }
 
-        let inputHelper = (selector: string, propertyName: string) => {
+    refreshBridgeFields(bridge:hkBridge.Configuration.IBridgeConfig) {
+
+        let inputHelper = (selector:string, propertyName:string) => {
             let input = <HTMLInputElement>document.querySelector(selector);
 
             let value = bridge[propertyName];
-            if(value !== undefined) 
+            if (value !== undefined) {
                 input.value = value;
-            else
-                input.value = "";    
-            input.addEventListener("input", this.handleBridgeMetaDataChange.bind(this, bridge, propertyName));                
-        }      
+            } else {
+                input.value = '';
+            }
+            input.addEventListener("input", this.handleBridgeMetaDataChange.bind(this, bridge, propertyName));
+        };
 
-        let checkboxHelper = (selector: string, propertyName: string) => {
+        let checkboxHelper = (selector:string, propertyName:string) => {
             let input = <HTMLInputElement>document.querySelector(selector);
 
             let value = bridge[propertyName];
-            input.checked = value; 
-            input.addEventListener("click", this.handleBridgeMetaDataChange.bind(this, bridge, propertyName));                
-        }                
-        
+            input.checked = value;
+            input.addEventListener("click", this.handleBridgeMetaDataChange.bind(this, bridge, propertyName));
+        };
+
         inputHelper('#bridge_name', 'name');
         inputHelper('#bridge_manufacturer', 'manufacturer');
         inputHelper('#bridge_model', 'model');
         inputHelper('#bridge_serial', 'serial');
-        inputHelper('#bridge_username', 'username');        
-        inputHelper('#bridge_pincode', 'pincode');        
-        inputHelper('#bridge_port', 'port');        
+        inputHelper('#bridge_username', 'username');
+        inputHelper('#bridge_pincode', 'pincode');
+        inputHelper('#bridge_port', 'port');
         checkboxHelper('#bridge_verboseLogging', 'verboseLogging');
     }
 
 
-    bindBridgeButtons(bridge: hkBridge.Configuration.IBridgeConfig, bridgePane: HTMLElement) {
-        let elem: HTMLElement;
-        if(elem = <HTMLElement>bridgePane.querySelector('#yahka_add_device')) {
+    bindBridgeButtons(bridge:hkBridge.Configuration.IBridgeConfig, bridgePane:HTMLElement) {
+        let elem:HTMLElement;
+        if (elem = <HTMLElement>bridgePane.querySelector('#yahka_add_device')) {
             elem.addEventListener('click', (e) => {
                 e.preventDefault();
                 let newDevice = {
@@ -137,48 +142,47 @@ class ioBroker_YahkaPageBuilder {
                     model: "",
                     name: "",
                     serial: "",
+                    enabled: true,
                     category: 1,
                     services: []
-                } 
-                bridge.devices.push( newDevice );
+                };
+                bridge.devices.push(newDevice);
                 this.setSelectedDeviceConfig(newDevice, true);
                 this.buildDeviceList(bridge, bridgePane);
                 this.changeCallback();
             })
         }
 
-        if(elem = <HTMLElement>bridgePane.querySelector('#yahka_add_service')) {
+        if (elem = <HTMLElement>bridgePane.querySelector('#yahka_add_service')) {
             elem.addEventListener('click', (e) => {
                 e.preventDefault();
                 console.log('click');
                 let dev = this.selectedDeviceConfig;
-                if(dev === undefined)
+                if (dev === undefined) {
                     return;
+                }
 
-                
-                dev.services.push(
-                    {
-                        name: '',
-                        subType: '',
-                        type: '',
-                        characteristics: []
-                    }
-                )
+                dev.services.push({
+                    name: '',
+                    subType: '',
+                    type: '',
+                    characteristics: []
+                });
                 this.refreshDevicePane(dev, true);
                 this.changeCallback();
             });
         }
 
 
-        if(elem = <HTMLElement>bridgePane.querySelector('#yahka_remove_device')) {
+        if (elem = <HTMLElement>bridgePane.querySelector('#yahka_remove_device')) {
             elem.addEventListener('click', (e) => {
                 e.preventDefault();
                 let dev = this.selectedDeviceConfig;
-                if(dev === undefined)
+                if (dev === undefined)
                     return;
 
                 let idx = bridge.devices.indexOf(dev);
-                if(idx > -1) {
+                if (idx > -1) {
                     bridge.devices.splice(idx, 1);
                     this.changeCallback();
                     this.setSelectedDeviceConfig(undefined, false);
@@ -187,47 +191,48 @@ class ioBroker_YahkaPageBuilder {
                 }
             });
         }
-    }    
+    }
 
 
-    refreshBridgeButtons(parent: HTMLElement) {
+    refreshBridgeButtons(parent:HTMLElement) {
         // let addDeviceButton    = <HTMLElement>document.querySelector('#yahka_add_device');
-        let addServiceButton   = <HTMLElement>parent.querySelector('#yahka_add_service');
+        let addServiceButton = <HTMLElement>parent.querySelector('#yahka_add_service');
         let removeDeviceButton = <HTMLElement>parent.querySelector('#yahka_remove_device');
-        console.log('refresh', parent, this.selectedDeviceConfig)
-        if(this.selectedDeviceConfig === undefined) {
-            addServiceButton.setAttribute('disabled','');
-            removeDeviceButton.setAttribute('disabled','');
+        console.log('refresh', parent, this.selectedDeviceConfig);
+        if (this.selectedDeviceConfig === undefined) {
+            addServiceButton.setAttribute('disabled', '');
+            removeDeviceButton.setAttribute('disabled', '');
         } else {
             addServiceButton.removeAttribute('disabled');
             removeDeviceButton.removeAttribute('disabled');
         }
-    }        
-        
+    }
 
-    buildDeviceList(bridge: hkBridge.Configuration.IBridgeConfig, bridgeFrame: DocumentFragment) {
+
+    buildDeviceList(bridge:hkBridge.Configuration.IBridgeConfig, bridgeFrame:any) { // DocumentFragment
         let deviceList = bridgeFrame.querySelector('#yahka_deviceList');
         deviceList.innerHTML = "";
-        for(let deviceConfig of bridge.devices) {
+        for (let deviceConfig of bridge.devices) {
             let deviceEntry = <DocumentFragment>document.importNode(this.deviceListEntryTemplate.content, true);
 
             let listItem = (<HTMLElement>deviceEntry.querySelector('.list'));
             this.refreshDeviceListEntry(deviceConfig, listItem);
-            deviceList.appendChild(deviceEntry);           
+            translateFragment(deviceEntry);
+            deviceList.appendChild(deviceEntry);
         }
 
         let deviceListClickHandler = this.handleDeviceListClick.bind(this, bridge);
-        (<any>$(deviceList)).listview({ onListClick: deviceListClickHandler });
+        (<any>$(deviceList)).listview({onListClick: deviceListClickHandler});
     }
 
-    refreshDeviceListEntry(deviceConfig: hkBridge.Configuration.IDeviceConfig, listItem: HTMLElement) {
-        if(!listItem)
+    refreshDeviceListEntry(deviceConfig:hkBridge.Configuration.IDeviceConfig, listItem:HTMLElement) {
+        if (!listItem)
             return;
-        let cat: ISelectListEntry;
+        let cat:ISelectListEntry;
         let iconClass = "mif-question";
-        if(accessoryCategories !== undefined)
-            if(cat = accessoryCategories[deviceConfig.category]) 
-                iconClass = cat['icon']; 
+        if (accessoryCategories !== undefined)
+            if (cat = accessoryCategories[deviceConfig.category])
+                iconClass = cat['icon'];
         let listIcon = listItem.querySelector('.list-icon');
         listIcon.className = "";
         listIcon.classList.add('list-icon', 'icon', iconClass);
@@ -237,110 +242,124 @@ class ioBroker_YahkaPageBuilder {
         listItem.classList.toggle('active', (deviceConfig === this.selectedDeviceConfig));
     }
 
-    findDeviceConfig(bridgeConfig: hkBridge.Configuration.IBridgeConfig, deviceIdent: string): hkBridge.Configuration.IDeviceConfig {
-        if(!bridgeConfig)
+    findDeviceConfig(bridgeConfig:hkBridge.Configuration.IBridgeConfig, deviceIdent:string):hkBridge.Configuration.IDeviceConfig {
+        if (!bridgeConfig)
             return undefined;
-        for(let devConfig of bridgeConfig.devices)
-            if (devConfig.name == deviceIdent)
+        for (let devConfig of bridgeConfig.devices) {
+            if (devConfig.name === deviceIdent) {
                 return devConfig;
+            }
+        }
         return undefined;
     }
 
-    handleDeviceListClick(bridgeConfig: hkBridge.Configuration.IBridgeConfig, deviceNode: JQuery) {
-        if(!deviceNode)
+    handleDeviceListClick(bridgeConfig:hkBridge.Configuration.IBridgeConfig, deviceNode:JQuery) {
+        if (!deviceNode)
             return;
-        
+
         let deviceIdent = deviceNode[0].dataset["deviceIdent"];
         let deviceConfig = this.findDeviceConfig(bridgeConfig, deviceIdent);
         this.setSelectedDeviceConfig(deviceConfig, false);
     }
 
-    refreshDevicePane(deviceConfig: hkBridge.Configuration.IDeviceConfig, focusLast?: boolean) {
+    refreshDevicePane(deviceConfig:hkBridge.Configuration.IDeviceConfig, focusLast?:boolean) {
         let devicePane = <HTMLElement>document.querySelector('#yahka_device_details');
         devicePane.innerHTML = '';
 
-        if(deviceConfig === undefined)
+        if (deviceConfig === undefined)
             return;
 
-        let lastPane: HTMLElement = this.buildDeviceInformationPanel(deviceConfig, devicePane);
-        for(let serviceConfig of deviceConfig.services) {
+        let lastPane:HTMLElement = this.buildDeviceInformationPanel(deviceConfig, devicePane);
+        for (let serviceConfig of deviceConfig.services) {
             let servicePanel = this.createServicePanel(deviceConfig, serviceConfig);
             devicePane.appendChild(servicePanel);
             lastPane = servicePanel;
         }
 
-        if(focusLast && lastPane) {
+        if (focusLast && lastPane) {
             lastPane.scrollIntoView();
-            if(!lastPane.classList.contains('active')) {
+            if (!lastPane.classList.contains('active')) {
                 let heading = (<HTMLElement>lastPane.querySelector('.heading'));
-                if(heading)
+                if (heading)
                     heading.click();
             }
         }
     }
 
-    buildDeviceInformationPanel(deviceConfig: hkBridge.Configuration.IDeviceConfig, devicePane: HTMLElement): HTMLElement {
+    buildDeviceInformationPanel(deviceConfig:hkBridge.Configuration.IDeviceConfig, devicePane:HTMLElement):HTMLElement {
         let devInfoFragment = <DocumentFragment> document.importNode(this.deviceInfoPanelTemplate.content, true);
         let devInfoPanel = <HTMLElement>devInfoFragment.querySelector('#yahka_device_info_panel');
-        let inputHelper = (selector: string, propertyName: string, selectList?: IDictionary<ISelectListEntry>) => {
+        translateFragment(devInfoFragment);
+        
+        let inputHelper = (selector:string, propertyName:string, selectList?:IDictionary<ISelectListEntry>) => {
             let input = <HTMLSelectElement>devInfoPanel.querySelector(selector);
 
-            if(selectList)
-                this.fillSelectByDict( input, selectList);
+            if (selectList) {
+                this.fillSelectByDict(input, selectList);
+            }
 
             let value = deviceConfig[propertyName];
-            if(value !== undefined) 
-                input.value = value;
-            else
-                input.value = "";    
-            input.addEventListener('input', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName));                
-        }        
-        
+            if (input.type === 'checkbox') {
+                input.checked = value === undefined ? true : value;
+                input.addEventListener('change', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName))
+            } else {
+                if (value !== undefined) {
+                    input.value = value;
+                } else {
+                    input.value = '';
+                }
+                input.addEventListener('input', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName));
+            }
+        };
+
         inputHelper('#device_name', 'name');
+        inputHelper('#device_enabled', 'enabled');
         inputHelper('#device_manufacturer', 'manufacturer');
         inputHelper('#device_model', 'model');
         inputHelper('#device_serial', 'serial');
         inputHelper('#device_category', 'category', accessoryCategories);
-        
+
         devicePane.appendChild(devInfoFragment);
         return devInfoPanel;
     }
 
-    createServicePanel(deviceConfig: hkBridge.Configuration.IDeviceConfig, serviceConfig: hkBridge.Configuration.IServiceConfig): HTMLElement {
+    createServicePanel(deviceConfig:hkBridge.Configuration.IDeviceConfig, serviceConfig:hkBridge.Configuration.IServiceConfig):HTMLElement {
         let servicePanel = <DocumentFragment> document.importNode(this.deviceServicePanelTemplate.content, true);
         let frameNode = <HTMLElement> servicePanel.querySelector('#yahka_service_panel');
-        
-        let inputHelper = (selector: string, configName: string, popuplateServices?: boolean, eventHandler?) => {
+        translateFragment(servicePanel);
+        let inputHelper = (selector:string, configName:string, popuplateServices?:boolean, eventHandler?) => {
             let input = <HTMLSelectElement>frameNode.querySelector(selector);
-            if(popuplateServices === true) {
-                let selectList: string[] = Object.keys(HAPServiceDictionary);
+            if (popuplateServices === true) {
+                let selectList:string[] = Object.keys(HAPServiceDictionary);
                 this.fillSelectByArray(input, selectList);
             }
-            if(serviceConfig) {
+
+            if (serviceConfig) {
                 let value = serviceConfig[configName];
-                if(value !== undefined) 
+                if (value !== undefined) {
                     input.value = value;
-                else
-                    input.value = "";    
+                } else {
+                    input.value = '';
+                }
             }
-        
-            if(eventHandler !== undefined)
+
+            if (eventHandler !== undefined)
                 input.addEventListener('input', eventHandler);
             else
-                input.addEventListener('input', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));                
-        }
+                input.addEventListener('input', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
+        };
 
         this.refreshServicePanelCaption(serviceConfig, frameNode);
         inputHelper('#service_name', 'name');
         inputHelper('#service_type', 'type', true, this.handleServiceTypeChange.bind(this, serviceConfig, frameNode));
         inputHelper('#service_subtype', 'subType');
-        
+
         this.buildCharacteristicTable(serviceConfig, frameNode);
 
         // bind delete buttton
         frameNode.querySelector('#yakha_delete_service').addEventListener('click', () => {
             let idx = deviceConfig.services.indexOf(serviceConfig);
-            if(idx > -1) {
+            if (idx > -1) {
                 deviceConfig.services.splice(idx, 1);
                 this.changeCallback();
                 frameNode.parentNode.removeChild(frameNode);
@@ -350,59 +369,53 @@ class ioBroker_YahkaPageBuilder {
         return frameNode;
     }
 
-    refreshServicePanelCaption(serviceConfig: hkBridge.Configuration.IServiceConfig, servicePanel: HTMLElement) {
-        servicePanel.querySelector('#yahka_service_caption').textContent = serviceConfig.name + '[' + serviceConfig.type + ']';        
+    refreshServicePanelCaption(serviceConfig:hkBridge.Configuration.IServiceConfig, servicePanel:HTMLElement) {
+        servicePanel.querySelector('#yahka_service_caption').textContent = serviceConfig.name + '[' + serviceConfig.type + ']';
     }
 
-    findHAPCharacteristic(serviceDef: IHAPServiceDefinition, characteristicName: string): IHAPCharacteristicDefintion {
-        if(!serviceDef)
+    findHAPCharacteristic(serviceDef:IHAPServiceDefinition, characteristicName:string):IHAPCharacteristicDefintion {
+        if (!serviceDef)
             return undefined;
         let x;
-        if(x = serviceDef.characteristics[characteristicName])
+        if (x = serviceDef.characteristics[characteristicName])
             return x;
         return undefined;
     }
 
-    findConfigCharacteristic(service: hkBridge.Configuration.IServiceConfig, characteristicName: string): hkBridge.Configuration.ICharacteristicConfig {
-        if(!service)
+    findConfigCharacteristic(service:hkBridge.Configuration.IServiceConfig, characteristicName:string):hkBridge.Configuration.ICharacteristicConfig {
+        if (!service) {
             return undefined;
+        }
 
-        for(let cfg of service.characteristics) {
-            if (cfg.name == characteristicName)
+        for (let cfg of service.characteristics) {
+            if (cfg.name == characteristicName) {
                 return cfg;
+            }
         }
 
         return undefined;
     }
 
-    isEmptyCharacteristic(charConfig: hkBridge.Configuration.ICharacteristicConfig): boolean {
-        if(charConfig === undefined)
-            return true;
-        if(charConfig.name === '')
-            return true;
-
-
-        if((charConfig['inOutFunction'] === '') || (charConfig['inOutFunction'] === undefined))
-            return true;
-
-        return false;
+    isEmptyCharacteristic(charConfig:hkBridge.Configuration.ICharacteristicConfig):boolean {
+        return (charConfig === undefined || charConfig.name === '' || (charConfig['inOutFunction'] === '') || (charConfig['inOutFunction'] === undefined));
     }
 
-    removeCharacteristic(serviceConfig: hkBridge.Configuration.IServiceConfig, charConfig: hkBridge.Configuration.ICharacteristicConfig) {
-        if(serviceConfig === undefined)
+    removeCharacteristic(serviceConfig:hkBridge.Configuration.IServiceConfig, charConfig:hkBridge.Configuration.ICharacteristicConfig) {
+        if (serviceConfig === undefined) {
             return;
+        }
 
         let idx = serviceConfig.characteristics.indexOf(charConfig);
-        if(idx > -1) {
+        if (idx > -1) {
             serviceConfig.characteristics.splice(idx, 1);
             this.changeCallback();
         }
     }
 
-    buildCharacteristicTable(serviceConfig: hkBridge.Configuration.IServiceConfig, servicePanel: HTMLElement) {
+    buildCharacteristicTable(serviceConfig:hkBridge.Configuration.IServiceConfig, servicePanel:HTMLElement) {
         let serviceDef = HAPServiceDictionary[serviceConfig.type];
-        let createdCharacteristics: IDictionary<[string, boolean, DocumentFragment]> = {};
-        for(let charConfig of serviceConfig.characteristics) {
+        let createdCharacteristics:IDictionary<[string, boolean, DocumentFragment]> = {};
+        for (let charConfig of serviceConfig.characteristics) {
             let charDef = this.findHAPCharacteristic(serviceDef, charConfig.name);
             if ((charDef === undefined) && (this.isEmptyCharacteristic(charConfig))) {
                 this.removeCharacteristic(serviceConfig, charConfig);
@@ -413,9 +426,9 @@ class ioBroker_YahkaPageBuilder {
         }
 
         // add undefined characteristics
-        if(serviceDef) {
-            for(let charName in serviceDef.characteristics) {
-                if(createdCharacteristics[charName] === undefined) {
+        if (serviceDef) {
+            for (let charName in serviceDef.characteristics) {
+                if (createdCharacteristics[charName] === undefined) {
                     let charDef = serviceDef.characteristics[charName];
                     let charRow = this.createCharacteristicRow(charDef, serviceConfig, undefined);
                     createdCharacteristics[charName] = [charName, charDef.optional, charRow];
@@ -423,29 +436,33 @@ class ioBroker_YahkaPageBuilder {
             }
         }
 
-        let charRows: Array<[string, boolean, DocumentFragment]> = [];
-        
-        for(let charRow in createdCharacteristics) 
+        let charRows:Array<[string, boolean, DocumentFragment]> = [];
+
+        for (let charRow in createdCharacteristics)
             charRows.push(createdCharacteristics[charRow]);
-        
-        charRows.sort( (a, b) => {
+
+        charRows.sort((a, b) => {
             if (a[1] != b[1])
                 return a[1] ? -1 : 1;
-            return a[0].localeCompare(b[0]); 
+            return a[0].localeCompare(b[0]);
         });
 
         let table = servicePanel.querySelector('#yahka_characteristic_table');
-        while(table.childElementCount > 1) // first row is the header row
+        while (table.childElementCount > 1) {// first row is the header row
             table.removeChild(table.lastElementChild);
-        for(let row of charRows) 
+        }
+        for (let row of charRows) {
             table.appendChild(row[2]);
+        }
     }
 
-    createCharacteristicRow(charDef: IHAPCharacteristicDefintion, serviceConfig: hkBridge.Configuration.IServiceConfig, charConfig: hkBridge.Configuration.ICharacteristicConfig): DocumentFragment {
+    createCharacteristicRow(charDef:IHAPCharacteristicDefintion, serviceConfig:hkBridge.Configuration.IServiceConfig, charConfig:hkBridge.Configuration.ICharacteristicConfig):DocumentFragment {
         let name = charConfig ? charConfig.name : charDef.name;
         let enabled = charConfig ? charConfig.enabled : false;
 
         let rowElement = <DocumentFragment>document.importNode(this.characteristicRow.content, true);
+
+        translateFragment(rowElement);
 
         let bracketElement = <HTMLElement>rowElement.querySelector('#characteristic');
 
@@ -459,30 +476,30 @@ class ioBroker_YahkaPageBuilder {
         rowElement.querySelector('#characteristic_name').textContent = name;
 
 
-        let inputHelper = (selector: string, configName: string, selectList: string[]) => {
+        let inputHelper = (selector:string, configName:string, selectList:string[]) => {
             let input = <HTMLSelectElement>rowElement.querySelector(selector);
-            if(selectList !== undefined)
+            if (selectList !== undefined)
                 this.fillSelectByArray(input, selectList);
-            if(charConfig) { 
+            if (charConfig) {
                 let value = charConfig[configName];
-                if(value !== undefined) 
+                if (value !== undefined)
                     input.value = value;
                 else
-                    input.value = "";                    
+                    input.value = "";
             }
             input.addEventListener('input', this.handleCharacteristicInputChange.bind(this, serviceConfig, name, configName));
-        }
+        };
 
-        inputHelper('#characteristic_inoutfunction', 'inOutFunction', inoutFunctions); 
-        inputHelper('#characteristic_inoutparams', 'inOutParameters', undefined); 
-        inputHelper('#characteristic_conversionfunction', 'conversionFunction', convFunctions); 
+        inputHelper('#characteristic_inoutfunction', 'inOutFunction', inoutFunctions);
+        inputHelper('#characteristic_inoutparams', 'inOutParameters', undefined);
+        inputHelper('#characteristic_conversionfunction', 'conversionFunction', convFunctions);
         inputHelper('#characteristic_conversionparams', 'conversionParameters', undefined);
 
         return rowElement;
     }
 
-    fillSelectByArray(inoutSelect: HTMLSelectElement, stringlist: string[]) {
-        for(let itemName of stringlist) {
+    fillSelectByArray(inoutSelect:HTMLSelectElement, stringlist:string[]) {
+        for (let itemName of stringlist) {
             let optElem = document.createElement('option');
             optElem.value = itemName;
             optElem.text = itemName;
@@ -491,28 +508,27 @@ class ioBroker_YahkaPageBuilder {
     }
 
 
-    fillSelectByDict(inoutSelect: HTMLSelectElement, dictionary: IDictionary<ISelectListEntry>) {
-        for(let key in dictionary) {
+    fillSelectByDict(inoutSelect:HTMLSelectElement, dictionary:IDictionary<ISelectListEntry>) {
+        for (let key in dictionary) {
             let optElem = document.createElement('option');
             optElem.value = key;
             optElem.text = dictionary[key].text;
             inoutSelect.add(optElem);
         }
-    }    
+    }
 
 
-
-    refreshEnabledClass(row: HTMLElement, enabled: boolean) {
+    refreshEnabledClass(row:HTMLElement, enabled:boolean) {
         row.classList.toggle('disabled', !enabled);
     }
 
-    refershOptionalClass(row: HTMLElement, optional: boolean) {
+    refershOptionalClass(row:HTMLElement, optional:boolean) {
         row.classList.toggle('optional-characteristic', optional);
     }
 
-    handleCharacteristicEnabledChange(serviceConfig: hkBridge.Configuration.IServiceConfig, charName: string, charRow: HTMLElement, ev: Event) {
+    handleCharacteristicEnabledChange(serviceConfig:hkBridge.Configuration.IServiceConfig, charName:string, charRow:HTMLElement, ev:Event) {
         let charConfig = this.findConfigCharacteristic(serviceConfig, charName);
-        if(charConfig === undefined) {
+        if (charConfig === undefined) {
             charConfig = {name: charName, enabled: false}
             serviceConfig.characteristics.push(charConfig);
         }
@@ -524,9 +540,9 @@ class ioBroker_YahkaPageBuilder {
         this.changeCallback();
     }
 
-    handleCharacteristicInputChange(serviceConfig: hkBridge.Configuration.IServiceConfig, charName: string, attribute: string, ev: Event) {
+    handleCharacteristicInputChange(serviceConfig:hkBridge.Configuration.IServiceConfig, charName:string, attribute:string, ev:Event) {
         let charConfig = this.findConfigCharacteristic(serviceConfig, charName);
-        if(charConfig === undefined) {
+        if (charConfig === undefined) {
             charConfig = {name: charName, enabled: false}
             serviceConfig.characteristics.push(charConfig);
         }
@@ -539,25 +555,25 @@ class ioBroker_YahkaPageBuilder {
     }
 
 
-    handleBridgeMetaDataChange(bridgeConfig: hkBridge.Configuration.IBridgeConfig, propertyName: string, ev: Event) {
+    handleBridgeMetaDataChange(bridgeConfig:hkBridge.Configuration.IBridgeConfig, propertyName:string, ev:Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
-        if(inputTarget.type == "checkbox")
+        if (inputTarget.type == "checkbox")
             bridgeConfig[propertyName] = inputTarget.checked;
         else
             bridgeConfig[propertyName] = inputTarget.value;
         this.changeCallback();
     }
 
-    handleDeviceMetaDataChange(deviceConfig: hkBridge.Configuration.IDeviceConfig, propertyName: string, ev: Event) {
+    handleDeviceMetaDataChange(deviceConfig:hkBridge.Configuration.IDeviceConfig, propertyName:string, ev:Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
-        let inputValue = inputTarget.value;
+        let inputValue = (inputTarget.type === 'checkbox') ? inputTarget.checked : inputTarget.value;
         let listItem = <HTMLElement>document.querySelector('div.list[data-device-ident="' + deviceConfig.name + '"]');
         deviceConfig[propertyName] = inputValue;
         this.refreshDeviceListEntry(deviceConfig, listItem);
         this.changeCallback();
     }
 
-    handleServiceMetaDataChange(serviceConfig: hkBridge.Configuration.IServiceConfig, servicePanel: HTMLElement, attribute: string, ev: Event) {
+    handleServiceMetaDataChange(serviceConfig:hkBridge.Configuration.IServiceConfig, servicePanel:HTMLElement, attribute:string, ev:Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
         let inputValue = inputTarget.value;
         serviceConfig[attribute] = inputValue;
@@ -568,16 +584,16 @@ class ioBroker_YahkaPageBuilder {
     }
 
 
-    handleServiceTypeChange(serviceConfig: hkBridge.Configuration.IServiceConfig, servicePanel: HTMLElement, ev: Event) {
+    handleServiceTypeChange(serviceConfig:hkBridge.Configuration.IServiceConfig, servicePanel:HTMLElement, ev:Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
         let inputValue = inputTarget.value;
         serviceConfig.type = inputValue;
-        
+
         this.refreshServicePanelCaption(serviceConfig, servicePanel);
-        
+
         this.buildCharacteristicTable(serviceConfig, servicePanel);
 
         this.changeCallback();
     }
-    
+
 }

@@ -1,46 +1,347 @@
 <!DOCTYPE html>
 <html>
-
+<head>
 <link rel="stylesheet" type="text/css" href="../../lib/css/themes/jquery-ui/redmond/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../lib/css/fancytree/ui.fancytree.min.css"/>
 <script type="text/javascript" src="../../lib/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
 <script type="text/javascript" src="../../lib/js/jquery-ui-1.10.3.full.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
+<link rel="stylesheet" type="text/css" href="../../lib/css/fancytree/ui.fancytree.min.css"/>
 <script type="text/javascript" src="../../js/translate.js"></script>
+<script type="text/javascript" src="../../lib/js/colResizable-1.5.min.js"></script>
+<script type="text/javascript" src="../../lib/js/jquery.fancytree-all.min.js"></script>
+<script type="text/javascript" src="../../js/selectID.js"></script>
 <script type="text/javascript" src="../../js/adapter-settings.js"></script>
 
 
 <script type="text/javascript" src="ext/metroui/js/metro.min.js"></script>
-<link rel="stylesheet" type="text/css" href="ext/metroui/css/metro.min.css"></link>
-<link rel="stylesheet" type="text/css" href="ext/metroui/css/metro-icons.min.css"></link>
-<link rel="stylesheet" type="text/css" href="ext/metroui/css/metro-colors.min.css"></link>
-<link rel="stylesheet" type="text/css" href="css/yahka.admin.css"></link>
+<link rel="stylesheet" type="text/css" href="ext/metroui/css/metro.min.css" />
+<link rel="stylesheet" type="text/css" href="ext/metroui/css/metro-icons.min.css" />
+<link rel="stylesheet" type="text/css" href="ext/metroui/css/metro-colors.min.css" />
+<link rel="stylesheet" type="text/css" href="css/yahka.admin.css" />
 
 <script type="text/javascript" src="yahka.admin.js"></script>
-
+<script type="text/javascript" src="words.js"></script>
+<style>
+    .dialog-select-member-close {
+        text-align: center;
+        position: absolute;
+        z-index: 1;
+        border: 1px solid #124967;
+        border-radius: 3px;
+        top: 3px;
+        right: 3px;
+        width: 20px;
+        height: 20px;
+        background: rgb(206, 53, 44);
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+    }
+</style>
 <script type="text/javascript">
     var yahkaAdmin = new ioBroker_YahkaAdmin();
+    var objects = null;
+    var onChange;
 
-    // Dictionary (systemDictionary is global variable from adapter-settings.js)
-    systemDictionary = {
-        "iobroker.yahka adapter settings": {
-            "de": "iobroker.yahka adapter settings",
-            "ru": "Пример"
-        },
-        "ConfigDescription": {
-            "de": "Hier kann die Zuordnung zwischen HomeKit Charakteristic und ioBroker State getroffen werden.",
-            "en": "The page below is used to assign ioBroker states to HomeKit characeteristics. "
-        },
-        "on save adapter restarts with new config immediately": {
-            "de": "Beim Speichern von Einstellungen der Adapter wird sofort neu gestartet.",
-            "ru": "Сразу после сохранения настроек драйвер перезапуститься с новыми значениями"
+    function translateFragment(fragment) {
+        var elements = fragment.querySelectorAll('.translate');
+        if (elements) {
+            for(var e = 0; e < elements.length; e++) {
+                var text = $(elements[e]).attr('data-lang');
+                if (!text) {
+                    text = $(elements[e]).html();
+                    $(elements[e]).attr('data-lang', text);
+                }
+
+                var transText = translateWord(text);
+                if (transText) {
+                    $(elements[e]).html(transText);
+                }
+            }
         }
+    }
+    var $selectId;
+
+    function initSelectidHelper(_objects) {
+        return $('#dialog-select-member').selectId('init',  {
+            noMultiselect: true,
+            noDialog: false,
+            objects: _objects,
+            imgPath:       '../../lib/css/fancytree/',
+            filter:        {type: 'state'},
+            name:          'vcard-select-state',
+            texts: {
+                select:          _('Select'),
+                cancel:          _('Cancel'),
+                all:             _('All'),
+                id:              _('ID'),
+                name:            _('Name'),
+                role:            _('Role'),
+                room:            _('Room'),
+                value:           _('Value'),
+                selectid:        _('Select ID'),
+                from:            _('From'),
+                lc:              _('Last changed'),
+                ts:              _('Time stamp'),
+                wait:            _('Processing...'),
+                ack:             _('Acknowledged'),
+                selectAll:       _('Select all'),
+                unselectAll:     _('Deselect all'),
+                invertSelection: _('Invert selection')
+            },
+            columns: ['image', 'name', 'role', 'room']
+        });
+    }
+
+    function getObjects(callback) {
+        if (objects) {
+            callback && callback(objects);
+        } else {
+            socket.emit('getObjects', function (err, res) {
+                objects = res || {};
+                callback && callback(objects);
+            });
+        }
+    }
+
+    function initSelectId (cb) {
+        if ($selectId) return cb($selectId);
+        getObjects(function () {
+            $selectId = initSelectidHelper(objects);
+            cb && cb($selectId);
+        });
+    }
+
+    function findRole(objs, channel, role) {
+        var regChannel = new RegExp('^' + channel.replace(/\./g, '\\.') + '\\.');
+        var regRole    = new RegExp('^' + role.replace(/\./g, '\\.') + '\\.');
+        for (var id in objs) {
+            if (!objs.hasOwnProperty(id)) continue;
+            if (regChannel.test(id) && objs[id] && objs[id].common && (objs[id].common.role === role || regRole.test(objs[id].common.role))) {
+                return objs[id];
+            }
+        }
+        return null;
+    }
+
+    var categories = {
+        TemperatureSensor: 10,    // Sensor
+        HumiditySensor: 10,       // Sensor
+        Thermostat: 9,            // Thermostat
+        AirQualitySensor: 10,     // Sensor
+        BatteryService: 10,       // Sensor
+        CarbonDioxideSensor: 10,  // Sensor
+        CarbonMonoxideSensor: 10, // Sensor
+        ContactSensor: 10,        // Sensor
+        LightSensor: 10,          // Sensor
+        Door: 12                  // door
     };
+    /*
+    1   Other
+    2  - Bridge
+    3  - Fan
+    4  - Garage door opener
+    5  - Lightbulb
+    6  - Door lock
+    7  - Outlet
+    8  - Switch
+    9  - Thermostat
+    10 - Sensor
+    11 - Alarm system
+    12 - Door
+    13 - Window
+    14 - Window covering
+    15 - Programmable switch
+    16 - Range extender
+    17 - Camera
+    */
+
+    function addSensor(devs, channel, type, services) {
+        var man = channel.split('.').shift();
+        var first;
+        for (var id in services) {
+            if (services.hasOwnProperty(id)) {
+                first = services[id];
+                break;
+            }
+        }
+        if (categories[type] === undefined) {
+            console.log('Unknown category ' + type);
+            return;
+        }
+
+        var device = {
+            manufacturer: man,
+            enabled: true,
+            model: type,
+            name: first ? first.common.name : type,
+            serial: "NO_SERIAL",
+            category: categories[type].toString(),
+            services: [
+                // {
+                //     "name": "Actual temperature",
+                //     "subType": "",
+                //     "type": "TemperatureSensor",
+                //     "characteristics": [
+                //         {
+                //             "name": "Name",
+                //             "enabled": false,
+                //             "inOutFunction": "ioBroker.State",
+                //             "conversionParameters": "",
+                //             "inOutParameters": "hm-rpc.1.JEQ0730962.1.ERROR"
+                //         }
+                //     ]
+                // }
+            ]
+        };
+
+        if (objects[channel] && objects[channel].common) {
+            device.name = objects[channel].common.name || device.name;
+        }
+        for (var s in services) {
+            if (!services.hasOwnProperty(s) || !services[s]) continue;
+            device.services.push({
+                name: device.name,
+                subType: device.name,
+                type: type,
+                characteristics: [
+                    {
+                        name: s,
+                        enabled: true,
+                        inOutFunction: 'ioBroker.State',
+                        conversionParameters: '',
+                        inOutParameters: services[s]._id
+                    }
+                ]
+            });
+        }
+        devs[channel] = device;
+    }
+
+    function findInOutParameters(devs, id) {
+        for (var d = 0; d < devs.length; d++) {
+            var services = devs[d].services;
+            if (services) {
+                for (var s = 0; s < services.length; s++) {
+                    var chars = services[s].characteristics;
+                    if (chars) {
+                        for (var c = 0; c < chars.length; s++) {
+                            if (chars[c].inOutParameters === id) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    function runWizard() {
+        getObjects(function () {
+            var settings = yahkaAdmin.settings;
+            var devices = {};
+            var level;
+            var temp;
+            var hum;
+            var bat;
+
+            for (var id in objects) {
+                if (!objects.hasOwnProperty(id)) continue;
+                var obj = objects[id];
+                if (obj.type === 'state') {
+                    var parts = id.split('.');
+                    parts.pop();
+                    var channel = parts.join('.');
+
+                    if (devices[channel] || findInOutParameters(id) || !obj.common || !obj.common.role) continue;
+
+                    // If temperature sensor
+                    if (obj.common.role === 'value.temperature') {
+                        // try to find level.temperature
+                        level = findRole(objects, channel, 'level.temperature');
+                        if (!level) {
+                            bat = findRole(objects, channel, 'indicator.battery');
+                            addSensor(devices, channel, 'TemperatureSensor', {CurrentTemperature: obj, StatusLowBattery: bat});
+                        } // else skip this device, because it is thermostat
+                    } else if (obj.common.role === 'value.humidity') {
+                        // try to find level.temperature
+                        level = findRole(objects, channel, 'level.temperature');
+                        if (!level) {
+                            bat = findRole(objects, channel, 'indicator.battery');
+                            addSensor(devices, channel, 'HumiditySensor', {CurrentRelativeHumidity: obj, StatusLowBattery: bat});
+                        } // else skip this device, because it is thermostat
+                    } else if (obj.common.role === 'level.temperature') {
+                        // try to find level.temperature
+                        temp = findRole(objects, channel, 'value.temperature');
+                        hum = findRole(objects, channel, 'value.humidity');
+                        // bat = findRole(objects, channel, 'indicator.battery');
+                        addSensor(devices, channel, 'Thermostat', {CurrentTemperature: temp, TargetTemperature: obj, CurrentRelativeHumidity: hum});
+                    } else if (obj.common.role === 'level.dimmer') {
+                        addSensor(devices, channel, 'Lightbulb', {Brightness: obj});
+                    } else if (obj.common.role === 'level.blind') {
+                        addSensor(devices, channel, 'Window', {TargetPosition: obj});
+                    } else if (obj.common.role === 'switch') {
+                        // detect if this switch is not in enums.function.light
+                        addSensor(devices, channel, 'Switch', {On: obj});
+                    } else if (obj.common.role === 'level.brightness') {
+                        bat = findRole(objects, channel, 'indicator.battery');
+                        addSensor(devices, channel, 'LightSensor', {CurrentAmbientLightLevel: obj, StatusLowBattery: bat});
+                    } else if (obj.common.role === 'sensor.window') {
+                        bat = findRole(objects, channel, 'indicator.battery');
+                        addSensor(devices, channel, 'ContactSensor', {ContactSensorState: obj, StatusLowBattery: bat});
+                    } else if (obj.common.role === 'sensor.window') {
+                        bat = findRole(objects, channel, 'indicator.battery');
+                        addSensor(devices, channel, 'ContactSensor', {ContactSensorState: obj, StatusLowBattery: bat});
+                    } else if (obj.common.role === 'sensor.fire') {
+                        bat = findRole(objects, channel, 'indicator.battery');
+                        addSensor(devices, channel, 'SmokeSensor', {SmokeDetected: obj, StatusLowBattery: bat});
+                    }
+                }
+            }
+            for (var ch in devices) {
+                if (devices.hasOwnProperty(ch)) {
+                    settings.bridge.devices.push(devices[ch]);
+                }
+            }
+
+            yahkaAdmin.loadSettings(settings, onChange);
+        });
+    }
 
     // the function loadSettings has to exist ...
-    function load(settings, onChange) {
-        yahkaAdmin.loadSettings(settings, onChange);
+    function load(settings, _onChange) {
+        onChange = _onChange;
+        $('body').on('click', '.id-selector', function () {
+            // get input
+            var $textarea = $(this).parent().parent().find('textarea');
+            var $select = $(this).parent().parent().find('select');
+            initSelectId(function ($sid) {
+                $sid.selectId('show', $textarea.val(), function (newId) {
+                    $sid.hide();
+                    if (newId !== $textarea.val()) {
+                        $textarea.val(newId)[0].dispatchEvent(new Event('input'));
+                        if (!$select.val()) {
+                            $select.val('ioBroker.State')[0].dispatchEvent(new Event('input'));
+                        }
+                    }
+                }).show();
+
+                if (!$sid.find('.dialog-select-member-close').length) {
+                    $sid.append('<div class="dialog-select-member-close">x</div>');
+                    $sid.find('.dialog-select-member-close').click(function () {
+                        $sid.hide();
+                    });
+                }
+            });
+        });
+
+        $('#wizard').click(runWizard);
+
+        yahkaAdmin.loadSettings(settings, _onChange);
     }
 
     // ... and the function save has to exist.
@@ -49,12 +350,17 @@
         yahkaAdmin.saveSettings(callback)
     }
 </script>
+</head>
+<body>
 
 <div id="adapter-container" class="flex-container-col">
     <div>
         <img src="yahka.png" />
         <h3 class="translate" style="display: inline; vertical-align: middle;">iobroker.yahka adapter settings</h3>
-        <div class="translate" data-lang="ConfigDescription">The page below is used to assign ioBroker states to HomeKit characeteristics.</div>
+        <div class="translate" data-lang="ConfigDescription" style="display: inline-block">The page below is used to assign ioBroker states to HomeKit characteristics.</div>
+        <button id="wizard" style="display: inline-block">Wizard</button>
+    </div>
+    <div id="dialog-select-member" style="display: none" data-close-button="true">
     </div>
     <div class="flex-grow flex-container-row bg-white">
         <div class=" flex-grow flex-panel">
@@ -65,51 +371,51 @@
                     </div>
                     <div class="content">
                         <div>
-                            <div class="translate">Bridge name:<span class="edit-hint">descriptive only - displayed in homekit apps. Changes are only recognized after readding the bridge in the app.</span></div>
+                            <div><label class="translate" for="bridge_name">Bridge name:</label><span class="edit-hint translate">descriptive only - displayed in homekit apps. Changes are only recognized after readding the bridge in the app.</span></div>
                             <div class="input control flex-grow margin10">
-                                <input class="full-size" type="text" id="bridge_name"></input>
+                                <input class="full-size" type="text" id="bridge_name"/>
                             </div>
                         </div>
                         <div>
-                            <div class="translate">Manufacturer:<span class="edit-hint">descriptive only - displayed in some homekit apps</span></div>
+                            <div><label class="translate" for="bridge_manufacturer">Manufacturer:</label><span class="edit-hint translate">descriptive only - displayed in some homekit apps</span></div>
                             <div class="input control flex-grow  margin10">
-                                <input class="full-size" type="text" id="bridge_manufacturer"></input>
+                                <input class="full-size" type="text" id="bridge_manufacturer"/>
                             </div>
                         </div>
                         <div>
-                            <div class="translate">Model:<span class="edit-hint">descriptive only - displayed in some homekit apps</span></div>
+                            <div><label class="translate" for="bridge_model">Model:</label><span class="edit-hint translate">descriptive only - displayed in some homekit apps</span></div>
                             <div class="input controlflex-grow  margin10">
-                                <input class="full-size" type="text" id="bridge_model"></input>
+                                <input class="full-size" type="text" id="bridge_model"/>
                             </div>
                         </div>
                         <div>
-                            <div class="translate">Serial:<span class="edit-hint">descriptive only - displayed in some homekit apps</span></div>
+                            <div><label class="translate" for="bridge_serial">Serial:</label><span class="edit-hint translate">descriptive only - displayed in some homekit apps</span></div>
                             <div class="input controlflex-grow  margin10">
-                                <input class="full-size" type="text" id="bridge_serial"></input>
+                                <input class="full-size" type="text" id="bridge_serial"/>
                             </div>
                         </div>
                         <div>
-                            <div class="translate">Username:<span class="edit-hint">needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b></span></div>
+                            <div><label class="translate" for="bridge_username">Username:</label><span class="edit-hint translate">needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b></span></div>
                             <div class="input controlflex-grow  margin10">
-                                <input class="full-size" type="text" id="bridge_username"></input>
+                                <input class="full-size" type="text" id="bridge_username"/>
                             </div>
                         </div>
                         <div>
-                            <div class="translate">Pincode: <span class="edit-hint">needs to be in the form of 123-45-678</span></div>
+                            <div><label class="translate" for="bridge_pincode">Pincode:</label><span class="edit-hint translate">needs to be in the form of 123-45-678</span></div>
                             <div class="input controlflex-grow  margin10">
-                                <input class="full-size" type="text" id="bridge_pincode"></input>
+                                <input class="full-size" type="text" id="bridge_pincode"/>
                             </div>
                         </div>
                         <div>
-                            <div class="translate">Port: <span class="edit-hint">0 = random free port assigned by the operation system (default)</span></div>
+                            <div><label class="translate" for="bridge_port">Port:</label><span class="edit-hint translate">0 = random free port assigned by the operation system (default)</span></div>
                             <div class="input controlflex-grow  margin10">
-                                <input class="full-size" type="number" id="bridge_port"></input>
+                                <input class="full-size" type="number" id="bridge_port"/>
                             </div>
                         </div>
                         <div>
-                            <div class="translate">Verbose Logging: <span class="edit-hint">true = redirect hap-node logging to adapter logging</span></div>
+                            <div><label class="translate" for="bridge_verboseLogging">Verbose Logging:</label><span class="edit-hint translate">true = redirect hap-node logging to adapter logging</span></div>
                             <div class="input controlflex-grow  margin10">
-                                <input class="" type="checkbox" id="bridge_verboseLogging"></input>
+                                <input class="" type="checkbox" id="bridge_verboseLogging"/>
                             </div>
                         </div>                        
                     </div>
@@ -145,7 +451,7 @@
         </div>
     </template>
 
-    <template id="yahka_device_info_panel">
+    <template id="yahka_device_info_panel_template">
         <div class="frame" id="yahka_device_info_panel">
             <div class="heading">
                 <span class="translate">Device Properties</span>
@@ -153,31 +459,37 @@
 
             <div class="content">
                 <div>
-                    <div class="translate">Device name:</div>  
+                    <div><label class="translate" for="device_enabled">Enabled:</label></div>
                     <div class="input control flex-grow margin10">
-                        <input class="full-size" type="text" id="device_name"></input>
+                        <input type="checkbox" id="device_enabled"/>
                     </div>
                 </div>
                 <div>
-                    <div class="translate">Manufacturer:</div>  
+                    <div><label class="translate" for="device_name">Device name:</label></div>
+                    <div class="input control flex-grow margin10">
+                        <input class="full-size" type="text" id="device_name"/>
+                    </div>
+                </div>
+                <div>
+                    <div><label class="translate" for="device_manufacturer">Manufacturer:</label></div>
                     <div class="input control flex-grow  margin10">
-                        <input class="full-size" type="text" id="device_manufacturer"></input>
+                        <input class="full-size" type="text" id="device_manufacturer"/>
                     </div>
                 </div>
                 <div>
-                    <div class="translate">Model:</div>  
+                    <div><label class="translate" for="device_model">Model:</label></div>
                     <div class="input controlflex-grow  margin10">
-                        <input class="full-size" type="text" id="device_model"></input>
+                        <input class="full-size" type="text" id="device_model"/>
                     </div>
                 </div>
                 <div>
-                    <div class="translate">Serial:</div>  
+                    <div><label class="translate" for="device_serial">Serial:</label></div>
                     <div class="input controlflex-grow  margin10">
-                        <input class="full-size" type="text" id="device_serial"></input>
+                        <input class="full-size" type="text" id="device_serial"/>
                     </div>
                 </div> 
                 <div>
-                    <div class="translate">Categeory:</div>
+                    <div><label class="translate" for="device_category">Categeory:</label></div>
                     <div class="input controlflex-grow  margin10">
                         <select class="full-size"  id="device_category"></select>
                     </div>
@@ -194,27 +506,27 @@
             </div>
             <div class="content">
                 <div class="flex-container-row flex-grow flex-align-baseline">
-                    <div >Service name:</div>  
+                    <div><label class="translate" for="service_name">Service name:</label></div>
                     <div class="input control flex-grow margin10">
-                        <input class="full-size" type="text" id="service_name"></input>
+                        <input class="full-size" type="text" id="service_name"/>
                     </div>
-                    <div>Service Type:</div>  
+                    <div><label class="translate" for="service_type">Service Type:</label></div>
                     <div class="input control flex-grow  margin10">
                         <select class="full-size"  id="service_type"></select>
                     </div>
-                    <div>Service Subtype:</div>  
+                    <div><label class="translate" for="service_subtype">Service Subtype:</label></div>
                     <div class="input controlflex-grow  margin10">
-                        <input class="full-size" type="text" id="service_subtype"></input>
+                        <input class="full-size" type="text" id="service_subtype"/>
                     </div>
                 </div>
-                <div><span class="translate">Characteristics Table</span> </div>
+                <div><span class="translate">Characteristics Table</span></div>
                 <div class="table" id="yahka_characteristic_table">
                     <div class="header row">
                         <div class="cell translate">Enabled</div>
                         <div class="cell translate">Name</div>
                         <div class="cell translate">1: InOutFunction / 2: ConversionFunction</div>
                         <div class="cell translate">1: InOutParams / 2: ConversionParams</div>
-                        <div class="cell translate">...</div>
+                        <div class="cell"></div>
                     </div>
                 </div>
             </div>
@@ -236,8 +548,7 @@
                 </div>
                 <div class="cell">
                     <div class="input-control select full-width">
-                        <select id="characteristic_inoutfunction">
-                        </select>
+                        <select id="characteristic_inoutfunction"></select>
                     </div>
                 </div>
                 <div class="cell">
@@ -246,7 +557,7 @@
                     </div>
                 </div>
                 <div class="cell">
-                    <button class="input-control button"><span class="mif-more-horiz"></span></button>
+                    <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
                 </div>
             </div> 
             <div class="row">
@@ -257,8 +568,7 @@
                 </div>
                 <div class="cell">
                     <div class="input-control select full-width">
-                        <select  id="characteristic_conversionfunction">
-                        </select>
+                        <select  id="characteristic_conversionfunction"></select>
                     </div>
                 </div>
                 <div class="cell">
@@ -267,13 +577,11 @@
                     </div>
                 </div>
                 <div class="cell">
-                    <button class="input-control button"><span class="mif-more-horiz"></span></button>
+                    <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
                 </div>
             </div>         
         </div>
     </template>
-
-
-
-
+</div>
+</body>
 </html>
