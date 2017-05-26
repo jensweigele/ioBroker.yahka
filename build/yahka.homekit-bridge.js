@@ -3,7 +3,6 @@ var debug = require("debug");
 debug.enable('*');
 var util = require("util");
 var HAP = require("hap-nodejs");
-exports.HAPAccessory = HAP.Accessory;
 exports.HAPService = HAP.Service;
 exports.HAPCharacteristic = HAP.Characteristic;
 var THomeKitBridge = (function () {

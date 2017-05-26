@@ -5,7 +5,7 @@ import util = require('util');
 import HAP = require('hap-nodejs');
 
 
-export let HAPAccessory:any = HAP.Accessory;
+// export let HAPAccessory:any = HAP.Accessory;
 export let HAPService:any = HAP.Service;
 export let HAPCharacteristic:any = HAP.Characteristic;
 
@@ -130,7 +130,7 @@ export class THomeKitBridge {
     }
 
     private createDevice(device:Configuration.IDeviceConfig) {
-        let deviceID = HAP.uuid.generate(this.config.ident + ':' + device.name)
+        let deviceID = HAP.uuid.generate(this.config.ident + ':' + device.name);
         let hapDevice:any = new HAP.Accessory(device.name, deviceID);
 
 
