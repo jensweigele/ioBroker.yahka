@@ -1,6 +1,6 @@
 /// <reference path="./typings/index.d.ts" />
 import debug = require('debug');
-debug.enable(<any>'*');
+//debug.enable(<any>'*');
 import util = require('util');
 import HAP = require('hap-nodejs');
 
@@ -102,7 +102,12 @@ export class THomeKitBridge {
                     continue;
                 }
                 let hapDevice = this.createDevice(device);
-                this.bridgeObject.addBridgedAccessory(hapDevice);
+                try {
+                    this.bridgeObject.addBridgedAccessory(hapDevice);
+                } catch (e) {
+                    this.FLogger.warn(e);
+                    this.FLogger.warn('Error by adding: ' + JSON.stringify(device));
+                }
             }
 
         this.bridgeObject.publish({

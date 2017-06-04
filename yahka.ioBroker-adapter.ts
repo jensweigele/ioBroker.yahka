@@ -43,7 +43,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
         if (!config.firstTimeInitialized) {
             this.adapter.log.info('first time initialization');
             this.adapter.log.debug('system config:' + JSON.stringify(this.adapter.systemConfig));
-            let hostName = "unknownHostname";
+            let hostName = 'unknownHostname';
             if (this.adapter.systemConfig != undefined)
                 if (this.adapter.systemConfig.system != undefined)
                     if (this.adapter.systemConfig.system.hostname != undefined)
@@ -54,7 +54,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
             bridgeConfig.serial = bridgeConfig.ident;
             let usr = [];
             for (let i = 0; i < 6; i++)
-                usr[i] = ("00" + (Math.floor((Math.random() * 256)).toString(16))).substr(-2);
+                usr[i] = ('00' + (Math.floor((Math.random() * 256)).toString(16))).substr(-2);
             bridgeConfig.username = usr.join(':');
             bridgeConfig.pincode = '123-45-678';
             bridgeConfig.port = 0;
@@ -80,20 +80,20 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
 
     private handleState(id:string, state:ioBroker.IState) {
         // Warning, state can be null if it was deleted
-        this.adapter.log.debug('got a stateChange for [' + id + ']');
         let notifyArray = this.stateToEventMap.get(id);
         if (!notifyArray) {
-            this.adapter.log.debug('nobody subscribed for this state');
+            //this.adapter.log.debug('nobody subscribed for this state');
             return;
         }
+        this.adapter.log.debug('got a stateChange for [' + id + ']');
 
         for (let method of notifyArray)
             method(state);
     }
 
     private handleMessage(obj:any) {
-        if (typeof obj == 'object' && obj.message) {
-            if (obj.command == 'send') {
+        if (typeof obj === 'object' && obj.message) {
+            if (obj.command === 'send') {
                 // Send response in callback if required
                 if (obj.callback)
                     this.adapter.sendTo(obj.from, obj.command, 'Message received', obj.callback);
@@ -118,7 +118,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
             let changeInterceptor = (ioValue:any) => subscriptionRequest.subscriptionEvent(ioValue, changeNotify);
 
 
-            if (subscriptionRequest.subscriptionType == 'state') {
+            if (subscriptionRequest.subscriptionType === 'state') {
                 let existingArray = this.stateToEventMap.get(subscriptionRequest.subscriptionIdentifier);
                 if (!existingArray) {
                     existingArray = [changeInterceptor];

@@ -1,4 +1,5 @@
 "use strict";
+
 var hkBridge = require("./yahka.homekit-bridge");
 var yahka_function_factory_1 = require("./yahka.function-factory");
 function isCustomCharacteristicConfig(config) {
@@ -30,7 +31,7 @@ var TIOBrokerAdapter = (function () {
         if (!config.firstTimeInitialized) {
             this.adapter.log.info('first time initialization');
             this.adapter.log.debug('system config:' + JSON.stringify(this.adapter.systemConfig));
-            var hostName = "unknownHostname";
+            var hostName = 'unknownHostname';
             if (this.adapter.systemConfig != undefined)
                 if (this.adapter.systemConfig.system != undefined)
                     if (this.adapter.systemConfig.system.hostname != undefined)
@@ -40,7 +41,7 @@ var TIOBrokerAdapter = (function () {
             bridgeConfig.serial = bridgeConfig.ident;
             var usr = [];
             for (var i = 0; i < 6; i++)
-                usr[i] = ("00" + (Math.floor((Math.random() * 256)).toString(16))).substr(-2);
+                usr[i] = ('00' + (Math.floor((Math.random() * 256)).toString(16))).substr(-2);
             bridgeConfig.username = usr.join(':');
             bridgeConfig.pincode = '123-45-678';
             bridgeConfig.port = 0;
@@ -60,20 +61,19 @@ var TIOBrokerAdapter = (function () {
         this.adapter.log.info('objectChange ' + id + ' ' + JSON.stringify(obj));
     };
     TIOBrokerAdapter.prototype.handleState = function (id, state) {
-        this.adapter.log.debug('got a stateChange for [' + id + ']');
         var notifyArray = this.stateToEventMap.get(id);
         if (!notifyArray) {
-            this.adapter.log.debug('nobody subscribed for this state');
             return;
         }
+        this.adapter.log.debug('got a stateChange for [' + id + ']');
         for (var _i = 0, notifyArray_1 = notifyArray; _i < notifyArray_1.length; _i++) {
             var method = notifyArray_1[_i];
             method(state);
         }
     };
     TIOBrokerAdapter.prototype.handleMessage = function (obj) {
-        if (typeof obj == 'object' && obj.message) {
-            if (obj.command == 'send') {
+        if (typeof obj === 'object' && obj.message) {
+            if (obj.command === 'send') {
                 if (obj.callback)
                     this.adapter.sendTo(obj.from, obj.command, 'Message received', obj.callback);
             }

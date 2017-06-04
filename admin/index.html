@@ -137,7 +137,11 @@
         CarbonMonoxideSensor: 10, // Sensor
         ContactSensor: 10,        // Sensor
         LightSensor: 10,          // Sensor
-        Door: 12                  // door
+        Door: 12,                 // door
+        Window: 13,               // Blinds without Tilt
+        WindowCovering: 14,       // Blinds with tilts
+        Switch: 8,                // Switch or Lamp
+        Lightbulb: 5,             // Dimmer
     };
     /*
     1   Other
@@ -178,7 +182,7 @@
             enabled: true,
             model: type,
             name: first ? first.common.name : type,
-            serial: "NO_SERIAL",
+            serial: 'NO_SERIAL',
             category: categories[type].toString(),
             services: [
                 // {
