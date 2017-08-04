@@ -35,10 +35,16 @@
     "grunt-contrib-copy": "^1.0.0",
     "grunt-exec": "^1.0.1",
     "grunt-ts": "^6.0.0-beta.3",
-    "typescript": "^2.0.3"
+    "typescript": "^2.0.3",
+    "mocha": "^2.3.4",
+    "chai": "^3.4.1"
   },
   "bugs": {
     "url": "https://github.com/jensweigele/ioBroker.yahka/issues"
   },
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "main": "build/main.js",
+  "scripts": {
+    "test": "node node_modules/mocha/bin/mocha"
+  }
 }

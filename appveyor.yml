@@ -1,0 +1,23 @@
+version: 'test-{build}'
+environment:
+  matrix:
+    - nodejs_version: '0.10'
+    - nodejs_version: '0.12'
+    - nodejs_version: '4'
+    - nodejs_version: '6'
+    - nodejs_version: '8'
+platform:
+  - x86
+  - x64
+clone_folder: 'c:\projects\%APPVEYOR_PROJECT_NAME%'
+install:
+  - ps: 'Install-Product node $env:nodejs_version $env:platform'
+  - npm install
+  - npm install winston@2.3.1
+  - 'npm install https://github.com/ioBroker/ioBroker.js-controller/tarball/master --production'
+test_script:
+  - echo %cd%
+  - node --version
+  - npm --version
+  - npm test
+build: 'off'
