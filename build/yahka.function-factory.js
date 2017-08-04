@@ -1,14 +1,22 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var yahka_homekit_bridge_1 = require('./yahka.homekit-bridge');
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var yahka_homekit_bridge_1 = require("./yahka.homekit-bridge");
 var TIoBrokerInOutFunction_State = (function () {
-    function TIoBrokerInOutFunction_State(adapter, stateName) {
+    function TIoBrokerInOutFunction_State(adapter, stateName, deferredTime) {
+        if (deferredTime === void 0) { deferredTime = 0; }
         this.adapter = adapter;
         this.stateName = stateName;
+        this.deferredTime = deferredTime;
+        this.debounceTimer = -1;
         this.subscriptionRequests = [];
         this.addSubscriptionRequest(stateName);
     }
@@ -56,16 +64,34 @@ var TIoBrokerInOutFunction_State = (function () {
         this.adapter.log.debug('change event from ioBroker via [' + this.stateName + ']' + JSON.stringify(ioState));
         var newValue = this.getValueOnNotify(ioState);
         if (newValue !== undefined)
-            callback(newValue);
+            this.executeCallback(callback, newValue);
         else
             this.adapter.log.debug('state was filtered - notification is canceled');
+    };
+    TIoBrokerInOutFunction_State.prototype.executeCallback = function (callback, plainIOValue) {
+        if (this.deferredTime > 0)
+            this.setupDeferredChangeEvent(callback, plainIOValue);
+        else
+            callback(plainIOValue);
+    };
+    TIoBrokerInOutFunction_State.prototype.setupDeferredChangeEvent = function (callback, plainIOValue) {
+        this.cancelDeferredChangeEvent();
+        this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback, plainIOValue), 150);
+    };
+    TIoBrokerInOutFunction_State.prototype.cancelDeferredChangeEvent = function () {
+        clearTimeout(this.debounceTimer);
+        this.debounceTimer = -1;
+    };
+    TIoBrokerInOutFunction_State.prototype.deferredChangeEvent = function (callback, plainIOValue) {
+        this.adapter.log.debug('[' + this.stateName + '] firing deferred change event:' + JSON.stringify(plainIOValue));
+        callback(plainIOValue);
     };
     return TIoBrokerInOutFunction_State;
 }());
 var TIoBrokerInOutFunction_State_OnlyACK = (function (_super) {
     __extends(TIoBrokerInOutFunction_State_OnlyACK, _super);
     function TIoBrokerInOutFunction_State_OnlyACK() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     TIoBrokerInOutFunction_State_OnlyACK.prototype.getValueOnRead = function (ioState) {
         if (ioState)
@@ -95,24 +121,57 @@ var TIoBrokerInOutFunction_State_OnlyACK = (function (_super) {
     };
     return TIoBrokerInOutFunction_State_OnlyACK;
 }(TIoBrokerInOutFunction_State));
+var TIoBrokerInOutFunction_State_OnlyNotACK = (function (_super) {
+    __extends(TIoBrokerInOutFunction_State_OnlyNotACK, _super);
+    function TIoBrokerInOutFunction_State_OnlyNotACK() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    TIoBrokerInOutFunction_State_OnlyNotACK.prototype.getValueOnRead = function (ioState) {
+        if (ioState)
+            if (ioState.ack) {
+                this.adapter.log.debug("faking CurrentState.Read for [" + this.stateName + ']: ' + JSON.stringify(this.lastNotAcknowledgedValue));
+                return this.lastNotAcknowledgedValue;
+            }
+            else {
+                this.lastNotAcknowledgedValue = ioState.val;
+                return ioState.val;
+            }
+        else
+            return null;
+    };
+    TIoBrokerInOutFunction_State_OnlyNotACK.prototype.getValueOnNotify = function (ioState) {
+        if (ioState)
+            if (!ioState.ack) {
+                this.adapter.log.debug("discarding CurrentState.Notify for [" + this.stateName + ']');
+                return undefined;
+            }
+            else {
+                this.lastNotAcknowledgedValue = ioState.val;
+                return ioState.val;
+            }
+        else
+            return null;
+    };
+    return TIoBrokerInOutFunction_State_OnlyNotACK;
+}(TIoBrokerInOutFunction_State));
 var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = (function (_super) {
     __extends(TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition, _super);
     function TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition(adapter, stateName, workingItem) {
-        var _this = this;
-        _super.call(this, adapter, stateName);
-        this.adapter = adapter;
-        this.stateName = stateName;
-        this.workingItem = workingItem;
-        this.lastWorkingState = false;
-        this.lastAcknowledgedValue = undefined;
-        this.debounceTimer = -1;
-        this.addSubscriptionRequest(workingItem);
+        var _this = _super.call(this, adapter, stateName, 0) || this;
+        _this.adapter = adapter;
+        _this.stateName = stateName;
+        _this.workingItem = workingItem;
+        _this.lastWorkingState = false;
+        _this.lastAcknowledgedValue = undefined;
+        _this.debounceTimer = -1;
+        _this.addSubscriptionRequest(workingItem);
         adapter.getForeignState(workingItem, function (error, ioState) {
             if (ioState)
                 _this.lastWorkingState = ioState.val;
             else
                 _this.lastWorkingState = undefined;
         });
+        return _this;
     }
     TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.subscriptionEvent = function (stateName, ioState, callback) {
         if (!ioState)
@@ -120,25 +179,25 @@ var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = (function (_
         if (stateName == this.workingItem) {
             this.adapter.log.debug('[' + this.stateName + '] got a working item change event: ' + JSON.stringify(ioState));
             this.lastWorkingState = ioState.val;
-            this.setupDeferedChangeEvent(callback);
+            this.setupDeferredChangeEvent(callback);
         }
         else if (stateName == this.stateName) {
             this.adapter.log.debug('[' + this.stateName + '] got a target state change event:' + JSON.stringify(ioState));
             if (ioState.ack) {
                 this.lastAcknowledgedValue = ioState.val;
-                this.setupDeferedChangeEvent(callback);
+                this.setupDeferredChangeEvent(callback);
             }
         }
     };
-    TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.setupDeferedChangeEvent = function (callback) {
-        this.cancelDeferedChangeEvent();
-        this.debounceTimer = setTimeout(this.deferedChangeEvent.bind(this, callback), 150);
+    TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.setupDeferredChangeEvent = function (callback) {
+        this.cancelDeferredChangeEvent();
+        this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback), 150);
     };
-    TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.cancelDeferedChangeEvent = function () {
+    TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.cancelDeferredChangeEvent = function () {
         clearTimeout(this.debounceTimer);
         this.debounceTimer = -1;
     };
-    TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.deferedChangeEvent = function (callback) {
+    TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.deferredChangeEvent = function (callback) {
         if (!this.lastWorkingState) {
             this.adapter.log.debug('[' + this.stateName + '] firing target state change event:' + JSON.stringify(this.lastAcknowledgedValue));
             callback(this.lastAcknowledgedValue);
@@ -155,6 +214,12 @@ var inOutFactory = {
             return undefined;
         var stateName = parameters;
         return new TIoBrokerInOutFunction_State(adapter, stateName);
+    },
+    "ioBroker.State.Defered": function (adapter, parameters) {
+        if (typeof parameters !== "string")
+            return undefined;
+        var stateName = parameters;
+        return new TIoBrokerInOutFunction_State(adapter, stateName, 250);
     },
     "ioBroker.State.OnlyACK": function (adapter, parameters) {
         if (typeof parameters !== "string")
@@ -186,11 +251,11 @@ var inOutFactory = {
     "const": function (adapter, parameters) {
         return {
             toIOBroker: function (ioValue, callback) {
-                console.log('inoutFunc: cons.toIOBroker: ', parameters);
+                console.log('inoutFunc: const.toIOBroker: ', parameters);
                 callback();
             },
             fromIOBroker: function (callback) {
-                console.log('inoutFunc: cons.fromIOBroker: ', parameters);
+                console.log('inoutFunc: const.fromIOBroker: ', parameters);
                 callback(null, parameters);
             },
             subscriptionRequests: []
@@ -252,6 +317,64 @@ var conversionFactory = {
                         break;
                 }
                 adapter.log.debug('HomematicDirectionToHomekitPositionState.toIOBroker, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
+                return result;
+            }
+        };
+    },
+    "HomematicControlModeToHomekitHeathingCoolingState": function (adapter, parameters) {
+        return {
+            toHomeKit: function (value) {
+                var num = undefined;
+                if (typeof value !== 'number')
+                    num = parseInt(value);
+                else
+                    num = value;
+                var result = undefined;
+                switch (num) {
+                    case 0:
+                        result = yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.AUTO;
+                        break;
+                    case 1:
+                        result = yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.HEAT;
+                        break;
+                    case 2:
+                        result = yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.HEAT;
+                        break;
+                    case 3:
+                        result = yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.HEAT;
+                        break;
+                    default:
+                        result = yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.OFF;
+                        break;
+                }
+                adapter.log.debug('HomematicDirectionToHomekitHeatingCoolingState.toHomeKit, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
+                return result;
+            },
+            toIOBroker: function (value) {
+                var num = undefined;
+                if (typeof value !== 'number')
+                    num = parseInt(value);
+                else
+                    num = value;
+                var result = undefined;
+                switch (num) {
+                    case yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.OFF:
+                        result = 0;
+                        break;
+                    case yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.HEAT:
+                        result = 1;
+                        break;
+                    case yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.COOL:
+                        result = 0;
+                        break;
+                    case yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.AUTO:
+                        result = 0;
+                        break;
+                    default:
+                        result = 0;
+                        break;
+                }
+                adapter.log.debug('HomematicDirectionToHomekitHeatingCoolingState.toIOBroker, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
                 return result;
             }
         };

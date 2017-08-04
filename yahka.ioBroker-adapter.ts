@@ -1,33 +1,30 @@
 import {IInOutFunction} from './yahka.homekit-bridge';
 /// <reference path="./typings/index.d.ts" />
 import * as hkBridge from './yahka.homekit-bridge';
-import * as mac from './node_modules/macaddress';
+// import * as mac from './node_modules/macaddress';
 import {functionFactory, IInternalInOutFunction} from './yahka.function-factory';
 
 interface ICustomCharacteristicConfig extends hkBridge.Configuration.ICharacteristicConfig {
-    conversionFunction?: string;
-    conversionParameters?: any;
-    inOutFunction?: string;
-    inOutParameters?: any;
+    conversionFunction?:string;
+    conversionParameters?:any;
+    inOutFunction?:string;
+    inOutParameters?:any;
 }
 
-function isCustomCharacteristicConfig(config: hkBridge.Configuration.ICharacteristicConfig): config is ICustomCharacteristicConfig {
+function isCustomCharacteristicConfig(config:hkBridge.Configuration.ICharacteristicConfig):config is ICustomCharacteristicConfig {
     if (!config)
         return false;
     let myConfig = <ICustomCharacteristicConfig>config;
     return (myConfig.inOutFunction !== undefined) || (myConfig.conversionFunction !== undefined) || (myConfig.inOutParameters !== undefined);
 }
 
-
-
-
-
 export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
-    stateToEventMap: Map<string, hkBridge.IInOutChangeNotify[]> = new Map<string, hkBridge.IInOutChangeNotify[]>();
-    objectToEventMap: Map<string, hkBridge.IInOutChangeNotify[]> = new Map<string, hkBridge.IInOutChangeNotify[]>();
-    bridge: hkBridge.THomeKitBridge = undefined;
+    stateToEventMap:Map<string, hkBridge.IInOutChangeNotify[]> = new Map<string, hkBridge.IInOutChangeNotify[]>();
+    objectToEventMap:Map<string, hkBridge.IInOutChangeNotify[]> = new Map<string, hkBridge.IInOutChangeNotify[]>();
+    bridge:hkBridge.THomeKitBridge = undefined;
+    verboseHAPLogging:boolean = false;
 
-    constructor(private adapter: ioBroker.IAdapter, private controllerPath) {
+    constructor(private adapter:ioBroker.IAdapter, private controllerPath) {
         adapter.on('ready', this.adapterReady.bind(this));
         adapter.on('objectChange', this.handleObjectChange.bind(this));
         adapter.on('stateChange', this.handleState.bind(this));
@@ -36,62 +33,67 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
     }
 
     private adapterReady() {
-        hkBridge.initHAP(this.controllerPath + '/' + this.adapter.systemConfig.dataDir + this.adapter.name + '.' + this.adapter.instance + '.hapdata');
+        hkBridge.initHAP(this.controllerPath + '/' + this.adapter.systemConfig.dataDir + this.adapter.name + '.' + this.adapter.instance + '.hapdata', this.handleHAPLogEvent.bind(this));
 
         this.adapter.log.info('adapter ready, checking config');
         let saveAdapterConfig = false;
         let config = this.adapter.config;
 
-        let bridgeConfig: hkBridge.Configuration.IBridgeConfig = config.bridge;
-        if(!config.firstTimeInitialized) {
-            this.adapter.log.info('first time initialization, system config:' + JSON.stringify(this.adapter.systemConfig));
-            let hostName = "unknownHostname";
-            if(this.adapter.systemConfig != undefined)
-                if(this.adapter.systemConfig.system != undefined)
-                    if(this.adapter.systemConfig.system.hostname != undefined)
+        let bridgeConfig:hkBridge.Configuration.IBridgeConfig = config.bridge;
+        if (!config.firstTimeInitialized) {
+            this.adapter.log.info('first time initialization');
+            this.adapter.log.debug('system config:' + JSON.stringify(this.adapter.systemConfig));
+            let hostName = 'unknownHostname';
+            if (this.adapter.systemConfig != undefined)
+                if (this.adapter.systemConfig.system != undefined)
+                    if (this.adapter.systemConfig.system.hostname != undefined)
                         hostName = this.adapter.systemConfig.system.hostname;
 
             bridgeConfig.ident = hostName + ':' + this.adapter.name + '.' + this.adapter.instance;
             bridgeConfig.name = bridgeConfig.ident;
-            bridgeConfig.serial = bridgeConfig.ident;  
+            bridgeConfig.serial = bridgeConfig.ident;
             let usr = [];
-            for(let i = 0; i < 6; i++)
-                usr[i] = ("00" + (Math.floor((Math.random() * 256) ).toString(16))).substr(-2);
+            for (let i = 0; i < 6; i++)
+                usr[i] = ('00' + (Math.floor((Math.random() * 256)).toString(16))).substr(-2);
             bridgeConfig.username = usr.join(':');
             bridgeConfig.pincode = '123-45-678';
             bridgeConfig.port = 0;
+            bridgeConfig.verboseLogging = false;
             config.firstTimeInitialized = true;
-            this.adapter.extendForeignObject('system.adapter.' + this.adapter.name + '.' + this.adapter.instance, { native: config }, undefined);
+            this.adapter.extendForeignObject('system.adapter.' + this.adapter.name + '.' + this.adapter.instance, {native: config}, undefined);
         }
-        
+        this.verboseHAPLogging = bridgeConfig.verboseLogging == true;
+
         this.adapter.log.info('creating bridge');
-        this.bridge = new hkBridge.THomeKitBridge(config.bridge, this);
+        this.bridge = new hkBridge.THomeKitBridge(config.bridge, this, this.adapter.log);
     }
 
-    private handleObjectChange(id: string, obj:ioBroker.IObject) {
+    private handleHAPLogEvent(message) {
+        if (this.verboseHAPLogging)
+            this.adapter.log.debug(message);
+    }
+
+    private handleObjectChange(id:string, obj:ioBroker.IObject) {
         // Warning, obj can be null if it was deleted
         this.adapter.log.info('objectChange ' + id + ' ' + JSON.stringify(obj));
     }
 
-    private handleState(id: string, state: ioBroker.IState) {
+    private handleState(id:string, state:ioBroker.IState) {
         // Warning, state can be null if it was deleted
-        this.adapter.log.debug('got a stateChange for [' + id + ']');
         let notifyArray = this.stateToEventMap.get(id);
-        if(!notifyArray) {
-            this.adapter.log.debug('nobody subscribed for this state');
+        if (!notifyArray) {
+            //this.adapter.log.debug('nobody subscribed for this state');
             return;
         }
-        
-        for(let method of notifyArray) 
+        this.adapter.log.debug('got a stateChange for [' + id + ']');
+
+        for (let method of notifyArray)
             method(state);
     }
 
-    private handleMessage(obj: any) {
-        if (typeof obj == 'object' && obj.message) {
-            if (obj.command == 'send') {
-                // e.g. send email or pushover or whatever
-                console.log('send command');
-
+    private handleMessage(obj:any) {
+        if (typeof obj === 'object' && obj.message) {
+            if (obj.command === 'send') {
                 // Send response in callback if required
                 if (obj.callback)
                     this.adapter.sendTo(obj.from, obj.command, 'Message received', obj.callback);
@@ -108,17 +110,17 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
         }
     }
 
-    private handleInOutSubscriptionRequest(inOutFunction: IInternalInOutFunction, changeNotify: hkBridge.IInOutChangeNotify) {
+    private handleInOutSubscriptionRequest(inOutFunction:IInternalInOutFunction, changeNotify:hkBridge.IInOutChangeNotify) {
         if (inOutFunction.subscriptionRequests.length == 0)
             return;
 
-        for(let subscriptionRequest of inOutFunction.subscriptionRequests) {
-            let changeInterceptor = (ioValue: any) => subscriptionRequest.subscriptionEvent(ioValue, changeNotify);
-        
+        for (let subscriptionRequest of inOutFunction.subscriptionRequests) {
+            let changeInterceptor = (ioValue:any) => subscriptionRequest.subscriptionEvent(ioValue, changeNotify);
 
-            if(subscriptionRequest.subscriptionType == 'state') {
+
+            if (subscriptionRequest.subscriptionType === 'state') {
                 let existingArray = this.stateToEventMap.get(subscriptionRequest.subscriptionIdentifier);
-                if(!existingArray) {
+                if (!existingArray) {
                     existingArray = [changeInterceptor];
                     this.stateToEventMap.set(subscriptionRequest.subscriptionIdentifier, existingArray);
                 } else
@@ -129,24 +131,24 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
             } else {
                 this.adapter.log.warn('unknown subscription type: ' + subscriptionRequest.subscriptionType);
             }
-        } 
+        }
 
     }
 
-    public CreateBinding(characteristicConfig: hkBridge.Configuration.ICharacteristicConfig, changeNotify: hkBridge.IInOutChangeNotify): hkBridge.IHomeKitBridgeBinding {
-        if(isCustomCharacteristicConfig(characteristicConfig)) {
+    public CreateBinding(characteristicConfig:hkBridge.Configuration.ICharacteristicConfig, changeNotify:hkBridge.IInOutChangeNotify):hkBridge.IHomeKitBridgeBinding {
+        if (isCustomCharacteristicConfig(characteristicConfig)) {
             let inoutFunc = functionFactory.createInOutFunction(this.adapter, characteristicConfig.inOutFunction, characteristicConfig.inOutParameters);
-            if(inoutFunc === undefined) { 
+            if (inoutFunc === undefined) {
                 this.adapter.log.error('[' + characteristicConfig.name + '] could not create inout-function: ' + characteristicConfig.inOutFunction + ' with params: ' + JSON.stringify(characteristicConfig.inOutParameters));
                 return undefined;
             }
 
             let convFunc = functionFactory.createConversionFunction(this.adapter, characteristicConfig.conversionFunction, characteristicConfig.conversionParameters);
-            if(convFunc === undefined) { 
+            if (convFunc === undefined) {
                 this.adapter.log.error('[' + characteristicConfig.name + '] could not create conversion-function: ' + characteristicConfig.conversionFunction + ' with params: ' + JSON.stringify(characteristicConfig.conversionParameters));
                 return undefined;
             }
-            
+
             this.handleInOutSubscriptionRequest(inoutFunc, changeNotify);
             return {
                 conversion: convFunc,
