@@ -52,7 +52,7 @@
   "bugs": {
     "url": "https://github.com/jensweigele/ioBroker.yahka/issues"
   },
-  "main": "main.js",
+  "main": "build/main.js",
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha"
   },
