@@ -30,6 +30,24 @@ function getControllerDir(isInstall) {
                 process.exit();
             }
         }
+    } else if (controllerDir[controllerDir.length - 4] === 'adapter') {
+        controllerDir.splice(controllerDir.length - 4, 4);
+        controllerDir = controllerDir.join('/');
+    } else if (controllerDir[controllerDir.length - 4] === 'node_modules') {
+        controllerDir.splice(controllerDir.length - 4, 4);
+        controllerDir = controllerDir.join('/');
+        if (fs.existsSync(controllerDir + '/node_modules/' + appName + '.js-controller')) {
+            controllerDir += '/node_modules/' + appName + '.js-controller';
+        } else if (fs.existsSync(controllerDir + '/node_modules/' + appName.toLowerCase() + '.js-controller')) {
+            controllerDir += '/node_modules/' + appName.toLowerCase() + '.js-controller';
+        } else if (!fs.existsSync(controllerDir + '/controller.js')) {
+            if (!isInstall) {
+                console.log('Cannot find js-controller');
+                process.exit(10);
+            } else {
+                process.exit();
+            }
+        }
     } else {
         if (!isInstall) {
             console.log('Cannot find js-controller');
