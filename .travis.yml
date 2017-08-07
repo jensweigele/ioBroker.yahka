@@ -14,7 +14,6 @@ before_install:
 before_script:
   - npm install winston@2.3.1
   - 'npm install https://github.com/ioBroker/ioBroker.js-controller/tarball/master --production'
-  - cp -R build/* ./
 addons:
   apt:
     sources:
