@@ -12,7 +12,28 @@ Sometimes additonal libriaries are required:
 ```
 sudo apt-get install libavahi-compat-libdnssd-dev
 ```
-
+if you have error :
+```
+Error:	2016-07-26 18:57:17.989	error	at Error (native)
+Error:	2016-07-26 18:57:17.989	error	dns service error: unknown
+uncaught	2016-07-26 18:57:17.985	error	exception: dns service error: unknown
+```
+install avahi-daemin
+```
+sudo apt-get install avahi-daemon -y
+```
+and edit avahi-daemon.conf 
+```
+sudo nano avahi-daemon.conf 
+```
+set:
+```
+host-name=orangepi2plus
+domain-name=local
+use-ipv4=yes
+use-ipv6=yes
+enable-dbus=yes
+```
 ## Usage
 
 What is???:
