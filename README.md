@@ -18,7 +18,7 @@ Error:	2016-07-26 18:57:17.989	error	at Error (native)
 Error:	2016-07-26 18:57:17.989	error	dns service error: unknown
 uncaught	2016-07-26 18:57:17.985	error	exception: dns service error: unknown
 ```
-install avahi-daemin
+install avahi-daemon
 ```
 sudo apt-get install avahi-daemon -y
 ```
