@@ -19,7 +19,7 @@ install:
   - bonjoursdksetup.exe /quiet
   - del bonjoursdksetup.exe
   - set BONJOUR_SDK_HOME=C:\Program Files\Bonjour SDK
-  - ps: 'Get-ChildItem Env:'
+  - npm install -S curve25519-n2
   - npm install
   - npm install winston@2.3.1
   - 'npm install https://github.com/ioBroker/ioBroker.js-controller/tarball/master --production'
