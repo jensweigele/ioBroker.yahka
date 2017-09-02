@@ -18,6 +18,7 @@ install:
   - appveyor DownloadFile https://www.samuelattard.com/files/bonjoursdksetup.exe
   - bonjoursdksetup.exe /quiet
   - del bonjoursdksetup.exe
+  - set BONJOUR_SDK_HOME=C:\Program Files\Bonjour SDK
   - ps: 'Get-ChildItem Env:'
   - npm install
   - npm install winston@2.3.1
