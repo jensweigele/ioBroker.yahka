@@ -9,10 +9,11 @@
                 "ru": "Увеличен размер окна настроек"
             }
         },
-        "title": "Javascript/Node.js based yahka adapter",
+        "title": "Homekit yahka adapter",
         "desc": {
             "en": "ioBroker yet another homekit adapter",
-            "de": "ioBroker yet another homekit adapter"
+            "de": "ioBroker yet another homekit adapter",
+            "ru": "ioBroker Homekit адаптер"
         },
         "platform": "Javascript/Node.js",
         "mode": "daemon",
