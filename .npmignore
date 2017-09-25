@@ -5,3 +5,5 @@ node_modules
 .git
 /node_modules
 test
+.travis.yml
+appveyor.yml
