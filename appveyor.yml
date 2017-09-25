@@ -1,8 +1,6 @@
 version: 'test-{build}'
 environment:
   matrix:
-    - nodejs_version: '0.10'
-    - nodejs_version: '0.12'
     - nodejs_version: '4'
     - nodejs_version: '6'
     - nodejs_version: '8'
@@ -18,6 +16,7 @@ install:
   - appveyor DownloadFile https://www.samuelattard.com/files/bonjoursdksetup.exe
   - bonjoursdksetup.exe /quiet
   - del bonjoursdksetup.exe
+  - set BONJOUR_SDK_HOME=C:\Program Files\Bonjour SDK
   - npm install
   - npm install winston@2.3.1
   - 'npm install https://github.com/ioBroker/ioBroker.js-controller/tarball/master --production'
