@@ -43,10 +43,19 @@ var TIoBrokerInOutFunction_State = (function () {
     TIoBrokerInOutFunction_State.prototype.toIOBroker = function (plainIoValue, callback) {
         var _this = this;
         this.adapter.log.debug('writing state to ioBroker [' + this.stateName + ']: ' + JSON.stringify(plainIoValue));
-        this.adapter.setForeignState(this.stateName, plainIoValue, false, function (error) {
-            if (error)
-                _this.adapter.log.error('setForeignState error [' + _this.stateName + '] to [' + JSON.stringify(plainIoValue) + ']: ' + error);
-            callback();
+
+        this.adapter.getForeignState(_this.stateName, function (error, ioState) {
+					var value = _this.getValueOnRead(ioState);
+					_this.adapter.log.debug('checking value change: ' + value + ' to ' + plainIoValue);
+					
+					// set state only, when changed (prevents setting brightness on hue lamps)
+					if (value !== plainIoValue) {
+						_this.adapter.setForeignState(_this.stateName, plainIoValue, false, function (error) {
+								if (error)
+										_this.adapter.log.error('setForeignState error [' + _this.stateName + '] to [' + JSON.stringify(plainIoValue) + ']: ' + error);
+						});
+					}
+					callback();
         });
     };
     TIoBrokerInOutFunction_State.prototype.fromIOBroker = function (callback) {
@@ -267,6 +276,34 @@ var conversionFactory = {
         return {
             toHomeKit: function (value) { return value; },
             toIOBroker: function (value) { return value; }
+        };
+    },
+    "level255": function (adapter, parameters) {
+        return {
+            toHomeKit: function (value) { 
+							var newValue = Math.round((value / 255.0) * 100.0, 0);
+							adapter.log.debug('level255: converting value to homekit: ' + value + ' to ' + newValue); 
+							return newValue; 
+						},
+            toIOBroker: function (value) { 
+							var newValue = Math.round((value / 100.0) * 255.0, 0);
+							adapter.log.debug('level255: converting value to ioBroker: ' + value + ' to ' + newValue); 
+							return newValue; 
+						}
+        };
+    },
+    "hue": function (adapter, parameters) {
+        return {
+            toHomeKit: function (value) { 
+							var newValue = Math.round((value / 65535.0) * 360.0, 0);
+							adapter.log.debug('hue: converting value to homekit: ' + value + ' to ' + newValue); 
+							return newValue; 
+						},
+            toIOBroker: function (value) { 
+							var newValue = Math.round((value / 360.0) * 65535.0, 0);
+							adapter.log.debug('hue: converting value to ioBroker: ' + value + ' to ' + newValue); 
+							return newValue; 
+						}
         };
     },
     "HomematicDirectionToHomekitPositionState": function (adapter, parameters) {

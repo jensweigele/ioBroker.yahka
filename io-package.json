@@ -52,7 +52,7 @@
             "_id": "yahka.meta._conversionFunctions",
             "type": "meta",
             "common": {},
-            "native": ["", "passthrough", "HomematicDirectionToHomekitPositionState", "HomematicControlModeToHomekitHeathingCoolingState"]
+            "native": ["", "hue", "level255", "passthrough", "HomematicDirectionToHomekitPositionState", "HomematicControlModeToHomekitHeathingCoolingState"]
         },
         {
             "_id": "yahka.meta._accessoryCategories",
