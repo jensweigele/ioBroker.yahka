@@ -27,12 +27,18 @@
         "readme": "https://github.com/jensweigele/ioBroker.yahka/blob/master/README.md",
         "loglevel": "info",
         "type": "iot-systems",
-        "config":{
+        "config": {
             "minWidth": 800,
             "width ": 1440,
             "minHeight": 600,
             "height ": 860
-        }
+        },
+        "authors": [
+            {
+                "name": "Jens Weigele",
+                "email": "iobroker.yahka@gmail.com"
+            }
+        ]
     },
     "native": {
         "firstTimeInitialized": false,
@@ -40,42 +46,108 @@
             "devices": []
         }
     },
-
     "objects": [
         {
             "_id": "yahka.meta._inoutFunctions",
             "type": "meta",
             "common": {},
-            "native": ["", "const", "ioBroker.State", "ioBroker.State.Defered", "ioBroker.State.OnlyACK", "ioBroker.homematic.WindowCovering.TargetPosition"]
+            "native": [
+                "",
+                "const",
+                "ioBroker.State",
+                "ioBroker.State.Defered",
+                "ioBroker.State.OnlyACK",
+                "ioBroker.homematic.WindowCovering.TargetPosition"
+            ]
         },
         {
             "_id": "yahka.meta._conversionFunctions",
             "type": "meta",
             "common": {},
+<<<<<<< HEAD
             "native": ["", "hue", "level255", "passthrough", "HomematicDirectionToHomekitPositionState", "HomematicControlModeToHomekitHeathingCoolingState"]
+=======
+            "native": [
+                "",
+                "passthrough",
+                "HomematicDirectionToHomekitPositionState",
+                "HomematicControlModeToHomekitHeathingCoolingState"
+            ]
+>>>>>>> update io-package.json
         },
         {
             "_id": "yahka.meta._accessoryCategories",
             "type": "meta",
             "common": {},
             "native": {
-                "1": { "text": "Other", "icon": "mif-question" },
-                "2": { "text": "Bridge", "icon": "mif-tree" },
-                "3": { "text": "Fan", "icon": "mif-air" },
-                "4": { "text": "Garage door opener", "icon": "mif-dialpad" },
-                "5": { "text": "Lightbulb", "icon": "mif-dialpad" },
-                "6": { "text": "Door lock", "icon": "mif-lock" },
-                "7": { "text": "Outlet", "icon": "mif-dialpad" },
-                "8": { "text": "Switch", "icon": "mif-switch" },
-                "9": { "text": "Thermostat", "icon": "mif-thermometer" },
-                "10": { "text": "Sensor", "icon": "mif-dialpad" },
-                "11": { "text": "Alarm system", "icon": "mif-bell" },
-                "12": { "text": "Door", "icon": "mif-dialpad" },
-                "13": { "text": "Window", "icon": "mif-dialpad" },
-                "14": { "text": "Window covering", "icon": "mif-dialpad" },
-                "15": { "text": "Programmable switch", "icon": "mif-switch" },
-                "16": { "text": "Range extender", "icon": "mif-share" },
-                "17": { "text": "Camera", "icon": "mif-video-camera" }
+                "1": {
+                    "text": "Other",
+                    "icon": "mif-question"
+                },
+                "2": {
+                    "text": "Bridge",
+                    "icon": "mif-tree"
+                },
+                "3": {
+                    "text": "Fan",
+                    "icon": "mif-air"
+                },
+                "4": {
+                    "text": "Garage door opener",
+                    "icon": "mif-dialpad"
+                },
+                "5": {
+                    "text": "Lightbulb",
+                    "icon": "mif-dialpad"
+                },
+                "6": {
+                    "text": "Door lock",
+                    "icon": "mif-lock"
+                },
+                "7": {
+                    "text": "Outlet",
+                    "icon": "mif-dialpad"
+                },
+                "8": {
+                    "text": "Switch",
+                    "icon": "mif-switch"
+                },
+                "9": {
+                    "text": "Thermostat",
+                    "icon": "mif-thermometer"
+                },
+                "10": {
+                    "text": "Sensor",
+                    "icon": "mif-dialpad"
+                },
+                "11": {
+                    "text": "Alarm system",
+                    "icon": "mif-bell"
+                },
+                "12": {
+                    "text": "Door",
+                    "icon": "mif-dialpad"
+                },
+                "13": {
+                    "text": "Window",
+                    "icon": "mif-dialpad"
+                },
+                "14": {
+                    "text": "Window covering",
+                    "icon": "mif-dialpad"
+                },
+                "15": {
+                    "text": "Programmable switch",
+                    "icon": "mif-switch"
+                },
+                "16": {
+                    "text": "Range extender",
+                    "icon": "mif-share"
+                },
+                "17": {
+                    "text": "Camera",
+                    "icon": "mif-video-camera"
+                }
             }
         },
         {
