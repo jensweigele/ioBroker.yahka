@@ -6,7 +6,8 @@
         "**/.hg": true,
         "**/.DS_Store": true,
         "**/*.js.map": true,
-        "build": true
+        "build": true,
+        "node_modules": true
     },
     "search.exclude": {
         "**/node_modules": true,
