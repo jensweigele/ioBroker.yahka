@@ -1,5 +1,4 @@
 "use strict";
-
 var hkBridge = require("./yahka.homekit-bridge");
 var yahka_function_factory_1 = require("./yahka.function-factory");
 function isCustomCharacteristicConfig(config) {
@@ -93,7 +92,7 @@ var TIOBrokerAdapter = (function () {
             return;
         var _loop_1 = function (subscriptionRequest) {
             var changeInterceptor = function (ioValue) { return subscriptionRequest.subscriptionEvent(ioValue, changeNotify); };
-            if (subscriptionRequest.subscriptionType == 'state') {
+            if (subscriptionRequest.subscriptionType === 'state') {
                 var existingArray = this_1.stateToEventMap.get(subscriptionRequest.subscriptionIdentifier);
                 if (!existingArray) {
                     existingArray = [changeInterceptor];

@@ -1,8 +1,13 @@
 {
     "common": {
         "name": "yahka",
-        "version": "0.5.5",
+        "version": "0.6.0",
         "news": {
+            "0.6.0": {
+                "en": "",
+                "de": "",
+                "ru": ""
+            },
             "0.5.5": {
                 "en": "Make a config dialog bigger",
                 "de": "Config-Dialog ist vergrößert",

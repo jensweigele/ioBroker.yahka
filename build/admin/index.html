@@ -137,7 +137,11 @@
         CarbonMonoxideSensor: 10, // Sensor
         ContactSensor: 10,        // Sensor
         LightSensor: 10,          // Sensor
-        Door: 12                  // door
+        Door: 12,                 // door
+        Window: 13,               // Blinds without Tilt
+        WindowCovering: 14,       // Blinds with tilts
+        Switch: 8,                // Switch or Lamp
+        Lightbulb: 5,             // Dimmer
     };
     /*
     1   Other
@@ -170,7 +174,7 @@
         }
         if (categories[type] === undefined) {
             console.log('Unknown category ' + type);
-            return;
+            return 0;
         }
 
         var device = {
@@ -178,7 +182,7 @@
             enabled: true,
             model: type,
             name: first ? first.common.name : type,
-            serial: "NO_SERIAL",
+            serial: 'NO_SERIAL',
             category: categories[type].toString(),
             services: [
                 // {
@@ -201,8 +205,10 @@
         if (objects[channel] && objects[channel].common) {
             device.name = objects[channel].common.name || device.name;
         }
+        var count = 0;
         for (var s in services) {
             if (!services.hasOwnProperty(s) || !services[s]) continue;
+            count++;
             device.services.push({
                 name: device.name,
                 subType: device.name,
@@ -219,6 +225,7 @@
             });
         }
         devs[channel] = device;
+        return count;
     }
 
     function findInOutParameters(devs, id) {
@@ -248,6 +255,7 @@
             var temp;
             var hum;
             var bat;
+            var count = 0;
 
             for (var id in objects) {
                 if (!objects.hasOwnProperty(id)) continue;
@@ -265,40 +273,40 @@
                         level = findRole(objects, channel, 'level.temperature');
                         if (!level) {
                             bat = findRole(objects, channel, 'indicator.battery');
-                            addSensor(devices, channel, 'TemperatureSensor', {CurrentTemperature: obj, StatusLowBattery: bat});
+                            count += addSensor(devices, channel, 'TemperatureSensor', {CurrentTemperature: obj, StatusLowBattery: bat});
                         } // else skip this device, because it is thermostat
                     } else if (obj.common.role === 'value.humidity') {
                         // try to find level.temperature
                         level = findRole(objects, channel, 'level.temperature');
                         if (!level) {
                             bat = findRole(objects, channel, 'indicator.battery');
-                            addSensor(devices, channel, 'HumiditySensor', {CurrentRelativeHumidity: obj, StatusLowBattery: bat});
+                            count += addSensor(devices, channel, 'HumiditySensor', {CurrentRelativeHumidity: obj, StatusLowBattery: bat});
                         } // else skip this device, because it is thermostat
                     } else if (obj.common.role === 'level.temperature') {
                         // try to find level.temperature
                         temp = findRole(objects, channel, 'value.temperature');
                         hum = findRole(objects, channel, 'value.humidity');
                         // bat = findRole(objects, channel, 'indicator.battery');
-                        addSensor(devices, channel, 'Thermostat', {CurrentTemperature: temp, TargetTemperature: obj, CurrentRelativeHumidity: hum});
+                        count += addSensor(devices, channel, 'Thermostat', {CurrentTemperature: temp, TargetTemperature: obj, CurrentRelativeHumidity: hum});
                     } else if (obj.common.role === 'level.dimmer') {
-                        addSensor(devices, channel, 'Lightbulb', {Brightness: obj});
+                        count += addSensor(devices, channel, 'Lightbulb', {Brightness: obj});
                     } else if (obj.common.role === 'level.blind') {
-                        addSensor(devices, channel, 'Window', {TargetPosition: obj});
+                        count += addSensor(devices, channel, 'Window', {TargetPosition: obj});
                     } else if (obj.common.role === 'switch') {
                         // detect if this switch is not in enums.function.light
-                        addSensor(devices, channel, 'Switch', {On: obj});
+                        count += addSensor(devices, channel, 'Switch', {On: obj});
                     } else if (obj.common.role === 'level.brightness') {
                         bat = findRole(objects, channel, 'indicator.battery');
-                        addSensor(devices, channel, 'LightSensor', {CurrentAmbientLightLevel: obj, StatusLowBattery: bat});
+                        count += addSensor(devices, channel, 'LightSensor', {CurrentAmbientLightLevel: obj, StatusLowBattery: bat});
                     } else if (obj.common.role === 'sensor.window') {
                         bat = findRole(objects, channel, 'indicator.battery');
-                        addSensor(devices, channel, 'ContactSensor', {ContactSensorState: obj, StatusLowBattery: bat});
+                        count += addSensor(devices, channel, 'ContactSensor', {ContactSensorState: obj, StatusLowBattery: bat});
                     } else if (obj.common.role === 'sensor.window') {
                         bat = findRole(objects, channel, 'indicator.battery');
-                        addSensor(devices, channel, 'ContactSensor', {ContactSensorState: obj, StatusLowBattery: bat});
+                        count += addSensor(devices, channel, 'ContactSensor', {ContactSensorState: obj, StatusLowBattery: bat});
                     } else if (obj.common.role === 'sensor.fire') {
                         bat = findRole(objects, channel, 'indicator.battery');
-                        addSensor(devices, channel, 'SmokeSensor', {SmokeDetected: obj, StatusLowBattery: bat});
+                        count += addSensor(devices, channel, 'SmokeSensor', {SmokeDetected: obj, StatusLowBattery: bat});
                     }
                 }
             }
@@ -309,6 +317,10 @@
             }
 
             yahkaAdmin.loadSettings(settings, onChange);
+
+            if (count) {
+                onChange();
+            }
         });
     }
 
