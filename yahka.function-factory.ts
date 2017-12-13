@@ -51,7 +51,7 @@ class TIoBrokerInOutFunction_State implements IInternalInOutFunction {
 
     toIOBroker(plainIoValue, callback) {
         this.adapter.log.debug('writing state to ioBroker [' + this.stateName + ']: ' + JSON.stringify(plainIoValue));
-        this.adapter.getForeignState(this.stateName, function (error, ioState) {
+        this.adapter.getForeignState(this.stateName, (error, ioState) =>  {
             let value = this.getValueOnRead(ioState);
             let valueChanged = value !== plainIoValue;
             this.adapter.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(plainIoValue) + ' = ' + valueChanged);

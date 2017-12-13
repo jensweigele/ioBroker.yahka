@@ -42,14 +42,14 @@ var TIoBrokerInOutFunction_State = (function () {
             return null;
     };
     TIoBrokerInOutFunction_State.prototype.toIOBroker = function (plainIoValue, callback) {
+        var _this = this;
         this.adapter.log.debug('writing state to ioBroker [' + this.stateName + ']: ' + JSON.stringify(plainIoValue));
         this.adapter.getForeignState(this.stateName, function (error, ioState) {
-            var _this = this;
-            var value = this.getValueOnRead(ioState);
+            var value = _this.getValueOnRead(ioState);
             var valueChanged = value !== plainIoValue;
-            this.adapter.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(plainIoValue) + ' = ' + valueChanged);
+            _this.adapter.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(plainIoValue) + ' = ' + valueChanged);
             if (valueChanged) {
-                this.adapter.setForeignState(this.stateName, plainIoValue, false, function (error) {
+                _this.adapter.setForeignState(_this.stateName, plainIoValue, false, function (error) {
                     if (error)
                         _this.adapter.log.error('setForeignState error [' + _this.stateName + '] to [' + JSON.stringify(plainIoValue) + ']: ' + error);
                     callback();

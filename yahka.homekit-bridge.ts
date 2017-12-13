@@ -1,6 +1,6 @@
 /// <reference path="./typings/index.d.ts" />
 import debug = require('debug');
-//debug.enable(<any>'*');
+debug.enable(<any>'*');
 import util = require('util');
 import HAP = require('hap-nodejs');
 

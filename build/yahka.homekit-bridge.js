@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var debug = require("debug");
+debug.enable('*');
 var util = require("util");
 var HAP = require("hap-nodejs");
 exports.HAPService = HAP.Service;
