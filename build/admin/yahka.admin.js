@@ -1,5 +1,6 @@
 "use strict";
 
+
 var inoutFunctions = [];
 getObject('yahka.meta._inoutFunctions', function (error, object) {
     inoutFunctions = object.native;

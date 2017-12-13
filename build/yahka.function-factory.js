@@ -9,6 +9,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+Object.defineProperty(exports, "__esModule", { value: true });
 var yahka_homekit_bridge_1 = require("./yahka.homekit-bridge");
 var TIoBrokerInOutFunction_State = (function () {
     function TIoBrokerInOutFunction_State(adapter, stateName, deferredTime) {

@@ -6,8 +6,8 @@ import HAP = require('hap-nodejs');
 
 
 // export let HAPAccessory:any = HAP.Accessory;
-export let HAPService:any = HAP.Service;
-export let HAPCharacteristic:any = HAP.Characteristic;
+export let HAPService = HAP.Service;
+export let HAPCharacteristic = HAP.Characteristic;
 
 type IHAPService = any;
 
@@ -119,8 +119,8 @@ export class THomeKitBridge {
     }
 
     private setupBridge() {
-        let hapBridge:any = new HAP.Bridge(this.config.name, HAP.uuid.generate(this.config.ident));
-
+        let hapBridge: HAPNodeJS.Accessory = new (<any>HAP).Bridge(this.config.name, HAP.uuid.generate(this.config.ident));
+        
         hapBridge.getService(HAPService.AccessoryInformation)
             .setCharacteristic(HAPCharacteristic.Manufacturer, this.config.manufacturer || "not configured")
             .setCharacteristic(HAPCharacteristic.Model, this.config.model || "not configured")

@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "debug": "^2.6.6",
-    "hap-nodejs": "^0.4.25",
+    "hap-nodejs": "^0.4.36",
     "macaddress": "0.2.8",
     "util": "^0.10.3"
   },
@@ -44,8 +44,8 @@
     "grunt-http": "^2.2.0",
     "grunt-jscs": "^3.0.1",
     "grunt-replace": "^1.0.1",
-    "grunt-ts": "^6.0.0-beta.3",
-    "typescript": "^2.0.3",
+    "grunt-ts": "^6.0.0-beta.17",
+    "typescript": "^2.6.2",
     "mocha": "^3.5.3",
     "chai": "^4.1.2"
   },

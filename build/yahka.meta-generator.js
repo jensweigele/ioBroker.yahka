@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var Characteristic_1 = require("./node_modules/hap-nodejs/lib/Characteristic");
 var Service_1 = require("./node_modules/hap-nodejs/lib/Service");
 require("./node_modules/hap-nodejs/lib/gen/HomeKitTypes");

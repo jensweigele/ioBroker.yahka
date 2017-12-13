@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var debug = require("debug");
 var util = require("util");
 var HAP = require("hap-nodejs");

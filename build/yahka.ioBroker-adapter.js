@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var hkBridge = require("./yahka.homekit-bridge");
 var yahka_function_factory_1 = require("./yahka.function-factory");
 function isCustomCharacteristicConfig(config) {
