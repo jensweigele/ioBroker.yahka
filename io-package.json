@@ -69,7 +69,14 @@
             "_id": "yahka.meta._conversionFunctions",
             "type": "meta",
             "common": {},
-            "native": ["", "hue", "level255", "passthrough", "HomematicDirectionToHomekitPositionState", "HomematicControlModeToHomekitHeathingCoolingState"]
+            "native": [
+                "",
+                "hue",
+                "level255",
+                "passthrough",
+                "HomematicDirectionToHomekitPositionState",
+                "HomematicControlModeToHomekitHeathingCoolingState"
+            ]
         },
         {
             "_id": "yahka.meta._accessoryCategories",
@@ -176,14 +183,47 @@
                         },
                         "FirmwareRevision": {
                             "name": "FirmwareRevision",
-                            "optional": true
+                            "optional": false
                         },
                         "HardwareRevision": {
                             "name": "HardwareRevision",
                             "optional": true
                         },
-                        "SoftwareRevision": {
-                            "name": "SoftwareRevision",
+                        "AccessoryFlags": {
+                            "name": "AccessoryFlags",
+                            "optional": true
+                        }
+                    }
+                },
+                "AirPurifier": {
+                    "type": "AirPurifier",
+                    "characteristics": {
+                        "Active": {
+                            "name": "Active",
+                            "optional": false
+                        },
+                        "CurrentAirPurifierState": {
+                            "name": "CurrentAirPurifierState",
+                            "optional": false
+                        },
+                        "TargetAirPurifierState": {
+                            "name": "TargetAirPurifierState",
+                            "optional": false
+                        },
+                        "LockPhysicalControls": {
+                            "name": "LockPhysicalControls",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        },
+                        "SwingMode": {
+                            "name": "SwingMode",
+                            "optional": true
+                        },
+                        "RotationSpeed": {
+                            "name": "RotationSpeed",
                             "optional": true
                         }
                     }
@@ -194,14 +234,6 @@
                         "AirQuality": {
                             "name": "AirQuality",
                             "optional": false
-                        },
-                        "AirParticulateDensity": {
-                            "name": "AirParticulateDensity",
-                            "optional": true
-                        },
-                        "AirParticulateSize": {
-                            "name": "AirParticulateSize",
-                            "optional": true
                         },
                         "StatusActive": {
                             "name": "StatusActive",
@@ -221,6 +253,38 @@
                         },
                         "Name": {
                             "name": "Name",
+                            "optional": true
+                        },
+                        "OzoneDensity": {
+                            "name": "OzoneDensity",
+                            "optional": true
+                        },
+                        "NitrogenDioxideDensity": {
+                            "name": "NitrogenDioxideDensity",
+                            "optional": true
+                        },
+                        "SulphurDioxideDensity": {
+                            "name": "SulphurDioxideDensity",
+                            "optional": true
+                        },
+                        "PM2_5Density": {
+                            "name": "PM2_5Density",
+                            "optional": true
+                        },
+                        "PM10Density": {
+                            "name": "PM10Density",
+                            "optional": true
+                        },
+                        "VOCDensity": {
+                            "name": "VOCDensity",
+                            "optional": true
+                        },
+                        "CarbonMonoxideLevel": {
+                            "name": "CarbonMonoxideLevel",
+                            "optional": true
+                        },
+                        "CarbonDioxideLevel": {
+                            "name": "CarbonDioxideLevel",
                             "optional": true
                         }
                     }
@@ -246,44 +310,31 @@
                         }
                     }
                 },
-                "BridgeConfiguration": {
-                    "type": "BridgeConfiguration",
+                "CameraRTPStreamManagement": {
+                    "type": "CameraRTPStreamManagement",
                     "characteristics": {
-                        "ConfigureBridgedAccessoryStatus": {
-                            "name": "ConfigureBridgedAccessoryStatus",
+                        "SupportedVideoStreamConfiguration": {
+                            "name": "SupportedVideoStreamConfiguration",
                             "optional": false
                         },
-                        "DiscoverBridgedAccessories": {
-                            "name": "DiscoverBridgedAccessories",
+                        "SupportedAudioStreamConfiguration": {
+                            "name": "SupportedAudioStreamConfiguration",
                             "optional": false
                         },
-                        "DiscoveredBridgedAccessories": {
-                            "name": "DiscoveredBridgedAccessories",
+                        "SupportedRTPConfiguration": {
+                            "name": "SupportedRTPConfiguration",
                             "optional": false
                         },
-                        "ConfigureBridgedAccessory": {
-                            "name": "ConfigureBridgedAccessory",
-                            "optional": false
-                        }
-                    }
-                },
-                "BridgingState": {
-                    "type": "BridgingState",
-                    "characteristics": {
-                        "Reachable": {
-                            "name": "Reachable",
+                        "SelectedStreamConfiguration": {
+                            "name": "SelectedStreamConfiguration",
                             "optional": false
                         },
-                        "LinkQuality": {
-                            "name": "LinkQuality",
+                        "StreamingStatus": {
+                            "name": "StreamingStatus",
                             "optional": false
                         },
-                        "AccessoryIdentifier": {
-                            "name": "AccessoryIdentifier",
-                            "optional": false
-                        },
-                        "Category": {
-                            "name": "Category",
+                        "SetupEndpoints": {
+                            "name": "SetupEndpoints",
                             "optional": false
                         },
                         "Name": {
@@ -424,6 +475,27 @@
                         }
                     }
                 },
+                "Doorbell": {
+                    "type": "Doorbell",
+                    "characteristics": {
+                        "ProgrammableSwitchEvent": {
+                            "name": "ProgrammableSwitchEvent",
+                            "optional": false
+                        },
+                        "Brightness": {
+                            "name": "Brightness",
+                            "optional": true
+                        },
+                        "Volume": {
+                            "name": "Volume",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
                 "Fan": {
                     "type": "Fan",
                     "characteristics": {
@@ -437,6 +509,64 @@
                         },
                         "RotationSpeed": {
                             "name": "RotationSpeed",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "Fanv2": {
+                    "type": "Fanv2",
+                    "characteristics": {
+                        "Active": {
+                            "name": "Active",
+                            "optional": false
+                        },
+                        "CurrentFanState": {
+                            "name": "CurrentFanState",
+                            "optional": true
+                        },
+                        "TargetFanState": {
+                            "name": "TargetFanState",
+                            "optional": true
+                        },
+                        "LockPhysicalControls": {
+                            "name": "LockPhysicalControls",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        },
+                        "RotationDirection": {
+                            "name": "RotationDirection",
+                            "optional": true
+                        },
+                        "RotationSpeed": {
+                            "name": "RotationSpeed",
+                            "optional": true
+                        },
+                        "SwingMode": {
+                            "name": "SwingMode",
+                            "optional": true
+                        }
+                    }
+                },
+                "FilterMaintenance": {
+                    "type": "FilterMaintenance",
+                    "characteristics": {
+                        "FilterChangeIndication": {
+                            "name": "FilterChangeIndication",
+                            "optional": false
+                        },
+                        "FilterLifeLevel": {
+                            "name": "FilterLifeLevel",
+                            "optional": true
+                        },
+                        "ResetFilterIndication": {
+                            "name": "ResetFilterIndication",
                             "optional": true
                         },
                         "Name": {
@@ -470,6 +600,104 @@
                         },
                         "Name": {
                             "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "HeaterCooler": {
+                    "type": "HeaterCooler",
+                    "characteristics": {
+                        "Active": {
+                            "name": "Active",
+                            "optional": false
+                        },
+                        "CurrentHeaterCoolerState": {
+                            "name": "CurrentHeaterCoolerState",
+                            "optional": false
+                        },
+                        "TargetHeaterCoolerState": {
+                            "name": "TargetHeaterCoolerState",
+                            "optional": false
+                        },
+                        "CurrentTemperature": {
+                            "name": "CurrentTemperature",
+                            "optional": false
+                        },
+                        "LockPhysicalControls": {
+                            "name": "LockPhysicalControls",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        },
+                        "SwingMode": {
+                            "name": "SwingMode",
+                            "optional": true
+                        },
+                        "CoolingThresholdTemperature": {
+                            "name": "CoolingThresholdTemperature",
+                            "optional": true
+                        },
+                        "HeatingThresholdTemperature": {
+                            "name": "HeatingThresholdTemperature",
+                            "optional": true
+                        },
+                        "TemperatureDisplayUnits": {
+                            "name": "TemperatureDisplayUnits",
+                            "optional": true
+                        },
+                        "RotationSpeed": {
+                            "name": "RotationSpeed",
+                            "optional": true
+                        }
+                    }
+                },
+                "HumidifierDehumidifier": {
+                    "type": "HumidifierDehumidifier",
+                    "characteristics": {
+                        "CurrentRelativeHumidity": {
+                            "name": "CurrentRelativeHumidity",
+                            "optional": false
+                        },
+                        "CurrentHumidifierDehumidifierState": {
+                            "name": "CurrentHumidifierDehumidifierState",
+                            "optional": false
+                        },
+                        "TargetHumidifierDehumidifierState": {
+                            "name": "TargetHumidifierDehumidifierState",
+                            "optional": false
+                        },
+                        "Active": {
+                            "name": "Active",
+                            "optional": false
+                        },
+                        "LockPhysicalControls": {
+                            "name": "LockPhysicalControls",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        },
+                        "SwingMode": {
+                            "name": "SwingMode",
+                            "optional": true
+                        },
+                        "WaterLevel": {
+                            "name": "WaterLevel",
+                            "optional": true
+                        },
+                        "RelativeHumidityDehumidifierThreshold": {
+                            "name": "RelativeHumidityDehumidifierThreshold",
+                            "optional": true
+                        },
+                        "RelativeHumidityHumidifierThreshold": {
+                            "name": "RelativeHumidityHumidifierThreshold",
+                            "optional": true
+                        },
+                        "RotationSpeed": {
+                            "name": "RotationSpeed",
                             "optional": true
                         }
                     }
@@ -583,6 +811,10 @@
                         "Name": {
                             "name": "Name",
                             "optional": true
+                        },
+                        "ColorTemperature": {
+                            "name": "ColorTemperature",
+                            "optional": true
                         }
                     }
                 },
@@ -641,6 +873,23 @@
                         "LockTargetState": {
                             "name": "LockTargetState",
                             "optional": false
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "Microphone": {
+                    "type": "Microphone",
+                    "characteristics": {
+                        "Mute": {
+                            "name": "Mute",
+                            "optional": false
+                        },
+                        "Volume": {
+                            "name": "Volume",
+                            "optional": true
                         },
                         "Name": {
                             "name": "Name",
@@ -752,6 +1001,48 @@
                         }
                     }
                 },
+                "ServiceLabel": {
+                    "type": "ServiceLabel",
+                    "characteristics": {
+                        "LabelNamespace": {
+                            "name": "LabelNamespace",
+                            "optional": false
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "Slat": {
+                    "type": "Slat",
+                    "characteristics": {
+                        "SlatType": {
+                            "name": "SlatType",
+                            "optional": false
+                        },
+                        "CurrentSlatState": {
+                            "name": "CurrentSlatState",
+                            "optional": false
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        },
+                        "CurrentTiltAngle": {
+                            "name": "CurrentTiltAngle",
+                            "optional": true
+                        },
+                        "TargetTiltAngle": {
+                            "name": "TargetTiltAngle",
+                            "optional": true
+                        },
+                        "SwingMode": {
+                            "name": "SwingMode",
+                            "optional": true
+                        }
+                    }
+                },
                 "SmokeSensor": {
                     "type": "SmokeSensor",
                     "characteristics": {
@@ -781,16 +1072,16 @@
                         }
                     }
                 },
-                "StatefulProgrammableSwitch": {
-                    "type": "StatefulProgrammableSwitch",
+                "Speaker": {
+                    "type": "Speaker",
                     "characteristics": {
-                        "ProgrammableSwitchEvent": {
-                            "name": "ProgrammableSwitchEvent",
+                        "Mute": {
+                            "name": "Mute",
                             "optional": false
                         },
-                        "ProgrammableSwitchOutputState": {
-                            "name": "ProgrammableSwitchOutputState",
-                            "optional": false
+                        "Volume": {
+                            "name": "Volume",
+                            "optional": true
                         },
                         "Name": {
                             "name": "Name",
@@ -807,6 +1098,10 @@
                         },
                         "Name": {
                             "name": "Name",
+                            "optional": true
+                        },
+                        "LabelIndex": {
+                            "name": "LabelIndex",
                             "optional": true
                         }
                     }
@@ -898,52 +1193,6 @@
                         }
                     }
                 },
-                "TimeInformation": {
-                    "type": "TimeInformation",
-                    "characteristics": {
-                        "CurrentTime": {
-                            "name": "CurrentTime",
-                            "optional": false
-                        },
-                        "DayoftheWeek": {
-                            "name": "DayoftheWeek",
-                            "optional": false
-                        },
-                        "TimeUpdate": {
-                            "name": "TimeUpdate",
-                            "optional": false
-                        }
-                    }
-                },
-                "TunneledBTLEAccessoryService": {
-                    "type": "TunneledBTLEAccessoryService",
-                    "characteristics": {
-                        "Name": {
-                            "name": "Name",
-                            "optional": false
-                        },
-                        "AccessoryIdentifier": {
-                            "name": "AccessoryIdentifier",
-                            "optional": false
-                        },
-                        "TunneledAccessoryStateNumber": {
-                            "name": "TunneledAccessoryStateNumber",
-                            "optional": false
-                        },
-                        "TunneledAccessoryConnected": {
-                            "name": "TunneledAccessoryConnected",
-                            "optional": false
-                        },
-                        "TunneledAccessoryAdvertising": {
-                            "name": "TunneledAccessoryAdvertising",
-                            "optional": false
-                        },
-                        "TunnelConnectionTimeout": {
-                            "name": "TunnelConnectionTimeout",
-                            "optional": false
-                        }
-                    }
-                },
                 "Window": {
                     "type": "Window",
                     "characteristics": {
@@ -1015,6 +1264,232 @@
                         "Name": {
                             "name": "Name",
                             "optional": true
+                        }
+                    }
+                },
+                "CameraControl": {
+                    "type": "CameraControl",
+                    "characteristics": {
+                        "On": {
+                            "name": "On",
+                            "optional": false
+                        },
+                        "CurrentHorizontalTiltAngle": {
+                            "name": "CurrentHorizontalTiltAngle",
+                            "optional": true
+                        },
+                        "CurrentVerticalTiltAngle": {
+                            "name": "CurrentVerticalTiltAngle",
+                            "optional": true
+                        },
+                        "TargetHorizontalTiltAngle": {
+                            "name": "TargetHorizontalTiltAngle",
+                            "optional": true
+                        },
+                        "TargetVerticalTiltAngle": {
+                            "name": "TargetVerticalTiltAngle",
+                            "optional": true
+                        },
+                        "NightVision": {
+                            "name": "NightVision",
+                            "optional": true
+                        },
+                        "OpticalZoom": {
+                            "name": "OpticalZoom",
+                            "optional": true
+                        },
+                        "DigitalZoom": {
+                            "name": "DigitalZoom",
+                            "optional": true
+                        },
+                        "ImageRotation": {
+                            "name": "ImageRotation",
+                            "optional": true
+                        },
+                        "ImageMirroring": {
+                            "name": "ImageMirroring",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "StatefulProgrammableSwitch": {
+                    "type": "StatefulProgrammableSwitch",
+                    "characteristics": {
+                        "ProgrammableSwitchEvent": {
+                            "name": "ProgrammableSwitchEvent",
+                            "optional": false
+                        },
+                        "ProgrammableSwitchOutputState": {
+                            "name": "ProgrammableSwitchOutputState",
+                            "optional": false
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "Label": {
+                    "type": "Label",
+                    "characteristics": {
+                        "LabelNamespace": {
+                            "name": "LabelNamespace",
+                            "optional": false
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "BridgeConfiguration": {
+                    "type": "BridgeConfiguration",
+                    "characteristics": {
+                        "ConfigureBridgedAccessoryStatus": {
+                            "name": "ConfigureBridgedAccessoryStatus",
+                            "optional": false
+                        },
+                        "DiscoverBridgedAccessories": {
+                            "name": "DiscoverBridgedAccessories",
+                            "optional": false
+                        },
+                        "DiscoveredBridgedAccessories": {
+                            "name": "DiscoveredBridgedAccessories",
+                            "optional": false
+                        },
+                        "ConfigureBridgedAccessory": {
+                            "name": "ConfigureBridgedAccessory",
+                            "optional": false
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "BridgingState": {
+                    "type": "BridgingState",
+                    "characteristics": {
+                        "Reachable": {
+                            "name": "Reachable",
+                            "optional": false
+                        },
+                        "LinkQuality": {
+                            "name": "LinkQuality",
+                            "optional": false
+                        },
+                        "AccessoryIdentifier": {
+                            "name": "AccessoryIdentifier",
+                            "optional": false
+                        },
+                        "Category": {
+                            "name": "Category",
+                            "optional": false
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "Pairing": {
+                    "type": "Pairing",
+                    "characteristics": {
+                        "PairSetup": {
+                            "name": "PairSetup",
+                            "optional": false
+                        },
+                        "PairVerify": {
+                            "name": "PairVerify",
+                            "optional": false
+                        },
+                        "PairingFeatures": {
+                            "name": "PairingFeatures",
+                            "optional": false
+                        },
+                        "PairingPairings": {
+                            "name": "PairingPairings",
+                            "optional": false
+                        }
+                    }
+                },
+                "ProtocolInformation": {
+                    "type": "ProtocolInformation",
+                    "characteristics": {
+                        "Version": {
+                            "name": "Version",
+                            "optional": false
+                        }
+                    }
+                },
+                "Relay": {
+                    "type": "Relay",
+                    "characteristics": {
+                        "RelayEnabled": {
+                            "name": "RelayEnabled",
+                            "optional": false
+                        },
+                        "RelayState": {
+                            "name": "RelayState",
+                            "optional": false
+                        },
+                        "RelayControlPoint": {
+                            "name": "RelayControlPoint",
+                            "optional": false
+                        }
+                    }
+                },
+                "TimeInformation": {
+                    "type": "TimeInformation",
+                    "characteristics": {
+                        "CurrentTime": {
+                            "name": "CurrentTime",
+                            "optional": false
+                        },
+                        "DayoftheWeek": {
+                            "name": "DayoftheWeek",
+                            "optional": false
+                        },
+                        "TimeUpdate": {
+                            "name": "TimeUpdate",
+                            "optional": false
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "TunneledBTLEAccessoryService": {
+                    "type": "TunneledBTLEAccessoryService",
+                    "characteristics": {
+                        "Name": {
+                            "name": "Name",
+                            "optional": false
+                        },
+                        "AccessoryIdentifier": {
+                            "name": "AccessoryIdentifier",
+                            "optional": false
+                        },
+                        "TunneledAccessoryStateNumber": {
+                            "name": "TunneledAccessoryStateNumber",
+                            "optional": false
+                        },
+                        "TunneledAccessoryConnected": {
+                            "name": "TunneledAccessoryConnected",
+                            "optional": false
+                        },
+                        "TunneledAccessoryAdvertising": {
+                            "name": "TunneledAccessoryAdvertising",
+                            "optional": false
+                        },
+                        "TunnelConnectionTimeout": {
+                            "name": "TunnelConnectionTimeout",
+                            "optional": false
                         }
                     }
                 }
