@@ -460,7 +460,6 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
 
         return {
             toHomeKit: function (value) { 
-                adapter.log.debug("scaleInt to HomeKit: " + JSON.stringify(parameters));
                 let num: number = undefined;
                 if (typeof value !== 'number')
                     num = parseInt(value);
@@ -481,7 +480,7 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
                 let homeKitMax = getParameter("homekit.max");
                 let ioBrokerMax = getParameter("iobroker.max");
                 let newValue = Math.round((num / homeKitMax) * ioBrokerMax);
-                adapter.log.debug('scaleInt: converting value to homekit: ' + value + ' to ' + newValue); 
+                adapter.log.debug('scaleInt: converting value to ioBroker: ' + value + ' to ' + newValue); 
                 return newValue; 
             }
         };
@@ -522,7 +521,34 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
                 let homeKitMax = getParameter("homekit.max");
                 let ioBrokerMax = getParameter("iobroker.max");
                 let newValue = (num / homeKitMax) * ioBrokerMax;
-                adapter.log.debug('scaleFloat: converting value to homekit: ' + value + ' to ' + newValue); 
+                adapter.log.debug('scaleFloat: converting value to ioBroker: ' + value + ' to ' + newValue); 
+                return newValue; 
+            }
+        };
+    },    
+    "inverse": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
+        function castToNumber(value: any): number {
+            if (value === undefined)
+                return undefined;
+            if (typeof value !== 'number')
+                return parseFloat(value);
+            else
+                return value;
+        }
+
+        return {
+            toHomeKit: function (value) { 
+                let num: number = castToNumber(value)
+                let maxValue = castToNumber(parameters);
+                let newValue = maxValue - num;
+                adapter.log.debug('inverse: converting value to homekit: ' + value + ' to ' + newValue); 
+                return newValue; 
+			},
+            toIOBroker: function (value) { 
+                let num: number = castToNumber(value)
+                let maxValue = castToNumber(parameters);
+                let newValue = maxValue - num;
+                adapter.log.debug('inverse: converting value to ioBroker: ' + value + ' to ' + newValue); 
                 return newValue; 
             }
         };

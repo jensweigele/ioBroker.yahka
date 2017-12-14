@@ -426,7 +426,6 @@ var conversionFactory = {
         }
         return {
             toHomeKit: function (value) {
-                adapter.log.debug("scaleInt to HomeKit: " + JSON.stringify(parameters));
                 var num = undefined;
                 if (typeof value !== 'number')
                     num = parseInt(value);
@@ -447,7 +446,7 @@ var conversionFactory = {
                 var homeKitMax = getParameter("homekit.max");
                 var ioBrokerMax = getParameter("iobroker.max");
                 var newValue = Math.round((num / homeKitMax) * ioBrokerMax);
-                adapter.log.debug('scaleInt: converting value to homekit: ' + value + ' to ' + newValue);
+                adapter.log.debug('scaleInt: converting value to ioBroker: ' + value + ' to ' + newValue);
                 return newValue;
             }
         };
@@ -487,7 +486,33 @@ var conversionFactory = {
                 var homeKitMax = getParameter("homekit.max");
                 var ioBrokerMax = getParameter("iobroker.max");
                 var newValue = (num / homeKitMax) * ioBrokerMax;
-                adapter.log.debug('scaleFloat: converting value to homekit: ' + value + ' to ' + newValue);
+                adapter.log.debug('scaleFloat: converting value to ioBroker: ' + value + ' to ' + newValue);
+                return newValue;
+            }
+        };
+    },
+    "inverse": function (adapter, parameters) {
+        function castToNumber(value) {
+            if (value === undefined)
+                return undefined;
+            if (typeof value !== 'number')
+                return parseFloat(value);
+            else
+                return value;
+        }
+        return {
+            toHomeKit: function (value) {
+                var num = castToNumber(value);
+                var maxValue = castToNumber(parameters);
+                var newValue = maxValue - num;
+                adapter.log.debug('inverse: converting value to homekit: ' + value + ' to ' + newValue);
+                return newValue;
+            },
+            toIOBroker: function (value) {
+                var num = castToNumber(value);
+                var maxValue = castToNumber(parameters);
+                var newValue = maxValue - num;
+                adapter.log.debug('inverse: converting value to ioBroker: ' + value + ' to ' + newValue);
                 return newValue;
             }
         };
