@@ -443,6 +443,91 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
             }
         };
     },
+
+    "inverseInt": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
+        var paramArray = JSON.parse(parameters);
+        function getParameter(name: string): number {
+            if (paramArray === undefined) 
+                return undefined;
+            let value = paramArray[name];
+            if (value === undefined) 
+                return undefined;
+            if (typeof value === 'number')
+                return value;
+            else 
+                return parseInt(value); 
+        }
+
+        return {
+            toHomeKit: function (value) { 
+                adapter.log.debug("inverseInt to HomeKit: " + JSON.stringify(parameters));
+                let num: number = undefined;
+                if (typeof value !== 'number')
+                    num = parseInt(value);
+                else
+                    num = value;
+                let homeKitMax = getParameter("homekit.max");
+                let ioBrokerMax = getParameter("iobroker.max");
+                let newValue = Math.round((num / ioBrokerMax) * homeKitMax);
+                adapter.log.debug('inverseInt: converting value to homekit: ' + value + ' to ' + newValue); 
+                return newValue; 
+			},
+            toIOBroker: function (value) { 
+                let num: number = undefined;
+                if (typeof value !== 'number')
+                    num = parseInt(value);
+                else
+                    num = value;
+                let homeKitMax = getParameter("homekit.max");
+                let ioBrokerMax = getParameter("iobroker.max");
+                let newValue = Math.round((num / homeKitMax) * ioBrokerMax);
+                adapter.log.debug('inverseInt: converting value to homekit: ' + value + ' to ' + newValue); 
+                return newValue; 
+            }
+        };
+    },    
+    "inverseFloat": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
+        var paramArray = JSON.parse(parameters);
+        function getParameter(name: string): number {
+            if (paramArray === undefined) 
+                return undefined;
+            let value = paramArray[name];
+            if (value === undefined) 
+                return undefined;
+            if (typeof value === 'number')
+                return value;
+            else 
+                return parseFloat(value); 
+        }
+
+        return {
+            toHomeKit: function (value) { 
+                let num: number = undefined;
+                if (typeof value !== 'number')
+                    num = parseFloat(value);
+                else
+                    num = value;
+                let homeKitMax = getParameter("homekit.max");
+                let ioBrokerMax = getParameter("iobroker.max");
+                let newValue = (num / ioBrokerMax) * homeKitMax;
+                adapter.log.debug('inverseFloat: converting value to homekit: ' + value + ' to ' + newValue); 
+                return newValue; 
+			},
+            toIOBroker: function (value) { 
+                let num: number = undefined;
+                if (typeof value !== 'number')
+                    num = parseFloat(value);
+                else
+                    num = value;
+                let homeKitMax = getParameter("homekit.max");
+                let ioBrokerMax = getParameter("iobroker.max");
+                let newValue = (num / homeKitMax) * ioBrokerMax;
+                adapter.log.debug('inverseFloat: converting value to homekit: ' + value + ' to ' + newValue); 
+                return newValue; 
+            }
+        };
+    },    
+
     "hue": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
         return {
             toHomeKit: function (value) { 
