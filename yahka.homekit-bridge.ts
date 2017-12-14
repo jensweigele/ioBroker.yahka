@@ -174,6 +174,14 @@ export class THomeKitBridge {
             this.initCharacteristic(hapService, charactConfig);
         }
 
+        // fix for wrong min Temperature Value in HAPNode
+        let curTempCharacetristic = hapService.getCharacteristic('Current Temperature');
+        if (curTempCharacetristic !== undefined) {
+            this.FLogger.debug("svc: " + JSON.stringify(curTempCharacetristic));
+            curTempCharacetristic.props.minValue = -99
+        }
+
+
         if (isNew) {
             hapDevice.addService(hapService);
         }

@@ -85,6 +85,11 @@ var THomeKitBridge = (function () {
             var charactConfig = _a[_i];
             this.initCharacteristic(hapService, charactConfig);
         }
+        var curTempCharacetristic = hapService.getCharacteristic('Current Temperature');
+        if (curTempCharacetristic !== undefined) {
+            this.FLogger.debug("svc: " + JSON.stringify(curTempCharacetristic));
+            curTempCharacetristic.props.minValue = -99;
+        }
         if (isNew) {
             hapDevice.addService(hapService);
         }
