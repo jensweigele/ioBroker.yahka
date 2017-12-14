@@ -74,8 +74,8 @@
                 "hue",
                 "level255",
                 "passthrough",
-                "inverseInt",
-                "inverseFloat",
+                "scaleInt",
+                "scaleFloat",
                 "HomematicDirectionToHomekitPositionState",
                 "HomematicControlModeToHomekitHeathingCoolingState"
             ]

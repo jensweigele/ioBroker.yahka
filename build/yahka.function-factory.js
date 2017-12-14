@@ -411,7 +411,7 @@ var conversionFactory = {
             }
         };
     },
-    "inverseInt": function (adapter, parameters) {
+    "scaleInt": function (adapter, parameters) {
         var paramArray = JSON.parse(parameters);
         function getParameter(name) {
             if (paramArray === undefined)
@@ -426,7 +426,7 @@ var conversionFactory = {
         }
         return {
             toHomeKit: function (value) {
-                adapter.log.debug("inverseInt to HomeKit: " + JSON.stringify(parameters));
+                adapter.log.debug("scaleInt to HomeKit: " + JSON.stringify(parameters));
                 var num = undefined;
                 if (typeof value !== 'number')
                     num = parseInt(value);
@@ -435,7 +435,7 @@ var conversionFactory = {
                 var homeKitMax = getParameter("homekit.max");
                 var ioBrokerMax = getParameter("iobroker.max");
                 var newValue = Math.round((num / ioBrokerMax) * homeKitMax);
-                adapter.log.debug('inverseInt: converting value to homekit: ' + value + ' to ' + newValue);
+                adapter.log.debug('scaleInt: converting value to homekit: ' + value + ' to ' + newValue);
                 return newValue;
             },
             toIOBroker: function (value) {
@@ -447,12 +447,12 @@ var conversionFactory = {
                 var homeKitMax = getParameter("homekit.max");
                 var ioBrokerMax = getParameter("iobroker.max");
                 var newValue = Math.round((num / homeKitMax) * ioBrokerMax);
-                adapter.log.debug('inverseInt: converting value to homekit: ' + value + ' to ' + newValue);
+                adapter.log.debug('scaleInt: converting value to homekit: ' + value + ' to ' + newValue);
                 return newValue;
             }
         };
     },
-    "inverseFloat": function (adapter, parameters) {
+    "scaleFloat": function (adapter, parameters) {
         var paramArray = JSON.parse(parameters);
         function getParameter(name) {
             if (paramArray === undefined)
@@ -475,7 +475,7 @@ var conversionFactory = {
                 var homeKitMax = getParameter("homekit.max");
                 var ioBrokerMax = getParameter("iobroker.max");
                 var newValue = (num / ioBrokerMax) * homeKitMax;
-                adapter.log.debug('inverseFloat: converting value to homekit: ' + value + ' to ' + newValue);
+                adapter.log.debug('scaleFloat: converting value to homekit: ' + value + ' to ' + newValue);
                 return newValue;
             },
             toIOBroker: function (value) {
@@ -487,7 +487,7 @@ var conversionFactory = {
                 var homeKitMax = getParameter("homekit.max");
                 var ioBrokerMax = getParameter("iobroker.max");
                 var newValue = (num / homeKitMax) * ioBrokerMax;
-                adapter.log.debug('inverseFloat: converting value to homekit: ' + value + ' to ' + newValue);
+                adapter.log.debug('scaleFloat: converting value to homekit: ' + value + ' to ' + newValue);
                 return newValue;
             }
         };
