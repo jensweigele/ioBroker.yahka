@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var debug = require("debug");
-debug.enable('*');
 var util = require("util");
 var HAP = require("hap-nodejs");
 exports.HAPService = HAP.Service;
@@ -74,7 +73,7 @@ var THomeKitBridge = (function () {
         }
         var isNew = false;
         var hapService = hapDevice.getService(HAP.Service[serviceConfig.type]);
-        if (hapService !== undefined && hapService.subType !== serviceConfig.subType) {
+        if (hapService !== undefined && hapService.subtype !== serviceConfig.subType) {
             hapService = undefined;
         }
         if (hapService === undefined) {
@@ -87,7 +86,6 @@ var THomeKitBridge = (function () {
         }
         var curTempCharacetristic = hapService.getCharacteristic('Current Temperature');
         if (curTempCharacetristic !== undefined) {
-            this.FLogger.debug("svc: " + JSON.stringify(curTempCharacetristic));
             curTempCharacetristic.props.minValue = -99;
         }
         if (isNew) {

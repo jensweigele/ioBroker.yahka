@@ -1,3 +1,4 @@
+import { ICameraConfig, THomeKitIPCamera } from './yahka.homekit-ipcamera';
 import {IInOutFunction} from './yahka.homekit-bridge';
 /// <reference path="./typings/index.d.ts" />
 import * as hkBridge from './yahka.homekit-bridge';
@@ -21,7 +22,7 @@ function isCustomCharacteristicConfig(config:hkBridge.Configuration.ICharacteris
 export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
     stateToEventMap:Map<string, hkBridge.IInOutChangeNotify[]> = new Map<string, hkBridge.IInOutChangeNotify[]>();
     objectToEventMap:Map<string, hkBridge.IInOutChangeNotify[]> = new Map<string, hkBridge.IInOutChangeNotify[]>();
-    bridge:hkBridge.THomeKitBridge = undefined;
+    devices: Array<Object> = [];
     verboseHAPLogging:boolean = false;
 
     constructor(private adapter:ioBroker.IAdapter, private controllerPath) {
@@ -36,9 +37,12 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
         hkBridge.initHAP(this.controllerPath + '/' + this.adapter.systemConfig.dataDir + this.adapter.name + '.' + this.adapter.instance + '.hapdata', this.handleHAPLogEvent.bind(this));
 
         this.adapter.log.info('adapter ready, checking config');
-        let saveAdapterConfig = false;
         let config = this.adapter.config;
+        this.createHomeKitBridges(config);
+        this.createCameraDevices(config);
+    }
 
+    private createHomeKitBridges(config: any) {
         let bridgeConfig:hkBridge.Configuration.IBridgeConfig = config.bridge;
         if (!config.firstTimeInitialized) {
             this.adapter.log.info('first time initialization');
@@ -65,7 +69,18 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
         this.verboseHAPLogging = bridgeConfig.verboseLogging == true;
 
         this.adapter.log.info('creating bridge');
-        this.bridge = new hkBridge.THomeKitBridge(config.bridge, this, this.adapter.log);
+        this.devices.push(new hkBridge.THomeKitBridge(config.bridge, this, this.adapter.log));        
+    }
+
+    private createCameraDevices(config: any) {
+        let cameraArray:Array<ICameraConfig> = config.cameras;
+        if (cameraArray === undefined)
+            return;
+        
+        for (let cameraConfig of cameraArray) {
+            this.adapter.log.info('creating camera');
+            this.devices.push(new THomeKitIPCamera(cameraConfig, this.adapter.log));
+        }
     }
 
     private handleHAPLogEvent(message) {

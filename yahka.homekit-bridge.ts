@@ -136,7 +136,7 @@ export class THomeKitBridge {
 
     private createDevice(device:Configuration.IDeviceConfig) {
         let deviceID = HAP.uuid.generate(this.config.ident + ':' + device.name);
-        let hapDevice:any = new HAP.Accessory(device.name, deviceID);
+        let hapDevice = new HAP.Accessory(device.name, deviceID);
 
 
         hapDevice.getService(HAPService.AccessoryInformation)
@@ -161,7 +161,7 @@ export class THomeKitBridge {
 
         let isNew = false;
         let hapService = hapDevice.getService(HAP.Service[serviceConfig.type]);
-        if (hapService !== undefined && hapService.subType !== serviceConfig.subType) {
+        if (hapService !== undefined && hapService.subtype !== serviceConfig.subType) {
             hapService = undefined;
         }
 
@@ -174,10 +174,10 @@ export class THomeKitBridge {
             this.initCharacteristic(hapService, charactConfig);
         }
 
+        
         // fix for wrong min Temperature Value in HAPNode
         let curTempCharacetristic = hapService.getCharacteristic('Current Temperature');
         if (curTempCharacetristic !== undefined) {
-            this.FLogger.debug("svc: " + JSON.stringify(curTempCharacetristic));
             curTempCharacetristic.props.minValue = -99
         }
 

@@ -12,6 +12,7 @@
         "yahka.ioBroker-adapter.ts",
         "main.ts",
         "admin/yahka.admin.ts",
-        "yahka.meta-generator.ts"
+        "yahka.meta-generator.ts",
+        "yahka.homekit-ipcamera.ts"
     ]
 }

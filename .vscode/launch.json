@@ -7,7 +7,7 @@
             "program": "${workspaceRoot}/../ioBroker/node_modules/iobroker.yahka/main.js",
             //"program": "${workspaceRoot}/main.ts",
             "stopOnEntry": false,
-            "args": ["1", "debug", "--force"],
+            "args": ["0", "debug", "--force"],
             "cwd": "${workspaceRoot}/../ioBroker/node_modules/iobroker.yahka",
             "preLaunchTask": null, //"tsc",
             "runtimeExecutable": null,
