@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "yahka",
-        "version": "0.6.0",
+        "version": "0.6.0-beta.1",
         "news": {
-            "0.6.0": {
+            "0.6.0-beta.1": {
                 "en": "",
                 "de": "",
                 "ru": ""
