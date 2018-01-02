@@ -36,13 +36,18 @@
 
 .flex-panel {
     padding: 5px;
-    margin: 10px;
+    margin: 5px;
     border: 1px solid #2086bf;
 }
 
-.button-line {
-    padding-bottom: 10px;
+.flex-panel > .caption {
+    background: #2086bf;
+    margin: -5px -5px 5px -5px;
+    padding: 5px;
+    font-weight: bold;
+    color: white;
 }
+
 
 .bg-white {
     background: whitesmoke;

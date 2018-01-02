@@ -374,82 +374,36 @@
     </div>
     <div id="dialog-select-member" style="display: none" data-close-button="true">
     </div>
-    <div class="flex-grow flex-container-row bg-white">
-        <div class=" flex-grow flex-panel">
-            <div class="accordion" data-role="accordion">
-                <div class="frame">
-                    <div class="heading">
-                        <span class="translate">Bridge Properties</span>
-                    </div>
-                    <div class="content">
-                        <div>
-                            <div><label class="translate" for="bridge_name">Bridge name:</label><span class="edit-hint translate">descriptive only - displayed in homekit apps. Changes are only recognized after readding the bridge in the app.</span></div>
-                            <div class="input control flex-grow margin10">
-                                <input class="full-size" type="text" id="bridge_name"/>
-                            </div>
-                        </div>
-                        <div>
-                            <div><label class="translate" for="bridge_manufacturer">Manufacturer:</label><span class="edit-hint translate">descriptive only - displayed in some homekit apps</span></div>
-                            <div class="input control flex-grow  margin10">
-                                <input class="full-size" type="text" id="bridge_manufacturer"/>
-                            </div>
-                        </div>
-                        <div>
-                            <div><label class="translate" for="bridge_model">Model:</label><span class="edit-hint translate">descriptive only - displayed in some homekit apps</span></div>
-                            <div class="input controlflex-grow  margin10">
-                                <input class="full-size" type="text" id="bridge_model"/>
-                            </div>
-                        </div>
-                        <div>
-                            <div><label class="translate" for="bridge_serial">Serial:</label><span class="edit-hint translate">descriptive only - displayed in some homekit apps</span></div>
-                            <div class="input controlflex-grow  margin10">
-                                <input class="full-size" type="text" id="bridge_serial"/>
-                            </div>
-                        </div>
-                        <div>
-                            <div><label class="translate" for="bridge_username">Username:</label><span class="edit-hint translate">needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b></span></div>
-                            <div class="input controlflex-grow  margin10">
-                                <input class="full-size" type="text" id="bridge_username"/>
-                            </div>
-                        </div>
-                        <div>
-                            <div><label class="translate" for="bridge_pincode">Pincode:</label><span class="edit-hint translate">needs to be in the form of 123-45-678</span></div>
-                            <div class="input controlflex-grow  margin10">
-                                <input class="full-size" type="text" id="bridge_pincode"/>
-                            </div>
-                        </div>
-                        <div>
-                            <div><label class="translate" for="bridge_port">Port:</label><span class="edit-hint translate">0 = random free port assigned by the operation system (default)</span></div>
-                            <div class="input controlflex-grow  margin10">
-                                <input class="full-size" type="number" id="bridge_port"/>
-                            </div>
-                        </div>
-                        <div>
-                            <div><label class="translate" for="bridge_verboseLogging">Verbose Logging:</label><span class="edit-hint translate">true = redirect hap-node logging to adapter logging</span></div>
-                            <div class="input controlflex-grow  margin10">
-                                <input class="" type="checkbox" id="bridge_verboseLogging"/>
-                            </div>
-                        </div>                        
-                    </div>
+
+    <div class="flex-grow flex-container-col bg-white" id="yahka_bridge_frame">
+        <div class="flex-container-row flex-grow">
+            <div class="flex-grow flex-panel">
+                <div>
+                    <button class="image-button primary" id="yahka_add_device">
+                        <span class="icon mif-plus bg-darkCobalt  fg-white"></span>
+                        <span class="translate">Add Device</span>
+                    </button>
+                    <button class="image-button danger" id="yahka_remove_device">
+                        <span class="icon mif-minus bg-darkCrimson  fg-white"></span>
+                        <span class="translate">Remove Device</span>
+                    </button>
+                    <button class="image-button primary" id="yahka_add_service">
+                        <span class="icon mif-plus bg-darkCobalt  fg-white"></span>
+                        <span class="translate">Add Service</span>
+                    </button>
+
                 </div>
             </div>
         </div>
-    </div>
-    <div class="flex-grow flex-container-col bg-white" id="yahka_bridge_frame">
+
         <div class="flex-grow treeAndData flex-container-row">
             <div class="flex-panel" style="min-width: 20%">
-                <div class="button-line">
-                    <button class="image-button primary" id="yahka_add_device"><span class="icon mif-plus bg-darkCobalt  fg-white"></span><span class="translate">Add Device</span></button>
-                    <button class="image-button danger" id="yahka_remove_device"><span class="icon mif-minus bg-darkCrimson  fg-white"></span><span class="translate">Remove Device</span></button>
-                </div>
-
+                <div class="caption">Devices</div>
                 <div class="listview" id="yahka_deviceList">
                 </div>
             </div>
             <div class=" flex-grow flex-panel">
-                <div class="button-line">
-                    <button class="image-button primary" id="yahka_add_service"><span class="icon mif-plus bg-darkCobalt  fg-white"></span><span class="translate">Add Service</span></button>
-                </div>
+                <div class="caption">Properties and Services</div>
                 <div class="accordion" id="yahka_device_details" data-role="accordion">
                 </div>
             </div>
@@ -507,9 +461,67 @@
                     </div>
                 </div>                 
             </div> 
+
         </div>
     </template>
 
+    <template id="yahka_bridgeconfig_template">
+        <div class="frame">
+            <div class="heading">
+                <span class="translate">Bridge Properties</span>
+            </div>
+            <div class="content">
+                <div>
+                    <div><label class="translate" for="bridge_name">Bridge name:</label><span class="edit-hint translate">descriptive only - displayed in homekit apps. Changes are only recognized after readding the bridge in the app.</span></div>
+                    <div class="input control flex-grow margin10">
+                        <input class="full-size" type="text" id="bridge_name"/>
+                    </div>
+                </div>
+                <div>
+                    <div><label class="translate" for="bridge_manufacturer">Manufacturer:</label><span class="edit-hint translate">descriptive only - displayed in some homekit apps</span></div>
+                    <div class="input control flex-grow  margin10">
+                        <input class="full-size" type="text" id="bridge_manufacturer"/>
+                    </div>
+                </div>
+                <div>
+                    <div><label class="translate" for="bridge_model">Model:</label><span class="edit-hint translate">descriptive only - displayed in some homekit apps</span></div>
+                    <div class="input controlflex-grow  margin10">
+                        <input class="full-size" type="text" id="bridge_model"/>
+                    </div>
+                </div>
+                <div>
+                    <div><label class="translate" for="bridge_serial">Serial:</label><span class="edit-hint translate">descriptive only - displayed in some homekit apps</span></div>
+                    <div class="input controlflex-grow  margin10">
+                        <input class="full-size" type="text" id="bridge_serial"/>
+                    </div>
+                </div>
+                <div>
+                    <div><label class="translate" for="bridge_username">Username:</label><span class="edit-hint translate">needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b></span></div>
+                    <div class="input controlflex-grow  margin10">
+                        <input class="full-size" type="text" id="bridge_username"/>
+                    </div>
+                </div>
+                <div>
+                    <div><label class="translate" for="bridge_pincode">Pincode:</label><span class="edit-hint translate">needs to be in the form of 123-45-678</span></div>
+                    <div class="input controlflex-grow  margin10">
+                        <input class="full-size" type="text" id="bridge_pincode"/>
+                    </div>
+                </div>
+                <div>
+                    <div><label class="translate" for="bridge_port">Port:</label><span class="edit-hint translate">0 = random free port assigned by the operation system (default)</span></div>
+                    <div class="input controlflex-grow  margin10">
+                        <input class="full-size" type="number" id="bridge_port"/>
+                    </div>
+                </div>
+                <div>
+                    <div><label class="translate" for="bridge_verboseLogging">Verbose Logging:</label><span class="edit-hint translate">true = redirect hap-node logging to adapter logging</span></div>
+                    <div class="input controlflex-grow  margin10">
+                        <input class="" type="checkbox" id="bridge_verboseLogging"/>
+                    </div>
+                </div>                        
+            </div>
+        </div>
+    </template>
     <template id="yahka_device_service_panel">
         <div class="frame" id="yahka_service_panel">
             <div class="heading">

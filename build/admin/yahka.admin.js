@@ -1,6 +1,16 @@
 "use strict";
 
 
+function isBridgeConfig(config) {
+    if (config === undefined)
+        return false;
+    return config.configType === "bridge" || config.ident !== undefined;
+}
+function isDeviceConfig(config) {
+    if (config === undefined)
+        return false;
+    return config.configType === "customdevice" || config.services !== undefined;
+}
 var inoutFunctions = [];
 getObject('yahka.meta._inoutFunctions', function (error, object) {
     inoutFunctions = object.native;
@@ -35,82 +45,68 @@ var ioBroker_YahkaPageBuilder = (function () {
         this.bridgeSettings = bridgeSettings;
         this.changeCallback = changeCallback;
         this.selectedDeviceConfig = undefined;
+        if (!bridgeSettings.devices)
+            bridgeSettings.devices = [];
+        bridgeSettings.configType = 'bridge';
+        this.bridgeConfigPanelTemplate = document.querySelector('#yahka_bridgeconfig_template');
         this.deviceListEntryTemplate = document.querySelector('#yahka_devicelist_entry');
         this.deviceInfoPanelTemplate = document.querySelector('#yahka_device_info_panel_template');
         this.deviceServicePanelTemplate = document.querySelector('#yahka_device_service_panel');
         this.characteristicRow = document.querySelector('#yahka_characteristic_row');
         this.refreshBridgeFrame();
     }
+    ioBroker_YahkaPageBuilder.prototype.getDeviceList = function () {
+        var result = [this.bridgeSettings];
+        if (this.bridgeSettings.devices)
+            result = result.concat(this.bridgeSettings.devices);
+        return result;
+    };
     ioBroker_YahkaPageBuilder.prototype.refreshBridgeFrame = function () {
         var bridgeFrame = document.querySelector('#yahka_bridge_frame');
-        this.refreshBridgeFields(this.bridgeSettings);
-        this.buildDeviceList(this.bridgeSettings, bridgeFrame);
-        this.bindBridgeButtons(this.bridgeSettings, bridgeFrame);
+        this.buildDeviceList(bridgeFrame);
+        this.bindBridgeButtons(bridgeFrame);
         this.refreshBridgeButtons(bridgeFrame);
         return bridgeFrame;
     };
     ioBroker_YahkaPageBuilder.prototype.setSelectedDeviceConfig = function (deviceConfig, AFocusLastPanel) {
         this.selectedDeviceConfig = deviceConfig;
-        this.refreshDevicePane(deviceConfig, AFocusLastPanel);
+        if (isBridgeConfig(deviceConfig)) {
+            this.refreshBridgeConfigPane();
+        }
+        else if (isDeviceConfig(deviceConfig)) {
+            this.refreshDevicePane(deviceConfig, AFocusLastPanel);
+        }
         this.refreshBridgeButtons(document.body);
     };
-    ioBroker_YahkaPageBuilder.prototype.refreshBridgeFields = function (bridge) {
+    ioBroker_YahkaPageBuilder.prototype.bindBridgeButtons = function (bridgePane) {
         var _this = this;
-        var inputHelper = function (selector, propertyName) {
-            var input = document.querySelector(selector);
-            var value = bridge[propertyName];
-            if (value !== undefined) {
-                input.value = value;
-            }
-            else {
-                input.value = '';
-            }
-            input.addEventListener("input", _this.handleBridgeMetaDataChange.bind(_this, bridge, propertyName));
-        };
-        var checkboxHelper = function (selector, propertyName) {
-            var input = document.querySelector(selector);
-            var value = bridge[propertyName];
-            input.checked = value;
-            input.addEventListener("click", _this.handleBridgeMetaDataChange.bind(_this, bridge, propertyName));
-        };
-        inputHelper('#bridge_name', 'name');
-        inputHelper('#bridge_manufacturer', 'manufacturer');
-        inputHelper('#bridge_model', 'model');
-        inputHelper('#bridge_serial', 'serial');
-        inputHelper('#bridge_username', 'username');
-        inputHelper('#bridge_pincode', 'pincode');
-        inputHelper('#bridge_port', 'port');
-        checkboxHelper('#bridge_verboseLogging', 'verboseLogging');
-    };
-    ioBroker_YahkaPageBuilder.prototype.bindBridgeButtons = function (bridge, bridgePane) {
-        var _this = this;
+        var bridge = this.bridgeSettings;
         var elem;
         if (elem = bridgePane.querySelector('#yahka_add_device')) {
             elem.addEventListener('click', function (e) {
                 e.preventDefault();
-                var newDevice = {
+                var newCustomDevice = {
+                    configType: "customdevice",
                     manufacturer: "",
                     model: "",
-                    name: "",
+                    name: "<new device " + _this.getDeviceList().length + ">",
                     serial: "",
                     enabled: true,
                     category: 1,
                     services: []
                 };
-                bridge.devices.push(newDevice);
-                _this.setSelectedDeviceConfig(newDevice, true);
-                _this.buildDeviceList(bridge, bridgePane);
+                bridge.devices.push(newCustomDevice);
+                _this.setSelectedDeviceConfig(newCustomDevice, true);
+                _this.buildDeviceList(bridgePane);
                 _this.changeCallback();
             });
         }
         if (elem = bridgePane.querySelector('#yahka_add_service')) {
             elem.addEventListener('click', function (e) {
                 e.preventDefault();
-                console.log('click');
                 var dev = _this.selectedDeviceConfig;
-                if (dev === undefined) {
+                if (!isDeviceConfig(dev))
                     return;
-                }
                 dev.services.push({
                     name: '',
                     subType: '',
@@ -125,14 +121,14 @@ var ioBroker_YahkaPageBuilder = (function () {
             elem.addEventListener('click', function (e) {
                 e.preventDefault();
                 var dev = _this.selectedDeviceConfig;
-                if (dev === undefined)
+                if (!isDeviceConfig(dev))
                     return;
                 var idx = bridge.devices.indexOf(dev);
                 if (idx > -1) {
                     bridge.devices.splice(idx, 1);
                     _this.changeCallback();
                     _this.setSelectedDeviceConfig(undefined, false);
-                    _this.buildDeviceList(bridge, bridgePane);
+                    _this.buildDeviceList(bridgePane);
                     _this.changeCallback();
                 }
             });
@@ -141,26 +137,30 @@ var ioBroker_YahkaPageBuilder = (function () {
     ioBroker_YahkaPageBuilder.prototype.refreshBridgeButtons = function (parent) {
         var addServiceButton = parent.querySelector('#yahka_add_service');
         var removeDeviceButton = parent.querySelector('#yahka_remove_device');
-        console.log('refresh', parent, this.selectedDeviceConfig);
-        if (this.selectedDeviceConfig === undefined) {
-            addServiceButton.setAttribute('disabled', '');
-            removeDeviceButton.setAttribute('disabled', '');
-        }
-        else {
+        var addServiceEnabled = isDeviceConfig(this.selectedDeviceConfig);
+        var removeDevEnabled = (this.selectedDeviceConfig !== undefined);
+        if (addServiceEnabled)
             addServiceButton.removeAttribute('disabled');
+        else
+            addServiceButton.setAttribute('disabled', '');
+        if (removeDevEnabled)
             removeDeviceButton.removeAttribute('disabled');
-        }
+        else
+            removeDeviceButton.setAttribute('disabled', '');
     };
-    ioBroker_YahkaPageBuilder.prototype.buildDeviceList = function (bridge, bridgeFrame) {
+    ioBroker_YahkaPageBuilder.prototype.createDeviceListEntry = function (deviceConfig) {
+        var deviceEntry = document.importNode(this.deviceListEntryTemplate.content, true);
+        var listItem = deviceEntry.querySelector('.list');
+        this.refreshDeviceListEntry(deviceConfig, listItem);
+        return deviceEntry;
+    };
+    ioBroker_YahkaPageBuilder.prototype.buildDeviceList = function (bridgeFrame) {
+        var bridge = this.bridgeSettings;
         var deviceList = bridgeFrame.querySelector('#yahka_deviceList');
         deviceList.innerHTML = "";
-        for (var _i = 0, _a = bridge.devices; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this.getDeviceList(); _i < _a.length; _i++) {
             var deviceConfig = _a[_i];
-            var deviceEntry = document.importNode(this.deviceListEntryTemplate.content, true);
-            var listItem = deviceEntry.querySelector('.list');
-            this.refreshDeviceListEntry(deviceConfig, listItem);
-            translateFragment(deviceEntry);
-            deviceList.appendChild(deviceEntry);
+            deviceList.appendChild(this.createDeviceListEntry(deviceConfig));
         }
         var deviceListClickHandler = this.handleDeviceListClick.bind(this, bridge);
         $(deviceList).listview({ onListClick: deviceListClickHandler });
@@ -170,7 +170,7 @@ var ioBroker_YahkaPageBuilder = (function () {
             return;
         var cat;
         var iconClass = "mif-question";
-        if (accessoryCategories !== undefined)
+        if ((accessoryCategories !== undefined) && (isDeviceConfig(deviceConfig)))
             if (cat = accessoryCategories[deviceConfig.category])
                 iconClass = cat['icon'];
         var listIcon = listItem.querySelector('.list-icon');
@@ -183,11 +183,10 @@ var ioBroker_YahkaPageBuilder = (function () {
     ioBroker_YahkaPageBuilder.prototype.findDeviceConfig = function (bridgeConfig, deviceIdent) {
         if (!bridgeConfig)
             return undefined;
-        for (var _i = 0, _a = bridgeConfig.devices; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this.getDeviceList(); _i < _a.length; _i++) {
             var devConfig = _a[_i];
-            if (devConfig.name === deviceIdent) {
+            if (devConfig.name == deviceIdent)
                 return devConfig;
-            }
         }
         return undefined;
     };
@@ -197,6 +196,40 @@ var ioBroker_YahkaPageBuilder = (function () {
         var deviceIdent = deviceNode[0].dataset["deviceIdent"];
         var deviceConfig = this.findDeviceConfig(bridgeConfig, deviceIdent);
         this.setSelectedDeviceConfig(deviceConfig, false);
+    };
+    ioBroker_YahkaPageBuilder.prototype.refreshBridgeConfigPane = function () {
+        var _this = this;
+        var devicePane = document.querySelector('#yahka_device_details');
+        devicePane.innerHTML = '';
+        var bridgeConfigFragment = document.importNode(this.bridgeConfigPanelTemplate.content, true);
+        translateFragment(bridgeConfigFragment);
+        var bridge = this.bridgeSettings;
+        var inputHelper = function (selector, propertyName) {
+            var input = bridgeConfigFragment.querySelector(selector);
+            var value = bridge[propertyName];
+            if (value !== undefined) {
+                input.value = value;
+            }
+            else {
+                input.value = '';
+            }
+            input.addEventListener("input", _this.handleBridgeMetaDataChange.bind(_this, bridge, propertyName));
+        };
+        var checkboxHelper = function (selector, propertyName) {
+            var input = bridgeConfigFragment.querySelector(selector);
+            var value = bridge[propertyName];
+            input.checked = value;
+            input.addEventListener("click", _this.handleBridgeMetaDataChange.bind(_this, bridge, propertyName));
+        };
+        inputHelper('#bridge_name', 'name');
+        inputHelper('#bridge_manufacturer', 'manufacturer');
+        inputHelper('#bridge_model', 'model');
+        inputHelper('#bridge_serial', 'serial');
+        inputHelper('#bridge_username', 'username');
+        inputHelper('#bridge_pincode', 'pincode');
+        inputHelper('#bridge_port', 'port');
+        checkboxHelper('#bridge_verboseLogging', 'verboseLogging');
+        devicePane.appendChild(bridgeConfigFragment);
     };
     ioBroker_YahkaPageBuilder.prototype.refreshDevicePane = function (deviceConfig, focusLast) {
         var devicePane = document.querySelector('#yahka_device_details');
@@ -317,7 +350,13 @@ var ioBroker_YahkaPageBuilder = (function () {
         return undefined;
     };
     ioBroker_YahkaPageBuilder.prototype.isEmptyCharacteristic = function (charConfig) {
-        return (charConfig === undefined || charConfig.name === '' || (charConfig['inOutFunction'] === '') || (charConfig['inOutFunction'] === undefined));
+        if (charConfig === undefined)
+            return true;
+        if (charConfig.name === '')
+            return true;
+        if ((charConfig['inOutFunction'] === '') || (charConfig['inOutFunction'] === undefined))
+            return true;
+        return false;
     };
     ioBroker_YahkaPageBuilder.prototype.removeCharacteristic = function (serviceConfig, charConfig) {
         if (serviceConfig === undefined) {
@@ -447,10 +486,14 @@ var ioBroker_YahkaPageBuilder = (function () {
     };
     ioBroker_YahkaPageBuilder.prototype.handleBridgeMetaDataChange = function (bridgeConfig, propertyName, ev) {
         var inputTarget = ev.currentTarget;
-        if (inputTarget.type == "checkbox")
+        var listItem = document.querySelector('div.list[data-device-ident="' + bridgeConfig.name + '"]');
+        if (inputTarget.type == "checkbox") {
             bridgeConfig[propertyName] = inputTarget.checked;
-        else
+        }
+        else {
             bridgeConfig[propertyName] = inputTarget.value;
+        }
+        this.refreshDeviceListEntry(bridgeConfig, listItem);
         this.changeCallback();
     };
     ioBroker_YahkaPageBuilder.prototype.handleDeviceMetaDataChange = function (deviceConfig, propertyName, ev) {

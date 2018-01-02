@@ -29,23 +29,27 @@ export module Configuration {
         [key:string]:any;
     }
 
-    export interface IDeviceConfig {
+    
+    export interface IBaseConfigNode {
+        configType:string;
         name:string;
+    }
+
+    export interface IBaseHomeKitDeviceConfig extends IBaseConfigNode {
         manufacturer:string;
         model:string;
+        serial:string;        
+    }
+    export interface IDeviceConfig extends IBaseHomeKitDeviceConfig {
         enabled:boolean;
-        serial:string;
         category:number;
         services:(IServiceConfig)[];
         [key:string]:any;
     }
 
-    export interface IBridgeConfig {
+    export interface IBridgeConfig extends IBaseHomeKitDeviceConfig {
         ident:string;
         name:string;
-        manufacturer:string;
-        model:string;
-        serial:string;
         username:string;
         pincode:string;
         port:number;
