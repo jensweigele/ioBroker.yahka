@@ -1,5 +1,5 @@
 /// <reference path="../typings/index.d.ts" />
-import * as hkBridge from '../yahka.homekit-bridge';
+import * as hkBridge from '../yahka.configuration';
 import * as $ from "jquery";
 
 type TIOBrokerAdminChangeCallback = (changeMarker?:boolean) => void;
@@ -195,7 +195,7 @@ class ioBroker_YahkaPageBuilder {
         let removeDeviceButton = <HTMLElement>parent.querySelector('#yahka_remove_device');
 
         let addServiceEnabled = isDeviceConfig(this.selectedDeviceConfig);
-        let removeDevEnabled = (this.selectedDeviceConfig !== undefined);
+        let removeDevEnabled = !isBridgeConfig(this.selectedDeviceConfig);
 
         if (addServiceEnabled)
             addServiceButton.removeAttribute('disabled');
@@ -651,3 +651,5 @@ class ioBroker_YahkaPageBuilder {
     }
 
 }
+
+class PageBuilder_CustomDevice {}

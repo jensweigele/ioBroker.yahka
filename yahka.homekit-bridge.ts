@@ -3,6 +3,7 @@ import debug = require('debug');
 debug.enable(<any>'*');
 import util = require('util');
 import HAP = require('hap-nodejs');
+import { Configuration } from './yahka.configuration';
 
 
 // export let HAPAccessory:any = HAP.Accessory;
@@ -12,52 +13,6 @@ export let HAPCharacteristic = HAP.Characteristic;
 type IHAPService = any;
 
 // type IHAPCharacteristic = any;
-
-export module Configuration {
-
-    export interface ICharacteristicConfig {
-        name:string;
-        enabled:boolean;
-        [key:string]:any;
-    }
-
-    export interface IServiceConfig {
-        name:string;
-        type:string;
-        subType:string;
-        characteristics:(ICharacteristicConfig)[];
-        [key:string]:any;
-    }
-
-    
-    export interface IBaseConfigNode {
-        configType:string;
-        name:string;
-    }
-
-    export interface IBaseHomeKitDeviceConfig extends IBaseConfigNode {
-        manufacturer:string;
-        model:string;
-        serial:string;        
-    }
-    export interface IDeviceConfig extends IBaseHomeKitDeviceConfig {
-        enabled:boolean;
-        category:number;
-        services:(IServiceConfig)[];
-        [key:string]:any;
-    }
-
-    export interface IBridgeConfig extends IBaseHomeKitDeviceConfig {
-        ident:string;
-        name:string;
-        username:string;
-        pincode:string;
-        port:number;
-        verboseLogging:boolean;
-        devices:(IDeviceConfig)[];
-        [key:string]:any;
-    }
-}
 
 export interface IConversionFunction {
     toHomeKit(value:any):any;

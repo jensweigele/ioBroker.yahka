@@ -1,24 +1,16 @@
 /// <reference path="./typings/index.d.ts" />
 import { spawn } from 'child_process';
-import { ILogger, Configuration } from './yahka.homekit-bridge';
+import { ILogger } from './yahka.homekit-bridge';
 import util = require('util');
 import HAP = require('hap-nodejs');
 import { StreamController } from 'hap-nodejs/lib/StreamController';
 import ip = require('ip');
 import { uuid } from 'hap-nodejs';
+import { Configuration } from './yahka.configuration';
 
 let HAPService = HAP.Service;
 let HAPCharacteristic = HAP.Characteristic;
 
-export interface ICameraConfig extends Configuration.IBridgeConfig {
-    source: String;
-    codec: String;
-    numberOfStreams: number | undefined;
-    maxWidth: number;
-    maxHeight: number;
-    maxFPS: number;
-
-}
 
 export class THomeKitIPCamera {
     private _camera: HAPNodeJS.Accessory;
@@ -27,7 +19,7 @@ export class THomeKitIPCamera {
     private ongoingSessions = {};
 
 
-    constructor(private camConfig: ICameraConfig, private FLogger: ILogger) {
+    constructor(private camConfig: Configuration.ICameraConfig, private FLogger: ILogger) {
         this.init();
     }
 
