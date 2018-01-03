@@ -1,6 +1,8 @@
 
 export module Configuration {
 
+    export type TConfigNodeType = 'bridge' | 'customdevice' | 'ipcamera' | undefined;
+
     export interface ICharacteristicConfig {
         name:string;
         enabled:boolean;
@@ -17,7 +19,7 @@ export module Configuration {
 
     
     export interface IBaseConfigNode {
-        configType:string;
+        configType:TConfigNodeType;
         name:string;
     }
 
