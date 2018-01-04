@@ -36,13 +36,18 @@
 
 .flex-panel {
     padding: 5px;
-    margin: 10px;
+    margin: 5px;
     border: 1px solid #2086bf;
 }
 
-.button-line {
-    padding-bottom: 10px;
+.flex-panel > .caption {
+    background: #2086bf;
+    margin: -5px -5px 5px -5px;
+    padding: 5px;
+    font-weight: bold;
+    color: white;
 }
+
 
 .bg-white {
     background: whitesmoke;
@@ -144,4 +149,25 @@
     color: #bebebe !important;
     cursor: default !important;
     border-color: transparent !important;
+}
+
+/* improvement: less padding for bullet-list */
+.simple-list.replace-list li {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+textarea.validationError {
+    border: 1px solid red;
+}
+
+.errorpanel {
+    display: none;
+    background: red;
+    color: white;
+    padding: 8px;
+    margin: 10px;
+}
+.errorpanel.validationError {
+    display: block
 }

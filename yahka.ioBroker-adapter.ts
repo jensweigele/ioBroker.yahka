@@ -1,17 +1,19 @@
+import { THomeKitIPCamera } from './yahka.homekit-ipcamera';
+import { Configuration } from './yahka.configuration';
 import {IInOutFunction} from './yahka.homekit-bridge';
 /// <reference path="./typings/index.d.ts" />
 import * as hkBridge from './yahka.homekit-bridge';
 // import * as mac from './node_modules/macaddress';
 import {functionFactory, IInternalInOutFunction} from './yahka.function-factory';
 
-interface ICustomCharacteristicConfig extends hkBridge.Configuration.ICharacteristicConfig {
+interface ICustomCharacteristicConfig extends Configuration.ICharacteristicConfig {
     conversionFunction?:string;
     conversionParameters?:any;
     inOutFunction?:string;
     inOutParameters?:any;
 }
 
-function isCustomCharacteristicConfig(config:hkBridge.Configuration.ICharacteristicConfig):config is ICustomCharacteristicConfig {
+function isCustomCharacteristicConfig(config:Configuration.ICharacteristicConfig):config is ICustomCharacteristicConfig {
     if (!config)
         return false;
     let myConfig = <ICustomCharacteristicConfig>config;
@@ -21,7 +23,7 @@ function isCustomCharacteristicConfig(config:hkBridge.Configuration.ICharacteris
 export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
     stateToEventMap:Map<string, hkBridge.IInOutChangeNotify[]> = new Map<string, hkBridge.IInOutChangeNotify[]>();
     objectToEventMap:Map<string, hkBridge.IInOutChangeNotify[]> = new Map<string, hkBridge.IInOutChangeNotify[]>();
-    bridge:hkBridge.THomeKitBridge = undefined;
+    devices: Array<Object> = [];
     verboseHAPLogging:boolean = false;
 
     constructor(private adapter:ioBroker.IAdapter, private controllerPath) {
@@ -36,10 +38,13 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
         hkBridge.initHAP(this.controllerPath + '/' + this.adapter.systemConfig.dataDir + this.adapter.name + '.' + this.adapter.instance + '.hapdata', this.handleHAPLogEvent.bind(this));
 
         this.adapter.log.info('adapter ready, checking config');
-        let saveAdapterConfig = false;
         let config = this.adapter.config;
+        this.createHomeKitBridges(config);
+        this.createCameraDevices(config);
+    }
 
-        let bridgeConfig:hkBridge.Configuration.IBridgeConfig = config.bridge;
+    private createHomeKitBridges(config: any) {
+        let bridgeConfig:Configuration.IBridgeConfig = config.bridge;
         if (!config.firstTimeInitialized) {
             this.adapter.log.info('first time initialization');
             this.adapter.log.debug('system config:' + JSON.stringify(this.adapter.systemConfig));
@@ -64,8 +69,19 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
         }
         this.verboseHAPLogging = bridgeConfig.verboseLogging == true;
 
-        this.adapter.log.info('creating bridge');
-        this.bridge = new hkBridge.THomeKitBridge(config.bridge, this, this.adapter.log);
+        this.adapter.log.debug('creating bridge');
+        this.devices.push(new hkBridge.THomeKitBridge(config.bridge, this, this.adapter.log));        
+    }
+
+    private createCameraDevices(config: any) {
+        let cameraArray:Array<Configuration.ICameraConfig> = config.cameras;
+        if (cameraArray === undefined)
+            return;
+        
+        for (let cameraConfig of cameraArray) {
+            this.adapter.log.debug('creating camera');
+            this.devices.push(new THomeKitIPCamera(cameraConfig, this.adapter.log));
+        }
     }
 
     private handleHAPLogEvent(message) {
@@ -135,7 +151,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
 
     }
 
-    public CreateBinding(characteristicConfig:hkBridge.Configuration.ICharacteristicConfig, changeNotify:hkBridge.IInOutChangeNotify):hkBridge.IHomeKitBridgeBinding {
+    public CreateBinding(characteristicConfig:Configuration.ICharacteristicConfig, changeNotify:hkBridge.IInOutChangeNotify):hkBridge.IHomeKitBridgeBinding {
         if (isCustomCharacteristicConfig(characteristicConfig)) {
             let inoutFunc = functionFactory.createInOutFunction(this.adapter, characteristicConfig.inOutFunction, characteristicConfig.inOutParameters);
             if (inoutFunc === undefined) {
