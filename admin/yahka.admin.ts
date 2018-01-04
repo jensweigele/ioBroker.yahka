@@ -7,7 +7,7 @@ type TIOBrokerAdminSaveCallback = (settingsObject: any) => void;
 function isBridgeConfig(config: hkBridge.Configuration.IBaseConfigNode): config is hkBridge.Configuration.IBridgeConfig {
     if (config === undefined)
         return false;
-    return config.configType === "bridge" || (<hkBridge.Configuration.IBridgeConfig>config).ident !== undefined;
+    return config.configType === "bridge";
 }
 
 function isDeviceConfig(config: hkBridge.Configuration.IBaseConfigNode): config is hkBridge.Configuration.IDeviceConfig {
@@ -947,7 +947,8 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
         };   
         
         let ffmpegHelper = (selector: string, propertyName: keyof hkBridge.Configuration.ICameraFfmpegCommandLine) => {
-            let input = <HTMLSelectElement>configFragment.querySelector(selector);
+            let input = <HTMLTextAreaElement>configFragment.querySelector(selector);
+            let inputErrorMsg = <HTMLElement>configFragment.querySelector(selector + '_error');
 
             let value = config.ffmpegCommandLine[propertyName];
             if (value !== undefined) {
@@ -955,7 +956,7 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
             } else {
                 input.value = '';
             }
-            input.addEventListener('input', this.handleffMpegPropertyChange.bind(this, config, propertyName));
+            input.addEventListener('input', this.handleffMpegPropertyChange.bind(this, config, propertyName, inputErrorMsg));
             
         };           
 
@@ -995,15 +996,22 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
         this.delegate.changeCallback();
     }
 
+    displayExceptionHint(textArea: HTMLTextAreaElement, msgPanel: HTMLElement,  message: string | undefined) {
+        textArea.classList.toggle('validationError', message !== undefined);
+        msgPanel.classList.toggle('validationError', message !== undefined);
+        msgPanel.innerText = message
+    }
 
 
-    handleffMpegPropertyChange(config: hkBridge.Configuration.ICameraConfig, propertyName: keyof hkBridge.Configuration.ICameraFfmpegCommandLine, ev: Event) {
-        let inputTarget = <HTMLInputElement>ev.currentTarget;
+
+    handleffMpegPropertyChange(config: hkBridge.Configuration.ICameraConfig, propertyName: keyof hkBridge.Configuration.ICameraFfmpegCommandLine, inputErrorMsgPanel: HTMLElement, ev: Event) {
+        let inputTarget = <HTMLTextAreaElement>ev.currentTarget;
         let listItem = <HTMLElement>document.querySelector('div.list[data-device-ident="' + config.name + '"]');
         try {
             config.ffmpegCommandLine[propertyName] = JSON.parse(inputTarget.value);
-        } catch {
-            // TODO
+            this.displayExceptionHint(inputTarget, inputErrorMsgPanel, undefined)
+        } catch(e) {
+            this.displayExceptionHint(inputTarget, inputErrorMsgPanel, e.message)
         }
         this.delegate.refreshDeviceListEntry(config, listItem);
         this.delegate.changeCallback();

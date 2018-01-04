@@ -14,7 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 function isBridgeConfig(config) {
     if (config === undefined)
         return false;
-    return config.configType === "bridge" || config.ident !== undefined;
+    return config.configType === "bridge";
 }
 function isDeviceConfig(config) {
     if (config === undefined)
@@ -792,6 +792,7 @@ var ConfigPageBuilder_IPCamera = (function (_super) {
         };
         var ffmpegHelper = function (selector, propertyName) {
             var input = configFragment.querySelector(selector);
+            var inputErrorMsg = configFragment.querySelector(selector + '_error');
             var value = config.ffmpegCommandLine[propertyName];
             if (value !== undefined) {
                 input.value = JSON.stringify(value, null, 2);
@@ -799,7 +800,7 @@ var ConfigPageBuilder_IPCamera = (function (_super) {
             else {
                 input.value = '';
             }
-            input.addEventListener('input', _this.handleffMpegPropertyChange.bind(_this, config, propertyName));
+            input.addEventListener('input', _this.handleffMpegPropertyChange.bind(_this, config, propertyName, inputErrorMsg));
         };
         inputHelper('#camera_enabled', 'enabled');
         inputHelper('#camera_name', 'name');
@@ -831,13 +832,20 @@ var ConfigPageBuilder_IPCamera = (function (_super) {
         this.delegate.refreshDeviceListEntry(config, listItem);
         this.delegate.changeCallback();
     };
-    ConfigPageBuilder_IPCamera.prototype.handleffMpegPropertyChange = function (config, propertyName, ev) {
+    ConfigPageBuilder_IPCamera.prototype.displayExceptionHint = function (textArea, msgPanel, message) {
+        textArea.classList.toggle('validationError', message !== undefined);
+        msgPanel.classList.toggle('validationError', message !== undefined);
+        msgPanel.innerText = message;
+    };
+    ConfigPageBuilder_IPCamera.prototype.handleffMpegPropertyChange = function (config, propertyName, inputErrorMsgPanel, ev) {
         var inputTarget = ev.currentTarget;
         var listItem = document.querySelector('div.list[data-device-ident="' + config.name + '"]');
         try {
             config.ffmpegCommandLine[propertyName] = JSON.parse(inputTarget.value);
+            this.displayExceptionHint(inputTarget, inputErrorMsgPanel, undefined);
         }
-        catch (_a) {
+        catch (e) {
+            this.displayExceptionHint(inputTarget, inputErrorMsgPanel, e.message);
         }
         this.delegate.refreshDeviceListEntry(config, listItem);
         this.delegate.changeCallback();

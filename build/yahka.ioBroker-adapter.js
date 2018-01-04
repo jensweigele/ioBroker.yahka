@@ -54,7 +54,7 @@ var TIOBrokerAdapter = (function () {
             this.adapter.extendForeignObject('system.adapter.' + this.adapter.name + '.' + this.adapter.instance, { native: config }, undefined);
         }
         this.verboseHAPLogging = bridgeConfig.verboseLogging == true;
-        this.adapter.log.info('creating bridge');
+        this.adapter.log.debug('creating bridge');
         this.devices.push(new hkBridge.THomeKitBridge(config.bridge, this, this.adapter.log));
     };
     TIOBrokerAdapter.prototype.createCameraDevices = function (config) {
@@ -63,7 +63,7 @@ var TIOBrokerAdapter = (function () {
             return;
         for (var _i = 0, cameraArray_1 = cameraArray; _i < cameraArray_1.length; _i++) {
             var cameraConfig = cameraArray_1[_i];
-            this.adapter.log.info('creating camera');
+            this.adapter.log.debug('creating camera');
             this.devices.push(new yahka_homekit_ipcamera_1.THomeKitIPCamera(cameraConfig, this.adapter.log));
         }
     };

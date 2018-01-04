@@ -24,6 +24,9 @@ export class THomeKitIPCamera {
     }
 
     init() {
+        if (!this.camConfig.enabled) {
+            return
+        }
         this.createCameraDevice()
         this.createCameraControlService();
         this.createStreamControllers();

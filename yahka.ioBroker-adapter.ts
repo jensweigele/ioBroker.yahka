@@ -69,7 +69,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
         }
         this.verboseHAPLogging = bridgeConfig.verboseLogging == true;
 
-        this.adapter.log.info('creating bridge');
+        this.adapter.log.debug('creating bridge');
         this.devices.push(new hkBridge.THomeKitBridge(config.bridge, this, this.adapter.log));        
     }
 
@@ -79,7 +79,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
             return;
         
         for (let cameraConfig of cameraArray) {
-            this.adapter.log.info('creating camera');
+            this.adapter.log.debug('creating camera');
             this.devices.push(new THomeKitIPCamera(cameraConfig, this.adapter.log));
         }
     }

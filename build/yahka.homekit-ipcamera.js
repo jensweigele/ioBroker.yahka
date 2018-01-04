@@ -17,6 +17,9 @@ var THomeKitIPCamera = (function () {
         this.init();
     }
     THomeKitIPCamera.prototype.init = function () {
+        if (!this.camConfig.enabled) {
+            return;
+        }
         this.createCameraDevice();
         this.createCameraControlService();
         this.createStreamControllers();
