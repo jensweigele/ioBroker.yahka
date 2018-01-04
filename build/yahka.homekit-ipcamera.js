@@ -135,11 +135,16 @@ var THomeKitIPCamera = (function () {
         }
     };
     THomeKitIPCamera.prototype.handleSnapshotRequest = function (request, callback) {
-        this.FLogger.info("get snapshot");
-        var resolution = request.width + 'x' + request.height;
-        var ffmpegCommand = '-re -i ' + this.camConfig.source + ' -t 1 -s ' + resolution + ' -f image2 -';
-        this.FLogger.info("Snapshot run: ffmpeg " + ffmpegCommand);
-        var ffmpeg = child_process_1.spawn('ffmpeg', (ffmpegCommand).split(' '), { env: process.env });
+        var params = {
+            source: this.camConfig.source,
+            width: request.width,
+            height: request.height,
+        };
+        var ffmpegCommand = this.camConfig.ffmpegCommandLine.snapshot.map(function (s) { return s.replace(/\$\{(.*?)\}/g, function (_, word) {
+            return params[word];
+        }); });
+        this.FLogger.debug("Snapshot run: ffmpeg " + ffmpegCommand.join(' '));
+        var ffmpeg = child_process_1.spawn('ffmpeg', ffmpegCommand, { env: process.env });
         var imageBuffer = Buffer.alloc(0);
         ffmpeg.stdout.on('data', function (data) {
             imageBuffer = Buffer.concat([imageBuffer, data]);
@@ -201,7 +206,6 @@ var THomeKitIPCamera = (function () {
         callback(response);
     };
     THomeKitIPCamera.prototype.handleStreamRequest = function (request) {
-        this.FLogger.info("StreamRequest");
         var sessionID = request["sessionID"];
         var requestType = request["type"];
         if (sessionID) {
@@ -227,29 +231,21 @@ var THomeKitIPCamera = (function () {
                     var targetAddress = sessionInfo["address"];
                     var targetVideoPort = sessionInfo["video_port"];
                     var videoKey = sessionInfo["video_srtp"];
-                    var ffmpegCommand = [
-                        '-re',
-                        '-f', 'dshow',
-                        '-i', 'video=Integrated Webcam',
-                        '-threads', '0',
-                        '-vcodec', codec,
-                        '-an', '-pix_fmt',
-                        'yuv420p',
-                        '-r', fps,
-                        '-f', 'rawvideo',
-                        '-tune', 'zerolatency',
-                        '-vf', 'scale=' + width + ':' + height,
-                        '-b:v', bitrate + 'k',
-                        '-bufsize', bitrate + 'k',
-                        '-payload_type', '99',
-                        '-ssrc', '1',
-                        '-f', 'rtp',
-                        '-srtp_out_suite', 'AES_CM_128_HMAC_SHA1_80',
-                        '-srtp_out_params', videoKey.toString('base64'),
-                        'srtp://' + targetAddress + ':' + targetVideoPort + '?rtcpport=' + targetVideoPort + '&localrtcpport=' + targetVideoPort + '&pkt_size=1378'
-                    ];
-                    this.FLogger.info("Stream run: ffmpeg " + ffmpegCommand.join(' '));
-                    console.log("Stream run: ffmpeg " + ffmpegCommand.join(' '));
+                    var params_1 = {
+                        source: this.camConfig.source,
+                        codec: codec,
+                        fps: fps,
+                        width: width,
+                        height: height,
+                        bitrate: bitrate,
+                        videokey: videoKey.toString('base64'),
+                        targetAddress: targetAddress,
+                        targetVideoPort: targetVideoPort
+                    };
+                    var ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map(function (s) { return s.replace(/\$\{(.*?)\}/g, function (_, word) {
+                        return params_1[word];
+                    }); });
+                    this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
                     var ffmpeg = child_process_1.spawn('ffmpeg', ffmpegCommand, { env: process.env });
                     var devnull = require('dev-null');
                     ffmpeg.stdout.pipe(devnull());

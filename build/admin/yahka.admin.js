@@ -21,6 +21,77 @@ function isDeviceConfig(config) {
         return false;
     return config.configType === "customdevice" || config.services !== undefined;
 }
+function isIPCameraConfig(config) {
+    if (config === undefined)
+        return false;
+    return config.configType === "ipcamera";
+}
+var defaultCommandLine = {
+    stream: [
+        '-re',
+        '-i', '${source}',
+        '-threads', '0',
+        '-vcodec', '${codec}',
+        '-an',
+        '-pix_fmt', 'yuv420p',
+        '-r', '${fps}',
+        '-f', 'rawvideo',
+        '-tune', 'zerolatency',
+        '-vf', 'scale=${width}:${height}',
+        '-b:v', '${bitrate}k',
+        '-bufsize', '${bitrate}k',
+        '-payload_type', '99',
+        '-ssrc', '1',
+        '-f', 'rtp',
+        '-srtp_out_suite', 'AES_CM_128_HMAC_SHA1_80',
+        '-srtp_out_params', '${videokey}',
+        'srtp://${targetAddress}:${targetVideoPort}?rtcpport=${targetVideoPort}&localrtcpport=${targetVideoPort}&pkt_size=1378'
+    ],
+    snapshot: [
+        '-re',
+        '-i', '${source}',
+        '-t', '1',
+        '-s', '${resolution}',
+        '-f', 'image2',
+        '-'
+    ]
+};
+var webcamCommandLine = {
+    stream: [
+        '-re',
+        '-f', 'dshow',
+        '-i', '${source}',
+        '-threads', '0',
+        '-vcodec', '${codec}',
+        '-an',
+        '-pix_fmt', 'yuv420p',
+        '-r', '${fps}',
+        '-f', 'rawvideo',
+        '-tune', 'zerolatency',
+        '-vf', 'scale=${width}:${height}',
+        '-b:v', '${bitrate}k',
+        '-bufsize', '${bitrate}k',
+        '-payload_type', '99',
+        '-ssrc', '1',
+        '-f', 'rtp',
+        '-srtp_out_suite', 'AES_CM_128_HMAC_SHA1_80',
+        '-srtp_out_params', '${videokey}',
+        'srtp://${targetAddress}:${targetVideoPort}?rtcpport=${targetVideoPort}&localrtcpport=${targetVideoPort}&pkt_size=1378'
+    ],
+    snapshot: [
+        '-re',
+        '-f', 'dshow',
+        '-i', '${source}',
+        '-t', '1',
+        '-s', '${width}x${height}',
+        '-f', 'image2',
+        '-'
+    ]
+};
+var ffmpegCommandLines = {
+    default: defaultCommandLine,
+    webcam: webcamCommandLine
+};
 var inoutFunctions = [];
 getObject('yahka.meta._inoutFunctions', function (error, object) {
     inoutFunctions = object.native;
@@ -42,7 +113,7 @@ var ioBroker_YahkaAdmin = (function () {
     }
     ioBroker_YahkaAdmin.prototype.loadSettings = function (settingsObject, onChangeCallback) {
         this.settings = settingsObject;
-        new ioBroker_YahkaPageBuilder(this.settings.bridge, onChangeCallback);
+        new ioBroker_YahkaPageBuilder(this.settings.bridge, this.settings.cameras, onChangeCallback);
         onChangeCallback(false);
     };
     ioBroker_YahkaAdmin.prototype.saveSettings = function (callback) {
@@ -51,8 +122,9 @@ var ioBroker_YahkaAdmin = (function () {
     return ioBroker_YahkaAdmin;
 }());
 var ioBroker_YahkaPageBuilder = (function () {
-    function ioBroker_YahkaPageBuilder(_bridgeSettings, _changeCallback) {
+    function ioBroker_YahkaPageBuilder(_bridgeSettings, cameraConfigs, _changeCallback) {
         this._bridgeSettings = _bridgeSettings;
+        this.cameraConfigs = cameraConfigs;
         this._changeCallback = _changeCallback;
         this.pageBuilders = new Map();
         this._selectedDeviceConfig = undefined;
@@ -63,6 +135,7 @@ var ioBroker_YahkaPageBuilder = (function () {
         this.buttonHandler = new ioBroker_ButtonHandler(this, this.deviceListHandler);
         this.pageBuilders.set('bridge', new ConfigPageBuilder_BridgeConfig(this));
         this.pageBuilders.set('customdevice', new ConfigPageBuilder_CustomDevice(this));
+        this.pageBuilders.set('ipcamera', new ConfigPageBuilder_IPCamera(this));
         this.bootstrap();
     }
     ioBroker_YahkaPageBuilder.prototype.bootstrap = function () {
@@ -73,6 +146,9 @@ var ioBroker_YahkaPageBuilder = (function () {
         return bridgeFrame;
     };
     ioBroker_YahkaPageBuilder.prototype.getPageBuilderByConfig = function (deviceConfig) {
+        if (deviceConfig === undefined) {
+            return undefined;
+        }
         var configType = deviceConfig.configType;
         if (configType === undefined) {
             if (isBridgeConfig(deviceConfig)) {
@@ -131,6 +207,8 @@ var ioBroker_DeviceListHandler = (function (_super) {
         var result = [this.delegate.bridgeSettings];
         if (this.delegate.bridgeSettings.devices)
             result = result.concat(this.delegate.bridgeSettings.devices);
+        if (this.delegate.cameraConfigs)
+            result = result.concat(this.delegate.cameraConfigs);
         return result;
     };
     ioBroker_DeviceListHandler.prototype.createDeviceListEntry = function (deviceConfig) {
@@ -155,9 +233,16 @@ var ioBroker_DeviceListHandler = (function (_super) {
             return;
         var cat;
         var iconClass = "mif-question";
-        if ((accessoryCategories !== undefined) && (isDeviceConfig(deviceConfig)))
+        if (isBridgeConfig(deviceConfig)) {
+            iconClass = 'mif-tree';
+        }
+        else if ((accessoryCategories !== undefined) && (isDeviceConfig(deviceConfig))) {
             if (cat = accessoryCategories[deviceConfig.category])
                 iconClass = cat['icon'];
+        }
+        else if (isIPCameraConfig(deviceConfig)) {
+            iconClass = 'mif-camera';
+        }
         var listIcon = listItem.querySelector('.list-icon');
         listIcon.className = "";
         listIcon.classList.add('list-icon', 'icon', iconClass);
@@ -214,6 +299,36 @@ var ioBroker_ButtonHandler = (function (_super) {
                 _this.delegate.changeCallback();
             });
         }
+        if (elem = bridgePane.querySelector('#yahka_add_camera')) {
+            elem.addEventListener('click', function (e) {
+                e.preventDefault();
+                var newIPCamera = {
+                    configType: "ipcamera",
+                    ident: "",
+                    manufacturer: "",
+                    model: "",
+                    name: "<new camera " + _this.deviceListHandler.getDeviceList().length + ">",
+                    serial: "",
+                    port: 0,
+                    username: "d8:be:54:e7:06:f6",
+                    pincode: "123-45-678",
+                    enabled: true,
+                    source: "",
+                    codec: "libx264",
+                    maxWidth: 1920,
+                    maxHeight: 1080,
+                    maxFPS: 60,
+                    verboseLogging: false,
+                    numberOfStreams: undefined,
+                    ffmpegCommandLine: ffmpegCommandLines.default,
+                    devices: []
+                };
+                _this.delegate.cameraConfigs.push(newIPCamera);
+                _this.delegate.setSelectedDeviceConfig(newIPCamera, true);
+                _this.deviceListHandler.buildDeviceList(bridgePane);
+                _this.delegate.changeCallback();
+            });
+        }
         if (elem = bridgePane.querySelector('#yahka_add_service')) {
             elem.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -237,15 +352,25 @@ var ioBroker_ButtonHandler = (function (_super) {
             elem.addEventListener('click', function (e) {
                 e.preventDefault();
                 var dev = _this.delegate.selectedDeviceConfig;
-                if (!isDeviceConfig(dev))
-                    return;
-                var idx = bridge.devices.indexOf(dev);
-                if (idx > -1) {
-                    bridge.devices.splice(idx, 1);
-                    _this.delegate.changeCallback();
-                    _this.delegate.setSelectedDeviceConfig(undefined, false);
-                    _this.deviceListHandler.buildDeviceList(bridgePane);
-                    _this.delegate.changeCallback();
+                if (isDeviceConfig(dev)) {
+                    var idx = bridge.devices.indexOf(dev);
+                    if (idx > -1) {
+                        bridge.devices.splice(idx, 1);
+                        _this.delegate.changeCallback();
+                        _this.delegate.setSelectedDeviceConfig(undefined, false);
+                        _this.deviceListHandler.buildDeviceList(bridgePane);
+                        _this.delegate.changeCallback();
+                    }
+                }
+                else if (isIPCameraConfig(dev)) {
+                    var idx = _this.delegate.cameraConfigs.indexOf(dev);
+                    if (idx > -1) {
+                        _this.delegate.cameraConfigs.splice(idx, 1);
+                        _this.delegate.changeCallback();
+                        _this.delegate.setSelectedDeviceConfig(undefined, false);
+                        _this.deviceListHandler.buildDeviceList(bridgePane);
+                        _this.delegate.changeCallback();
+                    }
                 }
             });
         }
@@ -625,5 +750,98 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
         this.delegate.changeCallback();
     };
     return ConfigPageBuilder_CustomDevice;
+}(ConfigPageBuilder_Base));
+var ConfigPageBuilder_IPCamera = (function (_super) {
+    __extends(ConfigPageBuilder_IPCamera, _super);
+    function ConfigPageBuilder_IPCamera(delegate) {
+        var _this = _super.call(this, delegate) || this;
+        _this.delegate = delegate;
+        _this.addServiceAvailable = false;
+        _this.removeDeviceAvailable = true;
+        _this.configPanelTemplate = document.querySelector('#yahka_cameraConfig_template');
+        return _this;
+    }
+    ConfigPageBuilder_IPCamera.prototype.refresh = function (config, AFocusLastPanel) {
+        if (!isIPCameraConfig(config)) {
+            return;
+        }
+        this.refreshConfigPane(config);
+    };
+    ConfigPageBuilder_IPCamera.prototype.refreshConfigPane = function (config) {
+        var _this = this;
+        var devicePane = document.querySelector('#yahka_device_details');
+        devicePane.innerHTML = '';
+        var configFragment = document.importNode(this.configPanelTemplate.content, true);
+        translateFragment(configFragment);
+        var inputHelper = function (selector, propertyName) {
+            var input = configFragment.querySelector(selector);
+            var value = config[propertyName];
+            if (input.type === 'checkbox') {
+                input.checked = value === undefined ? true : value;
+                input.addEventListener('change', _this.handlePropertyChange.bind(_this, config, propertyName));
+            }
+            else {
+                if (value !== undefined) {
+                    input.value = value.toString();
+                }
+                else {
+                    input.value = '';
+                }
+                input.addEventListener('input', _this.handlePropertyChange.bind(_this, config, propertyName));
+            }
+        };
+        var ffmpegHelper = function (selector, propertyName) {
+            var input = configFragment.querySelector(selector);
+            var value = config.ffmpegCommandLine[propertyName];
+            if (value !== undefined) {
+                input.value = JSON.stringify(value, null, 2);
+            }
+            else {
+                input.value = '';
+            }
+            input.addEventListener('input', _this.handleffMpegPropertyChange.bind(_this, config, propertyName));
+        };
+        inputHelper('#camera_enabled', 'enabled');
+        inputHelper('#camera_name', 'name');
+        inputHelper('#camera_manufacturer', 'manufacturer');
+        inputHelper('#camera_model', 'model');
+        inputHelper('#camera_serial', 'serial');
+        inputHelper('#camera_username', 'username');
+        inputHelper('#camera_pincode', 'pincode');
+        inputHelper('#camera_port', 'port');
+        inputHelper('#camera_source', 'source');
+        inputHelper('#camera_codec', 'codec');
+        inputHelper('#camera_numberOfStreams', 'numberOfStreams');
+        inputHelper('#camera_maxWidth', 'maxWidth');
+        inputHelper('#camera_maxHeight', 'maxHeight');
+        inputHelper('#camera_maxFPS', 'maxFPS');
+        ffmpegHelper('#ffmpeg_snapshot', 'snapshot');
+        ffmpegHelper('#ffmpeg_stream', 'stream');
+        devicePane.appendChild(configFragment);
+    };
+    ConfigPageBuilder_IPCamera.prototype.handlePropertyChange = function (config, propertyName, ev) {
+        var inputTarget = ev.currentTarget;
+        var listItem = document.querySelector('div.list[data-device-ident="' + config.name + '"]');
+        if (inputTarget.type == "checkbox") {
+            config[propertyName] = inputTarget.checked;
+        }
+        else {
+            config[propertyName] = inputTarget.value;
+        }
+        this.delegate.refreshDeviceListEntry(config, listItem);
+        this.delegate.changeCallback();
+    };
+    ConfigPageBuilder_IPCamera.prototype.handleffMpegPropertyChange = function (config, propertyName, ev) {
+        var inputTarget = ev.currentTarget;
+        var listItem = document.querySelector('div.list[data-device-ident="' + config.name + '"]');
+        try {
+            config.ffmpegCommandLine[propertyName] = JSON.parse(inputTarget.value);
+        }
+        catch (_a) {
+        }
+        this.delegate.refreshDeviceListEntry(config, listItem);
+        this.delegate.changeCallback();
+    };
+    return ConfigPageBuilder_IPCamera;
 }(ConfigPageBuilder_Base));
 //# sourceMappingURL=yahka.admin.js.map

@@ -526,7 +526,8 @@
                 <span class="translate">Basic Properties</span>
             </div>
             <div class="content">
-                <div><label class="translate" for="camera_enabled">Enabled:</label></div>
+                <div>
+                    <div><label class="translate" for="camera_enabled">Enabled:</label></div>
                     <div class="input control flex-grow margin10">
                         <input type="checkbox" id="camera_enabled"/>
                     </div>
@@ -580,13 +581,7 @@
                 <div class="heading">
                     <span class="translate">Stream Properties</span>
                 </div>
-<!-- 
-                source: String;
-                codec: String;
-                numberOfStreams: number | undefined;
-                maxWidth: number;
-                maxHeight: number;
-                maxFPS: number; -->
+
                 <div class="content">
                     <div>
                         <div><label class="translate" for="camera_source">Source:</label></div>
@@ -626,7 +621,28 @@
                     </div>                
                 </div>
             </div>
+        </div>
+        <div class="frame">
+                <div class="heading">
+                    <span class="translate">Advanced Settings</span>
+                </div>
 
+                <div class="content">
+                    <div>
+                            <div><label class="translate" for="ffmpeg_snapshot">FFMPEG Command Line - Snapshot:</label></div>
+                            <div class="input control flex-grow margin10">
+                                <textarea class="full-size" id="ffmpeg_snapshot"></textarea>
+                            </div>
+                    </div>
+                    <div>
+                            <div><label class="translate" for="ffmpeg_stream">FFMPEG Command Line - Stream:</label></div>
+                            <div class="input control flex-grow margin10">
+                                <textarea class="full-size" id="ffmpeg_stream"></textarea>
+                            </div>
+                        </div>                                    
+                </div>
+            </div>
+        </div>        
     </template>
 
     <template id="yahka_device_service_panel">

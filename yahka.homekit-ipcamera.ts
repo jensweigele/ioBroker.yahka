@@ -164,11 +164,18 @@ export class THomeKitIPCamera {
 
 
     handleSnapshotRequest(request, callback) {
-        this.FLogger.info("get snapshot");
-        let resolution = request.width + 'x' + request.height;
-        let ffmpegCommand = '-re -i ' + this.camConfig.source + ' -t 1 -s ' + resolution + ' -f image2 -';
-        this.FLogger.info("Snapshot run: ffmpeg " + ffmpegCommand);
-        let ffmpeg = spawn('ffmpeg', (ffmpegCommand).split(' '), { env: process.env });
+        let params = {
+            source: this.camConfig.source,
+            width: request.width,
+            height: request.height,
+        }
+        let ffmpegCommand = this.camConfig.ffmpegCommandLine.snapshot.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => {
+            return params[word];
+        }));
+
+        this.FLogger.debug("Snapshot run: ffmpeg " + ffmpegCommand.join(' '));
+        let ffmpeg = spawn('ffmpeg', ffmpegCommand, { env: process.env });
+
         var imageBuffer = Buffer.alloc(0);
 
         ffmpeg.stdout.on('data', function (data) {
@@ -248,7 +255,6 @@ export class THomeKitIPCamera {
     }
 
     handleStreamRequest(request) {
-        this.FLogger.info("StreamRequest");
         var sessionID = request["sessionID"];
         var requestType = request["type"];
         if (sessionID) {
@@ -280,29 +286,23 @@ export class THomeKitIPCamera {
                     let targetVideoPort = sessionInfo["video_port"];
                     let videoKey = sessionInfo["video_srtp"];
 
-                    
-                    let ffmpegCommand = [
-                        '-re',
-                        '-f', 'dshow', 
-                        '-i', 'video=Integrated Webcam', 
-                        '-threads', '0', 
-                        '-vcodec', codec, 
-                        '-an', '-pix_fmt', 
-                        'yuv420p', 
-                        '-r', fps, 
-                        '-f', 'rawvideo', 
-                        '-tune', 'zerolatency', 
-                        '-vf', 'scale=' + width + ':' + height, 
-                        '-b:v', bitrate + 'k',
-                        '-bufsize', bitrate + 'k',
-                        '-payload_type', '99', 
-                        '-ssrc', '1', 
-                        '-f', 'rtp', 
-                        '-srtp_out_suite', 'AES_CM_128_HMAC_SHA1_80', 
-                        '-srtp_out_params', videoKey.toString('base64'), 
-                        'srtp://' + targetAddress + ':' + targetVideoPort + '?rtcpport=' + targetVideoPort + '&localrtcpport=' + targetVideoPort + '&pkt_size=1378']; 
-                    this.FLogger.info("Stream run: ffmpeg " + ffmpegCommand.join(' '));
-                    console.log("Stream run: ffmpeg " + ffmpegCommand.join(' '));
+
+                    let params = {
+                        source: this.camConfig.source,
+                        codec: codec,
+                        fps: fps,
+                        width: width,
+                        height: height,
+                        bitrate: bitrate,
+                        videokey: videoKey.toString('base64'),
+                        targetAddress: targetAddress,
+                        targetVideoPort: targetVideoPort
+                    }
+                    let ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => {
+                        return params[word];
+                    }));
+
+                    this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
                     let ffmpeg = spawn('ffmpeg', ffmpegCommand, { env: process.env });
                     var devnull = require('dev-null');
                     ffmpeg.stdout.pipe(devnull());
