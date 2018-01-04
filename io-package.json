@@ -1,8 +1,13 @@
 {
     "common": {
         "name": "yahka",
-        "version": "0.6.0-beta.1",
+        "version": "0.6.0-beta.2",
         "news": {
+            "0.6.0-beta.2": {
+                "en": "Support for IP-Cameras",
+                "de": "Support für IP-Kameras",
+                "ru": ""
+            },
             "0.6.0-beta.1": {
                 "en": "",
                 "de": "",
