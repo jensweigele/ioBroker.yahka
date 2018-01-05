@@ -508,14 +508,14 @@ class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base implements I
             input.addEventListener("click", this.handleBridgeMetaDataChange.bind(this, bridge, propertyName));
         };
 
-        inputHelper('#bridge_name', 'name');
-        inputHelper('#bridge_manufacturer', 'manufacturer');
-        inputHelper('#bridge_model', 'model');
-        inputHelper('#bridge_serial', 'serial');
-        inputHelper('#bridge_username', 'username');
-        inputHelper('#bridge_pincode', 'pincode');
-        inputHelper('#bridge_port', 'port');
-        checkboxHelper('#bridge_verboseLogging', 'verboseLogging');
+        inputHelper('#name', 'name');
+        inputHelper('#manufacturer', 'manufacturer');
+        inputHelper('#model', 'model');
+        inputHelper('#serial', 'serial');
+        inputHelper('#username', 'username');
+        inputHelper('#pincode', 'pincode');
+        inputHelper('#port', 'port');
+        checkboxHelper('#verboseLogging', 'verboseLogging');
 
         devicePane.appendChild(bridgeConfigFragment);
     }
@@ -618,12 +618,12 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
             }
         };
 
-        inputHelper('#device_name', 'name');
-        inputHelper('#device_enabled', 'enabled');
-        inputHelper('#device_manufacturer', 'manufacturer');
-        inputHelper('#device_model', 'model');
-        inputHelper('#device_serial', 'serial');
-        inputHelper('#device_category', 'category', accessoryCategories);
+        inputHelper('#name', 'name');
+        inputHelper('#enabled', 'enabled');
+        inputHelper('#manufacturer', 'manufacturer');
+        inputHelper('#model', 'model');
+        inputHelper('#serial', 'serial');
+        inputHelper('#category', 'category', accessoryCategories);
 
         devicePane.appendChild(devInfoFragment);
         return devInfoPanel;
@@ -960,22 +960,22 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
             
         };           
 
-        inputHelper('#camera_enabled', 'enabled');
-        inputHelper('#camera_name', 'name');
-        inputHelper('#camera_manufacturer', 'manufacturer');
-        inputHelper('#camera_model', 'model');
-        inputHelper('#camera_serial', 'serial');
-        inputHelper('#camera_username', 'username');
-        inputHelper('#camera_pincode', 'pincode');
-        inputHelper('#camera_port', 'port');
+        inputHelper('#enabled', 'enabled');
+        inputHelper('#name', 'name');
+        inputHelper('#manufacturer', 'manufacturer');
+        inputHelper('#model', 'model');
+        inputHelper('#serial', 'serial');
+        inputHelper('#username', 'username');
+        inputHelper('#pincode', 'pincode');
+        inputHelper('#port', 'port');
 
 
-        inputHelper('#camera_source', 'source');
-        inputHelper('#camera_codec', 'codec');
-        inputHelper('#camera_numberOfStreams', 'numberOfStreams');
-        inputHelper('#camera_maxWidth', 'maxWidth');
-        inputHelper('#camera_maxHeight', 'maxHeight');
-        inputHelper('#camera_maxFPS', 'maxFPS');
+        inputHelper('#source', 'source');
+        inputHelper('#codec', 'codec');
+        inputHelper('#numberOfStreams', 'numberOfStreams');
+        inputHelper('#maxWidth', 'maxWidth');
+        inputHelper('#maxHeight', 'maxHeight');
+        inputHelper('#maxFPS', 'maxFPS');
 
         ffmpegHelper('#ffmpeg_snapshot', 'snapshot');
         ffmpegHelper('#ffmpeg_stream', 'stream');

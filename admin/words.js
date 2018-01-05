@@ -10,7 +10,6 @@ systemDictionary = {
         "ru": "Нижеприведенная страница используется для присвоения состояний ioBroker характеристикам HomeKit."
     },
     "Bridge Properties":    {"en": "Bridge Properties",     "de": "Bridge-Eigenschaften",   "ru": "Свойства хаба"},
-    "Bridge name:":         {"en": "Bridge name:",          "de": "Bridge-Name:",           "ru": "Название хаба:"},
     "Manufacturer:":        {"en": "Manufacturer:",         "de": "Hersteller:",            "ru": "Производитель:"},
     "Model:":               {"en": "Model:",                "de": "Modell:",                "ru": "Модель:"},
     "Serial:":              {"en": "Serial:",               "de": "Serial:",                "ru": "Номер:"},
@@ -22,7 +21,7 @@ systemDictionary = {
     "Remove Device":        {"en": "Remove Device",         "de": "Gerät entfernen",        "ru": "Удалить устройство"},
     "Add Service":          {"en": "Add Service",           "de": "Service hinzufügen",     "ru": "Добавить сервис"},
     "Device Properties":    {"en": "Device Properties",     "de": "Geräteeigenschaften",    "ru": "Device Properties"},
-    "Device name:":         {"en": "Device name:",          "de": "Gerätename:",            "ru": "Имя устройства:"},
+    "Name:":                {"en": "Name:",                 "de": "Name:",                  "ru": "Имя устройства:"},
     "Categeory:":           {"en": "Categeory:",            "de": "Kategorie:",             "ru": "Категория:"},
     "Service: ":            {"en": "Service: ",             "de": "Bedienung: ",            "ru": "Обслуживание: "},
     "Service name:":        {"en": "Service name:",         "de": "Dienstname:",            "ru": "Наименование услуги:"},

@@ -429,39 +429,39 @@
 
             <div class="content">
                 <div>
-                    <div><label class="translate" for="device_enabled">Enabled:</label></div>
+                    <div><label class="translate" for="enabled">Enabled:</label></div>
                     <div class="input control flex-grow margin10">
-                        <input type="checkbox" id="device_enabled"/>
+                        <input type="checkbox" id="enabled"/>
                     </div>
                 </div>
                 <div>
-                    <div><label class="translate" for="device_name">Device name:</label></div>
+                    <div><label class="translate" for="name">Name:</label></div>
                     <div class="input control flex-grow margin10">
-                        <input class="full-size" type="text" id="device_name"/>
+                        <input class="full-size" type="text" id="name"/>
                     </div>
                 </div>
                 <div>
-                    <div><label class="translate" for="device_manufacturer">Manufacturer:</label></div>
+                    <div><label class="translate" for="manufacturer">Manufacturer:</label></div>
                     <div class="input control flex-grow  margin10">
-                        <input class="full-size" type="text" id="device_manufacturer"/>
+                        <input class="full-size" type="text" id="manufacturer"/>
                     </div>
                 </div>
                 <div>
-                    <div><label class="translate" for="device_model">Model:</label></div>
+                    <div><label class="translate" for="model">Model:</label></div>
                     <div class="input controlflex-grow  margin10">
-                        <input class="full-size" type="text" id="device_model"/>
+                        <input class="full-size" type="text" id="model"/>
                     </div>
                 </div>
                 <div>
-                    <div><label class="translate" for="device_serial">Serial:</label></div>
+                    <div><label class="translate" for="serial">Serial:</label></div>
                     <div class="input controlflex-grow  margin10">
-                        <input class="full-size" type="text" id="device_serial"/>
+                        <input class="full-size" type="text" id="serial"/>
                     </div>
                 </div> 
                 <div>
-                    <div><label class="translate" for="device_category">Categeory:</label></div>
+                    <div><label class="translate" for="category">Categeory:</label></div>
                     <div class="input controlflex-grow  margin10">
-                        <select class="full-size"  id="device_category"></select>
+                        <select class="full-size"  id="category"></select>
                     </div>
                 </div>                 
             </div> 
@@ -471,51 +471,51 @@
 
     <template id="yahka_bridgeconfig_template">
         <div>
-            <div><label class="translate" for="bridge_name">Bridge name:</label><span class="edit-hint translate">descriptive only - displayed in homekit apps. Changes are only recognized after readding the bridge in the app.</span></div>
+            <div><label class="translate" for="name">Name:</label><span class="edit-hint translate">descriptive only - displayed in homekit apps. Changes are only recognized after readding the bridge in the app.</span></div>
             <div class="input control flex-grow margin10">
-                <input class="full-size" type="text" id="bridge_name"/>
+                <input class="full-size" type="text" id="name"/>
             </div>
         </div>
         <div>
-            <div><label class="translate" for="bridge_manufacturer">Manufacturer:</label><span class="edit-hint translate">descriptive only - displayed in some homekit apps</span></div>
+            <div><label class="translate" for="manufacturer">Manufacturer:</label><span class="edit-hint translate">descriptive only - displayed in some homekit apps</span></div>
             <div class="input control flex-grow  margin10">
-                <input class="full-size" type="text" id="bridge_manufacturer"/>
+                <input class="full-size" type="text" id="manufacturer"/>
             </div>
         </div>
         <div>
-            <div><label class="translate" for="bridge_model">Model:</label><span class="edit-hint translate">descriptive only - displayed in some homekit apps</span></div>
+            <div><label class="translate" for="model">Model:</label><span class="edit-hint translate">descriptive only - displayed in some homekit apps</span></div>
             <div class="input controlflex-grow  margin10">
-                <input class="full-size" type="text" id="bridge_model"/>
+                <input class="full-size" type="text" id="model"/>
             </div>
         </div>
         <div>
-            <div><label class="translate" for="bridge_serial">Serial:</label><span class="edit-hint translate">descriptive only - displayed in some homekit apps</span></div>
+            <div><label class="translate" for="serial">Serial:</label><span class="edit-hint translate">descriptive only - displayed in some homekit apps</span></div>
             <div class="input controlflex-grow  margin10">
-                <input class="full-size" type="text" id="bridge_serial"/>
+                <input class="full-size" type="text" id="serial"/>
             </div>
         </div>
         <div>
-            <div><label class="translate" for="bridge_username">Username:</label><span class="edit-hint translate">needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b></span></div>
+            <div><label class="translate" for="username">Username:</label><span class="edit-hint translate">needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b></span></div>
             <div class="input controlflex-grow  margin10">
-                <input class="full-size" type="text" id="bridge_username"/>
+                <input class="full-size" type="text" id="username"/>
             </div>
         </div>
         <div>
-            <div><label class="translate" for="bridge_pincode">Pincode:</label><span class="edit-hint translate">needs to be in the form of 123-45-678</span></div>
+            <div><label class="translate" for="pincode">Pincode:</label><span class="edit-hint translate">needs to be in the form of 123-45-678</span></div>
             <div class="input controlflex-grow  margin10">
-                <input class="full-size" type="text" id="bridge_pincode"/>
+                <input class="full-size" type="text" id="pincode"/>
             </div>
         </div>
         <div>
-            <div><label class="translate" for="bridge_port">Port:</label><span class="edit-hint translate">0 = random free port assigned by the operation system (default)</span></div>
+            <div><label class="translate" for="port">Port:</label><span class="edit-hint translate">0 = random free port assigned by the operation system (default)</span></div>
             <div class="input controlflex-grow  margin10">
-                <input class="full-size" type="number" id="bridge_port"/>
+                <input class="full-size" type="number" id="port"/>
             </div>
         </div>
         <div>
-            <div><label class="translate" for="bridge_verboseLogging">Verbose Logging:</label><span class="edit-hint translate">true = redirect hap-node logging to adapter logging</span></div>
+            <div><label class="translate" for="verboseLogging">Verbose Logging:</label><span class="edit-hint translate">true = redirect hap-node logging to adapter logging</span></div>
             <div class="input controlflex-grow  margin10">
-                <input class="" type="checkbox" id="bridge_verboseLogging"/>
+                <input class="" type="checkbox" id="verboseLogging"/>
             </div>
         </div>                        
     </template>
@@ -527,51 +527,51 @@
             </div>
             <div class="content">
                 <div>
-                    <div><label class="translate" for="camera_enabled">Enabled:</label></div>
+                    <div><label class="translate" for="enabled">Enabled:</label></div>
                     <div class="input control flex-grow margin10">
-                        <input type="checkbox" id="camera_enabled"/>
+                        <input type="checkbox" id="enabled"/>
                     </div>
                 </div>
                 <div>
-                    <div><label class="translate" for="camera_name">Device name:</label></div>
+                    <div><label class="translate" for="name">Device name:</label></div>
                     <div class="input control flex-grow margin10">
-                        <input class="full-size" type="text" id="camera_name"/>
+                        <input class="full-size" type="text" id="name"/>
                     </div>
                 </div>
                 <div>
-                    <div><label class="translate" for="camera_manufacturer">Manufacturer:</label></div>
+                    <div><label class="translate" for="manufacturer">Manufacturer:</label></div>
                     <div class="input control flex-grow  margin10">
-                        <input class="full-size" type="text" id="camera_manufacturer"/>
+                        <input class="full-size" type="text" id="manufacturer"/>
                     </div>
                 </div>
                 <div>
-                    <div><label class="translate" for="camera_model">Model:</label></div>
+                    <div><label class="translate" for="model">Model:</label></div>
                     <div class="input controlflex-grow  margin10">
-                        <input class="full-size" type="text" id="camera_model"/>
+                        <input class="full-size" type="text" id="model"/>
                     </div>
                 </div>
                 <div>
-                    <div><label class="translate" for="camera_serial">Serial:</label></div>
+                    <div><label class="translate" for="serial">Serial:</label></div>
                     <div class="input controlflex-grow  margin10">
-                        <input class="full-size" type="text" id="camera_serial"/>
+                        <input class="full-size" type="text" id="serial"/>
                     </div>
                 </div> 
                 <div>
-                    <div><label class="translate" for="camera_username">Username:</label><span class="edit-hint translate">needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the camera needs to be reconfigured in the HomeKit database</b></span></div>
+                    <div><label class="translate" for="username">Username:</label><span class="edit-hint translate">needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the camera needs to be reconfigured in the HomeKit database</b></span></div>
                     <div class="input controlflex-grow  margin10">
-                        <input class="full-size" type="text" id="camera_username"/>
+                        <input class="full-size" type="text" id="username"/>
                     </div>
                 </div>
                 <div>
-                    <div><label class="translate" for="camera_pincode">Pincode:</label><span class="edit-hint translate">needs to be in the form of 123-45-678</span></div>
+                    <div><label class="translate" for="pincode">Pincode:</label><span class="edit-hint translate">needs to be in the form of 123-45-678</span></div>
                     <div class="input controlflex-grow  margin10">
-                        <input class="full-size" type="text" id="camera_pincode"/>
+                        <input class="full-size" type="text" id="pincode"/>
                     </div>
                 </div>
                 <div>
-                    <div><label class="translate" for="camera_port">Port:</label><span class="edit-hint translate">0 = random free port assigned by the operation system (default)</span></div>
+                    <div><label class="translate" for="port">Port:</label><span class="edit-hint translate">0 = random free port assigned by the operation system (default)</span></div>
                     <div class="input controlflex-grow  margin10">
-                        <input class="full-size" type="number" id="camera_port"/>
+                        <input class="full-size" type="number" id="port"/>
                     </div>
                 </div>                       
             </div>
@@ -584,39 +584,39 @@
 
                 <div class="content">
                     <div>
-                        <div><label class="translate" for="camera_source">Source:</label></div>
+                        <div><label class="translate" for="source">Source:</label></div>
                         <div class="input control flex-grow margin10">
-                            <input class="full-size" type="text" id="camera_source"/>
+                            <input class="full-size" type="text" id="source"/>
                         </div>
                     </div>
                     <div>
-                        <div><label class="translate" for="camera_codec">Codec:</label></div>
+                        <div><label class="translate" for="codec">Codec:</label></div>
                         <div class="input control flex-grow  margin10">
-                            <input class="full-size" type="text" id="camera_codec"/>
+                            <input class="full-size" type="text" id="codec"/>
                         </div>
                     </div>
                     <div>
-                        <div><label class="translate" for="camera_numberOfStreams">Number of Streams:</label></div>
+                        <div><label class="translate" for="numberOfStreams">Number of Streams:</label></div>
                         <div class="input controlflex-grow  margin10">
-                            <input class="full-size" type="text" id="camera_numberOfStreams"/>
+                            <input class="full-size" type="text" id="numberOfStreams"/>
                         </div>
                     </div>
                     <div>
-                        <div><label class="translate" for="camera_maxWidth">maxWidth:</label></div>
+                        <div><label class="translate" for="maxWidth">maxWidth:</label></div>
                         <div class="input controlflex-grow  margin10">
-                            <input class="full-size" type="text" id="camera_maxWidth"/>
+                            <input class="full-size" type="text" id="maxWidth"/>
                         </div>
                     </div> 
                     <div>
-                        <div><label class="translate" for="camera_maxHeight">maxHeight:</label></div>
+                        <div><label class="translate" for="maxHeight">maxHeight:</label></div>
                         <div class="input controlflex-grow  margin10">
-                            <input class="full-size" type="text" id="camera_maxHeight"/>
+                            <input class="full-size" type="text" id="maxHeight"/>
                         </div>
                     </div>
                     <div>
-                        <div><label class="translate" for="camera_maxFPS">maxFPS:</label></div>
+                        <div><label class="translate" for="maxFPS">maxFPS:</label></div>
                         <div class="input controlflex-grow  margin10">
-                            <input class="full-size" type="text" id="camera_maxFPS"/>
+                            <input class="full-size" type="text" id="maxFPS"/>
                         </div>
                     </div>                
                 </div>
