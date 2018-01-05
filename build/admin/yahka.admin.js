@@ -108,6 +108,12 @@ var accessoryCategories = {};
 getObject('yahka.meta._accessoryCategories', function (error, object) {
     accessoryCategories = object.native;
 });
+function generateRandomUsername() {
+    var usr = [];
+    for (var i = 0; i < 6; i++)
+        usr[i] = ('00' + (Math.floor((Math.random() * 256)).toString(16))).substr(-2);
+    return usr.join(':');
+}
 var ioBroker_YahkaAdmin = (function () {
     function ioBroker_YahkaAdmin() {
     }
@@ -310,7 +316,7 @@ var ioBroker_ButtonHandler = (function (_super) {
                     name: "<new camera " + _this.deviceListHandler.getDeviceList().length + ">",
                     serial: "",
                     port: 0,
-                    username: "d8:be:54:e7:06:f6",
+                    username: generateRandomUsername(),
                     pincode: "123-45-678",
                     enabled: true,
                     source: "",

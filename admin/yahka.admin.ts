@@ -127,6 +127,13 @@ getObject('yahka.meta._accessoryCategories', (error, object) => {
     accessoryCategories = object.native;
 });
 
+function generateRandomUsername(): string {
+    let usr = [];
+    for (let i = 0; i < 6; i++)
+        usr[i] = ('00' + (Math.floor((Math.random() * 256)).toString(16))).substr(-2);
+    return usr.join(':');
+}
+
 
 interface IConfigPageBuilder {
     refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean);
@@ -370,7 +377,7 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
                     name: "<new camera " + this.deviceListHandler.getDeviceList().length + ">",
                     serial: "",
                     port: 0,
-                    username: "d8:be:54:e7:06:f6",
+                    username: generateRandomUsername(),
                     pincode: "123-45-678",
                     enabled: true,
                     source: "",
