@@ -136,7 +136,7 @@ function generateRandomUsername(): string {
 
 
 interface IConfigPageBuilder {
-    refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean);
+    refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement);
     styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean;
     readonly addServiceAvailable: boolean;
     readonly removeDeviceAvailable: boolean;
@@ -147,8 +147,9 @@ interface IConfigPageBuilderDelegate {
     readonly selectedDeviceConfig: hkBridge.Configuration.IBaseConfigNode;
     readonly bridgeSettings: hkBridge.Configuration.IBridgeConfig;
     cameraConfigs: [hkBridge.Configuration.ICameraConfig];
-    setSelectedDeviceConfig(deviceConfig: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean)
+    setSelectedDeviceConfig(deviceConfig: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean): void;
     refreshDeviceListEntry(deviceConfig: hkBridge.Configuration.IBaseConfigNode, listItem: HTMLElement);
+    refreshDevicePanel(deviceConfig: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean): void;
     changeCallback();
 
     getPageBuilderByConfig(deviceConfig: hkBridge.Configuration.IBaseConfigNode): IConfigPageBuilder;
@@ -228,12 +229,20 @@ class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
         return this._selectedDeviceConfig
     }
 
+    public refreshDevicePanel(deviceConfig: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean) {
+        let pageBuilder = this.getPageBuilderByConfig(deviceConfig);
+        let devicePanel = <HTMLElement>document.querySelector('#yahka_device_details');
+        if(devicePanel) {
+            devicePanel.innerHTML = '';
+        }
+        if (pageBuilder) {
+            pageBuilder.refresh(deviceConfig, AFocusLastPanel, devicePanel);
+        }
+    }
+
     setSelectedDeviceConfig(deviceConfig: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean) {
         this._selectedDeviceConfig = deviceConfig;
-        let pageBuilder = this.getPageBuilderByConfig(deviceConfig);
-        if (pageBuilder) {
-            pageBuilder.refresh(deviceConfig, AFocusLastPanel);
-        }
+        this.refreshDevicePanel(deviceConfig, AFocusLastPanel);
         this.buttonHandler.refreshBridgeButtons(document.body);
     }
 
@@ -411,10 +420,8 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
                     type: '',
                     characteristics: []
                 });
-                let pageBuilder = this.delegate.getPageBuilderByConfig(dev);
-                if (pageBuilder) {
-                    pageBuilder.refresh(dev, true);
-                }
+
+                this.delegate.refreshDevicePanel(dev, true);
                 this.delegate.changeCallback();
             });
         }
@@ -478,46 +485,30 @@ class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base implements I
         this.bridgeConfigPanelTemplate = <HTMLTemplateElement>document.querySelector('#yahka_bridgeconfig_template');
     }
 
-    public refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean) {
+    public refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
         if (!isBridgeConfig(config)) {
             return
         }
-        this.refreshBridgeConfigPane(config);
-    }
-
-    public styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean {
-        let listIcon = listItem.querySelector('.list-icon');
-        listIcon.className = 'list-icon icon mif-tree';
-        listItem.classList.add('fg-grayDark');
-        return true;
-    }
-
-    refreshBridgeConfigPane(bridge: hkBridge.Configuration.IBridgeConfig) {
-        let devicePane = <HTMLElement>document.querySelector('#yahka_device_details');
-        devicePane.innerHTML = '';
-
         let bridgeConfigFragment = <DocumentFragment>document.importNode(this.bridgeConfigPanelTemplate.content, true);
         translateFragment(bridgeConfigFragment);
 
-
         let inputHelper = (selector: string, propertyName: string) => {
             let input = <HTMLInputElement>bridgeConfigFragment.querySelector(selector);
-
-            let value = bridge[propertyName];
+            let value = config[propertyName];
             if (value !== undefined) {
                 input.value = value;
             } else {
                 input.value = '';
             }
-            input.addEventListener("input", this.handleBridgeMetaDataChange.bind(this, bridge, propertyName));
+            input.addEventListener("input", this.handleBridgeMetaDataChange.bind(this, config, propertyName));
         };
 
         let checkboxHelper = (selector: string, propertyName: string) => {
             let input = <HTMLInputElement>bridgeConfigFragment.querySelector(selector);
 
-            let value = bridge[propertyName];
+            let value = config[propertyName];
             input.checked = value;
-            input.addEventListener("click", this.handleBridgeMetaDataChange.bind(this, bridge, propertyName));
+            input.addEventListener("click", this.handleBridgeMetaDataChange.bind(this, config, propertyName));
         };
 
         inputHelper('#name', 'name');
@@ -529,9 +520,15 @@ class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base implements I
         inputHelper('#port', 'port');
         checkboxHelper('#verboseLogging', 'verboseLogging');
 
-        devicePane.appendChild(bridgeConfigFragment);
+        devicePanel.appendChild(bridgeConfigFragment);
     }
 
+    public styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean {
+        let listIcon = listItem.querySelector('.list-icon');
+        listIcon.className = 'list-icon icon mif-tree';
+        listItem.classList.add('fg-grayDark');
+        return true;
+    }
 
     handleBridgeMetaDataChange(bridgeConfig: hkBridge.Configuration.IBridgeConfig, propertyName: string, ev: Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
@@ -573,11 +570,26 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
         this.characteristicRow = <HTMLTemplateElement>document.querySelector('#yahka_characteristic_row');
     }
 
-    public refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean) {
+    public refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
         if (!isDeviceConfig(config)) {
             return
         }
-        this.refreshDevicePane(config, AFocusLastPanel);
+
+        let lastPane: HTMLElement = this.buildDeviceInformationPanel(config, devicePanel);
+        for (let serviceConfig of config.services) {
+            let servicePanel = this.createServicePanel(config, serviceConfig);
+            devicePanel.appendChild(servicePanel);
+            lastPane = servicePanel;
+        }
+
+        if (AFocusLastPanel && lastPane) {
+            lastPane.scrollIntoView();
+            if (!lastPane.classList.contains('active')) {
+                let heading = (<HTMLElement>lastPane.querySelector('.heading'));
+                if (heading)
+                    heading.click();
+            }
+        }        
     }
 
 
@@ -600,30 +612,6 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
         return true;
         
     }    
-
-    refreshDevicePane(deviceConfig: hkBridge.Configuration.IDeviceConfig, focusLast?: boolean) {
-        let devicePane = <HTMLElement>document.querySelector('#yahka_device_details');
-        devicePane.innerHTML = '';
-
-        if (deviceConfig === undefined)
-            return;
-
-        let lastPane: HTMLElement = this.buildDeviceInformationPanel(deviceConfig, devicePane);
-        for (let serviceConfig of deviceConfig.services) {
-            let servicePanel = this.createServicePanel(deviceConfig, serviceConfig);
-            devicePane.appendChild(servicePanel);
-            lastPane = servicePanel;
-        }
-
-        if (focusLast && lastPane) {
-            lastPane.scrollIntoView();
-            if (!lastPane.classList.contains('active')) {
-                let heading = (<HTMLElement>lastPane.querySelector('.heading'));
-                if (heading)
-                    heading.click();
-            }
-        }
-    }
 
     buildDeviceInformationPanel(deviceConfig: hkBridge.Configuration.IDeviceConfig, devicePane: HTMLElement): HTMLElement {
         let devInfoFragment = <DocumentFragment>document.importNode(this.deviceInfoPanelTemplate.content, true);
@@ -703,6 +691,7 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
                 this.delegate.changeCallback();
                 frameNode.parentNode.removeChild(frameNode);
             }
+            this.delegate.setSelectedDeviceConfig(undefined, false);
         });
 
         return frameNode;
@@ -948,28 +937,10 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
         this.configPanelTemplate = <HTMLTemplateElement>document.querySelector('#yahka_cameraConfig_template');
     }
 
-    public refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean) {
+    public refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
         if (!isIPCameraConfig(config)) {
             return
         }
-        this.refreshConfigPane(config);
-    }
-
-    public styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean {
-        if (!isIPCameraConfig(deviceConfig)) {
-            return false;
-        }
-
-        let listIcon = listItem.querySelector('.list-icon');
-        listIcon.className = 'list-icon icon mif-camera';
-        listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
-        listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
-        return true;
-    }
-
-    refreshConfigPane(config: hkBridge.Configuration.ICameraConfig) {
-        let devicePane = <HTMLElement>document.querySelector('#yahka_device_details');
-        devicePane.innerHTML = '';
 
         let configFragment = <DocumentFragment>document.importNode(this.configPanelTemplate.content, true);
         translateFragment(configFragment);
@@ -1025,9 +996,20 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
         ffmpegHelper('#ffmpeg_snapshot', 'snapshot');
         ffmpegHelper('#ffmpeg_stream', 'stream');
 
-        devicePane.appendChild(configFragment);
+        devicePanel.appendChild(configFragment);        
     }
 
+    public styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean {
+        if (!isIPCameraConfig(deviceConfig)) {
+            return false;
+        }
+
+        let listIcon = listItem.querySelector('.list-icon');
+        listIcon.className = 'list-icon icon mif-camera';
+        listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
+        listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
+        return true;
+    }
 
     handlePropertyChange(config: hkBridge.Configuration.ICameraConfig, propertyName: keyof hkBridge.Configuration.ICameraConfig, ev: Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;

@@ -180,12 +180,19 @@ var ioBroker_YahkaPageBuilder = (function () {
         enumerable: true,
         configurable: true
     });
+    ioBroker_YahkaPageBuilder.prototype.refreshDevicePanel = function (deviceConfig, AFocusLastPanel) {
+        var pageBuilder = this.getPageBuilderByConfig(deviceConfig);
+        var devicePanel = document.querySelector('#yahka_device_details');
+        if (devicePanel) {
+            devicePanel.innerHTML = '';
+        }
+        if (pageBuilder) {
+            pageBuilder.refresh(deviceConfig, AFocusLastPanel, devicePanel);
+        }
+    };
     ioBroker_YahkaPageBuilder.prototype.setSelectedDeviceConfig = function (deviceConfig, AFocusLastPanel) {
         this._selectedDeviceConfig = deviceConfig;
-        var pageBuilder = this.getPageBuilderByConfig(deviceConfig);
-        if (pageBuilder) {
-            pageBuilder.refresh(deviceConfig, AFocusLastPanel);
-        }
+        this.refreshDevicePanel(deviceConfig, AFocusLastPanel);
         this.buttonHandler.refreshBridgeButtons(document.body);
     };
     ioBroker_YahkaPageBuilder.prototype.refreshDeviceListEntry = function (deviceConfig, listItem) {
@@ -341,10 +348,7 @@ var ioBroker_ButtonHandler = (function (_super) {
                     type: '',
                     characteristics: []
                 });
-                var pageBuilder = _this.delegate.getPageBuilderByConfig(dev);
-                if (pageBuilder) {
-                    pageBuilder.refresh(dev, true);
-                }
+                _this.delegate.refreshDevicePanel(dev, true);
                 _this.delegate.changeCallback();
             });
         }
@@ -402,40 +406,29 @@ var ConfigPageBuilder_BridgeConfig = (function (_super) {
         _this.bridgeConfigPanelTemplate = document.querySelector('#yahka_bridgeconfig_template');
         return _this;
     }
-    ConfigPageBuilder_BridgeConfig.prototype.refresh = function (config, AFocusLastPanel) {
+    ConfigPageBuilder_BridgeConfig.prototype.refresh = function (config, AFocusLastPanel, devicePanel) {
+        var _this = this;
         if (!isBridgeConfig(config)) {
             return;
         }
-        this.refreshBridgeConfigPane(config);
-    };
-    ConfigPageBuilder_BridgeConfig.prototype.styleListItem = function (listItem, deviceConfig) {
-        var listIcon = listItem.querySelector('.list-icon');
-        listIcon.className = 'list-icon icon mif-tree';
-        listItem.classList.add('fg-grayDark');
-        return true;
-    };
-    ConfigPageBuilder_BridgeConfig.prototype.refreshBridgeConfigPane = function (bridge) {
-        var _this = this;
-        var devicePane = document.querySelector('#yahka_device_details');
-        devicePane.innerHTML = '';
         var bridgeConfigFragment = document.importNode(this.bridgeConfigPanelTemplate.content, true);
         translateFragment(bridgeConfigFragment);
         var inputHelper = function (selector, propertyName) {
             var input = bridgeConfigFragment.querySelector(selector);
-            var value = bridge[propertyName];
+            var value = config[propertyName];
             if (value !== undefined) {
                 input.value = value;
             }
             else {
                 input.value = '';
             }
-            input.addEventListener("input", _this.handleBridgeMetaDataChange.bind(_this, bridge, propertyName));
+            input.addEventListener("input", _this.handleBridgeMetaDataChange.bind(_this, config, propertyName));
         };
         var checkboxHelper = function (selector, propertyName) {
             var input = bridgeConfigFragment.querySelector(selector);
-            var value = bridge[propertyName];
+            var value = config[propertyName];
             input.checked = value;
-            input.addEventListener("click", _this.handleBridgeMetaDataChange.bind(_this, bridge, propertyName));
+            input.addEventListener("click", _this.handleBridgeMetaDataChange.bind(_this, config, propertyName));
         };
         inputHelper('#name', 'name');
         inputHelper('#manufacturer', 'manufacturer');
@@ -445,7 +438,13 @@ var ConfigPageBuilder_BridgeConfig = (function (_super) {
         inputHelper('#pincode', 'pincode');
         inputHelper('#port', 'port');
         checkboxHelper('#verboseLogging', 'verboseLogging');
-        devicePane.appendChild(bridgeConfigFragment);
+        devicePanel.appendChild(bridgeConfigFragment);
+    };
+    ConfigPageBuilder_BridgeConfig.prototype.styleListItem = function (listItem, deviceConfig) {
+        var listIcon = listItem.querySelector('.list-icon');
+        listIcon.className = 'list-icon icon mif-tree';
+        listItem.classList.add('fg-grayDark');
+        return true;
     };
     ConfigPageBuilder_BridgeConfig.prototype.handleBridgeMetaDataChange = function (bridgeConfig, propertyName, ev) {
         var inputTarget = ev.currentTarget;
@@ -473,11 +472,25 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
         _this.characteristicRow = document.querySelector('#yahka_characteristic_row');
         return _this;
     }
-    ConfigPageBuilder_CustomDevice.prototype.refresh = function (config, AFocusLastPanel) {
+    ConfigPageBuilder_CustomDevice.prototype.refresh = function (config, AFocusLastPanel, devicePanel) {
         if (!isDeviceConfig(config)) {
             return;
         }
-        this.refreshDevicePane(config, AFocusLastPanel);
+        var lastPane = this.buildDeviceInformationPanel(config, devicePanel);
+        for (var _i = 0, _a = config.services; _i < _a.length; _i++) {
+            var serviceConfig = _a[_i];
+            var servicePanel = this.createServicePanel(config, serviceConfig);
+            devicePanel.appendChild(servicePanel);
+            lastPane = servicePanel;
+        }
+        if (AFocusLastPanel && lastPane) {
+            lastPane.scrollIntoView();
+            if (!lastPane.classList.contains('active')) {
+                var heading = lastPane.querySelector('.heading');
+                if (heading)
+                    heading.click();
+            }
+        }
     };
     ConfigPageBuilder_CustomDevice.prototype.styleListItem = function (listItem, deviceConfig) {
         if (!isDeviceConfig(deviceConfig)) {
@@ -495,27 +508,6 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
         listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
         listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
         return true;
-    };
-    ConfigPageBuilder_CustomDevice.prototype.refreshDevicePane = function (deviceConfig, focusLast) {
-        var devicePane = document.querySelector('#yahka_device_details');
-        devicePane.innerHTML = '';
-        if (deviceConfig === undefined)
-            return;
-        var lastPane = this.buildDeviceInformationPanel(deviceConfig, devicePane);
-        for (var _i = 0, _a = deviceConfig.services; _i < _a.length; _i++) {
-            var serviceConfig = _a[_i];
-            var servicePanel = this.createServicePanel(deviceConfig, serviceConfig);
-            devicePane.appendChild(servicePanel);
-            lastPane = servicePanel;
-        }
-        if (focusLast && lastPane) {
-            lastPane.scrollIntoView();
-            if (!lastPane.classList.contains('active')) {
-                var heading = lastPane.querySelector('.heading');
-                if (heading)
-                    heading.click();
-            }
-        }
     };
     ConfigPageBuilder_CustomDevice.prototype.buildDeviceInformationPanel = function (deviceConfig, devicePane) {
         var _this = this;
@@ -588,6 +580,7 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
                 _this.delegate.changeCallback();
                 frameNode.parentNode.removeChild(frameNode);
             }
+            _this.delegate.setSelectedDeviceConfig(undefined, false);
         });
         return frameNode;
     };
@@ -784,26 +777,11 @@ var ConfigPageBuilder_IPCamera = (function (_super) {
         _this.configPanelTemplate = document.querySelector('#yahka_cameraConfig_template');
         return _this;
     }
-    ConfigPageBuilder_IPCamera.prototype.refresh = function (config, AFocusLastPanel) {
+    ConfigPageBuilder_IPCamera.prototype.refresh = function (config, AFocusLastPanel, devicePanel) {
+        var _this = this;
         if (!isIPCameraConfig(config)) {
             return;
         }
-        this.refreshConfigPane(config);
-    };
-    ConfigPageBuilder_IPCamera.prototype.styleListItem = function (listItem, deviceConfig) {
-        if (!isIPCameraConfig(deviceConfig)) {
-            return false;
-        }
-        var listIcon = listItem.querySelector('.list-icon');
-        listIcon.className = 'list-icon icon mif-camera';
-        listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
-        listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
-        return true;
-    };
-    ConfigPageBuilder_IPCamera.prototype.refreshConfigPane = function (config) {
-        var _this = this;
-        var devicePane = document.querySelector('#yahka_device_details');
-        devicePane.innerHTML = '';
         var configFragment = document.importNode(this.configPanelTemplate.content, true);
         translateFragment(configFragment);
         var inputHelper = function (selector, propertyName) {
@@ -851,7 +829,17 @@ var ConfigPageBuilder_IPCamera = (function (_super) {
         inputHelper('#maxFPS', 'maxFPS');
         ffmpegHelper('#ffmpeg_snapshot', 'snapshot');
         ffmpegHelper('#ffmpeg_stream', 'stream');
-        devicePane.appendChild(configFragment);
+        devicePanel.appendChild(configFragment);
+    };
+    ConfigPageBuilder_IPCamera.prototype.styleListItem = function (listItem, deviceConfig) {
+        if (!isIPCameraConfig(deviceConfig)) {
+            return false;
+        }
+        var listIcon = listItem.querySelector('.list-icon');
+        listIcon.className = 'list-icon icon mif-camera';
+        listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
+        listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
+        return true;
     };
     ConfigPageBuilder_IPCamera.prototype.handlePropertyChange = function (config, propertyName, ev) {
         var inputTarget = ev.currentTarget;
