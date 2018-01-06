@@ -53,10 +53,6 @@
     background: whitesmoke;
 }
 
-.device-entry>.list-icon.icon {
-    color: grey;
-}
-
 .edit-hint {
     color: #999999;
     font-size: 0.9em;

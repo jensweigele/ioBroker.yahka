@@ -237,24 +237,18 @@ var ioBroker_DeviceListHandler = (function (_super) {
     ioBroker_DeviceListHandler.prototype.refreshDeviceListEntry = function (deviceConfig, listItem) {
         if (!listItem)
             return;
-        var cat;
-        var iconClass = "mif-question";
-        if (isBridgeConfig(deviceConfig)) {
-            iconClass = 'mif-tree';
-        }
-        else if ((accessoryCategories !== undefined) && (isDeviceConfig(deviceConfig))) {
-            if (cat = accessoryCategories[deviceConfig.category])
-                iconClass = cat['icon'];
-        }
-        else if (isIPCameraConfig(deviceConfig)) {
-            iconClass = 'mif-camera';
-        }
-        var listIcon = listItem.querySelector('.list-icon');
-        listIcon.className = "";
-        listIcon.classList.add('list-icon', 'icon', iconClass);
+        var pageBuilder = this.delegate.getPageBuilderByConfig(deviceConfig);
         listItem.querySelector('.list-title').textContent = deviceConfig.name;
         listItem.dataset["deviceIdent"] = deviceConfig.name;
         listItem.classList.toggle('active', (deviceConfig === this.delegate.selectedDeviceConfig));
+        var stylingDone = false;
+        if (pageBuilder !== undefined) {
+            stylingDone = pageBuilder.styleListItem(listItem, deviceConfig);
+        }
+        if (!stylingDone) {
+            var listIcon = listItem.querySelector('.list-icon');
+            listIcon.className = 'list-icon icon mif-question';
+        }
     };
     ioBroker_DeviceListHandler.prototype.findDeviceConfig = function (bridgeConfig, deviceIdent) {
         if (!bridgeConfig)
@@ -414,6 +408,12 @@ var ConfigPageBuilder_BridgeConfig = (function (_super) {
         }
         this.refreshBridgeConfigPane(config);
     };
+    ConfigPageBuilder_BridgeConfig.prototype.styleListItem = function (listItem, deviceConfig) {
+        var listIcon = listItem.querySelector('.list-icon');
+        listIcon.className = 'list-icon icon mif-tree';
+        listItem.classList.add('fg-grayDark');
+        return true;
+    };
     ConfigPageBuilder_BridgeConfig.prototype.refreshBridgeConfigPane = function (bridge) {
         var _this = this;
         var devicePane = document.querySelector('#yahka_device_details');
@@ -478,6 +478,23 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
             return;
         }
         this.refreshDevicePane(config, AFocusLastPanel);
+    };
+    ConfigPageBuilder_CustomDevice.prototype.styleListItem = function (listItem, deviceConfig) {
+        if (!isDeviceConfig(deviceConfig)) {
+            return false;
+        }
+        var iconClass = "mif-question";
+        var cat;
+        if (accessoryCategories !== undefined) {
+            if (cat = accessoryCategories[deviceConfig.category])
+                iconClass = cat['icon'];
+        }
+        var listIcon = listItem.querySelector('.list-icon');
+        listIcon.className = "";
+        listIcon.classList.add('list-icon', 'icon', iconClass);
+        listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
+        listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
+        return true;
     };
     ConfigPageBuilder_CustomDevice.prototype.refreshDevicePane = function (deviceConfig, focusLast) {
         var devicePane = document.querySelector('#yahka_device_details');
@@ -772,6 +789,16 @@ var ConfigPageBuilder_IPCamera = (function (_super) {
             return;
         }
         this.refreshConfigPane(config);
+    };
+    ConfigPageBuilder_IPCamera.prototype.styleListItem = function (listItem, deviceConfig) {
+        if (!isIPCameraConfig(deviceConfig)) {
+            return false;
+        }
+        var listIcon = listItem.querySelector('.list-icon');
+        listIcon.className = 'list-icon icon mif-camera';
+        listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
+        listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
+        return true;
     };
     ConfigPageBuilder_IPCamera.prototype.refreshConfigPane = function (config) {
         var _this = this;

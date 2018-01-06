@@ -137,6 +137,7 @@ function generateRandomUsername(): string {
 
 interface IConfigPageBuilder {
     refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean);
+    styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean;
     readonly addServiceAvailable: boolean;
     readonly removeDeviceAvailable: boolean;
 
@@ -296,23 +297,20 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
     refreshDeviceListEntry(deviceConfig: hkBridge.Configuration.IBaseConfigNode, listItem: HTMLElement) {
         if (!listItem)
             return;
-        let cat: ISelectListEntry;
-        let iconClass = "mif-question";
-        if (isBridgeConfig(deviceConfig)) {
-            iconClass = 'mif-tree';
-        } else if ((accessoryCategories !== undefined) && (isDeviceConfig(deviceConfig))) {
-            if (cat = accessoryCategories[deviceConfig.category])
-                iconClass = cat['icon'];
-        } else if (isIPCameraConfig(deviceConfig)) {
-            iconClass = 'mif-camera';
-        }
-        let listIcon = listItem.querySelector('.list-icon');
-        listIcon.className = "";
-        listIcon.classList.add('list-icon', 'icon', iconClass);
 
+        let pageBuilder = this.delegate.getPageBuilderByConfig(deviceConfig);
         listItem.querySelector('.list-title').textContent = deviceConfig.name;
         listItem.dataset["deviceIdent"] = deviceConfig.name;
         listItem.classList.toggle('active', (deviceConfig === this.delegate.selectedDeviceConfig));
+        let stylingDone = false
+        if(pageBuilder !== undefined) {
+            stylingDone = pageBuilder.styleListItem(listItem, deviceConfig)
+        }
+        
+        if (!stylingDone) {
+            let listIcon = listItem.querySelector('.list-icon');
+            listIcon.className = 'list-icon icon mif-question';
+        }        
     }
 
     findDeviceConfig(bridgeConfig: hkBridge.Configuration.IBridgeConfig, deviceIdent: string): hkBridge.Configuration.IBaseConfigNode {
@@ -487,6 +485,13 @@ class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base implements I
         this.refreshBridgeConfigPane(config);
     }
 
+    public styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean {
+        let listIcon = listItem.querySelector('.list-icon');
+        listIcon.className = 'list-icon icon mif-tree';
+        listItem.classList.add('fg-grayDark');
+        return true;
+    }
+
     refreshBridgeConfigPane(bridge: hkBridge.Configuration.IBridgeConfig) {
         let devicePane = <HTMLElement>document.querySelector('#yahka_device_details');
         devicePane.innerHTML = '';
@@ -574,6 +579,27 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
         }
         this.refreshDevicePane(config, AFocusLastPanel);
     }
+
+
+    public styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean {
+        if (!isDeviceConfig(deviceConfig)) {
+            return false
+        }
+        let iconClass = "mif-question";
+        let cat: ISelectListEntry;
+        if (accessoryCategories !== undefined) {
+            if (cat = accessoryCategories[deviceConfig.category])
+                iconClass = cat['icon'];
+        }
+        let listIcon = listItem.querySelector('.list-icon');
+        listIcon.className = "";
+        listIcon.classList.add('list-icon', 'icon', iconClass);
+
+        listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
+        listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
+        return true;
+        
+    }    
 
     refreshDevicePane(deviceConfig: hkBridge.Configuration.IDeviceConfig, focusLast?: boolean) {
         let devicePane = <HTMLElement>document.querySelector('#yahka_device_details');
@@ -927,6 +953,18 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
             return
         }
         this.refreshConfigPane(config);
+    }
+
+    public styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean {
+        if (!isIPCameraConfig(deviceConfig)) {
+            return false;
+        }
+
+        let listIcon = listItem.querySelector('.list-icon');
+        listIcon.className = 'list-icon icon mif-camera';
+        listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
+        listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
+        return true;
     }
 
     refreshConfigPane(config: hkBridge.Configuration.ICameraConfig) {
