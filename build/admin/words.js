@@ -57,7 +57,7 @@ systemDictionary = {
     },
     "needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b>": {
         "en": "needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b>",
-        "de": "Muss in Form einer Mac-Adresse sein, z. B.: d8:be:54:e7:06:f8. <b> Nach dem Ändern dieses Feldes muss die Brücke in der HomeKit-Datenbank </b> rekonfiguriert werden",
+        "de": "Muss in Form einer Mac-Adresse sein, z. B.: d8:be:54:e7:06:f8. <b> Nach dem Ändern dieses Feldes müssen alle Geräte in der HomeKit-Datenbank </b> rekonfiguriert werden",
         "ru": "Должен быть в виде MAC-адреса, например: d8:be:54:e7:06:f8. <b>После изменения этого поля, хаб необходимо переконфигурировать в базе данных HomeKit </b>"
     },
     "needs to be in the form of 123-45-678": {
@@ -90,5 +90,23 @@ systemDictionary = {
     "id":                   {"en": "ID",                    "de": "ID",                     "ru": "ID"},
     "Select all":           {"en": "Select all",            "de": "Alle auswählen",         "ru": "Выбрать все видимые"},
     "Deselect all":         {"en": "Deselect all",          "de": "Auswahl aufheben",       "ru": "Убрать выделение"},
-    "Invert selection":     {"en": "Invert selection",      "de": "Selektierung invertieren", "ru": "Инвертировать выделение"}
+    "Invert selection":     {"en": "Invert selection",      "de": "Selektierung invertieren", "ru": "Инвертировать выделение"},
+
+    "Add Camera": {"en": "Add Camera", "de": "Kamera hinzufügen", "ru": "Add Camera"},
+    "Basic Properties": {"en": "Basic Properties", "de": "Allgemein", "ru": "Basic Properties"},
+    "Device name:": {"en": "Device name:", "de": "Gerätename:", "ru": "Device name:"},
+    "needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the camera needs to be reconfigured in the HomeKit database</b>": {
+        "en": "needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the camera needs to be reconfigured in the HomeKit database</b>", 
+        "de": "Muss in Form einer Mac-Adresse sein, z. B.: d8:be:54:e7:06:f8. <b> Nach dem Ändern dieses Feldes muss die Kamera Geräte in der HomeKit-Datenbank </b> rekonfiguriert werden",
+        "ru": "needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the camera needs to be reconfigured in the HomeKit database</b>"},
+    "Stream Properties": {"en": "Stream Properties", "de": "Stream Eingeschaften", "ru": "Stream Properties"},
+    "Source:": {"en": "Source:", "de": "Quelle:", "ru": "Source:"},
+    "Codec:": {"en": "Codec:", "de": "Codec:", "ru": "Codec:"},
+    "Number of Streams:": {"en": "Number of Streams:", "de": "Anzahl der Streams:", "ru": "Number of Streams:"},
+    "maxWidth:": {"en": "max. Width:", "de": "max Breite:", "ru": "max. Width:"},
+    "maxHeight:": {"en": "max. Height:", "de": "max. Höhe:", "ru": "max. Height:"},
+    "maxFPS:": {"en": "max. FPS:", "de": "max. FPS:", "ru": "max. FPS:"},
+    "Advanced Settings": {"en": "Advanced Settings", "de": "Erweiterte Eigenschaften", "ru": "Advanced Settings"},
+    "FFMPEG Command Line - Snapshot:": {"en": "FFMPEG Kommandozeile - Snapshot:", "de": "FFMPEG Command Line - Einzelbild:", "ru": "FFMPEG Command Line - Snapshot:"},
+    "FFMPEG Command Line - Stream:": {"en": "FFMPEG Command Line - Livestream:", "de": "FFMPEG Kommandozeile - Livestream:", "ru": "FFMPEG Command Line - Livestream:"},    
 };

@@ -161,6 +161,9 @@ class ioBroker_YahkaAdmin {
 
     loadSettings(settingsObject: any, onChangeCallback: TIOBrokerAdminChangeCallback) {
         this.settings = settingsObject;
+        if(settingsObject.cameras === undefined) {
+            settingsObject.cameras = []
+        }
 
         new ioBroker_YahkaPageBuilder(this.settings.bridge, this.settings.cameras, onChangeCallback);
 

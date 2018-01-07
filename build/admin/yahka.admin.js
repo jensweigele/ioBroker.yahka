@@ -119,6 +119,9 @@ var ioBroker_YahkaAdmin = (function () {
     }
     ioBroker_YahkaAdmin.prototype.loadSettings = function (settingsObject, onChangeCallback) {
         this.settings = settingsObject;
+        if (settingsObject.cameras === undefined) {
+            settingsObject.cameras = [];
+        }
         new ioBroker_YahkaPageBuilder(this.settings.bridge, this.settings.cameras, onChangeCallback);
         onChangeCallback(false);
     };
