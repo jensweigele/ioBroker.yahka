@@ -108,6 +108,7 @@ var THomeKitIPCamera = (function () {
             _this.FLogger.debug('camera identify');
             callback();
         });
+        hapDevice.cameraSource = this;
         this._camera = hapDevice;
     };
     THomeKitIPCamera.prototype.createCameraControlService = function () {

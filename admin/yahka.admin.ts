@@ -49,7 +49,7 @@ let defaultCommandLine: hkBridge.Configuration.ICameraFfmpegCommandLine =
             '-re',
             '-i', '${source}',
             '-t', '1',
-            '-s', '${resolution}',
+            '-s', '${width}x${height}',
             '-f', 'image2',
             '-'
         ]

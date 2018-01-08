@@ -129,6 +129,7 @@ export class THomeKitIPCamera {
             this.FLogger.debug('camera identify');
             callback(); // success
         });
+        hapDevice.cameraSource = this;
 
         this._camera = hapDevice;
 
