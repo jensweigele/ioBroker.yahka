@@ -221,11 +221,12 @@ var ioBroker_DeviceListHandler = (function (_super) {
     }
     ioBroker_DeviceListHandler.prototype.getDeviceList = function () {
         var result = [this.delegate.bridgeSettings];
+        var devices = [];
         if (this.delegate.bridgeSettings.devices)
-            result = result.concat(this.delegate.bridgeSettings.devices);
+            devices = devices.concat(this.delegate.bridgeSettings.devices);
         if (this.delegate.cameraConfigs)
-            result = result.concat(this.delegate.cameraConfigs);
-        return result;
+            devices = devices.concat(this.delegate.cameraConfigs);
+        return result.concat(devices.sort(function (a, b) { return a.name.localeCompare(b.name); }));
     };
     ioBroker_DeviceListHandler.prototype.createDeviceListEntry = function (deviceConfig) {
         var deviceEntry = document.importNode(this.deviceListEntryTemplate.content, true);

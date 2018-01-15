@@ -279,11 +279,12 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
 
     getDeviceList(): hkBridge.Configuration.IBaseConfigNode[] {
         let result: hkBridge.Configuration.IBaseConfigNode[] = [this.delegate.bridgeSettings];
+        let devices: hkBridge.Configuration.IBaseConfigNode[] = [];
         if (this.delegate.bridgeSettings.devices)
-            result = result.concat(this.delegate.bridgeSettings.devices)
+            devices = devices.concat(this.delegate.bridgeSettings.devices)
         if (this.delegate.cameraConfigs)
-            result = result.concat(this.delegate.cameraConfigs)
-        return result;
+            devices = devices.concat(this.delegate.cameraConfigs)
+        return result.concat(devices.sort( (a,b) => a.name.localeCompare(b.name)));
     }
 
     createDeviceListEntry(deviceConfig: hkBridge.Configuration.IBaseConfigNode) {
