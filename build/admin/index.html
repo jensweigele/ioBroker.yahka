@@ -436,6 +436,7 @@
                 </div>
                 <div>
                     <div><label class="translate" for="name">Name:</label></div>
+                    <div class="errorpanel translate" id="name_error">A device with this name already exists. Please change the name!</div>
                     <div class="input control flex-grow margin10">
                         <input class="full-size" type="text" id="name"/>
                     </div>
@@ -472,6 +473,7 @@
     <template id="yahka_bridgeconfig_template">
         <div>
             <div><label class="translate" for="name">Name:</label><span class="edit-hint translate">descriptive only - displayed in homekit apps. Changes are only recognized after readding the bridge in the app.</span></div>
+            <div class="errorpanel translate" id="name_error">A device with this name already exists. Please change the name!</div>
             <div class="input control flex-grow margin10">
                 <input class="full-size" type="text" id="name"/>
             </div>
@@ -534,6 +536,7 @@
                 </div>
                 <div>
                     <div><label class="translate" for="name">Device name:</label></div>
+                    <div class="errorpanel translate" id="name_error">A device with this name already exists. Please change the name!</div>
                     <div class="input control flex-grow margin10">
                         <input class="full-size" type="text" id="name"/>
                     </div>

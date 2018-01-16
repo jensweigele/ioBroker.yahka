@@ -1,6 +1,7 @@
 /// <reference path="../typings/index.d.ts" />
 import * as hkBridge from '../yahka.configuration';
 import * as $ from "jquery";
+import { error } from 'util';
 
 type TIOBrokerAdminChangeCallback = (changeMarker?: boolean) => void;
 type TIOBrokerAdminSaveCallback = (settingsObject: any) => void;
@@ -151,6 +152,7 @@ interface IConfigPageBuilderDelegate {
     refreshDeviceListEntry(deviceConfig: hkBridge.Configuration.IBaseConfigNode, listItem: HTMLElement);
     refreshDevicePanel(deviceConfig: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean): void;
     changeCallback();
+    deviceIsUnique(deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean;
 
     getPageBuilderByConfig(deviceConfig: hkBridge.Configuration.IBaseConfigNode): IConfigPageBuilder;
 }
@@ -206,6 +208,12 @@ class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
 
         return bridgeFrame;
     }
+
+    public deviceIsUnique(deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean {
+        let devList = this.deviceListHandler.getDeviceList();
+        return !devList.some((a) => (a.name == deviceConfig.name) && (a !== deviceConfig));
+    }
+    
 
     public getPageBuilderByConfig(deviceConfig: hkBridge.Configuration.IBaseConfigNode): IConfigPageBuilder {
         if (deviceConfig === undefined) {
@@ -265,11 +273,19 @@ class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
 class ConfigPageBuilder_Base {
     constructor(protected delegate: IConfigPageBuilderDelegate) {
     }
+
+    protected refreshSimpleErrorElement(errorElement: HTMLElement, validator: TValidatorFunction) {
+        let errorVisible = false;
+        if(validator) 
+            errorVisible = validator();
+        if(errorElement)
+            errorElement.classList.toggle('validationError', errorVisible);        
+    }
 }
 
 class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
     deviceListEntryTemplate: HTMLTemplateElement;
-
+    listEntryToConfigMap = new Map<HTMLElement, hkBridge.Configuration.IBaseConfigNode>();
 
     constructor(delegate: IConfigPageBuilderDelegate) {
         super(delegate);
@@ -299,12 +315,16 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
         let bridge = this.delegate.bridgeSettings;
         let deviceList = bridgeFrame.querySelector('#yahka_deviceList');
         deviceList.innerHTML = "";
-        for (let deviceConfig of this.getDeviceList())
-            deviceList.appendChild(this.createDeviceListEntry(deviceConfig));
+        this.listEntryToConfigMap.clear();
+        for (let deviceConfig of this.getDeviceList()) {
+            let fragment = this.createDeviceListEntry(deviceConfig);
+            let node = (<HTMLElement>fragment.querySelector('.list'));
+            this.listEntryToConfigMap.set(node, deviceConfig);
+            deviceList.appendChild(fragment);
+        }
 
 
-        let deviceListClickHandler = this.handleDeviceListClick.bind(this, bridge);
-        (<any>$(deviceList)).listview({ onListClick: deviceListClickHandler });
+        (<any>$(deviceList)).listview({ onListClick: this.handleDeviceListClick.bind(this) });
     }
 
     refreshDeviceListEntry(deviceConfig: hkBridge.Configuration.IBaseConfigNode, listItem: HTMLElement) {
@@ -335,12 +355,13 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
         return undefined;
     }
 
-    handleDeviceListClick(bridgeConfig: hkBridge.Configuration.IBridgeConfig, deviceNode: JQuery) {
+    handleDeviceListClick(deviceNode: JQuery) {
         if (!deviceNode)
             return;
 
-        let deviceIdent = deviceNode[0].dataset["deviceIdent"];
-        let deviceConfig = this.findDeviceConfig(bridgeConfig, deviceIdent);
+        let deviceConfig = this.listEntryToConfigMap.get(deviceNode[0]);
+        // let deviceIdent = deviceNode[0].dataset["deviceIdent"];
+        // let deviceConfig = this.findDeviceConfig(bridgeConfig, deviceIdent);
         this.delegate.setSelectedDeviceConfig(deviceConfig, false);
     }
 }
@@ -480,6 +501,8 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
     }
 }
 
+type TValidatorFunction = () => boolean;
+
 class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base implements IConfigPageBuilder {
     public addServiceAvailable: boolean = false;
     public removeDeviceAvailable: boolean = false;
@@ -496,26 +519,30 @@ class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base implements I
         let bridgeConfigFragment = <DocumentFragment>document.importNode(this.bridgeConfigPanelTemplate.content, true);
         translateFragment(bridgeConfigFragment);
 
-        let inputHelper = (selector: string, propertyName: string) => {
+        let inputHelper = (selector: string, propertyName: string, validator: TValidatorFunction = undefined)  => {
             let input = <HTMLInputElement>bridgeConfigFragment.querySelector(selector);
+            let errorElement = <HTMLElement>bridgeConfigFragment.querySelector(selector + '_error');
             let value = config[propertyName];
             if (value !== undefined) {
                 input.value = value;
             } else {
                 input.value = '';
             }
-            input.addEventListener("input", this.handleBridgeMetaDataChange.bind(this, config, propertyName));
+            input.addEventListener("input", this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
+            this.refreshSimpleErrorElement(errorElement, validator);
         };
 
-        let checkboxHelper = (selector: string, propertyName: string) => {
+        let checkboxHelper = (selector: string, propertyName: string, validator: TValidatorFunction = undefined) => {
             let input = <HTMLInputElement>bridgeConfigFragment.querySelector(selector);
+            let errorElement = <HTMLElement>bridgeConfigFragment.querySelector(selector + '_error');
 
             let value = config[propertyName];
             input.checked = value;
-            input.addEventListener("click", this.handleBridgeMetaDataChange.bind(this, config, propertyName));
+            input.addEventListener("click", this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
+            this.refreshSimpleErrorElement(errorElement, validator);
         };
 
-        inputHelper('#name', 'name');
+        inputHelper('#name', 'name', () => !this.delegate.deviceIsUnique(config));
         inputHelper('#manufacturer', 'manufacturer');
         inputHelper('#model', 'model');
         inputHelper('#serial', 'serial');
@@ -534,7 +561,7 @@ class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base implements I
         return true;
     }
 
-    handleBridgeMetaDataChange(bridgeConfig: hkBridge.Configuration.IBridgeConfig, propertyName: string, ev: Event) {
+    handleBridgeMetaDataChange(bridgeConfig: hkBridge.Configuration.IBridgeConfig, propertyName: string, errorElement: HTMLElement, validator: TValidatorFunction, ev: Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
         let listItem = <HTMLElement>document.querySelector('div.list[data-device-ident="' + bridgeConfig.name + '"]');
         if (inputTarget.type == "checkbox") {
@@ -542,6 +569,7 @@ class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base implements I
         } else {
             bridgeConfig[propertyName] = inputTarget.value;
         }
+        this.refreshSimpleErrorElement(errorElement, validator);
         this.delegate.refreshDeviceListEntry(bridgeConfig, listItem);
         this.delegate.changeCallback();
     }
@@ -622,8 +650,9 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
         let devInfoPanel = <HTMLElement>devInfoFragment.querySelector('#yahka_device_info_panel');
         translateFragment(devInfoFragment);
 
-        let inputHelper = (selector: string, propertyName: string, selectList?: IDictionary<ISelectListEntry>) => {
+        let inputHelper = (selector: string, propertyName: string, selectList?: IDictionary<ISelectListEntry>, validator: TValidatorFunction = undefined) => {
             let input = <HTMLSelectElement>devInfoPanel.querySelector(selector);
+            let errorElement = <HTMLElement>devInfoPanel.querySelector(selector + '_error');
 
             if (selectList) {
                 this.fillSelectByDict(input, selectList);
@@ -632,18 +661,19 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
             let value = deviceConfig[propertyName];
             if (input.type === 'checkbox') {
                 input.checked = value === undefined ? true : value;
-                input.addEventListener('change', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName))
+                input.addEventListener('change', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator))
             } else {
                 if (value !== undefined) {
                     input.value = value;
                 } else {
                     input.value = '';
                 }
-                input.addEventListener('input', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName));
+                input.addEventListener('input', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator));
             }
+            this.refreshSimpleErrorElement(errorElement, validator);
         };
 
-        inputHelper('#name', 'name');
+        inputHelper('#name', 'name', undefined, () => !this.delegate.deviceIsUnique(deviceConfig));
         inputHelper('#enabled', 'enabled');
         inputHelper('#manufacturer', 'manufacturer');
         inputHelper('#model', 'model');
@@ -897,11 +927,12 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
 
 
 
-    handleDeviceMetaDataChange(deviceConfig: hkBridge.Configuration.IDeviceConfig, propertyName: string, ev: Event) {
+    handleDeviceMetaDataChange(deviceConfig: hkBridge.Configuration.IDeviceConfig, propertyName: string, errorElement: HTMLElement, validator: TValidatorFunction, ev: Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
         let inputValue = (inputTarget.type === 'checkbox') ? inputTarget.checked : inputTarget.value;
         let listItem = <HTMLElement>document.querySelector('div.list[data-device-ident="' + deviceConfig.name + '"]');
         deviceConfig[propertyName] = inputValue;
+        this.refreshSimpleErrorElement(errorElement, validator);
         this.delegate.refreshDeviceListEntry(deviceConfig, listItem);
         this.delegate.changeCallback();
     }
@@ -949,21 +980,23 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
         let configFragment = <DocumentFragment>document.importNode(this.configPanelTemplate.content, true);
         translateFragment(configFragment);
 
-        let inputHelper = (selector: string, propertyName: keyof hkBridge.Configuration.ICameraConfig) => {
+        let inputHelper = (selector: string, propertyName: keyof hkBridge.Configuration.ICameraConfig, validator: TValidatorFunction = undefined) => {
             let input = <HTMLSelectElement>configFragment.querySelector(selector);
+            let errorElement = <HTMLElement>configFragment.querySelector(selector + '_error');
 
             let value = config[propertyName];
             if (input.type === 'checkbox') {
                 input.checked = value === undefined ? true : value;
-                input.addEventListener('change', this.handlePropertyChange.bind(this, config, propertyName))
+                input.addEventListener('change', this.handlePropertyChange.bind(this, config, propertyName, errorElement, validator))
             } else {
                 if (value !== undefined) {
                     input.value = value.toString();
                 } else {
                     input.value = '';
                 }
-                input.addEventListener('input', this.handlePropertyChange.bind(this, config, propertyName));
+                input.addEventListener('input', this.handlePropertyChange.bind(this, config, propertyName, errorElement, validator));
             }
+            this.refreshSimpleErrorElement(errorElement, validator);
         };   
         
         let ffmpegHelper = (selector: string, propertyName: keyof hkBridge.Configuration.ICameraFfmpegCommandLine) => {
@@ -981,7 +1014,7 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
         };           
 
         inputHelper('#enabled', 'enabled');
-        inputHelper('#name', 'name');
+        inputHelper('#name', 'name', () => !this.delegate.deviceIsUnique(config));
         inputHelper('#manufacturer', 'manufacturer');
         inputHelper('#model', 'model');
         inputHelper('#serial', 'serial');
@@ -1015,7 +1048,7 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
         return true;
     }
 
-    handlePropertyChange(config: hkBridge.Configuration.ICameraConfig, propertyName: keyof hkBridge.Configuration.ICameraConfig, ev: Event) {
+    handlePropertyChange(config: hkBridge.Configuration.ICameraConfig, propertyName: keyof hkBridge.Configuration.ICameraConfig, errorElement: HTMLElement, validator: TValidatorFunction, ev: Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
         let listItem = <HTMLElement>document.querySelector('div.list[data-device-ident="' + config.name + '"]');
         if (inputTarget.type == "checkbox") {
@@ -1023,6 +1056,7 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
         } else {
             config[propertyName] = inputTarget.value;
         }
+        this.refreshSimpleErrorElement(errorElement, validator);
         this.delegate.refreshDeviceListEntry(config, listItem);
         this.delegate.changeCallback();
     }

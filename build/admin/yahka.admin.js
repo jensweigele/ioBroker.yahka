@@ -154,6 +154,10 @@ var ioBroker_YahkaPageBuilder = (function () {
         this.buttonHandler.refreshBridgeButtons(bridgeFrame);
         return bridgeFrame;
     };
+    ioBroker_YahkaPageBuilder.prototype.deviceIsUnique = function (deviceConfig) {
+        var devList = this.deviceListHandler.getDeviceList();
+        return !devList.some(function (a) { return (a.name == deviceConfig.name) && (a !== deviceConfig); });
+    };
     ioBroker_YahkaPageBuilder.prototype.getPageBuilderByConfig = function (deviceConfig) {
         if (deviceConfig === undefined) {
             return undefined;
@@ -210,12 +214,20 @@ var ConfigPageBuilder_Base = (function () {
     function ConfigPageBuilder_Base(delegate) {
         this.delegate = delegate;
     }
+    ConfigPageBuilder_Base.prototype.refreshSimpleErrorElement = function (errorElement, validator) {
+        var errorVisible = false;
+        if (validator)
+            errorVisible = validator();
+        if (errorElement)
+            errorElement.classList.toggle('validationError', errorVisible);
+    };
     return ConfigPageBuilder_Base;
 }());
 var ioBroker_DeviceListHandler = (function (_super) {
     __extends(ioBroker_DeviceListHandler, _super);
     function ioBroker_DeviceListHandler(delegate) {
         var _this = _super.call(this, delegate) || this;
+        _this.listEntryToConfigMap = new Map();
         _this.deviceListEntryTemplate = document.querySelector('#yahka_devicelist_entry');
         return _this;
     }
@@ -238,12 +250,15 @@ var ioBroker_DeviceListHandler = (function (_super) {
         var bridge = this.delegate.bridgeSettings;
         var deviceList = bridgeFrame.querySelector('#yahka_deviceList');
         deviceList.innerHTML = "";
+        this.listEntryToConfigMap.clear();
         for (var _i = 0, _a = this.getDeviceList(); _i < _a.length; _i++) {
             var deviceConfig = _a[_i];
-            deviceList.appendChild(this.createDeviceListEntry(deviceConfig));
+            var fragment = this.createDeviceListEntry(deviceConfig);
+            var node = fragment.querySelector('.list');
+            this.listEntryToConfigMap.set(node, deviceConfig);
+            deviceList.appendChild(fragment);
         }
-        var deviceListClickHandler = this.handleDeviceListClick.bind(this, bridge);
-        $(deviceList).listview({ onListClick: deviceListClickHandler });
+        $(deviceList).listview({ onListClick: this.handleDeviceListClick.bind(this) });
     };
     ioBroker_DeviceListHandler.prototype.refreshDeviceListEntry = function (deviceConfig, listItem) {
         if (!listItem)
@@ -271,11 +286,10 @@ var ioBroker_DeviceListHandler = (function (_super) {
         }
         return undefined;
     };
-    ioBroker_DeviceListHandler.prototype.handleDeviceListClick = function (bridgeConfig, deviceNode) {
+    ioBroker_DeviceListHandler.prototype.handleDeviceListClick = function (deviceNode) {
         if (!deviceNode)
             return;
-        var deviceIdent = deviceNode[0].dataset["deviceIdent"];
-        var deviceConfig = this.findDeviceConfig(bridgeConfig, deviceIdent);
+        var deviceConfig = this.listEntryToConfigMap.get(deviceNode[0]);
         this.delegate.setSelectedDeviceConfig(deviceConfig, false);
     };
     return ioBroker_DeviceListHandler;
@@ -417,8 +431,10 @@ var ConfigPageBuilder_BridgeConfig = (function (_super) {
         }
         var bridgeConfigFragment = document.importNode(this.bridgeConfigPanelTemplate.content, true);
         translateFragment(bridgeConfigFragment);
-        var inputHelper = function (selector, propertyName) {
+        var inputHelper = function (selector, propertyName, validator) {
+            if (validator === void 0) { validator = undefined; }
             var input = bridgeConfigFragment.querySelector(selector);
+            var errorElement = bridgeConfigFragment.querySelector(selector + '_error');
             var value = config[propertyName];
             if (value !== undefined) {
                 input.value = value;
@@ -426,15 +442,19 @@ var ConfigPageBuilder_BridgeConfig = (function (_super) {
             else {
                 input.value = '';
             }
-            input.addEventListener("input", _this.handleBridgeMetaDataChange.bind(_this, config, propertyName));
+            input.addEventListener("input", _this.handleBridgeMetaDataChange.bind(_this, config, propertyName, errorElement, validator));
+            _this.refreshSimpleErrorElement(errorElement, validator);
         };
-        var checkboxHelper = function (selector, propertyName) {
+        var checkboxHelper = function (selector, propertyName, validator) {
+            if (validator === void 0) { validator = undefined; }
             var input = bridgeConfigFragment.querySelector(selector);
+            var errorElement = bridgeConfigFragment.querySelector(selector + '_error');
             var value = config[propertyName];
             input.checked = value;
-            input.addEventListener("click", _this.handleBridgeMetaDataChange.bind(_this, config, propertyName));
+            input.addEventListener("click", _this.handleBridgeMetaDataChange.bind(_this, config, propertyName, errorElement, validator));
+            _this.refreshSimpleErrorElement(errorElement, validator);
         };
-        inputHelper('#name', 'name');
+        inputHelper('#name', 'name', function () { return !_this.delegate.deviceIsUnique(config); });
         inputHelper('#manufacturer', 'manufacturer');
         inputHelper('#model', 'model');
         inputHelper('#serial', 'serial');
@@ -450,7 +470,7 @@ var ConfigPageBuilder_BridgeConfig = (function (_super) {
         listItem.classList.add('fg-grayDark');
         return true;
     };
-    ConfigPageBuilder_BridgeConfig.prototype.handleBridgeMetaDataChange = function (bridgeConfig, propertyName, ev) {
+    ConfigPageBuilder_BridgeConfig.prototype.handleBridgeMetaDataChange = function (bridgeConfig, propertyName, errorElement, validator, ev) {
         var inputTarget = ev.currentTarget;
         var listItem = document.querySelector('div.list[data-device-ident="' + bridgeConfig.name + '"]');
         if (inputTarget.type == "checkbox") {
@@ -459,6 +479,7 @@ var ConfigPageBuilder_BridgeConfig = (function (_super) {
         else {
             bridgeConfig[propertyName] = inputTarget.value;
         }
+        this.refreshSimpleErrorElement(errorElement, validator);
         this.delegate.refreshDeviceListEntry(bridgeConfig, listItem);
         this.delegate.changeCallback();
     };
@@ -518,15 +539,17 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
         var devInfoFragment = document.importNode(this.deviceInfoPanelTemplate.content, true);
         var devInfoPanel = devInfoFragment.querySelector('#yahka_device_info_panel');
         translateFragment(devInfoFragment);
-        var inputHelper = function (selector, propertyName, selectList) {
+        var inputHelper = function (selector, propertyName, selectList, validator) {
+            if (validator === void 0) { validator = undefined; }
             var input = devInfoPanel.querySelector(selector);
+            var errorElement = devInfoPanel.querySelector(selector + '_error');
             if (selectList) {
                 _this.fillSelectByDict(input, selectList);
             }
             var value = deviceConfig[propertyName];
             if (input.type === 'checkbox') {
                 input.checked = value === undefined ? true : value;
-                input.addEventListener('change', _this.handleDeviceMetaDataChange.bind(_this, deviceConfig, propertyName));
+                input.addEventListener('change', _this.handleDeviceMetaDataChange.bind(_this, deviceConfig, propertyName, errorElement, validator));
             }
             else {
                 if (value !== undefined) {
@@ -535,10 +558,11 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
                 else {
                     input.value = '';
                 }
-                input.addEventListener('input', _this.handleDeviceMetaDataChange.bind(_this, deviceConfig, propertyName));
+                input.addEventListener('input', _this.handleDeviceMetaDataChange.bind(_this, deviceConfig, propertyName, errorElement, validator));
             }
+            _this.refreshSimpleErrorElement(errorElement, validator);
         };
-        inputHelper('#name', 'name');
+        inputHelper('#name', 'name', undefined, function () { return !_this.delegate.deviceIsUnique(deviceConfig); });
         inputHelper('#enabled', 'enabled');
         inputHelper('#manufacturer', 'manufacturer');
         inputHelper('#model', 'model');
@@ -746,11 +770,12 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
         charConfig[attribute] = inputValue;
         this.delegate.changeCallback();
     };
-    ConfigPageBuilder_CustomDevice.prototype.handleDeviceMetaDataChange = function (deviceConfig, propertyName, ev) {
+    ConfigPageBuilder_CustomDevice.prototype.handleDeviceMetaDataChange = function (deviceConfig, propertyName, errorElement, validator, ev) {
         var inputTarget = ev.currentTarget;
         var inputValue = (inputTarget.type === 'checkbox') ? inputTarget.checked : inputTarget.value;
         var listItem = document.querySelector('div.list[data-device-ident="' + deviceConfig.name + '"]');
         deviceConfig[propertyName] = inputValue;
+        this.refreshSimpleErrorElement(errorElement, validator);
         this.delegate.refreshDeviceListEntry(deviceConfig, listItem);
         this.delegate.changeCallback();
     };
@@ -788,12 +813,14 @@ var ConfigPageBuilder_IPCamera = (function (_super) {
         }
         var configFragment = document.importNode(this.configPanelTemplate.content, true);
         translateFragment(configFragment);
-        var inputHelper = function (selector, propertyName) {
+        var inputHelper = function (selector, propertyName, validator) {
+            if (validator === void 0) { validator = undefined; }
             var input = configFragment.querySelector(selector);
+            var errorElement = configFragment.querySelector(selector + '_error');
             var value = config[propertyName];
             if (input.type === 'checkbox') {
                 input.checked = value === undefined ? true : value;
-                input.addEventListener('change', _this.handlePropertyChange.bind(_this, config, propertyName));
+                input.addEventListener('change', _this.handlePropertyChange.bind(_this, config, propertyName, errorElement, validator));
             }
             else {
                 if (value !== undefined) {
@@ -802,8 +829,9 @@ var ConfigPageBuilder_IPCamera = (function (_super) {
                 else {
                     input.value = '';
                 }
-                input.addEventListener('input', _this.handlePropertyChange.bind(_this, config, propertyName));
+                input.addEventListener('input', _this.handlePropertyChange.bind(_this, config, propertyName, errorElement, validator));
             }
+            _this.refreshSimpleErrorElement(errorElement, validator);
         };
         var ffmpegHelper = function (selector, propertyName) {
             var input = configFragment.querySelector(selector);
@@ -818,7 +846,7 @@ var ConfigPageBuilder_IPCamera = (function (_super) {
             input.addEventListener('input', _this.handleffMpegPropertyChange.bind(_this, config, propertyName, inputErrorMsg));
         };
         inputHelper('#enabled', 'enabled');
-        inputHelper('#name', 'name');
+        inputHelper('#name', 'name', function () { return !_this.delegate.deviceIsUnique(config); });
         inputHelper('#manufacturer', 'manufacturer');
         inputHelper('#model', 'model');
         inputHelper('#serial', 'serial');
@@ -845,7 +873,7 @@ var ConfigPageBuilder_IPCamera = (function (_super) {
         listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
         return true;
     };
-    ConfigPageBuilder_IPCamera.prototype.handlePropertyChange = function (config, propertyName, ev) {
+    ConfigPageBuilder_IPCamera.prototype.handlePropertyChange = function (config, propertyName, errorElement, validator, ev) {
         var inputTarget = ev.currentTarget;
         var listItem = document.querySelector('div.list[data-device-ident="' + config.name + '"]');
         if (inputTarget.type == "checkbox") {
@@ -854,6 +882,7 @@ var ConfigPageBuilder_IPCamera = (function (_super) {
         else {
             config[propertyName] = inputTarget.value;
         }
+        this.refreshSimpleErrorElement(errorElement, validator);
         this.delegate.refreshDeviceListEntry(config, listItem);
         this.delegate.changeCallback();
     };
