@@ -109,4 +109,7 @@ systemDictionary = {
     "Advanced Settings": {"en": "Advanced Settings", "de": "Erweiterte Eigenschaften", "ru": "Допольнительные свойтва"},
     "FFMPEG Command Line - Snapshot:": {"en": "FFMPEG Kommandozeile - Snapshot:", "de": "FFMPEG Command Line - Einzelbild:", "ru": "FFMPEG Command Line - Snapshot:"},
     "FFMPEG Command Line - Stream:": {"en": "FFMPEG Command Line - Livestream:", "de": "FFMPEG Kommandozeile - Livestream:", "ru": "FFMPEG Command Line - Livestream:"},    
+    "Devices": {"en": "Devices", "de": "Geräte", "ru": "Devices"},
+    "Properties and Services": {"en": "Properties and Services", "de": "Eigenschaften und Dienste", "ru": "Properties and Services"},
+    "A device with this name already exists. Please change the name!": {"en": "A device with this name already exists. Please change the name!", "de": "Ein Gerät mit diesem Namen existiert bereits. Bitte den Namen des Geräts ändern!", "ru": "A device with this name already exists. Please change the name!"},
 };
