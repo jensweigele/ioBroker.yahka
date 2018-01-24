@@ -12,10 +12,10 @@ function getControllerDir(isInstall) {
     // Find the js-controller location
     var controllerDir = __dirname.replace(/\\/g, '/');
     controllerDir = controllerDir.split('/');
-    if (controllerDir[controllerDir.length - 3] == 'adapter') {
+    if (controllerDir[controllerDir.length - 3] === 'adapter') {
         controllerDir.splice(controllerDir.length - 3, 3);
         controllerDir = controllerDir.join('/');
-    } else if (controllerDir[controllerDir.length - 3] == 'node_modules') {
+    } else if (controllerDir[controllerDir.length - 3] === 'node_modules') {
         controllerDir.splice(controllerDir.length - 3, 3);
         controllerDir = controllerDir.join('/');
         if (fs.existsSync(controllerDir + '/node_modules/' + appName + '.js-controller')) {
@@ -30,6 +30,9 @@ function getControllerDir(isInstall) {
                 process.exit();
             }
         }
+    } else if (fs.existsSync(__dirname + '/../../node_modules/' + appName.toLowerCase() + '.js-controller')) {
+        controllerDir.splice(controllerDir.length - 2, 2);
+        return controllerDir.join('/') + '/node_modules/' + appName.toLowerCase() + '.js-controller';
     } else {
         if (!isInstall) {
             console.log('Cannot find js-controller');
@@ -43,6 +46,7 @@ function getControllerDir(isInstall) {
 
 // Read controller configuration file
 function getConfig() {
+    var fs = require('fs');
     if (fs.existsSync(controllerDir + '/conf/' + appName + '.json')) {
         return JSON.parse(fs.readFileSync(controllerDir + '/conf/' + appName + '.json'));
     } else if (fs.existsSync(controllerDir + '/conf/' + appName.toLowerCase() + '.json')) {
@@ -52,9 +56,9 @@ function getConfig() {
     }
 }
 appName       = getAppName();
-controllerDir = getControllerDir(typeof process != 'undefined' && process.argv && process.argv.indexOf('--install') != -1);
+controllerDir = getControllerDir(typeof process !== 'undefined' && process.argv && process.argv.indexOf('--install') !== -1);
 
 exports.controllerDir = controllerDir;
 exports.getConfig =     getConfig;
-exports.adapter =       require(controllerDir + '/lib/adapter.js');
+exports.Adapter =       require(controllerDir + '/lib/adapter.js');
 exports.appName =       appName;
