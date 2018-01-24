@@ -8,48 +8,22 @@
 
 ***This adapter needs at least nodejs 4.x***
 
-## Installation
-Sometimes additonal libriaries are required:
+## Installation and Usage
 
-```
-sudo apt-get install libavahi-compat-libdnssd-dev
-```
-if you have error :
-```
-Error:	2016-07-26 18:57:17.989	error	at Error (native)
-Error:	2016-07-26 18:57:17.989	error	dns service error: unknown
-uncaught	2016-07-26 18:57:17.985	error	exception: dns service error: unknown
-```
-install avahi-daemon
-```
-sudo apt-get install avahi-daemon -y
-```
-and edit avahi-daemon.conf 
-```
-sudo nano avahi-daemon.conf 
-```
-set:
-```
-host-name=orangepi2plus
-domain-name=local
-use-ipv4=yes
-use-ipv6=yes
-enable-dbus=yes
-```
-## Usage
-
-What is???:
-- ioBroker.State.Defered
-- ioBroker.State.OnlyACK
-- ioBroker.homematic.WindowCovering.TargetPosition
-
-- passthrough
-- HomematicDirectionToHomekitPositionState
-- HomematicControlModeToHomekitHeathingCoolingState
+For details on how to install and configure this adapter, please see the [Wiki](https://github.com/jensweigele/ioBroker.yahka/wiki)
 
 ## Changelog
 
-### 0.5.5 (2017.05.04)
+### 0.6.0
+  (jw) add support for IP-Cameras
+  (jw) included iOS 11 device definitions
+  (jw) allowed negative temperatures for temperature sensors
+  (jw) fixed crashes due to duplicate device names
+  (oliverschulze) added conversion functions "hue" and "level255"
+  (jw) added conversion functions scaleInt, scaleFloat and inverse
+  (jw) devices are now sorted by name in the admin panel
+
+### 0.5.5
   (bluefox) allow select ID in configuration dialog
 
 ### 0.5.4
