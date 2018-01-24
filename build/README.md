@@ -14,6 +14,9 @@ For details on how to install and configure this adapter, please see the [Wiki](
 
 ## Changelog
 
+### 0.6.1 
+  (jw) fixed startup crash<br>
+
 ### 0.6.0
   (jw) add support for IP-Cameras<br>
   (jw) included iOS 11 device definitions<br>
