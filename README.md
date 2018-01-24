@@ -15,33 +15,33 @@ For details on how to install and configure this adapter, please see the [Wiki](
 ## Changelog
 
 ### 0.6.0
-  (jw) add support for IP-Cameras
-  (jw) included iOS 11 device definitions
-  (jw) allowed negative temperatures for temperature sensors
-  (jw) fixed crashes due to duplicate device names
-  (oliverschulze) added conversion functions "hue" and "level255"
-  (jw) added conversion functions scaleInt, scaleFloat and inverse
-  (jw) devices are now sorted by name in the admin panel
+  (jw) add support for IP-Cameras<br>
+  (jw) included iOS 11 device definitions<br>
+  (jw) allowed negative temperatures for temperature sensors<br>
+  (jw) fixed crashes due to duplicate device names<br>
+  (oliverschulze) added conversion functions "hue" and "level255"<br>
+  (jw) added conversion functions scaleInt, scaleFloat and inverse<br>
+  (jw) devices are now sorted by name in the admin panel<br>
 
 ### 0.5.5
-  (bluefox) allow select ID in configuration dialog
+  (bluefox) allow select ID in configuration dialog<br>
 
 ### 0.5.4
-  (jw) improve logoutput
-  (jw) added HomematicControlModeToHomekitHeathingCoolingState mapping
+  (jw) improve logoutput<br>
+  (jw) added HomematicControlModeToHomekitHeathingCoolingState mapping<br>
 
 ### 0.5.3
-  (jw) internal release
+  (jw) internal release<br>
 
 ### 0.5.2
-  (jw) fixed issues with empty characteristic values
-  (jw) fixed issue with empty adapter.systemConfig.system object
+  (jw) fixed issues with empty characteristic values<br>
+  (jw) fixed issue with empty adapter.systemConfig.system object<br>
 
 ### 0.5.1
-  (jw) fixed issue with wrongly displayed logo
+  (jw) fixed issue with wrongly displayed logo<br>
 
 ### 0.5.0
-  (jw) initial release
+  (jw) initial release<br>
 
 ## License
 The MIT License (MIT)
