@@ -94,8 +94,16 @@ export class THomeKitBridge {
     }
 
     private createDevice(device:Configuration.IDeviceConfig) {
-        let deviceID = HAP.uuid.generate(this.config.ident + ':' + device.name);
-        let hapDevice = new HAP.Accessory(device.name, deviceID);
+        let devName = device.name;
+        let deviceID = HAP.uuid.generate(this.config.ident + ':' + devName);
+        let i = 0;
+        while (this.bridgeObject.bridgedAccessories.some((a) => a.UUID == deviceID)) {
+            devName = device.name + '_' + ++i;
+            deviceID = HAP.uuid.generate(this.config.ident + ':' + devName);
+        }
+
+        this.FLogger.info('adding ' + devName + ' with UUID: ' + deviceID);
+        let hapDevice = new HAP.Accessory(devName, deviceID);
 
 
         hapDevice.getService(HAPService.AccessoryInformation)

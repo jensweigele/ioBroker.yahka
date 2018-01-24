@@ -52,8 +52,15 @@ var THomeKitBridge = (function () {
     };
     THomeKitBridge.prototype.createDevice = function (device) {
         var _this = this;
-        var deviceID = HAP.uuid.generate(this.config.ident + ':' + device.name);
-        var hapDevice = new HAP.Accessory(device.name, deviceID);
+        var devName = device.name;
+        var deviceID = HAP.uuid.generate(this.config.ident + ':' + devName);
+        var i = 0;
+        while (this.bridgeObject.bridgedAccessories.some(function (a) { return a.UUID == deviceID; })) {
+            devName = device.name + '_' + ++i;
+            deviceID = HAP.uuid.generate(this.config.ident + ':' + devName);
+        }
+        this.FLogger.info('adding ' + devName + ' with UUID: ' + deviceID);
+        var hapDevice = new HAP.Accessory(devName, deviceID);
         hapDevice.getService(exports.HAPService.AccessoryInformation)
             .setCharacteristic(exports.HAPCharacteristic.Manufacturer, device.manufacturer || 'not configured')
             .setCharacteristic(exports.HAPCharacteristic.Model, device.model || 'not configured')
