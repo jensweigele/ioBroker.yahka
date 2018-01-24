@@ -202,8 +202,8 @@ var ioBroker_YahkaPageBuilder = (function () {
         this.refreshDevicePanel(deviceConfig, AFocusLastPanel);
         this.buttonHandler.refreshBridgeButtons(document.body);
     };
-    ioBroker_YahkaPageBuilder.prototype.refreshDeviceListEntry = function (deviceConfig, listItem) {
-        return this.deviceListHandler.refreshDeviceListEntry(deviceConfig, listItem);
+    ioBroker_YahkaPageBuilder.prototype.refreshDeviceListEntry = function (deviceConfig) {
+        this.deviceListHandler.refreshDeviceList();
     };
     ioBroker_YahkaPageBuilder.prototype.changeCallback = function () {
         return this._changeCallback();
@@ -260,31 +260,25 @@ var ioBroker_DeviceListHandler = (function (_super) {
         }
         $(deviceList).listview({ onListClick: this.handleDeviceListClick.bind(this) });
     };
+    ioBroker_DeviceListHandler.prototype.refreshDeviceList = function () {
+        var _this = this;
+        this.listEntryToConfigMap.forEach(function (node, element) { return _this.refreshDeviceListEntry(node, element); });
+    };
     ioBroker_DeviceListHandler.prototype.refreshDeviceListEntry = function (deviceConfig, listItem) {
         if (!listItem)
             return;
         var pageBuilder = this.delegate.getPageBuilderByConfig(deviceConfig);
         listItem.querySelector('.list-title').textContent = deviceConfig.name;
-        listItem.dataset["deviceIdent"] = deviceConfig.name;
         listItem.classList.toggle('active', (deviceConfig === this.delegate.selectedDeviceConfig));
         var stylingDone = false;
         if (pageBuilder !== undefined) {
             stylingDone = pageBuilder.styleListItem(listItem, deviceConfig);
         }
+        listItem.classList.toggle('error', !this.delegate.deviceIsUnique(deviceConfig));
         if (!stylingDone) {
             var listIcon = listItem.querySelector('.list-icon');
             listIcon.className = 'list-icon icon mif-question';
         }
-    };
-    ioBroker_DeviceListHandler.prototype.findDeviceConfig = function (bridgeConfig, deviceIdent) {
-        if (!bridgeConfig)
-            return undefined;
-        for (var _i = 0, _a = this.getDeviceList(); _i < _a.length; _i++) {
-            var devConfig = _a[_i];
-            if (devConfig.name == deviceIdent)
-                return devConfig;
-        }
-        return undefined;
     };
     ioBroker_DeviceListHandler.prototype.handleDeviceListClick = function (deviceNode) {
         if (!deviceNode)
@@ -472,7 +466,6 @@ var ConfigPageBuilder_BridgeConfig = (function (_super) {
     };
     ConfigPageBuilder_BridgeConfig.prototype.handleBridgeMetaDataChange = function (bridgeConfig, propertyName, errorElement, validator, ev) {
         var inputTarget = ev.currentTarget;
-        var listItem = document.querySelector('div.list[data-device-ident="' + bridgeConfig.name + '"]');
         if (inputTarget.type == "checkbox") {
             bridgeConfig[propertyName] = inputTarget.checked;
         }
@@ -480,7 +473,7 @@ var ConfigPageBuilder_BridgeConfig = (function (_super) {
             bridgeConfig[propertyName] = inputTarget.value;
         }
         this.refreshSimpleErrorElement(errorElement, validator);
-        this.delegate.refreshDeviceListEntry(bridgeConfig, listItem);
+        this.delegate.refreshDeviceListEntry(bridgeConfig);
         this.delegate.changeCallback();
     };
     return ConfigPageBuilder_BridgeConfig;
@@ -773,10 +766,9 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
     ConfigPageBuilder_CustomDevice.prototype.handleDeviceMetaDataChange = function (deviceConfig, propertyName, errorElement, validator, ev) {
         var inputTarget = ev.currentTarget;
         var inputValue = (inputTarget.type === 'checkbox') ? inputTarget.checked : inputTarget.value;
-        var listItem = document.querySelector('div.list[data-device-ident="' + deviceConfig.name + '"]');
         deviceConfig[propertyName] = inputValue;
         this.refreshSimpleErrorElement(errorElement, validator);
-        this.delegate.refreshDeviceListEntry(deviceConfig, listItem);
+        this.delegate.refreshDeviceListEntry(deviceConfig);
         this.delegate.changeCallback();
     };
     ConfigPageBuilder_CustomDevice.prototype.handleServiceMetaDataChange = function (serviceConfig, servicePanel, attribute, ev) {
@@ -875,7 +867,6 @@ var ConfigPageBuilder_IPCamera = (function (_super) {
     };
     ConfigPageBuilder_IPCamera.prototype.handlePropertyChange = function (config, propertyName, errorElement, validator, ev) {
         var inputTarget = ev.currentTarget;
-        var listItem = document.querySelector('div.list[data-device-ident="' + config.name + '"]');
         if (inputTarget.type == "checkbox") {
             config[propertyName] = inputTarget.checked;
         }
@@ -883,7 +874,7 @@ var ConfigPageBuilder_IPCamera = (function (_super) {
             config[propertyName] = inputTarget.value;
         }
         this.refreshSimpleErrorElement(errorElement, validator);
-        this.delegate.refreshDeviceListEntry(config, listItem);
+        this.delegate.refreshDeviceListEntry(config);
         this.delegate.changeCallback();
     };
     ConfigPageBuilder_IPCamera.prototype.displayExceptionHint = function (textArea, msgPanel, message) {
@@ -893,7 +884,6 @@ var ConfigPageBuilder_IPCamera = (function (_super) {
     };
     ConfigPageBuilder_IPCamera.prototype.handleffMpegPropertyChange = function (config, propertyName, inputErrorMsgPanel, ev) {
         var inputTarget = ev.currentTarget;
-        var listItem = document.querySelector('div.list[data-device-ident="' + config.name + '"]');
         try {
             config.ffmpegCommandLine[propertyName] = JSON.parse(inputTarget.value);
             this.displayExceptionHint(inputTarget, inputErrorMsgPanel, undefined);
@@ -901,7 +891,7 @@ var ConfigPageBuilder_IPCamera = (function (_super) {
         catch (e) {
             this.displayExceptionHint(inputTarget, inputErrorMsgPanel, e.message);
         }
-        this.delegate.refreshDeviceListEntry(config, listItem);
+        this.delegate.refreshDeviceListEntry(config);
         this.delegate.changeCallback();
     };
     return ConfigPageBuilder_IPCamera;

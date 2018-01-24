@@ -167,3 +167,8 @@ textarea.validationError {
 .errorpanel.validationError {
     display: block
 }
+
+
+.list.device-entry.error {
+    border: 1px dashed red !important
+}

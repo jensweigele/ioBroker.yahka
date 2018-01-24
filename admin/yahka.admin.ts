@@ -149,7 +149,7 @@ interface IConfigPageBuilderDelegate {
     readonly bridgeSettings: hkBridge.Configuration.IBridgeConfig;
     cameraConfigs: [hkBridge.Configuration.ICameraConfig];
     setSelectedDeviceConfig(deviceConfig: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean): void;
-    refreshDeviceListEntry(deviceConfig: hkBridge.Configuration.IBaseConfigNode, listItem: HTMLElement);
+    refreshDeviceListEntry(deviceConfig: hkBridge.Configuration.IBaseConfigNode);
     refreshDevicePanel(deviceConfig: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean): void;
     changeCallback();
     deviceIsUnique(deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean;
@@ -258,8 +258,8 @@ class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
     }
 
 
-    public refreshDeviceListEntry(deviceConfig: hkBridge.Configuration.IBaseConfigNode, listItem: HTMLElement) {
-        return this.deviceListHandler.refreshDeviceListEntry(deviceConfig, listItem);
+    public refreshDeviceListEntry(deviceConfig: hkBridge.Configuration.IBaseConfigNode) {
+        this.deviceListHandler.refreshDeviceList();
     }
 
     public changeCallback() {
@@ -327,18 +327,22 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
         (<any>$(deviceList)).listview({ onListClick: this.handleDeviceListClick.bind(this) });
     }
 
-    refreshDeviceListEntry(deviceConfig: hkBridge.Configuration.IBaseConfigNode, listItem: HTMLElement) {
+    public refreshDeviceList() {
+        this.listEntryToConfigMap.forEach( (node, element) => this.refreshDeviceListEntry(node, element))
+    }
+
+    private refreshDeviceListEntry(deviceConfig: hkBridge.Configuration.IBaseConfigNode, listItem: HTMLElement) {
         if (!listItem)
             return;
 
         let pageBuilder = this.delegate.getPageBuilderByConfig(deviceConfig);
         listItem.querySelector('.list-title').textContent = deviceConfig.name;
-        listItem.dataset["deviceIdent"] = deviceConfig.name;
         listItem.classList.toggle('active', (deviceConfig === this.delegate.selectedDeviceConfig));
         let stylingDone = false
         if(pageBuilder !== undefined) {
             stylingDone = pageBuilder.styleListItem(listItem, deviceConfig)
         }
+        listItem.classList.toggle('error', !this.delegate.deviceIsUnique(deviceConfig));
         
         if (!stylingDone) {
             let listIcon = listItem.querySelector('.list-icon');
@@ -346,22 +350,11 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
         }        
     }
 
-    findDeviceConfig(bridgeConfig: hkBridge.Configuration.IBridgeConfig, deviceIdent: string): hkBridge.Configuration.IBaseConfigNode {
-        if (!bridgeConfig)
-            return undefined;
-        for (let devConfig of this.getDeviceList())
-            if (devConfig.name == deviceIdent)
-                return devConfig;
-        return undefined;
-    }
-
     handleDeviceListClick(deviceNode: JQuery) {
         if (!deviceNode)
             return;
 
         let deviceConfig = this.listEntryToConfigMap.get(deviceNode[0]);
-        // let deviceIdent = deviceNode[0].dataset["deviceIdent"];
-        // let deviceConfig = this.findDeviceConfig(bridgeConfig, deviceIdent);
         this.delegate.setSelectedDeviceConfig(deviceConfig, false);
     }
 }
@@ -563,14 +556,13 @@ class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base implements I
 
     handleBridgeMetaDataChange(bridgeConfig: hkBridge.Configuration.IBridgeConfig, propertyName: string, errorElement: HTMLElement, validator: TValidatorFunction, ev: Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
-        let listItem = <HTMLElement>document.querySelector('div.list[data-device-ident="' + bridgeConfig.name + '"]');
         if (inputTarget.type == "checkbox") {
             bridgeConfig[propertyName] = inputTarget.checked;
         } else {
             bridgeConfig[propertyName] = inputTarget.value;
         }
         this.refreshSimpleErrorElement(errorElement, validator);
-        this.delegate.refreshDeviceListEntry(bridgeConfig, listItem);
+        this.delegate.refreshDeviceListEntry(bridgeConfig);
         this.delegate.changeCallback();
     }
 
@@ -930,10 +922,9 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
     handleDeviceMetaDataChange(deviceConfig: hkBridge.Configuration.IDeviceConfig, propertyName: string, errorElement: HTMLElement, validator: TValidatorFunction, ev: Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
         let inputValue = (inputTarget.type === 'checkbox') ? inputTarget.checked : inputTarget.value;
-        let listItem = <HTMLElement>document.querySelector('div.list[data-device-ident="' + deviceConfig.name + '"]');
         deviceConfig[propertyName] = inputValue;
         this.refreshSimpleErrorElement(errorElement, validator);
-        this.delegate.refreshDeviceListEntry(deviceConfig, listItem);
+        this.delegate.refreshDeviceListEntry(deviceConfig);
         this.delegate.changeCallback();
     }
 
@@ -1050,14 +1041,13 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
 
     handlePropertyChange(config: hkBridge.Configuration.ICameraConfig, propertyName: keyof hkBridge.Configuration.ICameraConfig, errorElement: HTMLElement, validator: TValidatorFunction, ev: Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
-        let listItem = <HTMLElement>document.querySelector('div.list[data-device-ident="' + config.name + '"]');
         if (inputTarget.type == "checkbox") {
             config[propertyName] = inputTarget.checked;
         } else {
             config[propertyName] = inputTarget.value;
         }
         this.refreshSimpleErrorElement(errorElement, validator);
-        this.delegate.refreshDeviceListEntry(config, listItem);
+        this.delegate.refreshDeviceListEntry(config);
         this.delegate.changeCallback();
     }
 
@@ -1071,14 +1061,13 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
 
     handleffMpegPropertyChange(config: hkBridge.Configuration.ICameraConfig, propertyName: keyof hkBridge.Configuration.ICameraFfmpegCommandLine, inputErrorMsgPanel: HTMLElement, ev: Event) {
         let inputTarget = <HTMLTextAreaElement>ev.currentTarget;
-        let listItem = <HTMLElement>document.querySelector('div.list[data-device-ident="' + config.name + '"]');
         try {
             config.ffmpegCommandLine[propertyName] = JSON.parse(inputTarget.value);
             this.displayExceptionHint(inputTarget, inputErrorMsgPanel, undefined)
         } catch(e) {
             this.displayExceptionHint(inputTarget, inputErrorMsgPanel, e.message)
         }
-        this.delegate.refreshDeviceListEntry(config, listItem);
+        this.delegate.refreshDeviceListEntry(config);
         this.delegate.changeCallback();
     }    
 }
