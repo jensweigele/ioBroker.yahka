@@ -61,6 +61,8 @@ class TIoBrokerInOutFunction_State implements IInternalInOutFunction {
                         this.adapter.log.error('setForeignState error [' + this.stateName + '] to [' + JSON.stringify(plainIoValue) + ']: ' + error);
                     callback();
                 });
+            } else {
+                callback();
             }
         });
     }

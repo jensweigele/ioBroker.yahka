@@ -55,6 +55,9 @@ var TIoBrokerInOutFunction_State = (function () {
                     callback();
                 });
             }
+            else {
+                callback();
+            }
         });
     };
     TIoBrokerInOutFunction_State.prototype.fromIOBroker = function (callback) {
