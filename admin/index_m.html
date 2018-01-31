@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="../../lib/css/themes/jquery-ui/redmond/jquery-ui.min.css" />
 <link rel="stylesheet" type="text/css" href="../../lib/css/fancytree/ui.fancytree.min.css"/>
-<script type="text/javascript" src="../../lib/js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+<link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
+<link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+<script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="../../lib/js/jquery-ui-1.10.3.full.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
-<link rel="stylesheet" type="text/css" href="../../lib/css/fancytree/ui.fancytree.min.css"/>
+<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+
 <script type="text/javascript" src="../../js/translate.js"></script>
 <script type="text/javascript" src="../../lib/js/colResizable-1.5.min.js"></script>
 <script type="text/javascript" src="../../lib/js/jquery.fancytree-all.min.js"></script>
 <script type="text/javascript" src="../../lib/js/selectID.js"></script>
+<script type="text/javascript" src="../../lib/js/materialize.js"></script>
 <script type="text/javascript" src="../../js/adapter-settings.js"></script>
-
+<script type="text/javascript" src="words.js"></script>
 
 <script type="text/javascript" src="ext/metroui/js/metro.min.js"></script>
 <link rel="stylesheet" type="text/css" href="ext/metroui/css/metro.min.css" />
@@ -747,6 +748,23 @@
             </div>         
         </div>
     </template>
+</div>
+<div class="material-dialogs m">
+    <div id="dialog-select-member" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col s12 title"></div>
+            </div>
+            <div class="row">
+                <div class="col s12 dialog-content">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-action modal-close waves-effect waves-green btn btn-set"  ><i class="large material-icons">check</i><span class="translate">Select</span></a>
+            <a class="modal-action modal-close waves-effect waves-green btn btn-close"><i class="large material-icons">close</i><span class="translate">Cancel</span></a>
+        </div>
+    </div>
 </div>
 </body>
 </html>

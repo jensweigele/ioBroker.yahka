@@ -14,6 +14,11 @@ For details on how to install and configure this adapter, please see the [Wiki](
 
 ## Changelog
 
+### 0.7.0 
+  (bluefox) Fixed the ID select dialog in Admin3<br>
+  (jw) updated hap-nodejs to support the following new services: Faucet, IrrigationSystem and Valve<br>
+  (jw) added ip-package to dependencies to avoid errors on some installations<br>
+
 ### 0.6.1 
   (jw) fixed startup crash<br>
 

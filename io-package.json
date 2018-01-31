@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "yahka",
-        "version": "0.6.1",
+        "version": "0.7.0",
         "news": {
+            "0.7.0": {
+                "en": "Fixed the ID select dialog in Admin3, added new services and fixed some other bugs",
+                "de": "Der ID-Auswahldialog in Admin3 wurde korrigiert, neue Dienste hinzugefügt und kleinere Fehler behoben",
+                "ru": "Исправлено диалоговое окно выбора идентификатора в Admin3",
+                "pt": "Corrigido o diálogo de seleção de ID em Admin3",
+                "nl": "Vaste het ID selectiedialoog in Admin3",
+                "fr": "Correction du dialogue de sélection d'ID dans Admin3",
+                "it": "Risolta la finestra di dialogo di selezione dell'ID in Admin3",
+                "es": "Se corrigió el diálogo de selección de ID en Admin3",
+                "pl": "Naprawiono okno dialogowe wyboru identyfikatora w Admin3"
+            },
             "0.6.1": {
                 "en": "Fixed a bug which prevent Yahka from Start",
                 "de": "Fixed a bug which prevent Yahka from Start",
@@ -19,11 +30,17 @@
                 "ru": "Увеличен размер окна настроек"
             }
         },
-        "title": "Homekit yahka adapter",
+        "title": "Homekit",
         "desc": {
-            "en": "ioBroker yet another homekit adapter",
-            "de": "ioBroker yet another homekit adapter",
-            "ru": "ioBroker Homekit адаптер"
+            "en": "yet another Homekit adapter",
+            "de": "noch ein weiterer Homekit-Adapter",
+            "ru": "Homekit драйвер",
+            "pt": "ainda outro adaptador Homekit",
+            "nl": "nog een andere Homekit-adapter",
+            "fr": "encore un autre adaptateur Homekit",
+            "it": "ancora un altro adattatore Homekit",
+            "es": "otro adaptador para el Homekit",
+            "pl": "kolejny adapter Homekit"
         },
         "platform": "Javascript/Node.js",
         "mode": "daemon",
@@ -37,6 +54,7 @@
         "readme": "https://github.com/jensweigele/ioBroker.yahka/blob/master/README.md",
         "loglevel": "info",
         "type": "iot-systems",
+        "materialize": true,
         "config": {
             "minWidth": 800,
             "width ": 1440,
@@ -583,6 +601,23 @@
                         }
                     }
                 },
+                "Faucet": {
+                    "type": "Faucet",
+                    "characteristics": {
+                        "Active": {
+                            "name": "Active",
+                            "optional": false
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        },
+                        "StatusFault": {
+                            "name": "StatusFault",
+                            "optional": true
+                        }
+                    }
+                },
                 "GarageDoorOpener": {
                     "type": "GarageDoorOpener",
                     "characteristics": {
@@ -735,6 +770,35 @@
                         },
                         "Name": {
                             "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "IrrigationSystem": {
+                    "type": "IrrigationSystem",
+                    "characteristics": {
+                        "Active": {
+                            "name": "Active",
+                            "optional": false
+                        },
+                        "ProgramMode": {
+                            "name": "ProgramMode",
+                            "optional": false
+                        },
+                        "InUse": {
+                            "name": "InUse",
+                            "optional": false
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        },
+                        "RemainingDuration": {
+                            "name": "RemainingDuration",
+                            "optional": true
+                        },
+                        "StatusFault": {
+                            "name": "StatusFault",
                             "optional": true
                         }
                     }
@@ -1193,6 +1257,47 @@
                         },
                         "HeatingThresholdTemperature": {
                             "name": "HeatingThresholdTemperature",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "Valve": {
+                    "type": "Valve",
+                    "characteristics": {
+                        "Active": {
+                            "name": "Active",
+                            "optional": false
+                        },
+                        "InUse": {
+                            "name": "InUse",
+                            "optional": false
+                        },
+                        "ValveType": {
+                            "name": "ValveType",
+                            "optional": false
+                        },
+                        "SetDuration": {
+                            "name": "SetDuration",
+                            "optional": true
+                        },
+                        "RemainingDuration": {
+                            "name": "RemainingDuration",
+                            "optional": true
+                        },
+                        "IsConfigured": {
+                            "name": "IsConfigured",
+                            "optional": true
+                        },
+                        "LabelIndex": {
+                            "name": "LabelIndex",
+                            "optional": true
+                        },
+                        "StatusFault": {
+                            "name": "StatusFault",
                             "optional": true
                         },
                         "Name": {
