@@ -14,42 +14,46 @@ For details on how to install and configure this adapter, please see the [Wiki](
 
 ## Changelog
 
+### 0.7.0 (2018.01.31) 
+* (bluefox) Fixed the ID select dialog in Admin3
+* (bluefox) Replace grunt with gulp
+
 ### 0.6.1 
-  (jw) fixed startup crash<br>
+* (jw) fixed startup crash
 
 ### 0.6.0
-  (jw) add support for IP-Cameras<br>
-  (jw) included iOS 11 device definitions<br>
-  (jw) allowed negative temperatures for temperature sensors<br>
-  (jw) fixed crashes due to duplicate device names<br>
-  (oliverschulze) added conversion functions "hue" and "level255"<br>
-  (jw) added conversion functions scaleInt, scaleFloat and inverse<br>
-  (jw) devices are now sorted by name in the admin panel<br>
+* (jw) add support for IP-Cameras
+* (jw) included iOS 11 device definitions
+* (jw) allowed negative temperatures for temperature sensors
+* (jw) fixed crashes due to duplicate device names
+* (oliverschulze) added conversion functions "hue" and "level255"
+* (jw) added conversion functions scaleInt, scaleFloat and inverse
+* (jw) devices are now sorted by name in the admin panel
 
 ### 0.5.5
-  (bluefox) allow select ID in configuration dialog<br>
+* (bluefox) allow select ID in configuration dialog
 
 ### 0.5.4
-  (jw) improve logoutput<br>
-  (jw) added HomematicControlModeToHomekitHeathingCoolingState mapping<br>
+* (jw) improve logoutput
+* (jw) added HomematicControlModeToHomekitHeathingCoolingState mapping
 
 ### 0.5.3
-  (jw) internal release<br>
+* (jw) internal release
 
 ### 0.5.2
-  (jw) fixed issues with empty characteristic values<br>
-  (jw) fixed issue with empty adapter.systemConfig.system object<br>
+* (jw) fixed issues with empty characteristic values
+* (jw) fixed issue with empty adapter.systemConfig.system object
 
 ### 0.5.1
-  (jw) fixed issue with wrongly displayed logo<br>
+* (jw) fixed issue with wrongly displayed logo
 
 ### 0.5.0
-  (jw) initial release<br>
+* (jw) initial release
 
 ## License
 The MIT License (MIT)
 
-Copyright (c) 2016-2017 Jens Weigele (iobroker.yahka@gmail.com)
+Copyright (c) 2016-2018 Jens Weigele (iobroker.yahka@gmail.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

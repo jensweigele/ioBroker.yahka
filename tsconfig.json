@@ -4,16 +4,11 @@
         "module": "commonjs",
         "sourceMap": true,
         "allowJs": true,
+        "rootDir": "./",
         "outDir": "./build/"
     },
     "compileOnSave": true,
     "files": [
-        "yahka.homekit-bridge.ts",
-        "yahka.ioBroker-adapter.ts",
-        "main.ts",
-        "admin/yahka.admin.ts",
-        "yahka.meta-generator.ts",
-        "yahka.homekit-ipcamera.ts",
-        "yahka.configuration.ts"
+        "admin/yahka.admin.ts"
     ]
 }

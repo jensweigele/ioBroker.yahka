@@ -2,3 +2,5 @@
 /node_modules
 /typings/globals
 /.tscache
+admin/i18n/flat.txt
+admin/i18n/*/flat.txt
