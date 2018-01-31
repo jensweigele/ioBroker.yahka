@@ -581,91 +581,89 @@
         </div>
 
         <div class="frame">
-                <div class="heading">
-                    <span class="translate">Stream Properties</span>
-                </div>
+            <div class="heading">
+                <span class="translate">Stream Properties</span>
+            </div>
 
-                <div class="content">
-                    <div>
-                        <div><label class="translate" for="source">Source:</label></div>
-                        <div class="input control flex-grow margin10">
-                            <input class="full-size" type="text" id="source"/>
-                        </div>
+            <div class="content">
+                <div>
+                    <div><label class="translate" for="source">Source:</label></div>
+                    <div class="input control flex-grow margin10">
+                        <input class="full-size" type="text" id="source"/>
                     </div>
-                    <div>
-                        <div><label class="translate" for="codec">Codec:</label></div>
-                        <div class="input control flex-grow  margin10">
-                            <input class="full-size" type="text" id="codec"/>
-                        </div>
-                    </div>
-                    <div>
-                        <div><label class="translate" for="numberOfStreams">Number of Streams:</label></div>
-                        <div class="input controlflex-grow  margin10">
-                            <input class="full-size" type="text" id="numberOfStreams"/>
-                        </div>
-                    </div>
-                    <div>
-                        <div><label class="translate" for="maxWidth">maxWidth:</label></div>
-                        <div class="input controlflex-grow  margin10">
-                            <input class="full-size" type="text" id="maxWidth"/>
-                        </div>
-                    </div> 
-                    <div>
-                        <div><label class="translate" for="maxHeight">maxHeight:</label></div>
-                        <div class="input controlflex-grow  margin10">
-                            <input class="full-size" type="text" id="maxHeight"/>
-                        </div>
-                    </div>
-                    <div>
-                        <div><label class="translate" for="maxFPS">maxFPS:</label></div>
-                        <div class="input controlflex-grow  margin10">
-                            <input class="full-size" type="text" id="maxFPS"/>
-                        </div>
-                    </div>                
                 </div>
+                <div>
+                    <div><label class="translate" for="codec">Codec:</label></div>
+                    <div class="input control flex-grow  margin10">
+                        <input class="full-size" type="text" id="codec"/>
+                    </div>
+                </div>
+                <div>
+                    <div><label class="translate" for="numberOfStreams">Number of Streams:</label></div>
+                    <div class="input controlflex-grow  margin10">
+                        <input class="full-size" type="text" id="numberOfStreams"/>
+                    </div>
+                </div>
+                <div>
+                    <div><label class="translate" for="maxWidth">maxWidth:</label></div>
+                    <div class="input controlflex-grow  margin10">
+                        <input class="full-size" type="text" id="maxWidth"/>
+                    </div>
+                </div> 
+                <div>
+                    <div><label class="translate" for="maxHeight">maxHeight:</label></div>
+                    <div class="input controlflex-grow  margin10">
+                        <input class="full-size" type="text" id="maxHeight"/>
+                    </div>
+                </div>
+                <div>
+                    <div><label class="translate" for="maxFPS">maxFPS:</label></div>
+                    <div class="input controlflex-grow  margin10">
+                        <input class="full-size" type="text" id="maxFPS"/>
+                    </div>
+                </div>                
             </div>
         </div>
         <div class="frame">
-                <div class="heading">
-                    <span class="translate">Advanced Settings</span>
-                </div>
+            <div class="heading">
+                <span class="translate">Advanced Settings</span>
+            </div>
 
-                <div class="content">
-                    <div>
-                            <div><label class="translate" for="ffmpeg_snapshot">FFMPEG Command Line - Snapshot:</label></div>
-                            <div class="errorpanel" id="ffmpeg_snapshot_error"></div>
-                            <div class="input control flex-grow margin10 flex-container-row">
-                                <textarea rows=8 class="flex-grow" id="ffmpeg_snapshot"></textarea>
-                                <div class="margin10 translate">Available replacers: <br>
-                                    <ul class="simple-list blue-bullet replace-list">
-                                        <li>${source}</li>
-                                        <li>${width}</li>
-                                        <li>${height}</li>
-                                    </ul>
-                                </div>
-                            </div>
+            <div class="content">
+                <div>
+                    <div><label class="translate" for="ffmpeg_snapshot">FFMPEG Command Line - Snapshot:</label></div>
+                    <div class="errorpanel" id="ffmpeg_snapshot_error"></div>
+                    <div class="input control flex-grow margin10 flex-container-row">
+                        <textarea rows=8 class="flex-grow" id="ffmpeg_snapshot"></textarea>
+                        <div class="margin10"><span class="translate">Available replacers:</span> <br>
+                            <ul class="simple-list blue-bullet replace-list">
+                                <li>${source}</li>
+                                <li>${width}</li>
+                                <li>${height}</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div>
-                            <div><label class="translate" for="ffmpeg_stream">FFMPEG Command Line - Stream:</label></div>
-                            <div class="errorpanel" id="ffmpeg_stream_error"></div>
-                            <div class="input control flex-grow margin10 flex-container-row">
-                                <textarea rows=8 class="flex-grow" id="ffmpeg_stream"></textarea>
-                                <div class="margin10 translate">Available replacers: <br>
-                                    <ul class="simple-list blue-bullet replace-list">
-                                        <li>${codec}</li>
-                                        <li>${fps}</li>
-                                        <li>${width}</li>
-                                        <li>${height}</li>
-                                        <li>${bitrate}</li>
-                                        <li>${videokey}</li>
-                                        <li>${targetAddress}</li>
-                                        <li>${targetVideoPort}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            
-                        </div>                                    
                 </div>
+                <div>
+                    <div><label class="translate" for="ffmpeg_stream">FFMPEG Command Line - Stream:</label></div>
+                    <div class="errorpanel" id="ffmpeg_stream_error"></div>
+                    <div class="input control flex-grow margin10 flex-container-row">
+                        <textarea rows=8 class="flex-grow" id="ffmpeg_stream"></textarea>
+                        <div class="margin10"><span class="translate">Available replacers:</span> <br>
+                            <ul class="simple-list blue-bullet replace-list">
+                                <li>${codec}</li>
+                                <li>${fps}</li>
+                                <li>${width}</li>
+                                <li>${height}</li>
+                                <li>${bitrate}</li>
+                                <li>${videokey}</li>
+                                <li>${targetAddress}</li>
+                                <li>${targetVideoPort}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>                                    
             </div>
         </div>        
     </template>
