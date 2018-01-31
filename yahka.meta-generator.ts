@@ -33,16 +33,14 @@ for (let serviceName of availableServices) {
         if (charName === undefined) {
             continue;
         }
-        let charDescriptor = {name: charName, optional: false};
-        serviceDescriptor.characteristics[charName] = charDescriptor;
-    }
+        serviceDescriptor.characteristics[charName] = {name: charName, optional: false}; //charDescriptor
+}
     for (let char of serviceInstance.optionalCharacteristics) {
         let charName = charDictionary[char.UUID];
         if (charName === undefined) {
             continue;
         }
-        let charDescriptor_ = {name: charName, optional: true};
-        serviceDescriptor.characteristics[charName] = charDescriptor_;
+        serviceDescriptor.characteristics[charName] = {name: charName, optional: true}; //charDescriptor
     }
 
     serviceDictionary[serviceName] = serviceDescriptor;

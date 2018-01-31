@@ -1,6 +1,6 @@
 /// <reference path="./typings/index.d.ts" />
 import debug = require('debug');
-debug.enable(<any>'*');
+// debug.enable(<any>'*'); // be very careful with that. debug="*" enabled the full debug of socket IO and you will get 20 messages per second.
 import util = require('util');
 import HAP = require('hap-nodejs');
 import { Configuration } from './yahka.configuration';

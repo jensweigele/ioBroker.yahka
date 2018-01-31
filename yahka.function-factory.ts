@@ -121,7 +121,7 @@ class TIoBrokerInOutFunction_State_OnlyACK extends TIoBrokerInOutFunction_State 
                 this.lastAcknowledgedValue = ioState.val;
                 return ioState.val;
             } else {
-                this.adapter.log.debug("faking CurrentState.Read for [" + this.stateName + ']: ' + JSON.stringify(this.lastAcknowledgedValue));
+                this.adapter.log.debug('faking CurrentState.Read for [' + this.stateName + ']: ' + JSON.stringify(this.lastAcknowledgedValue));
                 return this.lastAcknowledgedValue;
             }
         else
@@ -134,7 +134,7 @@ class TIoBrokerInOutFunction_State_OnlyACK extends TIoBrokerInOutFunction_State 
                 this.lastAcknowledgedValue = ioState.val;
                 return ioState.val;
             } else {
-                this.adapter.log.debug("discarding CurrentState.Notify for [" + this.stateName + ']');
+                this.adapter.log.debug('discarding CurrentState.Notify for [' + this.stateName + ']');
                 return undefined;
             }
         else
@@ -148,7 +148,7 @@ class TIoBrokerInOutFunction_State_OnlyNotACK extends TIoBrokerInOutFunction_Sta
     getValueOnRead(ioState:ioBroker.IState):any {
         if (ioState)
             if (ioState.ack) {
-                this.adapter.log.debug("faking CurrentState.Read for [" + this.stateName + ']: ' + JSON.stringify(this.lastNotAcknowledgedValue));
+                this.adapter.log.debug('faking CurrentState.Read for [' + this.stateName + ']: ' + JSON.stringify(this.lastNotAcknowledgedValue));
                 return this.lastNotAcknowledgedValue;
             } else {
                 this.lastNotAcknowledgedValue = ioState.val;
@@ -161,7 +161,7 @@ class TIoBrokerInOutFunction_State_OnlyNotACK extends TIoBrokerInOutFunction_Sta
     getValueOnNotify(ioState:ioBroker.IState):any {
         if (ioState)
             if (!ioState.ack) {
-                this.adapter.log.debug("discarding CurrentState.Notify for [" + this.stateName + ']');
+                this.adapter.log.debug('discarding CurrentState.Notify for [' + this.stateName + ']');
                 return undefined;
             } else {
                 this.lastNotAcknowledgedValue = ioState.val;
@@ -227,9 +227,9 @@ class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition extends TIoB
 }
 
 type TInOutFunctionCreateFunction = (adapter:ioBroker.IAdapter, parameters:any) => IInternalInOutFunction;
-var inOutFactory:IObjectDictionary<TInOutFunctionCreateFunction> = {
-    "ioBroker.State": function (adapter:ioBroker.IAdapter, parameters:any):IInternalInOutFunction {
-        if (typeof parameters !== "string")
+let inOutFactory:IObjectDictionary<TInOutFunctionCreateFunction> = {
+    'ioBroker.State': function (adapter:ioBroker.IAdapter, parameters:any):IInternalInOutFunction {
+        if (typeof parameters !== 'string')
             return undefined;
         let stateName:string = parameters;
 
@@ -237,23 +237,23 @@ var inOutFactory:IObjectDictionary<TInOutFunctionCreateFunction> = {
     },
 
     // should be named Defered=>Deferred
-    "ioBroker.State.Defered": function (adapter:ioBroker.IAdapter, parameters:any):IInternalInOutFunction {
-        if (typeof parameters !== "string")
+    'ioBroker.State.Defered': function (adapter:ioBroker.IAdapter, parameters:any):IInternalInOutFunction {
+        if (typeof parameters !== 'string')
             return undefined;
         let stateName:string = parameters;
 
         return new TIoBrokerInOutFunction_State(adapter, stateName, 250);
     },
 
-    "ioBroker.State.OnlyACK": function (adapter:ioBroker.IAdapter, parameters:any):IInternalInOutFunction {
-        if (typeof parameters !== "string")
+    'ioBroker.State.OnlyACK': function (adapter:ioBroker.IAdapter, parameters:any):IInternalInOutFunction {
+        if (typeof parameters !== 'string')
             return undefined;
         let stateName:string = parameters;
 
         return new TIoBrokerInOutFunction_State_OnlyACK(adapter, stateName);
     },
 
-    "ioBroker.homematic.WindowCovering.TargetPosition": function (adapter:ioBroker.IAdapter, parameters:any):IInternalInOutFunction {
+    'ioBroker.homematic.WindowCovering.TargetPosition': function (adapter:ioBroker.IAdapter, parameters:any):IInternalInOutFunction {
         let p:Array<string>;
 
         if (typeof parameters === 'string')
@@ -279,7 +279,7 @@ var inOutFactory:IObjectDictionary<TInOutFunctionCreateFunction> = {
         return new TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition(adapter, stateName, workingItemName);
     },
 
-    "const": function (adapter:ioBroker.IAdapter, parameters:any):IInternalInOutFunction {
+    'const': function (adapter:ioBroker.IAdapter, parameters:any):IInternalInOutFunction {
         return {
             toIOBroker(ioValue:any, callback:() => void) {
                 console.log('inoutFunc: const.toIOBroker: ', parameters);
@@ -297,15 +297,15 @@ var inOutFactory:IObjectDictionary<TInOutFunctionCreateFunction> = {
 };
 
 type TConversionFunctionCreateFunction = (adapter:ioBroker.IAdapter, parameters:any) => IConversionFunction;
-var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
-    "passthrough": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
+let conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
+    'passthrough': function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
         return {
             toHomeKit: (value:any) => value,
             toIOBroker: (value:any) => value
         }
     },
 
-    "HomematicDirectionToHomekitPositionState": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
+    'HomematicDirectionToHomekitPositionState': function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
         return {
             toHomeKit: (value) => {
                 let num = undefined;
@@ -360,7 +360,7 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
         }
     },
 
-    "HomematicControlModeToHomekitHeathingCoolingState": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
+    'HomematicControlModeToHomekitHeathingCoolingState': function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
         return {
             toHomeKit: (value) => {
                 let num = undefined;
@@ -421,7 +421,7 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
         }
     },
 
-    "level255": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
+    'level255': function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
         return {
             toHomeKit: function (value) { 
                 let num: number = undefined;
@@ -439,15 +439,15 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
                     num = parseInt(value);
                 else
                     num = value;                     
-                var newValue = Math.round((num / 100.0) * 255.0);
+                let newValue = Math.round((num / 100.0) * 255.0);
                 adapter.log.debug('level255: converting value to ioBroker: ' + value + ' to ' + newValue); 
                 return newValue; 
             }
         };
     },
 
-    "scaleInt": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
-        var paramArray = JSON.parse(parameters);
+    'scaleInt': function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
+        let paramArray = JSON.parse(parameters);
         function getParameter(name: string): number {
             if (paramArray === undefined) 
                 return undefined;
@@ -467,8 +467,8 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
                     num = parseInt(value);
                 else
                     num = value;
-                let homeKitMax = getParameter("homekit.max");
-                let ioBrokerMax = getParameter("iobroker.max");
+                let homeKitMax = getParameter('homekit.max');
+                let ioBrokerMax = getParameter('iobroker.max');
                 let newValue = Math.round((num / ioBrokerMax) * homeKitMax);
                 adapter.log.debug('scaleInt: converting value to homekit: ' + value + ' to ' + newValue); 
                 return newValue; 
@@ -479,16 +479,16 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
                     num = parseInt(value);
                 else
                     num = value;
-                let homeKitMax = getParameter("homekit.max");
-                let ioBrokerMax = getParameter("iobroker.max");
+                let homeKitMax = getParameter('homekit.max');
+                let ioBrokerMax = getParameter('iobroker.max');
                 let newValue = Math.round((num / homeKitMax) * ioBrokerMax);
                 adapter.log.debug('scaleInt: converting value to ioBroker: ' + value + ' to ' + newValue); 
                 return newValue; 
             }
         };
     },    
-    "scaleFloat": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
-        var paramArray = JSON.parse(parameters);
+    'scaleFloat': function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
+        let paramArray = JSON.parse(parameters);
         function getParameter(name: string): number {
             if (paramArray === undefined) 
                 return undefined;
@@ -508,8 +508,8 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
                     num = parseFloat(value);
                 else
                     num = value;
-                let homeKitMax = getParameter("homekit.max");
-                let ioBrokerMax = getParameter("iobroker.max");
+                let homeKitMax = getParameter('homekit.max');
+                let ioBrokerMax = getParameter('iobroker.max');
                 let newValue = (num / ioBrokerMax) * homeKitMax;
                 adapter.log.debug('scaleFloat: converting value to homekit: ' + value + ' to ' + newValue); 
                 return newValue; 
@@ -520,15 +520,15 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
                     num = parseFloat(value);
                 else
                     num = value;
-                let homeKitMax = getParameter("homekit.max");
-                let ioBrokerMax = getParameter("iobroker.max");
+                let homeKitMax = getParameter('homekit.max');
+                let ioBrokerMax = getParameter('iobroker.max');
                 let newValue = (num / homeKitMax) * ioBrokerMax;
                 adapter.log.debug('scaleFloat: converting value to ioBroker: ' + value + ' to ' + newValue); 
                 return newValue; 
             }
         };
     },    
-    "inverse": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
+    'inverse': function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
         function castToNumber(value: any): number {
             if (value === undefined)
                 return undefined;
@@ -540,14 +540,14 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
 
         return {
             toHomeKit: function (value) { 
-                let num: number = castToNumber(value)
+                let num: number = castToNumber(value);
                 let maxValue = castToNumber(parameters);
                 let newValue = maxValue - num;
                 adapter.log.debug('inverse: converting value to homekit: ' + value + ' to ' + newValue); 
                 return newValue; 
 			},
             toIOBroker: function (value) { 
-                let num: number = castToNumber(value)
+                let num: number = castToNumber(value);
                 let maxValue = castToNumber(parameters);
                 let newValue = maxValue - num;
                 adapter.log.debug('inverse: converting value to ioBroker: ' + value + ' to ' + newValue); 
@@ -556,7 +556,7 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
         };
     },    
 
-    "hue": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
+    'hue': function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
         return {
             toHomeKit: function (value) { 
                 let num: number = undefined;
@@ -564,7 +564,7 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
                     num = parseInt(value);
                 else
                     num = value;                     
-                var newValue = Math.round((num / 65535.0) * 360.0);
+                let newValue = Math.round((num / 65535.0) * 360.0);
                 adapter.log.debug('hue: converting value to homekit: ' + value + ' to ' + newValue); 
                 return newValue; 
             },
@@ -574,7 +574,7 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
                     num = parseInt(value);
                 else
                     num = value;     
-                var newValue = Math.round((num / 360.0) * 65535.0);
+                let newValue = Math.round((num / 360.0) * 65535.0);
                 adapter.log.debug('hue: converting value to ioBroker: ' + value + ' to ' + newValue); 
                 return newValue; 
             }
@@ -583,15 +583,15 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
 };
 
 
-export var functionFactory = {
+export let functionFactory = {
     createInOutFunction: function (adapter:ioBroker.IAdapter, inOutFunction:string, inOutParameters?:any):IInternalInOutFunction {
         if (!(inOutFunction in inOutFactory))
-            return inOutFactory["const"](adapter, inOutParameters);
+            return inOutFactory['const'](adapter, inOutParameters);
         return inOutFactory[inOutFunction](adapter, inOutParameters);
     },
     createConversionFunction: function (adapter:ioBroker.IAdapter, conversionFunction:string, conversionParameters?:any):IConversionFunction {
         if (!(conversionFunction in conversionFactory))
-            return conversionFactory["passthrough"](adapter, conversionParameters);
+            return conversionFactory['passthrough'](adapter, conversionParameters);
         return conversionFactory[conversionFunction](adapter, conversionParameters);
     }
 

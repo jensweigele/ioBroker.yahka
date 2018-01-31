@@ -148,7 +148,6 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
                 this.adapter.log.warn('unknown subscription type: ' + subscriptionRequest.subscriptionType);
             }
         }
-
     }
 
     public CreateBinding(characteristicConfig:Configuration.ICharacteristicConfig, changeNotify:hkBridge.IInOutChangeNotify):hkBridge.IHomeKitBridgeBinding {

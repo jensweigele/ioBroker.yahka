@@ -4,6 +4,7 @@
         "module": "commonjs",
         "sourceMap": true,
         "allowJs": true,
+        "rootDir": "./",
         "outDir": "./build/"
     },
     "compileOnSave": true,
