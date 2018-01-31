@@ -4,8 +4,8 @@
         "version": "0.7.0",
         "news": {
             "0.7.0": {
-                "en": "Fixed the ID select dialog in Admin3",
-                "de": "Der ID-Auswahldialog in Admin3 wurde korrigiert",
+                "en": "Fixed the ID select dialog in Admin3, added new services and fixed some other bugs",
+                "de": "Der ID-Auswahldialog in Admin3 wurde korrigiert, neue Dienste hinzugefügt und kleinere Fehler behoben",
                 "ru": "Исправлено диалоговое окно выбора идентификатора в Admin3",
                 "pt": "Corrigido o diálogo de seleção de ID em Admin3",
                 "nl": "Vaste het ID selectiedialoog in Admin3",
