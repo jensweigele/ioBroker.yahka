@@ -38,7 +38,7 @@ module.exports = function(grunt) {
 
         exec: {
             refreshIOBroker: {
-                cwd: '../../',
+                cwd: '../iobroker/',
                 command: 'iobroker.bat upload yahka'
             },
             NPMPublish: {

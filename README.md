@@ -14,6 +14,8 @@ For details on how to install and configure this adapter, please see the [Wiki](
 
 ## Changelog
 
+### 0.7.0 (2018.01.31) 
+  (bluefox) Fixed the ID select dialog in Admin3<br>
 ### 0.6.1 
   (jw) fixed startup crash<br>
 
