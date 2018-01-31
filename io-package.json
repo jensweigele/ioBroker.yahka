@@ -601,6 +601,23 @@
                         }
                     }
                 },
+                "Faucet": {
+                    "type": "Faucet",
+                    "characteristics": {
+                        "Active": {
+                            "name": "Active",
+                            "optional": false
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        },
+                        "StatusFault": {
+                            "name": "StatusFault",
+                            "optional": true
+                        }
+                    }
+                },
                 "GarageDoorOpener": {
                     "type": "GarageDoorOpener",
                     "characteristics": {
@@ -753,6 +770,35 @@
                         },
                         "Name": {
                             "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "IrrigationSystem": {
+                    "type": "IrrigationSystem",
+                    "characteristics": {
+                        "Active": {
+                            "name": "Active",
+                            "optional": false
+                        },
+                        "ProgramMode": {
+                            "name": "ProgramMode",
+                            "optional": false
+                        },
+                        "InUse": {
+                            "name": "InUse",
+                            "optional": false
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        },
+                        "RemainingDuration": {
+                            "name": "RemainingDuration",
+                            "optional": true
+                        },
+                        "StatusFault": {
+                            "name": "StatusFault",
                             "optional": true
                         }
                     }
@@ -1211,6 +1257,47 @@
                         },
                         "HeatingThresholdTemperature": {
                             "name": "HeatingThresholdTemperature",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "Valve": {
+                    "type": "Valve",
+                    "characteristics": {
+                        "Active": {
+                            "name": "Active",
+                            "optional": false
+                        },
+                        "InUse": {
+                            "name": "InUse",
+                            "optional": false
+                        },
+                        "ValveType": {
+                            "name": "ValveType",
+                            "optional": false
+                        },
+                        "SetDuration": {
+                            "name": "SetDuration",
+                            "optional": true
+                        },
+                        "RemainingDuration": {
+                            "name": "RemainingDuration",
+                            "optional": true
+                        },
+                        "IsConfigured": {
+                            "name": "IsConfigured",
+                            "optional": true
+                        },
+                        "LabelIndex": {
+                            "name": "LabelIndex",
+                            "optional": true
+                        },
+                        "StatusFault": {
+                            "name": "StatusFault",
                             "optional": true
                         },
                         "Name": {
