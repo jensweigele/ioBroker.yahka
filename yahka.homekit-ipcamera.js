@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var child_process_1 = require("child_process");
 var HAP = require("hap-nodejs");
 var StreamController_1 = require("hap-nodejs/lib/StreamController");
@@ -142,7 +142,7 @@ var THomeKitIPCamera = (function () {
         var params = {
             source: this.camConfig.source,
             width: request.width,
-            height: request.height,
+            height: request.height
         };
         var ffmpegCommand = this.camConfig.ffmpegCommandLine.snapshot.map(function (s) { return s.replace(/\$\{(.*?)\}/g, function (_, word) {
             return params[word];

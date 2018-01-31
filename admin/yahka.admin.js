@@ -9,8 +9,8 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-
-
+exports.__esModule = true;
+var $ = require("jquery");
 function isBridgeConfig(config) {
     if (config === undefined)
         return false;
@@ -89,7 +89,7 @@ var webcamCommandLine = {
     ]
 };
 var ffmpegCommandLines = {
-    default: defaultCommandLine,
+    "default": defaultCommandLine,
     webcam: webcamCommandLine
 };
 var inoutFunctions = [];
@@ -339,7 +339,7 @@ var ioBroker_ButtonHandler = (function (_super) {
                     maxFPS: 60,
                     verboseLogging: false,
                     numberOfStreams: undefined,
-                    ffmpegCommandLine: ffmpegCommandLines.default,
+                    ffmpegCommandLine: ffmpegCommandLines["default"],
                     devices: []
                 };
                 _this.delegate.cameraConfigs.push(newIPCamera);

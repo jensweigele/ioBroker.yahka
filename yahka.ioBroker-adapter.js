@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var yahka_homekit_ipcamera_1 = require("./yahka.homekit-ipcamera");
 var hkBridge = require("./yahka.homekit-bridge");
 var yahka_function_factory_1 = require("./yahka.function-factory");

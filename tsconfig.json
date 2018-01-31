@@ -3,17 +3,24 @@
         "target": "es5",
         "module": "commonjs",
         "sourceMap": true,
-        "allowJs": true,
-        "outDir": "./build/"
+        "allowJs": false,
+        "outDir": "./",
+        "rootDir": "src",
+        "baseUrl": "src",
+        "paths": {
+            "*" : [
+                "../node_modules/*"
+            ]
+        }
     },
     "compileOnSave": true,
     "files": [
-        "yahka.homekit-bridge.ts",
-        "yahka.ioBroker-adapter.ts",
-        "main.ts",
-        "admin/yahka.admin.ts",
-        "yahka.meta-generator.ts",
-        "yahka.homekit-ipcamera.ts",
-        "yahka.configuration.ts"
+        "src/yahka.homekit-bridge.ts",
+        "src/yahka.ioBroker-adapter.ts",
+        "src/main.ts",
+        "src/admin/yahka.admin.ts",
+        "src/yahka.meta-generator.ts",
+        "src/yahka.homekit-ipcamera.ts",
+        "src/yahka.configuration.ts"
     ]
 }
