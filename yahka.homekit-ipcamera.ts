@@ -1,19 +1,20 @@
 /// <reference path="./typings/index.d.ts" />
 import { spawn } from 'child_process';
 import { ILogger } from './yahka.homekit-bridge';
-import util = require('util');
+// import util = require('util');
 import HAP = require('hap-nodejs');
 import { StreamController } from 'hap-nodejs/lib/StreamController';
 import ip = require('ip');
-import { uuid } from 'hap-nodejs';
+//import { uuid } from 'hap-nodejs';
 import { Configuration } from './yahka.configuration';
 
+const uuid = HAP.uuid;
 let HAPService = HAP.Service;
 let HAPCharacteristic = HAP.Characteristic;
 
 
 export class THomeKitIPCamera {
-    private _camera: HAPNodeJS.Accessory;
+    private _camera: HAPNodeJS.Accessory; // BF: where will be HAPNodeJS imported?
     private streamControllers: Array<StreamController> = [];
     private pendingSessions = {};
     private ongoingSessions = {};
@@ -27,16 +28,16 @@ export class THomeKitIPCamera {
         if (!this.camConfig.enabled) {
             return
         }
-        this.createCameraDevice()
+        this.createCameraDevice();
         this.createCameraControlService();
         this.createStreamControllers();
         this.publishCamera();
     }
 
     private createOptionsDictionary() {
-        var videoResolutions = [];
+        let videoResolutions = [];
 
-        var maxFPS = (this.camConfig.maxFPS > 30) ? 30 : this.camConfig.maxFPS;
+        let maxFPS = (this.camConfig.maxFPS > 30) ? 30 : this.camConfig.maxFPS;
 
         if (this.camConfig.maxWidth >= 320) {
             if (this.camConfig.maxHeight >= 240) {
@@ -90,7 +91,8 @@ export class THomeKitIPCamera {
             }
         }
 
-        let options = {
+        // options
+        return {
             proxy: false, // Requires RTP/RTCP MUX Proxy
             srtp: true, // Supports SRTP AES_CM_128_HMAC_SHA1_80 encryption
             video: {
@@ -103,17 +105,16 @@ export class THomeKitIPCamera {
             audio: {
                 codecs: [
                     {
-                        type: "OPUS", // Audio Codec
+                        type: 'OPUS', // Audio Codec
                         samplerate: 24 // 8, 16, 24 KHz
                     },
                     {
-                        type: "AAC-eld",
+                        type: 'AAC-eld',
                         samplerate: 16
                     }
                 ]
             }
-        }
-        return options
+        };
     }
 
     private createCameraDevice() {
@@ -136,16 +137,16 @@ export class THomeKitIPCamera {
     }
 
     private createCameraControlService() {
-        var controlService = new HAP.Service.CameraControl();
+        let controlService = new HAP.Service.CameraControl();
         this._camera.services.push(controlService);
     }
 
     private createStreamControllers() {
-        let options = this.createOptionsDictionary()        
+        let options = this.createOptionsDictionary();
         let maxStreams = this.camConfig.numberOfStreams || 2;
 
-        for (var i = 0; i < maxStreams; i++) {
-            var streamController = new StreamController(i, options, this);
+        for (let i = 0; i < maxStreams; i++) {
+            let streamController = new StreamController(i, options, this);
             this._camera.services.push((<any>streamController).service);
             this.streamControllers.push(streamController);
         }
@@ -172,15 +173,15 @@ export class THomeKitIPCamera {
             source: this.camConfig.source,
             width: request.width,
             height: request.height,
-        }
-        let ffmpegCommand = this.camConfig.ffmpegCommandLine.snapshot.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => {
+        };
+        let ffmpegCommand = this.camConfig.ffmpegCommandLine.snapshot.map((s) => s.replace(/\${(.*?)}/g, (_, word) => {
             return params[word];
         }));
 
-        this.FLogger.debug("Snapshot run: ffmpeg " + ffmpegCommand.join(' '));
+        this.FLogger.debug('Snapshot run: ffmpeg ' + ffmpegCommand.join(' '));
         let ffmpeg = spawn('ffmpeg', ffmpegCommand, { env: process.env });
 
-        var imageBuffer = Buffer.alloc(0);
+        let imageBuffer = Buffer.alloc(0);
 
         ffmpeg.stdout.on('data', function (data) {
             imageBuffer = Buffer.concat([imageBuffer, (<Buffer>data)]);
@@ -191,104 +192,99 @@ export class THomeKitIPCamera {
     }
 
     prepareStream(request, callback) {
-        var sessionInfo = {};
+        let sessionInfo = {};
 
-        let sessionID = request["sessionID"];
-        let targetAddress = request["targetAddress"];
+        let sessionID = request['sessionID'];
 
-        sessionInfo["address"] = targetAddress;
+        sessionInfo['address'] = request['targetAddress'];
 
-        var response = {};
+        let response = {};
 
-        let videoInfo = request["video"];
+        let videoInfo = request['video'];
         if (videoInfo) {
-            let targetPort = videoInfo["port"];
-            let srtp_key = videoInfo["srtp_key"];
-            let srtp_salt = videoInfo["srtp_salt"];
+            let targetPort = videoInfo['port'];
+            let srtp_key = videoInfo['srtp_key'];
+            let srtp_salt = videoInfo['srtp_salt'];
 
-            let videoResp = {
+            response['video'] = {
                 port: targetPort,
                 ssrc: 1,
                 srtp_key: srtp_key,
                 srtp_salt: srtp_salt
             };
 
-            response["video"] = videoResp;
-
-            sessionInfo["video_port"] = targetPort;
-            sessionInfo["video_srtp"] = Buffer.concat([srtp_key, srtp_salt]);
-            sessionInfo["video_ssrc"] = 1;
+            sessionInfo['video_port'] = targetPort;
+            sessionInfo['video_srtp'] = Buffer.concat([srtp_key, srtp_salt]);
+            sessionInfo['video_ssrc'] = 1;
         }
 
-        let audioInfo = request["audio"];
+        let audioInfo = request['audio'];
         if (audioInfo) {
-            let targetPort = audioInfo["port"];
-            let srtp_key = audioInfo["srtp_key"];
-            let srtp_salt = audioInfo["srtp_salt"];
+            let targetPort = audioInfo['port'];
+            let srtp_key = audioInfo['srtp_key'];
+            let srtp_salt = audioInfo['srtp_salt'];
 
-            let audioResp = {
+            response['audio'] = {
                 port: targetPort,
                 ssrc: 1,
                 srtp_key: srtp_key,
                 srtp_salt: srtp_salt
             };
 
-            response["audio"] = audioResp;
-
-            sessionInfo["audio_port"] = targetPort;
-            sessionInfo["audio_srtp"] = Buffer.concat([srtp_key, srtp_salt]);
-            sessionInfo["audio_ssrc"] = 1;
+            sessionInfo['audio_port'] = targetPort;
+            sessionInfo['audio_srtp'] = Buffer.concat([srtp_key, srtp_salt]);
+            sessionInfo['audio_ssrc'] = 1;
         }
 
         
         let currentAddress = ip.address();
-        var addressResp = {
+        let addressResp = {
             address: currentAddress
         };
 
         if (ip.isV4Format(currentAddress)) {
-            addressResp["type"] = "v4";
+            addressResp['type'] = 'v4';
         } else {
-            addressResp["type"] = "v6";
+            addressResp['type'] = 'v6';
         }
 
-        response["address"] = addressResp;
+        response['address'] = addressResp;
         this.pendingSessions[uuid.unparse(sessionID, 0)] = sessionInfo;
 
         callback(response);
     }
 
     handleStreamRequest(request) {
-        var sessionID = request["sessionID"];
-        var requestType = request["type"];
+        let sessionID = request['sessionID'];
+        let requestType = request['type'];
         if (sessionID) {
             let sessionIdentifier = uuid.unparse(sessionID, 0);
 
-            if (requestType == "start") {
-                var sessionInfo = this.pendingSessions[sessionIdentifier];
+            if (requestType == 'start') {
+                let sessionInfo = this.pendingSessions[sessionIdentifier];
                 if (sessionInfo) {
-                    var width = 1280;
-                    var height = 720;
-                    var fps = 30;
-                    var bitrate = 300;
-                    var codec = this.camConfig.codec || 'libx264';
+                    let width = 1280;
+                    let height = 720;
+                    let fps = 30;
+                    let bitrate = 300;
+                    let codec = this.camConfig.codec || 'libx264';
 
-                    let videoInfo = request["video"];
+                    let videoInfo = request['video'];
                     if (videoInfo) {
-                        width = videoInfo["width"];
-                        height = videoInfo["height"];
+                        width = videoInfo['width'];
+                        height = videoInfo['height'];
 
-                        let expectedFPS = videoInfo["fps"];
+                        let expectedFPS = videoInfo['fps'];
                         if (expectedFPS < fps) {
                             fps = expectedFPS;
                         }
 
-                        bitrate = videoInfo["max_bit_rate"];
+                        bitrate = videoInfo['max_bit_rate'];
                     }
 
-                    let targetAddress = sessionInfo["address"];
-                    let targetVideoPort = sessionInfo["video_port"];
-                    let videoKey = sessionInfo["video_srtp"];
+                    let targetAddress = sessionInfo['address'];
+                    let targetVideoPort = sessionInfo['video_port'];
+                    let videoKey = sessionInfo['video_srtp'];
 
 
                     let params = {
@@ -301,22 +297,22 @@ export class THomeKitIPCamera {
                         videokey: videoKey.toString('base64'),
                         targetAddress: targetAddress,
                         targetVideoPort: targetVideoPort
-                    }
-                    let ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => {
+                    };
+                    let ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map((s) => s.replace(/\${(.*?)}/g, (_, word) => {
                         return params[word];
                     }));
 
-                    this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
+                    this.FLogger.debug('Stream run: ffmpeg ' + ffmpegCommand.join(' '));
                     let ffmpeg = spawn('ffmpeg', ffmpegCommand, { env: process.env });
-                    var devnull = require('dev-null');
+                    let devnull = require('dev-null');
                     ffmpeg.stdout.pipe(devnull());
                     ffmpeg.stderr.pipe(devnull());
                     this.ongoingSessions[sessionIdentifier] = ffmpeg;
                 }
 
                 delete this.pendingSessions[sessionIdentifier];
-            } else if (requestType == "stop") {
-                var ffmpegProcess = this.ongoingSessions[sessionIdentifier];
+            } else if (requestType == 'stop') {
+                let ffmpegProcess = this.ongoingSessions[sessionIdentifier];
                 if (ffmpegProcess) {
                     ffmpegProcess.kill('SIGKILL');
                 }
