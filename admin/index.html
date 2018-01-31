@@ -324,7 +324,6 @@
         });
     }
 
-    // the function loadSettings has to exist ...
     function load(settings, _onChange) {
         onChange = _onChange;
         $('body').on('click', '.id-selector', function () {
@@ -356,8 +355,6 @@
         yahkaAdmin.loadSettings(settings, _onChange);
     }
 
-    // ... and the function save has to exist.
-    // you have to make sure the callback is called with the settings object as first param!
     function save(callback) {
         yahkaAdmin.saveSettings(callback)
     }
@@ -370,9 +367,7 @@
         <img src="yahka.png" />
         <h3 class="translate" style="display: inline; vertical-align: middle;">iobroker.yahka adapter settings</h3>
         <div class="translate" data-lang="ConfigDescription" style="display: inline-block">The page below is used to assign ioBroker states to HomeKit characteristics.</div>
-        <button id="wizard" style="display: inline-block">Wizard</button>
-    </div>
-    <div id="dialog-select-member" style="display: none" data-close-button="true">
+        <!-- <button id="wizard" style="display: inline-block">Wizard</button> -->
     </div>
 
     <div class="flex-grow flex-container-col bg-white" id="yahka_bridge_frame">
