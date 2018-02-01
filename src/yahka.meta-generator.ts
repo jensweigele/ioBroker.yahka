@@ -1,7 +1,7 @@
 import {CompleterResult} from 'readline';
-import {Characteristic}  from './node_modules/hap-nodejs/lib/Characteristic';
-import {Service} from './node_modules/hap-nodejs/lib/Service';
-import './node_modules/hap-nodejs/lib/gen/HomeKitTypes';
+import {Characteristic}  from 'hap-nodejs/lib/Characteristic';
+import {Service} from 'hap-nodejs/lib/Service';
+import 'hap-nodejs/lib/gen/HomeKitTypes';
 
 let availableServices = Object.keys(Service);
 let availableCharacteristics = Object.keys(Characteristic);

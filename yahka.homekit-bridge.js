@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var debug = require("debug");
 debug.enable('*');
 var util = require("util");
