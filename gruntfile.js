@@ -12,8 +12,6 @@ module.exports = function(grunt) {
         copy: {
             build: {
                 files: [
-                    // copy files to build directory
-                    //{ expand: true, src: ['*.png', 'io-package.json', 'package.json', 'lib/**', 'admin/**', '!**/*.ts', 'README.md'], dest: 'build/' }
                 ]
             },
             deployTestInstance: {
@@ -26,8 +24,7 @@ module.exports = function(grunt) {
         },
 
         clean: {
-             build: [], //['build/**/*.*'],
-             ts_nodeModules: []//['build/node_modules']
+                build: ['yahka.*.js', 'main.js', 'admin/yahka.*.js']
         },
 
         ts: {
@@ -60,7 +57,6 @@ module.exports = function(grunt) {
     grunt.registerTask('buildOnly', [
         'clean:build',
         'ts:build',
-        'clean:ts_nodeModules',
         'replace',
         'copy:build'
     ]);
@@ -78,7 +74,6 @@ module.exports = function(grunt) {
     grunt.registerTask('BuildAndDeployToTest', [
         'clean:build',
         'ts:build',
-        'clean:ts_nodeModules',
         'replace',
         'copy:build',
         'copy:deployTestInstance',
@@ -88,7 +83,6 @@ module.exports = function(grunt) {
     grunt.registerTask('NPMPublish', [
         'clean:build',
         'ts:build',
-        'clean:ts_nodeModules',
         'replace',
         'copy:build',
         'exec:NPMPublish'        
@@ -97,7 +91,6 @@ module.exports = function(grunt) {
     grunt.registerTask('NPMBeta', [
         'clean:build',
         'ts:build',
-        'clean:ts_nodeModules',
         'replace',
         'copy:build',
         'exec:NPMBeta'        
