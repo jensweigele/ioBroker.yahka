@@ -14,6 +14,10 @@ For details on how to install and configure this adapter, please see the [Wiki](
 
 ## Changelog
 
+### 0.7.1
+  (jw) fixed a bug where state selection with admin 2.0.9 did not work anymore
+  (jw) restructured repository to support install via url
+
 ### 0.7.0 
   (bluefox) Fixed the ID select dialog in Admin3<br>
   (jw) updated hap-nodejs to support the following new services: Faucet, IrrigationSystem and Valve<br>

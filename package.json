@@ -1,6 +1,6 @@
 {
   "name": "iobroker.yahka",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "ioBroker HomeKit Adapter",
   "author": {
     "name": "Jens Weigele",
@@ -56,7 +56,7 @@
     "url": "https://github.com/jensweigele/ioBroker.yahka/issues"
   },
   "readmeFilename": "README.md",
-  "main": "build/main.js",
+  "main": "main.js",
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha --exit"
   }

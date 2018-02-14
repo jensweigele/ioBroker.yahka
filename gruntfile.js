@@ -12,22 +12,19 @@ module.exports = function(grunt) {
         copy: {
             build: {
                 files: [
-                    // copy files to build directory
-                    { expand: true, src: ['*.png', 'io-package.json', 'package.json', 'lib/**', 'admin/**', '!**/*.ts', 'README.md'], dest: 'build/' }
                 ]
             },
             deployTestInstance: {
                 files: [
                     // copy files to build directory
-                    { expand: true, cwd: 'build', src: ['**'], dest: '../ioBroker/node_modules/iobroker.yahka/' }
+                    { expand: true, cwd: '', src: ['**', '!src/**', '!node_modules/**'], dest: '../ioBroker/node_modules/iobroker.yahka/' }
                 ]
 
             }
         },
 
         clean: {
-            build: ['build/**/*.*'],
-            ts_nodeModules: ['build/node_modules']
+                build: ['yahka.*.js', 'main.js', 'admin/yahka.*.js']
         },
 
         ts: {
@@ -60,14 +57,13 @@ module.exports = function(grunt) {
     grunt.registerTask('buildOnly', [
         'clean:build',
         'ts:build',
-        'clean:ts_nodeModules',
         'replace',
         'copy:build'
     ]);
     grunt.registerTask('replace', function () {
-        var file = require('fs').readFileSync('./build/admin/yahka.admin.js');
+        var file = require('fs').readFileSync('./admin/yahka.admin.js');
         file = file.toString().replace('Object.defineProperty(exports, "__esModule", { value: true });', '').replace('var $ = require("jquery");', '');
-        require('fs').writeFileSync('./build/admin/yahka.admin.js', file);   
+        require('fs').writeFileSync('./admin/yahka.admin.js', file);   
     });
     
     grunt.registerTask('DeployToTest', [
@@ -78,7 +74,6 @@ module.exports = function(grunt) {
     grunt.registerTask('BuildAndDeployToTest', [
         'clean:build',
         'ts:build',
-        'clean:ts_nodeModules',
         'replace',
         'copy:build',
         'copy:deployTestInstance',
@@ -88,7 +83,6 @@ module.exports = function(grunt) {
     grunt.registerTask('NPMPublish', [
         'clean:build',
         'ts:build',
-        'clean:ts_nodeModules',
         'replace',
         'copy:build',
         'exec:NPMPublish'        
@@ -97,7 +91,6 @@ module.exports = function(grunt) {
     grunt.registerTask('NPMBeta', [
         'clean:build',
         'ts:build',
-        'clean:ts_nodeModules',
         'replace',
         'copy:build',
         'exec:NPMBeta'        
