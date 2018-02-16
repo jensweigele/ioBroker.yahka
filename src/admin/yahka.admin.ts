@@ -213,7 +213,7 @@ class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
         let devList = this.deviceListHandler.getDeviceList();
         return !devList.some((a) => (a.name == deviceConfig.name) && (a !== deviceConfig));
     }
-    
+
 
     public getPageBuilderByConfig(deviceConfig: hkBridge.Configuration.IBaseConfigNode): IConfigPageBuilder {
         if (deviceConfig === undefined) {
@@ -276,10 +276,10 @@ class ConfigPageBuilder_Base {
 
     protected refreshSimpleErrorElement(errorElement: HTMLElement, validator: TValidatorFunction) {
         let errorVisible = false;
-        if(validator) 
+        if(validator)
             errorVisible = validator();
         if(errorElement)
-            errorElement.classList.toggle('validationError', errorVisible);        
+            errorElement.classList.toggle('validationError', errorVisible);
     }
 }
 
@@ -343,11 +343,11 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
             stylingDone = pageBuilder.styleListItem(listItem, deviceConfig)
         }
         listItem.classList.toggle('error', !this.delegate.deviceIsUnique(deviceConfig));
-        
+
         if (!stylingDone) {
             let listIcon = listItem.querySelector('.list-icon');
             listIcon.className = 'list-icon icon mif-question';
-        }        
+        }
     }
 
     handleDeviceListClick(deviceNode: JQuery) {
@@ -470,6 +470,66 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
                 }
             });
         }
+
+        if (elem = <HTMLElement>bridgePane.querySelector('#yahka_duplicate_device')) {
+            elem.addEventListener('click', (e) => {
+                e.preventDefault();
+                let dev = this.delegate.selectedDeviceConfig;
+                if (isDeviceConfig(dev)) {
+                    let newCustomDevice: hkBridge.Configuration.IDeviceConfig = {
+                        configType: dev.configType,
+                        manufacturer: dev.manufacturer,
+                        model: dev.model,
+                        name: dev.name + " copy",
+                        serial: "", // dev.serial,
+                        enabled: dev.enabled,
+                        category: dev.category,
+                        services: []
+                    };
+
+                    for(let service of dev.services) {
+                        let newService: hkBridge.Configuration.IServiceConfig = {
+                            name: service.name,
+                            subType: service.subType,
+                            type: service.type,
+                            characteristics: []
+                        };
+
+                        for(let characteristic of service.characteristics) {
+                            newService.characteristics.push({
+                              name: characteristic.name,
+                              enabled: characteristic.enabled,
+                              inOutFunction: characteristic.inOutFunction,
+                              inOutParameters: characteristic.inOutParameters,
+                              conversionFunction: characteristic.conversionFunction,
+                              conversionParameters: characteristic.conversionParameters
+                            });
+                        }
+
+                        newCustomDevice.services.push(newService);
+                    }
+
+                    bridge.devices.push(newCustomDevice);
+
+                    this.delegate.changeCallback();
+                    this.delegate.setSelectedDeviceConfig(newCustomDevice, true);
+                    this.deviceListHandler.buildDeviceList(bridgePane);
+                    this.delegate.changeCallback();
+                } /* TODO else if (isIPCameraConfig(dev)) {
+                    let idx = this.delegate.cameraConfigs.indexOf(dev);
+                    if (idx > -1) {
+                        this.delegate.cameraConfigs.splice(idx, 1);
+                        this.delegate.changeCallback();
+                        this.delegate.setSelectedDeviceConfig(undefined, false);
+                        this.deviceListHandler.buildDeviceList(bridgePane);
+                        this.delegate.changeCallback();
+                    }
+                }
+                */
+            });
+        }
+
+
     }
 
 
@@ -477,6 +537,7 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
         // let addDeviceButton    = <HTMLElement>document.querySelector('#yahka_add_device');
         let addServiceButton = <HTMLElement>parent.querySelector('#yahka_add_service');
         let removeDeviceButton = <HTMLElement>parent.querySelector('#yahka_remove_device');
+        let duplicateDeviceButton = <HTMLElement>parent.querySelector('#yahka_duplicate_device');
 
         let pageBuilder = this.delegate.getPageBuilderByConfig(this.delegate.selectedDeviceConfig);
         let addServiceEnabled = pageBuilder ? pageBuilder.addServiceAvailable : false;
@@ -491,6 +552,11 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
             removeDeviceButton.removeAttribute('disabled');
         else
             removeDeviceButton.setAttribute('disabled', '');
+
+        if (pageBuilder)
+            duplicateDeviceButton.removeAttribute('disabled');
+        else
+            duplicateDeviceButton.setAttribute('disabled', '');
     }
 }
 
@@ -613,7 +679,7 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
                 if (heading)
                     heading.click();
             }
-        }        
+        }
     }
 
 
@@ -634,8 +700,8 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
         listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
         listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
         return true;
-        
-    }    
+
+    }
 
     buildDeviceInformationPanel(deviceConfig: hkBridge.Configuration.IDeviceConfig, devicePane: HTMLElement): HTMLElement {
         let devInfoFragment = <DocumentFragment>document.importNode(this.deviceInfoPanelTemplate.content, true);
@@ -988,8 +1054,8 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
                 input.addEventListener('input', this.handlePropertyChange.bind(this, config, propertyName, errorElement, validator));
             }
             this.refreshSimpleErrorElement(errorElement, validator);
-        };   
-        
+        };
+
         let ffmpegHelper = (selector: string, propertyName: keyof hkBridge.Configuration.ICameraFfmpegCommandLine) => {
             let input = <HTMLTextAreaElement>configFragment.querySelector(selector);
             let inputErrorMsg = <HTMLElement>configFragment.querySelector(selector + '_error');
@@ -1001,8 +1067,8 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
                 input.value = '';
             }
             input.addEventListener('input', this.handleffMpegPropertyChange.bind(this, config, propertyName, inputErrorMsg));
-            
-        };           
+
+        };
 
         inputHelper('#enabled', 'enabled');
         inputHelper('#name', 'name', () => !this.delegate.deviceIsUnique(config));
@@ -1024,7 +1090,7 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
         ffmpegHelper('#ffmpeg_snapshot', 'snapshot');
         ffmpegHelper('#ffmpeg_stream', 'stream');
 
-        devicePanel.appendChild(configFragment);        
+        devicePanel.appendChild(configFragment);
     }
 
     public styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean {
@@ -1069,5 +1135,5 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
         }
         this.delegate.refreshDeviceListEntry(config);
         this.delegate.changeCallback();
-    }    
+    }
 }

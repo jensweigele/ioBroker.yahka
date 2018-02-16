@@ -382,10 +382,14 @@
                     <button class="image-button primary" id="yahka_add_camera">
                             <span class="icon mif-plus bg-darkCobalt  fg-white"></span>
                             <span class="translate">Add Camera</span>
-                    </button>                    
+                    </button>
                     <button class="image-button danger" id="yahka_remove_device">
                         <span class="icon mif-minus bg-darkCrimson  fg-white"></span>
                         <span class="translate">Remove Device</span>
+                    </button>
+                    <button class="image-button primary" id="yahka_duplicate_device">
+                        <span class="icon mif-plus bg-darkCobalt  fg-white"></span>
+                        <span class="translate">Duplicate Device</span>
                     </button>
                     <button class="image-button primary" id="yahka_add_service">
                         <span class="icon mif-plus bg-darkCobalt  fg-white"></span>
@@ -454,14 +458,14 @@
                     <div class="input controlflex-grow  margin10">
                         <input class="full-size" type="text" id="serial"/>
                     </div>
-                </div> 
+                </div>
                 <div>
                     <div><label class="translate" for="category">Categeory:</label></div>
                     <div class="input controlflex-grow  margin10">
                         <select class="full-size"  id="category"></select>
                     </div>
-                </div>                 
-            </div> 
+                </div>
+            </div>
 
         </div>
     </template>
@@ -515,9 +519,9 @@
             <div class="input controlflex-grow  margin10">
                 <input class="" type="checkbox" id="verboseLogging"/>
             </div>
-        </div>                        
+        </div>
     </template>
-    
+
     <template id="yahka_cameraConfig_template">
         <div class="frame">
             <div class="heading">
@@ -554,7 +558,7 @@
                     <div class="input controlflex-grow  margin10">
                         <input class="full-size" type="text" id="serial"/>
                     </div>
-                </div> 
+                </div>
                 <div>
                     <div><label class="translate" for="username">Username:</label><span class="edit-hint translate">needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the camera needs to be reconfigured in the HomeKit database</b></span></div>
                     <div class="input controlflex-grow  margin10">
@@ -572,7 +576,7 @@
                     <div class="input controlflex-grow  margin10">
                         <input class="full-size" type="number" id="port"/>
                     </div>
-                </div>                       
+                </div>
             </div>
         </div>
 
@@ -605,7 +609,7 @@
                     <div class="input controlflex-grow  margin10">
                         <input class="full-size" type="text" id="maxWidth"/>
                     </div>
-                </div> 
+                </div>
                 <div>
                     <div><label class="translate" for="maxHeight">maxHeight:</label></div>
                     <div class="input controlflex-grow  margin10">
@@ -617,7 +621,7 @@
                     <div class="input controlflex-grow  margin10">
                         <input class="full-size" type="text" id="maxFPS"/>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
         <div class="frame">
@@ -658,10 +662,10 @@
                             </ul>
                         </div>
                     </div>
-                    
-                </div>                                    
+
+                </div>
             </div>
-        </div>        
+        </div>
     </template>
 
     <template id="yahka_device_service_panel">
@@ -725,7 +729,7 @@
                 <div class="cell">
                     <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
                 </div>
-            </div> 
+            </div>
             <div class="row">
                 <div class="cell center">
                 </div>
@@ -745,7 +749,7 @@
                 <div class="cell">
                     <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
                 </div>
-            </div>         
+            </div>
         </div>
     </template>
 </div>

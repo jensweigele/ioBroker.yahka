@@ -9,8 +9,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-
-
 function isBridgeConfig(config) {
     if (config === undefined)
         return false;
@@ -114,7 +112,7 @@ function generateRandomUsername() {
         usr[i] = ('00' + (Math.floor((Math.random() * 256)).toString(16))).substr(-2);
     return usr.join(':');
 }
-var ioBroker_YahkaAdmin = (function () {
+var ioBroker_YahkaAdmin = /** @class */ (function () {
     function ioBroker_YahkaAdmin() {
     }
     ioBroker_YahkaAdmin.prototype.loadSettings = function (settingsObject, onChangeCallback) {
@@ -130,7 +128,7 @@ var ioBroker_YahkaAdmin = (function () {
     };
     return ioBroker_YahkaAdmin;
 }());
-var ioBroker_YahkaPageBuilder = (function () {
+var ioBroker_YahkaPageBuilder = /** @class */ (function () {
     function ioBroker_YahkaPageBuilder(_bridgeSettings, cameraConfigs, _changeCallback) {
         this._bridgeSettings = _bridgeSettings;
         this.cameraConfigs = cameraConfigs;
@@ -210,7 +208,7 @@ var ioBroker_YahkaPageBuilder = (function () {
     };
     return ioBroker_YahkaPageBuilder;
 }());
-var ConfigPageBuilder_Base = (function () {
+var ConfigPageBuilder_Base = /** @class */ (function () {
     function ConfigPageBuilder_Base(delegate) {
         this.delegate = delegate;
     }
@@ -223,7 +221,7 @@ var ConfigPageBuilder_Base = (function () {
     };
     return ConfigPageBuilder_Base;
 }());
-var ioBroker_DeviceListHandler = (function (_super) {
+var ioBroker_DeviceListHandler = /** @class */ (function (_super) {
     __extends(ioBroker_DeviceListHandler, _super);
     function ioBroker_DeviceListHandler(delegate) {
         var _this = _super.call(this, delegate) || this;
@@ -288,7 +286,7 @@ var ioBroker_DeviceListHandler = (function (_super) {
     };
     return ioBroker_DeviceListHandler;
 }(ConfigPageBuilder_Base));
-var ioBroker_ButtonHandler = (function (_super) {
+var ioBroker_ButtonHandler = /** @class */ (function (_super) {
     __extends(ioBroker_ButtonHandler, _super);
     function ioBroker_ButtonHandler(delegate, deviceListHandler) {
         var _this = _super.call(this, delegate) || this;
@@ -390,10 +388,66 @@ var ioBroker_ButtonHandler = (function (_super) {
                 }
             });
         }
+        if (elem = bridgePane.querySelector('#yahka_duplicate_device')) {
+            elem.addEventListener('click', function (e) {
+                e.preventDefault();
+                var dev = _this.delegate.selectedDeviceConfig;
+                if (isDeviceConfig(dev)) {
+                    var newCustomDevice = {
+                        configType: dev.configType,
+                        manufacturer: dev.manufacturer,
+                        model: dev.model,
+                        name: dev.name + " copy",
+                        serial: "",
+                        enabled: dev.enabled,
+                        category: dev.category,
+                        services: []
+                    };
+                    for (var _i = 0, _a = dev.services; _i < _a.length; _i++) {
+                        var service = _a[_i];
+                        var newService = {
+                            name: service.name,
+                            subType: service.subType,
+                            type: service.type,
+                            characteristics: []
+                        };
+                        for (var _b = 0, _c = service.characteristics; _b < _c.length; _b++) {
+                            var characteristic = _c[_b];
+                            newService.characteristics.push({
+                                name: characteristic.name,
+                                enabled: characteristic.enabled,
+                                inOutFunction: characteristic.inOutFunction,
+                                inOutParameters: characteristic.inOutParameters,
+                                conversionFunction: characteristic.conversionFunction,
+                                conversionParameters: characteristic.conversionParameters
+                            });
+                        }
+                        newCustomDevice.services.push(newService);
+                    }
+                    bridge.devices.push(newCustomDevice);
+                    _this.delegate.changeCallback();
+                    _this.delegate.setSelectedDeviceConfig(newCustomDevice, true);
+                    _this.deviceListHandler.buildDeviceList(bridgePane);
+                    _this.delegate.changeCallback();
+                } /* TODO else if (isIPCameraConfig(dev)) {
+                    let idx = this.delegate.cameraConfigs.indexOf(dev);
+                    if (idx > -1) {
+                        this.delegate.cameraConfigs.splice(idx, 1);
+                        this.delegate.changeCallback();
+                        this.delegate.setSelectedDeviceConfig(undefined, false);
+                        this.deviceListHandler.buildDeviceList(bridgePane);
+                        this.delegate.changeCallback();
+                    }
+                }
+                */
+            });
+        }
     };
     ioBroker_ButtonHandler.prototype.refreshBridgeButtons = function (parent) {
+        // let addDeviceButton    = <HTMLElement>document.querySelector('#yahka_add_device');
         var addServiceButton = parent.querySelector('#yahka_add_service');
         var removeDeviceButton = parent.querySelector('#yahka_remove_device');
+        var duplicateDeviceButton = parent.querySelector('#yahka_duplicate_device');
         var pageBuilder = this.delegate.getPageBuilderByConfig(this.delegate.selectedDeviceConfig);
         var addServiceEnabled = pageBuilder ? pageBuilder.addServiceAvailable : false;
         var removeDevEnabled = pageBuilder ? pageBuilder.removeDeviceAvailable : false;
@@ -405,10 +459,14 @@ var ioBroker_ButtonHandler = (function (_super) {
             removeDeviceButton.removeAttribute('disabled');
         else
             removeDeviceButton.setAttribute('disabled', '');
+        if (pageBuilder)
+            duplicateDeviceButton.removeAttribute('disabled');
+        else
+            duplicateDeviceButton.setAttribute('disabled', '');
     };
     return ioBroker_ButtonHandler;
 }(ConfigPageBuilder_Base));
-var ConfigPageBuilder_BridgeConfig = (function (_super) {
+var ConfigPageBuilder_BridgeConfig = /** @class */ (function (_super) {
     __extends(ConfigPageBuilder_BridgeConfig, _super);
     function ConfigPageBuilder_BridgeConfig(delegate) {
         var _this = _super.call(this, delegate) || this;
@@ -478,7 +536,7 @@ var ConfigPageBuilder_BridgeConfig = (function (_super) {
     };
     return ConfigPageBuilder_BridgeConfig;
 }(ConfigPageBuilder_Base));
-var ConfigPageBuilder_CustomDevice = (function (_super) {
+var ConfigPageBuilder_CustomDevice = /** @class */ (function (_super) {
     __extends(ConfigPageBuilder_CustomDevice, _super);
     function ConfigPageBuilder_CustomDevice(delegate) {
         var _this = _super.call(this, delegate) || this;
@@ -594,6 +652,7 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
         inputHelper('#service_type', 'type', true, this.handleServiceTypeChange.bind(this, serviceConfig, frameNode));
         inputHelper('#service_subtype', 'subType');
         this.buildCharacteristicTable(serviceConfig, frameNode);
+        // bind delete buttton
         frameNode.querySelector('#yakha_delete_service').addEventListener('click', function () {
             var idx = deviceConfig.services.indexOf(serviceConfig);
             if (idx > -1) {
@@ -660,6 +719,7 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
             var charRow = this.createCharacteristicRow(charDef, serviceConfig, charConfig);
             createdCharacteristics[charConfig.name] = [charConfig.name, charDef ? charDef.optional : false, charRow];
         }
+        // add undefined characteristics
         if (serviceDef) {
             for (var charName in serviceDef.characteristics) {
                 if (createdCharacteristics[charName] === undefined) {
@@ -788,7 +848,7 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
     };
     return ConfigPageBuilder_CustomDevice;
 }(ConfigPageBuilder_Base));
-var ConfigPageBuilder_IPCamera = (function (_super) {
+var ConfigPageBuilder_IPCamera = /** @class */ (function (_super) {
     __extends(ConfigPageBuilder_IPCamera, _super);
     function ConfigPageBuilder_IPCamera(delegate) {
         var _this = _super.call(this, delegate) || this;
