@@ -10,8 +10,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+/// <reference path="./typings/index.d.ts" />
 var yahka_homekit_bridge_1 = require("./yahka.homekit-bridge");
-var TIoBrokerInOutFunction_State = (function () {
+var TIoBrokerInOutFunction_State = /** @class */ (function () {
     function TIoBrokerInOutFunction_State(adapter, stateName, deferredTime) {
         if (deferredTime === void 0) { deferredTime = 0; }
         this.adapter = adapter;
@@ -99,7 +100,7 @@ var TIoBrokerInOutFunction_State = (function () {
     };
     return TIoBrokerInOutFunction_State;
 }());
-var TIoBrokerInOutFunction_State_OnlyACK = (function (_super) {
+var TIoBrokerInOutFunction_State_OnlyACK = /** @class */ (function (_super) {
     __extends(TIoBrokerInOutFunction_State_OnlyACK, _super);
     function TIoBrokerInOutFunction_State_OnlyACK() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -132,7 +133,7 @@ var TIoBrokerInOutFunction_State_OnlyACK = (function (_super) {
     };
     return TIoBrokerInOutFunction_State_OnlyACK;
 }(TIoBrokerInOutFunction_State));
-var TIoBrokerInOutFunction_State_OnlyNotACK = (function (_super) {
+var TIoBrokerInOutFunction_State_OnlyNotACK = /** @class */ (function (_super) {
     __extends(TIoBrokerInOutFunction_State_OnlyNotACK, _super);
     function TIoBrokerInOutFunction_State_OnlyNotACK() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -165,7 +166,7 @@ var TIoBrokerInOutFunction_State_OnlyNotACK = (function (_super) {
     };
     return TIoBrokerInOutFunction_State_OnlyNotACK;
 }(TIoBrokerInOutFunction_State));
-var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = (function (_super) {
+var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = /** @class */ (function (_super) {
     __extends(TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition, _super);
     function TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition(adapter, stateName, workingItem) {
         var _this = _super.call(this, adapter, stateName, 0) || this;
@@ -226,6 +227,7 @@ var inOutFactory = {
         var stateName = parameters;
         return new TIoBrokerInOutFunction_State(adapter, stateName);
     },
+    // should be named Defered=>Deferred
     "ioBroker.State.Defered": function (adapter, parameters) {
         if (typeof parameters !== "string")
             return undefined;
@@ -490,6 +492,33 @@ var conversionFactory = {
                 var ioBrokerMax = getParameter("iobroker.max");
                 var newValue = (num / homeKitMax) * ioBrokerMax;
                 adapter.log.debug('scaleFloat: converting value to ioBroker: ' + value + ' to ' + newValue);
+                return newValue;
+            }
+        };
+    },
+    "scaleBooleanHK": function (adapter, parameters) {
+        var paramArray = JSON.parse(parameters);
+        function getParameter(name) {
+            if (paramArray === undefined)
+                return undefined;
+            var value = paramArray[name];
+            if (value === undefined)
+                return undefined;
+            if (typeof value === 'number')
+                return value;
+            else
+                return parseInt(value);
+        }
+        return {
+            toHomeKit: function (value) {
+                var newValue = value ? true : false;
+                adapter.log.debug('scaleBooleanHK: converting value to homekit: ' + value + ' to ' + newValue);
+                return newValue;
+            },
+            toIOBroker: function (value) {
+                var homeKitMax = getParameter("iobroker.max");
+                var newValue = value ? homeKitMax : 0;
+                adapter.log.debug('scaleBooleanHK: converting value to ioBroker: ' + value + ' to ' + newValue);
                 return newValue;
             }
         };
