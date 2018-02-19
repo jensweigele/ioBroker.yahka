@@ -6,7 +6,7 @@
             "0.7.1": {
                 "en": "Fixed the ID select dialog in Admin 2.0.9. restructured repo to allow install via git-url",
                 "de": "Der ID-Auswahldialog in Admin 2.0.9 wurde korrigiert. Repository umstrukturiert um Installation via git-url zu ermöglichen"
-            },            
+            },
             "0.7.0": {
                 "en": "Fixed the ID select dialog in Admin3, added new services and fixed some other bugs",
                 "de": "Der ID-Auswahldialog in Admin3 wurde korrigiert, neue Dienste hinzugefügt und kleinere Fehler behoben",
@@ -104,6 +104,7 @@
                 "inverse",
                 "scaleInt",
                 "scaleFloat",
+                "scaleBooleanHK",
                 "HomematicDirectionToHomekitPositionState",
                 "HomematicControlModeToHomekitHeathingCoolingState"
             ]

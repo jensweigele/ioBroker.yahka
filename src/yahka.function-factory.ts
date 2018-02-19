@@ -528,6 +528,36 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
             }
         };
     },    
+    
+    "scaleBooleanHK": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
+        var paramArray = JSON.parse(parameters);
+        function getParameter(name: string): number {
+            if (paramArray === undefined)
+                return undefined;
+            let value = paramArray[name];
+            if (value === undefined)
+                return undefined;
+            if (typeof value === 'number')
+                return value;
+            else
+                return parseInt(value);
+        }
+
+        return {
+            toHomeKit: function (value) {
+                let newValue:boolean = value ? true : false;
+                adapter.log.debug('scaleBooleanHK: converting value to homekit: ' + value + ' to ' + newValue);
+                return newValue;
+            },
+            toIOBroker: function (value) {
+                let homeKitMax = getParameter("iobroker.max");
+                let newValue = value ? homeKitMax : 0;
+                adapter.log.debug('scaleBooleanHK: converting value to ioBroker: ' + value + ' to ' + newValue);
+                return newValue;
+            }
+        };
+    },
+        
     "inverse": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
         function castToNumber(value: any): number {
             if (value === undefined)
