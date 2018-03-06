@@ -14,9 +14,11 @@ For details on how to install and configure this adapter, please see the [Wiki](
 
 ## Changelog
 
+### 0.8.0
+  (mdietz666) scaleInt and scaleFloat now supports min-values (this allows mapping from e.g. -90 to 90 to 0 to 180)<br>
 ### 0.7.1
-  (jw) fixed a bug where state selection with admin 2.0.9 did not work anymore
-  (jw) restructured repository to support install via url
+  (jw) fixed a bug where state selection with admin 2.0.9 did not work anymore<br>
+  (jw) restructured repository to support install via url<br>
 
 ### 0.7.0 
   (bluefox) Fixed the ID select dialog in Admin3<br>
