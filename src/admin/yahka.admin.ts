@@ -141,6 +141,7 @@ interface IConfigPageBuilder {
     styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean;
     readonly addServiceAvailable: boolean;
     readonly removeDeviceAvailable: boolean;
+    readonly dupliacteDeviceAvailable: boolean;
 
 }
 
@@ -470,6 +471,29 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
                 }
             });
         }
+
+        if (elem = <HTMLElement>bridgePane.querySelector('#yahka_duplicate_device')) {
+            elem.addEventListener('click', (e) => {
+                e.preventDefault();
+                let dev = this.delegate.selectedDeviceConfig;
+                let copyOfDevice = $.extend(true, {}, dev)
+                copyOfDevice.name = copyOfDevice.name + " copy"
+                if (isDeviceConfig(copyOfDevice)) {
+                    copyOfDevice.serial = "";
+                    bridge.devices.push(copyOfDevice);
+                } else if (isIPCameraConfig(copyOfDevice)) {
+                    copyOfDevice.serial = "";
+                    this.delegate.cameraConfigs.push(copyOfDevice);
+                } else {
+                    return 
+                }
+                this.delegate.setSelectedDeviceConfig(copyOfDevice, true);
+                this.deviceListHandler.buildDeviceList(bridgePane);
+                this.delegate.changeCallback();                 
+            });
+        }
+
+
     }
 
 
@@ -477,10 +501,12 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
         // let addDeviceButton    = <HTMLElement>document.querySelector('#yahka_add_device');
         let addServiceButton = <HTMLElement>parent.querySelector('#yahka_add_service');
         let removeDeviceButton = <HTMLElement>parent.querySelector('#yahka_remove_device');
-
+        let duplicateDeviceButton = <HTMLElement>parent.querySelector('#yahka_duplicate_device');
+        
         let pageBuilder = this.delegate.getPageBuilderByConfig(this.delegate.selectedDeviceConfig);
         let addServiceEnabled = pageBuilder ? pageBuilder.addServiceAvailable : false;
         let removeDevEnabled = pageBuilder ? pageBuilder.removeDeviceAvailable : false;
+        let duplicateDeviceEnabled = pageBuilder ? pageBuilder.dupliacteDeviceAvailable : false;
 
         if (addServiceEnabled)
             addServiceButton.removeAttribute('disabled');
@@ -491,6 +517,11 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
             removeDeviceButton.removeAttribute('disabled');
         else
             removeDeviceButton.setAttribute('disabled', '');
+
+        if (duplicateDeviceEnabled)
+            duplicateDeviceButton.removeAttribute('disabled');
+        else
+            duplicateDeviceButton.setAttribute('disabled', '');
     }
 }
 
@@ -499,6 +530,7 @@ type TValidatorFunction = () => boolean;
 class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base implements IConfigPageBuilder {
     public addServiceAvailable: boolean = false;
     public removeDeviceAvailable: boolean = false;
+    public dupliacteDeviceAvailable: boolean = false;
     bridgeConfigPanelTemplate: HTMLTemplateElement;
     constructor(protected delegate: IConfigPageBuilderDelegate) {
         super(delegate);
@@ -583,6 +615,7 @@ interface IHAPServiceDefinition {
 class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements IConfigPageBuilder {
     public addServiceAvailable: boolean = true;
     public removeDeviceAvailable: boolean = true;
+    public dupliacteDeviceAvailable: boolean = true;
     deviceInfoPanelTemplate: HTMLTemplateElement;
     deviceServicePanelTemplate: HTMLTemplateElement;
     characteristicRow: HTMLTemplateElement;
@@ -956,7 +989,7 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
 class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConfigPageBuilder {
     public addServiceAvailable: boolean = false;
     public removeDeviceAvailable: boolean = true;
-
+    public dupliacteDeviceAvailable: boolean = true;
     configPanelTemplate: HTMLTemplateElement;
     constructor(protected delegate: IConfigPageBuilderDelegate) {
         super(delegate);

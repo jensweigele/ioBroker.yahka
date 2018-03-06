@@ -390,13 +390,37 @@ var ioBroker_ButtonHandler = (function (_super) {
                 }
             });
         }
+        if (elem = bridgePane.querySelector('#yahka_duplicate_device')) {
+            elem.addEventListener('click', function (e) {
+                e.preventDefault();
+                var dev = _this.delegate.selectedDeviceConfig;
+                var copyOfDevice = $.extend(true, {}, dev);
+                copyOfDevice.name = copyOfDevice.name + " copy";
+                if (isDeviceConfig(copyOfDevice)) {
+                    copyOfDevice.serial = "";
+                    bridge.devices.push(copyOfDevice);
+                }
+                else if (isIPCameraConfig(copyOfDevice)) {
+                    copyOfDevice.serial = "";
+                    _this.delegate.cameraConfigs.push(copyOfDevice);
+                }
+                else {
+                    return;
+                }
+                _this.delegate.setSelectedDeviceConfig(copyOfDevice, true);
+                _this.deviceListHandler.buildDeviceList(bridgePane);
+                _this.delegate.changeCallback();
+            });
+        }
     };
     ioBroker_ButtonHandler.prototype.refreshBridgeButtons = function (parent) {
         var addServiceButton = parent.querySelector('#yahka_add_service');
         var removeDeviceButton = parent.querySelector('#yahka_remove_device');
+        var duplicateDeviceButton = parent.querySelector('#yahka_duplicate_device');
         var pageBuilder = this.delegate.getPageBuilderByConfig(this.delegate.selectedDeviceConfig);
         var addServiceEnabled = pageBuilder ? pageBuilder.addServiceAvailable : false;
         var removeDevEnabled = pageBuilder ? pageBuilder.removeDeviceAvailable : false;
+        var duplicateDeviceEnabled = pageBuilder ? pageBuilder.dupliacteDeviceAvailable : false;
         if (addServiceEnabled)
             addServiceButton.removeAttribute('disabled');
         else
@@ -405,6 +429,10 @@ var ioBroker_ButtonHandler = (function (_super) {
             removeDeviceButton.removeAttribute('disabled');
         else
             removeDeviceButton.setAttribute('disabled', '');
+        if (duplicateDeviceEnabled)
+            duplicateDeviceButton.removeAttribute('disabled');
+        else
+            duplicateDeviceButton.setAttribute('disabled', '');
     };
     return ioBroker_ButtonHandler;
 }(ConfigPageBuilder_Base));
@@ -415,6 +443,7 @@ var ConfigPageBuilder_BridgeConfig = (function (_super) {
         _this.delegate = delegate;
         _this.addServiceAvailable = false;
         _this.removeDeviceAvailable = false;
+        _this.dupliacteDeviceAvailable = false;
         _this.bridgeConfigPanelTemplate = document.querySelector('#yahka_bridgeconfig_template');
         return _this;
     }
@@ -485,6 +514,7 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
         _this.delegate = delegate;
         _this.addServiceAvailable = true;
         _this.removeDeviceAvailable = true;
+        _this.dupliacteDeviceAvailable = true;
         _this.deviceInfoPanelTemplate = document.querySelector('#yahka_device_info_panel_template');
         _this.deviceServicePanelTemplate = document.querySelector('#yahka_device_service_panel');
         _this.characteristicRow = document.querySelector('#yahka_characteristic_row');
@@ -795,6 +825,7 @@ var ConfigPageBuilder_IPCamera = (function (_super) {
         _this.delegate = delegate;
         _this.addServiceAvailable = false;
         _this.removeDeviceAvailable = true;
+        _this.dupliacteDeviceAvailable = true;
         _this.configPanelTemplate = document.querySelector('#yahka_cameraConfig_template');
         return _this;
     }

@@ -19,6 +19,7 @@ systemDictionary = {
     "Verbose Logging:":     {"en": "Verbose Logging:",      "de": "Verbose Logging:",       "ru": "Отладочная информация:"},
     "Add Device":           {"en": "Add Device",            "de": "Gerät hinzufügen",       "ru": "Добавить устройство"},
     "Remove Device":        {"en": "Remove Device",         "de": "Gerät entfernen",        "ru": "Удалить устройство"},
+    "Duplicate Device":     {"en": "Duplicate Device",      "de": "Gerät duplizieren",      "ru": ""},
     "Add Service":          {"en": "Add Service",           "de": "Service hinzufügen",     "ru": "Добавить сервис"},
     "Device Properties":    {"en": "Device Properties",     "de": "Geräteeigenschaften",    "ru": "Свойства устройства"},
     "Name:":                {"en": "Name:",                 "de": "Name:",                  "ru": "Имя устройства:"},
