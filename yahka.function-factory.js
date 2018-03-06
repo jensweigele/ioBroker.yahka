@@ -416,12 +416,13 @@ var conversionFactory = {
     },
     "scaleInt": function (adapter, parameters) {
         var paramArray = JSON.parse(parameters);
-        function getParameter(name) {
+        function getParameter(name, defaultValue) {
+            if (defaultValue === void 0) { defaultValue = undefined; }
             if (paramArray === undefined)
-                return undefined;
+                return defaultValue;
             var value = paramArray[name];
             if (value === undefined)
-                return undefined;
+                return defaultValue;
             if (typeof value === 'number')
                 return value;
             else
@@ -436,7 +437,9 @@ var conversionFactory = {
                     num = value;
                 var homeKitMax = getParameter("homekit.max");
                 var ioBrokerMax = getParameter("iobroker.max");
-                var newValue = Math.round((num / ioBrokerMax) * homeKitMax);
+                var homeKitMin = getParameter("homekit.min", 0);
+                var ioBrokerMin = getParameter("iobroker.min", 0);
+                var newValue = Math.round(((num - ioBrokerMin) / (ioBrokerMax - ioBrokerMin)) * (homeKitMax - homeKitMin));
                 adapter.log.debug('scaleInt: converting value to homekit: ' + value + ' to ' + newValue);
                 return newValue;
             },
@@ -448,7 +451,9 @@ var conversionFactory = {
                     num = value;
                 var homeKitMax = getParameter("homekit.max");
                 var ioBrokerMax = getParameter("iobroker.max");
-                var newValue = Math.round((num / homeKitMax) * ioBrokerMax);
+                var homeKitMin = getParameter("homekit.min", 0);
+                var ioBrokerMin = getParameter("iobroker.min", 0);
+                var newValue = Math.round(((num - homeKitMin) / (homeKitMax - homeKitMin)) * (ioBrokerMax - ioBrokerMin));
                 adapter.log.debug('scaleInt: converting value to ioBroker: ' + value + ' to ' + newValue);
                 return newValue;
             }
@@ -456,12 +461,13 @@ var conversionFactory = {
     },
     "scaleFloat": function (adapter, parameters) {
         var paramArray = JSON.parse(parameters);
-        function getParameter(name) {
+        function getParameter(name, defaultValue) {
+            if (defaultValue === void 0) { defaultValue = undefined; }
             if (paramArray === undefined)
-                return undefined;
+                return defaultValue;
             var value = paramArray[name];
             if (value === undefined)
-                return undefined;
+                return defaultValue;
             if (typeof value === 'number')
                 return value;
             else
@@ -476,7 +482,9 @@ var conversionFactory = {
                     num = value;
                 var homeKitMax = getParameter("homekit.max");
                 var ioBrokerMax = getParameter("iobroker.max");
-                var newValue = (num / ioBrokerMax) * homeKitMax;
+                var homeKitMin = getParameter("homekit.min", 0);
+                var ioBrokerMin = getParameter("iobroker.min", 0);
+                var newValue = ((num - ioBrokerMin) / (ioBrokerMax - ioBrokerMin)) * (homeKitMax - homeKitMin);
                 adapter.log.debug('scaleFloat: converting value to homekit: ' + value + ' to ' + newValue);
                 return newValue;
             },
@@ -488,7 +496,9 @@ var conversionFactory = {
                     num = value;
                 var homeKitMax = getParameter("homekit.max");
                 var ioBrokerMax = getParameter("iobroker.max");
-                var newValue = (num / homeKitMax) * ioBrokerMax;
+                var homeKitMin = getParameter("homekit.min", 0);
+                var ioBrokerMin = getParameter("iobroker.min", 0);
+                var newValue = ((num - homeKitMin) / (homeKitMax - homeKitMin)) * (ioBrokerMax - ioBrokerMin);
                 adapter.log.debug('scaleFloat: converting value to ioBroker: ' + value + ' to ' + newValue);
                 return newValue;
             }
