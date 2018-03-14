@@ -10,10 +10,10 @@ platform:
 clone_folder: 'c:\projects\%APPVEYOR_PROJECT_NAME%'
 install:
   - ps: 'Install-Product node $env:nodejs_version $env:platform'
-  - appveyor DownloadFile https://www.samuelattard.com/files/bonjourcore2.msi
+  - appveyor DownloadFile https://github.com/Apollon77/SupportingFiles/raw/master/appveyor/bonjour/bonjourcore2.msi
   - msiexec /i bonjourcore2.msi /qn
   - del bonjourcore2.msi
-  - appveyor DownloadFile https://www.samuelattard.com/files/bonjoursdksetup.exe
+  - appveyor DownloadFile https://github.com/Apollon77/SupportingFiles/raw/master/appveyor/bonjour/bonjoursdksetup.exe
   - bonjoursdksetup.exe /quiet
   - del bonjoursdksetup.exe
   - set BONJOUR_SDK_HOME=C:\Program Files\Bonjour SDK
