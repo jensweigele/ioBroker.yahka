@@ -4,19 +4,23 @@ environment:
     - nodejs_version: '4'
     - nodejs_version: '6'
     - nodejs_version: '8'
+    - nodejs_version: '10'
 platform:
   - x86
   - x64
 clone_folder: 'c:\projects\%APPVEYOR_PROJECT_NAME%'
 install:
   - ps: 'Install-Product node $env:nodejs_version $env:platform'
-  - appveyor DownloadFile https://github.com/Apollon77/SupportingFiles/raw/master/appveyor/bonjour/bonjourcore2.msi
+  - ps: '$NpmVersion = (npm -v).Substring(0,1)'
+  - ps: 'if($NpmVersion -eq 5) { npm install -g npm@5 }'
+  - ps: npm --version
+  - 'appveyor DownloadFile https://github.com/Apollon77/SupportingFiles/raw/master/appveyor/bonjour/bonjourcore2.msi'
   - msiexec /i bonjourcore2.msi /qn
   - del bonjourcore2.msi
-  - appveyor DownloadFile https://github.com/Apollon77/SupportingFiles/raw/master/appveyor/bonjour/bonjoursdksetup.exe
+  - 'appveyor DownloadFile https://github.com/Apollon77/SupportingFiles/raw/master/appveyor/bonjour/bonjoursdksetup.exe'
   - bonjoursdksetup.exe /quiet
   - del bonjoursdksetup.exe
-  - set BONJOUR_SDK_HOME=C:\Program Files\Bonjour SDK
+  - 'set BONJOUR_SDK_HOME=C:\Program Files\Bonjour SDK'
   - npm install
   - npm install winston@2.3.1
   - 'npm install https://github.com/ioBroker/ioBroker.js-controller/tarball/master --production'
