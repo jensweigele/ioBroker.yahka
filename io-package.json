@@ -1,8 +1,12 @@
 {
     "common": {
         "name": "yahka",
-        "version": "0.7.1",
+        "version": "0.8.0",
         "news": {
+            "0.8.0": {
+                "en": "ScaleInt and ScaleFloat now support a min-parameter to improve mapping of values. Added 'Duplicate Device' to Admin interface.",
+                "de": "ScaleInt und ScaleFloat untersützen nun die Angabe eines Min-Parameters. 'Gerät duplizieren' zu Admin Oberfläche hinzugefügt."
+            },            
             "0.7.1": {
                 "en": "Fixed the ID select dialog in Admin 2.0.9. restructured repo to allow install via git-url",
                 "de": "Der ID-Auswahldialog in Admin 2.0.9 wurde korrigiert. Repository umstrukturiert um Installation via git-url zu ermöglichen"
