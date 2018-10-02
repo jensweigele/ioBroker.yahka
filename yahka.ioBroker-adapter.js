@@ -71,9 +71,6 @@ var TIOBrokerAdapter = (function () {
         if (this.verboseHAPLogging)
             this.adapter.log.debug(message);
     };
-    TIOBrokerAdapter.prototype.handleObjectChange = function (id, obj) {
-        this.adapter.log.info('objectChange ' + id + ' ' + JSON.stringify(obj));
-    };
     TIOBrokerAdapter.prototype.handleState = function (id, state) {
         var notifyArray = this.stateToEventMap.get(id);
         if (!notifyArray) {
