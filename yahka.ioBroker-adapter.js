@@ -18,7 +18,6 @@ var TIOBrokerAdapter = (function () {
         this.devices = [];
         this.verboseHAPLogging = false;
         adapter.on('ready', this.adapterReady.bind(this));
-        adapter.on('objectChange', this.handleObjectChange.bind(this));
         adapter.on('stateChange', this.handleState.bind(this));
         adapter.on('message', this.handleMessage.bind(this));
         adapter.on('unload', this.handleUnload.bind(this));
