@@ -40,11 +40,11 @@ module.exports = function(grunt) {
                 command: './iobroker upload yahka'
             },
             NPMPublish: {
-                cwd: 'build',
+                cwd: '',
                 command: 'npm publish'
             },
             NPMBeta: {
-                cwd: 'build',
+                cwd: '',
                 command: 'npm publish --tag beta'
             }
         }
