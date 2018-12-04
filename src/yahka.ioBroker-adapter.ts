@@ -28,7 +28,6 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
 
     constructor(private adapter:ioBroker.IAdapter, private controllerPath) {
         adapter.on('ready', this.adapterReady.bind(this));
-        adapter.on('objectChange', this.handleObjectChange.bind(this));
         adapter.on('stateChange', this.handleState.bind(this));
         adapter.on('message', this.handleMessage.bind(this));
         adapter.on('unload', this.handleUnload.bind(this));
@@ -87,11 +86,6 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
     private handleHAPLogEvent(message) {
         if (this.verboseHAPLogging)
             this.adapter.log.debug(message);
-    }
-
-    private handleObjectChange(id:string, obj:ioBroker.IObject) {
-        // Warning, obj can be null if it was deleted
-        this.adapter.log.info('objectChange ' + id + ' ' + JSON.stringify(obj));
     }
 
     private handleState(id:string, state:ioBroker.IState) {

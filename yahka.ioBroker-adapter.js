@@ -18,7 +18,6 @@ var TIOBrokerAdapter = (function () {
         this.devices = [];
         this.verboseHAPLogging = false;
         adapter.on('ready', this.adapterReady.bind(this));
-        adapter.on('objectChange', this.handleObjectChange.bind(this));
         adapter.on('stateChange', this.handleState.bind(this));
         adapter.on('message', this.handleMessage.bind(this));
         adapter.on('unload', this.handleUnload.bind(this));
@@ -70,9 +69,6 @@ var TIOBrokerAdapter = (function () {
     TIOBrokerAdapter.prototype.handleHAPLogEvent = function (message) {
         if (this.verboseHAPLogging)
             this.adapter.log.debug(message);
-    };
-    TIOBrokerAdapter.prototype.handleObjectChange = function (id, obj) {
-        this.adapter.log.info('objectChange ' + id + ' ' + JSON.stringify(obj));
     };
     TIOBrokerAdapter.prototype.handleState = function (id, state) {
         var notifyArray = this.stateToEventMap.get(id);
