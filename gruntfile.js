@@ -3,6 +3,7 @@
 module.exports = function(grunt) {
 
     var srcDir = __dirname + '/';
+    var destinationDir = '../../iobroker/'
     var pkg = grunt.file.readJSON('package.json');
 
     // check arguments
@@ -17,7 +18,7 @@ module.exports = function(grunt) {
             deployTestInstance: {
                 files: [
                     // copy files to build directory
-                    { expand: true, cwd: '', src: ['**', '!src/**', '!node_modules/**'], dest: '../ioBroker/node_modules/iobroker.yahka/' }
+                    { expand: true, cwd: '', src: ['**', '!src/**', '!node_modules/**'], dest: destinationDir + 'node_modules/iobroker.yahka/' }
                 ]
 
             }
@@ -35,8 +36,8 @@ module.exports = function(grunt) {
 
         exec: {
             refreshIOBroker: {
-                cwd: '../iobroker/',
-                command: 'iobroker.bat upload yahka'
+                cwd: destinationDir,
+                command: './iobroker upload yahka'
             },
             NPMPublish: {
                 cwd: 'build',

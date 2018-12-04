@@ -33,7 +33,6 @@
     "util": "^0.10.3",
     "dev-null": "^0.1.1",
     "ip": "^1.1.5"
-
   },
   "devDependencies": {
     "@types/node": "^7.0.18",
