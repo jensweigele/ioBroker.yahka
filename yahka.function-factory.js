@@ -280,6 +280,12 @@ var conversionFactory = {
             toIOBroker: function (value) { return value; }
         };
     },
+    "boolean100": function (adapter, parameters) {
+        return {
+            toHomeKit: function (value) { return value; },
+            toIOBroker: function (value) { return value; }
+        };
+    },
     "HomematicDirectionToHomekitPositionState": function (adapter, parameters) {
         return {
             toHomeKit: function (value) {
