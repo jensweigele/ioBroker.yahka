@@ -1,8 +1,12 @@
 {
     "common": {
         "name": "yahka",
-        "version": "0.8.1",
+        "version": "0.8.2",
         "news": {
+            "0.8.2": {
+                "en": "Added further conversion function (0_false/100_true.",
+                "de": "Weitere Konvertierungsfunktion hinzugefügt (0_false/100_true)"
+            },
             "0.8.1": {
                 "en": "ScaleInt and ScaleFloat now support a min-parameter to improve mapping of values. Added 'Duplicate Device' to Admin interface.",
                 "de": "ScaleInt und ScaleFloat untersützen nun die Angabe eines Min-Parameters. 'Gerät duplizieren' zu Admin Oberfläche hinzugefügt."
