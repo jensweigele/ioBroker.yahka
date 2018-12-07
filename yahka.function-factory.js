@@ -282,7 +282,21 @@ var conversionFactory = {
     },
     "boolean100": function (adapter, parameters) {
         return {
-            toHomeKit: function (value) { return value; },
+            toHomeKit: function (value) {
+                var num = undefined;
+                if (typeof value !== 'number')
+                    num = parseInt(value);
+                else
+                    num = value;
+                switch (num) {
+                    case 0:
+                        adapter.log.debug('boolean100.toHomeKit, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to true');
+                        return true;
+                    case 100:
+                        adapter.log.debug('boolean100.toHomeKit, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to false');
+                        return false;
+                }
+                },
             toIOBroker: function (value) { return value; }
         };
     },
