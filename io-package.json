@@ -113,7 +113,8 @@
                 "scaleInt",
                 "scaleFloat",
                 "HomematicDirectionToHomekitPositionState",
-                "HomematicControlModeToHomekitHeathingCoolingState"
+                "HomematicControlModeToHomekitHeathingCoolingState",
+                "boolean100"
             ]
         },
         {
