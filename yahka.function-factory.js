@@ -316,8 +316,7 @@ var conversionFactory = {
                 }
                 },
             }
-        };
-    },
+        },
     "HomematicDirectionToHomekitPositionState": function (adapter, parameters) {
         return {
             toHomeKit: function (value) {
