@@ -305,6 +305,7 @@ var conversionFactory = {
                     num = (value == 'true');
                 else
                     num = value;
+                adapter.log.info("THE BOOLEAN100 VALUE IS " + JSON.stringify(num)+ '[' + (typeof num) + ']');
                 return (num ? 100 : 0)
                 },
             }
