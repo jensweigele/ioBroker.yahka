@@ -283,6 +283,7 @@ var conversionFactory = {
     "boolean100": function (adapter, parameters) {
         return {
             toIOBroker: function (value) {
+                adapter.log.info("THE BOOLEAN100 VALUE IS " + JSON.stringify(value));
                 var num = undefined;
                 if (typeof value !== 'number')
                     num = parseInt(value);
@@ -298,12 +299,10 @@ var conversionFactory = {
                 }
                 },
             toHomeKit: function (value) {
+                adapter.log.info("THE BOOLEAN100 VALUE IS " + JSON.stringify(value));
                 var num = undefined;
                 if (typeof value !== 'boolean')
-                    if (value === "true")
-                        num = true;
-                    else
-                        num = false;
+                    num = (value == 'true');
                 else
                     num = value;
                 switch (num) {
