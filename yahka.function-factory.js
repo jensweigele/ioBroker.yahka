@@ -305,14 +305,7 @@ var conversionFactory = {
                     num = (value == 'true');
                 else
                     num = value;
-                switch (num) {
-                    case false:
-                        adapter.log.debug('boolean100.toHomeKit, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to 0');
-                        return 0;
-                    case true:
-                        adapter.log.debug('boolean100.toHomeKit, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to 100');
-                        return 100;
-                }
+                return (num ? 100 : 0)
                 },
             }
         },
