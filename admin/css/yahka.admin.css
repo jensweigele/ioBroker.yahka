@@ -121,10 +121,9 @@
 /* fix: show dropdown arrow for metro ui control */
 
 .input-control input,
-.input-control select,
-.input-control textarea {
-    -moz-appearance: button-arrow-down;
-    -webkit-appearance: button-arrow-down;
+.input-control select {
+    -webkit-appearance: menulist;
+    -moz-appearance: menulist;
     /*appearance: button-arrow-down;*/
 }
 
