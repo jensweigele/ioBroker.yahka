@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var debug = require("debug");
-debug.enable('*');
+debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 var util = require("util");
 var HAP = require("hap-nodejs");
 exports.HAPService = HAP.Service;
@@ -168,4 +168,14 @@ function initHAP(storagePath, HAPdebugLogMethod) {
     };
 }
 exports.initHAP = initHAP;
+function deinitHAP() {
+    if (!hapInited) {
+        return;
+    }
+    debug.disable();
+    debug.log = function () {
+    };
+    hapInited = false;
+}
+exports.deinitHAP = deinitHAP;
 //# sourceMappingURL=yahka.homekit-bridge.js.map

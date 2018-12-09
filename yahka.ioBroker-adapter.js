@@ -86,7 +86,9 @@ var TIOBrokerAdapter = (function () {
     };
     TIOBrokerAdapter.prototype.handleUnload = function (callback) {
         try {
-            this.adapter.log.info('cleaned everything up...');
+            this.adapter.log.info('cleaning up ...');
+            hkBridge.deinitHAP();
+            this.adapter.log.info('cleaned up ...');
             callback();
         }
         catch (e) {

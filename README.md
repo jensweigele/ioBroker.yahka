@@ -14,6 +14,9 @@ For details on how to install and configure this adapter, please see the [Wiki](
 
 ## Changelog
 
+### 0.8.2
+  (jw) Removed a bug which flooded logging when starting/stopping the adapter which led to excessive memory consumption<br>
+
 ### 0.8.1
   (jw) updated dependencies<br>
   (jw) change default name of new instances<br>

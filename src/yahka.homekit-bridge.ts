@@ -1,6 +1,6 @@
 /// <reference path="./typings/index.d.ts" />
 import debug = require('debug');
-debug.enable(<any>'*');
+debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 import util = require('util');
 import HAP = require('hap-nodejs');
 import { Configuration } from './yahka.configuration';
@@ -229,4 +229,14 @@ export function initHAP(storagePath:string, HAPdebugLogMethod:Function) {
         HAPdebugLogMethod(util.format.apply(this, arguments));
     };
 
+}
+
+export function deinitHAP() {
+    if (!hapInited) {
+        return;
+    }
+    debug.disable()
+    debug.log = function () {
+    };
+    hapInited = false;
 }

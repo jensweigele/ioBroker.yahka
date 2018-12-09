@@ -108,7 +108,9 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
 
     private handleUnload(callback) {
         try {
-            this.adapter.log.info('cleaned everything up...');
+            this.adapter.log.info('cleaning up ...');
+            hkBridge.deinitHAP();
+            this.adapter.log.info('cleaned up ...');
             callback();
         } catch (e) {
             callback();
