@@ -439,7 +439,7 @@ var conversionFactory = {
                 var ioBrokerMax = getParameter("iobroker.max");
                 var homeKitMin = getParameter("homekit.min", 0);
                 var ioBrokerMin = getParameter("iobroker.min", 0);
-                var newValue = Math.round(((num - ioBrokerMin) / (ioBrokerMax - ioBrokerMin)) * (homeKitMax - homeKitMin));
+                var newValue = Math.round(ioBrokerMin + ((ioBrokerMax - ioBrokerMin) / (homeKitMax - homeKitMin)) * (num - homeKitMin));
                 adapter.log.debug('scaleInt: converting value to homekit: ' + value + ' to ' + newValue);
                 return newValue;
             },
@@ -453,7 +453,7 @@ var conversionFactory = {
                 var ioBrokerMax = getParameter("iobroker.max");
                 var homeKitMin = getParameter("homekit.min", 0);
                 var ioBrokerMin = getParameter("iobroker.min", 0);
-                var newValue = Math.round(((num - homeKitMin) / (homeKitMax - homeKitMin)) * (ioBrokerMax - ioBrokerMin));
+                var newValue = Math.round(ioBrokerMin + ((ioBrokerMax - ioBrokerMin) / (homeKitMax - homeKitMin)) * (num - homeKitMin));
                 adapter.log.debug('scaleInt: converting value to ioBroker: ' + value + ' to ' + newValue);
                 return newValue;
             }
@@ -484,7 +484,7 @@ var conversionFactory = {
                 var ioBrokerMax = getParameter("iobroker.max");
                 var homeKitMin = getParameter("homekit.min", 0);
                 var ioBrokerMin = getParameter("iobroker.min", 0);
-                var newValue = ((num - ioBrokerMin) / (ioBrokerMax - ioBrokerMin)) * (homeKitMax - homeKitMin);
+                var newValue = ioBrokerMin + ((ioBrokerMax - ioBrokerMin) / (homeKitMax - homeKitMin)) * (num - homeKitMin);
                 adapter.log.debug('scaleFloat: converting value to homekit: ' + value + ' to ' + newValue);
                 return newValue;
             },
@@ -498,7 +498,7 @@ var conversionFactory = {
                 var ioBrokerMax = getParameter("iobroker.max");
                 var homeKitMin = getParameter("homekit.min", 0);
                 var ioBrokerMin = getParameter("iobroker.min", 0);
-                var newValue = ((num - homeKitMin) / (homeKitMax - homeKitMin)) * (ioBrokerMax - ioBrokerMin);
+                var newValue = ioBrokerMin + ((ioBrokerMax - ioBrokerMin) / (homeKitMax - homeKitMin)) * (num - homeKitMin);
                 adapter.log.debug('scaleFloat: converting value to ioBroker: ' + value + ' to ' + newValue);
                 return newValue;
             }
