@@ -158,6 +158,11 @@ interface IConfigPageBuilderDelegate {
     getPageBuilderByConfig(deviceConfig: hkBridge.Configuration.IBaseConfigNode): IConfigPageBuilder;
 }
 
+interface IParameterEditor {
+    refreshAndShow(inContainer: HTMLElement, withValue: string);
+}
+
+type IParameterEditorDelegate = (newValue: string) => void;
 
 class ioBroker_YahkaAdmin {
     settings: any;
@@ -852,6 +857,19 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
         }
     }
 
+    getParameterEditor(functionName: string, valueChangeCallback: IParameterEditorDelegate): IParameterEditor {
+        if (!functionName) 
+            return new ParameterEditor_Null(valueChangeCallback);
+        return new ParameterEditor_SingleState(valueChangeCallback);
+    }
+
+    updateParameterEditor(functionName: string, parameterContainer: HTMLElement, parameterValue: string, parameterChangeCallback: IParameterEditorDelegate) {
+        let editor = this.getParameterEditor(functionName, parameterChangeCallback);
+        if (editor == undefined)
+            return;
+        editor.refreshAndShow(parameterContainer, parameterValue);
+    }
+
     createCharacteristicRow(charDef: IHAPCharacteristicDefintion, serviceConfig: hkBridge.Configuration.IServiceConfig, charConfig: hkBridge.Configuration.ICharacteristicConfig): DocumentFragment {
         let name = charConfig ? charConfig.name : charDef.name;
         let enabled = charConfig ? charConfig.enabled : false;
@@ -886,10 +904,47 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
             input.addEventListener('input', this.handleCharacteristicInputChange.bind(this, serviceConfig, name, configName));
         };
 
-        inputHelper('#characteristic_inoutfunction', 'inOutFunction', inoutFunctions);
-        inputHelper('#characteristic_inoutparams', 'inOutParameters', undefined);
-        inputHelper('#characteristic_conversionfunction', 'conversionFunction', convFunctions);
-        inputHelper('#characteristic_conversionparams', 'conversionParameters', undefined);
+        let functionSelector = (selector: string, containerSelector: string, configName: string, parameterName: string, selectList: string[]) => {
+            let input = <HTMLSelectElement>rowElement.querySelector(selector);
+            let container = <HTMLElement>rowElement.querySelector(containerSelector);
+            if (selectList !== undefined)
+                this.fillSelectByArray(input, selectList);
+            let parameterValue = '';
+            if (charConfig) {
+                let value = charConfig[configName];
+                if (value !== undefined)
+                    input.value = value;
+                else
+                    input.value = "";
+                parameterValue = charConfig[parameterName];
+            }
+            if(!parameterValue)
+                parameterValue = '';
+
+            let paramUpdateMethod =  (newValue) => {
+                let charConfig = this.findConfigCharacteristic(serviceConfig, name);
+                if (charConfig === undefined) {
+                    charConfig = { name: name, enabled: false }
+                    serviceConfig.characteristics.push(charConfig);
+                }
+        
+                charConfig[parameterName] = newValue;
+        
+                this.delegate.changeCallback();
+            }
+
+            this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod);
+            input.addEventListener('input', (e) => {
+                this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
+                this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod);
+                return false;
+            });
+        };
+
+        functionSelector('#characteristic_inoutfunction', '#characteristic_inoutparams_container', 'inOutFunction', 'inOutParameters', inoutFunctions);
+        //inputHelper('#characteristic_inoutparams', 'inOutParameters', undefined);
+        functionSelector('#characteristic_conversionfunction', '#characteristic_conversionparams_container', 'conversionFunction', 'conversionParameters', convFunctions);
+        //inputHelper('#characteristic_conversionparams', 'conversionParameters', undefined);
 
         return rowElement;
     }
@@ -1103,4 +1158,70 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
         this.delegate.refreshDeviceListEntry(config);
         this.delegate.changeCallback();
     }    
+}
+
+
+class ParameterEditor implements IParameterEditor {
+    
+
+    constructor(private valueChangeCallback: IParameterEditorDelegate) {
+
+    }
+
+    refreshAndShow(containerElement: HTMLElement, withValue: string) {
+
+    }
+    protected removeChildren(parentNode: HTMLElement) {
+        while (parentNode.firstChild) {
+            parentNode.removeChild(parentNode.firstChild);
+        }
+    }
+
+    protected cloneTemplateNode(selector: string): DocumentFragment {
+        let node = <HTMLTemplateElement>document.querySelector(selector);        
+        return <DocumentFragment>document.importNode(node.content, true);
+    }
+
+    protected buildNewParameterValue(): string {
+        return undefined;
+    }
+
+    protected valueChanged() {
+        this.valueChangeCallback(this.buildNewParameterValue());
+    }
+
+}
+
+class ParameterEditor_Null extends ParameterEditor {
+    private lastParamValue: string;
+    refreshAndShow(containerElement: HTMLElement, parameterValue: string) {
+        this.removeChildren(containerElement);
+        this.lastParamValue = parameterValue;
+    }  
+
+    protected buildNewParameterValue(): string {
+        return this.lastParamValue;
+    }    
+}
+
+class ParameterEditor_SingleState extends ParameterEditor {
+    private templateNode: DocumentFragment;
+    private textField: HTMLTextAreaElement;
+    constructor(valueChangeCallback: IParameterEditorDelegate) {
+        super(valueChangeCallback);
+        this.templateNode = this.cloneTemplateNode('#editor_single_state');
+        this.textField = this.templateNode.querySelector("#textfield");
+        this.textField.addEventListener('input', (ev) => this.valueChanged());
+    }
+
+    refreshAndShow(containerElement: HTMLElement, parameterValue: string) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+
+        this.textField.value = parameterValue;
+    }   
+
+    protected buildNewParameterValue(): string {
+        return this.textField.value;
+    }
 }

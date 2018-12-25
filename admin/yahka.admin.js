@@ -716,6 +716,17 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
             table.appendChild(row[2]);
         }
     };
+    ConfigPageBuilder_CustomDevice.prototype.getParameterEditor = function (functionName, valueChangeCallback) {
+        if (!functionName)
+            return new ParameterEditor_Null(valueChangeCallback);
+        return new ParameterEditor_SingleState(valueChangeCallback);
+    };
+    ConfigPageBuilder_CustomDevice.prototype.updateParameterEditor = function (functionName, parameterContainer, parameterValue, parameterChangeCallback) {
+        var editor = this.getParameterEditor(functionName, parameterChangeCallback);
+        if (editor == undefined)
+            return;
+        editor.refreshAndShow(parameterContainer, parameterValue);
+    };
     ConfigPageBuilder_CustomDevice.prototype.createCharacteristicRow = function (charDef, serviceConfig, charConfig) {
         var _this = this;
         var name = charConfig ? charConfig.name : charDef.name;
@@ -742,10 +753,40 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
             }
             input.addEventListener('input', _this.handleCharacteristicInputChange.bind(_this, serviceConfig, name, configName));
         };
-        inputHelper('#characteristic_inoutfunction', 'inOutFunction', inoutFunctions);
-        inputHelper('#characteristic_inoutparams', 'inOutParameters', undefined);
-        inputHelper('#characteristic_conversionfunction', 'conversionFunction', convFunctions);
-        inputHelper('#characteristic_conversionparams', 'conversionParameters', undefined);
+        var functionSelector = function (selector, containerSelector, configName, parameterName, selectList) {
+            var input = rowElement.querySelector(selector);
+            var container = rowElement.querySelector(containerSelector);
+            if (selectList !== undefined)
+                _this.fillSelectByArray(input, selectList);
+            var parameterValue = '';
+            if (charConfig) {
+                var value = charConfig[configName];
+                if (value !== undefined)
+                    input.value = value;
+                else
+                    input.value = "";
+                parameterValue = charConfig[parameterName];
+            }
+            if (!parameterValue)
+                parameterValue = '';
+            var paramUpdateMethod = function (newValue) {
+                var charConfig = _this.findConfigCharacteristic(serviceConfig, name);
+                if (charConfig === undefined) {
+                    charConfig = { name: name, enabled: false };
+                    serviceConfig.characteristics.push(charConfig);
+                }
+                charConfig[parameterName] = newValue;
+                _this.delegate.changeCallback();
+            };
+            _this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod);
+            input.addEventListener('input', function (e) {
+                _this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
+                _this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod);
+                return false;
+            });
+        };
+        functionSelector('#characteristic_inoutfunction', '#characteristic_inoutparams_container', 'inOutFunction', 'inOutParameters', inoutFunctions);
+        functionSelector('#characteristic_conversionfunction', '#characteristic_conversionparams_container', 'conversionFunction', 'conversionParameters', convFunctions);
         return rowElement;
     };
     ConfigPageBuilder_CustomDevice.prototype.fillSelectByArray = function (inoutSelect, stringlist) {
@@ -927,4 +968,60 @@ var ConfigPageBuilder_IPCamera = (function (_super) {
     };
     return ConfigPageBuilder_IPCamera;
 }(ConfigPageBuilder_Base));
+var ParameterEditor = (function () {
+    function ParameterEditor(valueChangeCallback) {
+        this.valueChangeCallback = valueChangeCallback;
+    }
+    ParameterEditor.prototype.refreshAndShow = function (containerElement, withValue) {
+    };
+    ParameterEditor.prototype.removeChildren = function (parentNode) {
+        while (parentNode.firstChild) {
+            parentNode.removeChild(parentNode.firstChild);
+        }
+    };
+    ParameterEditor.prototype.cloneTemplateNode = function (selector) {
+        var node = document.querySelector(selector);
+        return document.importNode(node.content, true);
+    };
+    ParameterEditor.prototype.buildNewParameterValue = function () {
+        return undefined;
+    };
+    ParameterEditor.prototype.valueChanged = function () {
+        this.valueChangeCallback(this.buildNewParameterValue());
+    };
+    return ParameterEditor;
+}());
+var ParameterEditor_Null = (function (_super) {
+    __extends(ParameterEditor_Null, _super);
+    function ParameterEditor_Null() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    ParameterEditor_Null.prototype.refreshAndShow = function (containerElement, parameterValue) {
+        this.removeChildren(containerElement);
+        this.lastParamValue = parameterValue;
+    };
+    ParameterEditor_Null.prototype.buildNewParameterValue = function () {
+        return this.lastParamValue;
+    };
+    return ParameterEditor_Null;
+}(ParameterEditor));
+var ParameterEditor_SingleState = (function (_super) {
+    __extends(ParameterEditor_SingleState, _super);
+    function ParameterEditor_SingleState(valueChangeCallback) {
+        var _this = _super.call(this, valueChangeCallback) || this;
+        _this.templateNode = _this.cloneTemplateNode('#editor_single_state');
+        _this.textField = _this.templateNode.querySelector("#textfield");
+        _this.textField.addEventListener('input', function (ev) { return _this.valueChanged(); });
+        return _this;
+    }
+    ParameterEditor_SingleState.prototype.refreshAndShow = function (containerElement, parameterValue) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+        this.textField.value = parameterValue;
+    };
+    ParameterEditor_SingleState.prototype.buildNewParameterValue = function () {
+        return this.textField.value;
+    };
+    return ParameterEditor_SingleState;
+}(ParameterEditor));
 //# sourceMappingURL=yahka.admin.js.map

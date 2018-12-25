@@ -336,9 +336,9 @@
                     $sid.hide();
                     if (newId !== $textarea.val()) {
                         $textarea.val(newId)[0].dispatchEvent(new Event('input'));
-                        if (!$select.val()) {
-                            $select.val('ioBroker.State')[0].dispatchEvent(new Event('input'));
-                        }
+                        //if (!$select.val()) {
+                        //    $select.val('ioBroker.State')[0].dispatchEvent(new Event('input'));
+                        //}
                     }
                 }).show();
 
@@ -696,7 +696,6 @@
                         <div class="cell translate">Name</div>
                         <div class="cell translate">1: InOutFunction / 2: ConversionFunction</div>
                         <div class="cell translate">1: InOutParams / 2: ConversionParams</div>
-                        <div class="cell"></div>
                     </div>
                 </div>
             </div>
@@ -721,14 +720,11 @@
                         <select id="characteristic_inoutfunction"></select>
                     </div>
                 </div>
-                <div class="cell">
-                    <div class="input-control auto-height full-width">
-                        <textarea id="characteristic_inoutparams" rows=1></textarea>
-                    </div>
+                
+                <div class="cell" id="characteristic_inoutparams_container">
                 </div>
-                <div class="cell">
-                    <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
-                </div>
+                
+           
             </div> 
             <div class="row">
                 <div class="cell center">
@@ -741,13 +737,7 @@
                         <select  id="characteristic_conversionfunction"></select>
                     </div>
                 </div>
-                <div class="cell">
-                    <div class="input-control auto-height full-width">
-                        <textarea id="characteristic_conversionparams" rows=1></textarea>
-                    </div>
-                </div>
-                <div class="cell">
-                    <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
+                <div class="cell" id="characteristic_conversionparams_container">
                 </div>
             </div>         
         </div>
@@ -771,4 +761,13 @@
     </div>
 </div>
 </body>
+
+
+<template id="editor_single_state">
+    <div class="input-control auto-height full-width">
+        <textarea id="textfield" rows=1></textarea>
+        <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
+    </div>
+</template>
+
 </html>
