@@ -135,9 +135,9 @@ var convFunctions = new Map([
     ["hue", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
     ["level255", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
     ["passthrough", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
-    ["inverse", function (valueChangeCallback) { return new ParameterEditor_Null(valueChangeCallback); }],
-    ["scaleInt", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
-    ["scaleFloat", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
+    ["inverse", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
+    ["scaleInt", function (valueChangeCallback) { return new ParameterEditor_ScaleConversionEditor(valueChangeCallback); }],
+    ["scaleFloat", function (valueChangeCallback) { return new ParameterEditor_ScaleConversionEditor(valueChangeCallback); }],
     ["HomematicDirectionToHomekitPositionState", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
     ["HomematicControlModeToHomekitHeathingCoolingState", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }]
 ]);
@@ -1114,5 +1114,44 @@ var ParameterEditor_SingleState = (function (_super) {
         return this.textField.value;
     };
     return ParameterEditor_SingleState;
+}(ParameterEditor));
+var ParameterEditor_ScaleConversionEditor = (function (_super) {
+    __extends(ParameterEditor_ScaleConversionEditor, _super);
+    function ParameterEditor_ScaleConversionEditor(valueChangeCallback) {
+        var _this = _super.call(this, valueChangeCallback) || this;
+        _this.templateNode = _this.cloneTemplateNode('#editor_conversion_scale');
+        _this.txtHKMin = _this.templateNode.querySelector("#hkMin");
+        _this.txtHKMin.addEventListener('input', function (ev) { return _this.valueChanged(); });
+        _this.txtHKMax = _this.templateNode.querySelector("#hkMax");
+        _this.txtHKMax.addEventListener('input', function (ev) { return _this.valueChanged(); });
+        _this.txtIOBrokerMin = _this.templateNode.querySelector("#ioMin");
+        _this.txtIOBrokerMin.addEventListener('input', function (ev) { return _this.valueChanged(); });
+        _this.txtIOBrokerMax = _this.templateNode.querySelector("#ioMax");
+        _this.txtIOBrokerMax.addEventListener('input', function (ev) { return _this.valueChanged(); });
+        return _this;
+    }
+    ParameterEditor_ScaleConversionEditor.prototype.refreshAndShow = function (containerElement, parameterValue) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+        try {
+            var parameterObject = JSON.parse(parameterValue);
+            this.txtHKMin.value = parameterObject["homekit.min"];
+            this.txtHKMax.value = parameterObject["homekit.max"];
+            this.txtIOBrokerMin.value = parameterObject["iobroker.min"];
+            this.txtIOBrokerMax.value = parameterObject["iobroker.max"];
+        }
+        catch (e) {
+            console.log(e);
+        }
+    };
+    ParameterEditor_ScaleConversionEditor.prototype.buildNewParameterValue = function () {
+        return JSON.stringify({
+            "homekit.min": this.txtHKMin.valueAsNumber,
+            "homekit.max": this.txtHKMax.valueAsNumber,
+            "iobroker.min": this.txtIOBrokerMin.valueAsNumber,
+            "iobroker.max": this.txtIOBrokerMax.valueAsNumber
+        });
+    };
+    return ParameterEditor_ScaleConversionEditor;
 }(ParameterEditor));
 //# sourceMappingURL=yahka.admin.js.map

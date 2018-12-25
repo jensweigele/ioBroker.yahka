@@ -123,8 +123,8 @@ let convFunctions = new Map<string, ParameterEditorFactory>([
     ["level255", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
     ["passthrough", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
     ["inverse", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
-    ["scaleInt", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
-    ["scaleFloat", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
+    ["scaleInt", (valueChangeCallback) => new ParameterEditor_ScaleConversionEditor(valueChangeCallback)],
+    ["scaleFloat", (valueChangeCallback) => new ParameterEditor_ScaleConversionEditor(valueChangeCallback)],
     ["HomematicDirectionToHomekitPositionState", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
     ["HomematicControlModeToHomekitHeathingCoolingState", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)]
 ]);
@@ -1222,5 +1222,50 @@ class ParameterEditor_SingleState extends ParameterEditor {
 
     protected buildNewParameterValue(): string {
         return this.textField.value;
+    }
+}
+
+class ParameterEditor_ScaleConversionEditor extends ParameterEditor {
+    private templateNode: DocumentFragment;
+    private txtHKMin: HTMLInputElement;
+    private txtHKMax: HTMLInputElement;
+    private txtIOBrokerMin: HTMLInputElement;
+    private txtIOBrokerMax: HTMLInputElement;
+    constructor(valueChangeCallback: IParameterEditorDelegate) {
+        super(valueChangeCallback);
+        this.templateNode = this.cloneTemplateNode('#editor_conversion_scale');
+        this.txtHKMin = this.templateNode.querySelector("#hkMin");
+        this.txtHKMin.addEventListener('input', (ev) => this.valueChanged());
+        this.txtHKMax = this.templateNode.querySelector("#hkMax");
+        this.txtHKMax.addEventListener('input', (ev) => this.valueChanged());
+        this.txtIOBrokerMin = this.templateNode.querySelector("#ioMin");
+        this.txtIOBrokerMin.addEventListener('input', (ev) => this.valueChanged());
+        this.txtIOBrokerMax = this.templateNode.querySelector("#ioMax");
+        this.txtIOBrokerMax.addEventListener('input', (ev) => this.valueChanged());
+    }
+
+    refreshAndShow(containerElement: HTMLElement, parameterValue: string) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+
+        try {
+            let parameterObject = JSON.parse(parameterValue);
+            this.txtHKMin.value = parameterObject["homekit.min"];
+            this.txtHKMax.value = parameterObject["homekit.max"];
+            this.txtIOBrokerMin.value = parameterObject["iobroker.min"];
+            this.txtIOBrokerMax.value = parameterObject["iobroker.max"];
+        }
+        catch(e) {
+            console.log(e);
+        }
+    }   
+
+    protected buildNewParameterValue(): string {
+        return JSON.stringify( {
+            "homekit.min": this.txtHKMin.valueAsNumber,
+            "homekit.max": this.txtHKMax.valueAsNumber, 
+            "iobroker.min": this.txtIOBrokerMin.valueAsNumber,
+            "iobroker.max": this.txtIOBrokerMax.valueAsNumber
+        });
     }
 }
