@@ -108,15 +108,27 @@ declare function getObject(id: string, callback: (error: any, object: any) => vo
 
 declare function translateFragment(fragment: DocumentFragment);
 
-var inoutFunctions: Array<string> = [];
-getObject('yahka.meta._inoutFunctions', (error, object) => {
-    inoutFunctions = object.native;
-});
+type ParameterEditorFactory = new(valueChangeCallback: IParameterEditorDelegate) => IParameterEditor;
+var inoutFunctions = new Map<string, ParameterEditorFactory>([       
+    ["", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
+    ["const", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
+    ["ioBroker.State", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
+    ["ioBroker.State.Defered", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
+    ["ioBroker.State.OnlyACK", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
+    ["ioBroker.homematic.WindowCovering.TargetPosition", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)]
+    ]);
+let convFunctions = new Map<string, ParameterEditorFactory>([ 
+    ["", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
+    ["hue", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
+    ["level255", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
+    ["passthrough", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
+    ["inverse", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
+    ["scaleInt", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
+    ["scaleFloat", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
+    ["HomematicDirectionToHomekitPositionState", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
+    ["HomematicControlModeToHomekitHeathingCoolingState", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)]
+]);
 
-let convFunctions: Array<string> = [];
-getObject('yahka.meta._conversionFunctions', (error, object) => {
-    convFunctions = object.native;
-});
 
 let HAPServiceDictionary: IDictionary<IHAPServiceDefinition> = {};
 getObject('yahka.meta._serviceDictionary', (error, object) => {
@@ -857,14 +869,16 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
         }
     }
 
-    getParameterEditor(functionName: string, valueChangeCallback: IParameterEditorDelegate): IParameterEditor {
-        if (!functionName) 
-            return new ParameterEditor_Null(valueChangeCallback);
-        return new ParameterEditor_SingleState(valueChangeCallback);
+    getParameterEditor(functionName: string, valueChangeCallback: IParameterEditorDelegate, functionMap: Map<string, ParameterEditorFactory>): IParameterEditor {
+        if(!functionMap.has(functionName)) {
+            return new ParameterEditor_Null(valueChangeCallback);    
+        }
+        let constr = functionMap.get(functionName);
+        return new constr(valueChangeCallback);
     }
 
-    updateParameterEditor(functionName: string, parameterContainer: HTMLElement, parameterValue: string, parameterChangeCallback: IParameterEditorDelegate) {
-        let editor = this.getParameterEditor(functionName, parameterChangeCallback);
+    updateParameterEditor(functionName: string, parameterContainer: HTMLElement, parameterValue: string, parameterChangeCallback: IParameterEditorDelegate, functionMap: Map<string, ParameterEditorFactory>) {
+        let editor = this.getParameterEditor(functionName, parameterChangeCallback, functionMap);
         if (editor == undefined)
             return;
         editor.refreshAndShow(parameterContainer, parameterValue);
@@ -889,26 +903,13 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
 
         rowElement.querySelector('#characteristic_name').textContent = name;
 
-
-        let inputHelper = (selector: string, configName: string, selectList: string[]) => {
-            let input = <HTMLSelectElement>rowElement.querySelector(selector);
-            if (selectList !== undefined)
-                this.fillSelectByArray(input, selectList);
-            if (charConfig) {
-                let value = charConfig[configName];
-                if (value !== undefined)
-                    input.value = value;
-                else
-                    input.value = "";
-            }
-            input.addEventListener('input', this.handleCharacteristicInputChange.bind(this, serviceConfig, name, configName));
-        };
-
-        let functionSelector = (selector: string, containerSelector: string, configName: string, parameterName: string, selectList: string[]) => {
+        let functionSelector = (selector: string, containerSelector: string, configName: string, parameterName: string, functionMap: Map<string, ParameterEditorFactory>) => {
             let input = <HTMLSelectElement>rowElement.querySelector(selector);
             let container = <HTMLElement>rowElement.querySelector(containerSelector);
-            if (selectList !== undefined)
-                this.fillSelectByArray(input, selectList);
+            if (functionMap !== undefined) {
+                let mapKeys = [...functionMap.keys()];
+                this.fillSelectByArray(input, mapKeys);
+            }
             let parameterValue = '';
             if (charConfig) {
                 let value = charConfig[configName];
@@ -933,19 +934,17 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
                 this.delegate.changeCallback();
             }
 
-            this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod);
+            this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod, functionMap);
             input.addEventListener('input', (e) => {
                 this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
-                this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod);
+                this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod, functionMap);
                 return false;
             });
         };
 
         functionSelector('#characteristic_inoutfunction', '#characteristic_inoutparams_container', 'inOutFunction', 'inOutParameters', inoutFunctions);
-        //inputHelper('#characteristic_inoutparams', 'inOutParameters', undefined);
         functionSelector('#characteristic_conversionfunction', '#characteristic_conversionparams_container', 'conversionFunction', 'conversionParameters', convFunctions);
-        //inputHelper('#characteristic_conversionparams', 'conversionParameters', undefined);
-
+        
         return rowElement;
     }
 

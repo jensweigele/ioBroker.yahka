@@ -9,6 +9,36 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __values = (this && this.__values) || function (o) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+    if (m) return m.call(o);
+    return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+};
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spread = (this && this.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+    return ar;
+};
 
 
 function isBridgeConfig(config) {
@@ -92,14 +122,25 @@ var ffmpegCommandLines = {
     default: defaultCommandLine,
     webcam: webcamCommandLine
 };
-var inoutFunctions = [];
-getObject('yahka.meta._inoutFunctions', function (error, object) {
-    inoutFunctions = object.native;
-});
-var convFunctions = [];
-getObject('yahka.meta._conversionFunctions', function (error, object) {
-    convFunctions = object.native;
-});
+var inoutFunctions = new Map([
+    ["", function (valueChangeCallback) { return new ParameterEditor_Null(valueChangeCallback); }],
+    ["const", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
+    ["ioBroker.State", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
+    ["ioBroker.State.Defered", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
+    ["ioBroker.State.OnlyACK", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
+    ["ioBroker.homematic.WindowCovering.TargetPosition", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }]
+]);
+var convFunctions = new Map([
+    ["", function (valueChangeCallback) { return new ParameterEditor_Null(valueChangeCallback); }],
+    ["hue", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
+    ["level255", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
+    ["passthrough", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
+    ["inverse", function (valueChangeCallback) { return new ParameterEditor_Null(valueChangeCallback); }],
+    ["scaleInt", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
+    ["scaleFloat", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
+    ["HomematicDirectionToHomekitPositionState", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
+    ["HomematicControlModeToHomekitHeathingCoolingState", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }]
+]);
 var HAPServiceDictionary = {};
 getObject('yahka.meta._serviceDictionary', function (error, object) {
     HAPServiceDictionary = object.native;
@@ -247,16 +288,26 @@ var ioBroker_DeviceListHandler = (function (_super) {
         return deviceEntry;
     };
     ioBroker_DeviceListHandler.prototype.buildDeviceList = function (bridgeFrame) {
+        var e_1, _a;
         var bridge = this.delegate.bridgeSettings;
         var deviceList = bridgeFrame.querySelector('#yahka_deviceList');
         deviceList.innerHTML = "";
         this.listEntryToConfigMap.clear();
-        for (var _i = 0, _a = this.getDeviceList(); _i < _a.length; _i++) {
-            var deviceConfig = _a[_i];
-            var fragment = this.createDeviceListEntry(deviceConfig);
-            var node = fragment.querySelector('.list');
-            this.listEntryToConfigMap.set(node, deviceConfig);
-            deviceList.appendChild(fragment);
+        try {
+            for (var _b = __values(this.getDeviceList()), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var deviceConfig = _c.value;
+                var fragment = this.createDeviceListEntry(deviceConfig);
+                var node = fragment.querySelector('.list');
+                this.listEntryToConfigMap.set(node, deviceConfig);
+                deviceList.appendChild(fragment);
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_1) throw e_1.error; }
         }
         $(deviceList).listview({ onListClick: this.handleDeviceListClick.bind(this) });
     };
@@ -521,15 +572,25 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
         return _this;
     }
     ConfigPageBuilder_CustomDevice.prototype.refresh = function (config, AFocusLastPanel, devicePanel) {
+        var e_2, _a;
         if (!isDeviceConfig(config)) {
             return;
         }
         var lastPane = this.buildDeviceInformationPanel(config, devicePanel);
-        for (var _i = 0, _a = config.services; _i < _a.length; _i++) {
-            var serviceConfig = _a[_i];
-            var servicePanel = this.createServicePanel(config, serviceConfig);
-            devicePanel.appendChild(servicePanel);
-            lastPane = servicePanel;
+        try {
+            for (var _b = __values(config.services), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var serviceConfig = _c.value;
+                var servicePanel = this.createServicePanel(config, serviceConfig);
+                devicePanel.appendChild(servicePanel);
+                lastPane = servicePanel;
+            }
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_2) throw e_2.error; }
         }
         if (AFocusLastPanel && lastPane) {
             lastPane.scrollIntoView();
@@ -647,14 +708,24 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
         return undefined;
     };
     ConfigPageBuilder_CustomDevice.prototype.findConfigCharacteristic = function (service, characteristicName) {
+        var e_3, _a;
         if (!service) {
             return undefined;
         }
-        for (var _i = 0, _a = service.characteristics; _i < _a.length; _i++) {
-            var cfg = _a[_i];
-            if (cfg.name == characteristicName) {
-                return cfg;
+        try {
+            for (var _b = __values(service.characteristics), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var cfg = _c.value;
+                if (cfg.name == characteristicName) {
+                    return cfg;
+                }
             }
+        }
+        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_3) throw e_3.error; }
         }
         return undefined;
     };
@@ -678,17 +749,27 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
         }
     };
     ConfigPageBuilder_CustomDevice.prototype.buildCharacteristicTable = function (serviceConfig, servicePanel) {
+        var e_4, _a, e_5, _b;
         var serviceDef = HAPServiceDictionary[serviceConfig.type];
         var createdCharacteristics = {};
-        for (var _i = 0, _a = serviceConfig.characteristics; _i < _a.length; _i++) {
-            var charConfig = _a[_i];
-            var charDef = this.findHAPCharacteristic(serviceDef, charConfig.name);
-            if ((charDef === undefined) && (this.isEmptyCharacteristic(charConfig))) {
-                this.removeCharacteristic(serviceConfig, charConfig);
-                continue;
+        try {
+            for (var _c = __values(serviceConfig.characteristics), _d = _c.next(); !_d.done; _d = _c.next()) {
+                var charConfig = _d.value;
+                var charDef = this.findHAPCharacteristic(serviceDef, charConfig.name);
+                if ((charDef === undefined) && (this.isEmptyCharacteristic(charConfig))) {
+                    this.removeCharacteristic(serviceConfig, charConfig);
+                    continue;
+                }
+                var charRow = this.createCharacteristicRow(charDef, serviceConfig, charConfig);
+                createdCharacteristics[charConfig.name] = [charConfig.name, charDef ? charDef.optional : false, charRow];
             }
-            var charRow = this.createCharacteristicRow(charDef, serviceConfig, charConfig);
-            createdCharacteristics[charConfig.name] = [charConfig.name, charDef ? charDef.optional : false, charRow];
+        }
+        catch (e_4_1) { e_4 = { error: e_4_1 }; }
+        finally {
+            try {
+                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+            }
+            finally { if (e_4) throw e_4.error; }
         }
         if (serviceDef) {
             for (var charName in serviceDef.characteristics) {
@@ -711,18 +792,29 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
         while (table.childElementCount > 1) {
             table.removeChild(table.lastElementChild);
         }
-        for (var _b = 0, charRows_1 = charRows; _b < charRows_1.length; _b++) {
-            var row = charRows_1[_b];
-            table.appendChild(row[2]);
+        try {
+            for (var charRows_1 = __values(charRows), charRows_1_1 = charRows_1.next(); !charRows_1_1.done; charRows_1_1 = charRows_1.next()) {
+                var row = charRows_1_1.value;
+                table.appendChild(row[2]);
+            }
+        }
+        catch (e_5_1) { e_5 = { error: e_5_1 }; }
+        finally {
+            try {
+                if (charRows_1_1 && !charRows_1_1.done && (_b = charRows_1.return)) _b.call(charRows_1);
+            }
+            finally { if (e_5) throw e_5.error; }
         }
     };
-    ConfigPageBuilder_CustomDevice.prototype.getParameterEditor = function (functionName, valueChangeCallback) {
-        if (!functionName)
+    ConfigPageBuilder_CustomDevice.prototype.getParameterEditor = function (functionName, valueChangeCallback, functionMap) {
+        if (!functionMap.has(functionName)) {
             return new ParameterEditor_Null(valueChangeCallback);
-        return new ParameterEditor_SingleState(valueChangeCallback);
+        }
+        var constr = functionMap.get(functionName);
+        return new constr(valueChangeCallback);
     };
-    ConfigPageBuilder_CustomDevice.prototype.updateParameterEditor = function (functionName, parameterContainer, parameterValue, parameterChangeCallback) {
-        var editor = this.getParameterEditor(functionName, parameterChangeCallback);
+    ConfigPageBuilder_CustomDevice.prototype.updateParameterEditor = function (functionName, parameterContainer, parameterValue, parameterChangeCallback, functionMap) {
+        var editor = this.getParameterEditor(functionName, parameterChangeCallback, functionMap);
         if (editor == undefined)
             return;
         editor.refreshAndShow(parameterContainer, parameterValue);
@@ -740,24 +832,13 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
         this.refreshEnabledClass(bracketElement, enabled);
         this.refershOptionalClass(bracketElement, charDef ? charDef.optional : true);
         rowElement.querySelector('#characteristic_name').textContent = name;
-        var inputHelper = function (selector, configName, selectList) {
-            var input = rowElement.querySelector(selector);
-            if (selectList !== undefined)
-                _this.fillSelectByArray(input, selectList);
-            if (charConfig) {
-                var value = charConfig[configName];
-                if (value !== undefined)
-                    input.value = value;
-                else
-                    input.value = "";
-            }
-            input.addEventListener('input', _this.handleCharacteristicInputChange.bind(_this, serviceConfig, name, configName));
-        };
-        var functionSelector = function (selector, containerSelector, configName, parameterName, selectList) {
+        var functionSelector = function (selector, containerSelector, configName, parameterName, functionMap) {
             var input = rowElement.querySelector(selector);
             var container = rowElement.querySelector(containerSelector);
-            if (selectList !== undefined)
-                _this.fillSelectByArray(input, selectList);
+            if (functionMap !== undefined) {
+                var mapKeys = __spread(functionMap.keys());
+                _this.fillSelectByArray(input, mapKeys);
+            }
             var parameterValue = '';
             if (charConfig) {
                 var value = charConfig[configName];
@@ -778,10 +859,10 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
                 charConfig[parameterName] = newValue;
                 _this.delegate.changeCallback();
             };
-            _this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod);
+            _this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod, functionMap);
             input.addEventListener('input', function (e) {
                 _this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
-                _this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod);
+                _this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod, functionMap);
                 return false;
             });
         };
@@ -790,12 +871,22 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
         return rowElement;
     };
     ConfigPageBuilder_CustomDevice.prototype.fillSelectByArray = function (inoutSelect, stringlist) {
-        for (var _i = 0, stringlist_1 = stringlist; _i < stringlist_1.length; _i++) {
-            var itemName = stringlist_1[_i];
-            var optElem = document.createElement('option');
-            optElem.value = itemName;
-            optElem.text = itemName;
-            inoutSelect.add(optElem);
+        var e_6, _a;
+        try {
+            for (var stringlist_1 = __values(stringlist), stringlist_1_1 = stringlist_1.next(); !stringlist_1_1.done; stringlist_1_1 = stringlist_1.next()) {
+                var itemName = stringlist_1_1.value;
+                var optElem = document.createElement('option');
+                optElem.value = itemName;
+                optElem.text = itemName;
+                inoutSelect.add(optElem);
+            }
+        }
+        catch (e_6_1) { e_6 = { error: e_6_1 }; }
+        finally {
+            try {
+                if (stringlist_1_1 && !stringlist_1_1.done && (_a = stringlist_1.return)) _a.call(stringlist_1);
+            }
+            finally { if (e_6) throw e_6.error; }
         }
     };
     ConfigPageBuilder_CustomDevice.prototype.fillSelectByDict = function (inoutSelect, dictionary) {

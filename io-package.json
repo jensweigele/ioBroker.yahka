@@ -88,35 +88,6 @@
     },
     "objects": [
         {
-            "_id": "yahka.meta._inoutFunctions",
-            "type": "meta",
-            "common": {},
-            "native": [
-                "",
-                "const",
-                "ioBroker.State",
-                "ioBroker.State.Defered",
-                "ioBroker.State.OnlyACK",
-                "ioBroker.homematic.WindowCovering.TargetPosition"
-            ]
-        },
-        {
-            "_id": "yahka.meta._conversionFunctions",
-            "type": "meta",
-            "common": {},
-            "native": [
-                "",
-                "hue",
-                "level255",
-                "passthrough",
-                "inverse",
-                "scaleInt",
-                "scaleFloat",
-                "HomematicDirectionToHomekitPositionState",
-                "HomematicControlModeToHomekitHeathingCoolingState"
-            ]
-        },
-        {
             "_id": "yahka.meta._accessoryCategories",
             "type": "meta",
             "common": {},
