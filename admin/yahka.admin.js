@@ -124,18 +124,18 @@ var ffmpegCommandLines = {
 };
 var inoutFunctions = new Map([
     ["", function (valueChangeCallback) { return new ParameterEditor_Null(valueChangeCallback); }],
-    ["const", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
+    ["const", function (valueChangeCallback) { return new ParameterEditor_Const(valueChangeCallback); }],
     ["ioBroker.State", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
     ["ioBroker.State.Defered", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
     ["ioBroker.State.OnlyACK", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
-    ["ioBroker.homematic.WindowCovering.TargetPosition", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }]
+    ["ioBroker.homematic.WindowCovering.TargetPosition", function (valueChangeCallback) { return new ParameterEditor_HomeMaticWindowCoveringTargetPosition(valueChangeCallback); }]
 ]);
 var convFunctions = new Map([
     ["", function (valueChangeCallback) { return new ParameterEditor_Null(valueChangeCallback); }],
-    ["hue", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
-    ["level255", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
-    ["passthrough", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
-    ["inverse", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
+    ["hue", function (valueChangeCallback) { return new ParameterEditor_Null(valueChangeCallback); }],
+    ["level255", function (valueChangeCallback) { return new ParameterEditor_Null(valueChangeCallback); }],
+    ["passthrough", function (valueChangeCallback) { return new ParameterEditor_Null(valueChangeCallback); }],
+    ["inverse", function (valueChangeCallback) { return new ParameterEditor_Const(valueChangeCallback); }],
     ["scaleInt", function (valueChangeCallback) { return new ParameterEditor_ScaleConversionEditor(valueChangeCallback); }],
     ["scaleFloat", function (valueChangeCallback) { return new ParameterEditor_ScaleConversionEditor(valueChangeCallback); }],
     ["HomematicDirectionToHomekitPositionState", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
@@ -862,7 +862,7 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
             _this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod, functionMap);
             input.addEventListener('input', function (e) {
                 _this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
-                _this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod, functionMap);
+                _this.updateParameterEditor(input.value, container, charConfig[parameterName], paramUpdateMethod, functionMap);
                 return false;
             });
         };
@@ -1115,6 +1115,25 @@ var ParameterEditor_SingleState = (function (_super) {
     };
     return ParameterEditor_SingleState;
 }(ParameterEditor));
+var ParameterEditor_Const = (function (_super) {
+    __extends(ParameterEditor_Const, _super);
+    function ParameterEditor_Const(valueChangeCallback) {
+        var _this = _super.call(this, valueChangeCallback) || this;
+        _this.templateNode = _this.cloneTemplateNode('#editor_const');
+        _this.textField = _this.templateNode.querySelector("#textfield");
+        _this.textField.addEventListener('input', function (ev) { return _this.valueChanged(); });
+        return _this;
+    }
+    ParameterEditor_Const.prototype.refreshAndShow = function (containerElement, parameterValue) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+        this.textField.value = parameterValue;
+    };
+    ParameterEditor_Const.prototype.buildNewParameterValue = function () {
+        return this.textField.value;
+    };
+    return ParameterEditor_Const;
+}(ParameterEditor));
 var ParameterEditor_ScaleConversionEditor = (function (_super) {
     __extends(ParameterEditor_ScaleConversionEditor, _super);
     function ParameterEditor_ScaleConversionEditor(valueChangeCallback) {
@@ -1141,17 +1160,57 @@ var ParameterEditor_ScaleConversionEditor = (function (_super) {
             this.txtIOBrokerMax.value = parameterObject["iobroker.max"];
         }
         catch (e) {
+            this.txtHKMin.value = parameterValue;
             console.log(e);
         }
     };
     ParameterEditor_ScaleConversionEditor.prototype.buildNewParameterValue = function () {
-        return JSON.stringify({
+        return {
             "homekit.min": this.txtHKMin.valueAsNumber,
             "homekit.max": this.txtHKMax.valueAsNumber,
             "iobroker.min": this.txtIOBrokerMin.valueAsNumber,
             "iobroker.max": this.txtIOBrokerMax.valueAsNumber
-        });
+        };
     };
     return ParameterEditor_ScaleConversionEditor;
+}(ParameterEditor));
+var ParameterEditor_HomeMaticWindowCoveringTargetPosition = (function (_super) {
+    __extends(ParameterEditor_HomeMaticWindowCoveringTargetPosition, _super);
+    function ParameterEditor_HomeMaticWindowCoveringTargetPosition(valueChangeCallback) {
+        var _this = _super.call(this, valueChangeCallback) || this;
+        _this.templateNode = _this.cloneTemplateNode('#editor_conversion_HomeMaticWindowCoveringTargetPosition');
+        _this.txtLevel = _this.templateNode.querySelector("#level");
+        _this.txtLevel.addEventListener('input', function (ev) { return _this.valueChanged(); });
+        _this.txtWorking = _this.templateNode.querySelector("#working");
+        _this.txtWorking.addEventListener('input', function (ev) { return _this.valueChanged(); });
+        return _this;
+    }
+    ParameterEditor_HomeMaticWindowCoveringTargetPosition.prototype.refreshAndShow = function (containerElement, parameterValue) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+        console.log(parameterValue);
+        try {
+            var p = void 0;
+            if (typeof parameterValue === 'string')
+                p = [parameterValue];
+            else if (parameterValue instanceof Array)
+                p = parameterValue;
+            else
+                p = [];
+            this.txtLevel.value = (p.length >= 1) ? p[0] : "";
+            this.txtWorking.value = (p.length >= 2) ? p[1] : "";
+        }
+        catch (e) {
+            this.txtLevel.value = parameterValue;
+            this.txtWorking.value = "";
+        }
+    };
+    ParameterEditor_HomeMaticWindowCoveringTargetPosition.prototype.buildNewParameterValue = function () {
+        var resultArray = [this.txtLevel.value];
+        if (this.txtWorking.value)
+            resultArray.push(this.txtWorking.value);
+        return resultArray;
+    };
+    return ParameterEditor_HomeMaticWindowCoveringTargetPosition;
 }(ParameterEditor));
 //# sourceMappingURL=yahka.admin.js.map

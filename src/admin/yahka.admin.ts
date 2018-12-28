@@ -111,18 +111,18 @@ declare function translateFragment(fragment: DocumentFragment);
 type ParameterEditorFactory = new(valueChangeCallback: IParameterEditorDelegate) => IParameterEditor;
 var inoutFunctions = new Map<string, ParameterEditorFactory>([       
     ["", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
-    ["const", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
+    ["const", (valueChangeCallback) => new ParameterEditor_Const(valueChangeCallback)],
     ["ioBroker.State", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
     ["ioBroker.State.Defered", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
     ["ioBroker.State.OnlyACK", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
-    ["ioBroker.homematic.WindowCovering.TargetPosition", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)]
+    ["ioBroker.homematic.WindowCovering.TargetPosition", (valueChangeCallback) => new ParameterEditor_HomeMaticWindowCoveringTargetPosition(valueChangeCallback)]
     ]);
 let convFunctions = new Map<string, ParameterEditorFactory>([ 
     ["", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
-    ["hue", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
-    ["level255", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
-    ["passthrough", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
-    ["inverse", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
+    ["hue", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
+    ["level255", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
+    ["passthrough", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
+    ["inverse", (valueChangeCallback) => new ParameterEditor_Const(valueChangeCallback)],
     ["scaleInt", (valueChangeCallback) => new ParameterEditor_ScaleConversionEditor(valueChangeCallback)],
     ["scaleFloat", (valueChangeCallback) => new ParameterEditor_ScaleConversionEditor(valueChangeCallback)],
     ["HomematicDirectionToHomekitPositionState", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
@@ -171,10 +171,10 @@ interface IConfigPageBuilderDelegate {
 }
 
 interface IParameterEditor {
-    refreshAndShow(inContainer: HTMLElement, withValue: string);
+    refreshAndShow(inContainer: HTMLElement, withValue: any);
 }
 
-type IParameterEditorDelegate = (newValue: string) => void;
+type IParameterEditorDelegate = (newValue: any) => void;
 
 class ioBroker_YahkaAdmin {
     settings: any;
@@ -877,7 +877,7 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
         return new constr(valueChangeCallback);
     }
 
-    updateParameterEditor(functionName: string, parameterContainer: HTMLElement, parameterValue: string, parameterChangeCallback: IParameterEditorDelegate, functionMap: Map<string, ParameterEditorFactory>) {
+    updateParameterEditor(functionName: string, parameterContainer: HTMLElement, parameterValue: any, parameterChangeCallback: IParameterEditorDelegate, functionMap: Map<string, ParameterEditorFactory>) {
         let editor = this.getParameterEditor(functionName, parameterChangeCallback, functionMap);
         if (editor == undefined)
             return;
@@ -928,7 +928,6 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
                     charConfig = { name: name, enabled: false }
                     serviceConfig.characteristics.push(charConfig);
                 }
-        
                 charConfig[parameterName] = newValue;
         
                 this.delegate.changeCallback();
@@ -937,7 +936,7 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
             this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod, functionMap);
             input.addEventListener('input', (e) => {
                 this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
-                this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod, functionMap);
+                this.updateParameterEditor(input.value, container, charConfig[parameterName], paramUpdateMethod, functionMap);
                 return false;
             });
         };
@@ -1167,7 +1166,7 @@ class ParameterEditor implements IParameterEditor {
 
     }
 
-    refreshAndShow(containerElement: HTMLElement, withValue: string) {
+    refreshAndShow(containerElement: HTMLElement, withValue: any) {
 
     }
     protected removeChildren(parentNode: HTMLElement) {
@@ -1181,7 +1180,7 @@ class ParameterEditor implements IParameterEditor {
         return <DocumentFragment>document.importNode(node.content, true);
     }
 
-    protected buildNewParameterValue(): string {
+    protected buildNewParameterValue(): any {
         return undefined;
     }
 
@@ -1193,12 +1192,12 @@ class ParameterEditor implements IParameterEditor {
 
 class ParameterEditor_Null extends ParameterEditor {
     private lastParamValue: string;
-    refreshAndShow(containerElement: HTMLElement, parameterValue: string) {
+    refreshAndShow(containerElement: HTMLElement, parameterValue: any) {
         this.removeChildren(containerElement);
         this.lastParamValue = parameterValue;
     }  
 
-    protected buildNewParameterValue(): string {
+    protected buildNewParameterValue(): any {
         return this.lastParamValue;
     }    
 }
@@ -1213,14 +1212,36 @@ class ParameterEditor_SingleState extends ParameterEditor {
         this.textField.addEventListener('input', (ev) => this.valueChanged());
     }
 
-    refreshAndShow(containerElement: HTMLElement, parameterValue: string) {
+    refreshAndShow(containerElement: HTMLElement, parameterValue: any) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
 
         this.textField.value = parameterValue;
     }   
 
-    protected buildNewParameterValue(): string {
+    protected buildNewParameterValue(): any {
+        return this.textField.value;
+    }
+}
+
+class ParameterEditor_Const extends ParameterEditor {
+    private templateNode: DocumentFragment;
+    private textField: HTMLTextAreaElement;
+    constructor(valueChangeCallback: IParameterEditorDelegate) {
+        super(valueChangeCallback);
+        this.templateNode = this.cloneTemplateNode('#editor_const');
+        this.textField = this.templateNode.querySelector("#textfield");
+        this.textField.addEventListener('input', (ev) => this.valueChanged());
+    }
+
+    refreshAndShow(containerElement: HTMLElement, parameterValue: any) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+
+        this.textField.value = parameterValue;
+    }   
+
+    protected buildNewParameterValue(): any {
         return this.textField.value;
     }
 }
@@ -1244,7 +1265,7 @@ class ParameterEditor_ScaleConversionEditor extends ParameterEditor {
         this.txtIOBrokerMax.addEventListener('input', (ev) => this.valueChanged());
     }
 
-    refreshAndShow(containerElement: HTMLElement, parameterValue: string) {
+    refreshAndShow(containerElement: HTMLElement, parameterValue: any) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
 
@@ -1256,16 +1277,61 @@ class ParameterEditor_ScaleConversionEditor extends ParameterEditor {
             this.txtIOBrokerMax.value = parameterObject["iobroker.max"];
         }
         catch(e) {
+            this.txtHKMin.value = parameterValue;
             console.log(e);
         }
     }   
 
-    protected buildNewParameterValue(): string {
-        return JSON.stringify( {
+    protected buildNewParameterValue(): any {
+        return {
             "homekit.min": this.txtHKMin.valueAsNumber,
             "homekit.max": this.txtHKMax.valueAsNumber, 
             "iobroker.min": this.txtIOBrokerMin.valueAsNumber,
             "iobroker.max": this.txtIOBrokerMax.valueAsNumber
-        });
+        };
+    }
+}
+
+
+class ParameterEditor_HomeMaticWindowCoveringTargetPosition extends ParameterEditor {
+    private templateNode: DocumentFragment;
+    private txtLevel: HTMLInputElement;
+    private txtWorking: HTMLInputElement;
+    constructor(valueChangeCallback: IParameterEditorDelegate) {
+        super(valueChangeCallback);
+        this.templateNode = this.cloneTemplateNode('#editor_conversion_HomeMaticWindowCoveringTargetPosition');
+        this.txtLevel = this.templateNode.querySelector("#level");
+        this.txtLevel.addEventListener('input', (ev) => this.valueChanged());
+        this.txtWorking = this.templateNode.querySelector("#working");
+        this.txtWorking.addEventListener('input', (ev) => this.valueChanged());
+    }
+
+    refreshAndShow(containerElement: HTMLElement, parameterValue: any) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+        console.log(parameterValue);
+        try {
+            let p:Array<string>;
+            if (typeof parameterValue === 'string')
+                p = [parameterValue];
+            else if (parameterValue instanceof Array)
+                p = parameterValue;
+            else
+                p = [];
+            
+            this.txtLevel.value = (p.length >= 1) ? p[0] : "";
+            this.txtWorking.value = (p.length >= 2) ? p[1] : "";
+        }
+        catch(e) {
+            this.txtLevel.value = parameterValue;
+            this.txtWorking.value = "";
+        }
+    }   
+
+    protected buildNewParameterValue(): any {
+        var resultArray: Array<string> = [this.txtLevel.value];
+        if (this.txtWorking.value)
+            resultArray.push(this.txtWorking.value);
+        return resultArray;
     }
 }

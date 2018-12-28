@@ -694,8 +694,7 @@
                     <div class="header row">
                         <div class="cell translate">Enabled</div>
                         <div class="cell translate">Name</div>
-                        <div class="cell translate">1: InOutFunction / 2: ConversionFunction</div>
-                        <div class="cell translate">1: InOutParams / 2: ConversionParams</div>
+                        <div class="cell translate"></div>
                     </div>
                 </div>
             </div>
@@ -713,33 +712,45 @@
                 </div>
                 <div class="cell">
                     <span id="characteristic_name"></span>
-                    <span class="place-right">1: </span>
+                    <span class="place-right">InOut: </span>
                 </div>
                 <div class="cell">
                     <div class="input-control select full-width">
                         <select id="characteristic_inoutfunction"></select>
                     </div>
                 </div>
-                
-                <div class="cell" id="characteristic_inoutparams_container">
-                </div>
-                
-           
-            </div> 
+            </div>
+
             <div class="row">
                 <div class="cell center">
                 </div>
                 <div class="cell">
-                    <span class="place-right">2: </span>
                 </div>
+                <div class="cell" id="characteristic_inoutparams_container">
+                </div>
+            </div>   
+
+            <div class="row">
+                <div class="cell center">
+                </div>   
+                <div class="cell center">
+                    <span class="place-right">Conversion: </span>
+                </div>           
                 <div class="cell">
                     <div class="input-control select full-width">
-                        <select  id="characteristic_conversionfunction"></select>
+                        <select id="characteristic_conversionfunction"></select>
                     </div>
+                </div>   
+            </div> 
+
+            <div class="row">
+                <div class="cell center">
+                </div>
+                <div class="cell">
                 </div>
                 <div class="cell" id="characteristic_conversionparams_container">
                 </div>
-            </div>         
+            </div>          
         </div>
     </template>
 </div>
@@ -764,25 +775,111 @@
 
 
 <template id="editor_single_state">
-    <div class="input-control auto-height full-width">
-        <textarea id="textfield" rows=1></textarea>
-        <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
-    </div>
+        <div class="table" id="yahka_characteristic_table">
+            <div class="row">
+                <div class="cell">
+                    <label class="translate" for="textfield">State:</label>
+                </div>
+                <div class="cell">
+                    <div class="input-control auto-height full-width">
+                        <textarea id="textfield" rows=1></textarea>
+                        <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>      
 </template>
+
+<template id="editor_const">
+        <div class="table" id="yahka_characteristic_table">
+            <div class="row">
+                <div class="cell">
+                    <label class="translate" for="textfield">Value:</label>
+                </div>
+                <div class="cell">
+                    <div class="input-control auto-height full-width">
+                        <textarea id="textfield" rows=1></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>      
+</template>
+
 
 <template id="editor_conversion_scale">
-    <div class="input-control auto-height full-width">
-        <input type="number" id="hkMin" ></input>
-    </div>
-    <div class="input-control auto-height full-width">
-        <input type="number" id="hkMax" ></input>
-    </div>
-    <div class="input-control auto-height full-width">
-        <input type="number" id="ioMin" ></input>
-    </div>
-    <div class="input-control auto-height full-width">
-        <input type="number" id="ioMax" ></input>
+    <!-- <div>Explanation: <br/>
+        $value is mapped to HomeKit with:  (homekitMin + ((homekitMax - homekitMin) / (ioBrokerMax - ioBrokerMin)) * ($value - ioBrokerMin))</br>
+        $value is mapped to ioBroker with: (ioBrokerMin + ((ioBrokerMax - ioBrokerMin) / (homeKitMax - homeKitMin)) * ($value - homeKitMin))
+    </div> -->
+    <div class="table" id="yahka_characteristic_table">
+        <div class="row">
+            <div class="cell">
+                <label class="translate" for="hkMin">HomeKit Minimum:</label>
+            </div>
+            <div class="cell">
+                <div class="input-control full-width">
+                        <input type="number" id="hkMin" ></input>
+                </div>                            
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                <label class="translate" for="hkMax">HomeKit Maximum:</label>
+            </div>
+            <div class="cell">
+                <div class="input-control full-width">
+                        <input type="number" id="hkMax" ></input>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                <label class="translate" for="ioMin">ioBroker Minimum:</label>
+            </div>
+            <div class="cell">
+                <div class="input-control full-width">
+                        <input type="number" id="ioMin" ></input>
+                    </div>
+                </div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                <label class="translate" for="ioMax">ioBroker Maximum:</label>
+            </div>
+            <div class="cell">
+                <div class="input-control full-width">
+                    <input type="number" id="ioMax" ></input>
+                </div>
+            </div>
+        </div>                                        
     </div>
 </template>
-
+<template id="editor_conversion_HomeMaticWindowCoveringTargetPosition">
+        <div class="table" id="yahka_characteristic_table">
+            <div class="row">
+                <div class="cell">
+                    <label class="translate" for="level">Level Datapoint:</label>
+                </div>
+                <div class="cell">
+                    <div class="input-control auto-height full-width">
+                        <textarea id="level" rows=1></textarea>
+                        <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
+                    </div>            
+                </div>
+            </div>
+            <div class="row">
+                <div class="cell">
+                    <label class="translate" for="working">Working Datapoint:</label>
+                </div>
+                <div class="cell">
+                    <div class="input-control auto-height full-width">
+                        <textarea id="working" rows=1></textarea>
+                        <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
+                    </div>            
+        
+                </div>
+            </div>                        
+        </div>
+    </template>
+    
 </html>
