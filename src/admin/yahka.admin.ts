@@ -938,6 +938,7 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
             this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod, functionMap);
             input.addEventListener('input', (e) => {
                 this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
+                let charConfig = this.findConfigCharacteristic(serviceConfig, name);
                 this.updateParameterEditor(input.value, container, charConfig[parameterName], paramUpdateMethod, functionMap);
                 return false;
             });

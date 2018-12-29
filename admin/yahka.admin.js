@@ -863,6 +863,7 @@ var ConfigPageBuilder_CustomDevice = (function (_super) {
             _this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod, functionMap);
             input.addEventListener('input', function (e) {
                 _this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
+                var charConfig = _this.findConfigCharacteristic(serviceConfig, name);
                 _this.updateParameterEditor(input.value, container, charConfig[parameterName], paramUpdateMethod, functionMap);
                 return false;
             });
