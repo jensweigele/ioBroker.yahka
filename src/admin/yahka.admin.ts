@@ -1271,17 +1271,21 @@ class ParameterEditor_ScaleConversionEditor extends ParameterEditor {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
 
-        try {
-            let parameterObject = JSON.parse(parameterValue);
-            this.txtHKMin.value = parameterObject["homekit.min"];
-            this.txtHKMax.value = parameterObject["homekit.max"];
-            this.txtIOBrokerMin.value = parameterObject["iobroker.min"];
-            this.txtIOBrokerMax.value = parameterObject["iobroker.max"];
+        let parameterArray = undefined;
+        if (typeof parameterValue === 'object') {
+            parameterArray = parameterValue
+        } else {
+            try {
+                parameterArray = JSON.parse(parameterValue);
+            } catch(e) {
+                this.txtHKMin.value = parameterValue;
+                return
+            }
         }
-        catch(e) {
-            this.txtHKMin.value = parameterValue;
-            console.log(e);
-        }
+        this.txtHKMin.value = parameterArray["homekit.min"];
+        this.txtHKMax.value = parameterArray["homekit.max"];
+        this.txtIOBrokerMin.value = parameterArray["iobroker.min"];
+        this.txtIOBrokerMax.value = parameterArray["iobroker.max"];
     }   
 
     protected buildNewParameterValue(): any {
@@ -1311,7 +1315,6 @@ class ParameterEditor_HomeMaticWindowCoveringTargetPosition extends ParameterEdi
     refreshAndShow(containerElement: HTMLElement, parameterValue: any) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
-        console.log(parameterValue);
         try {
             let p:Array<string>;
             if (typeof parameterValue === 'string')
@@ -1354,8 +1357,8 @@ class ParameterEditor_ConversionScript extends ParameterEditor {
     refreshAndShow(containerElement: HTMLElement, parameterValue: any) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
-        this.txtToHomeKit.value = parameterValue["toHomeKit"];
-        this.txtToIOBroker.value = parameterValue["toIOBroker"];
+        this.txtToHomeKit.value = parameterValue["toHomeKit"] ? parameterValue["toHomeKit"] : "";
+        this.txtToIOBroker.value = parameterValue["toIOBroker"] ? parameterValue["toIOBroker"] : "";
     }   
 
     protected buildNewParameterValue(): any {

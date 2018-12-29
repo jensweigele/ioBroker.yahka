@@ -447,7 +447,13 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
     },
 
     "scaleInt": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
-        var paramArray = JSON.parse(parameters);
+        
+        let paramArray = undefined;
+        if (typeof parameters === 'object') {
+            paramArray = parameters
+        } else {
+            paramArray = JSON.parse(parameters);
+        }
         function getParameter(name: string, defaultValue: number = undefined): number {
             if (paramArray === undefined) 
                 return defaultValue;

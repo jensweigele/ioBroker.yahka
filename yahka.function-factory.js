@@ -415,7 +415,13 @@ var conversionFactory = {
         };
     },
     "scaleInt": function (adapter, parameters) {
-        var paramArray = JSON.parse(parameters);
+        var paramArray = undefined;
+        if (typeof parameters === 'object') {
+            paramArray = parameters;
+        }
+        else {
+            paramArray = JSON.parse(parameters);
+        }
         function getParameter(name, defaultValue) {
             if (defaultValue === void 0) { defaultValue = undefined; }
             if (paramArray === undefined)

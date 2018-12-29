@@ -1153,17 +1153,23 @@ var ParameterEditor_ScaleConversionEditor = (function (_super) {
     ParameterEditor_ScaleConversionEditor.prototype.refreshAndShow = function (containerElement, parameterValue) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
-        try {
-            var parameterObject = JSON.parse(parameterValue);
-            this.txtHKMin.value = parameterObject["homekit.min"];
-            this.txtHKMax.value = parameterObject["homekit.max"];
-            this.txtIOBrokerMin.value = parameterObject["iobroker.min"];
-            this.txtIOBrokerMax.value = parameterObject["iobroker.max"];
+        var parameterArray = undefined;
+        if (typeof parameterValue === 'object') {
+            parameterArray = parameterValue;
         }
-        catch (e) {
-            this.txtHKMin.value = parameterValue;
-            console.log(e);
+        else {
+            try {
+                parameterArray = JSON.parse(parameterValue);
+            }
+            catch (e) {
+                this.txtHKMin.value = parameterValue;
+                return;
+            }
         }
+        this.txtHKMin.value = parameterArray["homekit.min"];
+        this.txtHKMax.value = parameterArray["homekit.max"];
+        this.txtIOBrokerMin.value = parameterArray["iobroker.min"];
+        this.txtIOBrokerMax.value = parameterArray["iobroker.max"];
     };
     ParameterEditor_ScaleConversionEditor.prototype.buildNewParameterValue = function () {
         return {
@@ -1189,7 +1195,6 @@ var ParameterEditor_HomeMaticWindowCoveringTargetPosition = (function (_super) {
     ParameterEditor_HomeMaticWindowCoveringTargetPosition.prototype.refreshAndShow = function (containerElement, parameterValue) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
-        console.log(parameterValue);
         try {
             var p = void 0;
             if (typeof parameterValue === 'string')
@@ -1228,8 +1233,8 @@ var ParameterEditor_ConversionScript = (function (_super) {
     ParameterEditor_ConversionScript.prototype.refreshAndShow = function (containerElement, parameterValue) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
-        this.txtToHomeKit.value = parameterValue["toHomeKit"];
-        this.txtToIOBroker.value = parameterValue["toIOBroker"];
+        this.txtToHomeKit.value = parameterValue["toHomeKit"] ? parameterValue["toHomeKit"] : "";
+        this.txtToIOBroker.value = parameterValue["toIOBroker"] ? parameterValue["toIOBroker"] : "";
     };
     ParameterEditor_ConversionScript.prototype.buildNewParameterValue = function () {
         return {
