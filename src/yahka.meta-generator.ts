@@ -2,6 +2,9 @@ import {CompleterResult} from 'readline';
 import {Characteristic}  from 'hap-nodejs/lib/Characteristic';
 import {Service} from 'hap-nodejs/lib/Service';
 import 'hap-nodejs/lib/gen/HomeKitTypes';
+import {importHAPCommunityTypes} from './yahka.community.types';
+
+importHAPCommunityTypes();
 
 let availableServices = Object.keys(Service);
 let availableCharacteristics = Object.keys(Characteristic);

@@ -14,8 +14,10 @@ var debug = require("debug");
 debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 var util = require("util");
 var HAP = require("hap-nodejs");
+var yahka_community_types_1 = require("./yahka.community.types");
 exports.HAPService = HAP.Service;
 exports.HAPCharacteristic = HAP.Characteristic;
+yahka_community_types_1.importHAPCommunityTypes();
 var THomeKitBridge = (function () {
     function THomeKitBridge(config, FBridgeFactory, FLogger) {
         this.config = config;

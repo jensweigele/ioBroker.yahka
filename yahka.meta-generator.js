@@ -14,6 +14,8 @@ var e_1, _a, e_2, _b, e_3, _c, e_4, _d;
 var Characteristic_1 = require("hap-nodejs/lib/Characteristic");
 var Service_1 = require("hap-nodejs/lib/Service");
 require("hap-nodejs/lib/gen/HomeKitTypes");
+var yahka_community_types_1 = require("./yahka.community.types");
+yahka_community_types_1.importHAPCommunityTypes();
 var availableServices = Object.keys(Service_1.Service);
 var availableCharacteristics = Object.keys(Characteristic_1.Characteristic);
 var result = {};
