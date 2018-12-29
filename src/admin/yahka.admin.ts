@@ -126,7 +126,9 @@ let convFunctions = new Map<string, ParameterEditorFactory>([
     ["scaleInt", (valueChangeCallback) => new ParameterEditor_ScaleConversionEditor(valueChangeCallback)],
     ["scaleFloat", (valueChangeCallback) => new ParameterEditor_ScaleConversionEditor(valueChangeCallback)],
     ["HomematicDirectionToHomekitPositionState", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
-    ["HomematicControlModeToHomekitHeathingCoolingState", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)]
+    ["HomematicControlModeToHomekitHeathingCoolingState", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
+    ["script", (valueChangeCallback) => new ParameterEditor_ConversionScript(valueChangeCallback)],
+    
 ]);
 
 
@@ -1335,3 +1337,32 @@ class ParameterEditor_HomeMaticWindowCoveringTargetPosition extends ParameterEdi
         return resultArray;
     }
 }
+
+class ParameterEditor_ConversionScript extends ParameterEditor {
+    private templateNode: DocumentFragment;
+    private txtToHomeKit: HTMLInputElement;
+    private txtToIOBroker: HTMLInputElement;
+    constructor(valueChangeCallback: IParameterEditorDelegate) {
+        super(valueChangeCallback);
+        this.templateNode = this.cloneTemplateNode('#editor_conversion_script');
+        this.txtToHomeKit = this.templateNode.querySelector("#toHomeKit");
+        this.txtToHomeKit.addEventListener('input', (ev) => this.valueChanged());
+        this.txtToIOBroker = this.templateNode.querySelector("#toIOBroker");
+        this.txtToIOBroker.addEventListener('input', (ev) => this.valueChanged());
+    }
+
+    refreshAndShow(containerElement: HTMLElement, parameterValue: any) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+        this.txtToHomeKit.value = parameterValue["toHomeKit"];
+        this.txtToIOBroker.value = parameterValue["toIOBroker"];
+    }   
+
+    protected buildNewParameterValue(): any {
+        return {
+            "toHomeKit": this.txtToHomeKit.value,
+            "toIOBroker": this.txtToIOBroker.value
+        }
+    }
+}
+

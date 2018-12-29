@@ -553,6 +553,30 @@ var conversionFactory = {
                 return newValue;
             }
         };
+    },
+    "script": function (adapter, parameters) {
+        function getParameter(name) {
+            if (parameters === undefined)
+                return "";
+            var value = parameters[name];
+            if (value === undefined)
+                return "";
+            return value;
+        }
+        var toHKFunction = new Function("value", getParameter("toHomeKit"));
+        var toIOBrokerFunction = new Function("value", getParameter("toIOBroker"));
+        return {
+            toHomeKit: function (value) {
+                var newValue = toHKFunction(value);
+                adapter.log.debug('script: converting value to homekit: ' + value + ' to ' + newValue);
+                return newValue;
+            },
+            toIOBroker: function (value) {
+                var newValue = toIOBrokerFunction(value);
+                adapter.log.debug('script: converting value to ioBroker: ' + value + ' to ' + newValue);
+                return newValue;
+            }
+        };
     }
 };
 exports.functionFactory = {

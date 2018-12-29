@@ -587,6 +587,33 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
                 return newValue; 
             }
         };
+    },
+
+    "script": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
+
+        function getParameter(name: string): string {
+            if (parameters === undefined) 
+                return "";
+            let value = parameters[name];
+            if (value === undefined) 
+                return "";
+            return value;
+        }
+
+        let toHKFunction = new Function("value", getParameter("toHomeKit"));
+        let toIOBrokerFunction = new Function("value", getParameter("toIOBroker"));
+        return {
+            toHomeKit: function (value) { 
+                let newValue = toHKFunction(value);
+                adapter.log.debug('script: converting value to homekit: ' + value + ' to ' + newValue); 
+                return newValue; 
+            },
+            toIOBroker: function (value) { 
+                let newValue = toIOBrokerFunction(value);
+                adapter.log.debug('script: converting value to ioBroker: ' + value + ' to ' + newValue); 
+                return newValue; 
+            }
+        };
     }
 };
 

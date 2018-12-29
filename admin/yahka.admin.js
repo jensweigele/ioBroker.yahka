@@ -139,7 +139,8 @@ var convFunctions = new Map([
     ["scaleInt", function (valueChangeCallback) { return new ParameterEditor_ScaleConversionEditor(valueChangeCallback); }],
     ["scaleFloat", function (valueChangeCallback) { return new ParameterEditor_ScaleConversionEditor(valueChangeCallback); }],
     ["HomematicDirectionToHomekitPositionState", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
-    ["HomematicControlModeToHomekitHeathingCoolingState", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }]
+    ["HomematicControlModeToHomekitHeathingCoolingState", function (valueChangeCallback) { return new ParameterEditor_SingleState(valueChangeCallback); }],
+    ["script", function (valueChangeCallback) { return new ParameterEditor_ConversionScript(valueChangeCallback); }],
 ]);
 var HAPServiceDictionary = {};
 getObject('yahka.meta._serviceDictionary', function (error, object) {
@@ -1212,5 +1213,30 @@ var ParameterEditor_HomeMaticWindowCoveringTargetPosition = (function (_super) {
         return resultArray;
     };
     return ParameterEditor_HomeMaticWindowCoveringTargetPosition;
+}(ParameterEditor));
+var ParameterEditor_ConversionScript = (function (_super) {
+    __extends(ParameterEditor_ConversionScript, _super);
+    function ParameterEditor_ConversionScript(valueChangeCallback) {
+        var _this = _super.call(this, valueChangeCallback) || this;
+        _this.templateNode = _this.cloneTemplateNode('#editor_conversion_script');
+        _this.txtToHomeKit = _this.templateNode.querySelector("#toHomeKit");
+        _this.txtToHomeKit.addEventListener('input', function (ev) { return _this.valueChanged(); });
+        _this.txtToIOBroker = _this.templateNode.querySelector("#toIOBroker");
+        _this.txtToIOBroker.addEventListener('input', function (ev) { return _this.valueChanged(); });
+        return _this;
+    }
+    ParameterEditor_ConversionScript.prototype.refreshAndShow = function (containerElement, parameterValue) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+        this.txtToHomeKit.value = parameterValue["toHomeKit"];
+        this.txtToIOBroker.value = parameterValue["toIOBroker"];
+    };
+    ParameterEditor_ConversionScript.prototype.buildNewParameterValue = function () {
+        return {
+            "toHomeKit": this.txtToHomeKit.value,
+            "toIOBroker": this.txtToIOBroker.value
+        };
+    };
+    return ParameterEditor_ConversionScript;
 }(ParameterEditor));
 //# sourceMappingURL=yahka.admin.js.map
