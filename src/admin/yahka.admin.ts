@@ -1240,7 +1240,7 @@ class ParameterEditor_Const extends ParameterEditor {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
 
-        this.textField.value = parameterValue;
+        this.textField.value = parameterValue ? parameterValue : "";
     }   
 
     protected buildNewParameterValue(): any {

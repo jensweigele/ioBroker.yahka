@@ -1128,7 +1128,7 @@ var ParameterEditor_Const = (function (_super) {
     ParameterEditor_Const.prototype.refreshAndShow = function (containerElement, parameterValue) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
-        this.textField.value = parameterValue;
+        this.textField.value = parameterValue ? parameterValue : "";
     };
     ParameterEditor_Const.prototype.buildNewParameterValue = function () {
         return this.textField.value;

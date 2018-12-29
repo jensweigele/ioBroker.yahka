@@ -778,7 +778,7 @@
         <div class="table" id="yahka_characteristic_table">
             <div class="row">
                 <div class="cell">
-                    <label class="translate" for="textfield">State:</label>
+                    <label class="translate">State:</label>
                 </div>
                 <div class="cell">
                     <div class="input-control auto-height full-width">
@@ -794,7 +794,7 @@
         <div class="table" id="yahka_characteristic_table">
             <div class="row">
                 <div class="cell">
-                    <label class="translate" for="textfield">Value:</label>
+                    <label class="translate">Value:</label>
                 </div>
                 <div class="cell">
                     <div class="input-control auto-height full-width">
@@ -814,7 +814,7 @@
     <div class="table" id="yahka_characteristic_table">
         <div class="row">
             <div class="cell">
-                <label class="translate" for="hkMin">HomeKit Minimum:</label>
+                <label class="translate">HomeKit Minimum:</label>
             </div>
             <div class="cell">
                 <div class="input-control full-width">
@@ -824,7 +824,7 @@
         </div>
         <div class="row">
             <div class="cell">
-                <label class="translate" for="hkMax">HomeKit Maximum:</label>
+                <label class="translate">HomeKit Maximum:</label>
             </div>
             <div class="cell">
                 <div class="input-control full-width">
@@ -834,7 +834,7 @@
         </div>
         <div class="row">
             <div class="cell">
-                <label class="translate" for="ioMin">ioBroker Minimum:</label>
+                <label class="translate">ioBroker Minimum:</label>
             </div>
             <div class="cell">
                 <div class="input-control full-width">
@@ -844,7 +844,7 @@
         </div>
         <div class="row">
             <div class="cell">
-                <label class="translate" for="ioMax">ioBroker Maximum:</label>
+                <label class="translate">ioBroker Maximum:</label>
             </div>
             <div class="cell">
                 <div class="input-control full-width">
@@ -858,7 +858,7 @@
         <div class="table" id="yahka_characteristic_table">
             <div class="row">
                 <div class="cell">
-                    <label class="translate" for="level">Level Datapoint:</label>
+                    <label class="translate">Level Datapoint:</label>
                 </div>
                 <div class="cell">
                     <div class="input-control auto-height full-width">
@@ -869,7 +869,7 @@
             </div>
             <div class="row">
                 <div class="cell">
-                    <label class="translate" for="working">Working Datapoint:</label>
+                    <label class="translate">Working Datapoint:</label>
                 </div>
                 <div class="cell">
                     <div class="input-control auto-height full-width">
@@ -883,26 +883,30 @@
 </template>
 
 <template id="editor_conversion_script">
+    <div>Explanation: use the variable <b>value</b> to access the sourcevalue. Example: <i>return value * 2;</i><br/>
     <div class="table" id="yahka_characteristic_table">
         <div class="row">
             <div class="cell">
-                <label class="translate" for="toHomeKit">To HomeKit:</label>
+                <label class="translate">To HomeKit:</label>
             </div>
             <div class="cell">
+                <span>function(value) {</span>
                 <div class="input-control auto-height full-width">
-                    <textarea id="toHomeKit" rows=1></textarea>
+                    <textarea id="toHomeKit" rows=4></textarea>
                 </div>            
+                <span>}</span>
             </div>
         </div>
         <div class="row">
             <div class="cell">
-                <label class="translate" for="toIOBroker">To IOBroker:</label>
+                <label class="translate">To IOBroker:</label>
             </div>
             <div class="cell">
+                <span>function(value) {</span>
                 <div class="input-control auto-height full-width">
-                    <textarea id="toIOBroker" rows=1></textarea>
+                    <textarea id="toIOBroker" rows=4></textarea>
                 </div>            
-    
+                <span>}</span>
             </div>
         </div>                        
     </div>
