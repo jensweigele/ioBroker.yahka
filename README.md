@@ -14,6 +14,11 @@ For details on how to install and configure this adapter, please see the [Wiki](
 
 ## Changelog
 
+### 0.9.0
+  (jw) improved admin interface to support individual editors for IO/Conversion functions<br>
+  (jw) added new conversion function "script" which adds the ability to run JavaScript functions as conversion functions<br>
+  (jw) fixed a bug in the scaleInt and scaleFloat methods (thanks to balzreber) <br>
+
 ### 0.8.2
   (jw) Removed a bug which flooded logging when starting/stopping the adapter which led to excessive memory consumption<br>
 
@@ -23,6 +28,7 @@ For details on how to install and configure this adapter, please see the [Wiki](
   (foxriver76) remove excessive logging<br>
   (mdietz666) scaleInt and scaleFloat now supports min-values (this allows mapping from e.g. -90 to 90 to 0 to 180)<br>
   (arichter83) added "Duplicate Device" functionality<br>
+
 ### 0.7.1
   (jw) fixed a bug where state selection with admin 2.0.9 did not work anymore<br>
   (jw) restructured repository to support install via url<br>
