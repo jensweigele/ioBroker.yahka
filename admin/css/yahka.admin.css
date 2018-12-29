@@ -103,6 +103,10 @@
 .row .input-control textarea {
     min-height: initial;
 }
+.row .input-control {
+    display: flex;
+    align-items: center;
+}
 
 .tabcontrol2 .frames .frame.flex-container-col,
 .tabcontrol2 .frames .frame.flex-container-row {

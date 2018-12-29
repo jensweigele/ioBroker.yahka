@@ -1,8 +1,13 @@
 {
     "common": {
         "name": "yahka",
-        "version": "0.8.2",
+        "version": "0.9.0",
         "news": {
+            "0.9.0": {
+                "en": "Improvements to Admin interface, new Script-Conversion function and some fixes",
+                "de": "Verbesserte Admin Oberfläche, neue Script-Konvertierungsfunktion und diverse Fehlerbehebungen"
+            },     
+
             "0.8.2": {
                 "en": "Removed a bug which flooded logging when starting/stopping the adapter which led to excessive memory consumption",
                 "de": "Fehler behoben durch den extrem viele Log ausgaben beim starten/beenden des Adapters geschrieben wurden - dies hat zu extremem RAM Verbrauch geführt."
@@ -87,35 +92,6 @@
         }
     },
     "objects": [
-        {
-            "_id": "yahka.meta._inoutFunctions",
-            "type": "meta",
-            "common": {},
-            "native": [
-                "",
-                "const",
-                "ioBroker.State",
-                "ioBroker.State.Defered",
-                "ioBroker.State.OnlyACK",
-                "ioBroker.homematic.WindowCovering.TargetPosition"
-            ]
-        },
-        {
-            "_id": "yahka.meta._conversionFunctions",
-            "type": "meta",
-            "common": {},
-            "native": [
-                "",
-                "hue",
-                "level255",
-                "passthrough",
-                "inverse",
-                "scaleInt",
-                "scaleFloat",
-                "HomematicDirectionToHomekitPositionState",
-                "HomematicControlModeToHomekitHeathingCoolingState"
-            ]
-        },
         {
             "_id": "yahka.meta._accessoryCategories",
             "type": "meta",

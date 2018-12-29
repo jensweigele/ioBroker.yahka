@@ -1,4 +1,14 @@
 "use strict";
+var __values = (this && this.__values) || function (o) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+    if (m) return m.call(o);
+    return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var child_process_1 = require("child_process");
 var HAP = require("hap-nodejs");
@@ -133,9 +143,19 @@ var THomeKitIPCamera = (function () {
         }, false);
     };
     THomeKitIPCamera.prototype.handleCloseConnection = function (connectionID) {
-        for (var _i = 0, _a = this.streamControllers; _i < _a.length; _i++) {
-            var controller = _a[_i];
-            controller.handleCloseConnection(connectionID);
+        var e_1, _a;
+        try {
+            for (var _b = __values(this.streamControllers), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var controller = _c.value;
+                controller.handleCloseConnection(connectionID);
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_1) throw e_1.error; }
         }
     };
     THomeKitIPCamera.prototype.handleSnapshotRequest = function (request, callback) {

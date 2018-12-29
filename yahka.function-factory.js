@@ -415,7 +415,13 @@ var conversionFactory = {
         };
     },
     "scaleInt": function (adapter, parameters) {
-        var paramArray = JSON.parse(parameters);
+        var paramArray = undefined;
+        if (typeof parameters === 'object') {
+            paramArray = parameters;
+        }
+        else {
+            paramArray = JSON.parse(parameters);
+        }
         function getParameter(name, defaultValue) {
             if (defaultValue === void 0) { defaultValue = undefined; }
             if (paramArray === undefined)
@@ -439,7 +445,7 @@ var conversionFactory = {
                 var ioBrokerMax = getParameter("iobroker.max");
                 var homeKitMin = getParameter("homekit.min", 0);
                 var ioBrokerMin = getParameter("iobroker.min", 0);
-                var newValue = Math.round(((num - ioBrokerMin) / (ioBrokerMax - ioBrokerMin)) * (homeKitMax - homeKitMin));
+                var newValue = Math.round(homeKitMin + ((homeKitMax - homeKitMin) / (ioBrokerMax - ioBrokerMin)) * (num - ioBrokerMin));
                 adapter.log.debug('scaleInt: converting value to homekit: ' + value + ' to ' + newValue);
                 return newValue;
             },
@@ -453,7 +459,8 @@ var conversionFactory = {
                 var ioBrokerMax = getParameter("iobroker.max");
                 var homeKitMin = getParameter("homekit.min", 0);
                 var ioBrokerMin = getParameter("iobroker.min", 0);
-                var newValue = Math.round(((num - homeKitMin) / (homeKitMax - homeKitMin)) * (ioBrokerMax - ioBrokerMin));
+                var newValue = Math.round(ioBrokerMin + ((ioBrokerMax - ioBrokerMin) / (homeKitMax - homeKitMin)) * (num - homeKitMin));
+                ;
                 adapter.log.debug('scaleInt: converting value to ioBroker: ' + value + ' to ' + newValue);
                 return newValue;
             }
@@ -550,6 +557,30 @@ var conversionFactory = {
                     num = value;
                 var newValue = Math.round((num / 360.0) * 65535.0);
                 adapter.log.debug('hue: converting value to ioBroker: ' + value + ' to ' + newValue);
+                return newValue;
+            }
+        };
+    },
+    "script": function (adapter, parameters) {
+        function getParameter(name) {
+            if (parameters === undefined)
+                return "";
+            var value = parameters[name];
+            if (value === undefined)
+                return "";
+            return value;
+        }
+        var toHKFunction = new Function("value", getParameter("toHomeKit"));
+        var toIOBrokerFunction = new Function("value", getParameter("toIOBroker"));
+        return {
+            toHomeKit: function (value) {
+                var newValue = toHKFunction(value);
+                adapter.log.debug('script: converting value to homekit: ' + value + ' to ' + newValue);
+                return newValue;
+            },
+            toIOBroker: function (value) {
+                var newValue = toIOBrokerFunction(value);
+                adapter.log.debug('script: converting value to ioBroker: ' + value + ' to ' + newValue);
                 return newValue;
             }
         };

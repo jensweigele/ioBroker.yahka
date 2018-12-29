@@ -1,4 +1,14 @@
 "use strict";
+var __values = (this && this.__values) || function (o) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+    if (m) return m.call(o);
+    return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var debug = require("debug");
 debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
@@ -14,21 +24,31 @@ var THomeKitBridge = (function () {
         this.init();
     }
     THomeKitBridge.prototype.init = function () {
+        var e_1, _a;
         this.bridgeObject = this.setupBridge();
         if (this.config.devices)
-            for (var _i = 0, _a = this.config.devices; _i < _a.length; _i++) {
-                var device = _a[_i];
-                if (device.enabled === false) {
-                    continue;
+            try {
+                for (var _b = __values(this.config.devices), _c = _b.next(); !_c.done; _c = _b.next()) {
+                    var device = _c.value;
+                    if (device.enabled === false) {
+                        continue;
+                    }
+                    var hapDevice = this.createDevice(device);
+                    try {
+                        this.bridgeObject.addBridgedAccessory(hapDevice);
+                    }
+                    catch (e) {
+                        this.FLogger.warn(e);
+                        this.FLogger.warn('Error by adding: ' + JSON.stringify(device));
+                    }
                 }
-                var hapDevice = this.createDevice(device);
+            }
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+            finally {
                 try {
-                    this.bridgeObject.addBridgedAccessory(hapDevice);
+                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
                 }
-                catch (e) {
-                    this.FLogger.warn(e);
-                    this.FLogger.warn('Error by adding: ' + JSON.stringify(device));
-                }
+                finally { if (e_1) throw e_1.error; }
             }
         this.bridgeObject.publish({
             username: this.config.username,
@@ -52,6 +72,7 @@ var THomeKitBridge = (function () {
     };
     THomeKitBridge.prototype.createDevice = function (device) {
         var _this = this;
+        var e_2, _a;
         var devName = device.name;
         var deviceID = HAP.uuid.generate(this.config.ident + ':' + devName);
         var i = 0;
@@ -69,13 +90,23 @@ var THomeKitBridge = (function () {
             _this.FLogger.debug('device identify');
             callback();
         });
-        for (var _i = 0, _a = device.services; _i < _a.length; _i++) {
-            var serviceConfig = _a[_i];
-            this.initService(hapDevice, serviceConfig);
+        try {
+            for (var _b = __values(device.services), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var serviceConfig = _c.value;
+                this.initService(hapDevice, serviceConfig);
+            }
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_2) throw e_2.error; }
         }
         return hapDevice;
     };
     THomeKitBridge.prototype.initService = function (hapDevice, serviceConfig) {
+        var e_3, _a;
         if (!(serviceConfig.type in HAP.Service)) {
             throw Error('unknown service type: ' + serviceConfig.type);
         }
@@ -88,9 +119,18 @@ var THomeKitBridge = (function () {
             hapService = new HAP.Service[serviceConfig.type](serviceConfig.name, serviceConfig.subType);
             isNew = true;
         }
-        for (var _i = 0, _a = serviceConfig.characteristics; _i < _a.length; _i++) {
-            var charactConfig = _a[_i];
-            this.initCharacteristic(hapService, charactConfig);
+        try {
+            for (var _b = __values(serviceConfig.characteristics), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var charactConfig = _c.value;
+                this.initCharacteristic(hapService, charactConfig);
+            }
+        }
+        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_3) throw e_3.error; }
         }
         var curTempCharacetristic = hapService.getCharacteristic('Current Temperature');
         if (curTempCharacetristic !== undefined) {

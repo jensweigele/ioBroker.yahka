@@ -447,7 +447,13 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
     },
 
     "scaleInt": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
-        var paramArray = JSON.parse(parameters);
+        
+        let paramArray = undefined;
+        if (typeof parameters === 'object') {
+            paramArray = parameters
+        } else {
+            paramArray = JSON.parse(parameters);
+        }
         function getParameter(name: string, defaultValue: number = undefined): number {
             if (paramArray === undefined) 
                 return defaultValue;
@@ -471,7 +477,7 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
                 let ioBrokerMax = getParameter("iobroker.max");
                 let homeKitMin = getParameter("homekit.min", 0);
                 let ioBrokerMin = getParameter("iobroker.min", 0);
-                let newValue = Math.round(((num - ioBrokerMin) / (ioBrokerMax - ioBrokerMin)) * (homeKitMax - homeKitMin));
+                let newValue = Math.round(homeKitMin + ((homeKitMax - homeKitMin) / (ioBrokerMax - ioBrokerMin)) * (num - ioBrokerMin));
 		        adapter.log.debug('scaleInt: converting value to homekit: ' + value + ' to ' + newValue); 
                 return newValue; 
 			},
@@ -485,7 +491,7 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
                 let ioBrokerMax = getParameter("iobroker.max");
                 let homeKitMin = getParameter("homekit.min", 0);
                 let ioBrokerMin = getParameter("iobroker.min", 0);
-                let newValue = Math.round(((num - homeKitMin) / (homeKitMax - homeKitMin)) * (ioBrokerMax - ioBrokerMin));
+                let newValue = Math.round(ioBrokerMin + ((ioBrokerMax - ioBrokerMin) / (homeKitMax - homeKitMin)) * (num - homeKitMin));;
                 adapter.log.debug('scaleInt: converting value to ioBroker: ' + value + ' to ' + newValue); 
                 return newValue; 
             }
@@ -584,6 +590,33 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
                     num = value;     
                 var newValue = Math.round((num / 360.0) * 65535.0);
                 adapter.log.debug('hue: converting value to ioBroker: ' + value + ' to ' + newValue); 
+                return newValue; 
+            }
+        };
+    },
+
+    "script": function (adapter:ioBroker.IAdapter, parameters:any):IConversionFunction {
+
+        function getParameter(name: string): string {
+            if (parameters === undefined) 
+                return "";
+            let value = parameters[name];
+            if (value === undefined) 
+                return "";
+            return value;
+        }
+
+        let toHKFunction = new Function("value", getParameter("toHomeKit"));
+        let toIOBrokerFunction = new Function("value", getParameter("toIOBroker"));
+        return {
+            toHomeKit: function (value) { 
+                let newValue = toHKFunction(value);
+                adapter.log.debug('script: converting value to homekit: ' + value + ' to ' + newValue); 
+                return newValue; 
+            },
+            toIOBroker: function (value) { 
+                let newValue = toIOBrokerFunction(value);
+                adapter.log.debug('script: converting value to ioBroker: ' + value + ' to ' + newValue); 
                 return newValue; 
             }
         };

@@ -335,9 +335,9 @@
                     $sid.hide();
                     if (newId !== $textarea.val()) {
                         $textarea.val(newId)[0].dispatchEvent(new Event('input'));
-                        if (!$select.val()) {
-                            $select.val('ioBroker.State')[0].dispatchEvent(new Event('input'));
-                        }
+                         //if (!$select.val()) {
+                        //    $select.val('ioBroker.State')[0].dispatchEvent(new Event('input'));
+                        //}
                     }
                 }).show();
 
@@ -694,9 +694,7 @@
                     <div class="header row">
                         <div class="cell translate">Enabled</div>
                         <div class="cell translate">Name</div>
-                        <div class="cell translate">1: InOutFunction / 2: ConversionFunction</div>
-                        <div class="cell translate">1: InOutParams / 2: ConversionParams</div>
-                        <div class="cell"></div>
+                        <div class="cell translate"></div>
                     </div>
                 </div>
             </div>
@@ -714,44 +712,204 @@
                 </div>
                 <div class="cell">
                     <span id="characteristic_name"></span>
-                    <span class="place-right">1: </span>
+                    <span class="place-right">InOut: </span>
                 </div>
                 <div class="cell">
                     <div class="input-control select full-width">
                         <select id="characteristic_inoutfunction"></select>
                     </div>
                 </div>
-                <div class="cell">
-                    <div class="input-control auto-height full-width">
-                        <textarea id="characteristic_inoutparams" rows=1></textarea>
-                    </div>
-                </div>
-                <div class="cell">
-                    <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
-                </div>
-            </div> 
+            </div>
+
             <div class="row">
                 <div class="cell center">
                 </div>
                 <div class="cell">
-                    <span class="place-right">2: </span>
                 </div>
+                <div class="cell" id="characteristic_inoutparams_container">
+                </div>
+            </div>   
+
+            <div class="row">
+                <div class="cell center">
+                </div>   
+                <div class="cell center">
+                    <span class="place-right">Conversion: </span>
+                </div>           
                 <div class="cell">
                     <div class="input-control select full-width">
-                        <select  id="characteristic_conversionfunction"></select>
+                        <select id="characteristic_conversionfunction"></select>
                     </div>
+                </div>   
+            </div> 
+
+            <div class="row">
+                <div class="cell center">
                 </div>
                 <div class="cell">
-                    <div class="input-control auto-height full-width">
-                        <textarea id="characteristic_conversionparams" rows=1></textarea>
-                    </div>
                 </div>
-                <div class="cell">
-                    <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
+                <div class="cell" id="characteristic_conversionparams_container">
                 </div>
-            </div>         
+            </div>          
         </div>
     </template>
 </div>
+<div class="material-dialogs m">
+    <div id="dialog-select-member" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col s12 title"></div>
+            </div>
+            <div class="row">
+                <div class="col s12 dialog-content">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-action modal-close waves-effect waves-green btn btn-set"  ><i class="large material-icons">check</i><span class="translate">Select</span></a>
+            <a class="modal-action modal-close waves-effect waves-green btn btn-close"><i class="large material-icons">close</i><span class="translate">Cancel</span></a>
+        </div>
+    </div>
+</div>
 </body>
+
+
+<template id="editor_single_state">
+        <div class="table" id="yahka_characteristic_table">
+            <div class="row">
+                <div class="cell">
+                    <label class="translate">State:</label>
+                </div>
+                <div class="cell">
+                    <div class="input-control auto-height full-width">
+                        <textarea id="textfield" rows=1></textarea>
+                        <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>      
+</template>
+
+<template id="editor_const">
+        <div class="table" id="yahka_characteristic_table">
+            <div class="row">
+                <div class="cell">
+                    <label class="translate">Value:</label>
+                </div>
+                <div class="cell">
+                    <div class="input-control auto-height full-width">
+                        <textarea id="textfield" rows=1></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>      
+</template>
+
+
+<template id="editor_conversion_scale">
+    <!-- <div>Explanation: <br/>
+        $value is mapped to HomeKit with:  (homekitMin + ((homekitMax - homekitMin) / (ioBrokerMax - ioBrokerMin)) * ($value - ioBrokerMin))</br>
+        $value is mapped to ioBroker with: (ioBrokerMin + ((ioBrokerMax - ioBrokerMin) / (homeKitMax - homeKitMin)) * ($value - homeKitMin))
+    </div> -->
+    <div class="table" id="yahka_characteristic_table">
+        <div class="row">
+            <div class="cell">
+                <label class="translate">HomeKit Minimum:</label>
+            </div>
+            <div class="cell">
+                <div class="input-control full-width">
+                        <input type="number" id="hkMin" ></input>
+                </div>                            
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                <label class="translate">HomeKit Maximum:</label>
+            </div>
+            <div class="cell">
+                <div class="input-control full-width">
+                        <input type="number" id="hkMax" ></input>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                <label class="translate">ioBroker Minimum:</label>
+            </div>
+            <div class="cell">
+                <div class="input-control full-width">
+                        <input type="number" id="ioMin" ></input>
+                    </div>
+                </div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                <label class="translate">ioBroker Maximum:</label>
+            </div>
+            <div class="cell">
+                <div class="input-control full-width">
+                    <input type="number" id="ioMax" ></input>
+                </div>
+            </div>
+        </div>                                        
+    </div>
+</template>
+<template id="editor_conversion_HomeMaticWindowCoveringTargetPosition">
+        <div class="table" id="yahka_characteristic_table">
+            <div class="row">
+                <div class="cell">
+                    <label class="translate">Level Datapoint:</label>
+                </div>
+                <div class="cell">
+                    <div class="input-control auto-height full-width">
+                        <textarea id="level" rows=1></textarea>
+                        <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
+                    </div>            
+                </div>
+            </div>
+            <div class="row">
+                <div class="cell">
+                    <label class="translate">Working Datapoint:</label>
+                </div>
+                <div class="cell">
+                    <div class="input-control auto-height full-width">
+                        <textarea id="working" rows=1></textarea>
+                        <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
+                    </div>            
+        
+                </div>
+            </div>                        
+        </div>
+</template>
+
+<template id="editor_conversion_script">
+    <div>Explanation: use the variable <b>value</b> to access the sourcevalue. Example: <i>return value * 2;</i><br/>
+    <div class="table" id="yahka_characteristic_table">
+        <div class="row">
+            <div class="cell">
+                <label class="translate">To HomeKit:</label>
+            </div>
+            <div class="cell">
+                <span>function(value) {</span>
+                <div class="input-control auto-height full-width">
+                    <textarea id="toHomeKit" rows=4></textarea>
+                </div>            
+                <span>}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                <label class="translate">To IOBroker:</label>
+            </div>
+            <div class="cell">
+                <span>function(value) {</span>
+                <div class="input-control auto-height full-width">
+                    <textarea id="toIOBroker" rows=4></textarea>
+                </div>            
+                <span>}</span>
+            </div>
+        </div>                        
+    </div>
+</template>
+
 </html>

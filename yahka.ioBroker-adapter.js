@@ -1,4 +1,14 @@
 "use strict";
+var __values = (this && this.__values) || function (o) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+    if (m) return m.call(o);
+    return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var yahka_homekit_ipcamera_1 = require("./yahka.homekit-ipcamera");
 var hkBridge = require("./yahka.homekit-bridge");
@@ -52,13 +62,23 @@ var TIOBrokerAdapter = (function () {
         this.devices.push(new hkBridge.THomeKitBridge(config.bridge, this, this.adapter.log));
     };
     TIOBrokerAdapter.prototype.createCameraDevices = function (config) {
+        var e_1, _a;
         var cameraArray = config.cameras;
         if (cameraArray === undefined)
             return;
-        for (var _i = 0, cameraArray_1 = cameraArray; _i < cameraArray_1.length; _i++) {
-            var cameraConfig = cameraArray_1[_i];
-            this.adapter.log.debug('creating camera');
-            this.devices.push(new yahka_homekit_ipcamera_1.THomeKitIPCamera(cameraConfig, this.adapter.log));
+        try {
+            for (var cameraArray_1 = __values(cameraArray), cameraArray_1_1 = cameraArray_1.next(); !cameraArray_1_1.done; cameraArray_1_1 = cameraArray_1.next()) {
+                var cameraConfig = cameraArray_1_1.value;
+                this.adapter.log.debug('creating camera');
+                this.devices.push(new yahka_homekit_ipcamera_1.THomeKitIPCamera(cameraConfig, this.adapter.log));
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (cameraArray_1_1 && !cameraArray_1_1.done && (_a = cameraArray_1.return)) _a.call(cameraArray_1);
+            }
+            finally { if (e_1) throw e_1.error; }
         }
     };
     TIOBrokerAdapter.prototype.handleHAPLogEvent = function (message) {
@@ -66,14 +86,24 @@ var TIOBrokerAdapter = (function () {
             this.adapter.log.debug(message);
     };
     TIOBrokerAdapter.prototype.handleState = function (id, state) {
+        var e_2, _a;
         var notifyArray = this.stateToEventMap.get(id);
         if (!notifyArray) {
             return;
         }
         this.adapter.log.debug('got a stateChange for [' + id + ']');
-        for (var _i = 0, notifyArray_1 = notifyArray; _i < notifyArray_1.length; _i++) {
-            var method = notifyArray_1[_i];
-            method(state);
+        try {
+            for (var notifyArray_1 = __values(notifyArray), notifyArray_1_1 = notifyArray_1.next(); !notifyArray_1_1.done; notifyArray_1_1 = notifyArray_1.next()) {
+                var method = notifyArray_1_1.value;
+                method(state);
+            }
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (notifyArray_1_1 && !notifyArray_1_1.done && (_a = notifyArray_1.return)) _a.call(notifyArray_1);
+            }
+            finally { if (e_2) throw e_2.error; }
         }
     };
     TIOBrokerAdapter.prototype.handleMessage = function (obj) {
@@ -96,6 +126,7 @@ var TIOBrokerAdapter = (function () {
         }
     };
     TIOBrokerAdapter.prototype.handleInOutSubscriptionRequest = function (inOutFunction, changeNotify) {
+        var e_3, _a;
         if (inOutFunction.subscriptionRequests.length == 0)
             return;
         var _loop_1 = function (subscriptionRequest) {
@@ -116,9 +147,18 @@ var TIOBrokerAdapter = (function () {
             }
         };
         var this_1 = this;
-        for (var _i = 0, _a = inOutFunction.subscriptionRequests; _i < _a.length; _i++) {
-            var subscriptionRequest = _a[_i];
-            _loop_1(subscriptionRequest);
+        try {
+            for (var _b = __values(inOutFunction.subscriptionRequests), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var subscriptionRequest = _c.value;
+                _loop_1(subscriptionRequest);
+            }
+        }
+        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_3) throw e_3.error; }
         }
     };
     TIOBrokerAdapter.prototype.CreateBinding = function (characteristicConfig, changeNotify) {
