@@ -4,11 +4,14 @@ debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 import util = require('util');
 import HAP = require('hap-nodejs');
 import { Configuration } from './yahka.configuration';
+import {importHAPCommunityTypes} from './yahka.community.types';
 
 
 // export let HAPAccessory:any = HAP.Accessory;
 export let HAPService = HAP.Service;
 export let HAPCharacteristic = HAP.Characteristic;
+
+importHAPCommunityTypes();
 
 type IHAPService = any;
 

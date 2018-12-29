@@ -1593,6 +1593,459 @@
                             "optional": false
                         }
                     }
+                },
+                "AudioDeviceService": {
+                    "type": "AudioDeviceService",
+                    "characteristics": {
+                        "AudioVolume": {
+                            "name": "AudioVolume",
+                            "optional": false
+                        },
+                        "Muting": {
+                            "name": "Muting",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "PlaybackDeviceService": {
+                    "type": "PlaybackDeviceService",
+                    "characteristics": {
+                        "PlaybackState": {
+                            "name": "PlaybackState",
+                            "optional": false
+                        },
+                        "SkipForward": {
+                            "name": "SkipForward",
+                            "optional": true
+                        },
+                        "SkipBackward": {
+                            "name": "SkipBackward",
+                            "optional": true
+                        },
+                        "ShuffleMode": {
+                            "name": "ShuffleMode",
+                            "optional": true
+                        },
+                        "RepeatMode": {
+                            "name": "RepeatMode",
+                            "optional": true
+                        },
+                        "PlaybackSpeed": {
+                            "name": "PlaybackSpeed",
+                            "optional": true
+                        },
+                        "MediaCurrentPosition": {
+                            "name": "MediaCurrentPosition",
+                            "optional": true
+                        },
+                        "MediaItemName": {
+                            "name": "MediaItemName",
+                            "optional": true
+                        },
+                        "MediaItemAlbumName": {
+                            "name": "MediaItemAlbumName",
+                            "optional": true
+                        },
+                        "MediaItemArtist": {
+                            "name": "MediaItemArtist",
+                            "optional": true
+                        },
+                        "MediaItemDuration": {
+                            "name": "MediaItemDuration",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        },
+                        "StillImage": {
+                            "name": "StillImage",
+                            "optional": true
+                        },
+                        "MediaTypeIdentifier": {
+                            "name": "MediaTypeIdentifier",
+                            "optional": true
+                        },
+                        "MediaWidth": {
+                            "name": "MediaWidth",
+                            "optional": true
+                        },
+                        "MediaHeight": {
+                            "name": "MediaHeight",
+                            "optional": true
+                        }
+                    }
+                },
+                "MediaInformationService": {
+                    "type": "MediaInformationService",
+                    "characteristics": {
+                        "MediaItemName": {
+                            "name": "MediaItemName",
+                            "optional": false
+                        },
+                        "MediaItemAlbumName": {
+                            "name": "MediaItemAlbumName",
+                            "optional": true
+                        },
+                        "MediaItemArtist": {
+                            "name": "MediaItemArtist",
+                            "optional": true
+                        },
+                        "MediaItemDuration": {
+                            "name": "MediaItemDuration",
+                            "optional": true
+                        },
+                        "MediaCurrentPosition": {
+                            "name": "MediaCurrentPosition",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        },
+                        "StillImage": {
+                            "name": "StillImage",
+                            "optional": true
+                        },
+                        "MediaTypeIdentifier": {
+                            "name": "MediaTypeIdentifier",
+                            "optional": true
+                        },
+                        "MediaWidth": {
+                            "name": "MediaWidth",
+                            "optional": true
+                        },
+                        "MediaHeight": {
+                            "name": "MediaHeight",
+                            "optional": true
+                        }
+                    }
+                },
+                "StillImageService": {
+                    "type": "StillImageService",
+                    "characteristics": {
+                        "StillImage": {
+                            "name": "StillImage",
+                            "optional": false
+                        },
+                        "MediaTypeIdentifier": {
+                            "name": "MediaTypeIdentifier",
+                            "optional": false
+                        },
+                        "MediaWidth": {
+                            "name": "MediaWidth",
+                            "optional": true
+                        },
+                        "MediaHeight": {
+                            "name": "MediaHeight",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "SecurityCameraService": {
+                    "type": "SecurityCameraService",
+                    "characteristics": {
+                        "MediaTypeIdentifier": {
+                            "name": "MediaTypeIdentifier",
+                            "optional": false
+                        },
+                        "Timestamp": {
+                            "name": "Timestamp",
+                            "optional": true
+                        },
+                        "MediaWidth": {
+                            "name": "MediaWidth",
+                            "optional": true
+                        },
+                        "MediaHeight": {
+                            "name": "MediaHeight",
+                            "optional": true
+                        },
+                        "VideoDataURL": {
+                            "name": "VideoDataURL",
+                            "optional": true
+                        },
+                        "AudioDataURL": {
+                            "name": "AudioDataURL",
+                            "optional": true
+                        },
+                        "MotionDetected": {
+                            "name": "MotionDetected",
+                            "optional": true
+                        },
+                        "StatusTampered": {
+                            "name": "StatusTampered",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "AtmosphericPressureSensor": {
+                    "type": "AtmosphericPressureSensor",
+                    "characteristics": {
+                        "AtmosphericPressureLevel": {
+                            "name": "AtmosphericPressureLevel",
+                            "optional": false
+                        },
+                        "StatusActive": {
+                            "name": "StatusActive",
+                            "optional": true
+                        },
+                        "StatusFault": {
+                            "name": "StatusFault",
+                            "optional": true
+                        },
+                        "StatusLowBattery": {
+                            "name": "StatusLowBattery",
+                            "optional": true
+                        },
+                        "StatusTampered": {
+                            "name": "StatusTampered",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "NoiseLevelSensor": {
+                    "type": "NoiseLevelSensor",
+                    "characteristics": {
+                        "NoiseLevel": {
+                            "name": "NoiseLevel",
+                            "optional": false
+                        },
+                        "StatusActive": {
+                            "name": "StatusActive",
+                            "optional": true
+                        },
+                        "StatusFault": {
+                            "name": "StatusFault",
+                            "optional": true
+                        },
+                        "StatusLowBattery": {
+                            "name": "StatusLowBattery",
+                            "optional": true
+                        },
+                        "StatusTampered": {
+                            "name": "StatusTampered",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "AirFlowSensor": {
+                    "type": "AirFlowSensor",
+                    "characteristics": {
+                        "AirFlow": {
+                            "name": "AirFlow",
+                            "optional": false
+                        },
+                        "StatusActive": {
+                            "name": "StatusActive",
+                            "optional": true
+                        },
+                        "StatusFault": {
+                            "name": "StatusFault",
+                            "optional": true
+                        },
+                        "StatusLowBattery": {
+                            "name": "StatusLowBattery",
+                            "optional": true
+                        },
+                        "StatusTampered": {
+                            "name": "StatusTampered",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "NitrogenDioxideSensor": {
+                    "type": "NitrogenDioxideSensor",
+                    "characteristics": {
+                        "NitrogenDioxideDetected": {
+                            "name": "NitrogenDioxideDetected",
+                            "optional": false
+                        },
+                        "StatusActive": {
+                            "name": "StatusActive",
+                            "optional": true
+                        },
+                        "StatusFault": {
+                            "name": "StatusFault",
+                            "optional": true
+                        },
+                        "StatusLowBattery": {
+                            "name": "StatusLowBattery",
+                            "optional": true
+                        },
+                        "NitrogenDioxideLevel": {
+                            "name": "NitrogenDioxideLevel",
+                            "optional": true
+                        },
+                        "NitrogenDioxidePeakLevel": {
+                            "name": "NitrogenDioxidePeakLevel",
+                            "optional": true
+                        },
+                        "StatusTampered": {
+                            "name": "StatusTampered",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "OzoneSensor": {
+                    "type": "OzoneSensor",
+                    "characteristics": {
+                        "OzoneDetected": {
+                            "name": "OzoneDetected",
+                            "optional": false
+                        },
+                        "StatusActive": {
+                            "name": "StatusActive",
+                            "optional": true
+                        },
+                        "StatusFault": {
+                            "name": "StatusFault",
+                            "optional": true
+                        },
+                        "StatusLowBattery": {
+                            "name": "StatusLowBattery",
+                            "optional": true
+                        },
+                        "OzoneLevel": {
+                            "name": "OzoneLevel",
+                            "optional": true
+                        },
+                        "OzonePeakLevel": {
+                            "name": "OzonePeakLevel",
+                            "optional": true
+                        },
+                        "StatusTampered": {
+                            "name": "StatusTampered",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "SodiumDioxideSensor": {
+                    "type": "SodiumDioxideSensor",
+                    "characteristics": {
+                        "SodiumDioxideDetected": {
+                            "name": "SodiumDioxideDetected",
+                            "optional": false
+                        },
+                        "StatusActive": {
+                            "name": "StatusActive",
+                            "optional": true
+                        },
+                        "StatusFault": {
+                            "name": "StatusFault",
+                            "optional": true
+                        },
+                        "StatusLowBattery": {
+                            "name": "StatusLowBattery",
+                            "optional": true
+                        },
+                        "SodiumDioxideLevel": {
+                            "name": "SodiumDioxideLevel",
+                            "optional": true
+                        },
+                        "SodiumDioxidePeakLevel": {
+                            "name": "SodiumDioxidePeakLevel",
+                            "optional": true
+                        },
+                        "StatusTampered": {
+                            "name": "StatusTampered",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "VolatileOrganicCompoundSensor": {
+                    "type": "VolatileOrganicCompoundSensor",
+                    "characteristics": {
+                        "VolatileOrganicCompoundDetected": {
+                            "name": "VolatileOrganicCompoundDetected",
+                            "optional": false
+                        },
+                        "StatusActive": {
+                            "name": "StatusActive",
+                            "optional": true
+                        },
+                        "StatusFault": {
+                            "name": "StatusFault",
+                            "optional": true
+                        },
+                        "StatusLowBattery": {
+                            "name": "StatusLowBattery",
+                            "optional": true
+                        },
+                        "VolatileOrganicCompoundLevel": {
+                            "name": "VolatileOrganicCompoundLevel",
+                            "optional": true
+                        },
+                        "VolatileOrganicCompoundPeakLevel": {
+                            "name": "VolatileOrganicCompoundPeakLevel",
+                            "optional": true
+                        },
+                        "StatusTampered": {
+                            "name": "StatusTampered",
+                            "optional": true
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        }
+                    }
+                },
+                "NotificationService": {
+                    "type": "NotificationService",
+                    "characteristics": {
+                        "NotificationCode": {
+                            "name": "NotificationCode",
+                            "optional": false
+                        },
+                        "NotificationText": {
+                            "name": "NotificationText",
+                            "optional": false
+                        },
+                        "Name": {
+                            "name": "Name",
+                            "optional": true
+                        },
+                        "LastEventTime": {
+                            "name": "LastEventTime",
+                            "optional": true
+                        }
+                    }
                 }
             }
         }
