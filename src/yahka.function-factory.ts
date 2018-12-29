@@ -477,7 +477,7 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
                 let ioBrokerMax = getParameter("iobroker.max");
                 let homeKitMin = getParameter("homekit.min", 0);
                 let ioBrokerMin = getParameter("iobroker.min", 0);
-                let newValue = Math.round(((num - ioBrokerMin) / (ioBrokerMax - ioBrokerMin)) * (homeKitMax - homeKitMin));
+                let newValue = Math.round(homeKitMin + ((homeKitMax - homeKitMin) / (ioBrokerMax - ioBrokerMin)) * (num - ioBrokerMin));
 		        adapter.log.debug('scaleInt: converting value to homekit: ' + value + ' to ' + newValue); 
                 return newValue; 
 			},
@@ -491,7 +491,7 @@ var conversionFactory:IObjectDictionary<TConversionFunctionCreateFunction> = {
                 let ioBrokerMax = getParameter("iobroker.max");
                 let homeKitMin = getParameter("homekit.min", 0);
                 let ioBrokerMin = getParameter("iobroker.min", 0);
-                let newValue = Math.round(((num - homeKitMin) / (homeKitMax - homeKitMin)) * (ioBrokerMax - ioBrokerMin));
+                let newValue = Math.round(ioBrokerMin + ((ioBrokerMax - ioBrokerMin) / (homeKitMax - homeKitMin)) * (num - homeKitMin));;
                 adapter.log.debug('scaleInt: converting value to ioBroker: ' + value + ' to ' + newValue); 
                 return newValue; 
             }
