@@ -2,3 +2,4 @@
 /node_modules
 /src/typings/globals
 /.tscache
+.DS_Store

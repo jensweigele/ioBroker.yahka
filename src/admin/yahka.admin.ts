@@ -178,7 +178,7 @@ interface IParameterEditor {
 
 type IParameterEditorDelegate = (newValue: any) => void;
 
-class ioBroker_YahkaAdmin {
+export class ioBroker_YahkaAdmin {
     settings: any;
 
     loadSettings(settingsObject: any, onChangeCallback: TIOBrokerAdminChangeCallback) {
