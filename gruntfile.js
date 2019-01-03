@@ -5,6 +5,7 @@ module.exports = function(grunt) {
     var srcDir = __dirname + '/';
     var destinationDir = '../../iobroker/'
     var pkg = grunt.file.readJSON('package.json');
+    const webpackConfig = require('./webpack.config.js');
 
     // check arguments
     // Project configuration.
@@ -12,8 +13,11 @@ module.exports = function(grunt) {
         pkg: pkg,
         copy: {
             build: {
-                files: [
-                ]
+                // files: [
+                //     { src: 'dist/main.js', dest: "main.js"},
+                //     { src: 'dist/yahka.admin.js', dest: "admin/yahka.admin.js"},
+                    
+                // ]
             },
             deployTestInstance: {
                 files: [
@@ -25,14 +29,23 @@ module.exports = function(grunt) {
         },
 
         clean: {
-                build: ['yahka.*.js', 'main.js', 'admin/yahka.*.js']
+                build: [] // ['yahka.*.js', 'main.js', 'admin/yahka.*.js']
         },
 
-        ts: {
-            build: {
-                tsconfig: true
-            }
-        },
+        // ts: {
+        //     build: {
+        //         tsconfig: true
+        //     }
+        // },
+        webpack: {
+            webpackConfig
+            // options: {
+            //   stats: !process.env.NODE_ENV || process.env.NODE_ENV === 'development',
+            //   mode: "development"
+            // },
+            // prod: ,
+            // dev: Object.assign({ watch: true }, webpackConfig)
+          },
 
         exec: {
             refreshIOBroker: {
@@ -52,19 +65,20 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-ts');
+    //grunt.loadNpmTasks('grunt-ts');
+    grunt.loadNpmTasks('grunt-webpack');
     grunt.loadNpmTasks('grunt-exec');
 
     grunt.registerTask('buildOnly', [
         'clean:build',
-        'ts:build',
+        'webpack',
         'replace',
         'copy:build'
     ]);
     grunt.registerTask('replace', function () {
-        var file = require('fs').readFileSync('./admin/yahka.admin.js');
-        file = file.toString().replace('Object.defineProperty(exports, "__esModule", { value: true });', '').replace('var $ = require("jquery");', '');
-        require('fs').writeFileSync('./admin/yahka.admin.js', file);   
+        // var file = require('fs').readFileSync('./admin/yahka.admin.js');
+        // file = file.toString().replace('Object.defineProperty(exports, "__esModule", { value: true });', '').replace('var $ = require("jquery");', '');
+        // require('fs').writeFileSync('./admin/yahka.admin.js', file);   
     });
     
     grunt.registerTask('DeployToTest', [
@@ -74,7 +88,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('BuildAndDeployToTest', [
         'clean:build',
-        'ts:build',
+        'webpack',
         'replace',
         'copy:build',
         'copy:deployTestInstance',
@@ -83,7 +97,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('NPMPublish', [
         'clean:build',
-        'ts:build',
+        'webpack',
         'replace',
         'copy:build',
         'exec:NPMPublish'        
@@ -91,7 +105,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('NPMBeta', [
         'clean:build',
-        'ts:build',
+        'webpack',
         'replace',
         'copy:build',
         'exec:NPMBeta'        
