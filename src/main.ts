@@ -34,6 +34,6 @@
 // you have to require the utils module and call adapter function
 import utils = require("../lib/utils"); // Get common adapter utils
 import * as hkAdapter from './yahka.ioBroker-adapter';
-
+require("./yahka.functions/yahka.functions.import");
 let yahkaAdapter = new hkAdapter.TIOBrokerAdapter(utils.Adapter({name: 'yahka', systemConfig: true}), utils.controllerDir);
 
