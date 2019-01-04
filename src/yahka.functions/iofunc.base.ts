@@ -1,16 +1,16 @@
 import { IInOutFunction, IConversionFunction } from '../yahka.homekit-bridge';
 import { IInOutChangeNotify } from '../yahka.homekit-bridge';
 export { IInOutChangeNotify } from '../yahka.homekit-bridge';
-type TSubscriptionType = 'state'|'object';
+type TSubscriptionType = 'state' | 'object';
 
 export interface ISubscriptionRequest {
-    subscriptionType:TSubscriptionType;
-    subscriptionIdentifier:string;
-    subscriptionEvent:(ioValue:any, callback:IInOutChangeNotify) => void;
+    subscriptionType: TSubscriptionType;
+    subscriptionIdentifier: string;
+    subscriptionEvent: (ioValue: any, callback: IInOutChangeNotify) => void;
 }
 
 export interface IInternalInOutFunction extends IInOutFunction {
-    subscriptionRequests:ISubscriptionRequest[];
+    subscriptionRequests: ISubscriptionRequest[];
 }
 
 
@@ -19,14 +19,14 @@ class TIoBrokerInOutFunctionBase {
 }
 export abstract class TIoBrokerInOutFunction_StateBase extends TIoBrokerInOutFunctionBase implements IInternalInOutFunction {
     protected debounceTimer = -1;
-    public subscriptionRequests:ISubscriptionRequest[] = [];
- 
-    constructor(protected adapter:ioBroker.IAdapter, protected stateName:string, protected deferredTime:number = 0) {
+    public subscriptionRequests: ISubscriptionRequest[] = [];
+
+    constructor(protected adapter: ioBroker.IAdapter, protected stateName: string, protected deferredTime: number = 0) {
         super();
         this.addSubscriptionRequest(stateName);
     }
 
-    addSubscriptionRequest(stateName:string) {
+    addSubscriptionRequest(stateName: string) {
         let subscriptionEvent = this.subscriptionEvent.bind(this, stateName);
         this.subscriptionRequests.push({
             subscriptionType: 'state',
@@ -35,14 +35,14 @@ export abstract class TIoBrokerInOutFunction_StateBase extends TIoBrokerInOutFun
         });
     }
 
-    getValueOnRead(ioState:ioBroker.IState):any {
+    getValueOnRead(ioState: ioBroker.IState): any {
         if (ioState)
             return ioState.val;
         else
             return null;
     }
 
-    getValueOnNotify(ioState:ioBroker.IState):any {
+    getValueOnNotify(ioState: ioBroker.IState): any {
         if (ioState)
             return ioState.val;
         else
@@ -51,7 +51,7 @@ export abstract class TIoBrokerInOutFunction_StateBase extends TIoBrokerInOutFun
 
     toIOBroker(plainIoValue, callback) {
         this.adapter.log.debug('writing state to ioBroker [' + this.stateName + ']: ' + JSON.stringify(plainIoValue));
-        this.adapter.getForeignState(this.stateName, (error, ioState) =>  {
+        this.adapter.getForeignState(this.stateName, (error, ioState) => {
             let value = this.getValueOnRead(ioState);
             let valueChanged = value !== plainIoValue;
             this.adapter.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(plainIoValue) + ' = ' + valueChanged);
@@ -79,7 +79,7 @@ export abstract class TIoBrokerInOutFunction_StateBase extends TIoBrokerInOutFun
         });
     }
 
-    subscriptionEvent(stateName:string, ioState:ioBroker.IState, callback:IInOutChangeNotify) {
+    subscriptionEvent(stateName: string, ioState: ioBroker.IState, callback: IInOutChangeNotify) {
         this.adapter.log.debug('change event from ioBroker via [' + this.stateName + ']' + JSON.stringify(ioState));
         let newValue = this.getValueOnNotify(ioState);
         if (newValue !== undefined)
@@ -88,14 +88,14 @@ export abstract class TIoBrokerInOutFunction_StateBase extends TIoBrokerInOutFun
             this.adapter.log.debug('state was filtered - notification is canceled');
     }
 
-    executeCallback(callback:IInOutChangeNotify, plainIOValue:any) {
+    executeCallback(callback: IInOutChangeNotify, plainIOValue: any) {
         if (this.deferredTime > 0)
             this.setupDeferredChangeEvent(callback, plainIOValue);
         else
             callback(plainIOValue);
     }
 
-    setupDeferredChangeEvent(callback:IInOutChangeNotify, plainIOValue:any) {
+    setupDeferredChangeEvent(callback: IInOutChangeNotify, plainIOValue: any) {
         this.cancelDeferredChangeEvent();
         this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback, plainIOValue), 150);
     }
@@ -105,7 +105,7 @@ export abstract class TIoBrokerInOutFunction_StateBase extends TIoBrokerInOutFun
         this.debounceTimer = -1;
     }
 
-    deferredChangeEvent(callback:IInOutChangeNotify, plainIOValue:any) {
+    deferredChangeEvent(callback: IInOutChangeNotify, plainIOValue: any) {
         this.adapter.log.debug('[' + this.stateName + '] firing deferred change event:' + JSON.stringify(plainIOValue));
         callback(plainIOValue);
     }

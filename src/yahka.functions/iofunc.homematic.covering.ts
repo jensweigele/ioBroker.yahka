@@ -1,12 +1,12 @@
 import { IInternalInOutFunction, TIoBrokerInOutFunction_StateBase, IInOutChangeNotify } from "./iofunc.base";
 
 export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition extends TIoBrokerInOutFunction_StateBase {
-    protected lastWorkingState:boolean = false;
-    protected lastAcknowledgedValue:any = undefined;
+    protected lastWorkingState: boolean = false;
+    protected lastAcknowledgedValue: any = undefined;
     protected debounceTimer = -1;
 
-    static create(adapter:ioBroker.IAdapter, parameters:any):IInternalInOutFunction {
-        let p:Array<string>;
+    static create(adapter: ioBroker.IAdapter, parameters: any): IInternalInOutFunction {
+        let p: Array<string>;
 
         if (typeof parameters === 'string')
             p = [parameters];
@@ -18,8 +18,8 @@ export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition exten
         if (p.length == 0)
             return undefined;
 
-        let stateName:string = p[0];
-        let workingItemName:string;
+        let stateName: string = p[0];
+        let workingItemName: string;
         if (p.length >= 2)
             workingItemName = p[1];
         else {
@@ -32,7 +32,7 @@ export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition exten
     }
 
 
-    constructor(protected adapter:ioBroker.IAdapter, protected stateName:string, protected workingItem:string) {
+    constructor(protected adapter: ioBroker.IAdapter, protected stateName: string, protected workingItem: string) {
         super(adapter, stateName, 0);
         this.addSubscriptionRequest(workingItem);
         adapter.getForeignState(workingItem, (error, ioState) => {
@@ -43,7 +43,7 @@ export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition exten
         });
     }
 
-    subscriptionEvent(stateName:string, ioState:ioBroker.IState, callback:IInOutChangeNotify) {
+    subscriptionEvent(stateName: string, ioState: ioBroker.IState, callback: IInOutChangeNotify) {
         if (!ioState)
             return;
 
@@ -60,7 +60,7 @@ export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition exten
         }
     }
 
-    setupDeferredChangeEvent(callback:IInOutChangeNotify) {
+    setupDeferredChangeEvent(callback: IInOutChangeNotify) {
         this.cancelDeferredChangeEvent();
         this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback), 150);
     }
@@ -70,7 +70,7 @@ export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition exten
         this.debounceTimer = -1;
     }
 
-    deferredChangeEvent(callback:IInOutChangeNotify) {
+    deferredChangeEvent(callback: IInOutChangeNotify) {
         if (!this.lastWorkingState) { // only fire callback if the covering does not move
             this.adapter.log.debug('[' + this.stateName + '] firing target state change event:' + JSON.stringify(this.lastAcknowledgedValue));
             callback(this.lastAcknowledgedValue);

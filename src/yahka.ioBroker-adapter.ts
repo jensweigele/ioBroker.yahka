@@ -4,8 +4,8 @@ import {IInOutFunction} from './yahka.homekit-bridge';
 /// <reference path="./typings/index.d.ts" />
 import * as hkBridge from './yahka.homekit-bridge';
 // import * as mac from './node_modules/macaddress';
-import {functionFactory} from './yahka.function-factory';
-import { IInternalInOutFunction } from './yahka.functions/yahka.functions.base';
+import {functionFactory} from './yahka.functions/functions.factory';
+import { IInternalInOutFunction } from './yahka.functions/iofunc.base';
 
 interface ICustomCharacteristicConfig extends Configuration.ICharacteristicConfig {
     conversionFunction?:string;

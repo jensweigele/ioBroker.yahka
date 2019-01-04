@@ -1,37 +1,37 @@
 import { TIoBrokerInOutFunction_StateBase, IInternalInOutFunction, ISubscriptionRequest, IInOutChangeNotify } from './iofunc.base';
 
 export class TIoBrokerInOutFunction_State extends TIoBrokerInOutFunction_StateBase {
-    static create(adapter:ioBroker.IAdapter, parameters:any): IInternalInOutFunction {
+    static create(adapter: ioBroker.IAdapter, parameters: any): IInternalInOutFunction {
         if (typeof parameters !== "string")
             return undefined;
-        let stateName:string = parameters;
+        let stateName: string = parameters;
 
         return new TIoBrokerInOutFunction_State(adapter, stateName);
     }
 }
 
 export class TIoBrokerInOutFunction_StateDeferred extends TIoBrokerInOutFunction_StateBase {
-    static create(adapter:ioBroker.IAdapter, parameters:any): IInternalInOutFunction {
+    static create(adapter: ioBroker.IAdapter, parameters: any): IInternalInOutFunction {
         if (typeof parameters !== "string")
             return undefined;
-        let stateName:string = parameters;
-    
-        return new TIoBrokerInOutFunction_StateDeferred(adapter, stateName, 250);
-    }  
-}
- 
-export class TIoBrokerInOutFunction_State_OnlyACK extends TIoBrokerInOutFunction_StateBase {
-    protected lastAcknowledgedValue:any;
+        let stateName: string = parameters;
 
-    static create(adapter:ioBroker.IAdapter, parameters:any): IInternalInOutFunction {
+        return new TIoBrokerInOutFunction_StateDeferred(adapter, stateName, 250);
+    }
+}
+
+export class TIoBrokerInOutFunction_State_OnlyACK extends TIoBrokerInOutFunction_StateBase {
+    protected lastAcknowledgedValue: any;
+
+    static create(adapter: ioBroker.IAdapter, parameters: any): IInternalInOutFunction {
         if (typeof parameters !== "string")
             return undefined;
-        let stateName:string = parameters;
+        let stateName: string = parameters;
 
         return new TIoBrokerInOutFunction_State_OnlyACK(adapter, stateName);
-    }      
-    
-    getValueOnRead(ioState:ioBroker.IState):any {
+    }
+
+    getValueOnRead(ioState: ioBroker.IState): any {
         if (ioState)
             if (ioState.ack) {
                 this.lastAcknowledgedValue = ioState.val;
@@ -44,7 +44,7 @@ export class TIoBrokerInOutFunction_State_OnlyACK extends TIoBrokerInOutFunction
             return null;
     }
 
-    getValueOnNotify(ioState:ioBroker.IState):any {
+    getValueOnNotify(ioState: ioBroker.IState): any {
         if (ioState)
             if (ioState.ack) {
                 this.lastAcknowledgedValue = ioState.val;
