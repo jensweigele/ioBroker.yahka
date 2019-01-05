@@ -1,4 +1,4 @@
-import { TYahkaFunctionBase, IConversionFunction } from "./conversion.base";
+import { TIOBrokerConversionBase, IConversionFunction } from "./conversion.base";
 
 
 export interface IIoBrokerConversionScriptParameters {
@@ -6,7 +6,7 @@ export interface IIoBrokerConversionScriptParameters {
     toIOBroker: string;
 }
 
-export class TIoBrokerConversion_Script extends TYahkaFunctionBase implements IConversionFunction {
+export class TIoBrokerConversion_Script extends TIOBrokerConversionBase implements IConversionFunction {
     static isScriptParameter(parameters: any): parameters is IIoBrokerConversionScriptParameters {
         const castedParam = <IIoBrokerConversionScriptParameters>parameters;
         return castedParam["toHomeKit"] !== undefined &&

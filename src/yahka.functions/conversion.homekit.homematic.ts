@@ -1,10 +1,10 @@
-import { TYahkaFunctionBase, IConversionFunction } from "./conversion.base";
+import { TIOBrokerConversionBase, IConversionFunction } from "./conversion.base";
 import { HAPCharacteristic } from "../yahka.homekit-bridge";
 
 
-export class TIoBrokerConversion_HomematicDirection_To_PositionState extends TYahkaFunctionBase implements IConversionFunction {
+export class TIoBrokerConversion_HomematicDirection_To_PositionState extends TIOBrokerConversionBase implements IConversionFunction {
     toHomeKit(value: any) {
-        let num = TYahkaFunctionBase.castToNumber(value)
+        let num = TIOBrokerConversionBase.castToNumber(value)
         let result = undefined;
         switch (num) {
             case 0:
@@ -24,7 +24,7 @@ export class TIoBrokerConversion_HomematicDirection_To_PositionState extends TYa
         return result;
     }
     toIOBroker(value: any) {
-        let num = TYahkaFunctionBase.castToNumber(value)
+        let num = TIOBrokerConversionBase.castToNumber(value)
         let result = undefined;
         switch (num) {
             case HAPCharacteristic.PositionState.STOPPED:
@@ -46,9 +46,9 @@ export class TIoBrokerConversion_HomematicDirection_To_PositionState extends TYa
 }
 
 
-export class TIoBrokerConversion_HomematicControlMode_To_CoolingState extends TYahkaFunctionBase implements IConversionFunction {
+export class TIoBrokerConversion_HomematicControlMode_To_CoolingState extends TIOBrokerConversionBase implements IConversionFunction {
     toHomeKit(value: any) {
-        let num = TYahkaFunctionBase.castToNumber(value)
+        let num = TIOBrokerConversionBase.castToNumber(value)
 
         let result = undefined;
         switch (num) {
@@ -72,7 +72,7 @@ export class TIoBrokerConversion_HomematicControlMode_To_CoolingState extends TY
         return result;
     }
     toIOBroker(value) {
-        let num = TYahkaFunctionBase.castToNumber(value)
+        let num = TIOBrokerConversionBase.castToNumber(value)
 
         let result = undefined;
         switch (num) {

@@ -1,6 +1,6 @@
 import { IConversionFunction } from '../yahka.homekit-bridge';
 export { IConversionFunction } from '../yahka.homekit-bridge';
-export abstract class TYahkaFunctionBase {
+export abstract class TIOBrokerConversionBase {
     constructor(protected adapter: ioBroker.IAdapter) {
     }
 

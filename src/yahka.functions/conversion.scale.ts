@@ -1,4 +1,4 @@
-import { TYahkaFunctionBase, IConversionFunction } from "./conversion.base";
+import { TIOBrokerConversionBase, IConversionFunction } from "./conversion.base";
 
 export interface IIoBrokerConversionScaleParameters {
     "homekit.min": number;
@@ -7,7 +7,7 @@ export interface IIoBrokerConversionScaleParameters {
     "iobroker.max": number;
 }
 
-export class TIoBrokerConversion_Scale extends TYahkaFunctionBase implements IConversionFunction {
+export class TIoBrokerConversion_Scale extends TIOBrokerConversionBase implements IConversionFunction {
     static isScaleParameter(parameters: any): parameters is IIoBrokerConversionScaleParameters {
         const castedParam = <IIoBrokerConversionScaleParameters>parameters;
         return castedParam["homekit.min"] !== undefined &&
@@ -34,7 +34,7 @@ export class TIoBrokerConversion_Scale extends TYahkaFunctionBase implements ICo
     }
 
     toHomeKit(value) {
-        let num: number = TYahkaFunctionBase.castToNumber(value);
+        let num: number = TIOBrokerConversionBase.castToNumber(value);
         let homeKitMax = this.parameters["homekit.max"];
         let ioBrokerMax = this.parameters["iobroker.max"];
         let homeKitMin = this.parameters["homekit.min"];
@@ -44,7 +44,7 @@ export class TIoBrokerConversion_Scale extends TYahkaFunctionBase implements ICo
         return newValue;
     }
     toIOBroker(value) {
-        let num: number = TYahkaFunctionBase.castToNumber(value);
+        let num: number = TIOBrokerConversionBase.castToNumber(value);
         let homeKitMax = this.parameters["homekit.max"];
         let ioBrokerMax = this.parameters["iobroker.max"];
         let homeKitMin = this.parameters["homekit.min"];

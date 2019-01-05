@@ -1,7 +1,7 @@
-import { TYahkaFunctionBase, IConversionFunction } from "./conversion.base";
+import { TIOBrokerConversionBase, IConversionFunction } from "./conversion.base";
 
 
-export class TIoBrokerConversion_Inverse extends TYahkaFunctionBase implements IConversionFunction {
+export class TIoBrokerConversion_Inverse extends TIOBrokerConversionBase implements IConversionFunction {
 
 
     static create(adapter: ioBroker.IAdapter, parameters: any): IConversionFunction {
@@ -13,13 +13,13 @@ export class TIoBrokerConversion_Inverse extends TYahkaFunctionBase implements I
     }
 
     toHomeKit(value: any) {
-        let num: number = TYahkaFunctionBase.castToNumber(value)
+        let num: number = TIOBrokerConversionBase.castToNumber(value)
         let newValue = this.maxValue - num;
         this.adapter.log.debug('inverse: converting value to homekit: ' + value + ' to ' + newValue);
         return newValue;
     }
     toIOBroker(value: any) {
-        let num: number = TYahkaFunctionBase.castToNumber(value)
+        let num: number = TIOBrokerConversionBase.castToNumber(value)
         let newValue = this.maxValue - num;
         this.adapter.log.debug('inverse: converting value to ioBroker: ' + value + ' to ' + newValue);
         return newValue;
