@@ -1,11 +1,11 @@
-import { IInternalInOutFunction, TIoBrokerInOutFunction_StateBase, IInOutChangeNotify } from "./iofunc.base";
+import { IInOutFunction, TIoBrokerInOutFunction_StateBase, IInOutChangeNotify } from "./iofunc.base";
 
 export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition extends TIoBrokerInOutFunction_StateBase {
     protected lastWorkingState: boolean = false;
     protected lastAcknowledgedValue: any = undefined;
     protected debounceTimer = -1;
 
-    static create(adapter: ioBroker.IAdapter, parameters: any): IInternalInOutFunction {
+    static create(adapter: ioBroker.IAdapter, parameters: any): IInOutFunction {
         let p: Array<string>;
 
         if (typeof parameters === 'string')

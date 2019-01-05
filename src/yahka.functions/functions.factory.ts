@@ -1,4 +1,4 @@
-import { IInternalInOutFunction } from './iofunc.base';
+import { IInOutFunction } from './iofunc.base';
 import { IConversionFunction } from './conversion.base';
 interface IObjectDictionary<T> {
     [name: string]: T;
@@ -6,11 +6,11 @@ interface IObjectDictionary<T> {
 
 type FactoryFunction<T> = (adapter: ioBroker.IAdapter, parameters: any) => T;
 
-export var inOutFactory: IObjectDictionary<FactoryFunction<IInternalInOutFunction>> = {};
+export var inOutFactory: IObjectDictionary<FactoryFunction<IInOutFunction>> = {};
 export var conversionFactory: IObjectDictionary<FactoryFunction<IConversionFunction>> = {};
 
 export var functionFactory = {
-    createInOutFunction: function (adapter: ioBroker.IAdapter, inOutFunction: string, inOutParameters?: any): IInternalInOutFunction {
+    createInOutFunction: function (adapter: ioBroker.IAdapter, inOutFunction: string, inOutParameters?: any): IInOutFunction {
         if (!(inOutFunction in inOutFactory))
             return inOutFactory["const"](adapter, inOutParameters);
         return inOutFactory[inOutFunction](adapter, inOutParameters);

@@ -1,7 +1,7 @@
-import { TIoBrokerInOutFunction_StateBase, IInternalInOutFunction, ISubscriptionRequest, IInOutChangeNotify } from './iofunc.base';
+import { TIoBrokerInOutFunction_StateBase, IInOutFunction } from './iofunc.base';
 
 export class TIoBrokerInOutFunction_State extends TIoBrokerInOutFunction_StateBase {
-    static create(adapter: ioBroker.IAdapter, parameters: any): IInternalInOutFunction {
+    static create(adapter: ioBroker.IAdapter, parameters: any): IInOutFunction {
         if (typeof parameters !== "string")
             return undefined;
         let stateName: string = parameters;
@@ -11,7 +11,7 @@ export class TIoBrokerInOutFunction_State extends TIoBrokerInOutFunction_StateBa
 }
 
 export class TIoBrokerInOutFunction_StateDeferred extends TIoBrokerInOutFunction_StateBase {
-    static create(adapter: ioBroker.IAdapter, parameters: any): IInternalInOutFunction {
+    static create(adapter: ioBroker.IAdapter, parameters: any): IInOutFunction {
         if (typeof parameters !== "string")
             return undefined;
         let stateName: string = parameters;
@@ -23,7 +23,7 @@ export class TIoBrokerInOutFunction_StateDeferred extends TIoBrokerInOutFunction
 export class TIoBrokerInOutFunction_State_OnlyACK extends TIoBrokerInOutFunction_StateBase {
     protected lastAcknowledgedValue: any;
 
-    static create(adapter: ioBroker.IAdapter, parameters: any): IInternalInOutFunction {
+    static create(adapter: ioBroker.IAdapter, parameters: any): IInOutFunction {
         if (typeof parameters !== "string")
             return undefined;
         let stateName: string = parameters;

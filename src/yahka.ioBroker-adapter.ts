@@ -5,8 +5,23 @@ import {IInOutFunction} from './yahka.homekit-bridge';
 import * as hkBridge from './yahka.homekit-bridge';
 // import * as mac from './node_modules/macaddress';
 import {functionFactory} from './yahka.functions/functions.factory';
-import { IInternalInOutFunction } from './yahka.functions/iofunc.base';
 
+
+export type TSubscriptionType = 'state' | 'object';
+
+export interface ISubscriptionRequest {
+    subscriptionType: TSubscriptionType;
+    subscriptionIdentifier: string;
+    subscriptionEvent: (ioValue: any, callback: hkBridge.IInOutChangeNotify) => void;
+}
+export interface ISubscriptionRequestor {
+    subscriptionRequests: ISubscriptionRequest[];
+}
+
+function isSubscriptionRequestor(param: Object): param is ISubscriptionRequestor {
+    return param["subscriptionRequests"] !== undefined &&
+        param["subscriptionRequests"] instanceof Array;
+}
 interface ICustomCharacteristicConfig extends Configuration.ICharacteristicConfig {
     conversionFunction?:string;
     conversionParameters?:any;
@@ -118,11 +133,11 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
         }
     }
 
-    private handleInOutSubscriptionRequest(inOutFunction:IInternalInOutFunction, changeNotify:hkBridge.IInOutChangeNotify) {
-        if (inOutFunction.subscriptionRequests.length == 0)
+    private handleInOutSubscriptionRequest(requestor:ISubscriptionRequestor, changeNotify:hkBridge.IInOutChangeNotify) {
+        if (requestor.subscriptionRequests.length == 0)
             return;
 
-        for (let subscriptionRequest of inOutFunction.subscriptionRequests) {
+        for (let subscriptionRequest of requestor.subscriptionRequests) {
             let changeInterceptor = (ioValue:any) => subscriptionRequest.subscriptionEvent(ioValue, changeNotify);
 
 
@@ -156,8 +171,11 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
                 this.adapter.log.error('[' + characteristicConfig.name + '] could not create conversion-function: ' + characteristicConfig.conversionFunction + ' with params: ' + JSON.stringify(characteristicConfig.conversionParameters));
                 return undefined;
             }
-
-            this.handleInOutSubscriptionRequest(inoutFunc, changeNotify);
+            
+            if(isSubscriptionRequestor(inoutFunc)) {
+                this.handleInOutSubscriptionRequest(inoutFunc, changeNotify);
+            }
+            
             return {
                 conversion: convFunc,
                 inOut: inoutFunc

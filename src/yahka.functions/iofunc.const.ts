@@ -1,8 +1,7 @@
-import { IInternalInOutFunction, ISubscriptionRequest } from "./iofunc.base";
-export class TIoBrokerInOutFunction_Const implements IInternalInOutFunction {
+import { IInOutFunction } from "./iofunc.base";
+export class TIoBrokerInOutFunction_Const implements IInOutFunction {
 
-    public subscriptionRequests: ISubscriptionRequest[] = [];
-    static create(adapter: ioBroker.IAdapter, parameters: any): IInternalInOutFunction {
+    static create(adapter: ioBroker.IAdapter, parameters: any): IInOutFunction {
         return new TIoBrokerInOutFunction_Const(adapter, parameters);
     }
 

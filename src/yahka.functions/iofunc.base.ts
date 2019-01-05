@@ -1,23 +1,10 @@
-import { IInOutFunction, IConversionFunction } from '../yahka.homekit-bridge';
-import { IInOutChangeNotify } from '../yahka.homekit-bridge';
-export { IInOutChangeNotify } from '../yahka.homekit-bridge';
-type TSubscriptionType = 'state' | 'object';
-
-export interface ISubscriptionRequest {
-    subscriptionType: TSubscriptionType;
-    subscriptionIdentifier: string;
-    subscriptionEvent: (ioValue: any, callback: IInOutChangeNotify) => void;
-}
-
-export interface IInternalInOutFunction extends IInOutFunction {
-    subscriptionRequests: ISubscriptionRequest[];
-}
-
-
+import { IInOutFunction, IInOutChangeNotify } from '../yahka.homekit-bridge';
+import { ISubscriptionRequest, ISubscriptionRequestor } from '../yahka.ioBroker-adapter';
+export { IInOutChangeNotify, IInOutFunction } from '../yahka.homekit-bridge';
 class TIoBrokerInOutFunctionBase {
 
 }
-export abstract class TIoBrokerInOutFunction_StateBase extends TIoBrokerInOutFunctionBase implements IInternalInOutFunction {
+export abstract class TIoBrokerInOutFunction_StateBase extends TIoBrokerInOutFunctionBase implements ISubscriptionRequestor, IInOutFunction {
     protected debounceTimer = -1;
     public subscriptionRequests: ISubscriptionRequest[] = [];
 
