@@ -10,3 +10,5 @@ appveyor.yml
 src
 .tscache
 .vscode
+webpack.config.js
+tsconfig.json
