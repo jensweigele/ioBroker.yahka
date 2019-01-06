@@ -5,23 +5,6 @@ import { error } from 'util';
 import { generateMetaDataDictionary } from './yahka.meta-generator';
 type TIOBrokerAdminChangeCallback = (changeMarker?: boolean) => void;
 type TIOBrokerAdminSaveCallback = (settingsObject: any) => void;
-function isBridgeConfig(config: hkBridge.Configuration.IBaseConfigNode): config is hkBridge.Configuration.IBridgeConfig {
-    if (config === undefined)
-        return false;
-    return config.configType === "bridge";
-}
-
-function isDeviceConfig(config: hkBridge.Configuration.IBaseConfigNode): config is hkBridge.Configuration.IDeviceConfig {
-    if (config === undefined)
-        return false;
-    return config.configType === "customdevice" || (<hkBridge.Configuration.IDeviceConfig>config).services !== undefined;
-}
-
-function isIPCameraConfig(config: hkBridge.Configuration.IBaseConfigNode): config is hkBridge.Configuration.ICameraConfig {
-    if (config === undefined)
-        return false;
-    return config.configType === "ipcamera";
-}
 
 
 let defaultCommandLine: hkBridge.Configuration.ICameraFfmpegCommandLine =
@@ -239,9 +222,9 @@ class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
 
         let configType = deviceConfig.configType;
         if (configType === undefined) {
-            if (isBridgeConfig(deviceConfig)) {
+            if (hkBridge.Configuration.isBridgeConfig(deviceConfig)) {
                 configType = 'bridge';
-            } else if (isDeviceConfig(deviceConfig)) {
+            } else if (hkBridge.Configuration.isDeviceConfig(deviceConfig)) {
                 configType = 'customdevice';
             }
         }
@@ -445,7 +428,7 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
             elem.addEventListener('click', (e) => {
                 e.preventDefault();
                 let dev = this.delegate.selectedDeviceConfig;
-                if (!isDeviceConfig(dev))
+                if (!hkBridge.Configuration.isDeviceConfig(dev))
                     return;
 
 
@@ -466,7 +449,7 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
             elem.addEventListener('click', (e) => {
                 e.preventDefault();
                 let dev = this.delegate.selectedDeviceConfig;
-                if (isDeviceConfig(dev)) {
+                if (hkBridge.Configuration.isDeviceConfig(dev)) {
                     let idx = bridge.devices.indexOf(dev);
                     if (idx > -1) {
                         bridge.devices.splice(idx, 1);
@@ -475,7 +458,7 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
                         this.deviceListHandler.buildDeviceList(bridgePane);
                         this.delegate.changeCallback();
                     }
-                } else if (isIPCameraConfig(dev)) {
+                } else if (hkBridge.Configuration.isIPCameraConfig(dev)) {
                     let idx = this.delegate.cameraConfigs.indexOf(dev);
                     if (idx > -1) {
                         this.delegate.cameraConfigs.splice(idx, 1);
@@ -494,10 +477,10 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
                 let dev = this.delegate.selectedDeviceConfig;
                 let copyOfDevice = $.extend(true, {}, dev)
                 copyOfDevice.name = copyOfDevice.name + " copy"
-                if (isDeviceConfig(copyOfDevice)) {
+                if (hkBridge.Configuration.isDeviceConfig(copyOfDevice)) {
                     copyOfDevice.serial = "";
                     bridge.devices.push(copyOfDevice);
-                } else if (isIPCameraConfig(copyOfDevice)) {
+                } else if (hkBridge.Configuration.isIPCameraConfig(copyOfDevice)) {
                     copyOfDevice.serial = "";
                     this.delegate.cameraConfigs.push(copyOfDevice);
                 } else {
@@ -554,7 +537,7 @@ class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base implements I
     }
 
     public refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
-        if (!isBridgeConfig(config)) {
+        if (!hkBridge.Configuration.isBridgeConfig(config)) {
             return
         }
         let bridgeConfigFragment = <DocumentFragment>document.importNode(this.bridgeConfigPanelTemplate.content, true);
@@ -644,7 +627,7 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
     }
 
     public refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
-        if (!isDeviceConfig(config)) {
+        if (!hkBridge.Configuration.isDeviceConfig(config)) {
             return
         }
 
@@ -667,7 +650,7 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
 
 
     public styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean {
-        if (!isDeviceConfig(deviceConfig)) {
+        if (!hkBridge.Configuration.isDeviceConfig(deviceConfig)) {
             return false
         }
         let iconClass = "mif-question";
@@ -1050,7 +1033,7 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
     }
 
     public refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
-        if (!isIPCameraConfig(config)) {
+        if (!hkBridge.Configuration.isIPCameraConfig(config)) {
             return
         }
 
@@ -1114,7 +1097,7 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
     }
 
     public styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean {
-        if (!isIPCameraConfig(deviceConfig)) {
+        if (!hkBridge.Configuration.isIPCameraConfig(deviceConfig)) {
             return false;
         }
 
