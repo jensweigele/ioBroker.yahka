@@ -1,5 +1,5 @@
 import { THomeKitIPCamera } from './yahka.homekit-ipcamera';
-import { Configuration } from './yahka.configuration';
+import { Configuration } from './shared/yahka.configuration';
 import {IInOutFunction} from './yahka.homekit-bridge';
 /// <reference path="./typings/index.d.ts" />
 import * as hkBridge from './yahka.homekit-bridge';

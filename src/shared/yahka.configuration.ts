@@ -1,4 +1,8 @@
 
+export interface IDictionary<T> {
+    [key: string]: T;
+}
+
 export module Configuration {
 
     export type TConfigNodeType = 'bridge' | 'customdevice' | 'ipcamera' | undefined;
@@ -60,4 +64,23 @@ export module Configuration {
         maxFPS: number;
         ffmpegCommandLine: ICameraFfmpegCommandLine;
     }
+
+    export function isBridgeConfig(config: IBaseConfigNode): config is IBridgeConfig {
+        if (config === undefined)
+            return false;
+        return config.configType === "bridge";
+    }
+
+    export function isDeviceConfig(config: IBaseConfigNode): config is IDeviceConfig {
+        if (config === undefined)
+            return false;
+        return config.configType === "customdevice" || (<IDeviceConfig>config).services !== undefined;
+    }
+
+    export function isIPCameraConfig(config: IBaseConfigNode): config is ICameraConfig {
+        if (config === undefined)
+            return false;
+        return config.configType === "ipcamera";
+    }
+
 }

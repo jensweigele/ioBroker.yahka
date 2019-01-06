@@ -2,10 +2,12 @@ import { CompleterResult } from 'readline';
 import { Characteristic } from 'hap-nodejs/lib/Characteristic';
 import { Service } from 'hap-nodejs/lib/Service';
 import 'hap-nodejs/lib/gen/HomeKitTypes';
-import {importHAPCommunityTypes} from '../yahka.community.types';
+import { importHAPCommunityTypes } from '../yahka.community.types';
+import { IDictionary } from '../shared/yahka.configuration';
+import { IHAPServiceDefinition, IHAPCharacteristicDefintion } from './admin.config';
 
 importHAPCommunityTypes();
-export function generateMetaDataDictionary() {
+export function generateMetaDataDictionary(): IDictionary<IHAPServiceDefinition> {
 
     let availableServices = Object.keys(Service);
     let availableCharacteristics = Object.keys(Characteristic);
@@ -30,7 +32,7 @@ export function generateMetaDataDictionary() {
             continue;
         }
 
-        let serviceDescriptor = {
+        let serviceDescriptor: IHAPServiceDefinition = {
             type: serviceName,
             characteristics: {}
         };
@@ -41,7 +43,7 @@ export function generateMetaDataDictionary() {
             if (charName === undefined) {
                 continue;
             }
-            let charDescriptor = { name: charName, optional: false, properties: getProperties(char) };
+            let charDescriptor: IHAPCharacteristicDefintion = { name: charName, optional: false, properties: getProperties(char) };
             serviceDescriptor.characteristics[charName] = charDescriptor;
         }
         for (let char of serviceInstance.optionalCharacteristics) {
@@ -49,8 +51,8 @@ export function generateMetaDataDictionary() {
             if (charName === undefined) {
                 continue;
             }
-            let charDescriptor_ = { name: charName, optional: true, properties: getProperties(char) };
-            serviceDescriptor.characteristics[charName] = charDescriptor_;
+            let charDescriptor: IHAPCharacteristicDefintion = { name: charName, optional: true, properties: getProperties(char) };
+            serviceDescriptor.characteristics[charName] = charDescriptor;
         }
 
         serviceDictionary[serviceName] = serviceDescriptor;

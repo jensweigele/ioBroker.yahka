@@ -1,0 +1,434 @@
+
+/// <reference path="../../typings/index.d.ts" />
+import * as hkBridge from '../../shared/yahka.configuration';
+import { generateMetaDataDictionary } from '../yahka.meta-generator';
+import { IDictionary } from '../../shared/yahka.configuration';
+import { IHAPServiceDefinition, IHAPCharacteristicDefintion } from '../admin.config';
+import { ConfigPageBuilder_Base, IConfigPageBuilder, IConfigPageBuilderDelegate, TValidatorFunction } from './pageBuilder.base';
+import { IParameterEditorDelegate, IParameterEditor } from '../parameterEditor/parameterEditor.base';
+import { ParameterEditorFactory, inoutFunctions, convFunctions } from '../parameterEditor/parameterEditor.factory';
+import { ParameterEditor_Null } from '../parameterEditor/parameterEditor.null';
+import { translateFragment } from '../admin.translation';
+
+declare function getObject(id: string, callback: (error: any, object: any) => void);
+interface ISelectListEntry {
+    text: string,
+    [otherProps: string]: any;
+}
+
+let accessoryCategories: IDictionary<ISelectListEntry> = {};
+getObject('yahka.meta._accessoryCategories', (object) => {
+    accessoryCategories = object.native;
+});
+let HAPServiceDictionary: IDictionary<IHAPServiceDefinition> = generateMetaDataDictionary();
+
+
+export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements IConfigPageBuilder {
+    public addServiceAvailable: boolean = true;
+    public removeDeviceAvailable: boolean = true;
+    public dupliacteDeviceAvailable: boolean = true;
+    deviceInfoPanelTemplate: HTMLTemplateElement;
+    deviceServicePanelTemplate: HTMLTemplateElement;
+    characteristicRow: HTMLTemplateElement;
+
+    constructor(protected delegate: IConfigPageBuilderDelegate) {
+        super(delegate);
+        this.deviceInfoPanelTemplate = <HTMLTemplateElement>document.querySelector('#yahka_device_info_panel_template');
+        this.deviceServicePanelTemplate = <HTMLTemplateElement>document.querySelector('#yahka_device_service_panel');
+        this.characteristicRow = <HTMLTemplateElement>document.querySelector('#yahka_characteristic_row');
+    }
+
+    public refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
+        if (!hkBridge.Configuration.isDeviceConfig(config)) {
+            return
+        }
+
+        let lastPane: HTMLElement = this.buildDeviceInformationPanel(config, devicePanel);
+        for (let serviceConfig of config.services) {
+            let servicePanel = this.createServicePanel(config, serviceConfig);
+            devicePanel.appendChild(servicePanel);
+            lastPane = servicePanel;
+        }
+
+        if (AFocusLastPanel && lastPane) {
+            lastPane.scrollIntoView();
+            if (!lastPane.classList.contains('active')) {
+                let heading = (<HTMLElement>lastPane.querySelector('.heading'));
+                if (heading)
+                    heading.click();
+            }
+        }
+    }
+
+
+    public styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean {
+        if (!hkBridge.Configuration.isDeviceConfig(deviceConfig)) {
+            return false
+        }
+        let iconClass = "mif-question";
+        let cat: ISelectListEntry;
+        if (accessoryCategories !== undefined) {
+            if (cat = accessoryCategories[deviceConfig.category])
+                iconClass = cat['icon'];
+        }
+        let listIcon = listItem.querySelector('.list-icon');
+        listIcon.className = "";
+        listIcon.classList.add('list-icon', 'icon', iconClass);
+
+        listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
+        listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
+        return true;
+
+    }
+
+    buildDeviceInformationPanel(deviceConfig: hkBridge.Configuration.IDeviceConfig, devicePane: HTMLElement): HTMLElement {
+        let devInfoFragment = <DocumentFragment>document.importNode(this.deviceInfoPanelTemplate.content, true);
+        let devInfoPanel = <HTMLElement>devInfoFragment.querySelector('#yahka_device_info_panel');
+        translateFragment(devInfoFragment);
+
+        let inputHelper = (selector: string, propertyName: string, selectList?: IDictionary<ISelectListEntry>, validator: TValidatorFunction = undefined) => {
+            let input = <HTMLSelectElement>devInfoPanel.querySelector(selector);
+            let errorElement = <HTMLElement>devInfoPanel.querySelector(selector + '_error');
+
+            if (selectList) {
+                this.fillSelectByDict(input, selectList);
+            }
+
+            let value = deviceConfig[propertyName];
+            if (input.type === 'checkbox') {
+                input.checked = value === undefined ? true : value;
+                input.addEventListener('change', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator))
+            } else {
+                if (value !== undefined) {
+                    input.value = value;
+                } else {
+                    input.value = '';
+                }
+                input.addEventListener('input', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator));
+            }
+            this.refreshSimpleErrorElement(errorElement, validator);
+        };
+
+        inputHelper('#name', 'name', undefined, () => !this.delegate.deviceIsUnique(deviceConfig));
+        inputHelper('#enabled', 'enabled');
+        inputHelper('#manufacturer', 'manufacturer');
+        inputHelper('#model', 'model');
+        inputHelper('#serial', 'serial');
+        inputHelper('#category', 'category', accessoryCategories);
+
+        devicePane.appendChild(devInfoFragment);
+        return devInfoPanel;
+    }
+
+    createServicePanel(deviceConfig: hkBridge.Configuration.IDeviceConfig, serviceConfig: hkBridge.Configuration.IServiceConfig): HTMLElement {
+        let servicePanel = <DocumentFragment>document.importNode(this.deviceServicePanelTemplate.content, true);
+        let frameNode = <HTMLElement>servicePanel.querySelector('#yahka_service_panel');
+        translateFragment(servicePanel);
+        let inputHelper = (selector: string, configName: string, popuplateServices?: boolean, eventHandler?) => {
+            let input = <HTMLSelectElement>frameNode.querySelector(selector);
+            if (popuplateServices === true) {
+                let selectList: string[] = Object.keys(HAPServiceDictionary);
+                this.fillSelectByArray(input, selectList);
+            }
+
+            if (serviceConfig) {
+                let value = serviceConfig[configName];
+                if (value !== undefined) {
+                    input.value = value;
+                } else {
+                    input.value = '';
+                }
+            }
+
+            if (eventHandler !== undefined)
+                input.addEventListener('input', eventHandler);
+            else
+                input.addEventListener('input', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
+        };
+
+        this.refreshServicePanelCaption(serviceConfig, frameNode);
+        inputHelper('#service_name', 'name');
+        inputHelper('#service_type', 'type', true, this.handleServiceTypeChange.bind(this, serviceConfig, frameNode));
+        inputHelper('#service_subtype', 'subType');
+
+        this.buildCharacteristicTable(serviceConfig, frameNode);
+
+        // bind delete buttton
+        frameNode.querySelector('#yakha_delete_service').addEventListener('click', () => {
+            let idx = deviceConfig.services.indexOf(serviceConfig);
+            if (idx > -1) {
+                deviceConfig.services.splice(idx, 1);
+                this.delegate.changeCallback();
+                frameNode.parentNode.removeChild(frameNode);
+            }
+            this.delegate.setSelectedDeviceConfig(undefined, false);
+        });
+
+        return frameNode;
+    }
+
+    refreshServicePanelCaption(serviceConfig: hkBridge.Configuration.IServiceConfig, servicePanel: HTMLElement) {
+        servicePanel.querySelector('#yahka_service_caption').textContent = serviceConfig.name + '[' + serviceConfig.type + ']';
+    }
+
+    findHAPCharacteristic(serviceDef: IHAPServiceDefinition, characteristicName: string): IHAPCharacteristicDefintion {
+        if (!serviceDef)
+            return undefined;
+        let x;
+        if (x = serviceDef.characteristics[characteristicName])
+            return x;
+        return undefined;
+    }
+
+    findConfigCharacteristic(service: hkBridge.Configuration.IServiceConfig, characteristicName: string): hkBridge.Configuration.ICharacteristicConfig {
+        if (!service) {
+            return undefined;
+        }
+
+        for (let cfg of service.characteristics) {
+            if (cfg.name == characteristicName) {
+                return cfg;
+            }
+        }
+
+        return undefined;
+    }
+
+    isEmptyCharacteristic(charConfig: hkBridge.Configuration.ICharacteristicConfig): boolean {
+        if (charConfig === undefined)
+            return true;
+        if (charConfig.name === '')
+            return true;
+
+
+        if ((charConfig['inOutFunction'] === '') || (charConfig['inOutFunction'] === undefined))
+            return true;
+
+        return false;
+    }
+
+    removeCharacteristic(serviceConfig: hkBridge.Configuration.IServiceConfig, charConfig: hkBridge.Configuration.ICharacteristicConfig) {
+        if (serviceConfig === undefined) {
+            return;
+        }
+
+        let idx = serviceConfig.characteristics.indexOf(charConfig);
+        if (idx > -1) {
+            serviceConfig.characteristics.splice(idx, 1);
+            this.delegate.changeCallback();
+        }
+    }
+
+    buildCharacteristicTable(serviceConfig: hkBridge.Configuration.IServiceConfig, servicePanel: HTMLElement) {
+        let serviceDef = HAPServiceDictionary[serviceConfig.type];
+        let createdCharacteristics: IDictionary<[string, boolean, DocumentFragment]> = {};
+        for (let charConfig of serviceConfig.characteristics) {
+            let charDef = this.findHAPCharacteristic(serviceDef, charConfig.name);
+            if ((charDef === undefined) && (this.isEmptyCharacteristic(charConfig))) {
+                this.removeCharacteristic(serviceConfig, charConfig);
+                continue;
+            }
+            let charRow = this.createCharacteristicRow(charDef, serviceConfig, charConfig);
+            createdCharacteristics[charConfig.name] = [charConfig.name, charDef ? charDef.optional : false, charRow];
+        }
+
+        // add undefined characteristics
+        if (serviceDef) {
+            for (let charName in serviceDef.characteristics) {
+                if (createdCharacteristics[charName] === undefined) {
+                    let charDef = serviceDef.characteristics[charName];
+                    let charRow = this.createCharacteristicRow(charDef, serviceConfig, undefined);
+                    createdCharacteristics[charName] = [charName, charDef.optional, charRow];
+                }
+            }
+        }
+
+        let charRows: Array<[string, boolean, DocumentFragment]> = [];
+
+        for (let charRow in createdCharacteristics)
+            charRows.push(createdCharacteristics[charRow]);
+
+        charRows.sort((a, b) => {
+            if (a[1] != b[1])
+                return a[1] ? -1 : 1;
+            return a[0].localeCompare(b[0]);
+        });
+
+        let table = servicePanel.querySelector('#yahka_characteristic_table');
+        while (table.childElementCount > 1) {// first row is the header row
+            table.removeChild(table.lastElementChild);
+        }
+        for (let row of charRows) {
+            table.appendChild(row[2]);
+        }
+    }
+
+    getParameterEditor(functionName: string, valueChangeCallback: IParameterEditorDelegate, functionMap: Map<string, ParameterEditorFactory>): IParameterEditor {
+        if (!functionMap.has(functionName)) {
+            return new ParameterEditor_Null(valueChangeCallback);
+        }
+        let constr = functionMap.get(functionName);
+        return new constr(valueChangeCallback);
+    }
+
+    updateParameterEditor(functionName: string, parameterContainer: HTMLElement, parameterValue: any, parameterChangeCallback: IParameterEditorDelegate, functionMap: Map<string, ParameterEditorFactory>) {
+        let editor = this.getParameterEditor(functionName, parameterChangeCallback, functionMap);
+        if (editor == undefined)
+            return;
+        editor.refreshAndShow(parameterContainer, parameterValue);
+    }
+
+    createCharacteristicRow(charDef: IHAPCharacteristicDefintion, serviceConfig: hkBridge.Configuration.IServiceConfig, charConfig: hkBridge.Configuration.ICharacteristicConfig): DocumentFragment {
+        let name = charConfig ? charConfig.name : charDef.name;
+        let enabled = charConfig ? charConfig.enabled : false;
+
+        let rowElement = <DocumentFragment>document.importNode(this.characteristicRow.content, true);
+
+        translateFragment(rowElement);
+
+        let bracketElement = <HTMLElement>rowElement.querySelector('#characteristic');
+
+        let checkBox = <HTMLInputElement>rowElement.querySelector('#characteristic_enabled');
+        checkBox.checked = enabled;
+        checkBox.addEventListener('click', this.handleCharacteristicEnabledChange.bind(this, serviceConfig, name, bracketElement))
+
+        this.refreshEnabledClass(bracketElement, enabled);
+        this.refershOptionalClass(bracketElement, charDef ? charDef.optional : true);
+
+        rowElement.querySelector('#characteristic_name').textContent = name;
+
+        let functionSelector = (selector: string, containerSelector: string, configName: string, parameterName: string, functionMap: Map<string, ParameterEditorFactory>) => {
+            let input = <HTMLSelectElement>rowElement.querySelector(selector);
+            let container = <HTMLElement>rowElement.querySelector(containerSelector);
+            if (functionMap !== undefined) {
+                let mapKeys = [...functionMap.keys()];
+                this.fillSelectByArray(input, mapKeys);
+            }
+            let parameterValue = '';
+            if (charConfig) {
+                let value = charConfig[configName];
+                if (value !== undefined)
+                    input.value = value;
+                else
+                    input.value = "";
+                parameterValue = charConfig[parameterName];
+            }
+            if (!parameterValue)
+                parameterValue = '';
+
+            let paramUpdateMethod = (newValue) => {
+                let charConfig = this.findConfigCharacteristic(serviceConfig, name);
+                if (charConfig === undefined) {
+                    charConfig = { name: name, enabled: false }
+                    serviceConfig.characteristics.push(charConfig);
+                }
+                charConfig[parameterName] = newValue;
+
+                this.delegate.changeCallback();
+            }
+
+            this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod, functionMap);
+            input.addEventListener('input', (e) => {
+                this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
+                let charConfig = this.findConfigCharacteristic(serviceConfig, name);
+                this.updateParameterEditor(input.value, container, charConfig[parameterName], paramUpdateMethod, functionMap);
+                return false;
+            });
+        };
+
+        functionSelector('#characteristic_inoutfunction', '#characteristic_inoutparams_container', 'inOutFunction', 'inOutParameters', inoutFunctions);
+        functionSelector('#characteristic_conversionfunction', '#characteristic_conversionparams_container', 'conversionFunction', 'conversionParameters', convFunctions);
+
+        return rowElement;
+    }
+
+    fillSelectByArray(inoutSelect: HTMLSelectElement, stringlist: string[]) {
+        for (let itemName of stringlist) {
+            let optElem = document.createElement('option');
+            optElem.value = itemName;
+            optElem.text = itemName;
+            inoutSelect.add(optElem);
+        }
+    }
+
+
+    fillSelectByDict(inoutSelect: HTMLSelectElement, dictionary: IDictionary<ISelectListEntry>) {
+        for (let key in dictionary) {
+            let optElem = document.createElement('option');
+            optElem.value = key;
+            optElem.text = dictionary[key].text;
+            inoutSelect.add(optElem);
+        }
+    }
+
+
+    refreshEnabledClass(row: HTMLElement, enabled: boolean) {
+        row.classList.toggle('disabled', !enabled);
+    }
+
+    refershOptionalClass(row: HTMLElement, optional: boolean) {
+        row.classList.toggle('optional-characteristic', optional);
+    }
+
+    handleCharacteristicEnabledChange(serviceConfig: hkBridge.Configuration.IServiceConfig, charName: string, charRow: HTMLElement, ev: Event) {
+        let charConfig = this.findConfigCharacteristic(serviceConfig, charName);
+        if (charConfig === undefined) {
+            charConfig = { name: charName, enabled: false }
+            serviceConfig.characteristics.push(charConfig);
+        }
+        let inputTarget = <HTMLInputElement>ev.currentTarget;
+        charConfig.enabled = inputTarget.checked;
+
+        this.refreshEnabledClass(charRow, charConfig.enabled);
+
+        this.delegate.changeCallback();
+    }
+
+    handleCharacteristicInputChange(serviceConfig: hkBridge.Configuration.IServiceConfig, charName: string, attribute: string, ev: Event) {
+        let charConfig = this.findConfigCharacteristic(serviceConfig, charName);
+        if (charConfig === undefined) {
+            charConfig = { name: charName, enabled: false }
+            serviceConfig.characteristics.push(charConfig);
+        }
+
+        let inputTarget = <HTMLInputElement>ev.currentTarget;
+        let inputValue = inputTarget.value;
+        charConfig[attribute] = inputValue;
+
+        this.delegate.changeCallback();
+    }
+
+
+
+    handleDeviceMetaDataChange(deviceConfig: hkBridge.Configuration.IDeviceConfig, propertyName: string, errorElement: HTMLElement, validator: TValidatorFunction, ev: Event) {
+        let inputTarget = <HTMLInputElement>ev.currentTarget;
+        let inputValue = (inputTarget.type === 'checkbox') ? inputTarget.checked : inputTarget.value;
+        deviceConfig[propertyName] = inputValue;
+        this.refreshSimpleErrorElement(errorElement, validator);
+        this.delegate.refreshDeviceListEntry(deviceConfig);
+        this.delegate.changeCallback();
+    }
+
+    handleServiceMetaDataChange(serviceConfig: hkBridge.Configuration.IServiceConfig, servicePanel: HTMLElement, attribute: string, ev: Event) {
+        let inputTarget = <HTMLInputElement>ev.currentTarget;
+        let inputValue = inputTarget.value;
+        serviceConfig[attribute] = inputValue;
+
+        this.refreshServicePanelCaption(serviceConfig, servicePanel);
+
+        this.delegate.changeCallback();
+    }
+
+
+    handleServiceTypeChange(serviceConfig: hkBridge.Configuration.IServiceConfig, servicePanel: HTMLElement, ev: Event) {
+        let inputTarget = <HTMLInputElement>ev.currentTarget;
+        let inputValue = inputTarget.value;
+        serviceConfig.type = inputValue;
+
+        this.refreshServicePanelCaption(serviceConfig, servicePanel);
+
+        this.buildCharacteristicTable(serviceConfig, servicePanel);
+
+        this.delegate.changeCallback();
+    }
+}
