@@ -3,7 +3,12 @@ import { Service } from 'hap-nodejs/lib/Service';
 import 'hap-nodejs/lib/gen/HomeKitTypes';
 import * as HapCommunity from 'hap-nodejs-community-types';
 
+let hapTypesImported = false;
 export function importHAPCommunityTypes() {
+
+    if (hapTypesImported)
+        return;
+
     let fakeBridge = {
         hap: {
             Service: Service,
@@ -21,4 +26,5 @@ export function importHAPCommunityTypes() {
             Service[type] = typeFct;
         }
     }
+    hapTypesImported = true;
 }

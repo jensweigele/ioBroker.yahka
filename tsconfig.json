@@ -9,19 +9,13 @@
         "rootDir": "src",
         "baseUrl": "src",
         "paths": {
-            "*" : [
+            "*": [
                 "../node_modules/*"
             ]
         }
     },
     "compileOnSave": true,
     "files": [
-        "src/yahka.homekit-bridge.ts",
-        "src/yahka.ioBroker-adapter.ts",
         "src/main.ts",
-        "src/admin/yahka.admin.ts",
-        "src/yahka.meta-generator.ts",
-        "src/yahka.homekit-ipcamera.ts",
-        "src/yahka.configuration.ts"
     ]
 }

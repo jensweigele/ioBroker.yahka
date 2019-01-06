@@ -2,7 +2,7 @@
 import * as hkBridge from '../yahka.configuration';
 import * as $ from "jquery";
 import { error } from 'util';
-
+import { generateMetaDataDictionary } from './yahka.meta-generator';
 type TIOBrokerAdminChangeCallback = (changeMarker?: boolean) => void;
 type TIOBrokerAdminSaveCallback = (settingsObject: any) => void;
 function isBridgeConfig(config: hkBridge.Configuration.IBaseConfigNode): config is hkBridge.Configuration.IBridgeConfig {
@@ -25,36 +25,36 @@ function isIPCameraConfig(config: hkBridge.Configuration.IBaseConfigNode): confi
 
 
 let defaultCommandLine: hkBridge.Configuration.ICameraFfmpegCommandLine =
-    {
-        stream: [
-            '-re',
-            '-i', '${source}',
-            '-threads', '0',
-            '-vcodec', '${codec}',
-            '-an',
-            '-pix_fmt', 'yuv420p',
-            '-r', '${fps}',
-            '-f', 'rawvideo',
-            '-tune', 'zerolatency',
-            '-vf', 'scale=${width}:${height}',
-            '-b:v', '${bitrate}k',
-            '-bufsize', '${bitrate}k',
-            '-payload_type', '99',
-            '-ssrc', '1',
-            '-f', 'rtp',
-            '-srtp_out_suite', 'AES_CM_128_HMAC_SHA1_80',
-            '-srtp_out_params', '${videokey}',
-            'srtp://${targetAddress}:${targetVideoPort}?rtcpport=${targetVideoPort}&localrtcpport=${targetVideoPort}&pkt_size=1378'
-        ],
-        snapshot: [
-            '-re',
-            '-i', '${source}',
-            '-t', '1',
-            '-s', '${width}x${height}',
-            '-f', 'image2',
-            '-'
-        ]
-    };
+{
+    stream: [
+        '-re',
+        '-i', '${source}',
+        '-threads', '0',
+        '-vcodec', '${codec}',
+        '-an',
+        '-pix_fmt', 'yuv420p',
+        '-r', '${fps}',
+        '-f', 'rawvideo',
+        '-tune', 'zerolatency',
+        '-vf', 'scale=${width}:${height}',
+        '-b:v', '${bitrate}k',
+        '-bufsize', '${bitrate}k',
+        '-payload_type', '99',
+        '-ssrc', '1',
+        '-f', 'rtp',
+        '-srtp_out_suite', 'AES_CM_128_HMAC_SHA1_80',
+        '-srtp_out_params', '${videokey}',
+        'srtp://${targetAddress}:${targetVideoPort}?rtcpport=${targetVideoPort}&localrtcpport=${targetVideoPort}&pkt_size=1378'
+    ],
+    snapshot: [
+        '-re',
+        '-i', '${source}',
+        '-t', '1',
+        '-s', '${width}x${height}',
+        '-f', 'image2',
+        '-'
+    ]
+};
 let webcamCommandLine: hkBridge.Configuration.ICameraFfmpegCommandLine = {
     stream: [
         '-re',
@@ -108,16 +108,16 @@ declare function getObject(id: string, callback: (error: any, object: any) => vo
 
 declare function translateFragment(fragment: DocumentFragment);
 
-type ParameterEditorFactory = new(valueChangeCallback: IParameterEditorDelegate) => IParameterEditor;
-var inoutFunctions = new Map<string, ParameterEditorFactory>([       
+type ParameterEditorFactory = new (valueChangeCallback: IParameterEditorDelegate) => IParameterEditor;
+var inoutFunctions = new Map<string, ParameterEditorFactory>([
     ["", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
     ["const", (valueChangeCallback) => new ParameterEditor_Const(valueChangeCallback)],
     ["ioBroker.State", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
     ["ioBroker.State.Defered", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
     ["ioBroker.State.OnlyACK", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
     ["ioBroker.homematic.WindowCovering.TargetPosition", (valueChangeCallback) => new ParameterEditor_HomeMaticWindowCoveringTargetPosition(valueChangeCallback)]
-    ]);
-let convFunctions = new Map<string, ParameterEditorFactory>([ 
+]);
+let convFunctions = new Map<string, ParameterEditorFactory>([
     ["", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
     ["hue", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
     ["level255", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
@@ -128,14 +128,11 @@ let convFunctions = new Map<string, ParameterEditorFactory>([
     ["HomematicDirectionToHomekitPositionState", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
     ["HomematicControlModeToHomekitHeathingCoolingState", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
     ["script", (valueChangeCallback) => new ParameterEditor_ConversionScript(valueChangeCallback)],
-    
+
 ]);
 
 
-let HAPServiceDictionary: IDictionary<IHAPServiceDefinition> = {};
-getObject('yahka.meta._serviceDictionary', (error, object) => {
-    HAPServiceDictionary = object.native;
-});
+let HAPServiceDictionary: IDictionary<IHAPServiceDefinition> = generateMetaDataDictionary();
 
 let accessoryCategories: IDictionary<ISelectListEntry> = {};
 getObject('yahka.meta._accessoryCategories', (error, object) => {
@@ -183,7 +180,7 @@ export class ioBroker_YahkaAdmin {
 
     loadSettings(settingsObject: any, onChangeCallback: TIOBrokerAdminChangeCallback) {
         this.settings = settingsObject;
-        if(settingsObject.cameras === undefined) {
+        if (settingsObject.cameras === undefined) {
             settingsObject.cameras = []
         }
 
@@ -233,7 +230,7 @@ class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
         let devList = this.deviceListHandler.getDeviceList();
         return !devList.some((a) => (a.name == deviceConfig.name) && (a !== deviceConfig));
     }
-    
+
 
     public getPageBuilderByConfig(deviceConfig: hkBridge.Configuration.IBaseConfigNode): IConfigPageBuilder {
         if (deviceConfig === undefined) {
@@ -263,7 +260,7 @@ class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
     public refreshDevicePanel(deviceConfig: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean) {
         let pageBuilder = this.getPageBuilderByConfig(deviceConfig);
         let devicePanel = <HTMLElement>document.querySelector('#yahka_device_details');
-        if(devicePanel) {
+        if (devicePanel) {
             devicePanel.innerHTML = '';
         }
         if (pageBuilder) {
@@ -296,10 +293,10 @@ class ConfigPageBuilder_Base {
 
     protected refreshSimpleErrorElement(errorElement: HTMLElement, validator: TValidatorFunction) {
         let errorVisible = false;
-        if(validator) 
+        if (validator)
             errorVisible = validator();
-        if(errorElement)
-            errorElement.classList.toggle('validationError', errorVisible);        
+        if (errorElement)
+            errorElement.classList.toggle('validationError', errorVisible);
     }
 }
 
@@ -320,7 +317,7 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
             devices = devices.concat(this.delegate.bridgeSettings.devices)
         if (this.delegate.cameraConfigs)
             devices = devices.concat(this.delegate.cameraConfigs)
-        return result.concat(devices.sort( (a,b) => a.name.localeCompare(b.name)));
+        return result.concat(devices.sort((a, b) => a.name.localeCompare(b.name)));
     }
 
     createDeviceListEntry(deviceConfig: hkBridge.Configuration.IBaseConfigNode) {
@@ -348,7 +345,7 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
     }
 
     public refreshDeviceList() {
-        this.listEntryToConfigMap.forEach( (node, element) => this.refreshDeviceListEntry(node, element))
+        this.listEntryToConfigMap.forEach((node, element) => this.refreshDeviceListEntry(node, element))
     }
 
     private refreshDeviceListEntry(deviceConfig: hkBridge.Configuration.IBaseConfigNode, listItem: HTMLElement) {
@@ -359,15 +356,15 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
         listItem.querySelector('.list-title').textContent = deviceConfig.name;
         listItem.classList.toggle('active', (deviceConfig === this.delegate.selectedDeviceConfig));
         let stylingDone = false
-        if(pageBuilder !== undefined) {
+        if (pageBuilder !== undefined) {
             stylingDone = pageBuilder.styleListItem(listItem, deviceConfig)
         }
         listItem.classList.toggle('error', !this.delegate.deviceIsUnique(deviceConfig));
-        
+
         if (!stylingDone) {
             let listIcon = listItem.querySelector('.list-icon');
             listIcon.className = 'list-icon icon mif-question';
-        }        
+        }
     }
 
     handleDeviceListClick(deviceNode: JQuery) {
@@ -504,11 +501,11 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
                     copyOfDevice.serial = "";
                     this.delegate.cameraConfigs.push(copyOfDevice);
                 } else {
-                    return 
+                    return
                 }
                 this.delegate.setSelectedDeviceConfig(copyOfDevice, true);
                 this.deviceListHandler.buildDeviceList(bridgePane);
-                this.delegate.changeCallback();                 
+                this.delegate.changeCallback();
             });
         }
 
@@ -521,7 +518,7 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
         let addServiceButton = <HTMLElement>parent.querySelector('#yahka_add_service');
         let removeDeviceButton = <HTMLElement>parent.querySelector('#yahka_remove_device');
         let duplicateDeviceButton = <HTMLElement>parent.querySelector('#yahka_duplicate_device');
-        
+
         let pageBuilder = this.delegate.getPageBuilderByConfig(this.delegate.selectedDeviceConfig);
         let addServiceEnabled = pageBuilder ? pageBuilder.addServiceAvailable : false;
         let removeDevEnabled = pageBuilder ? pageBuilder.removeDeviceAvailable : false;
@@ -563,7 +560,7 @@ class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base implements I
         let bridgeConfigFragment = <DocumentFragment>document.importNode(this.bridgeConfigPanelTemplate.content, true);
         translateFragment(bridgeConfigFragment);
 
-        let inputHelper = (selector: string, propertyName: string, validator: TValidatorFunction = undefined)  => {
+        let inputHelper = (selector: string, propertyName: string, validator: TValidatorFunction = undefined) => {
             let input = <HTMLInputElement>bridgeConfigFragment.querySelector(selector);
             let errorElement = <HTMLElement>bridgeConfigFragment.querySelector(selector + '_error');
             let value = config[propertyName];
@@ -665,7 +662,7 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
                 if (heading)
                     heading.click();
             }
-        }        
+        }
     }
 
 
@@ -686,8 +683,8 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
         listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
         listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
         return true;
-        
-    }    
+
+    }
 
     buildDeviceInformationPanel(deviceConfig: hkBridge.Configuration.IDeviceConfig, devicePane: HTMLElement): HTMLElement {
         let devInfoFragment = <DocumentFragment>document.importNode(this.deviceInfoPanelTemplate.content, true);
@@ -872,8 +869,8 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
     }
 
     getParameterEditor(functionName: string, valueChangeCallback: IParameterEditorDelegate, functionMap: Map<string, ParameterEditorFactory>): IParameterEditor {
-        if(!functionMap.has(functionName)) {
-            return new ParameterEditor_Null(valueChangeCallback);    
+        if (!functionMap.has(functionName)) {
+            return new ParameterEditor_Null(valueChangeCallback);
         }
         let constr = functionMap.get(functionName);
         return new constr(valueChangeCallback);
@@ -921,17 +918,17 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
                     input.value = "";
                 parameterValue = charConfig[parameterName];
             }
-            if(!parameterValue)
+            if (!parameterValue)
                 parameterValue = '';
 
-            let paramUpdateMethod =  (newValue) => {
+            let paramUpdateMethod = (newValue) => {
                 let charConfig = this.findConfigCharacteristic(serviceConfig, name);
                 if (charConfig === undefined) {
                     charConfig = { name: name, enabled: false }
                     serviceConfig.characteristics.push(charConfig);
                 }
                 charConfig[parameterName] = newValue;
-        
+
                 this.delegate.changeCallback();
             }
 
@@ -946,7 +943,7 @@ class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements I
 
         functionSelector('#characteristic_inoutfunction', '#characteristic_inoutparams_container', 'inOutFunction', 'inOutParameters', inoutFunctions);
         functionSelector('#characteristic_conversionfunction', '#characteristic_conversionparams_container', 'conversionFunction', 'conversionParameters', convFunctions);
-        
+
         return rowElement;
     }
 
@@ -1077,8 +1074,8 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
                 input.addEventListener('input', this.handlePropertyChange.bind(this, config, propertyName, errorElement, validator));
             }
             this.refreshSimpleErrorElement(errorElement, validator);
-        };   
-        
+        };
+
         let ffmpegHelper = (selector: string, propertyName: keyof hkBridge.Configuration.ICameraFfmpegCommandLine) => {
             let input = <HTMLTextAreaElement>configFragment.querySelector(selector);
             let inputErrorMsg = <HTMLElement>configFragment.querySelector(selector + '_error');
@@ -1090,8 +1087,8 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
                 input.value = '';
             }
             input.addEventListener('input', this.handleffMpegPropertyChange.bind(this, config, propertyName, inputErrorMsg));
-            
-        };           
+
+        };
 
         inputHelper('#enabled', 'enabled');
         inputHelper('#name', 'name', () => !this.delegate.deviceIsUnique(config));
@@ -1113,7 +1110,7 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
         ffmpegHelper('#ffmpeg_snapshot', 'snapshot');
         ffmpegHelper('#ffmpeg_stream', 'stream');
 
-        devicePanel.appendChild(configFragment);        
+        devicePanel.appendChild(configFragment);
     }
 
     public styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean {
@@ -1140,7 +1137,7 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
         this.delegate.changeCallback();
     }
 
-    displayExceptionHint(textArea: HTMLTextAreaElement, msgPanel: HTMLElement,  message: string | undefined) {
+    displayExceptionHint(textArea: HTMLTextAreaElement, msgPanel: HTMLElement, message: string | undefined) {
         textArea.classList.toggle('validationError', message !== undefined);
         msgPanel.classList.toggle('validationError', message !== undefined);
         msgPanel.innerText = message
@@ -1153,17 +1150,17 @@ class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConf
         try {
             config.ffmpegCommandLine[propertyName] = JSON.parse(inputTarget.value);
             this.displayExceptionHint(inputTarget, inputErrorMsgPanel, undefined)
-        } catch(e) {
+        } catch (e) {
             this.displayExceptionHint(inputTarget, inputErrorMsgPanel, e.message)
         }
         this.delegate.refreshDeviceListEntry(config);
         this.delegate.changeCallback();
-    }    
+    }
 }
 
 
 class ParameterEditor implements IParameterEditor {
-    
+
 
     constructor(private valueChangeCallback: IParameterEditorDelegate) {
 
@@ -1179,7 +1176,7 @@ class ParameterEditor implements IParameterEditor {
     }
 
     protected cloneTemplateNode(selector: string): DocumentFragment {
-        let node = <HTMLTemplateElement>document.querySelector(selector);        
+        let node = <HTMLTemplateElement>document.querySelector(selector);
         return <DocumentFragment>document.importNode(node.content, true);
     }
 
@@ -1198,11 +1195,11 @@ class ParameterEditor_Null extends ParameterEditor {
     refreshAndShow(containerElement: HTMLElement, parameterValue: any) {
         this.removeChildren(containerElement);
         this.lastParamValue = parameterValue;
-    }  
+    }
 
     protected buildNewParameterValue(): any {
         return this.lastParamValue;
-    }    
+    }
 }
 
 class ParameterEditor_SingleState extends ParameterEditor {
@@ -1220,7 +1217,7 @@ class ParameterEditor_SingleState extends ParameterEditor {
         containerElement.appendChild(this.templateNode);
 
         this.textField.value = parameterValue;
-    }   
+    }
 
     protected buildNewParameterValue(): any {
         return this.textField.value;
@@ -1242,7 +1239,7 @@ class ParameterEditor_Const extends ParameterEditor {
         containerElement.appendChild(this.templateNode);
 
         this.textField.value = parameterValue ? parameterValue : "";
-    }   
+    }
 
     protected buildNewParameterValue(): any {
         return this.textField.value;
@@ -1278,7 +1275,7 @@ class ParameterEditor_ScaleConversionEditor extends ParameterEditor {
         } else {
             try {
                 parameterArray = JSON.parse(parameterValue);
-            } catch(e) {
+            } catch (e) {
                 this.txtHKMin.value = parameterValue;
                 return
             }
@@ -1287,12 +1284,12 @@ class ParameterEditor_ScaleConversionEditor extends ParameterEditor {
         this.txtHKMax.value = parameterArray["homekit.max"];
         this.txtIOBrokerMin.value = parameterArray["iobroker.min"];
         this.txtIOBrokerMax.value = parameterArray["iobroker.max"];
-    }   
+    }
 
     protected buildNewParameterValue(): any {
         return {
             "homekit.min": this.txtHKMin.valueAsNumber,
-            "homekit.max": this.txtHKMax.valueAsNumber, 
+            "homekit.max": this.txtHKMax.valueAsNumber,
             "iobroker.min": this.txtIOBrokerMin.valueAsNumber,
             "iobroker.max": this.txtIOBrokerMax.valueAsNumber
         };
@@ -1317,22 +1314,22 @@ class ParameterEditor_HomeMaticWindowCoveringTargetPosition extends ParameterEdi
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
         try {
-            let p:Array<string>;
+            let p: Array<string>;
             if (typeof parameterValue === 'string')
                 p = [parameterValue];
             else if (parameterValue instanceof Array)
                 p = parameterValue;
             else
                 p = [];
-            
+
             this.txtLevel.value = (p.length >= 1) ? p[0] : "";
             this.txtWorking.value = (p.length >= 2) ? p[1] : "";
         }
-        catch(e) {
+        catch (e) {
             this.txtLevel.value = parameterValue;
             this.txtWorking.value = "";
         }
-    }   
+    }
 
     protected buildNewParameterValue(): any {
         var resultArray: Array<string> = [this.txtLevel.value];
@@ -1360,7 +1357,7 @@ class ParameterEditor_ConversionScript extends ParameterEditor {
         containerElement.appendChild(this.templateNode);
         this.txtToHomeKit.value = parameterValue["toHomeKit"] ? parameterValue["toHomeKit"] : "";
         this.txtToIOBroker.value = parameterValue["toIOBroker"] ? parameterValue["toIOBroker"] : "";
-    }   
+    }
 
     protected buildNewParameterValue(): any {
         return {
