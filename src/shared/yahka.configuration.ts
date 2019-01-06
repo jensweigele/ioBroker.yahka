@@ -1,4 +1,8 @@
 
+export interface IDictionary<T> {
+    [key: string]: T;
+}
+
 export module Configuration {
 
     export type TConfigNodeType = 'bridge' | 'customdevice' | 'ipcamera' | undefined;

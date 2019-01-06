@@ -6,7 +6,7 @@ import HAP = require('hap-nodejs');
 import { StreamController } from 'hap-nodejs/lib/StreamController';
 import ip = require('ip');
 import { uuid } from 'hap-nodejs';
-import { Configuration } from './yahka.configuration';
+import { Configuration } from './shared/yahka.configuration';
 
 let HAPService = HAP.Service;
 let HAPCharacteristic = HAP.Characteristic;
