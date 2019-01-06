@@ -17,7 +17,7 @@ interface ISelectListEntry {
 }
 
 let accessoryCategories: IDictionary<ISelectListEntry> = {};
-getObject('yahka.meta._accessoryCategories', (object) => {
+getObject('yahka.meta._accessoryCategories', (_, object) => {
     accessoryCategories = object.native;
 });
 let HAPServiceDictionary: IDictionary<IHAPServiceDefinition> = generateMetaDataDictionary();
