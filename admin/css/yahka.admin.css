@@ -60,52 +60,90 @@
     font-style: italic;
 }
 
-.table {
-    display: table;
+.characteristic-table {
+    width: 100%;
+    margin: .625rem 0;
 }
 
-.table .fixed {
-    table-layout: fixed;
-}
+.characteristic-table tr:not(:last-child) { 
+    height: fit-content;
+ }
 
-.row {
-    display: table-row
-}
-
-.row-group {
-    display: table-row-group;
-}
-
-.header .cell {
+.characteristic-table th {
     padding: 0.5em 4px 0.5em 4px;
     font-weight: bold;
     background: gainsboro;
 }
 
-.cell {
+.characteristic-table tbody td {
     padding: 0px 4px 0px 4px;
-    display: table-cell
 }
 
-.cell.center {
+.characteristic-table td.center {
     text-align: center;
 }
 
-.optional-characteristic>.row {
+.characteristic-table td {
+    vertical-align: baseline;
+}
+
+.characteristic-table .optional-characteristic>tr {
     font-style: italic;
 }
 
-.disabled>.row {
+.characteristic-table .disabled>tr {
     background-color: #eee;
     color: #999;
 }
 
-.row .input-control textarea {
+.characteristic-table tr .input-control textarea {
     min-height: initial;
 }
-.row .input-control {
+.characteristic-table tr .input-control {
     display: flex;
     align-items: center;
+}
+
+.characteristic-table .characteristic-property-cell {
+    padding: 4px 8px 8px 20px;
+    vertical-align: top;
+}
+
+.characteristic-table .editor-container-cell {
+    padding-left: 20px;
+    
+}
+
+.characteristic-table .inOut {
+    background-color: #d2e8f924;
+}
+.characteristic-table .conversion {
+    background-color: #f7f9d36b;
+}
+
+.characteristic-table tbody {
+    border: 1px solid gainsboro;
+}
+
+.editor-table {
+    display: table;
+    width: 100%;
+}
+.editor-table .row{
+    display: table-row;
+}
+.editor-table .cell {
+    vertical-align: baseline;
+    display: table-cell;
+}
+
+.editor-table .input-container {
+    display: flex;
+    align-items: center;
+    min-height: 2rem;
+}
+.editor-table .input-container>*:first-child {
+    flex: 1 1 auto;
 }
 
 .tabcontrol2 .frames .frame.flex-container-col,

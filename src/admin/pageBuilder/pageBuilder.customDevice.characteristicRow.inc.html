@@ -1,50 +1,59 @@
-<div id="characteristic" class="row-group">
-    <div class="row">
-        <div class="cell center">
+<tbody id="characteristic" class="row-group">
+    <tr>
+        <td class="center">
             <label class="input-control checkbox small-check">
                 <input type="checkbox" id="characteristic_enabled">
                 <span class="check"></span>
             </label>
-        </div>
-        <div class="cell">
-            <span id="characteristic_name"></span>
-            <span class="place-right">InOut: </span>
-        </div>
-        <div class="cell">
+        </td>
+        <td>
+            <span id="characteristic_name"></span><a href="#">&nbsp;&nbsp;&nbsp;[show properties]</a>
+
+        </td>
+        <td class="right inOut">
+            <span class="translate">InOut: </span>
+        </td>
+        </td>
+        <td class="inOut">
             <div class="input-control select full-width">
                 <select id="characteristic_inoutfunction"></select>
             </div>
-        </div>
-    </div>
+        </td>
+    </tr>
 
-    <div class="row">
-        <div class="cell center">
-        </div>
-        <div class="cell">
-        </div>
-        <div class="cell" id="characteristic_inoutparams_container">
-        </div>
-    </div>
+    <tr>
+        <td>
+        </td>
+        <td rowspan="3" class="characteristic-property-cell">
+            <div class="no-display" id="characteristic_propertyTable_container">
+                <span>Characteristic Properties</span>
+                <div class="editor-table no-display" id="characteristic_propertyTable">
+                </div>
+            </div>
 
-    <div class="row">
-        <div class="cell center">
-        </div>
-        <div class="cell center">
-            <span class="place-right">Conversion: </span>
-        </div>
-        <div class="cell">
+
+        </td>
+        <td colspan="2" id="characteristic_inoutparams_container" class="editor-container-cell inOut">
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+        </td>
+        <td class="right conversion">
+            <span class="translate">Conversion: </span>
+        </td>
+        <td class="conversion">
             <div class="input-control select full-width">
                 <select id="characteristic_conversionfunction"></select>
             </div>
-        </div>
-    </div>
+        </td>
+    </tr>
 
-    <div class="row">
-        <div class="cell center">
-        </div>
-        <div class="cell">
-        </div>
-        <div class="cell" id="characteristic_conversionparams_container">
-        </div>
-    </div>
-</div>
+    <tr class="row">
+        <td>
+        </td>
+        <td colspan="2" id="characteristic_conversionparams_container" class="editor-container-cell conversion">
+        </td>
+    </tr>
+</tbody>

@@ -31,12 +31,14 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
     deviceInfoPanelTemplate: HTMLTemplateElement;
     deviceServicePanelTemplate: HTMLTemplateElement;
     characteristicRow: HTMLTemplateElement;
+    characteristicPropRow: HTMLTemplateElement;
 
     constructor(protected delegate: IConfigPageBuilderDelegate) {
         super(delegate);
         this.deviceInfoPanelTemplate = createTemplateElement(require('./pageBuilder.customDevice.infoPanel.inc.html'));
         this.deviceServicePanelTemplate = createTemplateElement(require('./pageBuilder.customDevice.servicePanel.inc.html'));
         this.characteristicRow = createTemplateElement(require('./pageBuilder.customDevice.characteristicRow.inc.html'));
+        this.characteristicPropRow = createTemplateElement(require('./pageBuilder.customDevice.characteristic.propRow.inc.html'));
     }
 
     public refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
@@ -340,7 +342,29 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         functionSelector('#characteristic_inoutfunction', '#characteristic_inoutparams_container', 'inOutFunction', 'inOutParameters', inoutFunctions);
         functionSelector('#characteristic_conversionfunction', '#characteristic_conversionparams_container', 'conversionFunction', 'conversionParameters', convFunctions);
 
+        this.updateCharacteristicProperties(rowElement, charDef, charConfig);
+
         return rowElement;
+    }
+
+    updateCharacteristicProperties(rowElement: DocumentFragment, charDef: IHAPCharacteristicDefintion, charConfig: hkBridge.Configuration.ICharacteristicConfig) {
+        let propTable = rowElement.querySelector('#characteristic_propertyTable');
+        for (let propName in charDef.properties) {
+            let propertyDefaultValue = charDef.properties[propName];
+            console.log(propName, typeof propertyDefaultValue);
+            if (typeof propertyDefaultValue === 'object') {
+                propertyDefaultValue = JSON.stringify(propertyDefaultValue);
+            }
+            let propElement = <DocumentFragment>document.importNode(this.characteristicPropRow.content, true);
+            let nameSpan = propElement.querySelector('#propName');
+            nameSpan.id = "";
+            nameSpan.textContent = propName;
+
+            let propInput = <HTMLInputElement>propElement.querySelector('#propValue')
+            propInput.id = propName;
+            propInput.placeholder = propertyDefaultValue;
+            propTable.appendChild(propElement);
+        }
     }
 
     fillSelectByArray(inoutSelect: HTMLSelectElement, stringlist: string[]) {
