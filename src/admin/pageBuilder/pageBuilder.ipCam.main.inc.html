@@ -1,0 +1,148 @@
+<div class="frame">
+    <div class="heading">
+        <span class="translate">Basic Properties</span>
+    </div>
+    <div class="content">
+        <div>
+            <div><label class="translate" for="enabled">Enabled:</label></div>
+            <div class="input control flex-grow margin10">
+                <input type="checkbox" id="enabled" />
+            </div>
+        </div>
+        <div>
+            <div><label class="translate" for="name">Device name:</label></div>
+            <div class="errorpanel translate" id="name_error">A device with this name already exists.
+                Please change the name!</div>
+            <div class="input control flex-grow margin10">
+                <input class="full-size" type="text" id="name" />
+            </div>
+        </div>
+        <div>
+            <div><label class="translate" for="manufacturer">Manufacturer:</label></div>
+            <div class="input control flex-grow  margin10">
+                <input class="full-size" type="text" id="manufacturer" />
+            </div>
+        </div>
+        <div>
+            <div><label class="translate" for="model">Model:</label></div>
+            <div class="input controlflex-grow  margin10">
+                <input class="full-size" type="text" id="model" />
+            </div>
+        </div>
+        <div>
+            <div><label class="translate" for="serial">Serial:</label></div>
+            <div class="input controlflex-grow  margin10">
+                <input class="full-size" type="text" id="serial" />
+            </div>
+        </div>
+        <div>
+            <div><label class="translate" for="username">Username:</label><span class="edit-hint translate">needs
+                    to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field,
+                        the camera needs to be reconfigured in the HomeKit database</b></span></div>
+            <div class="input controlflex-grow  margin10">
+                <input class="full-size" type="text" id="username" />
+            </div>
+        </div>
+        <div>
+            <div><label class="translate" for="pincode">Pincode:</label><span class="edit-hint translate">needs
+                    to be in the form of 123-45-678</span></div>
+            <div class="input controlflex-grow  margin10">
+                <input class="full-size" type="text" id="pincode" />
+            </div>
+        </div>
+        <div>
+            <div><label class="translate" for="port">Port:</label><span class="edit-hint translate">0 =
+                    random free port assigned by the operation system (default)</span></div>
+            <div class="input controlflex-grow  margin10">
+                <input class="full-size" type="number" id="port" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="frame">
+    <div class="heading">
+        <span class="translate">Stream Properties</span>
+    </div>
+
+    <div class="content">
+        <div>
+            <div><label class="translate" for="source">Source:</label></div>
+            <div class="input control flex-grow margin10">
+                <input class="full-size" type="text" id="source" />
+            </div>
+        </div>
+        <div>
+            <div><label class="translate" for="codec">Codec:</label></div>
+            <div class="input control flex-grow  margin10">
+                <input class="full-size" type="text" id="codec" />
+            </div>
+        </div>
+        <div>
+            <div><label class="translate" for="numberOfStreams">Number of Streams:</label></div>
+            <div class="input controlflex-grow  margin10">
+                <input class="full-size" type="text" id="numberOfStreams" />
+            </div>
+        </div>
+        <div>
+            <div><label class="translate" for="maxWidth">maxWidth:</label></div>
+            <div class="input controlflex-grow  margin10">
+                <input class="full-size" type="text" id="maxWidth" />
+            </div>
+        </div>
+        <div>
+            <div><label class="translate" for="maxHeight">maxHeight:</label></div>
+            <div class="input controlflex-grow  margin10">
+                <input class="full-size" type="text" id="maxHeight" />
+            </div>
+        </div>
+        <div>
+            <div><label class="translate" for="maxFPS">maxFPS:</label></div>
+            <div class="input controlflex-grow  margin10">
+                <input class="full-size" type="text" id="maxFPS" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="frame">
+    <div class="heading">
+        <span class="translate">Advanced Settings</span>
+    </div>
+
+    <div class="content">
+        <div>
+            <div><label class="translate" for="ffmpeg_snapshot">FFMPEG Command Line - Snapshot:</label></div>
+            <div class="errorpanel" id="ffmpeg_snapshot_error"></div>
+            <div class="input control flex-grow margin10 flex-container-row">
+                <textarea rows=8 class="flex-grow" id="ffmpeg_snapshot"></textarea>
+                <div class="margin10"><span class="translate">Available replacers:</span> <br>
+                    <ul class="simple-list blue-bullet replace-list">
+                        <li>${source}</li>
+                        <li>${width}</li>
+                        <li>${height}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div><label class="translate" for="ffmpeg_stream">FFMPEG Command Line - Stream:</label></div>
+            <div class="errorpanel" id="ffmpeg_stream_error"></div>
+            <div class="input control flex-grow margin10 flex-container-row">
+                <textarea rows=8 class="flex-grow" id="ffmpeg_stream"></textarea>
+                <div class="margin10"><span class="translate">Available replacers:</span> <br>
+                    <ul class="simple-list blue-bullet replace-list">
+                        <li>${codec}</li>
+                        <li>${fps}</li>
+                        <li>${width}</li>
+                        <li>${height}</li>
+                        <li>${bitrate}</li>
+                        <li>${videokey}</li>
+                        <li>${targetAddress}</li>
+                        <li>${targetVideoPort}</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

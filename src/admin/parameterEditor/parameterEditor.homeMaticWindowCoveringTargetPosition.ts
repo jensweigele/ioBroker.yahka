@@ -1,4 +1,5 @@
 import { ParameterEditor, IParameterEditorDelegate } from "./parameterEditor.base";
+import { createAndCloneTemplateElement } from "../admin.pageLoader";
 
 export class ParameterEditor_HomeMaticWindowCoveringTargetPosition extends ParameterEditor {
     private templateNode: DocumentFragment;
@@ -6,7 +7,7 @@ export class ParameterEditor_HomeMaticWindowCoveringTargetPosition extends Param
     private txtWorking: HTMLInputElement;
     constructor(valueChangeCallback: IParameterEditorDelegate) {
         super(valueChangeCallback);
-        this.templateNode = this.cloneTemplateNode('#editor_conversion_HomeMaticWindowCoveringTargetPosition');
+        this.templateNode = createAndCloneTemplateElement(require('./parameterEditor.homeMaticWindowCoveringTargetPosition.inc.html'));
         this.txtLevel = this.templateNode.querySelector("#level");
         this.txtLevel.addEventListener('input', (ev) => this.valueChanged());
         this.txtWorking = this.templateNode.querySelector("#working");

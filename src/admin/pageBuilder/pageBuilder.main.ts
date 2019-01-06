@@ -6,6 +6,7 @@ import { ConfigPageBuilder_Base, IConfigPageBuilder, IConfigPageBuilderDelegate,
 import { ConfigPageBuilder_CustomDevice } from './pageBuilder.customDevice';
 import { ConfigPageBuilder_BridgeConfig } from './pageBuilder.bridgeConfig';
 import { ConfigPageBuilder_IPCamera } from './pageBuilder.ipCam';
+import { createTemplateElement } from '../admin.pageLoader';
 
 
 function generateRandomUsername(): string {
@@ -113,7 +114,7 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
 
     constructor(delegate: IConfigPageBuilderDelegate) {
         super(delegate);
-        this.deviceListEntryTemplate = <HTMLTemplateElement>document.querySelector('#yahka_devicelist_entry');
+        this.deviceListEntryTemplate = createTemplateElement(require('./pageBuilder.main.deviceListEntry.inc.html'));
     }
 
 

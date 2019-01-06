@@ -20,11 +20,6 @@ export class ParameterEditor implements IParameterEditor {
         }
     }
 
-    protected cloneTemplateNode(selector: string): DocumentFragment {
-        let node = <HTMLTemplateElement>document.querySelector(selector);
-        return <DocumentFragment>document.importNode(node.content, true);
-    }
-
     protected buildNewParameterValue(): any {
         return undefined;
     }

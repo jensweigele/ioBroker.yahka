@@ -1,4 +1,5 @@
 import { ParameterEditor, IParameterEditorDelegate } from "./parameterEditor.base";
+import { createAndCloneTemplateElement } from "../admin.pageLoader";
 
 export class ParameterEditor_ScaleConversionEditor extends ParameterEditor {
     private templateNode: DocumentFragment;
@@ -8,7 +9,7 @@ export class ParameterEditor_ScaleConversionEditor extends ParameterEditor {
     private txtIOBrokerMax: HTMLInputElement;
     constructor(valueChangeCallback: IParameterEditorDelegate) {
         super(valueChangeCallback);
-        this.templateNode = this.cloneTemplateNode('#editor_conversion_scale');
+        this.templateNode = createAndCloneTemplateElement(require('./parameterEditor.scaleConversion.inc.html'));
         this.txtHKMin = this.templateNode.querySelector("#hkMin");
         this.txtHKMin.addEventListener('input', (ev) => this.valueChanged());
         this.txtHKMax = this.templateNode.querySelector("#hkMax");

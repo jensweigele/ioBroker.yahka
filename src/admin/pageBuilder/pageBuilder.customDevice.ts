@@ -9,6 +9,8 @@ import { IParameterEditorDelegate, IParameterEditor } from '../parameterEditor/p
 import { ParameterEditorFactory, inoutFunctions, convFunctions } from '../parameterEditor/parameterEditor.factory';
 import { ParameterEditor_Null } from '../parameterEditor/parameterEditor.null';
 import { translateFragment } from '../admin.translation';
+import { createTemplateElement } from '../admin.pageLoader';
+
 
 declare function getObject(id: string, callback: (error: any, object: any) => void);
 interface ISelectListEntry {
@@ -22,7 +24,6 @@ getObject('yahka.meta._accessoryCategories', (_, object) => {
 });
 let HAPServiceDictionary: IDictionary<IHAPServiceDefinition> = generateMetaDataDictionary();
 
-
 export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements IConfigPageBuilder {
     public addServiceAvailable: boolean = true;
     public removeDeviceAvailable: boolean = true;
@@ -33,9 +34,9 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
 
     constructor(protected delegate: IConfigPageBuilderDelegate) {
         super(delegate);
-        this.deviceInfoPanelTemplate = <HTMLTemplateElement>document.querySelector('#yahka_device_info_panel_template');
-        this.deviceServicePanelTemplate = <HTMLTemplateElement>document.querySelector('#yahka_device_service_panel');
-        this.characteristicRow = <HTMLTemplateElement>document.querySelector('#yahka_characteristic_row');
+        this.deviceInfoPanelTemplate = createTemplateElement(require('./pageBuilder.customDevice.infoPanel.inc.html'));
+        this.deviceServicePanelTemplate = createTemplateElement(require('./pageBuilder.customDevice.servicePanel.inc.html'));
+        this.characteristicRow = createTemplateElement(require('./pageBuilder.customDevice.characteristicRow.inc.html'));
     }
 
     public refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {

@@ -1,4 +1,5 @@
 import { ParameterEditor, IParameterEditorDelegate } from "./parameterEditor.base";
+import { createAndCloneTemplateElement } from "../admin.pageLoader";
 
 export class ParameterEditor_ConversionScript extends ParameterEditor {
     private templateNode: DocumentFragment;
@@ -6,7 +7,7 @@ export class ParameterEditor_ConversionScript extends ParameterEditor {
     private txtToIOBroker: HTMLInputElement;
     constructor(valueChangeCallback: IParameterEditorDelegate) {
         super(valueChangeCallback);
-        this.templateNode = this.cloneTemplateNode('#editor_conversion_script');
+        this.templateNode = createAndCloneTemplateElement(require('./parameterEditor.conversionScript.inc.html'));
         this.txtToHomeKit = this.templateNode.querySelector("#toHomeKit");
         this.txtToHomeKit.addEventListener('input', (ev) => this.valueChanged());
         this.txtToIOBroker = this.templateNode.querySelector("#toIOBroker");

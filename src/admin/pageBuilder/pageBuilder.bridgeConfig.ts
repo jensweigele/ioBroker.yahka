@@ -3,6 +3,7 @@
 import * as hkBridge from '../../shared/yahka.configuration';
 import { ConfigPageBuilder_Base, IConfigPageBuilder, IConfigPageBuilderDelegate, TValidatorFunction } from './pageBuilder.base';
 import { translateFragment } from '../admin.translation';
+import { createTemplateElement } from '../admin.pageLoader';
 
 export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base implements IConfigPageBuilder {
     public addServiceAvailable: boolean = false;
@@ -11,7 +12,7 @@ export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base imple
     bridgeConfigPanelTemplate: HTMLTemplateElement;
     constructor(protected delegate: IConfigPageBuilderDelegate) {
         super(delegate);
-        this.bridgeConfigPanelTemplate = <HTMLTemplateElement>document.querySelector('#yahka_bridgeconfig_template');
+        this.bridgeConfigPanelTemplate = createTemplateElement(require('./pageBuilder.bridgeConfig.main.inc.html'));
     }
 
     public refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {

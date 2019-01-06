@@ -39,6 +39,10 @@ let frontendConfig = {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/
+      },
+      {
+        test: /\.inc.html$/,
+        use: 'raw-loader'
       }
     ]
   },

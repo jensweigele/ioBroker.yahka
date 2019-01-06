@@ -1,11 +1,12 @@
 import { ParameterEditor, IParameterEditorDelegate } from "./parameterEditor.base";
+import { createAndCloneTemplateElement } from "../admin.pageLoader";
 
 export class ParameterEditor_Const extends ParameterEditor {
     private templateNode: DocumentFragment;
     private textField: HTMLTextAreaElement;
     constructor(valueChangeCallback: IParameterEditorDelegate) {
         super(valueChangeCallback);
-        this.templateNode = this.cloneTemplateNode('#editor_const');
+        this.templateNode = createAndCloneTemplateElement(require('./parameterEditor.const.inc.html'));
         this.textField = this.templateNode.querySelector("#textfield");
         this.textField.addEventListener('input', (ev) => this.valueChanged());
     }

@@ -4,6 +4,7 @@ import * as hkBridge from '../../shared/yahka.configuration';
 import * as $ from "jquery";
 import { ConfigPageBuilder_Base, IConfigPageBuilder, IConfigPageBuilderDelegate, TValidatorFunction } from './pageBuilder.base';
 import { translateFragment } from '../admin.translation';
+import { createTemplateElement } from '../admin.pageLoader';
 
 export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConfigPageBuilder {
     public addServiceAvailable: boolean = false;
@@ -12,7 +13,7 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
     configPanelTemplate: HTMLTemplateElement;
     constructor(protected delegate: IConfigPageBuilderDelegate) {
         super(delegate);
-        this.configPanelTemplate = <HTMLTemplateElement>document.querySelector('#yahka_cameraConfig_template');
+        this.configPanelTemplate = createTemplateElement(require('./pageBuilder.ipCam.main.inc.html'));
     }
 
     public refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {

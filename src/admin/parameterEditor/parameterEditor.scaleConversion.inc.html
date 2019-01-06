@@ -1,0 +1,46 @@
+<!-- <div>Explanation: <br/>
+        $value is mapped to HomeKit with:  (homekitMin + ((homekitMax - homekitMin) / (ioBrokerMax - ioBrokerMin)) * ($value - ioBrokerMin))</br>
+        $value is mapped to ioBroker with: (ioBrokerMin + ((ioBrokerMax - ioBrokerMin) / (homeKitMax - homeKitMin)) * ($value - homeKitMin))
+    </div> -->
+<div class="table" id="yahka_characteristic_table">
+    <div class="row">
+        <div class="cell">
+            <label class="translate">HomeKit Minimum:</label>
+        </div>
+        <div class="cell">
+            <div class="input-control full-width">
+                <input type="number" id="hkMin"></input>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <label class="translate">HomeKit Maximum:</label>
+        </div>
+        <div class="cell">
+            <div class="input-control full-width">
+                <input type="number" id="hkMax"></input>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <label class="translate">ioBroker Minimum:</label>
+        </div>
+        <div class="cell">
+            <div class="input-control full-width">
+                <input type="number" id="ioMin"></input>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <label class="translate">ioBroker Maximum:</label>
+        </div>
+        <div class="cell">
+            <div class="input-control full-width">
+                <input type="number" id="ioMax"></input>
+            </div>
+        </div>
+    </div>
+</div>
