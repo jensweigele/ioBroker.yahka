@@ -2,11 +2,10 @@ import { IInOutFunction, IInOutChangeNotify } from "../yahka.homekit-bridge";
 import { ISubscriptionRequestor, ISubscriptionRequest } from "../yahka.ioBroker-adapter";
 
 export abstract class TYahkaFunctionBase implements ISubscriptionRequestor {
-    protected debounceTimer = -1;
     public subscriptionRequests: ISubscriptionRequest[] = [];
     protected stateCache = new Map<string, ioBroker.IState>();
 
-    constructor(protected adapter: ioBroker.IAdapter) {
+    constructor(protected adapter: ioBroker.IAdapter, protected logIdentifier: string = "") {
     }
 
     protected addSubscriptionRequest(stateName: string) {
@@ -47,22 +46,27 @@ export abstract class TYahkaFunctionBase implements ISubscriptionRequestor {
         return needUpdate;
     }
     subscriptionEvent(stateName: string, ioState: ioBroker.IState, callback: IInOutChangeNotify) {
-        this.adapter.log.debug('change event from ioBroker via [' + stateName + ']' + JSON.stringify(ioState));
+        this.adapter.log.debug('[' + this.logIdentifier + '] change event from ioBroker via [' + stateName + ']' + JSON.stringify(ioState));
         if (this.shouldStateBeFiltered(stateName, ioState)) {
-            this.adapter.log.debug('state was filtered - notification is canceled');
+            this.adapter.log.debug('[' + this.logIdentifier + '] state was filtered - notification is canceled');
             return;
         }
 
         let cacheChange = this.updateCache(stateName, ioState);
         if(!cacheChange) {
-            this.adapter.log.debug('state value already in cache - notification is canceled');
+            this.adapter.log.debug('[' + this.logIdentifier + '] state value already in cache - notification is canceled');
             return;
         }
 
-        this.recalculateHomekitValues(stateName, callback);
+        this.cacheChanged(stateName, callback);
+
     }
 
-    protected recalculateHomekitValues(stateName: string, callback: IInOutChangeNotify) {
-        // noop
+    protected cacheChanged(stateName: string, callback: IInOutChangeNotify) {
+
     }
+
+
+
 }
+

@@ -1,15 +1,49 @@
+import { TYahkaFunctionBase } from './functions.base';
 import { IInOutFunction, IInOutChangeNotify } from '../yahka.homekit-bridge';
 import { ISubscriptionRequest, ISubscriptionRequestor } from '../yahka.ioBroker-adapter';
 export { IInOutChangeNotify, IInOutFunction } from '../yahka.homekit-bridge';
-class TIoBrokerInOutFunctionBase {
+
+export abstract class TIoBrokerInOutFunctionBase extends TYahkaFunctionBase implements IInOutFunction {
+    protected valueForHomeKit: any = undefined;
+    protected errorForHomeKit: any = null;
+
+    fromIOBroker(callback:(error: any, plainIOValue: any) => void) {
+        this.adapter.log.debug('[' + this.logIdentifier + '] fromIOBroker event - delivering cached value');
+        callback(null, this.valueForHomeKit);
+    }
+
+    toIOBroker(plainIoValue: any, callback: () => void) {
+        this.adapter.log.debug('[' + this.logIdentifier + '] writing state to ioBroker: ' + JSON.stringify(plainIoValue));
+        this.updateIOBrokerValue(plainIoValue, callback);
+    }
+
+    cacheChanged(stateName: string, callback: IInOutChangeNotify) {
+        try {
+            this.valueForHomeKit = this.recalculateHomekitValues(stateName);
+            this.errorForHomeKit = null;
+        } catch (e) {
+            this.errorForHomeKit = e;
+        }        
+        
+        if(this.valueForHomeKit)
+            callback(this.valueForHomeKit);
+    }
+
+    protected recalculateHomekitValues(stateName: string) {
+        // noop
+    }
+
+    protected updateIOBrokerValue(plainIoValue: any, callback: () => void) {
+        // to be filled in derived class
+    }
 
 }
-export abstract class TIoBrokerInOutFunction_StateBase extends TIoBrokerInOutFunctionBase implements ISubscriptionRequestor, IInOutFunction {
+
+ export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionRequestor, IInOutFunction {
     protected debounceTimer = -1;
     public subscriptionRequests: ISubscriptionRequest[] = [];
 
     constructor(protected adapter: ioBroker.IAdapter, protected stateName: string, protected deferredTime: number = 0) {
-        super();
         this.addSubscriptionRequest(stateName);
     }
 
