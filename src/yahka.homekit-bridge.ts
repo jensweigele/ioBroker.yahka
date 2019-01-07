@@ -208,6 +208,14 @@ export class THomeKitBridge {
 
             binding.inOut.fromIOBroker((ioBrokerError, ioValue) => {
                 let hkValue = binding.conversion.toHomeKit(ioValue);
+                // check if the value can be converetd to a number
+                if ((hkValue !== undefined) && (hkValue !== "")) {
+                    let numValue = Number(hkValue);
+                    if (!isNaN(numValue)) {
+                        hkValue = numValue;
+                    }
+                }
+
                 this.FLogger.debug('[' + characteristicConfig.name + '] forwarding value from ioBroker (' + JSON.stringify(ioValue) + ') to homekit as (' + JSON.stringify(hkValue) + ')');
                 hkCallback(ioBrokerError, hkValue);
             });

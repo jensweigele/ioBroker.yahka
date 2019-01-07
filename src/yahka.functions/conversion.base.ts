@@ -8,7 +8,7 @@ export abstract class TIOBrokerConversionBase {
         if (value === undefined)
             return undefined;
         if (typeof value !== 'number')
-            return parseFloat(value);
+            return Number(value);
         else
             return value;
     }
