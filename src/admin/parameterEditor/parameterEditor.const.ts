@@ -1,5 +1,6 @@
 import { ParameterEditor, IParameterEditorDelegate } from "./parameterEditor.base";
 import { createAndCloneTemplateElement } from "../admin.pageLoader";
+import { Utils } from "../admin.utils";
 
 export class ParameterEditor_Const extends ParameterEditor {
     private templateNode: DocumentFragment;
@@ -14,11 +15,11 @@ export class ParameterEditor_Const extends ParameterEditor {
     refreshAndShow(containerElement: HTMLElement, parameterValue: any) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
-
-        this.textField.value = parameterValue ? parameterValue : "";
+        console.log("setting input field", parameterValue);
+        Utils.setInputValue(this.textField, parameterValue);
     }
 
     protected buildNewParameterValue(): any {
-        return this.textField.value;
+        return Utils.getInputValue(this.textField);
     }
 }
