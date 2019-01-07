@@ -6,10 +6,13 @@ export interface IDictionary<T> {
 export module Configuration {
 
     export type TConfigNodeType = 'bridge' | 'customdevice' | 'ipcamera' | undefined;
-
+    export interface ICharacteristicProperties {
+        [key: string]: any;
+    }
     export interface ICharacteristicConfig {
         name: string;
         enabled: boolean;
+        properties?: ICharacteristicProperties;
         [key: string]: any;
     }
 

@@ -121,6 +121,10 @@
     background-color: #f7f9d36b;
 }
 
+.characteristic-property-cell .properties-defined {
+    font-weight: bold;
+}
+
 .characteristic-table tbody {
     border: 1px solid gainsboro;
 }

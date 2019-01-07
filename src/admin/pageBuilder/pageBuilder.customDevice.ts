@@ -10,6 +10,7 @@ import { ParameterEditorFactory, inoutFunctions, convFunctions } from '../parame
 import { ParameterEditor_Null } from '../parameterEditor/parameterEditor.null';
 import { translateFragment } from '../admin.translation';
 import { createTemplateElement } from '../admin.pageLoader';
+import { Utils } from '../admin.utils';
 
 
 declare function getObject(id: string, callback: (error: any, object: any) => void);
@@ -102,11 +103,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
                 input.checked = value === undefined ? true : value;
                 input.addEventListener('change', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator))
             } else {
-                if (value !== undefined) {
-                    input.value = value;
-                } else {
-                    input.value = '';
-                }
+                Utils.setInputValue(input, value);
                 input.addEventListener('input', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator));
             }
             this.refreshSimpleErrorElement(errorElement, validator);
@@ -134,14 +131,8 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
                 this.fillSelectByArray(input, selectList);
             }
 
-            if (serviceConfig) {
-                let value = serviceConfig[configName];
-                if (value !== undefined) {
-                    input.value = value;
-                } else {
-                    input.value = '';
-                }
-            }
+            if (serviceConfig)
+                Utils.setInputValue(input, serviceConfig[configName]);
 
             if (eventHandler !== undefined)
                 input.addEventListener('input', eventHandler);
@@ -309,11 +300,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
             }
             let parameterValue = '';
             if (charConfig) {
-                let value = charConfig[configName];
-                if (value !== undefined)
-                    input.value = value;
-                else
-                    input.value = "";
+                Utils.setInputValue(input, charConfig[configName]);
                 parameterValue = charConfig[parameterName];
             }
             if (!parameterValue)
@@ -330,11 +317,11 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
                 this.delegate.changeCallback();
             }
 
-            this.updateParameterEditor(input.value, container, parameterValue, paramUpdateMethod, functionMap);
+            this.updateParameterEditor(Utils.getSelectInputValue(input), container, parameterValue, paramUpdateMethod, functionMap);
             input.addEventListener('input', (e) => {
                 this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
                 let charConfig = this.findConfigCharacteristic(serviceConfig, name);
-                this.updateParameterEditor(input.value, container, charConfig[parameterName], paramUpdateMethod, functionMap);
+                this.updateParameterEditor(Utils.getSelectInputValue(input), container, charConfig[parameterName], paramUpdateMethod, functionMap);
                 return false;
             });
         };
@@ -342,27 +329,56 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         functionSelector('#characteristic_inoutfunction', '#characteristic_inoutparams_container', 'inOutFunction', 'inOutParameters', inoutFunctions);
         functionSelector('#characteristic_conversionfunction', '#characteristic_conversionparams_container', 'conversionFunction', 'conversionParameters', convFunctions);
 
-        this.updateCharacteristicProperties(rowElement, charDef, charConfig);
+        this.updateCharacteristicProperties(rowElement, serviceConfig, charDef, charConfig);
 
         return rowElement;
     }
 
-    updateCharacteristicProperties(rowElement: DocumentFragment, charDef: IHAPCharacteristicDefintion, charConfig: hkBridge.Configuration.ICharacteristicConfig) {
+    updateCharacteristicProperties(rowElement: DocumentFragment, serviceConfig: hkBridge.Configuration.IServiceConfig, charDef: IHAPCharacteristicDefintion, charConfig: hkBridge.Configuration.ICharacteristicConfig) {
+        let charName = charConfig ? charConfig.name : charDef.name;
+        let toggleLink = rowElement.querySelector('#toggleProperties');
+        let propContainer = rowElement.querySelector('#characteristic_propertyTable_container');
+        let hasCustomProperties = charConfig ? (charConfig.properties !== undefined) && (Object.keys(charConfig.properties).length > 0) : false;
+
+        if (toggleLink) {
+            toggleLink.addEventListener('click', () => {
+                propContainer.classList.toggle('no-display');
+            })
+            propContainer.classList.toggle('no-display', !hasCustomProperties);
+            toggleLink.classList.toggle('properties-defined', hasCustomProperties);
+        }
         let propTable = rowElement.querySelector('#characteristic_propertyTable');
-        for (let propName in charDef.properties) {
-            let propertyDefaultValue = charDef.properties[propName];
-            console.log(propName, typeof propertyDefaultValue);
-            if (typeof propertyDefaultValue === 'object') {
-                propertyDefaultValue = JSON.stringify(propertyDefaultValue);
+
+        function transformValue(value: any) {
+            let result = value;
+            let isObject = false;
+            if (typeof result === 'object') {
+                result = JSON.stringify(result);
+                isObject = true;
             }
+            return { asString: result, isObject: isObject };
+        }
+
+        for (let propertyName in charDef.properties) {
+            let propertyDefaultValue = transformValue(charDef.properties[propertyName]);
             let propElement = <DocumentFragment>document.importNode(this.characteristicPropRow.content, true);
             let nameSpan = propElement.querySelector('#propName');
             nameSpan.id = "";
-            nameSpan.textContent = propName;
+            nameSpan.textContent = propertyName;
 
             let propInput = <HTMLInputElement>propElement.querySelector('#propValue')
-            propInput.id = propName;
-            propInput.placeholder = propertyDefaultValue;
+            propInput.id = propertyName;
+            propInput.placeholder = propertyDefaultValue.asString;
+            if (charConfig) {
+                if (charConfig.properties) {
+                    if (charConfig.properties[propertyName]) {
+                        let charValue = transformValue(charConfig.properties[propertyName]);
+                        Utils.setInputValue(propInput, charValue.asString);
+                    }
+                }
+            }
+            nameSpan.classList.toggle('properties-defined', propInput.value != "");
+            propInput.addEventListener('input', this.handleCharacteristicPropertyChange.bind(this, serviceConfig, charName, propertyName, propertyDefaultValue.isObject))
             propTable.appendChild(propElement);
         }
     }
@@ -417,12 +433,41 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         }
 
         let inputTarget = <HTMLInputElement>ev.currentTarget;
-        let inputValue = inputTarget.value;
+        let inputValue = Utils.getInputValue(inputTarget);
         charConfig[attribute] = inputValue;
 
         this.delegate.changeCallback();
     }
 
+
+    handleCharacteristicPropertyChange(serviceConfig: hkBridge.Configuration.IServiceConfig, charName: string, property: string, isObjectProperty: boolean, ev: Event) {
+        let charConfig = this.findConfigCharacteristic(serviceConfig, charName);
+        if (charConfig === undefined) {
+            charConfig = { name: charName, enabled: false }
+            serviceConfig.characteristics.push(charConfig);
+        }
+
+        let inputTarget = <HTMLInputElement>ev.currentTarget;
+        let inputValue = Utils.getInputValue(inputTarget);
+        if (charConfig.properties === undefined)
+            charConfig.properties = {};
+
+        if (inputValue) {
+            if (isObjectProperty) {
+                try {
+                    charConfig.properties[property] = JSON.parse(inputValue);
+                } catch (e) {
+                    console.log("parsing of", inputValue, " failed with: ", e);
+                }
+            } else {
+                charConfig.properties[property] = inputValue;
+            }
+        } else {
+            delete charConfig.properties[property];
+        }
+
+        this.delegate.changeCallback();
+    }
 
 
     handleDeviceMetaDataChange(deviceConfig: hkBridge.Configuration.IDeviceConfig, propertyName: string, errorElement: HTMLElement, validator: TValidatorFunction, ev: Event) {
@@ -436,7 +481,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
 
     handleServiceMetaDataChange(serviceConfig: hkBridge.Configuration.IServiceConfig, servicePanel: HTMLElement, attribute: string, ev: Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
-        let inputValue = inputTarget.value;
+        let inputValue = Utils.getInputValue(inputTarget);
         serviceConfig[attribute] = inputValue;
 
         this.refreshServicePanelCaption(serviceConfig, servicePanel);
@@ -447,7 +492,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
 
     handleServiceTypeChange(serviceConfig: hkBridge.Configuration.IServiceConfig, servicePanel: HTMLElement, ev: Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
-        let inputValue = inputTarget.value;
+        let inputValue = Utils.getInputValue(inputTarget);
         serviceConfig.type = inputValue;
 
         this.refreshServicePanelCaption(serviceConfig, servicePanel);
