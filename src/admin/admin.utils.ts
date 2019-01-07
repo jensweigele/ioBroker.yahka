@@ -1,16 +1,25 @@
 export module Utils {
-    export function getInputValue(input: HTMLInputElement) {
-        let dateValue = input.valueAsDate
-        if (dateValue)
-            return dateValue;
-        let numValue = input.valueAsNumber;
-        if (!isNaN(numValue))
-            return numValue;
+    export function getInputValue(input: HTMLInputElement | HTMLTextAreaElement, emptyStringAsUndefined: boolean = true) {
+        if ("valueAsDate" in input) {
+            let dateValue = input.valueAsDate;
+            if (dateValue)
+                return dateValue;
+        }
+
+        if ("valueAsNumber" in input) {
+            let numValue = input.valueAsNumber;
+            if (!isNaN(numValue))
+                return numValue;
+        }
 
         let stringValue = input.value;
         let strAsNumber = Number(stringValue);
         if (!isNaN(strAsNumber))
             return strAsNumber;
+
+        if ((stringValue === "") && emptyStringAsUndefined)
+            return undefined;
+
         return stringValue;
     }
 
@@ -29,7 +38,8 @@ export module Utils {
         return stringValue;
     }
 
-    export function setInputValue(input: HTMLInputElement | HTMLSelectElement, value: any) {
-        input.value = value ? value : "";
+    export function setInputValue(input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement, value: any) {
+        input.value = ((value !== undefined) && (value !== null)) ? value : "";
     }
+
 }

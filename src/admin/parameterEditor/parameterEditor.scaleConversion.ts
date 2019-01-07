@@ -1,5 +1,6 @@
 import { ParameterEditor, IParameterEditorDelegate } from "./parameterEditor.base";
 import { createAndCloneTemplateElement } from "../admin.pageLoader";
+import { Utils } from "../admin.utils";
 
 export class ParameterEditor_ScaleConversionEditor extends ParameterEditor {
     private templateNode: DocumentFragment;
@@ -31,22 +32,23 @@ export class ParameterEditor_ScaleConversionEditor extends ParameterEditor {
             try {
                 parameterArray = JSON.parse(parameterValue);
             } catch (e) {
-                this.txtHKMin.value = parameterValue;
+                Utils.setInputValue(this.txtHKMin, parameterValue);
                 return
             }
         }
-        this.txtHKMin.value = parameterArray["homekit.min"];
-        this.txtHKMax.value = parameterArray["homekit.max"];
-        this.txtIOBrokerMin.value = parameterArray["iobroker.min"];
-        this.txtIOBrokerMax.value = parameterArray["iobroker.max"];
+
+        Utils.setInputValue(this.txtHKMin, parameterArray["homekit.min"]);
+        Utils.setInputValue(this.txtHKMax, parameterArray["homekit.max"]);
+        Utils.setInputValue(this.txtIOBrokerMin, parameterArray["iobroker.min"]);
+        Utils.setInputValue(this.txtIOBrokerMax, parameterArray["iobroker.max"]);
     }
 
     protected buildNewParameterValue(): any {
         return {
-            "homekit.min": this.txtHKMin.valueAsNumber,
-            "homekit.max": this.txtHKMax.valueAsNumber,
-            "iobroker.min": this.txtIOBrokerMin.valueAsNumber,
-            "iobroker.max": this.txtIOBrokerMax.valueAsNumber
+            "homekit.min": Utils.getInputValue(this.txtHKMin),
+            "homekit.max": Utils.getInputValue(this.txtHKMax),
+            "iobroker.min": Utils.getInputValue(this.txtIOBrokerMin),
+            "iobroker.max": Utils.getInputValue(this.txtIOBrokerMax)
         };
     }
 }

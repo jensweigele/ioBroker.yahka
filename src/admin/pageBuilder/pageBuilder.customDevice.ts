@@ -298,13 +298,11 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
                 let mapKeys = [...functionMap.keys()];
                 this.fillSelectByArray(input, mapKeys);
             }
-            let parameterValue = '';
+            let parameterValue = undefined;
             if (charConfig) {
                 Utils.setInputValue(input, charConfig[configName]);
                 parameterValue = charConfig[parameterName];
             }
-            if (!parameterValue)
-                parameterValue = '';
 
             let paramUpdateMethod = (newValue) => {
                 let charConfig = this.findConfigCharacteristic(serviceConfig, name);

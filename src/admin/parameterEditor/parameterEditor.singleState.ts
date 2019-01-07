@@ -1,5 +1,6 @@
 import { ParameterEditor, IParameterEditorDelegate } from "./parameterEditor.base";
 import { createAndCloneTemplateElement } from "../admin.pageLoader";
+import { Utils } from "../admin.utils";
 
 export class ParameterEditor_SingleState extends ParameterEditor {
     private templateNode: DocumentFragment;
@@ -15,10 +16,10 @@ export class ParameterEditor_SingleState extends ParameterEditor {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
 
-        this.textField.value = parameterValue;
+        Utils.setInputValue(this.textField, parameterValue);
     }
 
     protected buildNewParameterValue(): any {
-        return this.textField.value;
+        return Utils.getInputValue(this.textField);
     }
 }

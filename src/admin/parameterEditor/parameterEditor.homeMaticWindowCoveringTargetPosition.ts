@@ -1,5 +1,6 @@
 import { ParameterEditor, IParameterEditorDelegate } from "./parameterEditor.base";
 import { createAndCloneTemplateElement } from "../admin.pageLoader";
+import { Utils } from "../admin.utils";
 
 export class ParameterEditor_HomeMaticWindowCoveringTargetPosition extends ParameterEditor {
     private templateNode: DocumentFragment;
@@ -26,8 +27,8 @@ export class ParameterEditor_HomeMaticWindowCoveringTargetPosition extends Param
             else
                 p = [];
 
-            this.txtLevel.value = (p.length >= 1) ? p[0] : "";
-            this.txtWorking.value = (p.length >= 2) ? p[1] : "";
+            Utils.setInputValue(this.txtLevel, (p.length >= 1) ? p[0] : "");
+            Utils.setInputValue(this.txtWorking, (p.length >= 2) ? p[1] : "");
         }
         catch (e) {
             this.txtLevel.value = parameterValue;
@@ -36,9 +37,9 @@ export class ParameterEditor_HomeMaticWindowCoveringTargetPosition extends Param
     }
 
     protected buildNewParameterValue(): any {
-        var resultArray: Array<string> = [this.txtLevel.value];
+        var resultArray: Array<string> = [Utils.getInputValue(this.txtLevel)];
         if (this.txtWorking.value)
-            resultArray.push(this.txtWorking.value);
+            resultArray.push(Utils.getInputValue(this.txtWorking));
         return resultArray;
     }
 }

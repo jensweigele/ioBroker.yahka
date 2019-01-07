@@ -1,5 +1,6 @@
 import { ParameterEditor, IParameterEditorDelegate } from "./parameterEditor.base";
 import { createAndCloneTemplateElement } from "../admin.pageLoader";
+import { Utils } from "../admin.utils";
 
 export class ParameterEditor_ConversionScript extends ParameterEditor {
     private templateNode: DocumentFragment;
@@ -17,14 +18,19 @@ export class ParameterEditor_ConversionScript extends ParameterEditor {
     refreshAndShow(containerElement: HTMLElement, parameterValue: any) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
-        this.txtToHomeKit.value = parameterValue["toHomeKit"] ? parameterValue["toHomeKit"] : "";
-        this.txtToIOBroker.value = parameterValue["toIOBroker"] ? parameterValue["toIOBroker"] : "";
+        if (parameterValue) {
+            Utils.setInputValue(this.txtToHomeKit, parameterValue["toHomeKit"]);
+            Utils.setInputValue(this.txtToIOBroker, parameterValue["toIOBroker"]);
+        } else {
+            this.txtToHomeKit.value = "";
+            this.txtToIOBroker.value = "";
+        }
     }
 
     protected buildNewParameterValue(): any {
         return {
-            "toHomeKit": this.txtToHomeKit.value,
-            "toIOBroker": this.txtToIOBroker.value
+            "toHomeKit": Utils.getInputValue(this.txtToHomeKit),
+            "toIOBroker": Utils.getInputValue(this.txtToIOBroker)
         }
     }
 }
