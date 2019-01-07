@@ -13,12 +13,14 @@ export module Utils {
         }
 
         let stringValue = input.value;
-        let strAsNumber = Number(stringValue);
-        if (!isNaN(strAsNumber))
-            return strAsNumber;
-
         if ((stringValue === "") && emptyStringAsUndefined)
             return undefined;
+
+        if (stringValue !== "") {
+            let strAsNumber = Number(stringValue);
+            if (!isNaN(strAsNumber))
+                return strAsNumber;
+        }
 
         return stringValue;
     }

@@ -4,55 +4,55 @@ debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 import util = require('util');
 import HAP = require('hap-nodejs');
 import { Configuration } from './shared/yahka.configuration';
-import { importHAPCommunityTypes } from './yahka.community.types';
+import { importHAPCommunityTypesAndFixes } from './yahka.community.types';
 
 
 // export let HAPAccessory:any = HAP.Accessory;
 export let HAPService = HAP.Service;
 export let HAPCharacteristic = HAP.Characteristic;
 
-importHAPCommunityTypes();
+importHAPCommunityTypesAndFixes();
 
 type IHAPService = any;
 
 // type IHAPCharacteristic = any;
 
 export interface IConversionFunction {
-    toHomeKit(value:any):any;
-    toIOBroker(value:any):any;
+    toHomeKit(value: any): any;
+    toIOBroker(value: any): any;
 }
 
 export interface IInOutFunction {
-    toIOBroker(ioValue:any, callback:() => void);
-    fromIOBroker(callback:(error:any, plainIOValue:any) => void);
+    toIOBroker(ioValue: any, callback: () => void);
+    fromIOBroker(callback: (error: any, plainIOValue: any) => void);
 }
 
-export type IInOutChangeNotify = (plainIOValue:any) => void;
+export type IInOutChangeNotify = (plainIOValue: any) => void;
 
 export interface IHomeKitBridgeBinding {
-    conversion:IConversionFunction;
-    inOut:IInOutFunction;
+    conversion: IConversionFunction;
+    inOut: IInOutFunction;
 }
 
 export interface ILogger {
     /** log message with debug level */
-    debug(message:string);
+    debug(message: string);
     /** log message with info level */
-    info(message:string);
+    info(message: string);
     /** log message with info warn */
-    warn(message:string);
+    warn(message: string);
     /** log message with info error */
-    error(message:string);
+    error(message: string);
 }
 
 export interface IHomeKitBridgeBindingFactory {
-    CreateBinding(characteristicConfig:Configuration.ICharacteristicConfig, changeNotify:IInOutChangeNotify):IHomeKitBridgeBinding;
+    CreateBinding(characteristicConfig: Configuration.ICharacteristicConfig, changeNotify: IInOutChangeNotify): IHomeKitBridgeBinding;
 }
 
 export class THomeKitBridge {
     private bridgeObject;
 
-    constructor(private config:Configuration.IBridgeConfig, private FBridgeFactory:IHomeKitBridgeBindingFactory, private FLogger:ILogger) {
+    constructor(private config: Configuration.IBridgeConfig, private FBridgeFactory: IHomeKitBridgeBindingFactory, private FLogger: ILogger) {
         this.init();
     }
 
@@ -82,7 +82,7 @@ export class THomeKitBridge {
 
     private setupBridge() {
         let hapBridge: HAPNodeJS.Accessory = new (<any>HAP).Bridge(this.config.name, HAP.uuid.generate(this.config.ident));
-        
+
         hapBridge.getService(HAPService.AccessoryInformation)
             .setCharacteristic(HAPCharacteristic.Manufacturer, this.config.manufacturer || "not configured")
             .setCharacteristic(HAPCharacteristic.Model, this.config.model || "not configured")
@@ -96,7 +96,7 @@ export class THomeKitBridge {
         return hapBridge;
     }
 
-    private createDevice(device:Configuration.IDeviceConfig) {
+    private createDevice(device: Configuration.IDeviceConfig) {
         let devName = device.name;
         let deviceID = HAP.uuid.generate(this.config.ident + ':' + devName);
         let i = 0;
@@ -124,7 +124,7 @@ export class THomeKitBridge {
         return hapDevice;
     }
 
-    private initService(hapDevice:any, serviceConfig:Configuration.IServiceConfig) {
+    private initService(hapDevice: any, serviceConfig: Configuration.IServiceConfig) {
         if (!(serviceConfig.type in HAP.Service)) {
             throw Error('unknown service type: ' + serviceConfig.type);
         }
@@ -144,20 +144,12 @@ export class THomeKitBridge {
             this.initCharacteristic(hapService, charactConfig);
         }
 
-        
-        // fix for wrong min Temperature Value in HAPNode
-        let curTempCharacetristic = hapService.getCharacteristic('Current Temperature');
-        if (curTempCharacetristic !== undefined) {
-            curTempCharacetristic.props.minValue = -99
-        }
-
-
         if (isNew) {
             hapDevice.addService(hapService);
         }
     }
 
-    private initCharacteristic(hapService:IHAPService, characteristicConfig:Configuration.ICharacteristicConfig) {
+    private initCharacteristic(hapService: IHAPService, characteristicConfig: Configuration.ICharacteristicConfig) {
         let hapCharacteristic = hapService.getCharacteristic(HAPCharacteristic[characteristicConfig.name]);
         if (!hapCharacteristic) {
             this.FLogger.warn("unknown characteristic: " + characteristicConfig.name);
@@ -167,9 +159,12 @@ export class THomeKitBridge {
         if (!characteristicConfig.enabled)
             return;
 
-        hapCharacteristic.binding = this.FBridgeFactory.CreateBinding(characteristicConfig, (plainIOValue:any) => {
+        if (characteristicConfig.properties !== undefined)
+            hapCharacteristic.setProps(characteristicConfig.properties);
+
+        hapCharacteristic.binding = this.FBridgeFactory.CreateBinding(characteristicConfig, (plainIOValue: any) => {
             this.FLogger.debug('[' + characteristicConfig.name + '] got a change notify event, ioValue: ' + JSON.stringify(plainIOValue));
-            let binding:IHomeKitBridgeBinding = hapCharacteristic.binding;
+            let binding: IHomeKitBridgeBinding = hapCharacteristic.binding;
             if (!binding) {
                 this.FLogger.error('[' + characteristicConfig.name + '] no binding!');
                 return;
@@ -180,9 +175,9 @@ export class THomeKitBridge {
             hapCharacteristic.setValue(hkValue, undefined, binding);
         });
 
-        hapCharacteristic.on('set', (hkValue:any, callback:() => void, context:any) => {
+        hapCharacteristic.on('set', (hkValue: any, callback: () => void, context: any) => {
             this.FLogger.debug('[' + characteristicConfig.name + '] got a set event, hkValue: ' + JSON.stringify(hkValue));
-            let binding:IHomeKitBridgeBinding = hapCharacteristic.binding;
+            let binding: IHomeKitBridgeBinding = hapCharacteristic.binding;
             if (!binding) {
                 this.FLogger.error('[' + characteristicConfig.name + '] no binding!');
                 callback();
@@ -204,7 +199,7 @@ export class THomeKitBridge {
 
         hapCharacteristic.on('get', (hkCallback) => {
             this.FLogger.debug('[' + characteristicConfig.name + '] got a get event');
-            let binding:IHomeKitBridgeBinding = hapCharacteristic.binding;
+            let binding: IHomeKitBridgeBinding = hapCharacteristic.binding;
             if (!binding) {
                 this.FLogger.error('[' + characteristicConfig.name + '] no binding!');
                 hkCallback('no binding', null);
@@ -220,13 +215,13 @@ export class THomeKitBridge {
     }
 }
 
-let hapInited:boolean = false;
+let hapInited: boolean = false;
 
-export function initHAP(storagePath:string, HAPdebugLogMethod:Function) {
+export function initHAP(storagePath: string, HAPdebugLogMethod: Function) {
     if (hapInited) {
         return;
     }
-    
+
     HAP.init(storagePath);
     debug.log = function () {
         HAPdebugLogMethod(util.format.apply(this, arguments));

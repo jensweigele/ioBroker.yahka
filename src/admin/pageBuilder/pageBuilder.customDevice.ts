@@ -367,9 +367,9 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
             let propInput = <HTMLInputElement>propElement.querySelector('#propValue')
             propInput.id = propertyName;
             propInput.placeholder = propertyDefaultValue.asString;
-            if (charConfig) {
-                if (charConfig.properties) {
-                    if (charConfig.properties[propertyName]) {
+            if (charConfig !== undefined) {
+                if (charConfig.properties !== undefined) {
+                    if (charConfig.properties[propertyName] !== undefined) {
                         let charValue = transformValue(charConfig.properties[propertyName]);
                         Utils.setInputValue(propInput, charValue.asString);
                     }
@@ -450,7 +450,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         if (charConfig.properties === undefined)
             charConfig.properties = {};
 
-        if (inputValue) {
+        if (inputValue !== undefined) {
             if (isObjectProperty) {
                 try {
                     charConfig.properties[property] = JSON.parse(inputValue);
