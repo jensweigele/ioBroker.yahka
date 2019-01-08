@@ -1,3 +1,4 @@
+
 import { IDictionary } from "../shared/yahka.configuration";
 
 
@@ -16,3 +17,12 @@ export interface IHAPCharacteristicDefintion {
 export interface IHAPCharacteristicProperties {
     [key: string]: any;
 }
+
+export interface ISelectListEntry {
+    text: string,
+    value?: string,
+    [otherProps: string]: any;
+}
+
+
+

@@ -4,6 +4,9 @@ import * as hkBridge from '../../shared/yahka.configuration';
 import { ConfigPageBuilder_Base, IConfigPageBuilder, IConfigPageBuilderDelegate, TValidatorFunction } from './pageBuilder.base';
 import { translateFragment } from '../admin.translation';
 import { createTemplateElement } from '../admin.pageLoader';
+import { IDictionary } from '../../shared/yahka.configuration';
+import { ISelectListEntry } from '../admin.config';
+import { ioBrokerInterfaceList } from '../yahka.admin';
 
 export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base implements IConfigPageBuilder {
     public addServiceAvailable: boolean = false;
@@ -15,16 +18,17 @@ export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base imple
         this.bridgeConfigPanelTemplate = createTemplateElement(require('./pageBuilder.bridgeConfig.main.inc.html'));
     }
 
-    public refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
+    public async refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
         if (!hkBridge.Configuration.isBridgeConfig(config)) {
             return
         }
         let bridgeConfigFragment = <DocumentFragment>document.importNode(this.bridgeConfigPanelTemplate.content, true);
         translateFragment(bridgeConfigFragment);
 
-        let inputHelper = (selector: string, propertyName: string, validator: TValidatorFunction = undefined) => {
-            let input = <HTMLInputElement>bridgeConfigFragment.querySelector(selector);
+        let inputHelper = (selector: string, propertyName: string, selectList?: IDictionary<ISelectListEntry> | ISelectListEntry[], validator: TValidatorFunction = undefined) => {
+            let input = <HTMLSelectElement>bridgeConfigFragment.querySelector(selector);
             let errorElement = <HTMLElement>bridgeConfigFragment.querySelector(selector + '_error');
+            this.fillSelectByListEntries(input, selectList);
             let value = config[propertyName];
             if (value !== undefined) {
                 input.value = value;
@@ -45,13 +49,16 @@ export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base imple
             this.refreshSimpleErrorElement(errorElement, validator);
         };
 
-        inputHelper('#name', 'name', () => !this.delegate.deviceIsUnique(config));
+        inputHelper('#name', 'name', undefined, () => !this.delegate.deviceIsUnique(config));
         inputHelper('#manufacturer', 'manufacturer');
         inputHelper('#model', 'model');
         inputHelper('#serial', 'serial');
         inputHelper('#username', 'username');
         inputHelper('#pincode', 'pincode');
         inputHelper('#port', 'port');
+        let ipList = await ioBrokerInterfaceList;
+        let ipListForSelectBox = ipList.filter((a) => a.family === "ipv4").map((a) => { return { value: a.address, text: a.name }; });
+        inputHelper('#interface', 'interface', ipListForSelectBox);
         checkboxHelper('#verboseLogging', 'verboseLogging');
 
         devicePanel.appendChild(bridgeConfigFragment);

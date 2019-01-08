@@ -48,6 +48,7 @@ export module Configuration {
         username: string;
         pincode: string;
         port: number;
+        interface?: string;
         verboseLogging: boolean;
         devices: (IDeviceConfig)[];
     }

@@ -5,6 +5,9 @@ import * as $ from "jquery";
 import { ConfigPageBuilder_Base, IConfigPageBuilder, IConfigPageBuilderDelegate, TValidatorFunction } from './pageBuilder.base';
 import { translateFragment } from '../admin.translation';
 import { createTemplateElement } from '../admin.pageLoader';
+import { IDictionary } from '../../shared/yahka.configuration';
+import { ISelectListEntry } from '../admin.config';
+import { ioBrokerInterfaceList } from '../yahka.admin';
 
 export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConfigPageBuilder {
     public addServiceAvailable: boolean = false;
@@ -16,7 +19,7 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
         this.configPanelTemplate = createTemplateElement(require('./pageBuilder.ipCam.main.inc.html'));
     }
 
-    public refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
+    public async refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
         if (!hkBridge.Configuration.isIPCameraConfig(config)) {
             return
         }
@@ -24,10 +27,10 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
         let configFragment = <DocumentFragment>document.importNode(this.configPanelTemplate.content, true);
         translateFragment(configFragment);
 
-        let inputHelper = (selector: string, propertyName: keyof hkBridge.Configuration.ICameraConfig, validator: TValidatorFunction = undefined) => {
+        let inputHelper = (selector: string, propertyName: keyof hkBridge.Configuration.ICameraConfig, selectList?: IDictionary<ISelectListEntry> | ISelectListEntry[], validator: TValidatorFunction = undefined) => {
             let input = <HTMLSelectElement>configFragment.querySelector(selector);
             let errorElement = <HTMLElement>configFragment.querySelector(selector + '_error');
-
+            this.fillSelectByListEntries(input, selectList);
             let value = config[propertyName];
             if (input.type === 'checkbox') {
                 input.checked = value === undefined ? true : value;
@@ -58,14 +61,16 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
         };
 
         inputHelper('#enabled', 'enabled');
-        inputHelper('#name', 'name', () => !this.delegate.deviceIsUnique(config));
+        inputHelper('#name', 'name', undefined, () => !this.delegate.deviceIsUnique(config));
         inputHelper('#manufacturer', 'manufacturer');
         inputHelper('#model', 'model');
         inputHelper('#serial', 'serial');
         inputHelper('#username', 'username');
         inputHelper('#pincode', 'pincode');
         inputHelper('#port', 'port');
-
+        let ipList = await ioBrokerInterfaceList;
+        let ipListForSelectBox = ipList.filter((a) => a.family === "ipv4").map((a) => { return { value: a.address, text: a.name }; });
+        inputHelper('#interface', 'interface', ipListForSelectBox);
 
         inputHelper('#source', 'source');
         inputHelper('#codec', 'codec');

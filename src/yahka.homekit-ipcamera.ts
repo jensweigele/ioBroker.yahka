@@ -141,7 +141,7 @@ export class THomeKitIPCamera {
     }
 
     private createStreamControllers() {
-        let options = this.createOptionsDictionary()        
+        let options = this.createOptionsDictionary()
         let maxStreams = this.camConfig.numberOfStreams || 2;
 
         for (var i = 0; i < maxStreams; i++) {
@@ -152,11 +152,16 @@ export class THomeKitIPCamera {
     }
 
     private publishCamera() {
-        this._camera.publish({
+        (<any>this._camera).publish({
             username: this.camConfig.username,
             port: this.camConfig.port,
             pincode: this.camConfig.pincode,
-            category: HAP.Accessory.Categories.CAMERA
+            category: HAP.Accessory.Categories.CAMERA,
+            mdns: {
+                interface: this.camConfig.interface,
+                reuseAddr: true
+            }
+
         }, false);
     }
 
@@ -240,7 +245,7 @@ export class THomeKitIPCamera {
             sessionInfo["audio_ssrc"] = 1;
         }
 
-        
+
         let currentAddress = ip.address();
         var addressResp = {
             address: currentAddress

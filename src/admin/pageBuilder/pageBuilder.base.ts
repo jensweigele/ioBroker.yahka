@@ -1,4 +1,6 @@
 import * as hkBridge from '../../shared/yahka.configuration';
+import { IDictionary } from '../../shared/yahka.configuration';
+import { ISelectListEntry } from '../admin.config';
 
 export type TValidatorFunction = () => boolean;
 export interface IConfigPageBuilder {
@@ -34,4 +36,41 @@ export class ConfigPageBuilder_Base {
         if (errorElement)
             errorElement.classList.toggle('validationError', errorVisible);
     }
+    private fillSelectByEntryList(selectElement: HTMLSelectElement, selectListArray: ISelectListEntry[]) {
+        for (let item of selectListArray) {
+            let optElem = document.createElement('option');
+            optElem.value = item.value;
+            optElem.text = item.text;
+            selectElement.add(optElem);
+        }
+    }
+    private fillSelectByDict(selectElement: HTMLSelectElement, dictionary: IDictionary<ISelectListEntry>) {
+        for (let key in dictionary) {
+            let optElem = document.createElement('option');
+            optElem.value = key;
+            optElem.text = dictionary[key].text;
+            selectElement.add(optElem);
+        }
+    }
+
+    protected fillSelectByListEntries(selectElement: HTMLSelectElement, entries: IDictionary<ISelectListEntry> | ISelectListEntry[]) {
+        if (entries === undefined)
+            return;
+
+        if (Array.isArray(entries))
+            this.fillSelectByEntryList(selectElement, entries);
+        else
+            this.fillSelectByDict(selectElement, entries);
+    }
+
+    protected fillSelectByArray(selectElement: HTMLSelectElement, stringlist: string[]) {
+        for (let itemName of stringlist) {
+            let optElem = document.createElement('option');
+            optElem.value = itemName;
+            optElem.text = itemName;
+            selectElement.add(optElem);
+        }
+    }
+
+
 }

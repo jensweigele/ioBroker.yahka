@@ -76,7 +76,11 @@ export class THomeKitBridge {
             username: this.config.username,
             port: this.config.port,
             pincode: this.config.pincode,
-            category: 2
+            category: 2,
+            mdns: {
+                interface: this.config.interface,
+                reuseAddr: true
+            }
         });
     }
 

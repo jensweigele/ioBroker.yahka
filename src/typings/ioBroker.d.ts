@@ -253,5 +253,10 @@ declare namespace ioBroker {
         checkGroup(user: string, group: string, callback: any);
 
     }
-    
+
+    export interface IIPInformation {
+        address: string
+        family: string
+        name: string
+    }
 }

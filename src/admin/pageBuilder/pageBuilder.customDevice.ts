@@ -3,7 +3,7 @@
 import * as hkBridge from '../../shared/yahka.configuration';
 import { generateMetaDataDictionary } from '../yahka.meta-generator';
 import { IDictionary } from '../../shared/yahka.configuration';
-import { IHAPServiceDefinition, IHAPCharacteristicDefintion } from '../admin.config';
+import { IHAPServiceDefinition, IHAPCharacteristicDefintion, ISelectListEntry } from '../admin.config';
 import { ConfigPageBuilder_Base, IConfigPageBuilder, IConfigPageBuilderDelegate, TValidatorFunction } from './pageBuilder.base';
 import { IParameterEditorDelegate, IParameterEditor } from '../parameterEditor/parameterEditor.base';
 import { ParameterEditorFactory, inoutFunctions, convFunctions } from '../parameterEditor/parameterEditor.factory';
@@ -14,10 +14,7 @@ import { Utils } from '../admin.utils';
 
 
 declare function getObject(id: string, callback: (error: any, object: any) => void);
-interface ISelectListEntry {
-    text: string,
-    [otherProps: string]: any;
-}
+
 
 let accessoryCategories: IDictionary<ISelectListEntry> = {};
 getObject('yahka.meta._accessoryCategories', (_, object) => {
@@ -94,9 +91,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
             let input = <HTMLSelectElement>devInfoPanel.querySelector(selector);
             let errorElement = <HTMLElement>devInfoPanel.querySelector(selector + '_error');
 
-            if (selectList) {
-                this.fillSelectByDict(input, selectList);
-            }
+            this.fillSelectByListEntries(input, selectList);
 
             let value = deviceConfig[propertyName];
             if (input.type === 'checkbox') {
@@ -381,24 +376,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         }
     }
 
-    fillSelectByArray(inoutSelect: HTMLSelectElement, stringlist: string[]) {
-        for (let itemName of stringlist) {
-            let optElem = document.createElement('option');
-            optElem.value = itemName;
-            optElem.text = itemName;
-            inoutSelect.add(optElem);
-        }
-    }
 
-
-    fillSelectByDict(inoutSelect: HTMLSelectElement, dictionary: IDictionary<ISelectListEntry>) {
-        for (let key in dictionary) {
-            let optElem = document.createElement('option');
-            optElem.value = key;
-            optElem.text = dictionary[key].text;
-            inoutSelect.add(optElem);
-        }
-    }
 
 
     refreshEnabledClass(row: HTMLElement, enabled: boolean) {
