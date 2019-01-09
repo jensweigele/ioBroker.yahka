@@ -151,6 +151,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
 
                 this.adapter.subscribeForeignStates(subscriptionRequest.subscriptionIdentifier);
                 this.adapter.log.debug('added subscription for: [' + subscriptionRequest.subscriptionType + ']' + subscriptionRequest.subscriptionIdentifier);
+                this.adapter.getForeignState(subscriptionRequest.subscriptionIdentifier, (_, value) => changeInterceptor(value));
             } else {
                 this.adapter.log.warn('unknown subscription type: ' + subscriptionRequest.subscriptionType);
             }

@@ -10,11 +10,9 @@ export class TIoBrokerInOutFunction_Const implements IInOutFunction {
     }
 
     toIOBroker(ioValue: any, callback: () => void) {
-        console.log('inoutFunc: const.toIOBroker: ', this.parameters);
         callback();
     }
     fromIOBroker(callback: (error: any, plainIOValue: any) => void) {
-        console.log('inoutFunc: const.fromIOBroker: ', this.parameters);
         callback(null, this.parameters);
     }
 }

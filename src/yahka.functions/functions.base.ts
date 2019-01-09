@@ -1,11 +1,14 @@
-import { IInOutFunction, IInOutChangeNotify } from "../yahka.homekit-bridge";
+import { IInOutFunction, IInOutChangeNotify, ILogger } from "../yahka.homekit-bridge";
 import { ISubscriptionRequestor, ISubscriptionRequest } from "../yahka.ioBroker-adapter";
+import { YahkaLogger } from "../shared/yahka.logger";
 
 export abstract class TYahkaFunctionBase implements ISubscriptionRequestor {
     public subscriptionRequests: ISubscriptionRequest[] = [];
     protected stateCache = new Map<string, ioBroker.IState>();
+    protected log: ILogger;
 
-    constructor(protected adapter: ioBroker.IAdapter, protected logIdentifier: string = "") {
+    constructor(protected adapter: ioBroker.IAdapter, private logIdentifier: string = "") {
+        this.log = new YahkaLogger(this.adapter, this.logIdentifier);
     }
 
     protected addSubscriptionRequest(stateName: string) {
@@ -46,15 +49,15 @@ export abstract class TYahkaFunctionBase implements ISubscriptionRequestor {
         return needUpdate;
     }
     subscriptionEvent(stateName: string, ioState: ioBroker.IState, callback: IInOutChangeNotify) {
-        this.adapter.log.debug('[' + this.logIdentifier + '] change event from ioBroker via [' + stateName + ']' + JSON.stringify(ioState));
+        this.log.debug('change event from ioBroker via [' + stateName + ']' + JSON.stringify(ioState));
         if (this.shouldStateBeFiltered(stateName, ioState)) {
-            this.adapter.log.debug('[' + this.logIdentifier + '] state was filtered - notification is canceled');
+            this.log.debug('state was filtered - notification is canceled');
             return;
         }
 
         let cacheChange = this.updateCache(stateName, ioState);
         if(!cacheChange) {
-            this.adapter.log.debug('[' + this.logIdentifier + '] state value already in cache - notification is canceled');
+            this.log.debug('state value already in cache - notification is canceled');
             return;
         }
 

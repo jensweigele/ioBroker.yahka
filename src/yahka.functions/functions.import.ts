@@ -7,8 +7,10 @@ import { TIoBrokerConversion_HomematicControlMode_To_CoolingState, TIoBrokerConv
 import { TIoBrokerConversion_Scale } from './conversion.scale';
 import { TIoBrokerConversion_Inverse } from './conversion.inverse';
 import { TIoBrokerConversion_Script } from './conversion.script';
+import { TIoBrokerInOutFunction_MultiState } from './iofunc.multi-state';
 
 inOutFactory["ioBroker.State"] = TIoBrokerInOutFunction_State.create;
+inOutFactory["ioBroker.MultiState"] = TIoBrokerInOutFunction_MultiState.create;
 inOutFactory["ioBroker.State.Defered"] = TIoBrokerInOutFunction_StateDeferred.create;
 inOutFactory["ioBroker.State.OnlyACK"] = TIoBrokerInOutFunction_State_OnlyACK.create;
 inOutFactory["const"] = TIoBrokerInOutFunction_Const.create;
