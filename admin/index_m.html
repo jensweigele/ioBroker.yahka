@@ -104,7 +104,7 @@
             onChange = _onChange;
             $('body').on('click', '.id-selector', function () {
                 // get input
-                var $textarea = $(this).parent().parent().find('textarea');
+                var $textarea = $(this).parent().parent().find('.stateSelectTarget');
                 var $select = $(this).parent().parent().find('select');
                 initSelectId(function ($sid) {
                     $sid.selectId('show', $textarea.val(), function (newId) {

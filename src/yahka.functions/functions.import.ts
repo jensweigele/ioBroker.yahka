@@ -8,6 +8,7 @@ import { TIoBrokerConversion_Scale } from './conversion.scale';
 import { TIoBrokerConversion_Inverse } from './conversion.inverse';
 import { TIoBrokerConversion_Script } from './conversion.script';
 import { TIoBrokerInOutFunction_MultiState } from './iofunc.multi-state';
+import { TIoBrokerConversion_Map } from './conversion.map';
 
 inOutFactory["ioBroker.State"] = TIoBrokerInOutFunction_State.create;
 inOutFactory["ioBroker.MultiState"] = TIoBrokerInOutFunction_MultiState.create;
@@ -37,3 +38,5 @@ conversionFactory["inverse"] = TIoBrokerConversion_Inverse.create;
 conversionFactory["script"] = (adapter, param) => new TIoBrokerConversion_Script(adapter, param);
 // 255 -> 65535.0
 // 100 - 360
+
+conversionFactory["map"] = TIoBrokerConversion_Map.create;

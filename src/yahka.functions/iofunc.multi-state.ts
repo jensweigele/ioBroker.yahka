@@ -5,11 +5,10 @@ import { isObject } from 'util';
 export interface TIoBrokerInOutFunction_MultiStateParameter {
     readState: string;
     writeState?: string;
-    stateName?: string;
     onlyAcknowledged?: boolean;
 }
 
-function isMultiStateParameter(value: any): value is TIoBrokerInOutFunction_MultiStateParameter {
+export function isMultiStateParameter(value: any): value is TIoBrokerInOutFunction_MultiStateParameter {
     if (value === undefined)
         return false;
     if (!isObject(value))
@@ -20,13 +19,18 @@ function isMultiStateParameter(value: any): value is TIoBrokerInOutFunction_Mult
 
 export class TIoBrokerInOutFunction_MultiState extends TIoBrokerInOutFunctionBase {
 
-    static create(adapter: ioBroker.IAdapter, parameters: any): IInOutFunction {
-        var stateNames: TIoBrokerInOutFunction_MultiStateParameter[] = undefined;
+    static parseParameters(parameters: any): TIoBrokerInOutFunction_MultiStateParameter[] {
         if (Array.isArray(parameters)) {
-            stateNames = parameters.filter(isMultiStateParameter);
+            return parameters.filter(isMultiStateParameter);
         } else if (typeof parameters === "string") {
-            stateNames = [{ readState: parameters }];
+            return [{ readState: parameters }];
         } else {
+            return undefined
+        }
+    }
+    static create(adapter: ioBroker.IAdapter, parameters: any): IInOutFunction {
+        let stateNames = this.parseParameters(parameters);
+        if (stateNames === undefined) {
             return undefined
         }
         return new TIoBrokerInOutFunction_MultiState(adapter, stateNames);
