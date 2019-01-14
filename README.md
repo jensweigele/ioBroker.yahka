@@ -25,7 +25,8 @@ For details on how to install and configure this adapter, please see the [Wiki](
   (jw) switched to webpack and refactored admin interface and io/conversion functions <br>
   (jw) fixed a problem where numeric values where transmitted to homekit as strings ([#87](https://github.com/jensweigele/ioBroker.yahka/issues/87))<br>
   (jw) added possibility to specify "firmware" version for bridge and devices ([#90](https://github.com/jensweigele/ioBroker.yahka/issues/90))<br>  
-
+  (jw) added Internet Explorer / MS Edge detection to print error message in admin panel ([#83](https://github.com/jensweigele/ioBroker.yahka/issues/83))<br>  
+  
 ### 0.8.2
   (jw) Removed a bug which flooded logging when starting/stopping the adapter which led to excessive memory consumption<br>
 
