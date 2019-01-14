@@ -6,6 +6,7 @@ import { ParameterEditor_MultiState } from "./parameterEditor.multiState";
 import { ParameterEditor_HomeMaticWindowCoveringTargetPosition } from "./parameterEditor.homeMaticWindowCoveringTargetPosition";
 import { ParameterEditor_ScaleConversionEditor } from "./parameterEditor.scaleConversion";
 import { ParameterEditor_ConversionScript } from "./parameterEditor.conversionScript";
+import { ParameterEditor_Map } from "./parameterEditor.map";
 
 export type ParameterEditorFactory = new (valueChangeCallback: IParameterEditorDelegate) => IParameterEditor;
 export let inoutFunctions = new Map<string, ParameterEditorFactory>([
@@ -19,6 +20,7 @@ export let inoutFunctions = new Map<string, ParameterEditorFactory>([
 ]);
 export let convFunctions = new Map<string, ParameterEditorFactory>([
     ["", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
+    ["map", (valueChangeCallback) => new ParameterEditor_Map(valueChangeCallback)],
     ["hue", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
     ["level255", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
     ["passthrough", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],

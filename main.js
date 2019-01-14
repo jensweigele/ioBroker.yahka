@@ -583,6 +583,7 @@ var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.fu
 function isMultiStateParameter(params) {
     return "mappings" in params;
 }
+exports.isMultiStateParameter = isMultiStateParameter;
 var TIoBrokerConversion_Map = /** @class */ (function (_super) {
     __extends(TIoBrokerConversion_Map, _super);
     function TIoBrokerConversion_Map(adapter, parameters) {
@@ -590,6 +591,7 @@ var TIoBrokerConversion_Map = /** @class */ (function (_super) {
         _this.parameters = parameters;
         _this.mappingArrayToHomeKit = new Map();
         _this.mappingArrayToIOBroker = new Map();
+        _this.jsonReplacer = function (key, value) { return String(value); };
         _this.buildMappingArray();
         return _this;
     }
@@ -604,8 +606,8 @@ var TIoBrokerConversion_Map = /** @class */ (function (_super) {
         try {
             for (var _b = __values(this.parameters.mappings), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var mapDef = _c.value;
-                var leftStr = JSON.stringify(mapDef.left);
-                var rightStr = JSON.stringify(mapDef.right);
+                var leftStr = JSON.stringify(mapDef.left, this.jsonReplacer);
+                var rightStr = JSON.stringify(mapDef.right, this.jsonReplacer);
                 this.mappingArrayToHomeKit.set(leftStr, mapDef.right);
                 this.mappingArrayToIOBroker.set(rightStr, mapDef.left);
             }
@@ -619,11 +621,11 @@ var TIoBrokerConversion_Map = /** @class */ (function (_super) {
         }
     };
     TIoBrokerConversion_Map.prototype.toHomeKit = function (value) {
-        var ioValueStr = JSON.stringify(value);
+        var ioValueStr = JSON.stringify(value, this.jsonReplacer);
         return this.mappingArrayToHomeKit.get(ioValueStr);
     };
     TIoBrokerConversion_Map.prototype.toIOBroker = function (value) {
-        var hkValueStr = JSON.stringify(value);
+        var hkValueStr = JSON.stringify(value, this.jsonReplacer);
         return this.mappingArrayToIOBroker.get(hkValueStr);
     };
     return TIoBrokerConversion_Map;
@@ -2145,6 +2147,8 @@ var TIOBrokerAdapter = /** @class */ (function () {
             return;
         }
         this.adapter.log.debug('got a stateChange for [' + id + ']');
+        // try to convert it to a number
+        convertStateValueToNumber(state);
         try {
             for (var notifyArray_1 = __values(notifyArray), notifyArray_1_1 = notifyArray_1.next(); !notifyArray_1_1.done; notifyArray_1_1 = notifyArray_1.next()) {
                 var method = notifyArray_1_1.value;
@@ -2195,7 +2199,10 @@ var TIOBrokerAdapter = /** @class */ (function () {
                     existingArray.push(changeInterceptor);
                 this_1.adapter.subscribeForeignStates(subscriptionRequest.subscriptionIdentifier);
                 this_1.adapter.log.debug('added subscription for: [' + subscriptionRequest.subscriptionType + ']' + subscriptionRequest.subscriptionIdentifier);
-                this_1.adapter.getForeignState(subscriptionRequest.subscriptionIdentifier, function (_, value) { return changeInterceptor(value); });
+                this_1.adapter.getForeignState(subscriptionRequest.subscriptionIdentifier, function (_, value) {
+                    convertStateValueToNumber(value);
+                    changeInterceptor(value);
+                });
             }
             else {
                 this_1.adapter.log.warn('unknown subscription type: ' + subscriptionRequest.subscriptionType);
@@ -2241,6 +2248,14 @@ var TIOBrokerAdapter = /** @class */ (function () {
     return TIOBrokerAdapter;
 }());
 exports.TIOBrokerAdapter = TIOBrokerAdapter;
+function convertStateValueToNumber(state) {
+    if ((state !== undefined) && (state.val !== "")) {
+        var numValue = Number(state.val);
+        if (!isNaN(numValue)) {
+            state.val = numValue;
+        }
+    }
+}
 
 
 /***/ }),

@@ -108,6 +108,9 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
         }
         this.adapter.log.debug('got a stateChange for [' + id + ']');
 
+        // try to convert it to a number
+        convertStateValueToNumber(state);        
+
         for (let method of notifyArray)
             method(state);
     }
@@ -151,7 +154,10 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
 
                 this.adapter.subscribeForeignStates(subscriptionRequest.subscriptionIdentifier);
                 this.adapter.log.debug('added subscription for: [' + subscriptionRequest.subscriptionType + ']' + subscriptionRequest.subscriptionIdentifier);
-                this.adapter.getForeignState(subscriptionRequest.subscriptionIdentifier, (_, value) => changeInterceptor(value));
+                this.adapter.getForeignState(subscriptionRequest.subscriptionIdentifier, (_, value) => {
+                    convertStateValueToNumber(value);
+                    changeInterceptor(value)
+                });
             } else {
                 this.adapter.log.warn('unknown subscription type: ' + subscriptionRequest.subscriptionType);
             }
@@ -183,5 +189,14 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
             }
         }
         return null;
+    }
+}
+
+function convertStateValueToNumber(state: ioBroker.IState) {
+    if ((state !== undefined) && (state.val !== "")) {
+        let numValue = Number(state.val);
+        if (!isNaN(numValue)) {
+            state.val = numValue;
+        }
     }
 }

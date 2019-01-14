@@ -7,13 +7,14 @@ export interface IIoBrokerConversion_MapEntry {
 export interface IIoBrokerConversion_Map_Parameters {
     mappings: IIoBrokerConversion_MapEntry[];
 }
-function isMultiStateParameter(params: any): params is IIoBrokerConversion_Map_Parameters {
+export function isMultiStateParameter(params: any): params is IIoBrokerConversion_Map_Parameters {
     return "mappings" in params;
 }
 
 export class TIoBrokerConversion_Map extends TIOBrokerConversionBase implements IConversionFunction {
     protected mappingArrayToHomeKit = new Map<string, any>();
     protected mappingArrayToIOBroker = new Map<string, any>();
+    private jsonReplacer = (key, value) => String(value);
 
     static create(adapter: ioBroker.IAdapter, parameters: any): IConversionFunction {
         if (!isMultiStateParameter(parameters)) {
@@ -30,8 +31,8 @@ export class TIoBrokerConversion_Map extends TIOBrokerConversionBase implements 
 
     buildMappingArray() {
         for(let mapDef of this.parameters.mappings) {
-            let leftStr = JSON.stringify(mapDef.left);
-            let rightStr = JSON.stringify(mapDef.right);
+            let leftStr = JSON.stringify(mapDef.left, this.jsonReplacer);
+            let rightStr = JSON.stringify(mapDef.right, this.jsonReplacer);
             
             this.mappingArrayToHomeKit.set(leftStr, mapDef.right);
             this.mappingArrayToIOBroker.set(rightStr, mapDef.left);
@@ -39,11 +40,11 @@ export class TIoBrokerConversion_Map extends TIOBrokerConversionBase implements 
     }
 
     toHomeKit(value: any) {
-        let ioValueStr = JSON.stringify(value);
+        let ioValueStr = JSON.stringify(value, this.jsonReplacer);
         return this.mappingArrayToHomeKit.get(ioValueStr);
     }
     toIOBroker(value: any) {
-        let hkValueStr = JSON.stringify(value);
+        let hkValueStr = JSON.stringify(value, this.jsonReplacer);
         return this.mappingArrayToIOBroker.get(hkValueStr);
     }
 }

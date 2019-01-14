@@ -15819,6 +15819,17 @@ var ioBroker_ButtonHandler = /** @class */ (function (_super) {
 
 /***/ }),
 
+/***/ "./admin/parameterEditor/parameterEditor.Map.inc.html":
+/*!************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.Map.inc.html ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"editor-table\">\n    <div class=\"row padding5\">\n            <div class=\"cell padding5\">\n                    ioBroker\n                </div>\n                <div class=\"cell padding5\">\n                        \n                    </div>                \n        <div class=\"cell padding5\">\n            HomeKit\n        </div>\n        <div class=\"cell padding5\">\n            Actions\n        </div>\n\n    </div>\n    <template id=\"mappingRow\">\n        <div class=\"row\">\n            <div class=\"cell padding5\">\n                <div class=\"input-container flex-container-row full-width\">\n                    <input id=\"ioBrokerValue\" type=\"text\"></input>\n                    <div>\n                        <input type=\"checkbox\" id=\"isSimpleValue\" /><span> is simple value</span>\n                    </div>\n                </div>\n            </div>\n            <div class=\"cell padding5\">\n                &hArr;\n            </div>\n            <div class=\"cell padding5\">\n                <div class=\"input-container full-width\">\n                    <input id=\"homekitValue\" type=\"text\"></input>\n                </div>\n            </div>\n            <div class=\"cell padding5\">\n                <a id=\"moveUp\" href=\"#\"><span class=\"icon mif-move-up fg-black\"></span></a>\n                <a id=\"moveDown\" href=\"#\"><span class=\"icon mif-move-down fg-black\"></span></a>\n                <a id=\"delRow\" href=\"#\"><span class=\"icon mif-minus fg-red\"></span></a>\n            </div>\n        </div>\n    </template>\n    <div class=\"row\" id=\"lastRow\">\n        <div class=\"cell padding5\">\n            <a id=\"addRow\" href=\"#\"><span class=\"icon mif-plus fg-green\"></span><span class=\"translate\">add new mapping</span></a>\n        </div>\n\n    </div>\n</div>"
+
+/***/ }),
+
 /***/ "./admin/parameterEditor/parameterEditor.base.ts":
 /*!*******************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.base.ts ***!
@@ -15999,6 +16010,7 @@ var parameterEditor_multiState_1 = __webpack_require__(/*! ./parameterEditor.mul
 var parameterEditor_homeMaticWindowCoveringTargetPosition_1 = __webpack_require__(/*! ./parameterEditor.homeMaticWindowCoveringTargetPosition */ "./admin/parameterEditor/parameterEditor.homeMaticWindowCoveringTargetPosition.ts");
 var parameterEditor_scaleConversion_1 = __webpack_require__(/*! ./parameterEditor.scaleConversion */ "./admin/parameterEditor/parameterEditor.scaleConversion.ts");
 var parameterEditor_conversionScript_1 = __webpack_require__(/*! ./parameterEditor.conversionScript */ "./admin/parameterEditor/parameterEditor.conversionScript.ts");
+var parameterEditor_map_1 = __webpack_require__(/*! ./parameterEditor.map */ "./admin/parameterEditor/parameterEditor.map.ts");
 exports.inoutFunctions = new Map([
     ["", function (valueChangeCallback) { return new parameterEditor_null_1.ParameterEditor_Null(valueChangeCallback); }],
     ["const", function (valueChangeCallback) { return new parameterEditor_const_1.ParameterEditor_Const(valueChangeCallback); }],
@@ -16010,6 +16022,7 @@ exports.inoutFunctions = new Map([
 ]);
 exports.convFunctions = new Map([
     ["", function (valueChangeCallback) { return new parameterEditor_null_1.ParameterEditor_Null(valueChangeCallback); }],
+    ["map", function (valueChangeCallback) { return new parameterEditor_map_1.ParameterEditor_Map(valueChangeCallback); }],
     ["hue", function (valueChangeCallback) { return new parameterEditor_null_1.ParameterEditor_Null(valueChangeCallback); }],
     ["level255", function (valueChangeCallback) { return new parameterEditor_null_1.ParameterEditor_Null(valueChangeCallback); }],
     ["passthrough", function (valueChangeCallback) { return new parameterEditor_null_1.ParameterEditor_Null(valueChangeCallback); }],
@@ -16101,6 +16114,132 @@ exports.ParameterEditor_HomeMaticWindowCoveringTargetPosition = ParameterEditor_
 
 /***/ }),
 
+/***/ "./admin/parameterEditor/parameterEditor.map.ts":
+/*!******************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.map.ts ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+var admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+var conversion_map_1 = __webpack_require__(/*! ../../yahka.functions/conversion.map */ "./yahka.functions/conversion.map.ts");
+var util_1 = __webpack_require__(/*! util */ "../node_modules/util/util.js");
+var ParameterEditor_Map = /** @class */ (function (_super) {
+    __extends(ParameterEditor_Map, _super);
+    function ParameterEditor_Map(valueChangeCallback) {
+        var _this = _super.call(this, valueChangeCallback) || this;
+        _this.stateRows = [];
+        _this.templateNode = admin_pageLoader_1.createAndCloneTemplateElement(__webpack_require__(/*! ./parameterEditor.Map.inc.html */ "./admin/parameterEditor/parameterEditor.Map.inc.html"));
+        _this.stateTemplate = _this.templateNode.querySelector('#mappingRow');
+        _this.lastRow = _this.templateNode.querySelector('#lastRow');
+        var addRow = _this.templateNode.querySelector("#addRow");
+        addRow.addEventListener('click', _this.addRowClicked.bind(_this));
+        return _this;
+    }
+    ParameterEditor_Map.prototype.createRow = function (item) {
+        var _this = this;
+        var importedRow = document.importNode(this.stateTemplate.content, true);
+        var myRow = this.lastRow.parentElement.insertBefore(importedRow.firstElementChild, this.lastRow);
+        this.stateRows.push(myRow);
+        var leftField = myRow.querySelector('#ioBrokerValue');
+        leftField.addEventListener('input', function (ev) { return _this.valueChanged(); });
+        var leftCheck = myRow.querySelector('#isSimpleValue');
+        leftCheck.addEventListener('input', function (ev) { return _this.valueChanged(); });
+        var rightField = myRow.querySelector('#homekitValue');
+        rightField.addEventListener('input', function (ev) { return _this.valueChanged(); });
+        myRow.querySelector('#delRow').addEventListener('click', function () {
+            myRow.remove();
+            _this.stateRows = _this.stateRows.filter(function (row) { return row != myRow; });
+            _this.valueChanged();
+        });
+        myRow.querySelector('#moveUp').addEventListener('click', function () {
+            var myIndex = _this.stateRows.indexOf(myRow);
+            var prevIndex = myIndex - 1;
+            if (prevIndex < 0) {
+                return;
+            }
+            var prevRow = _this.stateRows[prevIndex];
+            _this.stateRows[prevIndex] = myRow;
+            _this.stateRows[myIndex] = prevRow;
+            _this.lastRow.parentElement.insertBefore(myRow, prevRow);
+            _this.valueChanged();
+        });
+        myRow.querySelector('#moveDown').addEventListener('click', function () {
+            var myIndex = _this.stateRows.indexOf(myRow);
+            var nextIndex = myIndex + 1;
+            if ((myIndex < 0) || (nextIndex >= _this.stateRows.length)) {
+                return;
+            }
+            var nextRow = _this.stateRows[nextIndex];
+            _this.stateRows[nextIndex] = myRow;
+            _this.stateRows[myIndex] = nextRow;
+            _this.lastRow.parentElement.insertBefore(nextRow, myRow);
+            _this.valueChanged();
+        });
+        if (item === undefined)
+            return myRow;
+        if (util_1.isObject(item.left)) {
+            admin_utils_1.Utils.setInputValue(leftField, JSON.stringify(item.left));
+            leftCheck.checked = false;
+        }
+        else {
+            admin_utils_1.Utils.setInputValue(leftField, item.left);
+            leftCheck.checked = true;
+        }
+        admin_utils_1.Utils.setInputValue(rightField, item.right);
+    };
+    ParameterEditor_Map.prototype.addRowClicked = function () {
+        this.createRow(undefined);
+        return false;
+    };
+    ParameterEditor_Map.prototype.refreshAndShow = function (containerElement, parameterValue) {
+        var _this = this;
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+        if (parameterValue === undefined) {
+            return;
+        }
+        if (!conversion_map_1.isMultiStateParameter(parameterValue)) {
+            return;
+        }
+        parameterValue.mappings.forEach(function (item) { return _this.createRow(item); });
+    };
+    ParameterEditor_Map.prototype.buildNewParameterValue = function () {
+        return {
+            mappings: this.stateRows.map(function (row) {
+                var ioValue = row.querySelector('#ioBrokerValue');
+                var isSimpleValue = row.querySelector('#isSimpleValue');
+                var leftValue = admin_utils_1.Utils.getInputValue(ioValue);
+                var hkValue = row.querySelector('#homekitValue');
+                return {
+                    left: isSimpleValue.checked ? leftValue : JSON.parse(leftValue),
+                    right: admin_utils_1.Utils.getInputValue(hkValue),
+                };
+            })
+        };
+    };
+    return ParameterEditor_Map;
+}(parameterEditor_base_1.ParameterEditor));
+exports.ParameterEditor_Map = ParameterEditor_Map;
+
+
+/***/ }),
+
 /***/ "./admin/parameterEditor/parameterEditor.multiState.inc.html":
 /*!*******************************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.multiState.inc.html ***!
@@ -16108,7 +16247,7 @@ exports.ParameterEditor_HomeMaticWindowCoveringTargetPosition = ParameterEditor_
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"editor-table\">\n    <template id=\"stateRow\">\n        <div class=\"row\">\n            <div class=\"cell\">\n                <span class=\"translate\">Read:</span>\n            </div>\n            <div class=\"cell padding5\">\n                <div class=\"input-container full-width\">\n                    <input id=\"readState\" type=\"text\" class=\"stateSelectTarget\"></input>\n                    <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n                </div>\n            </div>\n            <div class=\"cell \">\n                <span class=\"translate\">Write:</span>\n            </div>\n            <div class=\"cell padding5\">\n                <div class=\"input-container full-width\">\n                    <input id=\"writeState\" type=\"text\" class=\"stateSelectTarget\" placeholder=\"leave empty to use read-state \"></input>\n                    <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n                </div>\n            </div>\n            <div class=\"cell padding5\">\n                <a id=\"moveUp\" href=\"#\"><span class=\"icon mif-move-up fg-black\"></span></a>\n                <a id=\"moveDown\" href=\"#\"><span class=\"icon mif-move-down fg-black\"></span></a>\n                <a id=\"delRow\" href=\"#\"><span class=\"icon mif-minus fg-red\"></span></a>\n            </div>\n        </div>\n    </template>\n    <div class=\"row\" id=\"lastRow\">\n        <div class=\"cell\">\n            <a id=\"addRow\" href=\"#\"><span class=\"icon mif-plus fg-green\"></span><span class=\"translate\">add new state</span></a>\n        </div>\n\n    </div>\n</div>"
+module.exports = "<div class=\"editor-table\">\n    <template id=\"stateRow\">\n        <div class=\"row\">\n            <div class=\"cell\">\n                <span class=\"translate\">Read:</span>\n            </div>\n            <div class=\"cell padding5\">\n                <div class=\"input-container full-width\">\n                    <input id=\"readState\" type=\"text\" class=\"stateSelectTarget\"></input>\n                    <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n                </div>\n            </div>\n            <div class=\"cell \">\n                <span class=\"translate\">Write:</span>\n            </div>\n            <div class=\"cell padding5\">\n                <div class=\"input-container full-width\">\n                    <input id=\"writeState\" type=\"text\" class=\"stateSelectTarget\" placeholder=\"leave empty to use read-state \"></input>\n                    <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n                </div>\n            </div>\n            <div class=\"cell padding5\">\n                <a id=\"moveUp\" href=\"#\"><span class=\"icon mif-move-up fg-black\"></span></a>\n                <a id=\"moveDown\" href=\"#\"><span class=\"icon mif-move-down fg-black\"></span></a>\n                <a id=\"delRow\" href=\"#\"><span class=\"icon mif-minus fg-red\"></span></a>\n            </div>\n        </div>\n    </template>\n    <div class=\"row\" id=\"lastRow\">\n        <div class=\"cell padding5\">\n            <a id=\"addRow\" href=\"#\"><span class=\"icon mif-plus fg-green\"></span><span class=\"translate\">add new state</span></a>\n        </div>\n\n    </div>\n</div>"
 
 /***/ }),
 
@@ -16730,6 +16869,146 @@ function importHAPCommunityTypesAndFixes() {
     hapTypesImported = true;
 }
 exports.importHAPCommunityTypesAndFixes = importHAPCommunityTypesAndFixes;
+
+
+/***/ }),
+
+/***/ "./yahka.functions/conversion.base.ts":
+/*!********************************************!*\
+  !*** ./yahka.functions/conversion.base.ts ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
+var TIOBrokerConversionBase = /** @class */ (function (_super) {
+    __extends(TIOBrokerConversionBase, _super);
+    function TIOBrokerConversionBase(adapter, logIdentifier) {
+        if (logIdentifier === void 0) { logIdentifier = ""; }
+        return _super.call(this, adapter, logIdentifier) || this;
+    }
+    TIOBrokerConversionBase.castToNumber = function (value) {
+        if (value === undefined)
+            return undefined;
+        if (typeof value !== 'number')
+            return Number(value);
+        else
+            return value;
+    };
+    TIOBrokerConversionBase.parameterValueByName = function (parameters, name) {
+        var paramArray = undefined;
+        if (typeof parameters === 'object') {
+            paramArray = parameters;
+        }
+        else {
+            paramArray = JSON.parse(parameters);
+        }
+        if (paramArray === undefined)
+            return undefined;
+        return paramArray[name];
+    };
+    return TIOBrokerConversionBase;
+}(functions_base_1.TYahkaFunctionBase));
+exports.TIOBrokerConversionBase = TIOBrokerConversionBase;
+
+
+/***/ }),
+
+/***/ "./yahka.functions/conversion.map.ts":
+/*!*******************************************!*\
+  !*** ./yahka.functions/conversion.map.ts ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __values = (this && this.__values) || function (o) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+    if (m) return m.call(o);
+    return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
+function isMultiStateParameter(params) {
+    return "mappings" in params;
+}
+exports.isMultiStateParameter = isMultiStateParameter;
+var TIoBrokerConversion_Map = /** @class */ (function (_super) {
+    __extends(TIoBrokerConversion_Map, _super);
+    function TIoBrokerConversion_Map(adapter, parameters) {
+        var _this = _super.call(this, adapter, "TIoBrokerConversion_Map") || this;
+        _this.parameters = parameters;
+        _this.mappingArrayToHomeKit = new Map();
+        _this.mappingArrayToIOBroker = new Map();
+        _this.jsonReplacer = function (key, value) { return String(value); };
+        _this.buildMappingArray();
+        return _this;
+    }
+    TIoBrokerConversion_Map.create = function (adapter, parameters) {
+        if (!isMultiStateParameter(parameters)) {
+            return undefined;
+        }
+        return new TIoBrokerConversion_Map(adapter, parameters);
+    };
+    TIoBrokerConversion_Map.prototype.buildMappingArray = function () {
+        var e_1, _a;
+        try {
+            for (var _b = __values(this.parameters.mappings), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var mapDef = _c.value;
+                var leftStr = JSON.stringify(mapDef.left, this.jsonReplacer);
+                var rightStr = JSON.stringify(mapDef.right, this.jsonReplacer);
+                this.mappingArrayToHomeKit.set(leftStr, mapDef.right);
+                this.mappingArrayToIOBroker.set(rightStr, mapDef.left);
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+    };
+    TIoBrokerConversion_Map.prototype.toHomeKit = function (value) {
+        var ioValueStr = JSON.stringify(value, this.jsonReplacer);
+        return this.mappingArrayToHomeKit.get(ioValueStr);
+    };
+    TIoBrokerConversion_Map.prototype.toIOBroker = function (value) {
+        var hkValueStr = JSON.stringify(value, this.jsonReplacer);
+        return this.mappingArrayToIOBroker.get(hkValueStr);
+    };
+    return TIoBrokerConversion_Map;
+}(conversion_base_1.TIOBrokerConversionBase));
+exports.TIoBrokerConversion_Map = TIoBrokerConversion_Map;
 
 
 /***/ }),
