@@ -53,6 +53,7 @@ export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base imple
         inputHelper('#manufacturer', 'manufacturer');
         inputHelper('#model', 'model');
         inputHelper('#serial', 'serial');
+        inputHelper('#firmware', 'firmware');
         inputHelper('#username', 'username');
         inputHelper('#pincode', 'pincode');
         inputHelper('#port', 'port');

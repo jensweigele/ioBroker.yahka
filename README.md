@@ -21,10 +21,10 @@ For details on how to install and configure this adapter, please see the [Wiki](
   (jw) fixed a bug in the scaleInt and scaleFloat methods (thanks to balzreber) <br>
   (jw) added ioFunction "MultiState" to get multiple states and/or seperate between read and write states <br>
   (jw) added conversion function "map" to customize mappings betwen ioBroker and HomeKit <br>
-  (jw) added possibility to specifiy IP for Bonjour broadcasting (for bridge configuration and camera configuration) <br>
+  (jw) added possibility to specifiy IP for Bonjour broadcasting (for bridge configuration and camera configuration)([#86](https://github.com/jensweigele/ioBroker.yahka/issues/86))<br> 
   (jw) switched to webpack and refactored admin interface and io/conversion functions <br>
-  (jw) fixed a problem where numeric values where transmitted to homekit as strings (#87) <br>
-  
+  (jw) fixed a problem where numeric values where transmitted to homekit as strings ([#87](https://github.com/jensweigele/ioBroker.yahka/issues/87))<br>
+  (jw) added possibility to specify "firmware" version for bridge and devices ([#90](https://github.com/jensweigele/ioBroker.yahka/issues/90))<br>  
 
 ### 0.8.2
   (jw) Removed a bug which flooded logging when starting/stopping the adapter which led to excessive memory consumption<br>

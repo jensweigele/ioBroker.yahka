@@ -205,6 +205,7 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
                     model: "",
                     name: "<new device " + this.deviceListHandler.getDeviceList().length + ">",
                     serial: "",
+                    firmware: "",
                     enabled: true,
                     category: 1,
                     services: []
@@ -226,6 +227,7 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
                     model: "",
                     name: "<new camera " + this.deviceListHandler.getDeviceList().length + ">",
                     serial: "",
+                    firmware: "",
                     port: 0,
                     username: generateRandomUsername(),
                     pincode: "123-45-678",

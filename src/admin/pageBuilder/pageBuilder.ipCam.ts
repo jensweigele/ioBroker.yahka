@@ -65,6 +65,7 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
         inputHelper('#manufacturer', 'manufacturer');
         inputHelper('#model', 'model');
         inputHelper('#serial', 'serial');
+        inputHelper('#firmware', 'firmware');
         inputHelper('#username', 'username');
         inputHelper('#pincode', 'pincode');
         inputHelper('#port', 'port');

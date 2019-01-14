@@ -34,6 +34,7 @@ export module Configuration {
         manufacturer: string;
         model: string;
         serial: string;
+        firmware: string;
     }
     export interface IDeviceConfig extends IBaseHomeKitDeviceConfig {
         enabled: boolean;

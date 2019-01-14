@@ -15,7 +15,6 @@ export class ParameterEditor_Const extends ParameterEditor {
     refreshAndShow(containerElement: HTMLElement, parameterValue: any) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
-        console.log("setting input field", parameterValue);
         Utils.setInputValue(this.textField, parameterValue);
     }
 

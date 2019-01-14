@@ -109,6 +109,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         inputHelper('#manufacturer', 'manufacturer');
         inputHelper('#model', 'model');
         inputHelper('#serial', 'serial');
+        inputHelper('#firmware', 'firmware');
         inputHelper('#category', 'category', accessoryCategories);
 
         devicePane.appendChild(devInfoFragment);

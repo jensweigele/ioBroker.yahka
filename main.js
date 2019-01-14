@@ -180,6 +180,17 @@ exports.appName =       appName;
 
 /***/ }),
 
+/***/ "../package.json":
+/*!***********************!*\
+  !*** ../package.json ***!
+  \***********************/
+/*! exports provided: name, version, description, author, contributors, homepage, license, keywords, repository, dependencies, devDependencies, bugs, readmeFilename, main, scripts, default */
+/***/ (function(module) {
+
+module.exports = {"name":"iobroker.yahka","version":"0.9.0","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"dependencies":{"debug":"^2.6.6","dev-null":"^0.1.1","hap-nodejs":"^0.4.47","hap-nodejs-community-types":"git+https://github.com/homespun/hap-nodejs-community-types.git","ip":"^1.1.5","macaddress":"0.2.9","util":"^0.10.3"},"devDependencies":{"@types/jquery":"^3.3.0","@types/node":"^7.0.18","chai":"^4.1.2","grunt":"^1.0.1","grunt-contrib-clean":"^1.1.0","grunt-contrib-compress":"^1.4.3","grunt-contrib-copy":"^1.0.0","grunt-contrib-jshint":"^1.1.0","grunt-exec":"^3.0.0","grunt-http":"^2.2.0","grunt-jscs":"^3.0.1","grunt-replace":"^1.0.1","grunt-ts":"^6.0.0-beta.17","grunt-webpack":"^3.1.3","html-webpack-plugin":"^3.2.0","mocha":"^4.1.0","raw-loader":"^1.0.0","ts-loader":"^5.3.2","typescript":"^2.6.2","webpack":"^4.28.3","webpack-cli":"^3.1.2","webpack-node-externals":"^1.7.2"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","scripts":{"test":"node node_modules/mocha/bin/mocha --exit"}};
+
+/***/ }),
+
 /***/ "./main.ts":
 /*!*****************!*\
   !*** ./main.ts ***!
@@ -1508,6 +1519,7 @@ debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 var util = __webpack_require__(/*! util */ "util");
 var HAP = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
 var yahka_community_types_1 = __webpack_require__(/*! ./yahka.community.types */ "./yahka.community.types.ts");
+var pjson = __webpack_require__(/*! ../package.json */ "../package.json");
 // export let HAPAccessory:any = HAP.Accessory;
 exports.HAPService = HAP.Service;
 exports.HAPCharacteristic = HAP.Characteristic;
@@ -1560,10 +1572,16 @@ var THomeKitBridge = /** @class */ (function () {
     THomeKitBridge.prototype.setupBridge = function () {
         var _this = this;
         var hapBridge = new HAP.Bridge(this.config.name, HAP.uuid.generate(this.config.ident));
-        hapBridge.getService(exports.HAPService.AccessoryInformation)
-            .setCharacteristic(exports.HAPCharacteristic.Manufacturer, this.config.manufacturer || "not configured")
-            .setCharacteristic(exports.HAPCharacteristic.Model, this.config.model || "not configured")
-            .setCharacteristic(exports.HAPCharacteristic.SerialNumber, this.config.serial || "not configured");
+        var infoService = hapBridge.getService(exports.HAPService.AccessoryInformation);
+        infoService.setCharacteristic(exports.HAPCharacteristic.Manufacturer, this.config.manufacturer || 'not configured');
+        infoService.setCharacteristic(exports.HAPCharacteristic.Model, this.config.model || 'not configured');
+        infoService.setCharacteristic(exports.HAPCharacteristic.SerialNumber, this.config.serial || 'not configured');
+        if ((this.config.firmware !== undefined) && (this.config.firmware !== "")) {
+            infoService.setCharacteristic(exports.HAPCharacteristic.FirmwareRevision, this.config.firmware);
+        }
+        else {
+            infoService.setCharacteristic(exports.HAPCharacteristic.FirmwareRevision, pjson.version);
+        }
         // Listen for bridge identification event
         hapBridge.on('identify', function (paired, callback) {
             _this.FLogger.debug('Node Bridge identify:' + paired);
@@ -1583,10 +1601,13 @@ var THomeKitBridge = /** @class */ (function () {
         }
         this.FLogger.info('adding ' + devName + ' with UUID: ' + deviceID);
         var hapDevice = new HAP.Accessory(devName, deviceID);
-        hapDevice.getService(exports.HAPService.AccessoryInformation)
-            .setCharacteristic(exports.HAPCharacteristic.Manufacturer, device.manufacturer || 'not configured')
-            .setCharacteristic(exports.HAPCharacteristic.Model, device.model || 'not configured')
-            .setCharacteristic(exports.HAPCharacteristic.SerialNumber, device.serial || 'not configured');
+        var infoService = hapDevice.getService(exports.HAPService.AccessoryInformation);
+        infoService.setCharacteristic(exports.HAPCharacteristic.Manufacturer, device.manufacturer || 'not configured');
+        infoService.setCharacteristic(exports.HAPCharacteristic.Model, device.model || 'not configured');
+        infoService.setCharacteristic(exports.HAPCharacteristic.SerialNumber, device.serial || 'not configured');
+        if ((device.firmware !== undefined) && (device.firmware !== "")) {
+            infoService.setCharacteristic(exports.HAPCharacteristic.FirmwareRevision, device.firmware);
+        }
         hapDevice.on('identify', function (paired, callback) {
             _this.FLogger.debug('device identify');
             callback(); // success
@@ -1849,10 +1870,13 @@ var THomeKitIPCamera = /** @class */ (function () {
         var _this = this;
         var deviceID = HAP.uuid.generate(this.camConfig.ident + ':' + this.camConfig.name);
         var hapDevice = new HAP.Accessory(this.camConfig.name, deviceID);
-        hapDevice.getService(HAPService.AccessoryInformation)
-            .setCharacteristic(HAPCharacteristic.Manufacturer, this.camConfig.manufacturer || 'not configured')
-            .setCharacteristic(HAPCharacteristic.Model, this.camConfig.model || 'not configured')
-            .setCharacteristic(HAPCharacteristic.SerialNumber, this.camConfig.serial || 'not configured');
+        var infoService = hapDevice.getService(HAPService.AccessoryInformation);
+        infoService.setCharacteristic(HAPCharacteristic.Manufacturer, this.camConfig.manufacturer || 'not configured');
+        infoService.setCharacteristic(HAPCharacteristic.Model, this.camConfig.model || 'not configured');
+        infoService.setCharacteristic(HAPCharacteristic.SerialNumber, this.camConfig.serial || 'not configured');
+        if ((this.camConfig.firmware !== undefined) && (this.camConfig.firmware !== "")) {
+            infoService.setCharacteristic(HAPCharacteristic.FirmwareRevision, this.camConfig.firmware);
+        }
         hapDevice.on('identify', function (paired, callback) {
             _this.FLogger.debug('camera identify');
             callback(); // success

@@ -120,10 +120,13 @@ export class THomeKitIPCamera {
         let deviceID = HAP.uuid.generate(this.camConfig.ident + ':' + this.camConfig.name);
         let hapDevice = new HAP.Accessory(this.camConfig.name, deviceID);
 
-        hapDevice.getService(HAPService.AccessoryInformation)
-            .setCharacteristic(HAPCharacteristic.Manufacturer, this.camConfig.manufacturer || 'not configured')
-            .setCharacteristic(HAPCharacteristic.Model, this.camConfig.model || 'not configured')
-            .setCharacteristic(HAPCharacteristic.SerialNumber, this.camConfig.serial || 'not configured');
+        let infoService = hapDevice.getService(HAPService.AccessoryInformation);
+        infoService.setCharacteristic(HAPCharacteristic.Manufacturer, this.camConfig.manufacturer || 'not configured');
+        infoService.setCharacteristic(HAPCharacteristic.Model, this.camConfig.model || 'not configured');
+        infoService.setCharacteristic(HAPCharacteristic.SerialNumber, this.camConfig.serial || 'not configured');
+        if ((this.camConfig.firmware !== undefined) && (this.camConfig.firmware !== "")) {
+            infoService.setCharacteristic(HAPCharacteristic.FirmwareRevision, this.camConfig.firmware);
+        }
 
         hapDevice.on('identify', (paired, callback) => {
             this.FLogger.debug('camera identify');

@@ -5,7 +5,7 @@ import util = require('util');
 import HAP = require('hap-nodejs');
 import { Configuration } from './shared/yahka.configuration';
 import { importHAPCommunityTypesAndFixes } from './yahka.community.types';
-
+var pjson = require('../package.json');
 
 // export let HAPAccessory:any = HAP.Accessory;
 export let HAPService = HAP.Service;
@@ -87,10 +87,15 @@ export class THomeKitBridge {
     private setupBridge() {
         let hapBridge: HAPNodeJS.Accessory = new (<any>HAP).Bridge(this.config.name, HAP.uuid.generate(this.config.ident));
 
-        hapBridge.getService(HAPService.AccessoryInformation)
-            .setCharacteristic(HAPCharacteristic.Manufacturer, this.config.manufacturer || "not configured")
-            .setCharacteristic(HAPCharacteristic.Model, this.config.model || "not configured")
-            .setCharacteristic(HAPCharacteristic.SerialNumber, this.config.serial || "not configured");
+        let infoService = hapBridge.getService(HAPService.AccessoryInformation);
+        infoService.setCharacteristic(HAPCharacteristic.Manufacturer, this.config.manufacturer || 'not configured');
+        infoService.setCharacteristic(HAPCharacteristic.Model, this.config.model || 'not configured');
+        infoService.setCharacteristic(HAPCharacteristic.SerialNumber, this.config.serial || 'not configured');
+        if ((this.config.firmware !== undefined) && (this.config.firmware !== "")) {
+            infoService.setCharacteristic(HAPCharacteristic.FirmwareRevision, this.config.firmware);
+        } else {
+            infoService.setCharacteristic(HAPCharacteristic.FirmwareRevision, pjson.version);
+        }
 
         // Listen for bridge identification event
         hapBridge.on('identify', (paired, callback) => {
@@ -112,11 +117,13 @@ export class THomeKitBridge {
         this.FLogger.info('adding ' + devName + ' with UUID: ' + deviceID);
         let hapDevice = new HAP.Accessory(devName, deviceID);
 
-
-        hapDevice.getService(HAPService.AccessoryInformation)
-            .setCharacteristic(HAPCharacteristic.Manufacturer, device.manufacturer || 'not configured')
-            .setCharacteristic(HAPCharacteristic.Model, device.model || 'not configured')
-            .setCharacteristic(HAPCharacteristic.SerialNumber, device.serial || 'not configured');
+        let infoService = hapDevice.getService(HAPService.AccessoryInformation);
+        infoService.setCharacteristic(HAPCharacteristic.Manufacturer, device.manufacturer || 'not configured');
+        infoService.setCharacteristic(HAPCharacteristic.Model, device.model || 'not configured');
+        infoService.setCharacteristic(HAPCharacteristic.SerialNumber, device.serial || 'not configured');
+        if ((device.firmware !== undefined) && (device.firmware !== "")) {
+            infoService.setCharacteristic(HAPCharacteristic.FirmwareRevision, device.firmware);
+        }
 
         hapDevice.on('identify', (paired, callback) => {
             this.FLogger.debug('device identify');
