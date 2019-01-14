@@ -8,12 +8,12 @@ export abstract class TIoBrokerInOutFunctionBase extends TYahkaFunctionBase impl
     protected errorForHomeKit: any = null;
 
     fromIOBroker(callback:(error: any, plainIOValue: any) => void) {
-        this.adapter.log.debug('[' + this.logIdentifier + '] fromIOBroker event - delivering cached value');
+        this.log.debug('fromIOBroker event - delivering cached value (' + JSON.stringify(this.valueForHomeKit) + ")");
         callback(null, this.valueForHomeKit);
     }
 
     toIOBroker(plainIoValue: any, callback: () => void) {
-        this.adapter.log.debug('[' + this.logIdentifier + '] writing state to ioBroker: ' + JSON.stringify(plainIoValue));
+        this.log.debug('writing state to ioBroker: ' + JSON.stringify(plainIoValue));
         this.updateIOBrokerValue(plainIoValue, callback);
     }
 
@@ -39,7 +39,7 @@ export abstract class TIoBrokerInOutFunctionBase extends TYahkaFunctionBase impl
 
 }
 
- export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionRequestor, IInOutFunction {
+export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionRequestor, IInOutFunction {
     protected debounceTimer = -1;
     public subscriptionRequests: ISubscriptionRequest[] = [];
 

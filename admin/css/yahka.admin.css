@@ -19,7 +19,14 @@
 .flex-container-col {
     display: flex;
     flex-direction: column;
+}
+
+.flex-container-stretch {
     align-items: stretch;
+}
+
+.flex-container-start {
+    align-items: flex-start;
 }
 
 .flex-grow {
@@ -40,14 +47,13 @@
     border: 1px solid #2086bf;
 }
 
-.flex-panel > .caption {
+.flex-panel>.caption {
     background: #2086bf;
     margin: -5px -5px 5px -5px;
     padding: 5px;
     font-weight: bold;
     color: white;
 }
-
 
 .bg-white {
     background: whitesmoke;
@@ -65,9 +71,9 @@
     margin: .625rem 0;
 }
 
-.characteristic-table tr:not(:last-child) { 
+.characteristic-table tr:not(:last-child) {
     height: fit-content;
- }
+}
 
 .characteristic-table th {
     padding: 0.5em 4px 0.5em 4px;
@@ -99,6 +105,7 @@
 .characteristic-table tr .input-control textarea {
     min-height: initial;
 }
+
 .characteristic-table tr .input-control {
     display: flex;
     align-items: center;
@@ -111,12 +118,12 @@
 
 .characteristic-table .editor-container-cell {
     padding-left: 20px;
-    
 }
 
 .characteristic-table .inOut {
     background-color: #d2e8f924;
 }
+
 .characteristic-table .conversion {
     background-color: #f7f9d36b;
 }
@@ -133,9 +140,11 @@
     display: table;
     width: 100%;
 }
-.editor-table .row{
+
+.editor-table .row {
     display: table-row;
 }
+
 .editor-table .cell {
     vertical-align: baseline;
     display: table-cell;
@@ -146,16 +155,15 @@
     align-items: center;
     min-height: 2rem;
 }
+
 .editor-table .input-container>*:first-child {
     flex: 1 1 auto;
 }
 
-.tabcontrol2 .frames .frame.flex-container-col,
-.tabcontrol2 .frames .frame.flex-container-row {
+.tabcontrol2 .frames .frame.flex-container-col, .tabcontrol2 .frames .frame.flex-container-row {
     display: flex;
     background-color: initial;
 }
-
 
 /* fix: accordion frame inside of a tabcontrol has a padding */
 
@@ -163,29 +171,24 @@
     padding: initial !important;
 }
 
-
 /* fix: show dropdown arrow for metro ui control */
 
-.input-control input,
-.input-control select {
+.input-control input, .input-control select {
     -webkit-appearance: menulist;
     -moz-appearance: menulist;
     /*appearance: button-arrow-down;*/
 }
 
-
 /* fix: disabled needs to have priority over colors (e.g. primary)*/
 
-.image-button.disabled,
-.image-button:disabled {
+.image-button.disabled, .image-button:disabled {
     background-color: #eaeaea !important;
     color: #bebebe !important;
     cursor: default !important;
     border-color: transparent !important;
 }
 
-.image-button.disabled .icon,
-.image-button:disabled .icon {
+.image-button.disabled .icon, .image-button:disabled .icon {
     background-color: #999 !important;
     color: #bebebe !important;
     cursor: default !important;
@@ -193,6 +196,7 @@
 }
 
 /* improvement: less padding for bullet-list */
+
 .simple-list.replace-list li {
     padding-top: 0px;
     padding-bottom: 0px;
@@ -209,10 +213,10 @@ textarea.validationError {
     padding: 8px;
     margin: 10px;
 }
+
 .errorpanel.validationError {
     display: block
 }
-
 
 .list.device-entry.error {
     border: 1px dashed red !important

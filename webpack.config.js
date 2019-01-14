@@ -20,6 +20,7 @@ let backendConfig = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js']
   },
+  devtool: "source-map",
   externals: [nodeExternals()],
   output: {
     path: path.resolve(__dirname)
@@ -49,6 +50,7 @@ let frontendConfig = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js']
   },
+  devtool: "source-map",
   externals: {
     jquery: 'jQuery'
   },

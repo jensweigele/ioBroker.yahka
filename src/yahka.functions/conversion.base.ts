@@ -1,7 +1,8 @@
-import { IConversionFunction } from '../yahka.homekit-bridge';
+import { TYahkaFunctionBase } from './functions.base';
 export { IConversionFunction } from '../yahka.homekit-bridge';
-export abstract class TIOBrokerConversionBase {
-    constructor(protected adapter: ioBroker.IAdapter) {
+export abstract class TIOBrokerConversionBase extends TYahkaFunctionBase {
+    constructor(adapter: ioBroker.IAdapter, logIdentifier: string = "") {
+        super(adapter, logIdentifier);
     }
 
     protected static castToNumber(value: any): number {
