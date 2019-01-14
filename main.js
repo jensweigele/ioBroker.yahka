@@ -1329,7 +1329,7 @@ var TIoBrokerInOutFunction_MultiState = /** @class */ (function (_super) {
         }
     };
     TIoBrokerInOutFunction_MultiState.create = function (adapter, parameters) {
-        var stateNames = this.parseParameters(parameters);
+        var stateNames = TIoBrokerInOutFunction_MultiState.parseParameters(parameters);
         if (stateNames === undefined) {
             return undefined;
         }

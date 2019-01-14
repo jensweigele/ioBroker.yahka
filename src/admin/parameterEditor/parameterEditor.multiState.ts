@@ -21,24 +21,51 @@ export class ParameterEditor_MultiState extends ParameterEditor {
 
     createRow(item: TIoBrokerInOutFunction_MultiStateParameter | undefined): Element {
         let importedRow = <DocumentFragment>document.importNode(this.stateTemplate.content, true);
-        let newRow = this.lastRow.parentElement.insertBefore(importedRow.firstElementChild, this.lastRow);
-        this.stateRows.push(newRow);
+        let myRow = this.lastRow.parentElement.insertBefore(importedRow.firstElementChild, this.lastRow);
+        this.stateRows.push(myRow);
 
-        let readField = <HTMLInputElement>newRow.querySelector('#readState');
+        let readField = <HTMLInputElement>myRow.querySelector('#readState');
         readField.addEventListener('input', (ev) => this.valueChanged());
 
-        let writeField = <HTMLInputElement>newRow.querySelector('#writeState');
+        let writeField = <HTMLInputElement>myRow.querySelector('#writeState');
         writeField.addEventListener('input', (ev) => this.valueChanged());
 
-        let rowDeleter = newRow.querySelector('#delRow');
-        rowDeleter.addEventListener('click', () => {
-            newRow.remove();
-            this.stateRows = this.stateRows.filter(row => row != newRow);
+        myRow.querySelector('#delRow').addEventListener('click', () => {
+            myRow.remove();
+            this.stateRows = this.stateRows.filter(row => row != myRow);
             this.valueChanged();
         });
 
+        myRow.querySelector('#moveUp').addEventListener('click', () => {
+            let myIndex = this.stateRows.indexOf(myRow);
+            let prevIndex = myIndex - 1;
+            if (prevIndex < 0) {
+                return;
+            }
+
+            let prevRow = this.stateRows[prevIndex];
+            this.stateRows[prevIndex] = myRow;
+            this.stateRows[myIndex] = prevRow;
+            this.lastRow.parentElement.insertBefore(myRow, prevRow);
+            this.valueChanged();
+        });        
+
+        myRow.querySelector('#moveDown').addEventListener('click', () => {
+            let myIndex = this.stateRows.indexOf(myRow);
+            let nextIndex = myIndex + 1;
+            if ((myIndex < 0) || (nextIndex >= this.stateRows.length)) {
+                return;
+            }
+
+            let nextRow = this.stateRows[nextIndex];
+            this.stateRows[nextIndex] = myRow;
+            this.stateRows[myIndex] = nextRow;
+            this.lastRow.parentElement.insertBefore(nextRow, myRow);
+            this.valueChanged();
+        });        
+
         if (item === undefined)
-            return newRow;
+            return myRow;
         Utils.setInputValue(readField, item.readState);
         Utils.setInputValue(writeField, item.writeState);
 

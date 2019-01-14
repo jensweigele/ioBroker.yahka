@@ -16108,7 +16108,7 @@ exports.ParameterEditor_HomeMaticWindowCoveringTargetPosition = ParameterEditor_
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"editor-table\">\n    <template id=\"stateRow\">\n        <div class=\"row\">\n            <div class=\"cell\">\n                <a id=\"delRow\" href=\"#\"><span class=\"icon mif-minus fg-red\"></span></a>\n            </div>\n            <div class=\"cell\">\n                <span class=\"translate\">Read:</span>\n            </div>\n            <div class=\"cell\">\n                <div class=\"input-container full-width\">\n                    <input id=\"readState\" type=\"text\" class=\"stateSelectTarget\"></input>\n                    <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n                </div>\n            </div>\n            <div class=\"cell\">\n                <span class=\"translate\">Write:</span>\n            </div>\n            <div class=\"cell\">\n                <div class=\"input-container full-width\">\n                    <input id=\"writeState\" type=\"text\" class=\"stateSelectTarget\" placeholder=\"same as read if empty\"></input>\n                    <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n                </div>\n            </div>\n        </div>\n    </template>\n    <div class=\"row\" id=\"lastRow\">\n        <div class=\"cell\">\n            <a id=\"addRow\" href=\"#\"><span class=\"icon mif-plus fg-green\"></span></a>\n        </div>\n        <div class=\"cell\">\n            <span class=\"translate\">add new state</span>\n        </div>\n        <div class=\"cell\">\n\n        </div>\n    </div>\n</div>"
+module.exports = "<div class=\"editor-table\">\n    <template id=\"stateRow\">\n        <div class=\"row\">\n            <div class=\"cell\">\n                <span class=\"translate\">Read:</span>\n            </div>\n            <div class=\"cell padding5\">\n                <div class=\"input-container full-width\">\n                    <input id=\"readState\" type=\"text\" class=\"stateSelectTarget\"></input>\n                    <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n                </div>\n            </div>\n            <div class=\"cell \">\n                <span class=\"translate\">Write:</span>\n            </div>\n            <div class=\"cell padding5\">\n                <div class=\"input-container full-width\">\n                    <input id=\"writeState\" type=\"text\" class=\"stateSelectTarget\" placeholder=\"leave empty to use read-state \"></input>\n                    <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n                </div>\n            </div>\n            <div class=\"cell padding5\">\n                <a id=\"moveUp\" href=\"#\"><span class=\"icon mif-move-up fg-black\"></span></a>\n                <a id=\"moveDown\" href=\"#\"><span class=\"icon mif-move-down fg-black\"></span></a>\n                <a id=\"delRow\" href=\"#\"><span class=\"icon mif-minus fg-red\"></span></a>\n            </div>\n        </div>\n    </template>\n    <div class=\"row\" id=\"lastRow\">\n        <div class=\"cell\">\n            <a id=\"addRow\" href=\"#\"><span class=\"icon mif-plus fg-green\"></span><span class=\"translate\">add new state</span></a>\n        </div>\n\n    </div>\n</div>"
 
 /***/ }),
 
@@ -16151,20 +16151,43 @@ var ParameterEditor_MultiState = /** @class */ (function (_super) {
     ParameterEditor_MultiState.prototype.createRow = function (item) {
         var _this = this;
         var importedRow = document.importNode(this.stateTemplate.content, true);
-        var newRow = this.lastRow.parentElement.insertBefore(importedRow.firstElementChild, this.lastRow);
-        this.stateRows.push(newRow);
-        var readField = newRow.querySelector('#readState');
+        var myRow = this.lastRow.parentElement.insertBefore(importedRow.firstElementChild, this.lastRow);
+        this.stateRows.push(myRow);
+        var readField = myRow.querySelector('#readState');
         readField.addEventListener('input', function (ev) { return _this.valueChanged(); });
-        var writeField = newRow.querySelector('#writeState');
+        var writeField = myRow.querySelector('#writeState');
         writeField.addEventListener('input', function (ev) { return _this.valueChanged(); });
-        var rowDeleter = newRow.querySelector('#delRow');
-        rowDeleter.addEventListener('click', function () {
-            newRow.remove();
-            _this.stateRows = _this.stateRows.filter(function (row) { return row != newRow; });
+        myRow.querySelector('#delRow').addEventListener('click', function () {
+            myRow.remove();
+            _this.stateRows = _this.stateRows.filter(function (row) { return row != myRow; });
+            _this.valueChanged();
+        });
+        myRow.querySelector('#moveUp').addEventListener('click', function () {
+            var myIndex = _this.stateRows.indexOf(myRow);
+            var prevIndex = myIndex - 1;
+            if (prevIndex < 0) {
+                return;
+            }
+            var prevRow = _this.stateRows[prevIndex];
+            _this.stateRows[prevIndex] = myRow;
+            _this.stateRows[myIndex] = prevRow;
+            _this.lastRow.parentElement.insertBefore(myRow, prevRow);
+            _this.valueChanged();
+        });
+        myRow.querySelector('#moveDown').addEventListener('click', function () {
+            var myIndex = _this.stateRows.indexOf(myRow);
+            var nextIndex = myIndex + 1;
+            if ((myIndex < 0) || (nextIndex >= _this.stateRows.length)) {
+                return;
+            }
+            var nextRow = _this.stateRows[nextIndex];
+            _this.stateRows[nextIndex] = myRow;
+            _this.stateRows[myIndex] = nextRow;
+            _this.lastRow.parentElement.insertBefore(nextRow, myRow);
             _this.valueChanged();
         });
         if (item === undefined)
-            return newRow;
+            return myRow;
         admin_utils_1.Utils.setInputValue(readField, item.readState);
         admin_utils_1.Utils.setInputValue(writeField, item.writeState);
     };
@@ -17013,7 +17036,7 @@ var TIoBrokerInOutFunction_MultiState = /** @class */ (function (_super) {
         }
     };
     TIoBrokerInOutFunction_MultiState.create = function (adapter, parameters) {
-        var stateNames = this.parseParameters(parameters);
+        var stateNames = TIoBrokerInOutFunction_MultiState.parseParameters(parameters);
         if (stateNames === undefined) {
             return undefined;
         }

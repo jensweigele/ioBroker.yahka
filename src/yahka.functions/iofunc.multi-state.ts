@@ -29,7 +29,7 @@ export class TIoBrokerInOutFunction_MultiState extends TIoBrokerInOutFunctionBas
         }
     }
     static create(adapter: ioBroker.IAdapter, parameters: any): IInOutFunction {
-        let stateNames = this.parseParameters(parameters);
+        let stateNames = TIoBrokerInOutFunction_MultiState.parseParameters(parameters);
         if (stateNames === undefined) {
             return undefined
         }
