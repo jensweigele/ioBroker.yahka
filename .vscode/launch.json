@@ -5,28 +5,27 @@
             "name": "Launch",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}/../ioBroker/node_modules/iobroker.yahka/main.js",
-            //"program": "${workspaceRoot}/main.ts",
+            "program": "${workspaceRoot}/../../ioBroker/node_modules/iobroker.yahka/main.js",
             "stopOnEntry": false,
             "args": [
                 "0",
                 "debug",
                 "--force"
             ],
-            "cwd": "${workspaceRoot}/../ioBroker/node_modules/iobroker.yahka",
-            "preLaunchTask": null, //"tsc",
-            "runtimeExecutable": null,
-            "runtimeArgs": [
-                "--nolazy"
-            ],
+            "cwd": "${workspaceRoot}/../../ioBroker/node_modules/iobroker.yahka",
             "env": {
                 "NODE_ENV": "development"
             },
             "console": "internalConsole",
             "sourceMaps": true,
             "outFiles": [
-                "${workspaceRoot}/../ioBroker/node_modules/iobroker.yahka/**/*.js"
-            ]
+                "${workspaceRoot}/../../ioBroker/node_modules/iobroker.yahka/**/*.js"
+            ],
+            "sourceMapPathOverrides": {
+                "webpack:///./~/*": "${workspaceRoot}/src/node_modules/*",
+                "webpack:///./*": "${workspaceRoot}/src/*",
+                "webpack:///*": "*"
+            }
         }
     ]
 }
