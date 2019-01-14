@@ -17327,7 +17327,8 @@ var TIoBrokerInOutFunction_MultiState = /** @class */ (function (_super) {
     };
     TIoBrokerInOutFunction_MultiState.prototype.recalculateHomekitValues = function (stateName) {
         var _this = this;
-        return this.stateProperties.map(function (state) { return _this.stateCache.get(state.readState).val; });
+        var hkValues = this.stateProperties.map(function (state) { return _this.stateCache.get(state.readState).val; });
+        return hkValues.length === 1 ? hkValues[0] : hkValues;
     };
     TIoBrokerInOutFunction_MultiState.prototype.updateSingleIOBrokerValue = function (state, newValue) {
         var _this = this;

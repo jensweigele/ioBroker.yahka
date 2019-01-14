@@ -44,8 +44,9 @@ export class TIoBrokerInOutFunction_MultiState extends TIoBrokerInOutFunctionBas
     }    
 
     protected recalculateHomekitValues(stateName: string) {
-        return this.stateProperties.map( (state) => this.stateCache.get(state.readState).val);
-    }    
+        let hkValues = this.stateProperties.map( (state) => this.stateCache.get(state.readState).val);
+        return hkValues.length === 1 ? hkValues[0] : hkValues;
+    }
 
     private updateSingleIOBrokerValue(state: TIoBrokerInOutFunction_MultiStateParameter, newValue: any): Promise<void> {
         if (newValue === undefined) 
