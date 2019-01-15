@@ -1,8 +1,13 @@
 {
     "common": {
         "name": "yahka",
-        "version": "0.9.0",
+        "version": "0.9.1",
         "news": {
+            "0.9.1": {
+                "en": "Add Chinese support",
+                "de": "Chinesische Unterstützung hinzufügen",
+                "zh-cn": "添加中文支持"
+            },
             "0.9.0": {
                 "en": "Improvements to Admin interface, new Script-Conversion function and some fixes",
                 "de": "Verbesserte Admin Oberfläche, neue Script-Konvertierungsfunktion und diverse Fehlerbehebungen"
@@ -56,7 +61,8 @@
             "fr": "encore un autre adaptateur Homekit",
             "it": "ancora un altro adattatore Homekit",
             "es": "otro adaptador para el Homekit",
-            "pl": "kolejny adapter Homekit"
+            "pl": "kolejny adapter Homekit",
+            "zh-cn": "另一款Homekit适配器"
         },
         "platform": "Javascript/Node.js",
         "mode": "daemon",

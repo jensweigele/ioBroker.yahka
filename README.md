@@ -14,6 +14,9 @@ For details on how to install and configure this adapter, please see the [Wiki](
 
 ## Changelog
 
+### 0.9.1 (2019-01-14)
+  (SchumyHao) Add Chinese support
+
 ### 0.9.0
   (jw) added more services and characteristics (from https://github.com/homespun/hap-nodejs-community-types)<br>
   (jw) improved admin interface to support individual editors for IO/Conversion functions<br>
