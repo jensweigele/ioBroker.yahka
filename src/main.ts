@@ -30,6 +30,8 @@
 /* jshint -W097 */// jshint strict:false
 /*jslint node: true */
 "use strict";
+import debug = require('debug');
+debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 
 // you have to require the utils module and call adapter function
 import utils = require("../lib/utils"); // Get common adapter utils

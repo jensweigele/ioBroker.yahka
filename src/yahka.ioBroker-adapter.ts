@@ -95,8 +95,10 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
     }
 
     private handleHAPLogEvent(message) {
-        if (this.verboseHAPLogging)
-            this.adapter.log.debug(message);
+        if (this.verboseHAPLogging) {
+            console.log("HAP debug message", message);
+            this.adapter.log.debug("HAP debug message: " + message);
+        }
     }
 
     private handleState(id:string, state:ioBroker.IState) {

@@ -231,6 +231,8 @@ module.exports = {"name":"iobroker.yahka","version":"0.9.0","description":"ioBro
 /*jslint node: true */
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var debug = __webpack_require__(/*! debug */ "debug");
+debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 // you have to require the utils module and call adapter function
 var utils = __webpack_require__(/*! ../lib/utils */ "../lib/utils.js"); // Get common adapter utils
 var hkAdapter = __webpack_require__(/*! ./yahka.ioBroker-adapter */ "./yahka.ioBroker-adapter.ts");
@@ -1516,7 +1518,6 @@ var __values = (this && this.__values) || function (o) {
 Object.defineProperty(exports, "__esModule", { value: true });
 /// <reference path="./typings/index.d.ts" />
 var debug = __webpack_require__(/*! debug */ "debug");
-debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 var util = __webpack_require__(/*! util */ "util");
 var HAP = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
 var yahka_community_types_1 = __webpack_require__(/*! ./yahka.community.types */ "./yahka.community.types.ts");
@@ -1726,6 +1727,7 @@ var THomeKitBridge = /** @class */ (function () {
 }());
 exports.THomeKitBridge = THomeKitBridge;
 var hapInited = false;
+var originalLogMethod = debug.log;
 function initHAP(storagePath, HAPdebugLogMethod) {
     if (hapInited) {
         return;
@@ -1741,8 +1743,7 @@ function deinitHAP() {
         return;
     }
     debug.disable();
-    debug.log = function () {
-    };
+    debug.log = originalLogMethod;
     hapInited = false;
 }
 exports.deinitHAP = deinitHAP;
@@ -2160,8 +2161,10 @@ var TIOBrokerAdapter = /** @class */ (function () {
         }
     };
     TIOBrokerAdapter.prototype.handleHAPLogEvent = function (message) {
-        if (this.verboseHAPLogging)
-            this.adapter.log.debug(message);
+        if (this.verboseHAPLogging) {
+            console.log("HAP debug message", message);
+            this.adapter.log.debug("HAP debug message: " + message);
+        }
     };
     TIOBrokerAdapter.prototype.handleState = function (id, state) {
         var e_2, _a;

@@ -1,6 +1,5 @@
 /// <reference path="./typings/index.d.ts" />
 import debug = require('debug');
-debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 import util = require('util');
 import HAP = require('hap-nodejs');
 import { Configuration } from './shared/yahka.configuration';
@@ -235,6 +234,7 @@ export class THomeKitBridge {
 }
 
 let hapInited: boolean = false;
+let originalLogMethod = debug.log;
 
 export function initHAP(storagePath: string, HAPdebugLogMethod: Function) {
     if (hapInited) {
@@ -245,7 +245,6 @@ export function initHAP(storagePath: string, HAPdebugLogMethod: Function) {
     debug.log = function () {
         HAPdebugLogMethod(util.format.apply(this, arguments));
     };
-
 }
 
 export function deinitHAP() {
@@ -253,7 +252,6 @@ export function deinitHAP() {
         return;
     }
     debug.disable()
-    debug.log = function () {
-    };
+    debug.log = originalLogMethod;
     hapInited = false;
 }
