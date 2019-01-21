@@ -316,10 +316,10 @@ function importHAPCommunityTypesAndFixes() {
     for (var type in communityTypes) {
         var typeFct = communityTypes[type];
         if (typeFct.length == 0) { // characteristic
-            Characteristic_1.Characteristic[type] = typeFct;
+            Characteristic_1.Characteristic["Community: " + type] = typeFct;
         }
         else if (typeFct.length == 2) { // service
-            Service_1.Service[type] = typeFct;
+            Service_1.Service["Community: " + type] = typeFct;
         }
     }
     hapTypesImported = true;

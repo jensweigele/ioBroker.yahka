@@ -34,9 +34,9 @@ export function importHAPCommunityTypesAndFixes() {
     for (let type in communityTypes) {
         let typeFct: Function = communityTypes[type];
         if (typeFct.length == 0) {  // characteristic
-            Characteristic[type] = typeFct;
+            Characteristic["Community: " + type] = typeFct;
         } else if (typeFct.length == 2) { // service
-            Service[type] = typeFct;
+            Service["Community: " + type] = typeFct;
         }
     }
     hapTypesImported = true;
