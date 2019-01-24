@@ -140,9 +140,11 @@ export class THomeKitBridge {
         }
 
         let isNew = false;
-        let hapService = hapDevice.getService(HAP.Service[serviceConfig.type]);
-        if (hapService !== undefined && hapService.subtype !== serviceConfig.subType) {
-            hapService = undefined;
+        let hapService = hapDevice.getService(HAP.Service[serviceConfig.type]);        
+        if (hapService !== undefined) {
+            const existingSubType = hapService.subtype ? hapService.subtype : ""
+            if (existingSubType != serviceConfig.subType)
+                hapService = undefined;
         }
 
         if (hapService === undefined) {
