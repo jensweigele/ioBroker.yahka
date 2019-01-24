@@ -3,32 +3,35 @@ import { ParameterEditor_Null } from "./parameterEditor.null";
 import { ParameterEditor_Const } from "./parameterEditor.const";
 import { ParameterEditor_SingleState } from "./parameterEditor.singleState";
 import { ParameterEditor_MultiState } from "./parameterEditor.multiState";
-import { ParameterEditor_HomeMaticWindowCoveringTargetPosition } from "./parameterEditor.homeMaticWindowCoveringTargetPosition";
+import { ParameterEditor_HomeMaticWindowCoveringTargetPosition } from "./parameterEditor.homematic.WindowCovering.TargetPosition";
 import { ParameterEditor_ScaleConversionEditor } from "./parameterEditor.scaleConversion";
 import { ParameterEditor_ConversionScript } from "./parameterEditor.conversionScript";
 import { ParameterEditor_Map } from "./parameterEditor.map";
+import { ParameterEditor_HomeMatic_Dimmer } from "./parameterEditor.homematic.dimmer";
 
 export type ParameterEditorFactory = new (valueChangeCallback: IParameterEditorDelegate) => IParameterEditor;
 export let inoutFunctions = new Map<string, ParameterEditorFactory>([
-    ["", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
-    ["const", (valueChangeCallback) => new ParameterEditor_Const(valueChangeCallback)],
-    ["ioBroker.State", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
-    ["ioBroker.MultiState", (valueChangeCallback) => new ParameterEditor_MultiState(valueChangeCallback)],
-    ["ioBroker.State.Defered", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
-    ["ioBroker.State.OnlyACK", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
-    ["ioBroker.homematic.WindowCovering.TargetPosition", (valueChangeCallback) => new ParameterEditor_HomeMaticWindowCoveringTargetPosition(valueChangeCallback)]
+    ["", (callback) => new ParameterEditor_Null(callback)],
+    ["const", (callback) => new ParameterEditor_Const(callback)],
+    ["ioBroker.State", (callback) => new ParameterEditor_SingleState(callback)],
+    ["ioBroker.MultiState", (callback) => new ParameterEditor_MultiState(callback)],
+    ["ioBroker.State.Defered", (callback) => new ParameterEditor_SingleState(callback)],
+    ["ioBroker.State.OnlyACK", (callback) => new ParameterEditor_SingleState(callback)],
+    ["ioBroker.homematic.WindowCovering.TargetPosition", (callback) => new ParameterEditor_HomeMaticWindowCoveringTargetPosition(callback)],
+    ["ioBroker.homematic.Dimmer.On", (callback) => new ParameterEditor_HomeMatic_Dimmer(callback, true)],
+    ["ioBroker.homematic.Dimmer.Brightness", (callback) => new ParameterEditor_HomeMatic_Dimmer(callback, false)]
 ]);
 export let convFunctions = new Map<string, ParameterEditorFactory>([
-    ["", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
-    ["map", (valueChangeCallback) => new ParameterEditor_Map(valueChangeCallback)],
-    ["hue", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
-    ["level255", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
-    ["passthrough", (valueChangeCallback) => new ParameterEditor_Null(valueChangeCallback)],
-    ["inverse", (valueChangeCallback) => new ParameterEditor_Const(valueChangeCallback)],
-    ["scaleInt", (valueChangeCallback) => new ParameterEditor_ScaleConversionEditor(valueChangeCallback)],
-    ["scaleFloat", (valueChangeCallback) => new ParameterEditor_ScaleConversionEditor(valueChangeCallback)],
-    ["HomematicDirectionToHomekitPositionState", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
-    ["HomematicControlModeToHomekitHeathingCoolingState", (valueChangeCallback) => new ParameterEditor_SingleState(valueChangeCallback)],
-    ["script", (valueChangeCallback) => new ParameterEditor_ConversionScript(valueChangeCallback)],
+    ["", (callback) => new ParameterEditor_Null(callback)],
+    ["map", (callback) => new ParameterEditor_Map(callback)],
+    ["hue", (callback) => new ParameterEditor_Null(callback)],
+    ["level255", (callback) => new ParameterEditor_Null(callback)],
+    ["passthrough", (callback) => new ParameterEditor_Null(callback)],
+    ["inverse", (callback) => new ParameterEditor_Const(callback)],
+    ["scaleInt", (callback) => new ParameterEditor_ScaleConversionEditor(callback)],
+    ["scaleFloat", (callback) => new ParameterEditor_ScaleConversionEditor(callback)],
+    ["HomematicDirectionToHomekitPositionState", (callback) => new ParameterEditor_SingleState(callback)],
+    ["HomematicControlModeToHomekitHeathingCoolingState", (callback) => new ParameterEditor_SingleState(callback)],
+    ["script", (callback) => new ParameterEditor_ConversionScript(callback)],
 
 ]);

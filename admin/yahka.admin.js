@@ -14415,6 +14415,9 @@ var Utils;
         if (emptyStringAsUndefined === void 0) { emptyStringAsUndefined = true; }
         if (input === undefined || input === null)
             return undefined;
+        if ((input.type == "checkbox") && ("checked" in input)) {
+            return input.checked;
+        }
         if ("valueAsDate" in input) {
             var dateValue = input.valueAsDate;
             if (dateValue)
@@ -14436,26 +14439,40 @@ var Utils;
         return stringValue;
     }
     Utils.getInputValue = getInputValue;
-    function getSelectInputValue(input) {
+    function getSelectInputValue(input, emptyStringAsUndefined) {
+        if (emptyStringAsUndefined === void 0) { emptyStringAsUndefined = true; }
         if (input === undefined || input === null)
             return undefined;
-        var dateValue = input.valueAsDate;
-        if (dateValue)
-            return dateValue;
-        var numValue = input.valueAsNumber;
-        if (!isNaN(numValue))
-            return numValue;
+        if ("valueAsDate" in input) {
+            var dateValue = input.valueAsDate;
+            if (dateValue)
+                return dateValue;
+        }
+        if ("valueAsNumber" in input) {
+            var numValue = input.valueAsNumber;
+            if (!isNaN(numValue))
+                return numValue;
+        }
         var stringValue = input.value;
-        var strAsNumber = Number(stringValue);
-        if (!isNaN(strAsNumber))
-            return strAsNumber;
+        if ((stringValue === "") && emptyStringAsUndefined)
+            return undefined;
+        if (stringValue !== "") {
+            var strAsNumber = Number(stringValue);
+            if (!isNaN(strAsNumber))
+                return strAsNumber;
+        }
         return stringValue;
     }
     Utils.getSelectInputValue = getSelectInputValue;
     function setInputValue(input, value) {
         if (input === undefined || input === null)
             return;
-        input.value = ((value !== undefined) && (value !== null)) ? value : "";
+        if (input.type == "checkbox") {
+            input.checked = Boolean(value);
+        }
+        else {
+            input.value = ((value !== undefined) && (value !== null)) ? value : "";
+        }
     }
     Utils.setInputValue = setInputValue;
 })(Utils = exports.Utils || (exports.Utils = {}));
@@ -16011,40 +16028,43 @@ var parameterEditor_null_1 = __webpack_require__(/*! ./parameterEditor.null */ "
 var parameterEditor_const_1 = __webpack_require__(/*! ./parameterEditor.const */ "./admin/parameterEditor/parameterEditor.const.ts");
 var parameterEditor_singleState_1 = __webpack_require__(/*! ./parameterEditor.singleState */ "./admin/parameterEditor/parameterEditor.singleState.ts");
 var parameterEditor_multiState_1 = __webpack_require__(/*! ./parameterEditor.multiState */ "./admin/parameterEditor/parameterEditor.multiState.ts");
-var parameterEditor_homeMaticWindowCoveringTargetPosition_1 = __webpack_require__(/*! ./parameterEditor.homeMaticWindowCoveringTargetPosition */ "./admin/parameterEditor/parameterEditor.homeMaticWindowCoveringTargetPosition.ts");
+var parameterEditor_homematic_WindowCovering_TargetPosition_1 = __webpack_require__(/*! ./parameterEditor.homematic.WindowCovering.TargetPosition */ "./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.ts");
 var parameterEditor_scaleConversion_1 = __webpack_require__(/*! ./parameterEditor.scaleConversion */ "./admin/parameterEditor/parameterEditor.scaleConversion.ts");
 var parameterEditor_conversionScript_1 = __webpack_require__(/*! ./parameterEditor.conversionScript */ "./admin/parameterEditor/parameterEditor.conversionScript.ts");
 var parameterEditor_map_1 = __webpack_require__(/*! ./parameterEditor.map */ "./admin/parameterEditor/parameterEditor.map.ts");
+var parameterEditor_homematic_dimmer_1 = __webpack_require__(/*! ./parameterEditor.homematic.dimmer */ "./admin/parameterEditor/parameterEditor.homematic.dimmer.ts");
 exports.inoutFunctions = new Map([
-    ["", function (valueChangeCallback) { return new parameterEditor_null_1.ParameterEditor_Null(valueChangeCallback); }],
-    ["const", function (valueChangeCallback) { return new parameterEditor_const_1.ParameterEditor_Const(valueChangeCallback); }],
-    ["ioBroker.State", function (valueChangeCallback) { return new parameterEditor_singleState_1.ParameterEditor_SingleState(valueChangeCallback); }],
-    ["ioBroker.MultiState", function (valueChangeCallback) { return new parameterEditor_multiState_1.ParameterEditor_MultiState(valueChangeCallback); }],
-    ["ioBroker.State.Defered", function (valueChangeCallback) { return new parameterEditor_singleState_1.ParameterEditor_SingleState(valueChangeCallback); }],
-    ["ioBroker.State.OnlyACK", function (valueChangeCallback) { return new parameterEditor_singleState_1.ParameterEditor_SingleState(valueChangeCallback); }],
-    ["ioBroker.homematic.WindowCovering.TargetPosition", function (valueChangeCallback) { return new parameterEditor_homeMaticWindowCoveringTargetPosition_1.ParameterEditor_HomeMaticWindowCoveringTargetPosition(valueChangeCallback); }]
+    ["", function (callback) { return new parameterEditor_null_1.ParameterEditor_Null(callback); }],
+    ["const", function (callback) { return new parameterEditor_const_1.ParameterEditor_Const(callback); }],
+    ["ioBroker.State", function (callback) { return new parameterEditor_singleState_1.ParameterEditor_SingleState(callback); }],
+    ["ioBroker.MultiState", function (callback) { return new parameterEditor_multiState_1.ParameterEditor_MultiState(callback); }],
+    ["ioBroker.State.Defered", function (callback) { return new parameterEditor_singleState_1.ParameterEditor_SingleState(callback); }],
+    ["ioBroker.State.OnlyACK", function (callback) { return new parameterEditor_singleState_1.ParameterEditor_SingleState(callback); }],
+    ["ioBroker.homematic.WindowCovering.TargetPosition", function (callback) { return new parameterEditor_homematic_WindowCovering_TargetPosition_1.ParameterEditor_HomeMaticWindowCoveringTargetPosition(callback); }],
+    ["ioBroker.homematic.Dimmer.On", function (callback) { return new parameterEditor_homematic_dimmer_1.ParameterEditor_HomeMatic_Dimmer(callback, true); }],
+    ["ioBroker.homematic.Dimmer.Brightness", function (callback) { return new parameterEditor_homematic_dimmer_1.ParameterEditor_HomeMatic_Dimmer(callback, false); }]
 ]);
 exports.convFunctions = new Map([
-    ["", function (valueChangeCallback) { return new parameterEditor_null_1.ParameterEditor_Null(valueChangeCallback); }],
-    ["map", function (valueChangeCallback) { return new parameterEditor_map_1.ParameterEditor_Map(valueChangeCallback); }],
-    ["hue", function (valueChangeCallback) { return new parameterEditor_null_1.ParameterEditor_Null(valueChangeCallback); }],
-    ["level255", function (valueChangeCallback) { return new parameterEditor_null_1.ParameterEditor_Null(valueChangeCallback); }],
-    ["passthrough", function (valueChangeCallback) { return new parameterEditor_null_1.ParameterEditor_Null(valueChangeCallback); }],
-    ["inverse", function (valueChangeCallback) { return new parameterEditor_const_1.ParameterEditor_Const(valueChangeCallback); }],
-    ["scaleInt", function (valueChangeCallback) { return new parameterEditor_scaleConversion_1.ParameterEditor_ScaleConversionEditor(valueChangeCallback); }],
-    ["scaleFloat", function (valueChangeCallback) { return new parameterEditor_scaleConversion_1.ParameterEditor_ScaleConversionEditor(valueChangeCallback); }],
-    ["HomematicDirectionToHomekitPositionState", function (valueChangeCallback) { return new parameterEditor_singleState_1.ParameterEditor_SingleState(valueChangeCallback); }],
-    ["HomematicControlModeToHomekitHeathingCoolingState", function (valueChangeCallback) { return new parameterEditor_singleState_1.ParameterEditor_SingleState(valueChangeCallback); }],
-    ["script", function (valueChangeCallback) { return new parameterEditor_conversionScript_1.ParameterEditor_ConversionScript(valueChangeCallback); }],
+    ["", function (callback) { return new parameterEditor_null_1.ParameterEditor_Null(callback); }],
+    ["map", function (callback) { return new parameterEditor_map_1.ParameterEditor_Map(callback); }],
+    ["hue", function (callback) { return new parameterEditor_null_1.ParameterEditor_Null(callback); }],
+    ["level255", function (callback) { return new parameterEditor_null_1.ParameterEditor_Null(callback); }],
+    ["passthrough", function (callback) { return new parameterEditor_null_1.ParameterEditor_Null(callback); }],
+    ["inverse", function (callback) { return new parameterEditor_const_1.ParameterEditor_Const(callback); }],
+    ["scaleInt", function (callback) { return new parameterEditor_scaleConversion_1.ParameterEditor_ScaleConversionEditor(callback); }],
+    ["scaleFloat", function (callback) { return new parameterEditor_scaleConversion_1.ParameterEditor_ScaleConversionEditor(callback); }],
+    ["HomematicDirectionToHomekitPositionState", function (callback) { return new parameterEditor_singleState_1.ParameterEditor_SingleState(callback); }],
+    ["HomematicControlModeToHomekitHeathingCoolingState", function (callback) { return new parameterEditor_singleState_1.ParameterEditor_SingleState(callback); }],
+    ["script", function (callback) { return new parameterEditor_conversionScript_1.ParameterEditor_ConversionScript(callback); }],
 ]);
 
 
 /***/ }),
 
-/***/ "./admin/parameterEditor/parameterEditor.homeMaticWindowCoveringTargetPosition.inc.html":
-/*!**********************************************************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.homeMaticWindowCoveringTargetPosition.inc.html ***!
-  \**********************************************************************************************/
+/***/ "./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.inc.html":
+/*!************************************************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.inc.html ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -16052,10 +16072,10 @@ module.exports = "<div class=\"editor-table\">\n    <div class=\"row\">\n       
 
 /***/ }),
 
-/***/ "./admin/parameterEditor/parameterEditor.homeMaticWindowCoveringTargetPosition.ts":
-/*!****************************************************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.homeMaticWindowCoveringTargetPosition.ts ***!
-  \****************************************************************************************/
+/***/ "./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.ts":
+/*!******************************************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.ts ***!
+  \******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16079,7 +16099,7 @@ var ParameterEditor_HomeMaticWindowCoveringTargetPosition = /** @class */ (funct
     __extends(ParameterEditor_HomeMaticWindowCoveringTargetPosition, _super);
     function ParameterEditor_HomeMaticWindowCoveringTargetPosition(valueChangeCallback) {
         var _this = _super.call(this, valueChangeCallback) || this;
-        _this.templateNode = admin_pageLoader_1.createAndCloneTemplateElement(__webpack_require__(/*! ./parameterEditor.homeMaticWindowCoveringTargetPosition.inc.html */ "./admin/parameterEditor/parameterEditor.homeMaticWindowCoveringTargetPosition.inc.html"));
+        _this.templateNode = admin_pageLoader_1.createAndCloneTemplateElement(__webpack_require__(/*! ./parameterEditor.homematic.WindowCovering.TargetPosition.inc.html */ "./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.inc.html"));
         _this.txtLevel = _this.templateNode.querySelector("#level");
         _this.txtLevel.addEventListener('input', function (ev) { return _this.valueChanged(); });
         _this.txtWorking = _this.templateNode.querySelector("#working");
@@ -16114,6 +16134,89 @@ var ParameterEditor_HomeMaticWindowCoveringTargetPosition = /** @class */ (funct
     return ParameterEditor_HomeMaticWindowCoveringTargetPosition;
 }(parameterEditor_base_1.ParameterEditor));
 exports.ParameterEditor_HomeMaticWindowCoveringTargetPosition = ParameterEditor_HomeMaticWindowCoveringTargetPosition;
+
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.homematic.dimmer.inc.html":
+/*!*************************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.homematic.dimmer.inc.html ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"editor-table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">Level Datapoint:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <input id=\"level\" type=\"text\" class=\"stateSelectTarget\"></input>\n                <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n            </div>\n        </div>\n    </div>\n    <div class=\"row extended-dimmer-properties\">\n        <div class=\"cell\">\n            <span class=\"translate\">Restore level on switch on:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <input type=\"checkbox\" id=\"restoreToPreviousLevel\" />\n            </div>\n        </div>\n    </div>\n    <div class=\"row extended-dimmer-properties\">\n        <div class=\"cell\">\n            <span class=\"translate\">Default level on switch on:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <input type=\"number\" id=\"defaultLevel\" class=\"full-width\"></input>\n            </div>\n        </div>\n    </div>\n</div>"
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.homematic.dimmer.ts":
+/*!*******************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.homematic.dimmer.ts ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+var admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+var iofunc_homematic_dimmer_1 = __webpack_require__(/*! ../../yahka.functions/iofunc.homematic.dimmer */ "./yahka.functions/iofunc.homematic.dimmer.ts");
+var ParameterEditor_HomeMatic_Dimmer = /** @class */ (function (_super) {
+    __extends(ParameterEditor_HomeMatic_Dimmer, _super);
+    function ParameterEditor_HomeMatic_Dimmer(valueChangeCallback, showExtendedDimmerProps) {
+        var _this = _super.call(this, valueChangeCallback) || this;
+        _this.showExtendedDimmerProps = showExtendedDimmerProps;
+        _this.templateNode = admin_pageLoader_1.createAndCloneTemplateElement(__webpack_require__(/*! ./parameterEditor.homematic.dimmer.inc.html */ "./admin/parameterEditor/parameterEditor.homematic.dimmer.inc.html"));
+        _this.txtLevel = _this.templateNode.querySelector("#level");
+        _this.txtLevel.addEventListener('input', function (ev) { return _this.valueChanged(); });
+        _this.chkRestoreToPrevious = _this.templateNode.querySelector("#restoreToPreviousLevel");
+        _this.chkRestoreToPrevious.addEventListener('click', function (ev) { return _this.valueChanged(); });
+        _this.txtDefaultLevel = _this.templateNode.querySelector("#defaultLevel");
+        _this.txtDefaultLevel.addEventListener('input', function (ev) { return _this.valueChanged(); });
+        if (!showExtendedDimmerProps) {
+            $(_this.templateNode).find('.extended-dimmer-properties').hide();
+        }
+        return _this;
+    }
+    ParameterEditor_HomeMatic_Dimmer.prototype.refreshAndShow = function (containerElement, parameterValue) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+        if (parameterValue === undefined) {
+            return;
+        }
+        var params = iofunc_homematic_dimmer_1.TIoBrokerInOutFunction_Homematic_Dimmer_Base.parseParameters(parameterValue);
+        if (params === undefined) {
+            return;
+        }
+        admin_utils_1.Utils.setInputValue(this.txtLevel, params.levelState);
+        admin_utils_1.Utils.setInputValue(this.chkRestoreToPrevious, params.restoreToPreviousLevel);
+        admin_utils_1.Utils.setInputValue(this.txtDefaultLevel, params.defaultSwitchOnLevel);
+    };
+    ParameterEditor_HomeMatic_Dimmer.prototype.buildNewParameterValue = function () {
+        var result = {
+            levelState: admin_utils_1.Utils.getInputValue(this.txtLevel)
+        };
+        if (this.showExtendedDimmerProps) {
+            result.restoreToPreviousLevel = admin_utils_1.Utils.getInputValue(this.chkRestoreToPrevious);
+            result.defaultSwitchOnLevel = admin_utils_1.Utils.getInputValue(this.txtDefaultLevel);
+        }
+        return result;
+    };
+    return ParameterEditor_HomeMatic_Dimmer;
+}(parameterEditor_base_1.ParameterEditor));
+exports.ParameterEditor_HomeMatic_Dimmer = ParameterEditor_HomeMatic_Dimmer;
 
 
 /***/ }),
@@ -16824,6 +16927,24 @@ exports.YahkaLogger = YahkaLogger;
 
 /***/ }),
 
+/***/ "./shared/yahka.utils.ts":
+/*!*******************************!*\
+  !*** ./shared/yahka.utils.ts ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+function propertyExists(object, property) {
+    return property in object;
+}
+exports.propertyExists = propertyExists;
+
+
+/***/ }),
+
 /***/ "./yahka.community.types.ts":
 /*!**********************************!*\
   !*** ./yahka.community.types.ts ***!
@@ -17048,9 +17169,6 @@ var TYahkaFunctionBase = /** @class */ (function () {
     TYahkaFunctionBase.prototype.shouldStateBeFiltered = function (stateName, ioState) {
         return false;
     };
-    TYahkaFunctionBase.prototype.readValueFromIOState = function (ioState) {
-        return ioState.val;
-    };
     TYahkaFunctionBase.prototype.readValueFromCache = function (stateName) {
         if (this.stateCache.has(stateName)) {
             return this.stateCache.get(stateName);
@@ -17139,7 +17257,7 @@ var TIoBrokerInOutFunctionBase = /** @class */ (function (_super) {
         catch (e) {
             this.errorForHomeKit = e;
         }
-        if (this.valueForHomeKit)
+        if (this.valueForHomeKit != null)
             callback(this.valueForHomeKit);
     };
     TIoBrokerInOutFunctionBase.prototype.recalculateHomekitValues = function (stateName) {
@@ -17214,7 +17332,7 @@ var TIoBrokerInOutFunction_StateBase = /** @class */ (function () {
     TIoBrokerInOutFunction_StateBase.prototype.subscriptionEvent = function (stateName, ioState, callback) {
         this.adapter.log.debug('change event from ioBroker via [' + this.stateName + ']' + JSON.stringify(ioState));
         var newValue = this.getValueOnNotify(ioState);
-        if (newValue !== undefined)
+        if (newValue != null)
             this.executeCallback(callback, newValue);
         else
             this.adapter.log.debug('state was filtered - notification is canceled');
@@ -17240,6 +17358,175 @@ var TIoBrokerInOutFunction_StateBase = /** @class */ (function () {
     return TIoBrokerInOutFunction_StateBase;
 }());
 exports.TIoBrokerInOutFunction_StateBase = TIoBrokerInOutFunction_StateBase;
+
+
+/***/ }),
+
+/***/ "./yahka.functions/iofunc.homematic.dimmer.ts":
+/*!****************************************************!*\
+  !*** ./yahka.functions/iofunc.homematic.dimmer.ts ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
+var util_1 = __webpack_require__(/*! util */ "../node_modules/util/util.js");
+var yahka_utils_1 = __webpack_require__(/*! ../shared/yahka.utils */ "./shared/yahka.utils.ts");
+function isHomematic_Dimmer_Parameter(value) {
+    if (value === undefined)
+        return false;
+    if (!util_1.isObject(value))
+        return false;
+    return yahka_utils_1.propertyExists(value, "levelState");
+}
+exports.isHomematic_Dimmer_Parameter = isHomematic_Dimmer_Parameter;
+var TIoBrokerInOutFunction_Homematic_Dimmer_Base = /** @class */ (function (_super) {
+    __extends(TIoBrokerInOutFunction_Homematic_Dimmer_Base, _super);
+    function TIoBrokerInOutFunction_Homematic_Dimmer_Base(adapter, functionName, parameters) {
+        var _this = _super.call(this, adapter, functionName + "[" + parameters.levelState + "]") || this;
+        _this.parameters = parameters;
+        _this.lastOnLevel = { val: undefined };
+        _this.addSubscriptionRequest(parameters.levelState);
+        return _this;
+    }
+    TIoBrokerInOutFunction_Homematic_Dimmer_Base.parseParameters = function (parameters) {
+        if (!isHomematic_Dimmer_Parameter(parameters)) {
+            return undefined;
+        }
+        ;
+        return parameters;
+    };
+    TIoBrokerInOutFunction_Homematic_Dimmer_Base.prototype.cacheChanged = function (stateName, callback) {
+        // save level if we are switching off
+        if (stateName === this.parameters.levelState) {
+            var cacheValue = this.readValueFromCache(stateName);
+            if (cacheValue.val > 0) {
+                this.lastOnLevel = cacheValue;
+            }
+        }
+        _super.prototype.cacheChanged.call(this, stateName, callback);
+    };
+    return TIoBrokerInOutFunction_Homematic_Dimmer_Base;
+}(iofunc_base_1.TIoBrokerInOutFunctionBase));
+exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = TIoBrokerInOutFunction_Homematic_Dimmer_Base;
+var TIoBrokerInOutFunction_Homematic_Dimmer_On = /** @class */ (function (_super) {
+    __extends(TIoBrokerInOutFunction_Homematic_Dimmer_On, _super);
+    function TIoBrokerInOutFunction_Homematic_Dimmer_On(adapter, parameters) {
+        var _this = _super.call(this, adapter, "Homematic.Dimmer.On", parameters) || this;
+        _this.adapter = adapter;
+        _this.parameters = parameters;
+        return _this;
+    }
+    TIoBrokerInOutFunction_Homematic_Dimmer_On.create = function (adapter, parameters) {
+        var params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
+        if (params === undefined) {
+            return undefined;
+        }
+        return new TIoBrokerInOutFunction_Homematic_Dimmer_On(adapter, params);
+    };
+    TIoBrokerInOutFunction_Homematic_Dimmer_On.prototype.recalculateHomekitValues = function (stateName) {
+        var hkValue = this.stateCache.get(this.parameters.levelState);
+        return Boolean(hkValue.val > 0);
+    };
+    TIoBrokerInOutFunction_Homematic_Dimmer_On.prototype.updateIOBrokerValue = function (plainIoValue, callback) {
+        var _this = this;
+        setTimeout(function () { return _this.executeIOBrokerValue(plainIoValue, callback); }, 50);
+    };
+    TIoBrokerInOutFunction_Homematic_Dimmer_On.prototype.executeIOBrokerValue = function (plainIoValue, callback) {
+        var _this = this;
+        var isSwitchingOn = Boolean(plainIoValue);
+        var stateName = this.parameters.levelState;
+        var newOnValue = (this.parameters.restoreToPreviousLevel ? this.lastOnLevel.val : this.parameters.defaultSwitchOnLevel) || this.parameters.defaultSwitchOnLevel || 100;
+        var newOffValue = 0;
+        var newValue = isSwitchingOn ? newOnValue : newOffValue;
+        if (isSwitchingOn && this.parameters.restoreToPreviousLevel) {
+            this.log.debug('using previous level for switching on: ' + JSON.stringify(this.lastOnLevel.val));
+        }
+        this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
+        this.adapter.getForeignState(stateName, function (error, ioState) {
+            var value = ioState.val;
+            if (isSwitchingOn && value > 0) {
+                _this.log.debug('function should switch on but level is already not equal to 0: ' + JSON.stringify(value));
+                callback();
+                return;
+            }
+            var valueChanged = value !== newValue;
+            _this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
+            if (valueChanged) {
+                _this.adapter.setForeignState(stateName, newValue, false, function (error) {
+                    if (error) {
+                        _this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
+                        callback();
+                    }
+                    callback();
+                });
+            }
+            else {
+                callback();
+            }
+        });
+    };
+    return TIoBrokerInOutFunction_Homematic_Dimmer_On;
+}(TIoBrokerInOutFunction_Homematic_Dimmer_Base));
+exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = TIoBrokerInOutFunction_Homematic_Dimmer_On;
+var TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = /** @class */ (function (_super) {
+    __extends(TIoBrokerInOutFunction_Homematic_Dimmer_Brightness, _super);
+    function TIoBrokerInOutFunction_Homematic_Dimmer_Brightness(adapter, parameters) {
+        var _this = _super.call(this, adapter, "Homematic.Dimmer.Brightness", parameters) || this;
+        _this.adapter = adapter;
+        _this.parameters = parameters;
+        return _this;
+    }
+    TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.create = function (adapter, parameters) {
+        var params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
+        if (params === undefined) {
+            return undefined;
+        }
+        return new TIoBrokerInOutFunction_Homematic_Dimmer_Brightness(adapter, params);
+    };
+    TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.prototype.recalculateHomekitValues = function (stateName) {
+        var hkValue = this.stateCache.get(this.parameters.levelState);
+        return hkValue.val == 0 ? this.lastOnLevel.val : hkValue.val;
+    };
+    TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.prototype.updateIOBrokerValue = function (plainIoValue, callback) {
+        var _this = this;
+        var newValue = plainIoValue;
+        var stateName = this.parameters.levelState;
+        this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
+        this.adapter.getForeignState(stateName, function (error, ioState) {
+            var value = ioState.val;
+            var valueChanged = value !== newValue;
+            _this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
+            if (valueChanged) {
+                _this.adapter.setForeignState(stateName, newValue, false, function (error) {
+                    if (error) {
+                        _this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
+                        callback();
+                    }
+                    callback();
+                });
+            }
+            else {
+                callback();
+            }
+        });
+    };
+    return TIoBrokerInOutFunction_Homematic_Dimmer_Brightness;
+}(TIoBrokerInOutFunction_Homematic_Dimmer_Base));
+exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = TIoBrokerInOutFunction_Homematic_Dimmer_Brightness;
 
 
 /***/ }),

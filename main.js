@@ -325,6 +325,24 @@ exports.YahkaLogger = YahkaLogger;
 
 /***/ }),
 
+/***/ "./shared/yahka.utils.ts":
+/*!*******************************!*\
+  !*** ./shared/yahka.utils.ts ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+function propertyExists(object, property) {
+    return property in object;
+}
+exports.propertyExists = propertyExists;
+
+
+/***/ }),
+
 /***/ "./yahka.community.types.ts":
 /*!**********************************!*\
   !*** ./yahka.community.types.ts ***!
@@ -909,9 +927,6 @@ var TYahkaFunctionBase = /** @class */ (function () {
     TYahkaFunctionBase.prototype.shouldStateBeFiltered = function (stateName, ioState) {
         return false;
     };
-    TYahkaFunctionBase.prototype.readValueFromIOState = function (ioState) {
-        return ioState.val;
-    };
     TYahkaFunctionBase.prototype.readValueFromCache = function (stateName) {
         if (this.stateCache.has(stateName)) {
             return this.stateCache.get(stateName);
@@ -1004,12 +1019,15 @@ var conversion_inverse_1 = __webpack_require__(/*! ./conversion.inverse */ "./ya
 var conversion_script_1 = __webpack_require__(/*! ./conversion.script */ "./yahka.functions/conversion.script.ts");
 var iofunc_multi_state_1 = __webpack_require__(/*! ./iofunc.multi-state */ "./yahka.functions/iofunc.multi-state.ts");
 var conversion_map_1 = __webpack_require__(/*! ./conversion.map */ "./yahka.functions/conversion.map.ts");
+var iofunc_homematic_dimmer_1 = __webpack_require__(/*! ./iofunc.homematic.dimmer */ "./yahka.functions/iofunc.homematic.dimmer.ts");
 functions_factory_1.inOutFactory["ioBroker.State"] = iofunc_state_1.TIoBrokerInOutFunction_State.create;
 functions_factory_1.inOutFactory["ioBroker.MultiState"] = iofunc_multi_state_1.TIoBrokerInOutFunction_MultiState.create;
 functions_factory_1.inOutFactory["ioBroker.State.Defered"] = iofunc_state_1.TIoBrokerInOutFunction_StateDeferred.create;
 functions_factory_1.inOutFactory["ioBroker.State.OnlyACK"] = iofunc_state_1.TIoBrokerInOutFunction_State_OnlyACK.create;
 functions_factory_1.inOutFactory["const"] = iofunc_const_1.TIoBrokerInOutFunction_Const.create;
 functions_factory_1.inOutFactory["ioBroker.homematic.WindowCovering.TargetPosition"] = iofunc_homematic_covering_1.TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.create;
+functions_factory_1.inOutFactory["ioBroker.homematic.Dimmer.On"] = iofunc_homematic_dimmer_1.TIoBrokerInOutFunction_Homematic_Dimmer_On.create;
+functions_factory_1.inOutFactory["ioBroker.homematic.Dimmer.Brightness"] = iofunc_homematic_dimmer_1.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.create;
 functions_factory_1.conversionFactory["passthrough"] = function (adapter, param) { return new conversion_passthrough_1.TIoBrokerConversion_Passthrough(adapter); };
 functions_factory_1.conversionFactory["HomematicDirectionToHomekitPositionState"] = function (adapter, param) { return new conversion_homekit_homematic_1.TIoBrokerConversion_HomematicDirection_To_PositionState(adapter); };
 functions_factory_1.conversionFactory["HomematicControlModeToHomekitHeathingCoolingState"] = function (adapter, param) { return new conversion_homekit_homematic_1.TIoBrokerConversion_HomematicControlMode_To_CoolingState(adapter); };
@@ -1081,7 +1099,7 @@ var TIoBrokerInOutFunctionBase = /** @class */ (function (_super) {
         catch (e) {
             this.errorForHomeKit = e;
         }
-        if (this.valueForHomeKit)
+        if (this.valueForHomeKit != null)
             callback(this.valueForHomeKit);
     };
     TIoBrokerInOutFunctionBase.prototype.recalculateHomekitValues = function (stateName) {
@@ -1156,7 +1174,7 @@ var TIoBrokerInOutFunction_StateBase = /** @class */ (function () {
     TIoBrokerInOutFunction_StateBase.prototype.subscriptionEvent = function (stateName, ioState, callback) {
         this.adapter.log.debug('change event from ioBroker via [' + this.stateName + ']' + JSON.stringify(ioState));
         var newValue = this.getValueOnNotify(ioState);
-        if (newValue !== undefined)
+        if (newValue != null)
             this.executeCallback(callback, newValue);
         else
             this.adapter.log.debug('state was filtered - notification is canceled');
@@ -1314,6 +1332,175 @@ var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = /** @class *
     return TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition;
 }(iofunc_base_1.TIoBrokerInOutFunction_StateBase));
 exports.TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition;
+
+
+/***/ }),
+
+/***/ "./yahka.functions/iofunc.homematic.dimmer.ts":
+/*!****************************************************!*\
+  !*** ./yahka.functions/iofunc.homematic.dimmer.ts ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
+var util_1 = __webpack_require__(/*! util */ "util");
+var yahka_utils_1 = __webpack_require__(/*! ../shared/yahka.utils */ "./shared/yahka.utils.ts");
+function isHomematic_Dimmer_Parameter(value) {
+    if (value === undefined)
+        return false;
+    if (!util_1.isObject(value))
+        return false;
+    return yahka_utils_1.propertyExists(value, "levelState");
+}
+exports.isHomematic_Dimmer_Parameter = isHomematic_Dimmer_Parameter;
+var TIoBrokerInOutFunction_Homematic_Dimmer_Base = /** @class */ (function (_super) {
+    __extends(TIoBrokerInOutFunction_Homematic_Dimmer_Base, _super);
+    function TIoBrokerInOutFunction_Homematic_Dimmer_Base(adapter, functionName, parameters) {
+        var _this = _super.call(this, adapter, functionName + "[" + parameters.levelState + "]") || this;
+        _this.parameters = parameters;
+        _this.lastOnLevel = { val: undefined };
+        _this.addSubscriptionRequest(parameters.levelState);
+        return _this;
+    }
+    TIoBrokerInOutFunction_Homematic_Dimmer_Base.parseParameters = function (parameters) {
+        if (!isHomematic_Dimmer_Parameter(parameters)) {
+            return undefined;
+        }
+        ;
+        return parameters;
+    };
+    TIoBrokerInOutFunction_Homematic_Dimmer_Base.prototype.cacheChanged = function (stateName, callback) {
+        // save level if we are switching off
+        if (stateName === this.parameters.levelState) {
+            var cacheValue = this.readValueFromCache(stateName);
+            if (cacheValue.val > 0) {
+                this.lastOnLevel = cacheValue;
+            }
+        }
+        _super.prototype.cacheChanged.call(this, stateName, callback);
+    };
+    return TIoBrokerInOutFunction_Homematic_Dimmer_Base;
+}(iofunc_base_1.TIoBrokerInOutFunctionBase));
+exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = TIoBrokerInOutFunction_Homematic_Dimmer_Base;
+var TIoBrokerInOutFunction_Homematic_Dimmer_On = /** @class */ (function (_super) {
+    __extends(TIoBrokerInOutFunction_Homematic_Dimmer_On, _super);
+    function TIoBrokerInOutFunction_Homematic_Dimmer_On(adapter, parameters) {
+        var _this = _super.call(this, adapter, "Homematic.Dimmer.On", parameters) || this;
+        _this.adapter = adapter;
+        _this.parameters = parameters;
+        return _this;
+    }
+    TIoBrokerInOutFunction_Homematic_Dimmer_On.create = function (adapter, parameters) {
+        var params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
+        if (params === undefined) {
+            return undefined;
+        }
+        return new TIoBrokerInOutFunction_Homematic_Dimmer_On(adapter, params);
+    };
+    TIoBrokerInOutFunction_Homematic_Dimmer_On.prototype.recalculateHomekitValues = function (stateName) {
+        var hkValue = this.stateCache.get(this.parameters.levelState);
+        return Boolean(hkValue.val > 0);
+    };
+    TIoBrokerInOutFunction_Homematic_Dimmer_On.prototype.updateIOBrokerValue = function (plainIoValue, callback) {
+        var _this = this;
+        setTimeout(function () { return _this.executeIOBrokerValue(plainIoValue, callback); }, 50);
+    };
+    TIoBrokerInOutFunction_Homematic_Dimmer_On.prototype.executeIOBrokerValue = function (plainIoValue, callback) {
+        var _this = this;
+        var isSwitchingOn = Boolean(plainIoValue);
+        var stateName = this.parameters.levelState;
+        var newOnValue = (this.parameters.restoreToPreviousLevel ? this.lastOnLevel.val : this.parameters.defaultSwitchOnLevel) || this.parameters.defaultSwitchOnLevel || 100;
+        var newOffValue = 0;
+        var newValue = isSwitchingOn ? newOnValue : newOffValue;
+        if (isSwitchingOn && this.parameters.restoreToPreviousLevel) {
+            this.log.debug('using previous level for switching on: ' + JSON.stringify(this.lastOnLevel.val));
+        }
+        this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
+        this.adapter.getForeignState(stateName, function (error, ioState) {
+            var value = ioState.val;
+            if (isSwitchingOn && value > 0) {
+                _this.log.debug('function should switch on but level is already not equal to 0: ' + JSON.stringify(value));
+                callback();
+                return;
+            }
+            var valueChanged = value !== newValue;
+            _this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
+            if (valueChanged) {
+                _this.adapter.setForeignState(stateName, newValue, false, function (error) {
+                    if (error) {
+                        _this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
+                        callback();
+                    }
+                    callback();
+                });
+            }
+            else {
+                callback();
+            }
+        });
+    };
+    return TIoBrokerInOutFunction_Homematic_Dimmer_On;
+}(TIoBrokerInOutFunction_Homematic_Dimmer_Base));
+exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = TIoBrokerInOutFunction_Homematic_Dimmer_On;
+var TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = /** @class */ (function (_super) {
+    __extends(TIoBrokerInOutFunction_Homematic_Dimmer_Brightness, _super);
+    function TIoBrokerInOutFunction_Homematic_Dimmer_Brightness(adapter, parameters) {
+        var _this = _super.call(this, adapter, "Homematic.Dimmer.Brightness", parameters) || this;
+        _this.adapter = adapter;
+        _this.parameters = parameters;
+        return _this;
+    }
+    TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.create = function (adapter, parameters) {
+        var params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
+        if (params === undefined) {
+            return undefined;
+        }
+        return new TIoBrokerInOutFunction_Homematic_Dimmer_Brightness(adapter, params);
+    };
+    TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.prototype.recalculateHomekitValues = function (stateName) {
+        var hkValue = this.stateCache.get(this.parameters.levelState);
+        return hkValue.val == 0 ? this.lastOnLevel.val : hkValue.val;
+    };
+    TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.prototype.updateIOBrokerValue = function (plainIoValue, callback) {
+        var _this = this;
+        var newValue = plainIoValue;
+        var stateName = this.parameters.levelState;
+        this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
+        this.adapter.getForeignState(stateName, function (error, ioState) {
+            var value = ioState.val;
+            var valueChanged = value !== newValue;
+            _this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
+            if (valueChanged) {
+                _this.adapter.setForeignState(stateName, newValue, false, function (error) {
+                    if (error) {
+                        _this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
+                        callback();
+                    }
+                    callback();
+                });
+            }
+            else {
+                callback();
+            }
+        });
+    };
+    return TIoBrokerInOutFunction_Homematic_Dimmer_Brightness;
+}(TIoBrokerInOutFunction_Homematic_Dimmer_Base));
+exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = TIoBrokerInOutFunction_Homematic_Dimmer_Brightness;
 
 
 /***/ }),

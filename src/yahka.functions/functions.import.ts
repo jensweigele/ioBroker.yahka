@@ -9,6 +9,7 @@ import { TIoBrokerConversion_Inverse } from './conversion.inverse';
 import { TIoBrokerConversion_Script } from './conversion.script';
 import { TIoBrokerInOutFunction_MultiState } from './iofunc.multi-state';
 import { TIoBrokerConversion_Map } from './conversion.map';
+import { TIoBrokerInOutFunction_Homematic_Dimmer_On, TIoBrokerInOutFunction_Homematic_Dimmer_Brightness } from './iofunc.homematic.dimmer';
 
 inOutFactory["ioBroker.State"] = TIoBrokerInOutFunction_State.create;
 inOutFactory["ioBroker.MultiState"] = TIoBrokerInOutFunction_MultiState.create;
@@ -16,6 +17,8 @@ inOutFactory["ioBroker.State.Defered"] = TIoBrokerInOutFunction_StateDeferred.cr
 inOutFactory["ioBroker.State.OnlyACK"] = TIoBrokerInOutFunction_State_OnlyACK.create;
 inOutFactory["const"] = TIoBrokerInOutFunction_Const.create;
 inOutFactory["ioBroker.homematic.WindowCovering.TargetPosition"] = TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.create;
+inOutFactory["ioBroker.homematic.Dimmer.On"] = TIoBrokerInOutFunction_Homematic_Dimmer_On.create;
+inOutFactory["ioBroker.homematic.Dimmer.Brightness"] = TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.create;
 
 conversionFactory["passthrough"] = (adapter, param) => new TIoBrokerConversion_Passthrough(adapter);
 conversionFactory["HomematicDirectionToHomekitPositionState"] = (adapter, param) => new TIoBrokerConversion_HomematicDirection_To_PositionState(adapter);

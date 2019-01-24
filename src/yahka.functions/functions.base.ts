@@ -24,9 +24,6 @@ export abstract class TYahkaFunctionBase implements ISubscriptionRequestor {
         return false;
     }
     
-    protected readValueFromIOState(ioState: ioBroker.IState): any {
-        return ioState.val;
-    }
     protected readValueFromCache(stateName: string): ioBroker.IState {
         if (this.stateCache.has(stateName)) {
             return this.stateCache.get(stateName);

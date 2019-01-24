@@ -7,17 +7,17 @@ export abstract class TIoBrokerInOutFunctionBase extends TYahkaFunctionBase impl
     protected valueForHomeKit: any = undefined;
     protected errorForHomeKit: any = null;
 
-    fromIOBroker(callback:(error: any, plainIOValue: any) => void) {
+    public fromIOBroker(callback:(error: any, plainIOValue: any) => void) {
         this.log.debug('fromIOBroker event - delivering cached value (' + JSON.stringify(this.valueForHomeKit) + ")");
         callback(null, this.valueForHomeKit);
     }
 
-    toIOBroker(plainIoValue: any, callback: () => void) {
+    public toIOBroker(plainIoValue: any, callback: () => void) {
         this.log.debug('writing state to ioBroker: ' + JSON.stringify(plainIoValue));
         this.updateIOBrokerValue(plainIoValue, callback);
     }
 
-    cacheChanged(stateName: string, callback: IInOutChangeNotify) {
+    protected cacheChanged(stateName: string, callback: IInOutChangeNotify) {
         try {
             this.valueForHomeKit = this.recalculateHomekitValues(stateName);
             this.errorForHomeKit = null;
@@ -25,7 +25,7 @@ export abstract class TIoBrokerInOutFunctionBase extends TYahkaFunctionBase impl
             this.errorForHomeKit = e;
         }        
         
-        if(this.valueForHomeKit)
+        if(this.valueForHomeKit != null)
             callback(this.valueForHomeKit);
     }
 
@@ -103,7 +103,7 @@ export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionR
     subscriptionEvent(stateName: string, ioState: ioBroker.IState, callback: IInOutChangeNotify) {
         this.adapter.log.debug('change event from ioBroker via [' + this.stateName + ']' + JSON.stringify(ioState));
         let newValue = this.getValueOnNotify(ioState);
-        if (newValue !== undefined)
+        if (newValue != null)
             this.executeCallback(callback, newValue);
         else
             this.adapter.log.debug('state was filtered - notification is canceled');
