@@ -180,6 +180,39 @@ exports.appName =       appName;
 
 /***/ }),
 
+/***/ "../node_modules/webpack/buildin/module.js":
+/*!*************************************************!*\
+  !*** ../node_modules/webpack/buildin/module.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if (!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+
 /***/ "../package.json":
 /*!***********************!*\
   !*** ../package.json ***!
@@ -199,7 +232,7 @@ module.exports = {"name":"iobroker.yahka","version":"0.9.0","description":"ioBro
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/**
+/* WEBPACK VAR INJECTION */(function(module) {/**
  *
  * iobroker.yahka adapter
  *
@@ -237,8 +270,24 @@ debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 var utils = __webpack_require__(/*! ../lib/utils */ "../lib/utils.js"); // Get common adapter utils
 var hkAdapter = __webpack_require__(/*! ./yahka.ioBroker-adapter */ "./yahka.ioBroker-adapter.ts");
 __webpack_require__(/*! ./yahka.functions/functions.import */ "./yahka.functions/functions.import.ts");
-var yahkaAdapter = new hkAdapter.TIOBrokerAdapter(utils.Adapter({ name: 'yahka', systemConfig: true }), utils.controllerDir);
+var yahkaAdapter;
+function startAdapter(options) {
+    if (options === void 0) { options = {}; }
+    var ioAdapter = utils.Adapter({ name: 'yahka', systemConfig: true });
+    yahkaAdapter = new hkAdapter.TIOBrokerAdapter(ioAdapter, utils.controllerDir);
+    return ioAdapter;
+}
+// ...
+if (module && module.parent) {
+    // Export startAdapter in compact mode
+    module.exports = startAdapter;
+}
+else {
+    // Otherwise start the adapter immediately
+    startAdapter();
+}
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/module.js */ "../node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
 

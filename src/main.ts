@@ -37,5 +37,23 @@ debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 import utils = require("../lib/utils"); // Get common adapter utils
 import * as hkAdapter from './yahka.ioBroker-adapter';
 require("./yahka.functions/functions.import");
-let yahkaAdapter = new hkAdapter.TIOBrokerAdapter(utils.Adapter({name: 'yahka', systemConfig: true}), utils.controllerDir);
+
+let yahkaAdapter: hkAdapter.TIOBrokerAdapter;
+function startAdapter(options: any = {}) {
+	const ioAdapter = utils.Adapter({name: 'yahka', systemConfig: true});
+    yahkaAdapter = new hkAdapter.TIOBrokerAdapter(ioAdapter, utils.controllerDir);
+    return ioAdapter;
+}
+
+// ...
+
+if (module && module.parent) {
+	// Export startAdapter in compact mode
+	module.exports = startAdapter;
+} else {
+	// Otherwise start the adapter immediately
+	startAdapter();
+}
+
+
 

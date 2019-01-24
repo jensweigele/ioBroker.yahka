@@ -4,8 +4,8 @@
         "version": "0.9.0",
         "news": {
             "0.9.0": {
-                "en": "Improvements to Admin interface, new Script-Conversion function and some fixes",
-                "de": "Verbesserte Admin Oberfläche, neue Script-Konvertierungsfunktion und diverse Fehlerbehebungen"
+                "en": "Various improvements and new features - for more details see: https://github.com/jensweigele/ioBroker.yahka/blob/master/README.md",
+                "de": "Verschiedene Verbesserungen und neue FEatures - mehr details unter: https://github.com/jensweigele/ioBroker.yahka/blob/master/README.md"
             },
             "0.8.2": {
                 "en": "Removed a bug which flooded logging when starting/stopping the adapter which led to excessive memory consumption",
@@ -71,6 +71,7 @@
         "loglevel": "info",
         "type": "iot-systems",
         "materialize": true,
+        "compact": true,
         "config": {
             "minWidth": 800,
             "width ": 1440,
