@@ -28,6 +28,7 @@ For details on how to install and configure this adapter, please see the [Wiki](
   (jw) added Internet Explorer / MS Edge detection to print error message in admin panel ([#83](https://github.com/jensweigele/ioBroker.yahka/issues/83))<br>
   (jw) added support for new compact mode ([#95](https://github.com/jensweigele/ioBroker.yahka/issues/95))<br>
   (jw) added support for specifiyng device information via datapoints ([#91](https://github.com/jensweigele/ioBroker.yahka/issues/91))<br>
+  (SchumyHao) added Chinese support
   
 ### 0.8.2
   (jw) Removed a bug which flooded logging when starting/stopping the adapter which led to excessive memory consumption<br>

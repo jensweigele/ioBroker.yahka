@@ -5,7 +5,8 @@
         "news": {
             "0.9.0": {
                 "en": "Various improvements and new features - for more details see: https://github.com/jensweigele/ioBroker.yahka/blob/master/README.md",
-                "de": "Verschiedene Verbesserungen und neue FEatures - mehr details unter: https://github.com/jensweigele/ioBroker.yahka/blob/master/README.md"
+                "de": "Verschiedene Verbesserungen und neue FEatures - mehr details unter: https://github.com/jensweigele/ioBroker.yahka/blob/master/README.md",
+                "zh-cn": "添加中文支持"
             },
             "0.8.2": {
                 "en": "Removed a bug which flooded logging when starting/stopping the adapter which led to excessive memory consumption",
@@ -56,7 +57,8 @@
             "fr": "encore un autre adaptateur Homekit",
             "it": "ancora un altro adattatore Homekit",
             "es": "otro adaptador para el Homekit",
-            "pl": "kolejny adapter Homekit"
+            "pl": "kolejny adapter Homekit",
+            "zh-cn": "另一款Homekit适配器"
         },
         "platform": "Javascript/Node.js",
         "mode": "daemon",
