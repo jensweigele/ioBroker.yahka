@@ -607,7 +607,7 @@ var TIoBrokerConversion_Inverse = /** @class */ (function (_super) {
         return _this;
     }
     TIoBrokerConversion_Inverse.create = function (adapter, parameters) {
-        var maxValue = this.castToNumber(parameters);
+        var maxValue = conversion_base_1.TIOBrokerConversionBase.castToNumber(parameters);
         return new TIoBrokerConversion_Inverse(adapter, maxValue);
     };
     TIoBrokerConversion_Inverse.prototype.toHomeKit = function (value) {

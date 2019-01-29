@@ -5,7 +5,7 @@ export class TIoBrokerConversion_Inverse extends TIOBrokerConversionBase impleme
 
 
     static create(adapter: ioBroker.IAdapter, parameters: any): IConversionFunction {
-        let maxValue = this.castToNumber(parameters);
+        let maxValue = TIOBrokerConversionBase.castToNumber(parameters);
         return new TIoBrokerConversion_Inverse(adapter, maxValue);
     }
     constructor(adapter: ioBroker.IAdapter, protected maxValue: number) {
