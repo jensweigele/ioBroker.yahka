@@ -57,8 +57,7 @@
     "typescript": "^2.6.2",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.1.2",
-    "webpack-node-externals": "^1.7.2",
-    "@iobroker/adapter-core": "^1.0.3"
+    "webpack-node-externals": "^1.7.2"
   },
   "bugs": {
     "url": "https://github.com/jensweigele/ioBroker.yahka/issues"
