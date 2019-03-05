@@ -64,6 +64,7 @@
             "pl": "kolejny adapter Homekit",
             "zh-cn": "另一款Homekit适配器"
         },
+        "license": "MIT",
         "platform": "Javascript/Node.js",
         "mode": "daemon",
         "icon": "yahka.png",
