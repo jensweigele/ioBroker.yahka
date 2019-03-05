@@ -2,6 +2,7 @@
 import debug = require('debug');
 import util = require('util');
 import HAP = require('hap-nodejs');
+import { uuid } from 'hap-nodejs';
 import { Configuration } from './shared/yahka.configuration';
 import { importHAPCommunityTypesAndFixes } from './yahka.community.types';
 var pjson = require('../package.json');
@@ -140,7 +141,7 @@ export class THomeKitBridge {
         }
 
         let isNew = false;
-        let hapService = hapDevice.getService(HAP.Service[serviceConfig.type]);        
+        let hapService = hapDevice.getService(HAP.Service[serviceConfig.type]);
         if (hapService !== undefined) {
             const existingSubType = hapService.subtype ? hapService.subtype : ""
             if (existingSubType != serviceConfig.subType)
