@@ -5494,6 +5494,7 @@ var Service, Characteristic;
 module.exports = function(homebridge, options) {
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
+  UUID = homebridge.hap.uuid;
 
   var CommunityTypes = {};
 
@@ -5741,7 +5742,9 @@ module.exports = function(homebridge, options) {
   CommunityTypes.MediaHeight.UUID = '00004004-0000-1000-8000-135D67EC4377';
   inherits(CommunityTypes.MediaHeight, Characteristic);
   
+
 // courtesy of https://gist.github.com/gomfunkel/b1a046d729757120907c
+
   CommunityTypes.Volts = function() {
     Characteristic.call(this, 'Volts', CommunityTypes.Volts.UUID);
     this.setProps({
@@ -5862,6 +5865,7 @@ module.exports = function(homebridge, options) {
   CommunityTypes.EveAirQuality.UUID = 'E863F10B-079E-48FF-8F27-9C2605A29F52';
   inherits(CommunityTypes.EveAirQuality, Characteristic);
 
+
 // courtesy of https://github.com/robi-van-kinobi/homebridge-cubesensors
 
   CommunityTypes.AtmosphericPressureLevel = function () {
@@ -5893,6 +5897,7 @@ module.exports = function(homebridge, options) {
   };
   CommunityTypes.NoiseLevel.UUID = '2CD7B6FD-419A-4740-8995-E3BFE43735AB';
   inherits(CommunityTypes.NoiseLevel, Characteristic);
+
 
 // courtesy of https://github.com/homespun/homebridge-platform-snmp
 
@@ -5954,6 +5959,7 @@ module.exports = function(homebridge, options) {
   };
   CommunityTypes.NitrogenDioxidePeakLevel.UUID = 'B6594847-7B88-496C-A1A0-B7860F3D7601';
   inherits(CommunityTypes.NitrogenDioxidePeakLevel, Characteristic);
+
 
 // courtesy of https://github.com/homespun/homebridge-platform-aqe
   CommunityTypes.OzoneDetected = function () {
@@ -6125,6 +6131,7 @@ module.exports = function(homebridge, options) {
   CommunityTypes.LastEventTime.UUID = 'E863F11A-079E-48FF-8F27-9C2605A29F52';
   inherits(CommunityTypes.LastEventTime, Characteristic);
 
+
 // courtesy of https://github.com/SeydX/homebridge-broadband
 
   CommunityTypes.DownloadSpeed = function() {
@@ -6270,6 +6277,7 @@ module.exports = function(homebridge, options) {
 
   CommunityTypes.SecurityCameraService = function(displayName, subtype) {
     Service.call(this, displayName, CommunityTypes.SecurityCameraService.UUID, subtype);
+
     // Required Characteristics
     this.addCharacteristic(CommunityTypes.StillImageService);
     this.addCharacteristic(CommunityTypes.MediaTypeIdentifier);
@@ -6285,7 +6293,7 @@ module.exports = function(homebridge, options) {
     this.addOptionalCharacteristic(Characteristic.Name);
   };
   CommunityTypes.SecurityCameraService.UUID = '00000005-0000-1000-8000-135D67EC4377';
-  inherits(CommunityTypes.SecurityCameraService, Service);
+
 
 // courtesy of https://github.com/robi-van-kinobi/homebridge-cubesensors
   CommunityTypes.AtmosphericPressureSensor = function (displayName, subtype) {
@@ -6319,6 +6327,69 @@ module.exports = function(homebridge, options) {
   };
   CommunityTypes.NoiseLevelSensor.UUID = '28FDA6BC-9C2A-4DEA-AAFD-B49DB6D155AB';
   inherits(CommunityTypes.NoiseLevelSensor, Service);
+
+
+// courtesy of https://github.com/ToddGreenfield/homebridge-nut
+
+  CommunityTypes.InputVoltageAC = function() {
+    Characteristic.call(this, 'Input Voltage AC', CommunityTypes.InputVoltageAC.UUID);
+    this.setProps({
+      format:   Characteristic.Formats.Float,
+      unit:     "V",
+      minValue: 0,
+      maxValue: 65535,
+      minStep:  0.01,
+      perms:    [ Characteristic.Perms.READ, Characteristic.Perms.NOTIFY ]
+    });
+    this.value = this.getDefaultValue();
+  };
+  CommunityTypes.InputVoltageAC.UUID = UUID.generate('CommunityTypes:usagedevice:InputVoltageAC');
+  inherits(CommunityTypes.InputVoltageAC, Characteristic);
+  
+  CommunityTypes.OutputVoltageAC = function() {
+    Characteristic.call(this, 'Output Voltage AC', CommunityTypes.OutputVoltageAC.UUID);
+    this.setProps({
+      format:   Characteristic.Formats.Float,
+      unit:     "V",
+      minValue: 0,
+      maxValue: 65535,
+      minStep:  0.01,
+      perms:    [ Characteristic.Perms.READ, Characteristic.Perms.NOTIFY ]
+    });
+    this.value = this.getDefaultValue();
+  };
+  CommunityTypes.OutputVoltageAC.UUID = UUID.generate('CommunityTypes:usagedevice:OutputVoltageAC');
+  inherits(CommunityTypes.OutputVoltageAC, Characteristic);
+  
+  CommunityTypes.BatteryVoltageDC = function() {
+    Characteristic.call(this, 'Battery Voltage DC', CommunityTypes.BatteryVoltageDC.UUID);
+    this.setProps({
+      format:   Characteristic.Formats.Float,
+      unit:     "V",
+      minValue: 0,
+      maxValue: 65535,
+      minStep:  0.01,
+      perms:    [ Characteristic.Perms.READ, Characteristic.Perms.NOTIFY ]
+    });
+    this.value = this.getDefaultValue();
+  };
+  CommunityTypes.BatteryVoltageDC.UUID = UUID.generate('CommunityTypes:usagedevice:BatteryVoltageDC');
+  inherits(CommunityTypes.BatteryVoltageDC, Characteristic);
+  
+  CommunityTypes.UPSLoadPercent = function() {
+    Characteristic.call(this, 'UPS Load', CommunityTypes.UPSLoadPercent.UUID);
+    this.setProps({
+      format:   Characteristic.Formats.UINT8,
+      unit: Characteristic.Units.PERCENTAGE,
+      minValue: 0,
+      maxValue: 100,
+      minStep:  1,
+      perms:    [ Characteristic.Perms.READ, Characteristic.Perms.NOTIFY ]
+    });
+    this.value = this.getDefaultValue();
+  };
+  CommunityTypes.UPSLoadPercent.UUID = UUID.generate('CommunityTypes:usagedevice:UPSLoadPercent');
+  inherits(CommunityTypes.UPSLoadPercent, Characteristic);
 
 // courtesy of https://github.com/homespun/homebridge-platform-snmp
 
@@ -6355,6 +6426,7 @@ module.exports = function(homebridge, options) {
   };
   CommunityTypes.NitrogenDioxideSensor.UUID = '9F6B797D-D43B-4C88-9AA0-57018AB8A91E';
   inherits(CommunityTypes.NitrogenDioxideSensor, Service);
+
 
 // courtesy of https://github.com/homespun/homebridge-platform-aqe
   CommunityTypes.OzoneSensor = function (displayName, subtype) {
@@ -6428,7 +6500,6 @@ module.exports = function(homebridge, options) {
 
   return CommunityTypes;
 };
-
 
 
 /***/ }),
