@@ -1,0 +1,3 @@
+[submodule "hap-nodejs-community-types"]
+	path = hap-nodejs-community-types
+	url = https://github.com/jensweigele/hap-nodejs-community-types

@@ -14,6 +14,10 @@ For details on how to install and configure this adapter, please see the [Wiki](
 
 ## Changelog
 
+### 0.9.2
+  (jw) fixed a bug where the adapter didn't start anymore<br>
+  (jw) removed the reference to the git repository of the hap community types<br>
+
 ### 0.9.1
   (jw) fixed a bug where the adapter crashes if a state does not exist<br>
   (jw) added io functions for HomeMatic dimmers ([#30](https://github.com/jensweigele/ioBroker.yahka/issues/30) and [#75](https://github.com/jensweigele/ioBroker.yahka/issues/75))<br>

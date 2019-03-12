@@ -1,8 +1,12 @@
 {
     "common": {
         "name": "yahka",
-        "version": "0.9.1",
+        "version": "0.9.2",
         "news": {
+            "0.9.2": {
+                "en": "Fixed a bug where the adapter didn't start anymore",
+                "de": "Fehler behoben, bei dem der Adapter nichtmehr startete"
+            },            
             "0.9.1": {
                 "en": "Minor bug fixes - for details see: https://github.com/jensweigele/ioBroker.yahka/blob/master/README.md",
                 "de": "Fehlerbehebungen - mehr details unter: https://github.com/jensweigele/ioBroker.yahka/blob/master/README.md"

@@ -2,7 +2,6 @@
 import debug = require('debug');
 import util = require('util');
 import HAP = require('hap-nodejs');
-import { uuid } from 'hap-nodejs';
 import { Configuration } from './shared/yahka.configuration';
 import { importHAPCommunityTypesAndFixes } from './yahka.community.types';
 var pjson = require('../package.json');

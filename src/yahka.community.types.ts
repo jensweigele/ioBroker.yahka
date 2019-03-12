@@ -1,8 +1,9 @@
 import { Characteristic } from 'hap-nodejs/lib/Characteristic';
 import { Service } from 'hap-nodejs/lib/Service';
 import 'hap-nodejs/lib/gen/HomeKitTypes';
-import * as HapCommunity from 'hap-nodejs-community-types';
+import * as HapCommunity from '../hap-nodejs-community-types';
 import { inherits } from 'util';
+import * as uuid from 'hap-nodejs/lib/util/uuid';
 
 let hapTypesImported = false;
 export function importHAPCommunityTypesAndFixes() {
@@ -25,7 +26,8 @@ export function importHAPCommunityTypesAndFixes() {
     let fakeBridge = {
         hap: {
             Service: Service,
-            Characteristic: Characteristic
+            Characteristic: Characteristic,
+            uuid: uuid
         }
     }
     let fakeOptions = {};

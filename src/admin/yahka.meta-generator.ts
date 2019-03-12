@@ -1,4 +1,3 @@
-import { CompleterResult } from 'readline';
 import { Characteristic } from 'hap-nodejs/lib/Characteristic';
 import { Service } from 'hap-nodejs/lib/Service';
 import 'hap-nodejs/lib/gen/HomeKitTypes';
