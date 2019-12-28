@@ -82,6 +82,7 @@
         "type": "iot-systems",
         "materialize": true,
         "compact": true,
+        "lib": ["libavahi-compat-libdnssd-dev", "pam-devel"],
         "config": {
             "minWidth": 800,
             "width ": 1440,
