@@ -43,7 +43,7 @@ export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionR
     protected debounceTimer = -1;
     public subscriptionRequests: ISubscriptionRequest[] = [];
 
-    constructor(protected adapter: ioBroker.IAdapter, protected stateName: string, protected deferredTime: number = 0) {
+    constructor(protected adapter: ioBroker.Adapter, protected stateName: string, protected deferredTime: number = 0) {
         this.addSubscriptionRequest(stateName);
     }
 
@@ -56,14 +56,14 @@ export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionR
         });
     }
 
-    getValueOnRead(ioState: ioBroker.IState): any {
+    getValueOnRead(ioState: ioBroker.State): any {
         if (ioState)
             return ioState.val;
         else
             return null;
     }
 
-    getValueOnNotify(ioState: ioBroker.IState): any {
+    getValueOnNotify(ioState: ioBroker.State): any {
         if (ioState)
             return ioState.val;
         else
@@ -100,7 +100,7 @@ export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionR
         });
     }
 
-    subscriptionEvent(stateName: string, ioState: ioBroker.IState, callback: IInOutChangeNotify) {
+    subscriptionEvent(stateName: string, ioState: ioBroker.State, callback: IInOutChangeNotify) {
         this.adapter.log.debug('change event from ioBroker via [' + this.stateName + ']' + JSON.stringify(ioState));
         let newValue = this.getValueOnNotify(ioState);
         if (newValue != null)

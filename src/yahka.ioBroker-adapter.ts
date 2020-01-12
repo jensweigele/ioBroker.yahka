@@ -42,7 +42,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
     devices: Array<Object> = [];
     verboseHAPLogging:boolean = false;
 
-    constructor(private adapter:ioBroker.IAdapter, private controllerPath) {
+    constructor(private adapter:ioBroker.Adapter, private controllerPath) {
         adapter.on('ready', this.adapterReady.bind(this));
         adapter.on('stateChange', this.handleState.bind(this));
         adapter.on('message', this.handleMessage.bind(this));
@@ -101,7 +101,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
         }
     }
 
-    private handleState(id:string, state:ioBroker.IState) {
+    private handleState(id:string, state:ioBroker.State) {
         // Warning, state can be null if it was deleted
         let notifyArray = this.stateToEventMap.get(id);
         if (!notifyArray) {
@@ -194,7 +194,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
     }
 }
 
-function convertStateValueToNumber(state: ioBroker.IState) {
+function convertStateValueToNumber(state: ioBroker.State) {
     if ((state) && (state.val !== "") && (state.val != null)) {
         let numValue = Number(state.val);
         if (!isNaN(numValue)) {

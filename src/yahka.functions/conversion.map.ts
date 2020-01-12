@@ -16,7 +16,7 @@ export class TIoBrokerConversion_Map extends TIOBrokerConversionBase implements 
     protected mappingArrayToIOBroker = new Map<string, any>();
     private jsonReplacer = (key, value) => String(value);
 
-    static create(adapter: ioBroker.IAdapter, parameters: any): IConversionFunction {
+    static create(adapter: ioBroker.Adapter, parameters: any): IConversionFunction {
         if (!isMultiStateParameter(parameters)) {
             return undefined;
         }
@@ -24,7 +24,7 @@ export class TIoBrokerConversion_Map extends TIOBrokerConversionBase implements 
         return new TIoBrokerConversion_Map(adapter, parameters);
     }
 
-    constructor(adapter: ioBroker.IAdapter, protected parameters: IIoBrokerConversion_Map_Parameters) {
+    constructor(adapter: ioBroker.Adapter, protected parameters: IIoBrokerConversion_Map_Parameters) {
         super(adapter, "TIoBrokerConversion_Map");
         this.buildMappingArray();
     }

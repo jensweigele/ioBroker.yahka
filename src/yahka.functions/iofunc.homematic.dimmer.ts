@@ -19,14 +19,14 @@ export function isHomematic_Dimmer_Parameter(value: any): value is TIoBrokerInOu
 
 
 export class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends TIoBrokerInOutFunctionBase {
-    protected lastOnLevel: ioBroker.IState = { val: undefined };
+    protected lastOnLevel: ioBroker.State = { val: undefined, ack: false, ts: undefined, lc: undefined, from: undefined };
     static parseParameters(parameters: any): TIoBrokerInOutFunction_Homematic_Dimmer_Parameter {
         if (!isHomematic_Dimmer_Parameter(parameters)) {
             return undefined
         };
         return parameters;
     }
-    constructor(adapter: ioBroker.IAdapter, functionName: string, protected parameters: TIoBrokerInOutFunction_Homematic_Dimmer_Parameter) {
+    constructor(adapter: ioBroker.Adapter, functionName: string, protected parameters: TIoBrokerInOutFunction_Homematic_Dimmer_Parameter) {
         super(adapter, functionName + "[" + parameters.levelState + "]");
         this.addSubscriptionRequest(parameters.levelState);
     }
@@ -46,7 +46,7 @@ export class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends TIoBrokerInOut
 
 
 export class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFunction_Homematic_Dimmer_Base {
-        static create(adapter: ioBroker.IAdapter, parameters: any): IInOutFunction {
+        static create(adapter: ioBroker.Adapter, parameters: any): IInOutFunction {
         let params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
         if (params === undefined) {
             return undefined
@@ -54,7 +54,7 @@ export class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFu
         return new TIoBrokerInOutFunction_Homematic_Dimmer_On(adapter, params);
     }
 
-    constructor(protected adapter: ioBroker.IAdapter, protected parameters: TIoBrokerInOutFunction_Homematic_Dimmer_Parameter) {
+    constructor(protected adapter: ioBroker.Adapter, protected parameters: TIoBrokerInOutFunction_Homematic_Dimmer_Parameter) {
         super(adapter, "Homematic.Dimmer.On", parameters);
     }
 
@@ -109,7 +109,7 @@ export class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFu
 
 
 export class TIoBrokerInOutFunction_Homematic_Dimmer_Brightness extends TIoBrokerInOutFunction_Homematic_Dimmer_Base {
-    static create(adapter: ioBroker.IAdapter, parameters: any): IInOutFunction {
+    static create(adapter: ioBroker.Adapter, parameters: any): IInOutFunction {
         let params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
         if (params === undefined) {
             return undefined
@@ -117,7 +117,7 @@ export class TIoBrokerInOutFunction_Homematic_Dimmer_Brightness extends TIoBroke
         return new TIoBrokerInOutFunction_Homematic_Dimmer_Brightness(adapter, params);
     }
 
-    constructor(protected adapter: ioBroker.IAdapter, protected parameters: TIoBrokerInOutFunction_Homematic_Dimmer_Parameter) {
+    constructor(protected adapter: ioBroker.Adapter, protected parameters: TIoBrokerInOutFunction_Homematic_Dimmer_Parameter) {
         super(adapter, "Homematic.Dimmer.Brightness", parameters);
     }
 

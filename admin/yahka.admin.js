@@ -38784,7 +38784,7 @@ var TIoBrokerInOutFunction_Homematic_Dimmer_Base = /** @class */ (function (_sup
     function TIoBrokerInOutFunction_Homematic_Dimmer_Base(adapter, functionName, parameters) {
         var _this = _super.call(this, adapter, functionName + "[" + parameters.levelState + "]") || this;
         _this.parameters = parameters;
-        _this.lastOnLevel = { val: undefined };
+        _this.lastOnLevel = { val: undefined, ack: false, ts: undefined, lc: undefined, from: undefined };
         _this.addSubscriptionRequest(parameters.levelState);
         return _this;
     }

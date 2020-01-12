@@ -4,11 +4,11 @@ import { TIOBrokerConversionBase, IConversionFunction } from "./conversion.base"
 export class TIoBrokerConversion_Inverse extends TIOBrokerConversionBase implements IConversionFunction {
 
 
-    static create(adapter: ioBroker.IAdapter, parameters: any): IConversionFunction {
+    static create(adapter: ioBroker.Adapter, parameters: any): IConversionFunction {
         let maxValue = TIOBrokerConversionBase.castToNumber(parameters);
         return new TIoBrokerConversion_Inverse(adapter, maxValue);
     }
-    constructor(adapter: ioBroker.IAdapter, protected maxValue: number) {
+    constructor(adapter: ioBroker.Adapter, protected maxValue: number) {
         super(adapter);
     }
 

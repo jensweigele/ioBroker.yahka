@@ -1176,100 +1176,6 @@ module.exports = function(homebridge, options) {
 
 /***/ }),
 
-/***/ "../lib/utils.js":
-/*!***********************!*\
-  !*** ../lib/utils.js ***!
-  \***********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-'use strict';
-
-const fs = require('fs');
-const path = require('path');
-
-let controllerDir;
-let appName;
-
-/**
- * returns application name
- *
- * The name of the application can be different and this function finds it out.
- *
- * @returns {string}
- */
- function getAppName() {
-    const parts = __dirname.replace(/\\/g, '/').split('/');
-    return parts[parts.length - 2].split('.')[0];
-}
-
-/**
- * looks for js-controller home folder
- *
- * @param {boolean} isInstall
- * @returns {string}
- */
-function getControllerDir(isInstall) {
-    // Find the js-controller location
-    const possibilities = [
-        'iobroker.js-controller',
-        'ioBroker.js-controller',
-    ];
-    /** @type {string} */
-    let controllerPath;
-    for (const pkg of possibilities) {
-        try {
-            const possiblePath = require.resolve(pkg);
-            if (fs.existsSync(possiblePath)) {
-                controllerPath = possiblePath;
-                break;
-            }
-        } catch (e) { /* not found */ }
-    }
-    if (controllerPath == null) {
-        if (!isInstall) {
-            console.log('Cannot find js-controller');
-            process.exit(10);
-        } else {
-            process.exit();
-        }
-    }
-    // we found the controller
-    return path.dirname(controllerPath);
-}
-
-/**
- * reads controller base settings
- *
- * @alias getConfig
- * @returns {object}
- */
- function getConfig() {
-    let configPath;
-    if (fs.existsSync(
-        configPath = path.join(controllerDir, 'conf', appName + '.json')
-    )) {
-        return JSON.parse(fs.readFileSync(configPath, 'utf8'));
-    } else if (fs.existsSync(
-        configPath = path.join(controllerDir, 'conf', + appName.toLowerCase() + '.json')
-    )) {
-        return JSON.parse(fs.readFileSync(configPath, 'utf8'));
-    } else {
-        throw new Error('Cannot find ' + controllerDir + '/conf/' + appName + '.json');
-    }
-}
-appName       = getAppName();
-controllerDir = getControllerDir(typeof process !== 'undefined' && process.argv && process.argv.indexOf('--install') !== -1);
-const adapter = require(path.join(controllerDir, 'lib/adapter.js'));
-
-exports.controllerDir = controllerDir;
-exports.getConfig =     getConfig;
-exports.Adapter =       adapter;
-exports.appName =       appName;
-
-
-/***/ }),
-
 /***/ "../node_modules/webpack/buildin/module.js":
 /*!*************************************************!*\
   !*** ../node_modules/webpack/buildin/module.js ***!
@@ -1310,7 +1216,7 @@ module.exports = function(module) {
 /*! exports provided: name, version, description, author, contributors, homepage, license, keywords, repository, dependencies, devDependencies, bugs, readmeFilename, main, scripts, default */
 /***/ (function(module) {
 
-module.exports = {"name":"iobroker.yahka","version":"0.9.2","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"dependencies":{"debug":"^2.6.6","dev-null":"^0.1.1","hap-nodejs":"^0.4.48","ip":"^1.1.5","macaddress":"0.2.9","util":"^0.10.3"},"devDependencies":{"@types/jquery":"^3.3.0","@types/node":"^7.0.18","chai":"^4.1.2","grunt":"^1.0.1","grunt-contrib-clean":"^1.1.0","grunt-contrib-compress":"^1.4.3","grunt-contrib-copy":"^1.0.0","grunt-contrib-jshint":"^1.1.0","grunt-exec":"^3.0.0","grunt-http":"^2.2.0","grunt-jscs":"^3.0.1","grunt-replace":"^1.0.1","grunt-ts":"^6.0.0-beta.17","grunt-webpack":"^3.1.3","html-webpack-plugin":"^3.2.0","mocha":"^4.1.0","raw-loader":"^1.0.0","ts-loader":"^5.3.2","typescript":"^2.6.2","webpack":"^4.28.3","webpack-cli":"^3.1.2","webpack-node-externals":"^1.7.2"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","scripts":{"test":"node node_modules/mocha/bin/mocha --exit"}};
+module.exports = {"name":"iobroker.yahka","version":"0.9.2","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"dependencies":{"@iobroker/adapter-core":"^2.1.0","debug":"^2.6.6","dev-null":"^0.1.1","hap-nodejs":"^0.4.48","ip":"^1.1.5","macaddress":"0.2.9","util":"^0.10.3"},"devDependencies":{"@types/iobroker":"^2.0.1","@types/jquery":"^3.3.0","@types/node":"^7.0.18","chai":"^4.1.2","grunt":"^1.0.1","grunt-contrib-clean":"^1.1.0","grunt-contrib-compress":"^1.4.3","grunt-contrib-copy":"^1.0.0","grunt-contrib-jshint":"^1.1.0","grunt-exec":"^3.0.0","grunt-http":"^2.2.0","grunt-jscs":"^3.0.1","grunt-replace":"^1.0.1","grunt-ts":"^6.0.0-beta.17","grunt-webpack":"^3.1.3","html-webpack-plugin":"^3.2.0","mocha":"^4.1.0","raw-loader":"^1.0.0","ts-loader":"^5.3.2","typescript":"^2.6.2","webpack":"^4.28.3","webpack-cli":"^3.1.2","webpack-node-externals":"^1.7.2"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","scripts":{"test":"node node_modules/mocha/bin/mocha --exit"}};
 
 /***/ }),
 
@@ -1357,7 +1263,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var debug = __webpack_require__(/*! debug */ "debug");
 debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 // you have to require the utils module and call adapter function
-var utils = __webpack_require__(/*! ../lib/utils */ "../lib/utils.js"); // Get common adapter utils
+var utils = __webpack_require__(/*! @iobroker/adapter-core */ "@iobroker/adapter-core");
 var hkAdapter = __webpack_require__(/*! ./yahka.ioBroker-adapter */ "./yahka.ioBroker-adapter.ts");
 __webpack_require__(/*! ./yahka.functions/functions.import */ "./yahka.functions/functions.import.ts");
 var yahkaAdapter;
@@ -2464,7 +2370,7 @@ var TIoBrokerInOutFunction_Homematic_Dimmer_Base = /** @class */ (function (_sup
     function TIoBrokerInOutFunction_Homematic_Dimmer_Base(adapter, functionName, parameters) {
         var _this = _super.call(this, adapter, functionName + "[" + parameters.levelState + "]") || this;
         _this.parameters = parameters;
-        _this.lastOnLevel = { val: undefined };
+        _this.lastOnLevel = { val: undefined, ack: false, ts: undefined, lc: undefined, from: undefined };
         _this.addSubscriptionRequest(parameters.levelState);
         return _this;
     }
@@ -3615,6 +3521,17 @@ function convertStateValueToNumber(state) {
     }
 }
 
+
+/***/ }),
+
+/***/ "@iobroker/adapter-core":
+/*!*****************************************!*\
+  !*** external "@iobroker/adapter-core" ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@iobroker/adapter-core");
 
 /***/ }),
 

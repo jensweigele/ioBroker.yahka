@@ -13,7 +13,7 @@ export class TIoBrokerConversion_Script extends TIOBrokerConversionBase implemen
             castedParam["toIOBroker"] !== undefined;
     }
 
-    static create(adapter: ioBroker.IAdapter, parameters: any): IConversionFunction {
+    static create(adapter: ioBroker.Adapter, parameters: any): IConversionFunction {
         let params: IIoBrokerConversionScriptParameters;
         if (TIoBrokerConversion_Script.isScriptParameter(parameters)) {
             params = parameters;
@@ -29,7 +29,7 @@ export class TIoBrokerConversion_Script extends TIOBrokerConversionBase implemen
     private toHKFunction: Function;
     private toIOFunction: Function;
 
-    constructor(adapter: ioBroker.IAdapter, protected parameters: IIoBrokerConversionScriptParameters) {
+    constructor(adapter: ioBroker.Adapter, protected parameters: IIoBrokerConversionScriptParameters) {
         super(adapter);
         this.toHKFunction = new Function("value", this.parameters.toHomeKit);
         this.toIOFunction = new Function("value", this.parameters.toIOBroker);

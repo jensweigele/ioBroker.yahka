@@ -28,7 +28,7 @@ export class TIoBrokerInOutFunction_MultiState extends TIoBrokerInOutFunctionBas
             return undefined
         }
     }
-    static create(adapter: ioBroker.IAdapter, parameters: any): IInOutFunction {
+    static create(adapter: ioBroker.Adapter, parameters: any): IInOutFunction {
         let stateNames = TIoBrokerInOutFunction_MultiState.parseParameters(parameters);
         if (stateNames === undefined) {
             return undefined
@@ -36,7 +36,7 @@ export class TIoBrokerInOutFunction_MultiState extends TIoBrokerInOutFunctionBas
         return new TIoBrokerInOutFunction_MultiState(adapter, stateNames);
     }
 
-    constructor(protected adapter: ioBroker.IAdapter, protected stateProperties: TIoBrokerInOutFunction_MultiStateParameter[]) {
+    constructor(protected adapter: ioBroker.Adapter, protected stateProperties: TIoBrokerInOutFunction_MultiStateParameter[]) {
         super(adapter, "TIoBrokerInOutFunctionMultiState");
         for (let state of stateProperties) {
             this.addSubscriptionRequest(state.readState);

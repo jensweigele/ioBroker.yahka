@@ -1,7 +1,7 @@
 import { TYahkaFunctionBase } from './functions.base';
 export { IConversionFunction } from '../yahka.homekit-bridge';
 export abstract class TIOBrokerConversionBase extends TYahkaFunctionBase {
-    constructor(adapter: ioBroker.IAdapter, logIdentifier: string = "") {
+    constructor(adapter: ioBroker.Adapter, logIdentifier: string = "") {
         super(adapter, logIdentifier);
     }
 

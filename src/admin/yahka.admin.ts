@@ -9,9 +9,14 @@ var resolveMethodForSettingsLoader: (value?: void | Thenable<void>) => void;
 const ioBrokerSettingsLoaded = new Promise<void>((resolve, reject) => {
     resolveMethodForSettingsLoader = resolve;
 });
-declare function getIPs(callback: (ips: ioBroker.IIPInformation[]) => void);
+declare interface IIPInformation {
+    address: string
+    family: string
+    name: string
+}
+declare function getIPs(callback: (ips: IIPInformation[]) => void);
 
-export const ioBrokerInterfaceList = new Promise<ioBroker.IIPInformation[]>(async (resolve, reject) => {
+export const ioBrokerInterfaceList = new Promise<IIPInformation[]>(async (resolve, reject) => {
     await ioBrokerSettingsLoaded;
     getIPs((ipList) => {
         resolve(ipList)

@@ -34,7 +34,7 @@ import debug = require('debug');
 debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 
 // you have to require the utils module and call adapter function
-import utils = require("../lib/utils"); // Get common adapter utils
+import * as utils from '@iobroker/adapter-core';
 import * as hkAdapter from './yahka.ioBroker-adapter';
 require("./yahka.functions/functions.import");
 

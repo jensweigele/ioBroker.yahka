@@ -4,10 +4,10 @@ import { YahkaLogger } from "../shared/yahka.logger";
 
 export abstract class TYahkaFunctionBase implements ISubscriptionRequestor {
     public subscriptionRequests: ISubscriptionRequest[] = [];
-    protected stateCache = new Map<string, ioBroker.IState>();
+    protected stateCache = new Map<string, ioBroker.State>();
     protected log: ILogger;
 
-    constructor(protected adapter: ioBroker.IAdapter, private logIdentifier: string = "") {
+    constructor(protected adapter: ioBroker.Adapter, private logIdentifier: string = "") {
         this.log = new YahkaLogger(this.adapter, this.logIdentifier);
     }
 
@@ -20,11 +20,11 @@ export abstract class TYahkaFunctionBase implements ISubscriptionRequestor {
         });
     }
 
-    protected shouldStateBeFiltered(stateName: string, ioState: ioBroker.IState): boolean {
+    protected shouldStateBeFiltered(stateName: string, ioState: ioBroker.State): boolean {
         return false;
     }
     
-    protected readValueFromCache(stateName: string): ioBroker.IState {
+    protected readValueFromCache(stateName: string): ioBroker.State {
         if (this.stateCache.has(stateName)) {
             return this.stateCache.get(stateName);
         } else {
@@ -32,7 +32,7 @@ export abstract class TYahkaFunctionBase implements ISubscriptionRequestor {
         }
     }
 
-    private updateCache(stateName: string, ioState: ioBroker.IState): boolean {
+    private updateCache(stateName: string, ioState: ioBroker.State): boolean {
         let needUpdate = false;
         if (this.stateCache.has(stateName)) {
             let curVal = this.stateCache.get(stateName);
@@ -45,7 +45,7 @@ export abstract class TYahkaFunctionBase implements ISubscriptionRequestor {
             this.stateCache.set(stateName, ioState);
         return needUpdate;
     }
-    subscriptionEvent(stateName: string, ioState: ioBroker.IState, callback: IInOutChangeNotify) {
+    subscriptionEvent(stateName: string, ioState: ioBroker.State, callback: IInOutChangeNotify) {
         this.log.debug('change event from ioBroker via [' + stateName + ']' + JSON.stringify(ioState));
         if (this.shouldStateBeFiltered(stateName, ioState)) {
             this.log.debug('state was filtered - notification is canceled');

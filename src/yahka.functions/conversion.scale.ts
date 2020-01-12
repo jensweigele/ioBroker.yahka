@@ -15,7 +15,7 @@ export class TIoBrokerConversion_Scale extends TIOBrokerConversionBase implement
             castedParam["iobroker.min"] !== undefined &&
             castedParam["iobroker.max"] !== undefined;
     }
-    static create(adapter: ioBroker.IAdapter, parameters: any): IConversionFunction {
+    static create(adapter: ioBroker.Adapter, parameters: any): IConversionFunction {
         let params: IIoBrokerConversionScaleParameters;
         if (TIoBrokerConversion_Scale.isScaleParameter(parameters)) {
             params = parameters;
@@ -29,7 +29,7 @@ export class TIoBrokerConversion_Scale extends TIOBrokerConversionBase implement
         }
         return new TIoBrokerConversion_Scale(adapter, params);
     }
-    constructor(adapter: ioBroker.IAdapter, protected parameters: IIoBrokerConversionScaleParameters) {
+    constructor(adapter: ioBroker.Adapter, protected parameters: IIoBrokerConversionScaleParameters) {
         super(adapter);
     }
 

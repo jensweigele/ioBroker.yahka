@@ -5,7 +5,7 @@ export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition exten
     protected lastAcknowledgedValue: any = undefined;
     protected debounceTimer = -1;
 
-    static create(adapter: ioBroker.IAdapter, parameters: any): IInOutFunction {
+    static create(adapter: ioBroker.Adapter, parameters: any): IInOutFunction {
         let p: Array<string>;
 
         if (typeof parameters === 'string')
@@ -32,7 +32,7 @@ export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition exten
     }
 
 
-    constructor(protected adapter: ioBroker.IAdapter, protected stateName: string, protected workingItem: string) {
+    constructor(protected adapter: ioBroker.Adapter, protected stateName: string, protected workingItem: string) {
         super(adapter, stateName, 0);
         this.addSubscriptionRequest(workingItem);
         adapter.getForeignState(workingItem, (error, ioState) => {
@@ -43,7 +43,7 @@ export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition exten
         });
     }
 
-    subscriptionEvent(stateName: string, ioState: ioBroker.IState, callback: IInOutChangeNotify) {
+    subscriptionEvent(stateName: string, ioState: ioBroker.State, callback: IInOutChangeNotify) {
         if (!ioState)
             return;
 
