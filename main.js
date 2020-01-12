@@ -1216,7 +1216,7 @@ module.exports = function(module) {
 /*! exports provided: name, version, description, author, contributors, homepage, license, keywords, repository, dependencies, devDependencies, bugs, readmeFilename, main, scripts, default */
 /***/ (function(module) {
 
-module.exports = {"name":"iobroker.yahka","version":"0.9.2","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"dependencies":{"@iobroker/adapter-core":"^2.1.0","debug":"^2.6.6","dev-null":"^0.1.1","hap-nodejs":"^0.4.48","ip":"^1.1.5","macaddress":"0.2.9","util":"^0.10.3"},"devDependencies":{"@types/iobroker":"^2.0.1","@types/jquery":"^3.3.0","@types/node":"^7.0.18","chai":"^4.1.2","grunt":"^1.0.1","grunt-contrib-clean":"^1.1.0","grunt-contrib-compress":"^1.4.3","grunt-contrib-copy":"^1.0.0","grunt-contrib-jshint":"^1.1.0","grunt-exec":"^3.0.0","grunt-http":"^2.2.0","grunt-jscs":"^3.0.1","grunt-replace":"^1.0.1","grunt-ts":"^6.0.0-beta.17","grunt-webpack":"^3.1.3","html-webpack-plugin":"^3.2.0","mocha":"^4.1.0","raw-loader":"^1.0.0","ts-loader":"^5.3.2","typescript":"^2.6.2","webpack":"^4.28.3","webpack-cli":"^3.1.2","webpack-node-externals":"^1.7.2"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","scripts":{"test":"node node_modules/mocha/bin/mocha --exit"}};
+module.exports = {"name":"iobroker.yahka","version":"0.10.0","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"dependencies":{"@iobroker/adapter-core":"^2.1.0","debug":"^2.6.6","dev-null":"^0.1.1","hap-nodejs":"^0.4.48","ip":"^1.1.5","macaddress":"0.2.9","util":"^0.10.3"},"devDependencies":{"@types/iobroker":"^2.0.1","@types/jquery":"^3.3.0","@types/node":"^7.0.18","chai":"^4.1.2","grunt":"^1.0.1","grunt-contrib-clean":"^1.1.0","grunt-contrib-compress":"^1.4.3","grunt-contrib-copy":"^1.0.0","grunt-contrib-jshint":"^1.1.0","grunt-exec":"^3.0.0","grunt-http":"^2.2.0","grunt-jscs":"^3.0.1","grunt-replace":"^1.0.1","grunt-ts":"^6.0.0-beta.17","grunt-webpack":"^3.1.3","html-webpack-plugin":"^3.2.0","mocha":"^4.1.0","raw-loader":"^1.0.0","ts-loader":"^5.3.2","typescript":"^2.6.2","webpack":"^4.28.3","webpack-cli":"^3.1.2","webpack-node-externals":"^1.7.2"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","scripts":{"test":"node node_modules/mocha/bin/mocha --exit"}};
 
 /***/ }),
 
@@ -1808,7 +1808,7 @@ var TIoBrokerConversion_Scale = /** @class */ (function (_super) {
         var ioBrokerMax = this.parameters["iobroker.max"];
         var homeKitMin = this.parameters["homekit.min"];
         var ioBrokerMin = this.parameters["iobroker.min"];
-        var newValue = ((num - ioBrokerMin) / (ioBrokerMax - ioBrokerMin)) * (homeKitMax - homeKitMin);
+        var newValue = ((num - ioBrokerMin) / (ioBrokerMax - ioBrokerMin)) * (homeKitMax - homeKitMin) + homeKitMin;
         this.adapter.log.debug('scaleInt: converting value to homekit: ' + value + ' to ' + newValue);
         return newValue;
     };
@@ -1818,7 +1818,7 @@ var TIoBrokerConversion_Scale = /** @class */ (function (_super) {
         var ioBrokerMax = this.parameters["iobroker.max"];
         var homeKitMin = this.parameters["homekit.min"];
         var ioBrokerMin = this.parameters["iobroker.min"];
-        var newValue = ((num - homeKitMin) / (homeKitMax - homeKitMin)) * (ioBrokerMax - ioBrokerMin);
+        var newValue = ((num - homeKitMin) / (homeKitMax - homeKitMin)) * (ioBrokerMax - ioBrokerMin) + ioBrokerMin;
         this.adapter.log.debug('scaleInt: converting value to ioBroker: ' + value + ' to ' + newValue);
         return newValue;
     };
