@@ -1,6 +1,6 @@
 {
   "name": "iobroker.yahka",
-  "version": "0.9.2",
+  "version": "0.10.0",
   "description": "ioBroker HomeKit Adapter",
   "author": {
     "name": "Jens Weigele",
