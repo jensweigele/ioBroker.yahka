@@ -32,7 +32,8 @@
     "hap-nodejs": "^0.4.48",
     "ip": "^1.1.5",
     "macaddress": "0.2.9",
-    "util": "^0.10.3"
+    "util": "^0.10.3",
+    "@iobroker/adapter-core": "^1.0.3"
   },
   "devDependencies": {
     "@types/jquery": "^3.3.0",

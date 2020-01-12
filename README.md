@@ -2,7 +2,7 @@
 # iobroker.yahka
 =================
 
-[![NPM version](http://img.shields.io/npm/v/iobroker.yahka.svg)](https://www.npmjs.com/package/iobroker.yahka)
+![Number of Installations](http://iobroker.live/badges/yahka-installed.svg) ![Number of Installations](http://iobroker.live/badges/yahka-stable.svg) [![NPM version](http://img.shields.io/npm/v/iobroker.yahka.svg)](https://www.npmjs.com/package/iobroker.yahka)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.yahka.svg)](https://www.npmjs.com/package/iobroker.yahka)
 [![Tests](https://travis-ci.org/ioBroker/ioBroker.yahka.svg?branch=master)](https://travis-ci.org/ioBroker/ioBroker.yahka)
 
