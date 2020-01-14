@@ -1,6 +1,6 @@
 export module Utils {
     export function getInputValue(input: HTMLInputElement | HTMLTextAreaElement, emptyStringAsUndefined: boolean = true) {
-        if (input === undefined || input === null)
+        if (input == null)
             return undefined;
 
         if ((input.type == "checkbox") && ("checked" in input)) {
@@ -34,19 +34,8 @@ export module Utils {
     }
 
     export function getSelectInputValue(input: HTMLSelectElement, emptyStringAsUndefined: boolean = true) {
-        if (input === undefined || input === null)
+        if (input == null)
             return undefined;
-        if ("valueAsDate" in input) {
-            let dateValue = input.valueAsDate;
-            if (dateValue)
-                return dateValue;
-        }
-
-        if ("valueAsNumber" in input) {
-            let numValue = input.valueAsNumber;
-            if (!isNaN(numValue))
-                return numValue;
-        }
 
         let stringValue = input.value;
         if ((stringValue === "") && emptyStringAsUndefined)

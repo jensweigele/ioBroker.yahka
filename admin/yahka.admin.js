@@ -94,7 +94,7 @@ var yahkaAdmin =
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var inherits = __webpack_require__(/*! util */ "../node_modules/util/util.js").inherits;
+var inherits = __webpack_require__(/*! util */ "../node_modules/node-libs-browser/node_modules/util/util.js").inherits;
 var Service, Characteristic;
 
 module.exports = function(homebridge, options) {
@@ -3111,7 +3111,8 @@ function toByteArray (b64) {
     ? validLen - 4
     : validLen
 
-  for (var i = 0; i < len; i += 4) {
+  var i
+  for (i = 0; i < len; i += 4) {
     tmp =
       (revLookup[b64.charCodeAt(i)] << 18) |
       (revLookup[b64.charCodeAt(i + 1)] << 12) |
@@ -7747,7 +7748,7 @@ module.exports = modes
 /*! exports provided: aes-128-ecb, aes-192-ecb, aes-256-ecb, aes-128-cbc, aes-192-cbc, aes-256-cbc, aes128, aes192, aes256, aes-128-cfb, aes-192-cfb, aes-256-cfb, aes-128-cfb8, aes-192-cfb8, aes-256-cfb8, aes-128-cfb1, aes-192-cfb1, aes-256-cfb1, aes-128-ofb, aes-192-ofb, aes-256-ofb, aes-128-ctr, aes-192-ctr, aes-256-ctr, aes-128-gcm, aes-192-gcm, aes-256-gcm, default */
 /***/ (function(module) {
 
-module.exports = {"aes-128-ecb":{"cipher":"AES","key":128,"iv":0,"mode":"ECB","type":"block"},"aes-192-ecb":{"cipher":"AES","key":192,"iv":0,"mode":"ECB","type":"block"},"aes-256-ecb":{"cipher":"AES","key":256,"iv":0,"mode":"ECB","type":"block"},"aes-128-cbc":{"cipher":"AES","key":128,"iv":16,"mode":"CBC","type":"block"},"aes-192-cbc":{"cipher":"AES","key":192,"iv":16,"mode":"CBC","type":"block"},"aes-256-cbc":{"cipher":"AES","key":256,"iv":16,"mode":"CBC","type":"block"},"aes128":{"cipher":"AES","key":128,"iv":16,"mode":"CBC","type":"block"},"aes192":{"cipher":"AES","key":192,"iv":16,"mode":"CBC","type":"block"},"aes256":{"cipher":"AES","key":256,"iv":16,"mode":"CBC","type":"block"},"aes-128-cfb":{"cipher":"AES","key":128,"iv":16,"mode":"CFB","type":"stream"},"aes-192-cfb":{"cipher":"AES","key":192,"iv":16,"mode":"CFB","type":"stream"},"aes-256-cfb":{"cipher":"AES","key":256,"iv":16,"mode":"CFB","type":"stream"},"aes-128-cfb8":{"cipher":"AES","key":128,"iv":16,"mode":"CFB8","type":"stream"},"aes-192-cfb8":{"cipher":"AES","key":192,"iv":16,"mode":"CFB8","type":"stream"},"aes-256-cfb8":{"cipher":"AES","key":256,"iv":16,"mode":"CFB8","type":"stream"},"aes-128-cfb1":{"cipher":"AES","key":128,"iv":16,"mode":"CFB1","type":"stream"},"aes-192-cfb1":{"cipher":"AES","key":192,"iv":16,"mode":"CFB1","type":"stream"},"aes-256-cfb1":{"cipher":"AES","key":256,"iv":16,"mode":"CFB1","type":"stream"},"aes-128-ofb":{"cipher":"AES","key":128,"iv":16,"mode":"OFB","type":"stream"},"aes-192-ofb":{"cipher":"AES","key":192,"iv":16,"mode":"OFB","type":"stream"},"aes-256-ofb":{"cipher":"AES","key":256,"iv":16,"mode":"OFB","type":"stream"},"aes-128-ctr":{"cipher":"AES","key":128,"iv":16,"mode":"CTR","type":"stream"},"aes-192-ctr":{"cipher":"AES","key":192,"iv":16,"mode":"CTR","type":"stream"},"aes-256-ctr":{"cipher":"AES","key":256,"iv":16,"mode":"CTR","type":"stream"},"aes-128-gcm":{"cipher":"AES","key":128,"iv":12,"mode":"GCM","type":"auth"},"aes-192-gcm":{"cipher":"AES","key":192,"iv":12,"mode":"GCM","type":"auth"},"aes-256-gcm":{"cipher":"AES","key":256,"iv":12,"mode":"GCM","type":"auth"}};
+module.exports = JSON.parse("{\"aes-128-ecb\":{\"cipher\":\"AES\",\"key\":128,\"iv\":0,\"mode\":\"ECB\",\"type\":\"block\"},\"aes-192-ecb\":{\"cipher\":\"AES\",\"key\":192,\"iv\":0,\"mode\":\"ECB\",\"type\":\"block\"},\"aes-256-ecb\":{\"cipher\":\"AES\",\"key\":256,\"iv\":0,\"mode\":\"ECB\",\"type\":\"block\"},\"aes-128-cbc\":{\"cipher\":\"AES\",\"key\":128,\"iv\":16,\"mode\":\"CBC\",\"type\":\"block\"},\"aes-192-cbc\":{\"cipher\":\"AES\",\"key\":192,\"iv\":16,\"mode\":\"CBC\",\"type\":\"block\"},\"aes-256-cbc\":{\"cipher\":\"AES\",\"key\":256,\"iv\":16,\"mode\":\"CBC\",\"type\":\"block\"},\"aes128\":{\"cipher\":\"AES\",\"key\":128,\"iv\":16,\"mode\":\"CBC\",\"type\":\"block\"},\"aes192\":{\"cipher\":\"AES\",\"key\":192,\"iv\":16,\"mode\":\"CBC\",\"type\":\"block\"},\"aes256\":{\"cipher\":\"AES\",\"key\":256,\"iv\":16,\"mode\":\"CBC\",\"type\":\"block\"},\"aes-128-cfb\":{\"cipher\":\"AES\",\"key\":128,\"iv\":16,\"mode\":\"CFB\",\"type\":\"stream\"},\"aes-192-cfb\":{\"cipher\":\"AES\",\"key\":192,\"iv\":16,\"mode\":\"CFB\",\"type\":\"stream\"},\"aes-256-cfb\":{\"cipher\":\"AES\",\"key\":256,\"iv\":16,\"mode\":\"CFB\",\"type\":\"stream\"},\"aes-128-cfb8\":{\"cipher\":\"AES\",\"key\":128,\"iv\":16,\"mode\":\"CFB8\",\"type\":\"stream\"},\"aes-192-cfb8\":{\"cipher\":\"AES\",\"key\":192,\"iv\":16,\"mode\":\"CFB8\",\"type\":\"stream\"},\"aes-256-cfb8\":{\"cipher\":\"AES\",\"key\":256,\"iv\":16,\"mode\":\"CFB8\",\"type\":\"stream\"},\"aes-128-cfb1\":{\"cipher\":\"AES\",\"key\":128,\"iv\":16,\"mode\":\"CFB1\",\"type\":\"stream\"},\"aes-192-cfb1\":{\"cipher\":\"AES\",\"key\":192,\"iv\":16,\"mode\":\"CFB1\",\"type\":\"stream\"},\"aes-256-cfb1\":{\"cipher\":\"AES\",\"key\":256,\"iv\":16,\"mode\":\"CFB1\",\"type\":\"stream\"},\"aes-128-ofb\":{\"cipher\":\"AES\",\"key\":128,\"iv\":16,\"mode\":\"OFB\",\"type\":\"stream\"},\"aes-192-ofb\":{\"cipher\":\"AES\",\"key\":192,\"iv\":16,\"mode\":\"OFB\",\"type\":\"stream\"},\"aes-256-ofb\":{\"cipher\":\"AES\",\"key\":256,\"iv\":16,\"mode\":\"OFB\",\"type\":\"stream\"},\"aes-128-ctr\":{\"cipher\":\"AES\",\"key\":128,\"iv\":16,\"mode\":\"CTR\",\"type\":\"stream\"},\"aes-192-ctr\":{\"cipher\":\"AES\",\"key\":192,\"iv\":16,\"mode\":\"CTR\",\"type\":\"stream\"},\"aes-256-ctr\":{\"cipher\":\"AES\",\"key\":256,\"iv\":16,\"mode\":\"CTR\",\"type\":\"stream\"},\"aes-128-gcm\":{\"cipher\":\"AES\",\"key\":128,\"iv\":12,\"mode\":\"GCM\",\"type\":\"auth\"},\"aes-192-gcm\":{\"cipher\":\"AES\",\"key\":192,\"iv\":12,\"mode\":\"GCM\",\"type\":\"auth\"},\"aes-256-gcm\":{\"cipher\":\"AES\",\"key\":256,\"iv\":12,\"mode\":\"GCM\",\"type\":\"auth\"}}");
 
 /***/ }),
 
@@ -8062,7 +8063,7 @@ module.exports = __webpack_require__(/*! ./browser/algorithms.json */ "../node_m
 /*! exports provided: sha224WithRSAEncryption, RSA-SHA224, sha256WithRSAEncryption, RSA-SHA256, sha384WithRSAEncryption, RSA-SHA384, sha512WithRSAEncryption, RSA-SHA512, RSA-SHA1, ecdsa-with-SHA1, sha256, sha224, sha384, sha512, DSA-SHA, DSA-SHA1, DSA, DSA-WITH-SHA224, DSA-SHA224, DSA-WITH-SHA256, DSA-SHA256, DSA-WITH-SHA384, DSA-SHA384, DSA-WITH-SHA512, DSA-SHA512, DSA-RIPEMD160, ripemd160WithRSA, RSA-RIPEMD160, md5WithRSAEncryption, RSA-MD5, default */
 /***/ (function(module) {
 
-module.exports = {"sha224WithRSAEncryption":{"sign":"rsa","hash":"sha224","id":"302d300d06096086480165030402040500041c"},"RSA-SHA224":{"sign":"ecdsa/rsa","hash":"sha224","id":"302d300d06096086480165030402040500041c"},"sha256WithRSAEncryption":{"sign":"rsa","hash":"sha256","id":"3031300d060960864801650304020105000420"},"RSA-SHA256":{"sign":"ecdsa/rsa","hash":"sha256","id":"3031300d060960864801650304020105000420"},"sha384WithRSAEncryption":{"sign":"rsa","hash":"sha384","id":"3041300d060960864801650304020205000430"},"RSA-SHA384":{"sign":"ecdsa/rsa","hash":"sha384","id":"3041300d060960864801650304020205000430"},"sha512WithRSAEncryption":{"sign":"rsa","hash":"sha512","id":"3051300d060960864801650304020305000440"},"RSA-SHA512":{"sign":"ecdsa/rsa","hash":"sha512","id":"3051300d060960864801650304020305000440"},"RSA-SHA1":{"sign":"rsa","hash":"sha1","id":"3021300906052b0e03021a05000414"},"ecdsa-with-SHA1":{"sign":"ecdsa","hash":"sha1","id":""},"sha256":{"sign":"ecdsa","hash":"sha256","id":""},"sha224":{"sign":"ecdsa","hash":"sha224","id":""},"sha384":{"sign":"ecdsa","hash":"sha384","id":""},"sha512":{"sign":"ecdsa","hash":"sha512","id":""},"DSA-SHA":{"sign":"dsa","hash":"sha1","id":""},"DSA-SHA1":{"sign":"dsa","hash":"sha1","id":""},"DSA":{"sign":"dsa","hash":"sha1","id":""},"DSA-WITH-SHA224":{"sign":"dsa","hash":"sha224","id":""},"DSA-SHA224":{"sign":"dsa","hash":"sha224","id":""},"DSA-WITH-SHA256":{"sign":"dsa","hash":"sha256","id":""},"DSA-SHA256":{"sign":"dsa","hash":"sha256","id":""},"DSA-WITH-SHA384":{"sign":"dsa","hash":"sha384","id":""},"DSA-SHA384":{"sign":"dsa","hash":"sha384","id":""},"DSA-WITH-SHA512":{"sign":"dsa","hash":"sha512","id":""},"DSA-SHA512":{"sign":"dsa","hash":"sha512","id":""},"DSA-RIPEMD160":{"sign":"dsa","hash":"rmd160","id":""},"ripemd160WithRSA":{"sign":"rsa","hash":"rmd160","id":"3021300906052b2403020105000414"},"RSA-RIPEMD160":{"sign":"rsa","hash":"rmd160","id":"3021300906052b2403020105000414"},"md5WithRSAEncryption":{"sign":"rsa","hash":"md5","id":"3020300c06082a864886f70d020505000410"},"RSA-MD5":{"sign":"rsa","hash":"md5","id":"3020300c06082a864886f70d020505000410"}};
+module.exports = JSON.parse("{\"sha224WithRSAEncryption\":{\"sign\":\"rsa\",\"hash\":\"sha224\",\"id\":\"302d300d06096086480165030402040500041c\"},\"RSA-SHA224\":{\"sign\":\"ecdsa/rsa\",\"hash\":\"sha224\",\"id\":\"302d300d06096086480165030402040500041c\"},\"sha256WithRSAEncryption\":{\"sign\":\"rsa\",\"hash\":\"sha256\",\"id\":\"3031300d060960864801650304020105000420\"},\"RSA-SHA256\":{\"sign\":\"ecdsa/rsa\",\"hash\":\"sha256\",\"id\":\"3031300d060960864801650304020105000420\"},\"sha384WithRSAEncryption\":{\"sign\":\"rsa\",\"hash\":\"sha384\",\"id\":\"3041300d060960864801650304020205000430\"},\"RSA-SHA384\":{\"sign\":\"ecdsa/rsa\",\"hash\":\"sha384\",\"id\":\"3041300d060960864801650304020205000430\"},\"sha512WithRSAEncryption\":{\"sign\":\"rsa\",\"hash\":\"sha512\",\"id\":\"3051300d060960864801650304020305000440\"},\"RSA-SHA512\":{\"sign\":\"ecdsa/rsa\",\"hash\":\"sha512\",\"id\":\"3051300d060960864801650304020305000440\"},\"RSA-SHA1\":{\"sign\":\"rsa\",\"hash\":\"sha1\",\"id\":\"3021300906052b0e03021a05000414\"},\"ecdsa-with-SHA1\":{\"sign\":\"ecdsa\",\"hash\":\"sha1\",\"id\":\"\"},\"sha256\":{\"sign\":\"ecdsa\",\"hash\":\"sha256\",\"id\":\"\"},\"sha224\":{\"sign\":\"ecdsa\",\"hash\":\"sha224\",\"id\":\"\"},\"sha384\":{\"sign\":\"ecdsa\",\"hash\":\"sha384\",\"id\":\"\"},\"sha512\":{\"sign\":\"ecdsa\",\"hash\":\"sha512\",\"id\":\"\"},\"DSA-SHA\":{\"sign\":\"dsa\",\"hash\":\"sha1\",\"id\":\"\"},\"DSA-SHA1\":{\"sign\":\"dsa\",\"hash\":\"sha1\",\"id\":\"\"},\"DSA\":{\"sign\":\"dsa\",\"hash\":\"sha1\",\"id\":\"\"},\"DSA-WITH-SHA224\":{\"sign\":\"dsa\",\"hash\":\"sha224\",\"id\":\"\"},\"DSA-SHA224\":{\"sign\":\"dsa\",\"hash\":\"sha224\",\"id\":\"\"},\"DSA-WITH-SHA256\":{\"sign\":\"dsa\",\"hash\":\"sha256\",\"id\":\"\"},\"DSA-SHA256\":{\"sign\":\"dsa\",\"hash\":\"sha256\",\"id\":\"\"},\"DSA-WITH-SHA384\":{\"sign\":\"dsa\",\"hash\":\"sha384\",\"id\":\"\"},\"DSA-SHA384\":{\"sign\":\"dsa\",\"hash\":\"sha384\",\"id\":\"\"},\"DSA-WITH-SHA512\":{\"sign\":\"dsa\",\"hash\":\"sha512\",\"id\":\"\"},\"DSA-SHA512\":{\"sign\":\"dsa\",\"hash\":\"sha512\",\"id\":\"\"},\"DSA-RIPEMD160\":{\"sign\":\"dsa\",\"hash\":\"rmd160\",\"id\":\"\"},\"ripemd160WithRSA\":{\"sign\":\"rsa\",\"hash\":\"rmd160\",\"id\":\"3021300906052b2403020105000414\"},\"RSA-RIPEMD160\":{\"sign\":\"rsa\",\"hash\":\"rmd160\",\"id\":\"3021300906052b2403020105000414\"},\"md5WithRSAEncryption\":{\"sign\":\"rsa\",\"hash\":\"md5\",\"id\":\"3020300c06082a864886f70d020505000410\"},\"RSA-MD5\":{\"sign\":\"rsa\",\"hash\":\"md5\",\"id\":\"3020300c06082a864886f70d020505000410\"}}");
 
 /***/ }),
 
@@ -8073,7 +8074,7 @@ module.exports = {"sha224WithRSAEncryption":{"sign":"rsa","hash":"sha224","id":"
 /*! exports provided: 1.3.132.0.10, 1.3.132.0.33, 1.2.840.10045.3.1.1, 1.2.840.10045.3.1.7, 1.3.132.0.34, 1.3.132.0.35, default */
 /***/ (function(module) {
 
-module.exports = {"1.3.132.0.10":"secp256k1","1.3.132.0.33":"p224","1.2.840.10045.3.1.1":"p192","1.2.840.10045.3.1.7":"p256","1.3.132.0.34":"p384","1.3.132.0.35":"p521"};
+module.exports = JSON.parse("{\"1.3.132.0.10\":\"secp256k1\",\"1.3.132.0.33\":\"p224\",\"1.2.840.10045.3.1.1\":\"p192\",\"1.2.840.10045.3.1.7\":\"p256\",\"1.3.132.0.34\":\"p384\",\"1.3.132.0.35\":\"p521\"}");
 
 /***/ }),
 
@@ -14298,9 +14299,8 @@ Cipher.prototype._finalDecrypt = function _finalDecrypt() {
 var assert = __webpack_require__(/*! minimalistic-assert */ "../node_modules/minimalistic-assert/index.js");
 var inherits = __webpack_require__(/*! inherits */ "../node_modules/inherits/inherits_browser.js");
 
-var des = __webpack_require__(/*! ../des */ "../node_modules/des.js/lib/des.js");
-var utils = des.utils;
-var Cipher = des.Cipher;
+var utils = __webpack_require__(/*! ./utils */ "../node_modules/des.js/lib/des/utils.js");
+var Cipher = __webpack_require__(/*! ./cipher */ "../node_modules/des.js/lib/des/cipher.js");
 
 function DESState() {
   this.tmp = new Array(2);
@@ -14453,9 +14453,8 @@ DES.prototype._decrypt = function _decrypt(state, lStart, rStart, out, off) {
 var assert = __webpack_require__(/*! minimalistic-assert */ "../node_modules/minimalistic-assert/index.js");
 var inherits = __webpack_require__(/*! inherits */ "../node_modules/inherits/inherits_browser.js");
 
-var des = __webpack_require__(/*! ../des */ "../node_modules/des.js/lib/des.js");
-var Cipher = des.Cipher;
-var DES = des.DES;
+var Cipher = __webpack_require__(/*! ./cipher */ "../node_modules/des.js/lib/des/cipher.js");
+var DES = __webpack_require__(/*! ./des */ "../node_modules/des.js/lib/des/des.js");
 
 function EDEState(type, key) {
   assert.equal(key.length, 24, 'Invalid key length');
@@ -15128,7 +15127,7 @@ function findPrime(bits, gen) {
 /*! exports provided: modp1, modp2, modp5, modp14, modp15, modp16, modp17, modp18, default */
 /***/ (function(module) {
 
-module.exports = {"modp1":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a63a3620ffffffffffffffff"},"modp2":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece65381ffffffffffffffff"},"modp5":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca237327ffffffffffffffff"},"modp14":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aacaa68ffffffffffffffff"},"modp15":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a93ad2caffffffffffffffff"},"modp16":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a92108011a723c12a787e6d788719a10bdba5b2699c327186af4e23c1a946834b6150bda2583e9ca2ad44ce8dbbbc2db04de8ef92e8efc141fbecaa6287c59474e6bc05d99b2964fa090c3a2233ba186515be7ed1f612970cee2d7afb81bdd762170481cd0069127d5b05aa993b4ea988d8fddc186ffb7dc90a6c08f4df435c934063199ffffffffffffffff"},"modp17":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a92108011a723c12a787e6d788719a10bdba5b2699c327186af4e23c1a946834b6150bda2583e9ca2ad44ce8dbbbc2db04de8ef92e8efc141fbecaa6287c59474e6bc05d99b2964fa090c3a2233ba186515be7ed1f612970cee2d7afb81bdd762170481cd0069127d5b05aa993b4ea988d8fddc186ffb7dc90a6c08f4df435c93402849236c3fab4d27c7026c1d4dcb2602646dec9751e763dba37bdf8ff9406ad9e530ee5db382f413001aeb06a53ed9027d831179727b0865a8918da3edbebcf9b14ed44ce6cbaced4bb1bdb7f1447e6cc254b332051512bd7af426fb8f401378cd2bf5983ca01c64b92ecf032ea15d1721d03f482d7ce6e74fef6d55e702f46980c82b5a84031900b1c9e59e7c97fbec7e8f323a97a7e36cc88be0f1d45b7ff585ac54bd407b22b4154aacc8f6d7ebf48e1d814cc5ed20f8037e0a79715eef29be32806a1d58bb7c5da76f550aa3d8a1fbff0eb19ccb1a313d55cda56c9ec2ef29632387fe8d76e3c0468043e8f663f4860ee12bf2d5b0b7474d6e694f91e6dcc4024ffffffffffffffff"},"modp18":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a92108011a723c12a787e6d788719a10bdba5b2699c327186af4e23c1a946834b6150bda2583e9ca2ad44ce8dbbbc2db04de8ef92e8efc141fbecaa6287c59474e6bc05d99b2964fa090c3a2233ba186515be7ed1f612970cee2d7afb81bdd762170481cd0069127d5b05aa993b4ea988d8fddc186ffb7dc90a6c08f4df435c93402849236c3fab4d27c7026c1d4dcb2602646dec9751e763dba37bdf8ff9406ad9e530ee5db382f413001aeb06a53ed9027d831179727b0865a8918da3edbebcf9b14ed44ce6cbaced4bb1bdb7f1447e6cc254b332051512bd7af426fb8f401378cd2bf5983ca01c64b92ecf032ea15d1721d03f482d7ce6e74fef6d55e702f46980c82b5a84031900b1c9e59e7c97fbec7e8f323a97a7e36cc88be0f1d45b7ff585ac54bd407b22b4154aacc8f6d7ebf48e1d814cc5ed20f8037e0a79715eef29be32806a1d58bb7c5da76f550aa3d8a1fbff0eb19ccb1a313d55cda56c9ec2ef29632387fe8d76e3c0468043e8f663f4860ee12bf2d5b0b7474d6e694f91e6dbe115974a3926f12fee5e438777cb6a932df8cd8bec4d073b931ba3bc832b68d9dd300741fa7bf8afc47ed2576f6936ba424663aab639c5ae4f5683423b4742bf1c978238f16cbe39d652de3fdb8befc848ad922222e04a4037c0713eb57a81a23f0c73473fc646cea306b4bcbc8862f8385ddfa9d4b7fa2c087e879683303ed5bdd3a062b3cf5b3a278a66d2a13f83f44f82ddf310ee074ab6a364597e899a0255dc164f31cc50846851df9ab48195ded7ea1b1d510bd7ee74d73faf36bc31ecfa268359046f4eb879f924009438b481c6cd7889a002ed5ee382bc9190da6fc026e479558e4475677e9aa9e3050e2765694dfc81f56e880b96e7160c980dd98edd3dfffffffffffffffff"}};
+module.exports = JSON.parse("{\"modp1\":{\"gen\":\"02\",\"prime\":\"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a63a3620ffffffffffffffff\"},\"modp2\":{\"gen\":\"02\",\"prime\":\"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece65381ffffffffffffffff\"},\"modp5\":{\"gen\":\"02\",\"prime\":\"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca237327ffffffffffffffff\"},\"modp14\":{\"gen\":\"02\",\"prime\":\"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aacaa68ffffffffffffffff\"},\"modp15\":{\"gen\":\"02\",\"prime\":\"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a93ad2caffffffffffffffff\"},\"modp16\":{\"gen\":\"02\",\"prime\":\"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a92108011a723c12a787e6d788719a10bdba5b2699c327186af4e23c1a946834b6150bda2583e9ca2ad44ce8dbbbc2db04de8ef92e8efc141fbecaa6287c59474e6bc05d99b2964fa090c3a2233ba186515be7ed1f612970cee2d7afb81bdd762170481cd0069127d5b05aa993b4ea988d8fddc186ffb7dc90a6c08f4df435c934063199ffffffffffffffff\"},\"modp17\":{\"gen\":\"02\",\"prime\":\"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a92108011a723c12a787e6d788719a10bdba5b2699c327186af4e23c1a946834b6150bda2583e9ca2ad44ce8dbbbc2db04de8ef92e8efc141fbecaa6287c59474e6bc05d99b2964fa090c3a2233ba186515be7ed1f612970cee2d7afb81bdd762170481cd0069127d5b05aa993b4ea988d8fddc186ffb7dc90a6c08f4df435c93402849236c3fab4d27c7026c1d4dcb2602646dec9751e763dba37bdf8ff9406ad9e530ee5db382f413001aeb06a53ed9027d831179727b0865a8918da3edbebcf9b14ed44ce6cbaced4bb1bdb7f1447e6cc254b332051512bd7af426fb8f401378cd2bf5983ca01c64b92ecf032ea15d1721d03f482d7ce6e74fef6d55e702f46980c82b5a84031900b1c9e59e7c97fbec7e8f323a97a7e36cc88be0f1d45b7ff585ac54bd407b22b4154aacc8f6d7ebf48e1d814cc5ed20f8037e0a79715eef29be32806a1d58bb7c5da76f550aa3d8a1fbff0eb19ccb1a313d55cda56c9ec2ef29632387fe8d76e3c0468043e8f663f4860ee12bf2d5b0b7474d6e694f91e6dcc4024ffffffffffffffff\"},\"modp18\":{\"gen\":\"02\",\"prime\":\"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a92108011a723c12a787e6d788719a10bdba5b2699c327186af4e23c1a946834b6150bda2583e9ca2ad44ce8dbbbc2db04de8ef92e8efc141fbecaa6287c59474e6bc05d99b2964fa090c3a2233ba186515be7ed1f612970cee2d7afb81bdd762170481cd0069127d5b05aa993b4ea988d8fddc186ffb7dc90a6c08f4df435c93402849236c3fab4d27c7026c1d4dcb2602646dec9751e763dba37bdf8ff9406ad9e530ee5db382f413001aeb06a53ed9027d831179727b0865a8918da3edbebcf9b14ed44ce6cbaced4bb1bdb7f1447e6cc254b332051512bd7af426fb8f401378cd2bf5983ca01c64b92ecf032ea15d1721d03f482d7ce6e74fef6d55e702f46980c82b5a84031900b1c9e59e7c97fbec7e8f323a97a7e36cc88be0f1d45b7ff585ac54bd407b22b4154aacc8f6d7ebf48e1d814cc5ed20f8037e0a79715eef29be32806a1d58bb7c5da76f550aa3d8a1fbff0eb19ccb1a313d55cda56c9ec2ef29632387fe8d76e3c0468043e8f663f4860ee12bf2d5b0b7474d6e694f91e6dbe115974a3926f12fee5e438777cb6a932df8cd8bec4d073b931ba3bc832b68d9dd300741fa7bf8afc47ed2576f6936ba424663aab639c5ae4f5683423b4742bf1c978238f16cbe39d652de3fdb8befc848ad922222e04a4037c0713eb57a81a23f0c73473fc646cea306b4bcbc8862f8385ddfa9d4b7fa2c087e879683303ed5bdd3a062b3cf5b3a278a66d2a13f83f44f82ddf310ee074ab6a364597e899a0255dc164f31cc50846851df9ab48195ded7ea1b1d510bd7ee74d73faf36bc31ecfa268359046f4eb879f924009438b481c6cd7889a002ed5ee382bc9190da6fc026e479558e4475677e9aa9e3050e2765694dfc81f56e880b96e7160c980dd98edd3dfffffffffffffffff\"}}");
 
 /***/ }),
 
@@ -15168,8 +15167,7 @@ elliptic.eddsa = __webpack_require__(/*! ./elliptic/eddsa */ "../node_modules/el
 
 
 var BN = __webpack_require__(/*! bn.js */ "../node_modules/bn.js/lib/bn.js");
-var elliptic = __webpack_require__(/*! ../../elliptic */ "../node_modules/elliptic/lib/elliptic.js");
-var utils = elliptic.utils;
+var utils = __webpack_require__(/*! ../utils */ "../node_modules/elliptic/lib/elliptic/utils.js");
 var getNAF = utils.getNAF;
 var getJSF = utils.getJSF;
 var assert = utils.assert;
@@ -15196,6 +15194,8 @@ function BaseCurve(type, conf) {
   this._wnafT3 = new Array(4);
   this._wnafT4 = new Array(4);
 
+  this._bitLength = this.n ? this.n.bitLength() : 0;
+
   // Generalized Greg Maxwell's trick
   var adjustCount = this.n && this.p.div(this.n);
   if (!adjustCount || adjustCount.cmpn(100) > 0) {
@@ -15219,7 +15219,7 @@ BaseCurve.prototype._fixedNafMul = function _fixedNafMul(p, k) {
   assert(p.precomputed);
   var doubles = p._getDoubles();
 
-  var naf = getNAF(k, 1);
+  var naf = getNAF(k, 1, this._bitLength);
   var I = (1 << (doubles.step + 1)) - (doubles.step % 2 === 0 ? 2 : 1);
   I /= 3;
 
@@ -15256,7 +15256,7 @@ BaseCurve.prototype._wnafMul = function _wnafMul(p, k) {
   var wnd = nafPoints.points;
 
   // Get NAF form
-  var naf = getNAF(k, w);
+  var naf = getNAF(k, w, this._bitLength);
 
   // Add `this`*(N+1) for every w-NAF index
   var acc = this.jpoint(null, null, null);
@@ -15312,8 +15312,8 @@ BaseCurve.prototype._wnafMulAdd = function _wnafMulAdd(defW,
     var a = i - 1;
     var b = i;
     if (wndWidth[a] !== 1 || wndWidth[b] !== 1) {
-      naf[a] = getNAF(coeffs[a], wndWidth[a]);
-      naf[b] = getNAF(coeffs[b], wndWidth[b]);
+      naf[a] = getNAF(coeffs[a], wndWidth[a], this._bitLength);
+      naf[b] = getNAF(coeffs[b], wndWidth[b], this._bitLength);
       max = Math.max(naf[a].length, max);
       max = Math.max(naf[b].length, max);
       continue;
@@ -15554,13 +15554,12 @@ BasePoint.prototype.dblp = function dblp(k) {
 "use strict";
 
 
-var curve = __webpack_require__(/*! ../curve */ "../node_modules/elliptic/lib/elliptic/curve/index.js");
-var elliptic = __webpack_require__(/*! ../../elliptic */ "../node_modules/elliptic/lib/elliptic.js");
+var utils = __webpack_require__(/*! ../utils */ "../node_modules/elliptic/lib/elliptic/utils.js");
 var BN = __webpack_require__(/*! bn.js */ "../node_modules/bn.js/lib/bn.js");
 var inherits = __webpack_require__(/*! inherits */ "../node_modules/inherits/inherits_browser.js");
-var Base = curve.base;
+var Base = __webpack_require__(/*! ./base */ "../node_modules/elliptic/lib/elliptic/curve/base.js");
 
-var assert = elliptic.utils.assert;
+var assert = utils.assert;
 
 function EdwardsCurve(conf) {
   // NOTE: Important as we are creating point in Base.call()
@@ -16019,13 +16018,11 @@ curve.edwards = __webpack_require__(/*! ./edwards */ "../node_modules/elliptic/l
 "use strict";
 
 
-var curve = __webpack_require__(/*! ../curve */ "../node_modules/elliptic/lib/elliptic/curve/index.js");
 var BN = __webpack_require__(/*! bn.js */ "../node_modules/bn.js/lib/bn.js");
 var inherits = __webpack_require__(/*! inherits */ "../node_modules/inherits/inherits_browser.js");
-var Base = curve.base;
+var Base = __webpack_require__(/*! ./base */ "../node_modules/elliptic/lib/elliptic/curve/base.js");
 
-var elliptic = __webpack_require__(/*! ../../elliptic */ "../node_modules/elliptic/lib/elliptic.js");
-var utils = elliptic.utils;
+var utils = __webpack_require__(/*! ../utils */ "../node_modules/elliptic/lib/elliptic/utils.js");
 
 function MontCurve(conf) {
   Base.call(this, 'mont', conf);
@@ -16211,13 +16208,12 @@ Point.prototype.getX = function getX() {
 "use strict";
 
 
-var curve = __webpack_require__(/*! ../curve */ "../node_modules/elliptic/lib/elliptic/curve/index.js");
-var elliptic = __webpack_require__(/*! ../../elliptic */ "../node_modules/elliptic/lib/elliptic.js");
+var utils = __webpack_require__(/*! ../utils */ "../node_modules/elliptic/lib/elliptic/utils.js");
 var BN = __webpack_require__(/*! bn.js */ "../node_modules/bn.js/lib/bn.js");
 var inherits = __webpack_require__(/*! inherits */ "../node_modules/inherits/inherits_browser.js");
-var Base = curve.base;
+var Base = __webpack_require__(/*! ./base */ "../node_modules/elliptic/lib/elliptic/curve/base.js");
 
-var assert = elliptic.utils.assert;
+var assert = utils.assert;
 
 function ShortCurve(conf) {
   Base.call(this, 'short', conf);
@@ -16633,8 +16629,9 @@ Point.prototype.getY = function getY() {
 
 Point.prototype.mul = function mul(k) {
   k = new BN(k, 16);
-
-  if (this._hasDoubles(k))
+  if (this.isInfinity())
+    return this;
+  else if (this._hasDoubles(k))
     return this.curve._fixedNafMul(this, k);
   else if (this.curve.endo)
     return this.curve._endoWnafMulAdd([ this ], [ k ]);
@@ -17163,17 +17160,18 @@ JPoint.prototype.isInfinity = function isInfinity() {
 var curves = exports;
 
 var hash = __webpack_require__(/*! hash.js */ "../node_modules/hash.js/lib/hash.js");
-var elliptic = __webpack_require__(/*! ../elliptic */ "../node_modules/elliptic/lib/elliptic.js");
+var curve = __webpack_require__(/*! ./curve */ "../node_modules/elliptic/lib/elliptic/curve/index.js");
+var utils = __webpack_require__(/*! ./utils */ "../node_modules/elliptic/lib/elliptic/utils.js");
 
-var assert = elliptic.utils.assert;
+var assert = utils.assert;
 
 function PresetCurve(options) {
   if (options.type === 'short')
-    this.curve = new elliptic.curve.short(options);
+    this.curve = new curve.short(options);
   else if (options.type === 'edwards')
-    this.curve = new elliptic.curve.edwards(options);
+    this.curve = new curve.edwards(options);
   else
-    this.curve = new elliptic.curve.mont(options);
+    this.curve = new curve.mont(options);
   this.g = this.curve.g;
   this.n = this.curve.n;
   this.hash = options.hash;
@@ -17379,8 +17377,9 @@ defineCurve('secp256k1', {
 
 var BN = __webpack_require__(/*! bn.js */ "../node_modules/bn.js/lib/bn.js");
 var HmacDRBG = __webpack_require__(/*! hmac-drbg */ "../node_modules/hmac-drbg/lib/hmac-drbg.js");
-var elliptic = __webpack_require__(/*! ../../elliptic */ "../node_modules/elliptic/lib/elliptic.js");
-var utils = elliptic.utils;
+var utils = __webpack_require__(/*! ../utils */ "../node_modules/elliptic/lib/elliptic/utils.js");
+var curves = __webpack_require__(/*! ../curves */ "../node_modules/elliptic/lib/elliptic/curves.js");
+var rand = __webpack_require__(/*! brorand */ "../node_modules/brorand/index.js");
 var assert = utils.assert;
 
 var KeyPair = __webpack_require__(/*! ./key */ "../node_modules/elliptic/lib/elliptic/ec/key.js");
@@ -17392,13 +17391,13 @@ function EC(options) {
 
   // Shortcut `elliptic.ec(curve-name)`
   if (typeof options === 'string') {
-    assert(elliptic.curves.hasOwnProperty(options), 'Unknown curve ' + options);
+    assert(curves.hasOwnProperty(options), 'Unknown curve ' + options);
 
-    options = elliptic.curves[options];
+    options = curves[options];
   }
 
   // Shortcut for `elliptic.ec(elliptic.curves.curveName)`
-  if (options instanceof elliptic.curves.PresetCurve)
+  if (options instanceof curves.PresetCurve)
     options = { curve: options };
 
   this.curve = options.curve.curve;
@@ -17436,7 +17435,7 @@ EC.prototype.genKeyPair = function genKeyPair(options) {
     hash: this.hash,
     pers: options.pers,
     persEnc: options.persEnc || 'utf8',
-    entropy: options.entropy || elliptic.rand(this.hash.hmacStrength),
+    entropy: options.entropy || rand(this.hash.hmacStrength),
     entropyEnc: options.entropy && options.entropyEnc || 'utf8',
     nonce: this.n.toArray()
   });
@@ -17630,8 +17629,7 @@ EC.prototype.getKeyRecoveryParam = function(e, signature, Q, enc) {
 
 
 var BN = __webpack_require__(/*! bn.js */ "../node_modules/bn.js/lib/bn.js");
-var elliptic = __webpack_require__(/*! ../../elliptic */ "../node_modules/elliptic/lib/elliptic.js");
-var utils = elliptic.utils;
+var utils = __webpack_require__(/*! ../utils */ "../node_modules/elliptic/lib/elliptic/utils.js");
 var assert = utils.assert;
 
 function KeyPair(ec, options) {
@@ -17762,8 +17760,7 @@ KeyPair.prototype.inspect = function inspect() {
 
 var BN = __webpack_require__(/*! bn.js */ "../node_modules/bn.js/lib/bn.js");
 
-var elliptic = __webpack_require__(/*! ../../elliptic */ "../node_modules/elliptic/lib/elliptic.js");
-var utils = elliptic.utils;
+var utils = __webpack_require__(/*! ../utils */ "../node_modules/elliptic/lib/elliptic/utils.js");
 var assert = utils.assert;
 
 function Signature(options, enc) {
@@ -17908,8 +17905,8 @@ Signature.prototype.toDER = function toDER(enc) {
 
 
 var hash = __webpack_require__(/*! hash.js */ "../node_modules/hash.js/lib/hash.js");
-var elliptic = __webpack_require__(/*! ../../elliptic */ "../node_modules/elliptic/lib/elliptic.js");
-var utils = elliptic.utils;
+var curves = __webpack_require__(/*! ../curves */ "../node_modules/elliptic/lib/elliptic/curves.js");
+var utils = __webpack_require__(/*! ../utils */ "../node_modules/elliptic/lib/elliptic/utils.js");
 var assert = utils.assert;
 var parseBytes = utils.parseBytes;
 var KeyPair = __webpack_require__(/*! ./key */ "../node_modules/elliptic/lib/elliptic/eddsa/key.js");
@@ -17921,7 +17918,7 @@ function EDDSA(curve) {
   if (!(this instanceof EDDSA))
     return new EDDSA(curve);
 
-  var curve = elliptic.curves[curve].curve;
+  var curve = curves[curve].curve;
   this.curve = curve;
   this.g = curve.g;
   this.g.precompute(curve.n.bitLength() + 1);
@@ -18037,8 +18034,7 @@ EDDSA.prototype.isPoint = function isPoint(val) {
 "use strict";
 
 
-var elliptic = __webpack_require__(/*! ../../elliptic */ "../node_modules/elliptic/lib/elliptic.js");
-var utils = elliptic.utils;
+var utils = __webpack_require__(/*! ../utils */ "../node_modules/elliptic/lib/elliptic/utils.js");
 var assert = utils.assert;
 var parseBytes = utils.parseBytes;
 var cachedProperty = utils.cachedProperty;
@@ -18146,8 +18142,7 @@ module.exports = KeyPair;
 
 
 var BN = __webpack_require__(/*! bn.js */ "../node_modules/bn.js/lib/bn.js");
-var elliptic = __webpack_require__(/*! ../../elliptic */ "../node_modules/elliptic/lib/elliptic.js");
-var utils = elliptic.utils;
+var utils = __webpack_require__(/*! ../utils */ "../node_modules/elliptic/lib/elliptic/utils.js");
 var assert = utils.assert;
 var cachedProperty = utils.cachedProperty;
 var parseBytes = utils.parseBytes;
@@ -19026,14 +19021,17 @@ utils.toHex = minUtils.toHex;
 utils.encode = minUtils.encode;
 
 // Represent num in a w-NAF form
-function getNAF(num, w) {
-  var naf = [];
+function getNAF(num, w, bits) {
+  var naf = new Array(Math.max(num.bitLength(), bits) + 1);
+  naf.fill(0);
+
   var ws = 1 << (w + 1);
   var k = num.clone();
-  while (k.cmpn(1) >= 0) {
+
+  for (var i = 0; i < naf.length; i++) {
     var z;
+    var mod = k.andln(ws - 1);
     if (k.isOdd()) {
-      var mod = k.andln(ws - 1);
       if (mod > (ws >> 1) - 1)
         z = (ws >> 1) - mod;
       else
@@ -19042,13 +19040,9 @@ function getNAF(num, w) {
     } else {
       z = 0;
     }
-    naf.push(z);
 
-    // Optimization, shift by word if possible
-    var shift = (k.cmpn(0) !== 0 && k.andln(ws - 1) === 0) ? (w + 1) : 1;
-    for (var i = 1; i < shift; i++)
-      naf.push(0);
-    k.iushrn(shift);
+    naf[i] = z;
+    k.iushrn(1);
   }
 
   return naf;
@@ -19143,7 +19137,7 @@ utils.intFromLE = intFromLE;
 /*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, bugs, bundleDependencies, dependencies, deprecated, description, devDependencies, files, homepage, keywords, license, main, name, repository, scripts, version, default */
 /***/ (function(module) {
 
-module.exports = {"_from":"elliptic@^6.0.0","_id":"elliptic@6.4.1","_inBundle":false,"_integrity":"sha512-BsXLz5sqX8OHcsh7CqBMztyXARmGQ3LWPtGjJi6DiJHq5C/qvi9P3OqgswKSDftbu8+IoI/QDTAm2fFnQ9SZSQ==","_location":"/elliptic","_phantomChildren":{},"_requested":{"type":"range","registry":true,"raw":"elliptic@^6.0.0","name":"elliptic","escapedName":"elliptic","rawSpec":"^6.0.0","saveSpec":null,"fetchSpec":"^6.0.0"},"_requiredBy":["/browserify-sign","/create-ecdh"],"_resolved":"https://registry.npmjs.org/elliptic/-/elliptic-6.4.1.tgz","_shasum":"c2d0b7776911b86722c632c3c06c60f2f819939a","_spec":"elliptic@^6.0.0","_where":"/Users/jensweigele/Documents/projects/ioBroker.yahka/node_modules/browserify-sign","author":{"name":"Fedor Indutny","email":"fedor@indutny.com"},"bugs":{"url":"https://github.com/indutny/elliptic/issues"},"bundleDependencies":false,"dependencies":{"bn.js":"^4.4.0","brorand":"^1.0.1","hash.js":"^1.0.0","hmac-drbg":"^1.0.0","inherits":"^2.0.1","minimalistic-assert":"^1.0.0","minimalistic-crypto-utils":"^1.0.0"},"deprecated":false,"description":"EC cryptography","devDependencies":{"brfs":"^1.4.3","coveralls":"^2.11.3","grunt":"^0.4.5","grunt-browserify":"^5.0.0","grunt-cli":"^1.2.0","grunt-contrib-connect":"^1.0.0","grunt-contrib-copy":"^1.0.0","grunt-contrib-uglify":"^1.0.1","grunt-mocha-istanbul":"^3.0.1","grunt-saucelabs":"^8.6.2","istanbul":"^0.4.2","jscs":"^2.9.0","jshint":"^2.6.0","mocha":"^2.1.0"},"files":["lib"],"homepage":"https://github.com/indutny/elliptic","keywords":["EC","Elliptic","curve","Cryptography"],"license":"MIT","main":"lib/elliptic.js","name":"elliptic","repository":{"type":"git","url":"git+ssh://git@github.com/indutny/elliptic.git"},"scripts":{"jscs":"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js","jshint":"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js","lint":"npm run jscs && npm run jshint","test":"npm run lint && npm run unit","unit":"istanbul test _mocha --reporter=spec test/index.js","version":"grunt dist && git add dist/"},"version":"6.4.1"};
+module.exports = JSON.parse("{\"_from\":\"elliptic@^6.0.0\",\"_id\":\"elliptic@6.5.2\",\"_inBundle\":false,\"_integrity\":\"sha512-f4x70okzZbIQl/NSRLkI/+tteV/9WqL98zx+SQ69KbXxmVrmjwsNUPn/gYJJ0sHvEak24cZgHIPegRePAtA/xw==\",\"_location\":\"/elliptic\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"elliptic@^6.0.0\",\"name\":\"elliptic\",\"escapedName\":\"elliptic\",\"rawSpec\":\"^6.0.0\",\"saveSpec\":null,\"fetchSpec\":\"^6.0.0\"},\"_requiredBy\":[\"/browserify-sign\",\"/create-ecdh\"],\"_resolved\":\"https://registry.npmjs.org/elliptic/-/elliptic-6.5.2.tgz\",\"_shasum\":\"05c5678d7173c049d8ca433552224a495d0e3762\",\"_spec\":\"elliptic@^6.0.0\",\"_where\":\"/Users/jensweigele/Documents/projects/ioBroker.yahka/node_modules/browserify-sign\",\"author\":{\"name\":\"Fedor Indutny\",\"email\":\"fedor@indutny.com\"},\"bugs\":{\"url\":\"https://github.com/indutny/elliptic/issues\"},\"bundleDependencies\":false,\"dependencies\":{\"bn.js\":\"^4.4.0\",\"brorand\":\"^1.0.1\",\"hash.js\":\"^1.0.0\",\"hmac-drbg\":\"^1.0.0\",\"inherits\":\"^2.0.1\",\"minimalistic-assert\":\"^1.0.0\",\"minimalistic-crypto-utils\":\"^1.0.0\"},\"deprecated\":false,\"description\":\"EC cryptography\",\"devDependencies\":{\"brfs\":\"^1.4.3\",\"coveralls\":\"^3.0.8\",\"grunt\":\"^1.0.4\",\"grunt-browserify\":\"^5.0.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-connect\":\"^1.0.0\",\"grunt-contrib-copy\":\"^1.0.0\",\"grunt-contrib-uglify\":\"^1.0.1\",\"grunt-mocha-istanbul\":\"^3.0.1\",\"grunt-saucelabs\":\"^9.0.1\",\"istanbul\":\"^0.4.2\",\"jscs\":\"^3.0.7\",\"jshint\":\"^2.10.3\",\"mocha\":\"^6.2.2\"},\"files\":[\"lib\"],\"homepage\":\"https://github.com/indutny/elliptic\",\"keywords\":[\"EC\",\"Elliptic\",\"curve\",\"Cryptography\"],\"license\":\"MIT\",\"main\":\"lib/elliptic.js\",\"name\":\"elliptic\",\"repository\":{\"type\":\"git\",\"url\":\"git+ssh://git@github.com/indutny/elliptic.git\"},\"scripts\":{\"jscs\":\"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js\",\"jshint\":\"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js\",\"lint\":\"npm run jscs && npm run jshint\",\"test\":\"npm run lint && npm run unit\",\"unit\":\"istanbul test _mocha --reporter=spec test/index.js\",\"version\":\"grunt dist && git add dist/\"},\"version\":\"6.5.2\"}");
 
 /***/ }),
 
@@ -19152,8 +19146,9 @@ module.exports = {"_from":"elliptic@^6.0.0","_id":"elliptic@6.4.1","_inBundle":f
   !*** ../node_modules/events/events.js ***!
   \****************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -19175,9 +19170,39 @@ module.exports = {"_from":"elliptic@^6.0.0","_id":"elliptic@6.4.1","_inBundle":f
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+
+
+var R = typeof Reflect === 'object' ? Reflect : null
+var ReflectApply = R && typeof R.apply === 'function'
+  ? R.apply
+  : function ReflectApply(target, receiver, args) {
+    return Function.prototype.apply.call(target, receiver, args);
+  }
+
+var ReflectOwnKeys
+if (R && typeof R.ownKeys === 'function') {
+  ReflectOwnKeys = R.ownKeys
+} else if (Object.getOwnPropertySymbols) {
+  ReflectOwnKeys = function ReflectOwnKeys(target) {
+    return Object.getOwnPropertyNames(target)
+      .concat(Object.getOwnPropertySymbols(target));
+  };
+} else {
+  ReflectOwnKeys = function ReflectOwnKeys(target) {
+    return Object.getOwnPropertyNames(target);
+  };
+}
+
+function ProcessEmitWarning(warning) {
+  if (console && console.warn) console.warn(warning);
+}
+
+var NumberIsNaN = Number.isNaN || function NumberIsNaN(value) {
+  return value !== value;
+}
+
 function EventEmitter() {
-  this._events = this._events || {};
-  this._maxListeners = this._maxListeners || undefined;
+  EventEmitter.init.call(this);
 }
 module.exports = EventEmitter;
 
@@ -19185,276 +19210,390 @@ module.exports = EventEmitter;
 EventEmitter.EventEmitter = EventEmitter;
 
 EventEmitter.prototype._events = undefined;
+EventEmitter.prototype._eventsCount = 0;
 EventEmitter.prototype._maxListeners = undefined;
 
 // By default EventEmitters will print a warning if more than 10 listeners are
 // added to it. This is a useful default which helps finding memory leaks.
-EventEmitter.defaultMaxListeners = 10;
+var defaultMaxListeners = 10;
+
+function checkListener(listener) {
+  if (typeof listener !== 'function') {
+    throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
+  }
+}
+
+Object.defineProperty(EventEmitter, 'defaultMaxListeners', {
+  enumerable: true,
+  get: function() {
+    return defaultMaxListeners;
+  },
+  set: function(arg) {
+    if (typeof arg !== 'number' || arg < 0 || NumberIsNaN(arg)) {
+      throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + arg + '.');
+    }
+    defaultMaxListeners = arg;
+  }
+});
+
+EventEmitter.init = function() {
+
+  if (this._events === undefined ||
+      this._events === Object.getPrototypeOf(this)._events) {
+    this._events = Object.create(null);
+    this._eventsCount = 0;
+  }
+
+  this._maxListeners = this._maxListeners || undefined;
+};
 
 // Obviously not all Emitters should be limited to 10. This function allows
 // that to be increased. Set to zero for unlimited.
-EventEmitter.prototype.setMaxListeners = function(n) {
-  if (!isNumber(n) || n < 0 || isNaN(n))
-    throw TypeError('n must be a positive number');
+EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
+  if (typeof n !== 'number' || n < 0 || NumberIsNaN(n)) {
+    throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + n + '.');
+  }
   this._maxListeners = n;
   return this;
 };
 
-EventEmitter.prototype.emit = function(type) {
-  var er, handler, len, args, i, listeners;
+function _getMaxListeners(that) {
+  if (that._maxListeners === undefined)
+    return EventEmitter.defaultMaxListeners;
+  return that._maxListeners;
+}
 
-  if (!this._events)
-    this._events = {};
+EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
+  return _getMaxListeners(this);
+};
 
-  // If there is no 'error' event listener then throw.
-  if (type === 'error') {
-    if (!this._events.error ||
-        (isObject(this._events.error) && !this._events.error.length)) {
-      er = arguments[1];
-      if (er instanceof Error) {
-        throw er; // Unhandled 'error' event
-      } else {
-        // At least give some kind of context to the user
-        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
-        err.context = er;
-        throw err;
-      }
-    }
-  }
+EventEmitter.prototype.emit = function emit(type) {
+  var args = [];
+  for (var i = 1; i < arguments.length; i++) args.push(arguments[i]);
+  var doError = (type === 'error');
 
-  handler = this._events[type];
-
-  if (isUndefined(handler))
+  var events = this._events;
+  if (events !== undefined)
+    doError = (doError && events.error === undefined);
+  else if (!doError)
     return false;
 
-  if (isFunction(handler)) {
-    switch (arguments.length) {
-      // fast cases
-      case 1:
-        handler.call(this);
-        break;
-      case 2:
-        handler.call(this, arguments[1]);
-        break;
-      case 3:
-        handler.call(this, arguments[1], arguments[2]);
-        break;
-      // slower
-      default:
-        args = Array.prototype.slice.call(arguments, 1);
-        handler.apply(this, args);
+  // If there is no 'error' event listener then throw.
+  if (doError) {
+    var er;
+    if (args.length > 0)
+      er = args[0];
+    if (er instanceof Error) {
+      // Note: The comments on the `throw` lines are intentional, they show
+      // up in Node's output if this results in an unhandled exception.
+      throw er; // Unhandled 'error' event
     }
-  } else if (isObject(handler)) {
-    args = Array.prototype.slice.call(arguments, 1);
-    listeners = handler.slice();
-    len = listeners.length;
-    for (i = 0; i < len; i++)
-      listeners[i].apply(this, args);
+    // At least give some kind of context to the user
+    var err = new Error('Unhandled error.' + (er ? ' (' + er.message + ')' : ''));
+    err.context = er;
+    throw err; // Unhandled 'error' event
+  }
+
+  var handler = events[type];
+
+  if (handler === undefined)
+    return false;
+
+  if (typeof handler === 'function') {
+    ReflectApply(handler, this, args);
+  } else {
+    var len = handler.length;
+    var listeners = arrayClone(handler, len);
+    for (var i = 0; i < len; ++i)
+      ReflectApply(listeners[i], this, args);
   }
 
   return true;
 };
 
-EventEmitter.prototype.addListener = function(type, listener) {
+function _addListener(target, type, listener, prepend) {
   var m;
+  var events;
+  var existing;
 
-  if (!isFunction(listener))
-    throw TypeError('listener must be a function');
+  checkListener(listener);
 
-  if (!this._events)
-    this._events = {};
+  events = target._events;
+  if (events === undefined) {
+    events = target._events = Object.create(null);
+    target._eventsCount = 0;
+  } else {
+    // To avoid recursion in the case that type === "newListener"! Before
+    // adding it to the listeners, first emit "newListener".
+    if (events.newListener !== undefined) {
+      target.emit('newListener', type,
+                  listener.listener ? listener.listener : listener);
 
-  // To avoid recursion in the case that type === "newListener"! Before
-  // adding it to the listeners, first emit "newListener".
-  if (this._events.newListener)
-    this.emit('newListener', type,
-              isFunction(listener.listener) ?
-              listener.listener : listener);
+      // Re-assign `events` because a newListener handler could have caused the
+      // this._events to be assigned to a new object
+      events = target._events;
+    }
+    existing = events[type];
+  }
 
-  if (!this._events[type])
+  if (existing === undefined) {
     // Optimize the case of one listener. Don't need the extra array object.
-    this._events[type] = listener;
-  else if (isObject(this._events[type]))
-    // If we've already got an array, just append.
-    this._events[type].push(listener);
-  else
-    // Adding the second element, need to change to array.
-    this._events[type] = [this._events[type], listener];
-
-  // Check for listener leak
-  if (isObject(this._events[type]) && !this._events[type].warned) {
-    if (!isUndefined(this._maxListeners)) {
-      m = this._maxListeners;
+    existing = events[type] = listener;
+    ++target._eventsCount;
+  } else {
+    if (typeof existing === 'function') {
+      // Adding the second element, need to change to array.
+      existing = events[type] =
+        prepend ? [listener, existing] : [existing, listener];
+      // If we've already got an array, just append.
+    } else if (prepend) {
+      existing.unshift(listener);
     } else {
-      m = EventEmitter.defaultMaxListeners;
+      existing.push(listener);
     }
 
-    if (m && m > 0 && this._events[type].length > m) {
-      this._events[type].warned = true;
-      console.error('(node) warning: possible EventEmitter memory ' +
-                    'leak detected. %d listeners added. ' +
-                    'Use emitter.setMaxListeners() to increase limit.',
-                    this._events[type].length);
-      if (typeof console.trace === 'function') {
-        // not supported in IE 10
-        console.trace();
-      }
+    // Check for listener leak
+    m = _getMaxListeners(target);
+    if (m > 0 && existing.length > m && !existing.warned) {
+      existing.warned = true;
+      // No error code for this since it is a Warning
+      // eslint-disable-next-line no-restricted-syntax
+      var w = new Error('Possible EventEmitter memory leak detected. ' +
+                          existing.length + ' ' + String(type) + ' listeners ' +
+                          'added. Use emitter.setMaxListeners() to ' +
+                          'increase limit');
+      w.name = 'MaxListenersExceededWarning';
+      w.emitter = target;
+      w.type = type;
+      w.count = existing.length;
+      ProcessEmitWarning(w);
     }
   }
 
-  return this;
+  return target;
+}
+
+EventEmitter.prototype.addListener = function addListener(type, listener) {
+  return _addListener(this, type, listener, false);
 };
 
 EventEmitter.prototype.on = EventEmitter.prototype.addListener;
 
-EventEmitter.prototype.once = function(type, listener) {
-  if (!isFunction(listener))
-    throw TypeError('listener must be a function');
+EventEmitter.prototype.prependListener =
+    function prependListener(type, listener) {
+      return _addListener(this, type, listener, true);
+    };
 
-  var fired = false;
-
-  function g() {
-    this.removeListener(type, g);
-
-    if (!fired) {
-      fired = true;
-      listener.apply(this, arguments);
-    }
-  }
-
-  g.listener = listener;
-  this.on(type, g);
-
-  return this;
-};
-
-// emits a 'removeListener' event iff the listener was removed
-EventEmitter.prototype.removeListener = function(type, listener) {
-  var list, position, length, i;
-
-  if (!isFunction(listener))
-    throw TypeError('listener must be a function');
-
-  if (!this._events || !this._events[type])
-    return this;
-
-  list = this._events[type];
-  length = list.length;
-  position = -1;
-
-  if (list === listener ||
-      (isFunction(list.listener) && list.listener === listener)) {
-    delete this._events[type];
-    if (this._events.removeListener)
-      this.emit('removeListener', type, listener);
-
-  } else if (isObject(list)) {
-    for (i = length; i-- > 0;) {
-      if (list[i] === listener ||
-          (list[i].listener && list[i].listener === listener)) {
-        position = i;
-        break;
-      }
-    }
-
-    if (position < 0)
-      return this;
-
-    if (list.length === 1) {
-      list.length = 0;
-      delete this._events[type];
-    } else {
-      list.splice(position, 1);
-    }
-
-    if (this._events.removeListener)
-      this.emit('removeListener', type, listener);
-  }
-
-  return this;
-};
-
-EventEmitter.prototype.removeAllListeners = function(type) {
-  var key, listeners;
-
-  if (!this._events)
-    return this;
-
-  // not listening for removeListener, no need to emit
-  if (!this._events.removeListener) {
+function onceWrapper() {
+  if (!this.fired) {
+    this.target.removeListener(this.type, this.wrapFn);
+    this.fired = true;
     if (arguments.length === 0)
-      this._events = {};
-    else if (this._events[type])
-      delete this._events[type];
-    return this;
+      return this.listener.call(this.target);
+    return this.listener.apply(this.target, arguments);
   }
+}
 
-  // emit removeListener for all listeners on all events
-  if (arguments.length === 0) {
-    for (key in this._events) {
-      if (key === 'removeListener') continue;
-      this.removeAllListeners(key);
-    }
-    this.removeAllListeners('removeListener');
-    this._events = {};
-    return this;
-  }
+function _onceWrap(target, type, listener) {
+  var state = { fired: false, wrapFn: undefined, target: target, type: type, listener: listener };
+  var wrapped = onceWrapper.bind(state);
+  wrapped.listener = listener;
+  state.wrapFn = wrapped;
+  return wrapped;
+}
 
-  listeners = this._events[type];
-
-  if (isFunction(listeners)) {
-    this.removeListener(type, listeners);
-  } else if (listeners) {
-    // LIFO order
-    while (listeners.length)
-      this.removeListener(type, listeners[listeners.length - 1]);
-  }
-  delete this._events[type];
-
+EventEmitter.prototype.once = function once(type, listener) {
+  checkListener(listener);
+  this.on(type, _onceWrap(this, type, listener));
   return this;
 };
 
-EventEmitter.prototype.listeners = function(type) {
-  var ret;
-  if (!this._events || !this._events[type])
-    ret = [];
-  else if (isFunction(this._events[type]))
-    ret = [this._events[type]];
-  else
-    ret = this._events[type].slice();
-  return ret;
+EventEmitter.prototype.prependOnceListener =
+    function prependOnceListener(type, listener) {
+      checkListener(listener);
+      this.prependListener(type, _onceWrap(this, type, listener));
+      return this;
+    };
+
+// Emits a 'removeListener' event if and only if the listener was removed.
+EventEmitter.prototype.removeListener =
+    function removeListener(type, listener) {
+      var list, events, position, i, originalListener;
+
+      checkListener(listener);
+
+      events = this._events;
+      if (events === undefined)
+        return this;
+
+      list = events[type];
+      if (list === undefined)
+        return this;
+
+      if (list === listener || list.listener === listener) {
+        if (--this._eventsCount === 0)
+          this._events = Object.create(null);
+        else {
+          delete events[type];
+          if (events.removeListener)
+            this.emit('removeListener', type, list.listener || listener);
+        }
+      } else if (typeof list !== 'function') {
+        position = -1;
+
+        for (i = list.length - 1; i >= 0; i--) {
+          if (list[i] === listener || list[i].listener === listener) {
+            originalListener = list[i].listener;
+            position = i;
+            break;
+          }
+        }
+
+        if (position < 0)
+          return this;
+
+        if (position === 0)
+          list.shift();
+        else {
+          spliceOne(list, position);
+        }
+
+        if (list.length === 1)
+          events[type] = list[0];
+
+        if (events.removeListener !== undefined)
+          this.emit('removeListener', type, originalListener || listener);
+      }
+
+      return this;
+    };
+
+EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
+
+EventEmitter.prototype.removeAllListeners =
+    function removeAllListeners(type) {
+      var listeners, events, i;
+
+      events = this._events;
+      if (events === undefined)
+        return this;
+
+      // not listening for removeListener, no need to emit
+      if (events.removeListener === undefined) {
+        if (arguments.length === 0) {
+          this._events = Object.create(null);
+          this._eventsCount = 0;
+        } else if (events[type] !== undefined) {
+          if (--this._eventsCount === 0)
+            this._events = Object.create(null);
+          else
+            delete events[type];
+        }
+        return this;
+      }
+
+      // emit removeListener for all listeners on all events
+      if (arguments.length === 0) {
+        var keys = Object.keys(events);
+        var key;
+        for (i = 0; i < keys.length; ++i) {
+          key = keys[i];
+          if (key === 'removeListener') continue;
+          this.removeAllListeners(key);
+        }
+        this.removeAllListeners('removeListener');
+        this._events = Object.create(null);
+        this._eventsCount = 0;
+        return this;
+      }
+
+      listeners = events[type];
+
+      if (typeof listeners === 'function') {
+        this.removeListener(type, listeners);
+      } else if (listeners !== undefined) {
+        // LIFO order
+        for (i = listeners.length - 1; i >= 0; i--) {
+          this.removeListener(type, listeners[i]);
+        }
+      }
+
+      return this;
+    };
+
+function _listeners(target, type, unwrap) {
+  var events = target._events;
+
+  if (events === undefined)
+    return [];
+
+  var evlistener = events[type];
+  if (evlistener === undefined)
+    return [];
+
+  if (typeof evlistener === 'function')
+    return unwrap ? [evlistener.listener || evlistener] : [evlistener];
+
+  return unwrap ?
+    unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
+}
+
+EventEmitter.prototype.listeners = function listeners(type) {
+  return _listeners(this, type, true);
 };
 
-EventEmitter.prototype.listenerCount = function(type) {
-  if (this._events) {
-    var evlistener = this._events[type];
-
-    if (isFunction(evlistener))
-      return 1;
-    else if (evlistener)
-      return evlistener.length;
-  }
-  return 0;
+EventEmitter.prototype.rawListeners = function rawListeners(type) {
+  return _listeners(this, type, false);
 };
 
 EventEmitter.listenerCount = function(emitter, type) {
-  return emitter.listenerCount(type);
+  if (typeof emitter.listenerCount === 'function') {
+    return emitter.listenerCount(type);
+  } else {
+    return listenerCount.call(emitter, type);
+  }
 };
 
-function isFunction(arg) {
-  return typeof arg === 'function';
+EventEmitter.prototype.listenerCount = listenerCount;
+function listenerCount(type) {
+  var events = this._events;
+
+  if (events !== undefined) {
+    var evlistener = events[type];
+
+    if (typeof evlistener === 'function') {
+      return 1;
+    } else if (evlistener !== undefined) {
+      return evlistener.length;
+    }
+  }
+
+  return 0;
 }
 
-function isNumber(arg) {
-  return typeof arg === 'number';
+EventEmitter.prototype.eventNames = function eventNames() {
+  return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
+};
+
+function arrayClone(arr, n) {
+  var copy = new Array(n);
+  for (var i = 0; i < n; ++i)
+    copy[i] = arr[i];
+  return copy;
 }
 
-function isObject(arg) {
-  return typeof arg === 'object' && arg !== null;
+function spliceOne(list, index) {
+  for (; index + 1 < list.length; index++)
+    list[index] = list[index + 1];
+  list.pop();
 }
 
-function isUndefined(arg) {
-  return arg === void 0;
+function unwrapListeners(arr) {
+  var ret = new Array(arr.length);
+  for (var i = 0; i < ret.length; ++i) {
+    ret[i] = arr[i].listener || arr[i];
+  }
+  return ret;
 }
 
 
@@ -19516,32 +19655,95 @@ module.exports = EVP_BytesToKey
 
 /***/ }),
 
-/***/ "../node_modules/hap-nodejs/lib/Characteristic.js":
-/*!********************************************************!*\
-  !*** ../node_modules/hap-nodejs/lib/Characteristic.js ***!
-  \********************************************************/
+/***/ "../node_modules/hap-nodejs/dist/lib/Characteristic.js":
+/*!*************************************************************!*\
+  !*** ../node_modules/hap-nodejs/dist/lib/Characteristic.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-
-var inherits = __webpack_require__(/*! util */ "../node_modules/util/util.js").inherits;
-var EventEmitter = __webpack_require__(/*! events */ "../node_modules/events/events.js").EventEmitter;
-var once = __webpack_require__(/*! ./util/once */ "../node_modules/hap-nodejs/lib/util/once.js").once;
-var Decimal = __webpack_require__(/*! decimal.js */ "../node_modules/decimal.js/decimal.mjs");
-var bufferShim = __webpack_require__(/*! buffer-shims */ "../node_modules/buffer-shims/index.js");
-
-module.exports = {
-  Characteristic: Characteristic
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var decimal_js_1 = __importDefault(__webpack_require__(/*! decimal.js */ "../node_modules/decimal.js/decimal.mjs"));
+var buffer_shims_1 = __importDefault(__webpack_require__(/*! buffer-shims */ "../node_modules/buffer-shims/index.js"));
+var once_1 = __webpack_require__(/*! ./util/once */ "../node_modules/hap-nodejs/dist/lib/util/once.js");
+var EventEmitter_1 = __webpack_require__(/*! ./EventEmitter */ "../node_modules/hap-nodejs/dist/lib/EventEmitter.js");
+// Known HomeKit formats
+var Formats;
+(function (Formats) {
+    Formats["BOOL"] = "bool";
+    Formats["INT"] = "int";
+    Formats["FLOAT"] = "float";
+    Formats["STRING"] = "string";
+    Formats["UINT8"] = "uint8";
+    Formats["UINT16"] = "uint16";
+    Formats["UINT32"] = "uint32";
+    Formats["UINT64"] = "uint64";
+    Formats["DATA"] = "data";
+    Formats["TLV8"] = "tlv8";
+    Formats["ARRAY"] = "array";
+    Formats["DICTIONARY"] = "dict"; //Not in HAP Spec
+})(Formats = exports.Formats || (exports.Formats = {}));
+// Known HomeKit unit types
+var Units;
+(function (Units) {
+    // HomeKit only defines Celsius, for Fahrenheit, it requires iOS app to do the conversion.
+    Units["CELSIUS"] = "celsius";
+    Units["PERCENTAGE"] = "percentage";
+    Units["ARC_DEGREE"] = "arcdegrees";
+    Units["LUX"] = "lux";
+    Units["SECONDS"] = "seconds";
+})(Units = exports.Units || (exports.Units = {}));
+// Known HomeKit permission types
+var Perms;
+(function (Perms) {
+    Perms["READ"] = "pr";
+    Perms["PAIRED_READ"] = "pr";
+    Perms["WRITE"] = "pw";
+    Perms["PAIRED_WRITE"] = "pw";
+    Perms["NOTIFY"] = "ev";
+    Perms["EVENTS"] = "ev";
+    Perms["ADDITIONAL_AUTHORIZATION"] = "aa";
+    Perms["TIMED_WRITE"] = "tw";
+    Perms["HIDDEN"] = "hd";
+    Perms["WRITE_RESPONSE"] = "wr";
+})(Perms = exports.Perms || (exports.Perms = {}));
+var Access;
+(function (Access) {
+    Access[Access["READ"] = 0] = "READ";
+    Access[Access["WRITE"] = 1] = "WRITE";
+    Access[Access["NOTIFY"] = 2] = "NOTIFY";
+})(Access = exports.Access || (exports.Access = {}));
+var CharacteristicEventTypes;
+(function (CharacteristicEventTypes) {
+    CharacteristicEventTypes["GET"] = "get";
+    CharacteristicEventTypes["SET"] = "set";
+    CharacteristicEventTypes["SUBSCRIBE"] = "subscribe";
+    CharacteristicEventTypes["UNSUBSCRIBE"] = "unsubscribe";
+    CharacteristicEventTypes["CHANGE"] = "change";
+})(CharacteristicEventTypes = exports.CharacteristicEventTypes || (exports.CharacteristicEventTypes = {}));
 /**
  * Characteristic represents a particular typed variable that can be assigned to a Service. For instance, a
  * "Hue" Characteristic might store a 'float' value of type 'arcdegrees'. You could add the Hue Characteristic
  * to a Service in order to store that value. A particular Characteristic is distinguished from others by its
- * UUID. HomeKit provides a set of known Characteristic UUIDs defined in HomeKitTypes.js along with a
+ * UUID. HomeKit provides a set of known Characteristic UUIDs defined in HomeKit.ts along with a
  * corresponding concrete subclass.
  *
  * You can also define custom Characteristics by providing your own UUID. Custom Characteristics can be added
@@ -19568,482 +19770,525 @@ module.exports = {
  *        in this.value. The event object contains the new value as well as the context object originally
  *        passed in by the initiator of this change (if known).
  */
-
-function Characteristic(displayName, UUID, props) {
-  this.displayName = displayName;
-  this.UUID = UUID;
-  this.iid = null; // assigned by our containing Service
-  this.value = null;
-  this.status = null;
-  this.eventOnlyCharacteristic = false;
-  this.props = props || {
-    format: null,
-    unit: null,
-    minValue: null,
-    maxValue: null,
-    minStep: null,
-    perms: []
-  };
-
-  this.subscriptions = 0;
-}
-
-inherits(Characteristic, EventEmitter);
-
-// Known HomeKit formats
-Characteristic.Formats = {
-  BOOL: 'bool',
-  INT: 'int',
-  FLOAT: 'float',
-  STRING: 'string',
-  UINT8: 'uint8',
-  UINT16: 'uint16',
-  UINT32: 'uint32',
-  UINT64: 'uint64',
-  DATA: 'data',
-  TLV8: 'tlv8',
-  ARRAY: 'array', //Not in HAP Spec
-  DICTIONARY: 'dict' //Not in HAP Spec
-}
-
-// Known HomeKit unit types
-Characteristic.Units = {
-  // HomeKit only defines Celsius, for Fahrenheit, it requires iOS app to do the conversion.
-  CELSIUS: 'celsius',
-  PERCENTAGE: 'percentage',
-  ARC_DEGREE: 'arcdegrees',
-  LUX: 'lux',
-  SECONDS: 'seconds'
-}
-
-// Known HomeKit permission types
-Characteristic.Perms = {
-  READ: 'pr', //Kept for backwards compatability
-  PAIRED_READ: 'pr', //Added to match HAP's terminology
-  WRITE: 'pw', //Kept for backwards compatability
-  PAIRED_WRITE: 'pw', //Added to match HAP's terminology
-  NOTIFY: 'ev', //Kept for backwards compatability
-  EVENTS: 'ev', //Added to match HAP's terminology
-  ADDITIONAL_AUTHORIZATION: 'aa',
-  TIMED_WRITE: 'tw', //Not currently supported by IP
-  HIDDEN: 'hd',
-  WRITE_RESPONSE: 'wr'
-}
-
-/**
- * Copies the given properties to our props member variable,
- * and returns 'this' for chaining.
- *
- * @param 'props' {
- *   format: <one of Characteristic.Formats>,
- *   unit: <one of Characteristic.Units>,
- *   perms: array of [Characteristic.Perms] like [Characteristic.Perms.READ, Characteristic.Perms.WRITE]
- *   ev: <Event Notifications Enabled Boolean>, (Optional)
- *   description: <String of description>, (Optional)
- *   minValue: <minimum value for numeric characteristics>, (Optional)
- *   maxValue: <maximum value for numeric characteristics>, (Optional)
- *   minStep: <smallest allowed increment for numeric characteristics>, (Optional)
- *   maxLen: <max length of string up to 256>, (Optional default: 64)
- *   maxDataLen: <max length of data>, (Optional default: 2097152)
- *   valid-values: <array of numbers>, (Optional)
- *   valid-values-range: <array of two numbers for start and end range> (Optional)
- * }
- */
-
-Characteristic.prototype.setProps = function(props) {
-  for (var key in (props || {}))
-    if (Object.prototype.hasOwnProperty.call(props, key))
-      this.props[key] = props[key];
-  return this;
-}
-
-
-Characteristic.prototype.subscribe = function () {
-  if (this.subscriptions === 0) {
-    this.emit('subscribe');
-  }
-  this.subscriptions++;
-}
-
-Characteristic.prototype.unsubscribe = function() {
-  var wasOne = this.subscriptions === 1;
-  this.subscriptions--;
-  this.subscriptions = Math.max(this.subscriptions, 0);
-  if (wasOne) {
-    this.emit('unsubscribe');
-  }
-}
-
-Characteristic.prototype.getValue = function(callback, context, connectionID) {
-  // Handle special event only characteristics.
-  if (this.eventOnlyCharacteristic === true) {
-    if (callback) {
-      callback(null, null);
+var Characteristic = /** @class */ (function (_super) {
+    __extends(Characteristic, _super);
+    function Characteristic(displayName, UUID, props) {
+        var _this = _super.call(this) || this;
+        _this.displayName = displayName;
+        _this.UUID = UUID;
+        _this.iid = null;
+        _this.value = null;
+        _this.status = null;
+        _this.eventOnlyCharacteristic = false;
+        _this.accessRestrictedToAdmins = [];
+        _this.subscriptions = 0;
+        /**
+         * Copies the given properties to our props member variable,
+         * and returns 'this' for chaining.
+         *
+         * @param 'props' {
+         *   format: <one of Formats>,
+         *   unit: <one of Characteristic.Units>,
+         *   perms: array of [Characteristic.Perms] like [Characteristic.Perms.READ, Characteristic.Perms.WRITE]
+         *   ev: <Event Notifications Enabled Boolean>, (Optional)
+         *   description: <String of description>, (Optional)
+         *   minValue: <minimum value for numeric characteristics>, (Optional)
+         *   maxValue: <maximum value for numeric characteristics>, (Optional)
+         *   minStep: <smallest allowed increment for numeric characteristics>, (Optional)
+         *   maxLen: <max length of string up to 256>, (Optional default: 64)
+         *   maxDataLen: <max length of data>, (Optional default: 2097152)
+         *   valid-values: <array of numbers>, (Optional)
+         *   valid-values-range: <array of two numbers for start and end range> (Optional)
+         * }
+         */
+        _this.setProps = function (props) {
+            for (var key in (props || {}))
+                if (Object.prototype.hasOwnProperty.call(props, key)) {
+                    // @ts-ignore
+                    _this.props[key] = props[key];
+                }
+            return _this;
+        };
+        _this.subscribe = function () {
+            if (_this.subscriptions === 0) {
+                _this.emit(CharacteristicEventTypes.SUBSCRIBE);
+            }
+            _this.subscriptions++;
+        };
+        _this.unsubscribe = function () {
+            var wasOne = _this.subscriptions === 1;
+            _this.subscriptions--;
+            _this.subscriptions = Math.max(_this.subscriptions, 0);
+            if (wasOne) {
+                _this.emit(CharacteristicEventTypes.UNSUBSCRIBE);
+            }
+        };
+        _this.getValue = function (callback, context, connectionID) {
+            // Handle special event only characteristics.
+            if (_this.eventOnlyCharacteristic === true) {
+                if (callback) {
+                    callback(null, null);
+                }
+                return;
+            }
+            if (_this.listeners(CharacteristicEventTypes.GET).length > 0) {
+                // allow a listener to handle the fetching of this value, and wait for completion
+                _this.emit(CharacteristicEventTypes.GET, once_1.once(function (err, newValue) {
+                    _this.status = err;
+                    if (err) {
+                        // pass the error along to our callback
+                        if (callback)
+                            callback(err);
+                    }
+                    else {
+                        newValue = _this.validateValue(newValue); //validateValue returns a value that has be cooerced into a valid value.
+                        if (newValue === undefined || newValue === null)
+                            newValue = _this.getDefaultValue();
+                        // getting the value was a success; we can pass it along and also update our cached value
+                        var oldValue = _this.value;
+                        _this.value = newValue;
+                        if (callback)
+                            callback(null, newValue);
+                        // emit a change event if necessary
+                        if (oldValue !== newValue)
+                            _this.emit(CharacteristicEventTypes.CHANGE, { oldValue: oldValue, newValue: newValue, context: context });
+                    }
+                }), context, connectionID);
+            }
+            else {
+                // no one is listening to the 'get' event, so just return the cached value
+                if (callback)
+                    callback(_this.status, _this.value);
+            }
+        };
+        _this.validateValue = function (newValue) {
+            var isNumericType = false;
+            var minValue_resolved = 0;
+            var maxValue_resolved = 0;
+            var minStep_resolved = undefined;
+            var stepDecimals = 0;
+            switch (_this.props.format) {
+                case Formats.INT:
+                    minStep_resolved = 1;
+                    minValue_resolved = -2147483648;
+                    maxValue_resolved = 2147483647;
+                    isNumericType = true;
+                    break;
+                case Formats.FLOAT:
+                    minStep_resolved = undefined;
+                    minValue_resolved = undefined;
+                    maxValue_resolved = undefined;
+                    isNumericType = true;
+                    break;
+                case Formats.UINT8:
+                    minStep_resolved = 1;
+                    minValue_resolved = 0;
+                    maxValue_resolved = 255;
+                    isNumericType = true;
+                    break;
+                case Formats.UINT16:
+                    minStep_resolved = 1;
+                    minValue_resolved = 0;
+                    maxValue_resolved = 65535;
+                    isNumericType = true;
+                    break;
+                case Formats.UINT32:
+                    minStep_resolved = 1;
+                    minValue_resolved = 0;
+                    maxValue_resolved = 4294967295;
+                    isNumericType = true;
+                    break;
+                case Formats.UINT64:
+                    minStep_resolved = 1;
+                    minValue_resolved = 0;
+                    maxValue_resolved = 18446744073709551615;
+                    isNumericType = true;
+                    break;
+                //All of the following datatypes return from this switch.
+                case Formats.BOOL:
+                    // @ts-ignore
+                    return (newValue == true); //We don't need to make sure this returns true or false
+                    break;
+                case Formats.STRING:
+                    var myString = newValue || ''; //If null or undefined or anything odd, make it a blank string
+                    myString = String(myString);
+                    var maxLength = _this.props.maxLen;
+                    if (maxLength === undefined)
+                        maxLength = 64; //Default Max Length is 64.
+                    if (myString.length > maxLength)
+                        myString = myString.substring(0, maxLength); //Truncate strings that are too long
+                    return myString; //We don't need to do any validation after having truncated the string
+                    break;
+                case Formats.DATA:
+                    var maxLength = _this.props.maxDataLen;
+                    if (maxLength === undefined)
+                        maxLength = 2097152; //Default Max Length is 2097152.
+                    //if (newValue.length>maxLength) //I don't know the best way to handle this since it's unknown binary data.
+                    //I suspect that it will crash HomeKit for this bridge if the length is too long.
+                    return newValue;
+                    break;
+                case Formats.TLV8:
+                    //Should we parse this to make sure the tlv8 is valid?
+                    break;
+                default: //Datatype out of HAP Spec encountered. We'll assume the developer knows what they're doing.
+                    return newValue;
+            }
+            ;
+            if (isNumericType) {
+                if (newValue === false) {
+                    return 0;
+                }
+                if (newValue === true) {
+                    return 1;
+                }
+                if (isNaN(Number.parseInt(newValue, 10))) {
+                    return _this.value;
+                } //This is not a number so we'll just pass out the last value.
+                if ((_this.props.maxValue && !isNaN(_this.props.maxValue)) && (_this.props.maxValue !== null))
+                    maxValue_resolved = _this.props.maxValue;
+                if ((_this.props.minValue && !isNaN(_this.props.minValue)) && (_this.props.minValue !== null))
+                    minValue_resolved = _this.props.minValue;
+                if ((_this.props.minStep && !isNaN(_this.props.minStep)) && (_this.props.minStep !== null))
+                    minStep_resolved = _this.props.minStep;
+                if (newValue < minValue_resolved)
+                    newValue = minValue_resolved; //Fails Minimum Value Test
+                if (newValue > maxValue_resolved)
+                    newValue = maxValue_resolved; //Fails Maximum Value Test
+                if (minStep_resolved !== undefined) {
+                    //Determine how many decimals we need to display
+                    if (Math.floor(minStep_resolved) === minStep_resolved)
+                        stepDecimals = 0;
+                    else
+                        stepDecimals = minStep_resolved.toString().split(".")[1].length || 0;
+                    //Use Decimal to detemine the lowest value within the step.
+                    try {
+                        var decimalVal = new decimal_js_1.default(parseFloat(newValue));
+                        var decimalDiff = decimalVal.mod(minStep_resolved);
+                        decimalVal = decimalVal.minus(decimalDiff);
+                        if (stepDecimals === 0) {
+                            newValue = parseInt(decimalVal.toFixed(0));
+                        }
+                        else {
+                            newValue = parseFloat(decimalVal.toFixed(stepDecimals)); //Convert it to a fixed decimal
+                        }
+                    }
+                    catch (e) {
+                        return _this.value; //If we had an error, return the current value.
+                    }
+                }
+                if (_this['valid-values'] !== undefined)
+                    if (!_this['valid-values'].includes(newValue))
+                        return _this.value; //Fails Valid Values Test
+                if (_this['valid-values-range'] !== undefined) { //This is another way Apple has to handle min/max
+                    if (newValue < _this['valid-values-range'][0])
+                        newValue = _this['valid-values-range'][0];
+                    if (newValue > _this['valid-values-range'][1])
+                        newValue = _this['valid-values-range'][1];
+                }
+            }
+            return newValue;
+        };
+        _this.setValue = function (newValue, callback, context, connectionID) {
+            if (newValue instanceof Error) {
+                _this.status = newValue;
+            }
+            else {
+                _this.status = null;
+            }
+            newValue = _this.validateValue(newValue); //validateValue returns a value that has be cooerced into a valid value.
+            var oldValue = _this.value;
+            if (_this.listeners(CharacteristicEventTypes.SET).length > 0) {
+                // allow a listener to handle the setting of this value, and wait for completion
+                _this.emit(CharacteristicEventTypes.SET, newValue, once_1.once(function (err, writeResponse) {
+                    _this.status = err;
+                    if (err) {
+                        // pass the error along to our callback
+                        if (callback)
+                            callback(err);
+                    }
+                    else {
+                        if (writeResponse !== undefined && _this.props.perms.includes(Perms.WRITE_RESPONSE))
+                            newValue = writeResponse; // support write response simply by letting the implementor pass the response as second argument to the callback
+                        if (newValue === undefined || newValue === null)
+                            newValue = _this.getDefaultValue();
+                        // setting the value was a success; so we can cache it now
+                        _this.value = newValue;
+                        if (callback)
+                            callback();
+                        if (_this.eventOnlyCharacteristic === true || oldValue !== newValue)
+                            _this.emit(CharacteristicEventTypes.CHANGE, { oldValue: oldValue, newValue: newValue, context: context });
+                    }
+                }), context, connectionID);
+            }
+            else {
+                if (newValue === undefined || newValue === null)
+                    newValue = _this.getDefaultValue();
+                // no one is listening to the 'set' event, so just assign the value blindly
+                _this.value = newValue;
+                if (callback)
+                    callback();
+                if (_this.eventOnlyCharacteristic === true || oldValue !== newValue)
+                    _this.emit(CharacteristicEventTypes.CHANGE, { oldValue: oldValue, newValue: newValue, context: context });
+            }
+            return _this; // for chaining
+        };
+        _this.updateValue = function (newValue, callback, context) {
+            if (newValue instanceof Error) {
+                _this.status = newValue;
+            }
+            else {
+                _this.status = null;
+            }
+            newValue = _this.validateValue(newValue); //validateValue returns a value that has be cooerced into a valid value.
+            if (newValue === undefined || newValue === null)
+                newValue = _this.getDefaultValue();
+            // no one is listening to the 'set' event, so just assign the value blindly
+            var oldValue = _this.value;
+            _this.value = newValue;
+            if (callback)
+                callback();
+            if (_this.eventOnlyCharacteristic === true || oldValue !== newValue)
+                _this.emit(CharacteristicEventTypes.CHANGE, { oldValue: oldValue, newValue: newValue, context: context });
+            return _this; // for chaining
+        };
+        _this.getDefaultValue = function () {
+            switch (_this.props.format) {
+                case Formats.BOOL:
+                    return false;
+                case Formats.STRING:
+                    return "";
+                case Formats.DATA:
+                    return null; // who knows!
+                case Formats.TLV8:
+                    return null; // who knows!
+                case Formats.DICTIONARY:
+                    return {};
+                case Formats.ARRAY:
+                    return [];
+                default:
+                    return _this.props.minValue || 0;
+            }
+        };
+        _this._assignID = function (identifierCache, accessoryName, serviceUUID, serviceSubtype) {
+            // generate our IID based on our UUID
+            _this.iid = identifierCache.getIID(accessoryName, serviceUUID, serviceSubtype, _this.UUID);
+        };
+        /**
+         * Returns a JSON representation of this Accessory suitable for delivering to HAP clients.
+         */
+        _this.toHAP = function (opt) {
+            // ensure our value fits within our constraints if present
+            var value = _this.value;
+            if (_this.props.minValue != null && value < _this.props.minValue)
+                value = _this.props.minValue;
+            if (_this.props.maxValue != null && value > _this.props.maxValue)
+                value = _this.props.maxValue;
+            if (_this.props.format != null) {
+                if (_this.props.format === Formats.INT)
+                    value = parseInt(value);
+                else if (_this.props.format === Formats.UINT8)
+                    value = parseInt(value);
+                else if (_this.props.format === Formats.UINT16)
+                    value = parseInt(value);
+                else if (_this.props.format === Formats.UINT32)
+                    value = parseInt(value);
+                else if (_this.props.format === Formats.UINT64)
+                    value = parseInt(value);
+                else if (_this.props.format === Formats.FLOAT) {
+                    value = parseFloat(value);
+                    if (_this.props.minStep != null) {
+                        var pow = Math.pow(10, decimalPlaces(_this.props.minStep));
+                        value = Math.round(value * pow) / pow;
+                    }
+                }
+            }
+            if (_this.eventOnlyCharacteristic === true) {
+                // @ts-ignore
+                value = null;
+            }
+            var hap = {
+                iid: _this.iid,
+                type: _this.UUID,
+                perms: _this.props.perms,
+                format: _this.props.format,
+                value: value,
+                description: _this.displayName,
+            };
+            if (_this.props.validValues != null && _this.props.validValues.length > 0) {
+                hap['valid-values'] = _this.props.validValues;
+            }
+            if (_this.props.validValueRanges != null && _this.props.validValueRanges.length > 0 && !(_this.props.validValueRanges.length & 1)) {
+                hap['valid-values-range'] = _this.props.validValueRanges;
+            }
+            // extra properties
+            if (_this.props.unit != null)
+                hap.unit = _this.props.unit;
+            if (_this.props.maxValue != null)
+                hap.maxValue = _this.props.maxValue;
+            if (_this.props.minValue != null)
+                hap.minValue = _this.props.minValue;
+            if (_this.props.minStep != null)
+                hap.minStep = _this.props.minStep;
+            // add maxLen if string length is > 64 bytes and trim to max 256 bytes
+            if (_this.props.format === Formats.STRING) {
+                var str = buffer_shims_1.default.from(value, 'utf8'), len = str.byteLength;
+                if (len > 256) { // 256 bytes is the max allowed length
+                    hap.value = str.toString('utf8', 0, 256);
+                    hap.maxLen = 256;
+                }
+                else if (len > 64) { // values below can be ommited
+                    hap.maxLen = len;
+                }
+            }
+            // if we're not readable, omit the "value" property - otherwise iOS will complain about non-compliance
+            if (_this.props.perms.indexOf(Perms.READ) == -1)
+                delete hap.value;
+            // delete the "value" property anyway if we were asked to
+            if (opt && opt.omitValues)
+                delete hap.value;
+            return hap;
+        };
+        // @ts-ignore
+        _this.props = props || {
+            format: null,
+            unit: null,
+            minValue: null,
+            maxValue: null,
+            minStep: null,
+            perms: []
+        };
+        return _this;
     }
-
-    return;
-  }
-
-  if (this.listeners('get').length > 0) {
-
-    // allow a listener to handle the fetching of this value, and wait for completion
-    this.emit('get', once(function(err, newValue) {
-      this.status = err;
-      if (err) {
-        // pass the error along to our callback
-        if (callback) callback(err);
-      }
-      else {
-        newValue = this.validateValue(newValue); //validateValue returns a value that has be cooerced into a valid value.
-        if (newValue === undefined || newValue === null)
-          newValue = this.getDefaultValue();
-
-        // getting the value was a success; we can pass it along and also update our cached value
-        var oldValue = this.value;
-        this.value = newValue;
-        if (callback) callback(null, newValue);
-
-        // emit a change event if necessary
-        if (oldValue !== newValue)
-          this.emit('change', { oldValue:oldValue, newValue:newValue, context:context });
-      }
-
-    }.bind(this)), context, connectionID);
-  }
-  else {
-
-    // no one is listening to the 'get' event, so just return the cached value
-    if (callback)
-      callback(this.status, this.value);
-  }
-}
-
-Characteristic.prototype.validateValue = function(newValue) {
-
- var isNumericType = false;
- var minValue_resolved = 0;
- var maxValue_resolved = 0;
- var minStep_resolved = undefined;
- var stepDecimals = 0;
-
-  switch(this.props.format) {
-    case 'int':
-      minStep_resolved=1;
-      minValue_resolved=-2147483648;
-      maxValue_resolved=2147483647;
-      isNumericType=true;
-      break;
-    case 'float':
-      minStep_resolved=undefined;
-      minValue_resolved=undefined;
-      maxValue_resolved=undefined;
-      isNumericType=true;
-      break;
-    case 'uint8':
-      minStep_resolved=1;
-      minValue_resolved=0;
-      maxValue_resolved=255;
-      isNumericType=true;
-      break;
-    case 'uint16':
-      minStep_resolved=1;
-      minValue_resolved=0;
-      maxValue_resolved=65535;
-      isNumericType=true;
-      break;
-    case 'uint32':
-      minStep_resolved=1;
-      minValue_resolved=0;
-      maxValue_resolved=4294967295;
-      isNumericType=true;
-      break;
-    case 'uint64':
-      minStep_resolved=1;
-      minValue_resolved=0;
-      maxValue_resolved=18446744073709551615;
-      isNumericType=true;
-      break;
-    //All of the following datatypes return from this switch.
-     case 'bool':
-      return (newValue == true); //We don't need to make sure this returns true or false
-      break;
-    case 'string':
-      var myString = newValue || ''; //If null or undefined or anything odd, make it a blank string
-      myString = String(myString);
-      var maxLength = this.props.maxLen;
-      if (maxLength === undefined) maxLength=64; //Default Max Length is 64.
-      if (myString.length>maxLength) myString = myString.substring(0,maxLength); //Truncate strings that are too long
-      return myString; //We don't need to do any validation after having truncated the string
-      break;
-    case 'data':
-      var maxLength = this.props.maxDataLen;
-      if (maxLength===undefined) maxLength=2097152; //Default Max Length is 2097152.
-      //if (newValue.length>maxLength) //I don't know the best way to handle this since it's unknown binary data.
-      //I suspect that it will crash HomeKit for this bridge if the length is too long.
-      return newValue;
-      break;
-    case 'tlv8':
-      //Should we parse this to make sure the tlv8 is valid?
-      break;
-    default: //Datatype out of HAP Spec encountered. We'll assume the developer knows what they're doing.
-      return newValue;
-    };
-
-  if (isNumericType) {
-    if (isNaN(newValue)) return this.value; //This is not a number so we'll just pass out the last value.
-    if (newValue === false) return 0;
-    if (newValue === true) return 1;
-    if ((!isNaN(this.props.maxValue))&&(this.props.maxValue!==null)) maxValue_resolved=this.props.maxValue;
-    if ((!isNaN(this.props.minValue))&&(this.props.minValue!==null)) minValue_resolved=this.props.minValue;
-    if ((!isNaN(this.props.minStep))&&(this.props.minStep!==null)) minStep_resolved=this.props.minStep;
-
-    if (newValue<minValue_resolved) newValue = minValue_resolved; //Fails Minimum Value Test
-    if (newValue>maxValue_resolved) newValue = maxValue_resolved; //Fails Maximum Value Test
-    if (minStep_resolved!==undefined) {
-      //Determine how many decimals we need to display
-      if (Math.floor(minStep_resolved) === minStep_resolved)
-        stepDecimals = 0;
-      else
-        stepDecimals = minStep_resolved.toString().split(".")[1].length || 0;
-
-      //Use Decimal to detemine the lowest value within the step.
-      try {
-        var decimalVal = new Decimal(newValue);
-        var decimalDiff = decimalVal.mod(minStep_resolved);
-        decimalVal = decimalVal.minus(decimalDiff);
-        if (stepDecimals === 0) {
-          newValue = parseInt(decimalVal.toFixed(0));
-        } else {
-          newValue = parseFloat(decimalVal.toFixed(stepDecimals)); //Convert it to a fixed decimal
-        }
-      } catch (e) {
-        return this.value; //If we had an error, return the current value.
-      }
-    }
-
-    if (this['valid-values']!==undefined)
-      if (!this['valid-values'].includes(newValue)) return this.value; //Fails Valid Values Test
-    if (this['valid-values-range']!==undefined) { //This is another way Apple has to handle min/max
-      if (newValue<this['valid-values-range'][0]) newValue=this['valid-values-range'][0];
-      if (newValue>this['valid-values-range'][1]) newValue=this['valid-values-range'][1];
-    }
-  }
-  return newValue;
-}
-
-Characteristic.prototype.setValue = function(newValue, callback, context, connectionID) {
-
-  if ( newValue instanceof Error ) {
-    this.status = newValue
-  } else {
-    this.status = null;
-  }
-
-  newValue = this.validateValue(newValue); //validateValue returns a value that has be cooerced into a valid value.
-
-  if (this.listeners('set').length > 0) {
-
-    // allow a listener to handle the setting of this value, and wait for completion
-    this.emit('set', newValue, once(function(err) {
-      this.status = err;
-      if (err) {
-        // pass the error along to our callback
-        if (callback) callback(err);
-      }
-      else {
-        if (newValue === undefined || newValue === null)
-          newValue = this.getDefaultValue();
-        // setting the value was a success; so we can cache it now
-        var oldValue = this.value;
-        this.value = newValue;
-        if (callback) callback();
-
-        if (this.eventOnlyCharacteristic === true || oldValue !== newValue)
-          this.emit('change', { oldValue:oldValue, newValue:newValue, context:context });
-      }
-
-    }.bind(this)), context, connectionID);
-
-  }
-  else {
-    if (newValue === undefined || newValue === null)
-      newValue = this.getDefaultValue();
-    // no one is listening to the 'set' event, so just assign the value blindly
-    var oldValue = this.value;
-    this.value = newValue;
-    if (callback) callback();
-
-    if (this.eventOnlyCharacteristic === true || oldValue !== newValue)
-      this.emit('change', { oldValue:oldValue, newValue:newValue, context:context });
-  }
-
-  return this; // for chaining
-}
-
-Characteristic.prototype.updateValue = function(newValue, callback, context) {
-
-  if ( newValue instanceof Error ) {
-    this.status = newValue
-  } else {
-    this.status = null;
-  }
-
-  newValue = this.validateValue(newValue); //validateValue returns a value that has be cooerced into a valid value.
-
-  if (newValue === undefined || newValue === null)
-    newValue = this.getDefaultValue();
-    // no one is listening to the 'set' event, so just assign the value blindly
-  var oldValue = this.value;
-  this.value = newValue;
-  if (callback) callback();
-
-  if (this.eventOnlyCharacteristic === true || oldValue !== newValue)
-    this.emit('change', { oldValue:oldValue, newValue:newValue, context:context });
-  return this; // for chaining
-}
-
-Characteristic.prototype.getDefaultValue = function() {
-  switch (this.props.format) {
-    case Characteristic.Formats.BOOL: return false;
-    case Characteristic.Formats.STRING: return "";
-    case Characteristic.Formats.DATA: return null; // who knows!
-    case Characteristic.Formats.TLV8: return null; // who knows!
-    case Characteristic.Formats.DICTIONARY: return {};
-    case Characteristic.Formats.ARRAY: return [];
-    default: return this.props.minValue || 0;
-  }
-}
-
-Characteristic.prototype._assignID = function(identifierCache, accessoryName, serviceUUID, serviceSubtype) {
-
-  // generate our IID based on our UUID
-  this.iid = identifierCache.getIID(accessoryName, serviceUUID, serviceSubtype, this.UUID);
-}
-
-/**
- * Returns a JSON representation of this Accessory suitable for delivering to HAP clients.
- */
-Characteristic.prototype.toHAP = function(opt) {
-
-  // ensure our value fits within our constraints if present
-  var value = this.value;
-  if (this.props.minValue != null && value < this.props.minValue) value = this.props.minValue;
-  if (this.props.maxValue != null && value > this.props.maxValue) value = this.props.maxValue;
-  if (this.props.format != null) {
-    if (this.props.format === Characteristic.Formats.INT)
-      value = parseInt(value);
-    else if (this.props.format === Characteristic.Formats.UINT8)
-      value = parseInt(value);
-    else if (this.props.format === Characteristic.Formats.UINT16)
-      value = parseInt(value);
-    else if (this.props.format === Characteristic.Formats.UINT32)
-      value = parseInt(value);
-    else if (this.props.format === Characteristic.Formats.UINT64)
-      value = parseInt(value);
-    else if (this.props.format === Characteristic.Formats.FLOAT) {
-      value = parseFloat(value);
-      if (this.props.minStep != null) {
-        var pow = Math.pow(10, decimalPlaces(this.props.minStep));
-        value = Math.round(value * pow) / pow;
-      }
-    }
-  }
-
-  if (this.eventOnlyCharacteristic === true) {
-    value = null;
-  }
-
-  var hap = {
-    iid: this.iid,
-    type: this.UUID,
-    perms: this.props.perms,
-    format: this.props.format,
-    value: value,
-    description: this.displayName
-
-    // These properties used to be sent but do not seem to be used:
-    //
-    // events: false,
-    // bonjour: false
-  };
-
-  if (this.props.validValues != null && this.props.validValues.length > 0) {
-    hap['valid-values'] = this.props.validValues;
-  }
-
-  if (this.props.validValueRanges != null && this.props.validValueRanges.length > 0 && !(this.props.validValueRanges.length & 1)) {
-    hap['valid-values-range'] = this.props.validValueRanges;
-  }
-
-  // extra properties
-  if (this.props.unit != null) hap.unit = this.props.unit;
-  if (this.props.maxValue != null) hap.maxValue = this.props.maxValue;
-  if (this.props.minValue != null) hap.minValue = this.props.minValue;
-  if (this.props.minStep != null) hap.minStep = this.props.minStep;
-
-  // add maxLen if string length is > 64 bytes and trim to max 256 bytes
-  if (this.props.format === Characteristic.Formats.STRING) {
-    var str = bufferShim.from(value, 'utf8'),
-        len = str.byteLength;
-    if (len > 256) { // 256 bytes is the max allowed length
-      hap.value = str.toString('utf8', 0, 256);
-      hap.maxLen = 256;
-    } else if (len > 64) { // values below can be ommited
-      hap.maxLen = len;
-    }
-  }
-
-  // if we're not readable, omit the "value" property - otherwise iOS will complain about non-compliance
-  if (this.props.perms.indexOf(Characteristic.Perms.READ) == -1)
-    delete hap.value;
-
-  // delete the "value" property anyway if we were asked to
-  if (opt && opt.omitValues)
-    delete hap.value;
-
-  return hap;
-}
-
+    Characteristic.Formats = Formats;
+    Characteristic.Units = Units;
+    Characteristic.Perms = Perms;
+    return Characteristic;
+}(EventEmitter_1.EventEmitter));
+exports.Characteristic = Characteristic;
 // Mike Samuel
 // http://stackoverflow.com/questions/10454518/javascript-how-to-retrieve-the-number-of-decimals-of-a-string-number
 function decimalPlaces(num) {
-  var match = (''+num).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
-  if (!match) { return 0; }
-  return Math.max(
-       0,
-       // Number of digits right of decimal point.
-       (match[1] ? match[1].length : 0)
-       // Adjust for scientific notation.
-       - (match[2] ? +match[2] : 0));
+    var match = ('' + num).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
+    if (!match) {
+        return 0;
+    }
+    return Math.max(0, 
+    // Number of digits right of decimal point.
+    (match[1] ? match[1].length : 0)
+        // Adjust for scientific notation.
+        - (match[2] ? +match[2] : 0));
 }
-
+//# sourceMappingURL=Characteristic.js.map
 
 /***/ }),
 
-/***/ "../node_modules/hap-nodejs/lib/Service.js":
-/*!*************************************************!*\
-  !*** ../node_modules/hap-nodejs/lib/Service.js ***!
-  \*************************************************/
+/***/ "../node_modules/hap-nodejs/dist/lib/EventEmitter.js":
+/*!***********************************************************!*\
+  !*** ../node_modules/hap-nodejs/dist/lib/EventEmitter.js ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var events_1 = __webpack_require__(/*! events */ "../node_modules/events/events.js");
+var EventEmitter = /** @class */ (function (_super) {
+    __extends(EventEmitter, _super);
+    function EventEmitter() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    EventEmitter.prototype.addListener = function (event, listener) {
+        return _super.prototype.addListener.call(this, event, listener);
+    };
+    ;
+    EventEmitter.prototype.on = function (event, listener) {
+        return _super.prototype.on.call(this, event, listener);
+    };
+    EventEmitter.prototype.once = function (event, listener) {
+        return _super.prototype.once.call(this, event, listener);
+    };
+    EventEmitter.prototype.removeListener = function (event, listener) {
+        return _super.prototype.removeListener.call(this, event, listener);
+    };
+    EventEmitter.prototype.removeAllListeners = function (event) {
+        return _super.prototype.removeAllListeners.call(this, event);
+    };
+    EventEmitter.prototype.setMaxListeners = function (n) {
+        return _super.prototype.setMaxListeners.call(this, n);
+    };
+    EventEmitter.prototype.getMaxListeners = function () {
+        return _super.prototype.getMaxListeners.call(this);
+    };
+    EventEmitter.prototype.listeners = function (event) {
+        return _super.prototype.listeners.call(this, event);
+    };
+    EventEmitter.prototype.emit = function (event) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        return _super.prototype.emit.apply(this, [event].concat(args));
+    };
+    EventEmitter.prototype.listenerCount = function (type) {
+        return _super.prototype.listenerCount.call(this, type);
+    };
+    return EventEmitter;
+}(events_1.EventEmitter));
+exports.EventEmitter = EventEmitter;
+//# sourceMappingURL=EventEmitter.js.map
 
-var inherits = __webpack_require__(/*! util */ "../node_modules/util/util.js").inherits;
-var clone = __webpack_require__(/*! ./util/clone */ "../node_modules/hap-nodejs/lib/util/clone.js").clone;
-var EventEmitter = __webpack_require__(/*! events */ "../node_modules/events/events.js").EventEmitter;
-var Characteristic = __webpack_require__(/*! ./Characteristic */ "../node_modules/hap-nodejs/lib/Characteristic.js").Characteristic;
+/***/ }),
 
-module.exports = {
-  Service: Service
-};
+/***/ "../node_modules/hap-nodejs/dist/lib/Service.js":
+/*!******************************************************!*\
+  !*** ../node_modules/hap-nodejs/dist/lib/Service.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var Characteristic_1 = __webpack_require__(/*! ./Characteristic */ "../node_modules/hap-nodejs/dist/lib/Characteristic.js");
+var clone_1 = __webpack_require__(/*! ./util/clone */ "../node_modules/hap-nodejs/dist/lib/util/clone.js");
+var EventEmitter_1 = __webpack_require__(/*! ./EventEmitter */ "../node_modules/hap-nodejs/dist/lib/EventEmitter.js");
+var ServiceEventTypes;
+(function (ServiceEventTypes) {
+    ServiceEventTypes["CHARACTERISTIC_CHANGE"] = "characteristic-change";
+    ServiceEventTypes["SERVICE_CONFIGURATION_CHANGE"] = "service-configurationChange";
+})(ServiceEventTypes = exports.ServiceEventTypes || (exports.ServiceEventTypes = {}));
 /**
  * Service represents a set of grouped values necessary to provide a logical function. For instance, a
  * "Door Lock Mechanism" service might contain two values, one for the "desired lock state" and one for the
  * "current lock state". A particular Service is distinguished from others by its "type", which is a UUID.
- * HomeKit provides a set of known Service UUIDs defined in HomeKitTypes.js along with a corresponding
+ * HomeKit provides a set of known Service UUIDs defined in HomeKit.ts along with a corresponding
  * concrete subclass that you can instantiate directly to setup the necessary values. These natively-supported
  * Services are expected to contain a particular set of Characteristics.
  *
@@ -20062,1386 +20307,230 @@ module.exports = {
  * @event 'characteristic-change' => function({characteristic, oldValue, newValue, context}) { }
  *        Emitted after a change in the value of one of our Characteristics has occurred.
  */
-
-function Service(displayName, UUID, subtype) {
-
-  if (!UUID) throw new Error("Services must be created with a valid UUID.");
-
-  this.displayName = displayName;
-  this.UUID = UUID;
-  this.subtype = subtype;
-  this.iid = null; // assigned later by our containing Accessory
-  this.characteristics = [];
-  this.optionalCharacteristics = [];
-
-  this.isHiddenService = false;
-  this.isPrimaryService = false;
-  this.linkedServices = [];
-
-  // every service has an optional Characteristic.Name property - we'll set it to our displayName
-  // if one was given
-  // if you don't provide a display name, some HomeKit apps may choose to hide the device.
-  if (displayName) {
-    // create the characteristic if necessary
-    var nameCharacteristic =
-      this.getCharacteristic(Characteristic.Name) ||
-      this.addCharacteristic(Characteristic.Name);
-
-    nameCharacteristic.setValue(displayName);
-  }
-}
-
-inherits(Service, EventEmitter);
-
-Service.prototype.addCharacteristic = function (characteristic) {
-  // characteristic might be a constructor like `Characteristic.Brightness` instead of an instance
-  // of Characteristic. Coerce if necessary.
-  if (typeof characteristic === 'function') {
-    characteristic = new (Function.prototype.bind.apply(characteristic, arguments));
-  }
-  // check for UUID conflict
-  for (var index in this.characteristics) {
-    var existing = this.characteristics[index];
-    if (existing.UUID === characteristic.UUID) {
-      if (characteristic.UUID === '00000052-0000-1000-8000-0026BB765291') {
-        //This is a special workaround for the Firmware Revision characteristic.
-        return existing;
-      }
-      throw new Error("Cannot add a Characteristic with the same UUID as another Characteristic in this Service: " + existing.UUID);
+var Service = /** @class */ (function (_super) {
+    __extends(Service, _super);
+    function Service(displayName, UUID, subtype) {
+        var _this = _super.call(this) || this;
+        _this.displayName = displayName;
+        _this.UUID = UUID;
+        _this.subtype = subtype;
+        _this.iid = null; // assigned later by our containing Accessory
+        _this.name = null;
+        _this.characteristics = [];
+        _this.optionalCharacteristics = [];
+        _this.isHiddenService = false;
+        _this.isPrimaryService = false;
+        _this.linkedServices = [];
+        _this.addCharacteristic = function (characteristic) {
+            var constructorArgs = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                constructorArgs[_i - 1] = arguments[_i];
+            }
+            // characteristic might be a constructor like `Characteristic.Brightness` instead of an instance
+            // of Characteristic. Coerce if necessary.
+            if (typeof characteristic === 'function') {
+                characteristic = new characteristic(constructorArgs[0], constructorArgs[1], constructorArgs[2]);
+            }
+            // check for UUID conflict
+            for (var index in _this.characteristics) {
+                var existing = _this.characteristics[index];
+                if (existing.UUID === characteristic.UUID) {
+                    if (characteristic.UUID === '00000052-0000-1000-8000-0026BB765291') {
+                        //This is a special workaround for the Firmware Revision characteristic.
+                        return existing;
+                    }
+                    throw new Error("Cannot add a Characteristic with the same UUID as another Characteristic in this Service: " + existing.UUID);
+                }
+            }
+            // listen for changes in characteristics and bubble them up
+            characteristic.on(Characteristic_1.CharacteristicEventTypes.CHANGE, function (change) {
+                // make a new object with the relevant characteristic added, and bubble it up
+                _this.emit(ServiceEventTypes.CHARACTERISTIC_CHANGE, clone_1.clone(change, { characteristic: characteristic }));
+            });
+            _this.characteristics.push(characteristic);
+            _this.emit(ServiceEventTypes.SERVICE_CONFIGURATION_CHANGE, clone_1.clone({ service: _this }));
+            return characteristic;
+        };
+        //Defines this service as hidden
+        _this.setHiddenService = function (isHidden) {
+            _this.isHiddenService = isHidden;
+            _this.emit(ServiceEventTypes.SERVICE_CONFIGURATION_CHANGE, clone_1.clone({ service: _this }));
+        };
+        //Allows setting other services that link to this one.
+        _this.addLinkedService = function (newLinkedService) {
+            //TODO: Add a check if the service is on the same accessory.
+            if (!_this.linkedServices.includes(newLinkedService))
+                _this.linkedServices.push(newLinkedService);
+            _this.emit(ServiceEventTypes.SERVICE_CONFIGURATION_CHANGE, clone_1.clone({ service: _this }));
+        };
+        _this.removeLinkedService = function (oldLinkedService) {
+            //TODO: Add a check if the service is on the same accessory.
+            if (_this.linkedServices.includes(oldLinkedService))
+                _this.linkedServices.splice(_this.linkedServices.indexOf(oldLinkedService), 1);
+            _this.emit(ServiceEventTypes.SERVICE_CONFIGURATION_CHANGE, clone_1.clone({ service: _this }));
+        };
+        _this.removeCharacteristic = function (characteristic) {
+            var targetCharacteristicIndex;
+            for (var index in _this.characteristics) {
+                var existingCharacteristic = _this.characteristics[index];
+                if (existingCharacteristic === characteristic) {
+                    targetCharacteristicIndex = index;
+                    break;
+                }
+            }
+            if (targetCharacteristicIndex) {
+                _this.characteristics.splice(Number.parseInt(targetCharacteristicIndex), 1);
+                characteristic.removeAllListeners();
+                _this.emit(ServiceEventTypes.SERVICE_CONFIGURATION_CHANGE, clone_1.clone({ service: _this }));
+            }
+        };
+        _this.getCharacteristic = function (name) {
+            // returns a characteristic object from the service
+            // If  Service.prototype.getCharacteristic(Characteristic.Type)  does not find the characteristic,
+            // but the type is in optionalCharacteristics, it adds the characteristic.type to the service and returns it.
+            var index, characteristic;
+            for (index in _this.characteristics) {
+                characteristic = _this.characteristics[index];
+                if (typeof name === 'string' && characteristic.displayName === name) {
+                    return characteristic;
+                }
+                else if (typeof name === 'function' && ((characteristic instanceof name) || (name.UUID === characteristic.UUID))) {
+                    return characteristic;
+                }
+            }
+            if (typeof name === 'function') {
+                for (index in _this.optionalCharacteristics) {
+                    characteristic = _this.optionalCharacteristics[index];
+                    if ((characteristic instanceof name) || (name.UUID === characteristic.UUID)) {
+                        return _this.addCharacteristic(name);
+                    }
+                }
+                //Not found in optional Characteristics. Adding anyway, but warning about it if it isn't the Name.
+                if (name !== Characteristic_1.Characteristic.Name) {
+                    console.warn("HAP Warning: Characteristic %s not in required or optional characteristics for service %s. Adding anyway.", name.UUID, _this.UUID);
+                    return _this.addCharacteristic(name);
+                }
+            }
+        };
+        _this.testCharacteristic = function (name) {
+            // checks for the existence of a characteristic object in the service
+            var index, characteristic;
+            for (index in _this.characteristics) {
+                characteristic = _this.characteristics[index];
+                if (typeof name === 'string' && characteristic.displayName === name) {
+                    return true;
+                }
+                else if (typeof name === 'function' && ((characteristic instanceof name) || (name.UUID === characteristic.UUID))) {
+                    return true;
+                }
+            }
+            return false;
+        };
+        _this.setCharacteristic = function (name, value) {
+            _this.getCharacteristic(name).setValue(value);
+            return _this; // for chaining
+        };
+        // A function to only updating the remote value, but not firing the 'set' event.
+        _this.updateCharacteristic = function (name, value) {
+            _this.getCharacteristic(name).updateValue(value);
+            return _this;
+        };
+        _this.addOptionalCharacteristic = function (characteristic) {
+            // characteristic might be a constructor like `Characteristic.Brightness` instead of an instance
+            // of Characteristic. Coerce if necessary.
+            if (typeof characteristic === 'function')
+                characteristic = new characteristic();
+            _this.optionalCharacteristics.push(characteristic);
+        };
+        _this.getCharacteristicByIID = function (iid) {
+            for (var index in _this.characteristics) {
+                var characteristic = _this.characteristics[index];
+                if (characteristic.iid === iid)
+                    return characteristic;
+            }
+        };
+        _this._assignIDs = function (identifierCache, accessoryName, baseIID) {
+            if (baseIID === void 0) { baseIID = 0; }
+            // the Accessory Information service must have a (reserved by IdentifierCache) ID of 1
+            if (_this.UUID === '0000003E-0000-1000-8000-0026BB765291') {
+                _this.iid = 1;
+            }
+            else {
+                // assign our own ID based on our UUID
+                _this.iid = baseIID + identifierCache.getIID(accessoryName, _this.UUID, _this.subtype);
+            }
+            // assign IIDs to our Characteristics
+            for (var index in _this.characteristics) {
+                var characteristic = _this.characteristics[index];
+                characteristic._assignID(identifierCache, accessoryName, _this.UUID, _this.subtype);
+            }
+        };
+        /**
+         * Returns a JSON representation of this Accessory suitable for delivering to HAP clients.
+         */
+        _this.toHAP = function (opt) {
+            var characteristicsHAP = [];
+            for (var index in _this.characteristics) {
+                var characteristic = _this.characteristics[index];
+                characteristicsHAP.push(characteristic.toHAP(opt));
+            }
+            var hap = {
+                iid: _this.iid,
+                type: _this.UUID,
+                characteristics: characteristicsHAP
+            };
+            if (_this.isPrimaryService !== undefined) {
+                hap['primary'] = _this.isPrimaryService;
+            }
+            if (_this.isHiddenService !== undefined) {
+                hap['hidden'] = _this.isHiddenService;
+            }
+            if (_this.linkedServices.length > 0) {
+                hap['linked'] = [];
+                for (var index in _this.linkedServices) {
+                    var otherService = _this.linkedServices[index];
+                    hap['linked'].push(otherService.iid);
+                }
+            }
+            return hap;
+        };
+        _this._setupCharacteristic = function (characteristic) {
+            // listen for changes in characteristics and bubble them up
+            characteristic.on(Characteristic_1.CharacteristicEventTypes.CHANGE, function (change) {
+                // make a new object with the relevant characteristic added, and bubble it up
+                _this.emit(ServiceEventTypes.CHARACTERISTIC_CHANGE, clone_1.clone(change, { characteristic: characteristic }));
+            });
+        };
+        _this._sideloadCharacteristics = function (targetCharacteristics) {
+            for (var index in targetCharacteristics) {
+                var target = targetCharacteristics[index];
+                _this._setupCharacteristic(target);
+            }
+            _this.characteristics = targetCharacteristics.slice();
+        };
+        if (!UUID)
+            throw new Error("Services must be created with a valid UUID.");
+        // every service has an optional Characteristic.Name property - we'll set it to our displayName
+        // if one was given
+        // if you don't provide a display name, some HomeKit apps may choose to hide the device.
+        if (displayName) {
+            // create the characteristic if necessary
+            var nameCharacteristic = _this.getCharacteristic(Characteristic_1.Characteristic.Name) ||
+                _this.addCharacteristic(Characteristic_1.Characteristic.Name);
+            nameCharacteristic.setValue(displayName);
+        }
+        return _this;
     }
-  }
-
-  // listen for changes in characteristics and bubble them up
-  characteristic.on('change', function (change) {
-    // make a new object with the relevant characteristic added, and bubble it up
-    this.emit('characteristic-change', clone(change, { characteristic: characteristic }));
-  }.bind(this));
-
-  this.characteristics.push(characteristic);
-
-  this.emit('service-configurationChange', clone({ service: this }));
-
-  return characteristic;
-}
-
-//Defines this service as hidden
-Service.prototype.setHiddenService = function (isHidden) {
-  this.isHiddenService = isHidden;
-  this.emit('service-configurationChange', clone({ service: this }));
-}
-
-//Allows setting other services that link to this one.
-Service.prototype.addLinkedService = function (newLinkedService) {
-  //TODO: Add a check if the service is on the same accessory.
-  if (!this.linkedServices.includes(newLinkedService))
-    this.linkedServices.push(newLinkedService);
-  this.emit('service-configurationChange', clone({ service: this }));
-}
-
-Service.prototype.removeLinkedService = function (oldLinkedService) {
-  //TODO: Add a check if the service is on the same accessory.
-  if (this.linkedServices.includes(oldLinkedService))
-    this.linkedServices.splice(this.linkedServices.indexOf(oldLinkedService), 1);
-  this.emit('service-configurationChange', clone({ service: this }));
-}
-
-Service.prototype.removeCharacteristic = function (characteristic) {
-  var targetCharacteristicIndex;
-
-  for (var index in this.characteristics) {
-    var existingCharacteristic = this.characteristics[index];
-
-    if (existingCharacteristic === characteristic) {
-      targetCharacteristicIndex = index;
-      break;
-    }
-  }
-
-  if (targetCharacteristicIndex) {
-    this.characteristics.splice(targetCharacteristicIndex, 1);
-    characteristic.removeAllListeners();
-
-    this.emit('service-configurationChange', clone({ service: this }));
-  }
-}
-
-Service.prototype.getCharacteristic = function (name) {
-  // returns a characteristic object from the service
-  // If  Service.prototype.getCharacteristic(Characteristic.Type)  does not find the characteristic,
-  // but the type is in optionalCharacteristics, it adds the characteristic.type to the service and returns it.
-  var index, characteristic;
-  for (index in this.characteristics) {
-    characteristic = this.characteristics[index];
-    if (typeof name === 'string' && characteristic.displayName === name) {
-      return characteristic;
-    }
-    else if (typeof name === 'function' && ((characteristic instanceof name) || (name.UUID === characteristic.UUID))) {
-      return characteristic;
-    }
-  }
-  if (typeof name === 'function') {
-    for (index in this.optionalCharacteristics) {
-      characteristic = this.optionalCharacteristics[index];
-      if ((characteristic instanceof name) || (name.UUID === characteristic.UUID)) {
-        return this.addCharacteristic(name);
-      }
-    }
-    //Not found in optional Characteristics. Adding anyway, but warning about it if it isn't the Name.
-    if (name !== Characteristic.Name) {
-      console.warn("HAP Warning: Characteristic %s not in required or optional characteristics for service %s. Adding anyway.", name.UUID, this.UUID);
-      return this.addCharacteristic(name);
-    }
-  }
-};
-
-Service.prototype.testCharacteristic = function (name) {
-  // checks for the existence of a characteristic object in the service
-  var index, characteristic;
-  for (index in this.characteristics) {
-    characteristic = this.characteristics[index];
-    if (typeof name === 'string' && characteristic.displayName === name) {
-      return true;
-    }
-    else if (typeof name === 'function' && ((characteristic instanceof name) || (name.UUID === characteristic.UUID))) {
-      return true;
-    }
-  }
-  return false;
-}
-
-Service.prototype.setCharacteristic = function (name, value) {
-  this.getCharacteristic(name).setValue(value);
-  return this; // for chaining
-}
-
-// A function to only updating the remote value, but not firiring the 'set' event.
-Service.prototype.updateCharacteristic = function (name, value) {
-  this.getCharacteristic(name).updateValue(value);
-  return this;
-}
-
-Service.prototype.addOptionalCharacteristic = function (characteristic) {
-  // characteristic might be a constructor like `Characteristic.Brightness` instead of an instance
-  // of Characteristic. Coerce if necessary.
-  if (typeof characteristic === 'function')
-    characteristic = new characteristic();
-
-  this.optionalCharacteristics.push(characteristic);
-}
-
-Service.prototype.getCharacteristicByIID = function (iid) {
-  for (var index in this.characteristics) {
-    var characteristic = this.characteristics[index];
-    if (characteristic.iid === iid)
-      return characteristic;
-  }
-}
-
-Service.prototype._assignIDs = function (identifierCache, accessoryName, baseIID) {
-  if (baseIID === undefined) {
-    baseIID = 0;
-  }
-  // the Accessory Information service must have a (reserved by IdentifierCache) ID of 1
-  if (this.UUID === '0000003E-0000-1000-8000-0026BB765291') {
-    this.iid = 1;
-  }
-  else {
-    // assign our own ID based on our UUID
-    this.iid = baseIID + identifierCache.getIID(accessoryName, this.UUID, this.subtype);
-  }
-
-  // assign IIDs to our Characteristics
-  for (var index in this.characteristics) {
-    var characteristic = this.characteristics[index];
-    characteristic._assignID(identifierCache, accessoryName, this.UUID, this.subtype);
-  }
-}
-
-/**
- * Returns a JSON representation of this Accessory suitable for delivering to HAP clients.
- */
-Service.prototype.toHAP = function (opt) {
-
-  var characteristicsHAP = [];
-
-  for (var index in this.characteristics) {
-    var characteristic = this.characteristics[index];
-    characteristicsHAP.push(characteristic.toHAP(opt));
-  }
-
-  var hap = {
-    iid: this.iid,
-    type: this.UUID,
-    characteristics: characteristicsHAP
-  };
-
-  if (this.isPrimaryService !== undefined) {
-    hap['primary'] = this.isPrimaryService;
-  }
-
-  if (this.isHiddenService !== undefined) {
-    hap['hidden'] = this.isHiddenService;
-  }
-
-  if (this.linkedServices.length > 0) {
-    hap['linked'] = [];
-    for (var index in this.linkedServices) {
-      var otherService = this.linkedServices[index];
-      hap['linked'].push(otherService.iid);
-    }
-  }
-
-  return hap;
-}
-
-Service.prototype._setupCharacteristic = function (characteristic) {
-  // listen for changes in characteristics and bubble them up
-  characteristic.on('change', function (change) {
-    // make a new object with the relevant characteristic added, and bubble it up
-    this.emit('characteristic-change', clone(change, { characteristic: characteristic }));
-  }.bind(this));
-}
-
-Service.prototype._sideloadCharacteristics = function (targetCharacteristics) {
-  for (var index in targetCharacteristics) {
-    var target = targetCharacteristics[index];
-    this._setupCharacteristic(target);
-  }
-
-  this.characteristics = targetCharacteristics.slice();
-}
-
+    return Service;
+}(EventEmitter_1.EventEmitter));
+exports.Service = Service;
+//# sourceMappingURL=Service.js.map
 
 /***/ }),
 
-/***/ "../node_modules/hap-nodejs/lib/gen/HomeKitTypes-Bridge.js":
-/*!*****************************************************************!*\
-  !*** ../node_modules/hap-nodejs/lib/gen/HomeKitTypes-Bridge.js ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// Removed from new HAS
-
-var inherits = __webpack_require__(/*! util */ "../node_modules/util/util.js").inherits;
-var Characteristic = __webpack_require__(/*! ../Characteristic */ "../node_modules/hap-nodejs/lib/Characteristic.js").Characteristic;
-var Service = __webpack_require__(/*! ../Service */ "../node_modules/hap-nodejs/lib/Service.js").Service;
-
-/**
- * 
- * Removed in IOS 11
- * 
- */
-
-/**
- * Characteristic "App Matching Identifier"
- */
-
-Characteristic.AppMatchingIdentifier = function() {
-  Characteristic.call(this, 'App Matching Identifier', '000000A4-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.TLV8,
-    perms: [Characteristic.Perms.READ]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.AppMatchingIdentifier, Characteristic);
-
-Characteristic.AppMatchingIdentifier.UUID = '000000A4-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Programmable Switch Output State"
- */
-
-Characteristic.ProgrammableSwitchOutputState = function() {
-  Characteristic.call(this, 'Programmable Switch Output State', '00000074-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.ProgrammableSwitchOutputState, Characteristic);
-
-Characteristic.ProgrammableSwitchOutputState.UUID = '00000074-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Software Revision"
- */
-
-Characteristic.SoftwareRevision = function() {
-  Characteristic.call(this, 'Software Revision', '00000054-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.STRING,
-    perms: [Characteristic.Perms.READ]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.SoftwareRevision, Characteristic);
-
-Characteristic.SoftwareRevision.UUID = '00000054-0000-1000-8000-0026BB765291';
-
-/**
- * Service "Camera Control"
- */
-
-Service.CameraControl = function(displayName, subtype) {
-  Service.call(this, displayName, '00000111-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.On);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.CurrentHorizontalTiltAngle);
-  this.addOptionalCharacteristic(Characteristic.CurrentVerticalTiltAngle);
-  this.addOptionalCharacteristic(Characteristic.TargetHorizontalTiltAngle);
-  this.addOptionalCharacteristic(Characteristic.TargetVerticalTiltAngle);
-  this.addOptionalCharacteristic(Characteristic.NightVision);
-  this.addOptionalCharacteristic(Characteristic.OpticalZoom);
-  this.addOptionalCharacteristic(Characteristic.DigitalZoom);
-  this.addOptionalCharacteristic(Characteristic.ImageRotation);
-  this.addOptionalCharacteristic(Characteristic.ImageMirroring);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.CameraControl, Service);
-
-Service.CameraControl.UUID = '00000111-0000-1000-8000-0026BB765291';
-
-/**
- * Service "Stateful Programmable Switch"
- */
-
-Service.StatefulProgrammableSwitch = function(displayName, subtype) {
-  Service.call(this, displayName, '00000088-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.ProgrammableSwitchEvent);
-  this.addCharacteristic(Characteristic.ProgrammableSwitchOutputState);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.StatefulProgrammableSwitch, Service);
-
-Service.StatefulProgrammableSwitch.UUID = '00000088-0000-1000-8000-0026BB765291';
-
-
-// Aliases
-Characteristic.SelectedStreamConfiguration = Characteristic.SelectedRTPStreamConfiguration;
-Service.Label = Service.ServiceLabel;
-Characteristic.LabelNamespace = Characteristic.ServiceLabelNamespace;
-Characteristic.LabelIndex = Characteristic.ServiceLabelIndex;
-
-//Renamed Enums:
-Characteristic.TargetHumidifierDehumidifierState.AUTO = 0; //Is Now HUMIDIFIER_OR_DEHUMIDIFIER
-
-
-
-
-
-
-
-/**
- * 
- * Removed in IOS 10
- * 
- */
-
-/**
- * Characteristic "Accessory Identifier"
- */
-
-Characteristic.AccessoryIdentifier = function() {
-  Characteristic.call(this, 'Accessory Identifier', '00000057-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.STRING,
-    perms: [Characteristic.Perms.READ]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.AccessoryIdentifier, Characteristic);
-
-Characteristic.AccessoryIdentifier.UUID = '00000057-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Category"
- */
-
-Characteristic.Category = function() {
-  Characteristic.call(this, 'Category', '000000A3-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT16,
-    maxValue: 16,
-    minValue: 1,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.Category, Characteristic);
-
-Characteristic.Category.UUID = '000000A3-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Configure Bridged Accessory"
- */
-
-Characteristic.ConfigureBridgedAccessory = function() {
-  Characteristic.call(this, 'Configure Bridged Accessory', '000000A0-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.TLV8,
-    perms: [Characteristic.Perms.WRITE]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.ConfigureBridgedAccessory, Characteristic);
-
-Characteristic.ConfigureBridgedAccessory.UUID = '000000A0-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Configure Bridged Accessory Status"
- */
-
-Characteristic.ConfigureBridgedAccessoryStatus = function() {
-  Characteristic.call(this, 'Configure Bridged Accessory Status', '0000009D-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.TLV8,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.ConfigureBridgedAccessoryStatus, Characteristic);
-
-Characteristic.ConfigureBridgedAccessoryStatus.UUID = '0000009D-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Current Time"
- */
-
-Characteristic.CurrentTime = function() {
-  Characteristic.call(this, 'Current Time', '0000009B-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.STRING,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CurrentTime, Characteristic);
-
-Characteristic.CurrentTime.UUID = '0000009B-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Day of the Week"
- */
-
-Characteristic.DayoftheWeek = function() {
-  Characteristic.call(this, 'Day of the Week', '00000098-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 7,
-    minValue: 1,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.DayoftheWeek, Characteristic);
-
-Characteristic.DayoftheWeek.UUID = '00000098-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Discover Bridged Accessories"
- */
-
-Characteristic.DiscoverBridgedAccessories = function() {
-  Characteristic.call(this, 'Discover Bridged Accessories', '0000009E-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.DiscoverBridgedAccessories, Characteristic);
-
-Characteristic.DiscoverBridgedAccessories.UUID = '0000009E-0000-1000-8000-0026BB765291';
-
-// The value property of DiscoverBridgedAccessories must be one of the following:
-Characteristic.DiscoverBridgedAccessories.START_DISCOVERY = 0;
-Characteristic.DiscoverBridgedAccessories.STOP_DISCOVERY = 1;
-
-/**
- * Characteristic "Discovered Bridged Accessories"
- */
-
-Characteristic.DiscoveredBridgedAccessories = function() {
-  Characteristic.call(this, 'Discovered Bridged Accessories', '0000009F-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT16,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.DiscoveredBridgedAccessories, Characteristic);
-
-Characteristic.DiscoveredBridgedAccessories.UUID = '0000009F-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Link Quality"
- */
-
-Characteristic.LinkQuality = function() {
-  Characteristic.call(this, 'Link Quality', '0000009C-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 4,
-    minValue: 1,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.LinkQuality, Characteristic);
-
-Characteristic.LinkQuality.UUID = '0000009C-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Reachable"
- */
-
-Characteristic.Reachable = function() {
-  Characteristic.call(this, 'Reachable', '00000063-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.BOOL,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.Reachable, Characteristic);
-
-Characteristic.Reachable.UUID = '00000063-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Relay Control Point"
- */
-
-Characteristic.RelayControlPoint = function() {
-  Characteristic.call(this, 'Relay Control Point', '0000005E-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.TLV8,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.RelayControlPoint, Characteristic);
-
-Characteristic.RelayControlPoint.UUID = '0000005E-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Relay Enabled"
- */
-
-Characteristic.RelayEnabled = function() {
-  Characteristic.call(this, 'Relay Enabled', '0000005B-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.BOOL,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.RelayEnabled, Characteristic);
-
-Characteristic.RelayEnabled.UUID = '0000005B-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Relay State"
- */
-
-Characteristic.RelayState = function() {
-  Characteristic.call(this, 'Relay State', '0000005C-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.RelayState, Characteristic);
-
-Characteristic.RelayState.UUID = '0000005C-0000-1000-8000-0026BB765291';
-
-
-/**
- * Characteristic "Time Update"
- */
-
-Characteristic.TimeUpdate = function() {
-  Characteristic.call(this, 'Time Update', '0000009A-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.BOOL,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TimeUpdate, Characteristic);
-
-Characteristic.TimeUpdate.UUID = '0000009A-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Tunnel Connection Timeout "
- */
-
-Characteristic.TunnelConnectionTimeout = function() {
-  Characteristic.call(this, 'Tunnel Connection Timeout ', '00000061-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT32,
-    perms: [Characteristic.Perms.WRITE, Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TunnelConnectionTimeout, Characteristic);
-
-Characteristic.TunnelConnectionTimeout.UUID = '00000061-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Tunneled Accessory Advertising"
- */
-
-Characteristic.TunneledAccessoryAdvertising = function() {
-  Characteristic.call(this, 'Tunneled Accessory Advertising', '00000060-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.BOOL,
-    perms: [Characteristic.Perms.WRITE, Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TunneledAccessoryAdvertising, Characteristic);
-
-Characteristic.TunneledAccessoryAdvertising.UUID = '00000060-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Tunneled Accessory Connected"
- */
-
-Characteristic.TunneledAccessoryConnected = function() {
-  Characteristic.call(this, 'Tunneled Accessory Connected', '00000059-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.BOOL,
-    perms: [Characteristic.Perms.WRITE, Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TunneledAccessoryConnected, Characteristic);
-
-Characteristic.TunneledAccessoryConnected.UUID = '00000059-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Tunneled Accessory State Number"
- */
-
-Characteristic.TunneledAccessoryStateNumber = function() {
-  Characteristic.call(this, 'Tunneled Accessory State Number', '00000058-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TunneledAccessoryStateNumber, Characteristic);
-
-Characteristic.TunneledAccessoryStateNumber.UUID = '00000058-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Version"
- */
-
-Characteristic.Version = function() {
-  Characteristic.call(this, 'Version', '00000037-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.STRING,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.Version, Characteristic);
-
-Characteristic.Version.UUID = '00000037-0000-1000-8000-0026BB765291';
-
-/**
- * Service "Bridge Configuration"
- */
-
-Service.BridgeConfiguration = function(displayName, subtype) {
-  Service.call(this, displayName, '000000A1-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.ConfigureBridgedAccessoryStatus);
-  this.addCharacteristic(Characteristic.DiscoverBridgedAccessories);
-  this.addCharacteristic(Characteristic.DiscoveredBridgedAccessories);
-  this.addCharacteristic(Characteristic.ConfigureBridgedAccessory);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.BridgeConfiguration, Service);
-
-Service.BridgeConfiguration.UUID = '000000A1-0000-1000-8000-0026BB765291';
-
-/**
- * Service "Bridging State"
- */
-
-Service.BridgingState = function(displayName, subtype) {
-  Service.call(this, displayName, '00000062-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.Reachable);
-  this.addCharacteristic(Characteristic.LinkQuality);
-  this.addCharacteristic(Characteristic.AccessoryIdentifier);
-  this.addCharacteristic(Characteristic.Category);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.BridgingState, Service);
-
-Service.BridgingState.UUID = '00000062-0000-1000-8000-0026BB765291';
-
-/**
- * Service "Pairing"
- */
-
-Service.Pairing = function(displayName, subtype) {
-  Service.call(this, displayName, '00000055-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.PairSetup);
-  this.addCharacteristic(Characteristic.PairVerify);
-  this.addCharacteristic(Characteristic.PairingFeatures);
-  this.addCharacteristic(Characteristic.PairingPairings);
-
-  // Optional Characteristics
-};
-
-inherits(Service.Pairing, Service);
-
-Service.Pairing.UUID = '00000055-0000-1000-8000-0026BB765291';
-
-/**
- * Service "Protocol Information"
- */
-
-Service.ProtocolInformation = function(displayName, subtype) {
-  Service.call(this, displayName, '000000A2-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.Version);
-
-  // Optional Characteristics
-};
-
-inherits(Service.ProtocolInformation, Service);
-
-Service.ProtocolInformation.UUID = '000000A2-0000-1000-8000-0026BB765291';
-
-/**
- * Service "Relay"
- */
-
-Service.Relay = function(displayName, subtype) {
-  Service.call(this, displayName, '0000005A-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.RelayEnabled);
-  this.addCharacteristic(Characteristic.RelayState);
-  this.addCharacteristic(Characteristic.RelayControlPoint);
-
-  // Optional Characteristics
-};
-
-inherits(Service.Relay, Service);
-
-Service.Relay.UUID = '0000005A-0000-1000-8000-0026BB765291';
-
-/**
- * Service "Time Information"
- */
-
-Service.TimeInformation = function(displayName, subtype) {
-  Service.call(this, displayName, '00000099-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.CurrentTime);
-  this.addCharacteristic(Characteristic.DayoftheWeek);
-  this.addCharacteristic(Characteristic.TimeUpdate);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.TimeInformation, Service);
-
-Service.TimeInformation.UUID = '00000099-0000-1000-8000-0026BB765291';
-
-/**
- * Service "Tunneled BTLE Accessory Service"
- */
-
-Service.TunneledBTLEAccessoryService = function(displayName, subtype) {
-  Service.call(this, displayName, '00000056-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.Name);
-  this.addCharacteristic(Characteristic.AccessoryIdentifier);
-  this.addCharacteristic(Characteristic.TunneledAccessoryStateNumber);
-  this.addCharacteristic(Characteristic.TunneledAccessoryConnected);
-  this.addCharacteristic(Characteristic.TunneledAccessoryAdvertising);
-  this.addCharacteristic(Characteristic.TunnelConnectionTimeout);
-
-  // Optional Characteristics
-};
-
-inherits(Service.TunneledBTLEAccessoryService, Service);
-
-Service.TunneledBTLEAccessoryService.UUID = '00000056-0000-1000-8000-0026BB765291';
-
-
-/***/ }),
-
-/***/ "../node_modules/hap-nodejs/lib/gen/HomeKitTypes-Television.js":
-/*!*********************************************************************!*\
-  !*** ../node_modules/hap-nodejs/lib/gen/HomeKitTypes-Television.js ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// Manually created from metadata in HomeKitDaemon
-
-var inherits = __webpack_require__(/*! util */ "../node_modules/util/util.js").inherits;
-var Characteristic = __webpack_require__(/*! ../Characteristic */ "../node_modules/hap-nodejs/lib/Characteristic.js").Characteristic;
-var Service = __webpack_require__(/*! ../Service */ "../node_modules/hap-nodejs/lib/Service.js").Service;
-
-/**
- * Characteristic "Active Identifier"
- */
-
-Characteristic.ActiveIdentifier = function() {
-  Characteristic.call(this, 'Active Identifier', '000000E7-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT32,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.ActiveIdentifier, Characteristic);
-
-Characteristic.ActiveIdentifier.UUID = '000000E7-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Configured Name"
- */
-
-Characteristic.ConfiguredName = function() {
-  Characteristic.call(this, 'Configured Name', '000000E3-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.STRING,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.ConfiguredName, Characteristic);
-
-Characteristic.ConfiguredName.UUID = '000000E3-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Sleep Discovery Mode"
- */
-
-Characteristic.SleepDiscoveryMode = function() {
-  Characteristic.call(this, 'Sleep Discovery Mode', '000000E8-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.SleepDiscoveryMode, Characteristic);
-
-Characteristic.SleepDiscoveryMode.UUID = '000000E8-0000-1000-8000-0026BB765291';
-
-// The value property of SleepDiscoveryMode must be one of the following:
-Characteristic.SleepDiscoveryMode.NOT_DISCOVERABLE = 0;
-Characteristic.SleepDiscoveryMode.ALWAYS_DISCOVERABLE = 1;
-
-/**
- * Characteristic "Closed Captions"
- */
-
-Characteristic.ClosedCaptions = function() {
-  Characteristic.call(this, 'Closed Captions', '000000DD-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.ClosedCaptions, Characteristic);
-
-Characteristic.ClosedCaptions.UUID = '000000DD-0000-1000-8000-0026BB765291';
-
-// The value property of ClosedCaptions must be one of the following:
-Characteristic.ClosedCaptions.DISABLED = 0;
-Characteristic.ClosedCaptions.ENABLED = 1;
-
-/**
- * Characteristic "Display Order"
- */
-
-Characteristic.DisplayOrder = function() {
-  Characteristic.call(this, 'Display Order', '00000136-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.TLV8,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.DisplayOrder, Characteristic);
-
-Characteristic.DisplayOrder.UUID = '00000136-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Current Media State"
- */
-
-Characteristic.CurrentMediaState = function() {
-  Characteristic.call(this, 'Current Media State', '000000E0-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 3,
-    minValue: 0,
-    validValues: [0,1,2,3],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CurrentMediaState, Characteristic);
-
-Characteristic.CurrentMediaState.UUID = '000000E0-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Target Media State"
- */
-
-Characteristic.TargetMediaState = function() {
-  Characteristic.call(this, 'Target Media State', '00000137-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 2,
-    minValue: 0,
-    validValues: [0,1,2,3],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TargetMediaState, Characteristic);
-
-Characteristic.TargetMediaState.UUID = '00000137-0000-1000-8000-0026BB765291';
-
-// The value property of TargetMediaState must be one of the following:
-Characteristic.TargetMediaState.PLAY = 0;
-Characteristic.TargetMediaState.PAUSE = 1;
-Characteristic.TargetMediaState.STOP = 2;
-
-/**
- * Characteristic "Picture Mode"
- */
-
-Characteristic.PictureMode = function() {
-  Characteristic.call(this, 'Picture Mode', '000000E2-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT16,
-    maxValue: 13,
-    minValue: 0,
-    validValues: [0,1,2,3,4,5,6,7,8,9,10,11,12,13],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.PictureMode, Characteristic);
-
-Characteristic.PictureMode.UUID = '000000E2-0000-1000-8000-0026BB765291';
-
-// The value property of PictureMode must be one of the following:
-Characteristic.PictureMode.OTHER = 0;
-Characteristic.PictureMode.STANDARD = 1;
-Characteristic.PictureMode.CALIBRATED = 2;
-Characteristic.PictureMode.CALIBRATED_DARK = 3;
-Characteristic.PictureMode.VIVID = 4;
-Characteristic.PictureMode.GAME = 5;
-Characteristic.PictureMode.COMPUTER = 6;
-Characteristic.PictureMode.CUSTOM = 7;
-
-/**
- * Characteristic "Power Mode Selection"
- */
-
-Characteristic.PowerModeSelection = function() {
-  Characteristic.call(this, 'Power Mode Selection', '000000DF-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.WRITE]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.PowerModeSelection, Characteristic);
-
-Characteristic.PowerModeSelection.UUID = '000000DF-0000-1000-8000-0026BB765291';
-
-// The value property of PowerModeSelection must be one of the following:
-Characteristic.PowerModeSelection.SHOW = 0;
-Characteristic.PowerModeSelection.HIDE = 1;
-
-/**
- * Characteristic "Remote Key"
- */
-
-Characteristic.RemoteKey = function() {
-  Characteristic.call(this, 'Remote Key', '000000E1-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 16,
-    minValue: 0,
-    validValues: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
-    perms: [Characteristic.Perms.WRITE]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.RemoteKey, Characteristic);
-
-Characteristic.RemoteKey.UUID = '000000E1-0000-1000-8000-0026BB765291';
-
-// The value property of RemoteKey must be one of the following:
-Characteristic.RemoteKey.REWIND = 0;
-Characteristic.RemoteKey.FAST_FORWARD = 1;
-Characteristic.RemoteKey.NEXT_TRACK = 2;
-Characteristic.RemoteKey.PREVIOUS_TRACK = 3;
-Characteristic.RemoteKey.ARROW_UP = 4;
-Characteristic.RemoteKey.ARROW_DOWN = 5;
-Characteristic.RemoteKey.ARROW_LEFT = 6;
-Characteristic.RemoteKey.ARROW_RIGHT = 7;
-Characteristic.RemoteKey.SELECT = 8;
-Characteristic.RemoteKey.BACK = 9;
-Characteristic.RemoteKey.EXIT = 10;
-Characteristic.RemoteKey.PLAY_PAUSE = 11;
-Characteristic.RemoteKey.INFORMATION = 15;
-
-/**
- * Characteristic "Input Source Type"
- */
-
-Characteristic.InputSourceType = function() {
-  Characteristic.call(this, 'Input Source Type', '000000DB-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 10,
-    minValue: 0,
-    validValues: [0,1,2,3,4,5,6,7,8,9,10],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.InputSourceType, Characteristic);
-
-Characteristic.InputSourceType.UUID = '000000DB-0000-1000-8000-0026BB765291';
-
-// The value property of InputSourceType must be one of the following:
-Characteristic.InputSourceType.OTHER = 0;
-Characteristic.InputSourceType.HOME_SCREEN = 1;
-Characteristic.InputSourceType.TUNER = 2;
-Characteristic.InputSourceType.HDMI = 3;
-Characteristic.InputSourceType.COMPOSITE_VIDEO = 4;
-Characteristic.InputSourceType.S_VIDEO = 5;
-Characteristic.InputSourceType.COMPONENT_VIDEO = 6;
-Characteristic.InputSourceType.DVI = 7;
-Characteristic.InputSourceType.AIRPLAY = 8;
-Characteristic.InputSourceType.USB = 9;
-Characteristic.InputSourceType.APPLICATION = 10;
-
-/**
- * Characteristic "Input Device Type"
- */
-
-Characteristic.InputDeviceType = function() {
-  Characteristic.call(this, 'Input Device Type', '000000DC-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 5,
-    minValue: 0,
-    validValues: [0,1,2,3,4,5],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.InputDeviceType, Characteristic);
-
-Characteristic.InputDeviceType.UUID = '000000DC-0000-1000-8000-0026BB765291';
-
-// The value property of InputDeviceType must be one of the following:
-Characteristic.InputDeviceType.OTHER = 0;
-Characteristic.InputDeviceType.TV = 1;
-Characteristic.InputDeviceType.RECORDING = 2;
-Characteristic.InputDeviceType.TUNER = 3;
-Characteristic.InputDeviceType.PLAYBACK = 4;
-Characteristic.InputDeviceType.AUDIO_SYSTEM = 5;
-
-/**
- * Characteristic "Identifier"
- */
-
-Characteristic.Identifier = function() {
-  Characteristic.call(this, 'Identifier', '000000E6-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT32,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.Identifier, Characteristic);
-
-Characteristic.Identifier.UUID = '000000E6-0000-1000-8000-0026BB765291';
-
-/**
- * Characteristic "Current Visibility State"
- */
-
-Characteristic.CurrentVisibilityState = function() {
-  Characteristic.call(this, 'Current Visibility State', '00000135-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 3,
-    minValue: 0,
-    validValues: [0,1,2,3],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CurrentVisibilityState, Characteristic);
-
-Characteristic.CurrentVisibilityState.UUID = '00000135-0000-1000-8000-0026BB765291';
-
-// The value property of CurrentVisibilityState must be one of the following:
-Characteristic.CurrentVisibilityState.SHOWN = 0;
-Characteristic.CurrentVisibilityState.HIDDEN = 1;
-
-/**
- * Characteristic "Target Visibility State"
- */
-
-Characteristic.TargetVisibilityState = function() {
-  Characteristic.call(this, 'Target Visibility State', '00000134-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TargetVisibilityState, Characteristic);
-
-Characteristic.TargetVisibilityState.UUID = '00000134-0000-1000-8000-0026BB765291';
-
-// The value property of TargetVisibilityState must be one of the following:
-Characteristic.TargetVisibilityState.SHOWN = 0;
-Characteristic.TargetVisibilityState.HIDDEN = 1;
-
-/**
- * Characteristic "Volume Control Type"
- */
-
-Characteristic.VolumeControlType = function() {
-  Characteristic.call(this, 'Volume Control Type', '000000E9-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 3,
-    minValue: 0,
-    validValues: [0,1,2,3],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.VolumeControlType, Characteristic);
-
-Characteristic.VolumeControlType.UUID = '000000E9-0000-1000-8000-0026BB765291';
-
-// The value property of VolumeControlType must be one of the following:
-Characteristic.VolumeControlType.NONE = 0;
-Characteristic.VolumeControlType.RELATIVE = 1;
-Characteristic.VolumeControlType.RELATIVE_WITH_CURRENT = 2;
-Characteristic.VolumeControlType.ABSOLUTE = 3;
-
-/**
- * Characteristic "Volume Selector"
- */
-
-Characteristic.VolumeSelector = function() {
-  Characteristic.call(this, 'Volume Selector', '000000EA-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.WRITE]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.VolumeSelector, Characteristic);
-
-Characteristic.VolumeSelector.UUID = '000000EA-0000-1000-8000-0026BB765291';
-
-// The value property of VolumeSelector must be one of the following:
-Characteristic.VolumeSelector.INCREMENT = 0;
-Characteristic.VolumeSelector.DECREMENT = 1;
-
-/**
- * Service "Television"
- */
-
-Service.Television = function(displayName, subtype) {
-  Service.call(this, displayName, '000000D8-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.Active);
-  this.addCharacteristic(Characteristic.ActiveIdentifier);
-  this.addCharacteristic(Characteristic.ConfiguredName);
-  this.addCharacteristic(Characteristic.SleepDiscoveryMode);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Brightness);
-  this.addOptionalCharacteristic(Characteristic.ClosedCaptions);
-  this.addOptionalCharacteristic(Characteristic.DisplayOrder);
-  this.addOptionalCharacteristic(Characteristic.CurrentMediaState);
-  this.addOptionalCharacteristic(Characteristic.TargetMediaState);
-  this.addOptionalCharacteristic(Characteristic.PictureMode);
-  this.addOptionalCharacteristic(Characteristic.PowerModeSelection);
-  this.addOptionalCharacteristic(Characteristic.RemoteKey);
-};
-
-inherits(Service.Television, Service);
-
-Service.Television.UUID = '000000D8-0000-1000-8000-0026BB765291';
-
-/**
- * Service "Input Source"
- */
-
-Service.InputSource = function(displayName, subtype) {
-  Service.call(this, displayName, '000000D9-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.ConfiguredName);
-  this.addCharacteristic(Characteristic.InputSourceType);
-  this.addCharacteristic(Characteristic.IsConfigured);
-  this.addCharacteristic(Characteristic.CurrentVisibilityState);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Identifier);
-  this.addOptionalCharacteristic(Characteristic.InputDeviceType);
-  this.addOptionalCharacteristic(Characteristic.TargetVisibilityState);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.InputSource, Service);
-
-Service.InputSource.UUID = '000000D9-0000-1000-8000-0026BB765291';
-
-/**
- * Service "Television Speaker"
- */
-
-Service.TelevisionSpeaker = function(displayName, subtype) {
-  Service.call(this, displayName, '00000113-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.Mute);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Active);
-  this.addOptionalCharacteristic(Characteristic.Volume);
-  this.addOptionalCharacteristic(Characteristic.VolumeControlType);
-  this.addOptionalCharacteristic(Characteristic.VolumeSelector);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.TelevisionSpeaker, Service);
-
-Service.TelevisionSpeaker.UUID = '00000113-0000-1000-8000-0026BB765291';
-
-/***/ }),
-
-/***/ "../node_modules/hap-nodejs/lib/gen/HomeKitTypes.js":
+/***/ "../node_modules/hap-nodejs/dist/lib/gen/HomeKit.js":
 /*!**********************************************************!*\
-  !*** ../node_modules/hap-nodejs/lib/gen/HomeKitTypes.js ***!
+  !*** ../node_modules/hap-nodejs/dist/lib/gen/HomeKit.js ***!
   \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -21449,3670 +20538,4429 @@ Service.TelevisionSpeaker.UUID = '00000113-0000-1000-8000-0026BB765291';
 "use strict";
 
 // THIS FILE IS AUTO-GENERATED - DO NOT MODIFY
-
-var inherits = __webpack_require__(/*! util */ "../node_modules/util/util.js").inherits;
-var Characteristic = __webpack_require__(/*! ../Characteristic */ "../node_modules/hap-nodejs/lib/Characteristic.js").Characteristic;
-var Service = __webpack_require__(/*! ../Service */ "../node_modules/hap-nodejs/lib/Service.js").Service;
-
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var Characteristic_1 = __webpack_require__(/*! ../Characteristic */ "../node_modules/hap-nodejs/dist/lib/Characteristic.js");
+var Service_1 = __webpack_require__(/*! ../Service */ "../node_modules/hap-nodejs/dist/lib/Service.js");
 /**
  * Characteristic "Accessory Flags"
  */
-
-Characteristic.AccessoryFlags = function() {
-  Characteristic.call(this, 'Accessory Flags', '000000A6-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT32,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.AccessoryFlags, Characteristic);
-
-Characteristic.AccessoryFlags.UUID = '000000A6-0000-1000-8000-0026BB765291';
-
+var AccessoryFlags = /** @class */ (function (_super) {
+    __extends(AccessoryFlags, _super);
+    function AccessoryFlags() {
+        var _this = _super.call(this, 'Accessory Flags', AccessoryFlags.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT32,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    AccessoryFlags.UUID = '000000A6-0000-1000-8000-0026BB765291';
+    return AccessoryFlags;
+}(Characteristic_1.Characteristic));
+exports.AccessoryFlags = AccessoryFlags;
+Characteristic_1.Characteristic.AccessoryFlags = AccessoryFlags;
+/**
+ * Characteristic "Product Data"
+ */
+var ProductData = /** @class */ (function (_super) {
+    __extends(ProductData, _super);
+    function ProductData() {
+        var _this = _super.call(this, 'Product Data', ProductData.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.DATA,
+            perms: [Characteristic_1.Perms.READ]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    ProductData.UUID = '00000220-0000-1000-8000-0026BB765291';
+    return ProductData;
+}(Characteristic_1.Characteristic));
+exports.ProductData = ProductData;
+Characteristic_1.Characteristic.ProductData = ProductData;
 /**
  * Characteristic "Active"
  */
-
-Characteristic.Active = function() {
-  Characteristic.call(this, 'Active', '000000B0-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.Active, Characteristic);
-
-Characteristic.Active.UUID = '000000B0-0000-1000-8000-0026BB765291';
-
-// The value property of Active must be one of the following:
-Characteristic.Active.INACTIVE = 0;
-Characteristic.Active.ACTIVE = 1;
-
+var Active = /** @class */ (function (_super) {
+    __extends(Active, _super);
+    function Active() {
+        var _this = _super.call(this, 'Active', Active.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of Active must be one of the following:
+    Active.INACTIVE = 0;
+    Active.ACTIVE = 1;
+    Active.UUID = '000000B0-0000-1000-8000-0026BB765291';
+    return Active;
+}(Characteristic_1.Characteristic));
+exports.Active = Active;
+Characteristic_1.Characteristic.Active = Active;
 /**
  * Characteristic "Administrator Only Access"
  */
-
-Characteristic.AdministratorOnlyAccess = function() {
-  Characteristic.call(this, 'Administrator Only Access', '00000001-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.BOOL,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.AdministratorOnlyAccess, Characteristic);
-
-Characteristic.AdministratorOnlyAccess.UUID = '00000001-0000-1000-8000-0026BB765291';
-
+var AdministratorOnlyAccess = /** @class */ (function (_super) {
+    __extends(AdministratorOnlyAccess, _super);
+    function AdministratorOnlyAccess() {
+        var _this = _super.call(this, 'Administrator Only Access', AdministratorOnlyAccess.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.BOOL,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    AdministratorOnlyAccess.UUID = '00000001-0000-1000-8000-0026BB765291';
+    return AdministratorOnlyAccess;
+}(Characteristic_1.Characteristic));
+exports.AdministratorOnlyAccess = AdministratorOnlyAccess;
+Characteristic_1.Characteristic.AdministratorOnlyAccess = AdministratorOnlyAccess;
 /**
  * Characteristic "Air Particulate Density"
  */
-
-Characteristic.AirParticulateDensity = function() {
-  Characteristic.call(this, 'Air Particulate Density', '00000064-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    maxValue: 1000,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.AirParticulateDensity, Characteristic);
-
-Characteristic.AirParticulateDensity.UUID = '00000064-0000-1000-8000-0026BB765291';
-
+var AirParticulateDensity = /** @class */ (function (_super) {
+    __extends(AirParticulateDensity, _super);
+    function AirParticulateDensity() {
+        var _this = _super.call(this, 'Air Particulate Density', AirParticulateDensity.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            maxValue: 1000,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    AirParticulateDensity.UUID = '00000064-0000-1000-8000-0026BB765291';
+    return AirParticulateDensity;
+}(Characteristic_1.Characteristic));
+exports.AirParticulateDensity = AirParticulateDensity;
+Characteristic_1.Characteristic.AirParticulateDensity = AirParticulateDensity;
 /**
  * Characteristic "Air Particulate Size"
  */
-
-Characteristic.AirParticulateSize = function() {
-  Characteristic.call(this, 'Air Particulate Size', '00000065-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.AirParticulateSize, Characteristic);
-
-Characteristic.AirParticulateSize.UUID = '00000065-0000-1000-8000-0026BB765291';
-
-// The value property of AirParticulateSize must be one of the following:
-Characteristic.AirParticulateSize._2_5_M = 0;
-Characteristic.AirParticulateSize._10_M = 1;
-
+var AirParticulateSize = /** @class */ (function (_super) {
+    __extends(AirParticulateSize, _super);
+    function AirParticulateSize() {
+        var _this = _super.call(this, 'Air Particulate Size', AirParticulateSize.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of AirParticulateSize must be one of the following:
+    AirParticulateSize._2_5_M = 0;
+    AirParticulateSize._10_M = 1;
+    AirParticulateSize.UUID = '00000065-0000-1000-8000-0026BB765291';
+    return AirParticulateSize;
+}(Characteristic_1.Characteristic));
+exports.AirParticulateSize = AirParticulateSize;
+Characteristic_1.Characteristic.AirParticulateSize = AirParticulateSize;
 /**
  * Characteristic "Air Quality"
  */
-
-Characteristic.AirQuality = function() {
-  Characteristic.call(this, 'Air Quality', '00000095-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 5,
-    minValue: 0,
-    validValues: [0,1,2,3,4,5],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.AirQuality, Characteristic);
-
-Characteristic.AirQuality.UUID = '00000095-0000-1000-8000-0026BB765291';
-
-// The value property of AirQuality must be one of the following:
-Characteristic.AirQuality.UNKNOWN = 0;
-Characteristic.AirQuality.EXCELLENT = 1;
-Characteristic.AirQuality.GOOD = 2;
-Characteristic.AirQuality.FAIR = 3;
-Characteristic.AirQuality.INFERIOR = 4;
-Characteristic.AirQuality.POOR = 5;
-
+var AirQuality = /** @class */ (function (_super) {
+    __extends(AirQuality, _super);
+    function AirQuality() {
+        var _this = _super.call(this, 'Air Quality', AirQuality.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 5,
+            minValue: 0,
+            validValues: [0, 1, 2, 3, 4, 5],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of AirQuality must be one of the following:
+    AirQuality.UNKNOWN = 0;
+    AirQuality.EXCELLENT = 1;
+    AirQuality.GOOD = 2;
+    AirQuality.FAIR = 3;
+    AirQuality.INFERIOR = 4;
+    AirQuality.POOR = 5;
+    AirQuality.UUID = '00000095-0000-1000-8000-0026BB765291';
+    return AirQuality;
+}(Characteristic_1.Characteristic));
+exports.AirQuality = AirQuality;
+Characteristic_1.Characteristic.AirQuality = AirQuality;
 /**
  * Characteristic "Audio Feedback"
  */
-
-Characteristic.AudioFeedback = function() {
-  Characteristic.call(this, 'Audio Feedback', '00000005-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.BOOL,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.AudioFeedback, Characteristic);
-
-Characteristic.AudioFeedback.UUID = '00000005-0000-1000-8000-0026BB765291';
-
+var AudioFeedback = /** @class */ (function (_super) {
+    __extends(AudioFeedback, _super);
+    function AudioFeedback() {
+        var _this = _super.call(this, 'Audio Feedback', AudioFeedback.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.BOOL,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    AudioFeedback.UUID = '00000005-0000-1000-8000-0026BB765291';
+    return AudioFeedback;
+}(Characteristic_1.Characteristic));
+exports.AudioFeedback = AudioFeedback;
+Characteristic_1.Characteristic.AudioFeedback = AudioFeedback;
 /**
  * Characteristic "Battery Level"
  */
-
-Characteristic.BatteryLevel = function() {
-  Characteristic.call(this, 'Battery Level', '00000068-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    unit: Characteristic.Units.PERCENTAGE,
-    maxValue: 100,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.BatteryLevel, Characteristic);
-
-Characteristic.BatteryLevel.UUID = '00000068-0000-1000-8000-0026BB765291';
-
+var BatteryLevel = /** @class */ (function (_super) {
+    __extends(BatteryLevel, _super);
+    function BatteryLevel() {
+        var _this = _super.call(this, 'Battery Level', BatteryLevel.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            unit: Characteristic_1.Units.PERCENTAGE,
+            maxValue: 100,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    BatteryLevel.UUID = '00000068-0000-1000-8000-0026BB765291';
+    return BatteryLevel;
+}(Characteristic_1.Characteristic));
+exports.BatteryLevel = BatteryLevel;
+Characteristic_1.Characteristic.BatteryLevel = BatteryLevel;
 /**
  * Characteristic "Brightness"
  */
-
-Characteristic.Brightness = function() {
-  Characteristic.call(this, 'Brightness', '00000008-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.INT,
-    unit: Characteristic.Units.PERCENTAGE,
-    maxValue: 100,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.Brightness, Characteristic);
-
-Characteristic.Brightness.UUID = '00000008-0000-1000-8000-0026BB765291';
-
+var Brightness = /** @class */ (function (_super) {
+    __extends(Brightness, _super);
+    function Brightness() {
+        var _this = _super.call(this, 'Brightness', Brightness.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.INT,
+            unit: Characteristic_1.Units.PERCENTAGE,
+            maxValue: 100,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    Brightness.UUID = '00000008-0000-1000-8000-0026BB765291';
+    return Brightness;
+}(Characteristic_1.Characteristic));
+exports.Brightness = Brightness;
+Characteristic_1.Characteristic.Brightness = Brightness;
 /**
  * Characteristic "Carbon Dioxide Detected"
  */
-
-Characteristic.CarbonDioxideDetected = function() {
-  Characteristic.call(this, 'Carbon Dioxide Detected', '00000092-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CarbonDioxideDetected, Characteristic);
-
-Characteristic.CarbonDioxideDetected.UUID = '00000092-0000-1000-8000-0026BB765291';
-
-// The value property of CarbonDioxideDetected must be one of the following:
-Characteristic.CarbonDioxideDetected.CO2_LEVELS_NORMAL = 0;
-Characteristic.CarbonDioxideDetected.CO2_LEVELS_ABNORMAL = 1;
-
+var CarbonDioxideDetected = /** @class */ (function (_super) {
+    __extends(CarbonDioxideDetected, _super);
+    function CarbonDioxideDetected() {
+        var _this = _super.call(this, 'Carbon Dioxide Detected', CarbonDioxideDetected.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of CarbonDioxideDetected must be one of the following:
+    CarbonDioxideDetected.CO2_LEVELS_NORMAL = 0;
+    CarbonDioxideDetected.CO2_LEVELS_ABNORMAL = 1;
+    CarbonDioxideDetected.UUID = '00000092-0000-1000-8000-0026BB765291';
+    return CarbonDioxideDetected;
+}(Characteristic_1.Characteristic));
+exports.CarbonDioxideDetected = CarbonDioxideDetected;
+Characteristic_1.Characteristic.CarbonDioxideDetected = CarbonDioxideDetected;
 /**
  * Characteristic "Carbon Dioxide Level"
  */
-
-Characteristic.CarbonDioxideLevel = function() {
-  Characteristic.call(this, 'Carbon Dioxide Level', '00000093-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    maxValue: 100000,
-    minValue: 0,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CarbonDioxideLevel, Characteristic);
-
-Characteristic.CarbonDioxideLevel.UUID = '00000093-0000-1000-8000-0026BB765291';
-
+var CarbonDioxideLevel = /** @class */ (function (_super) {
+    __extends(CarbonDioxideLevel, _super);
+    function CarbonDioxideLevel() {
+        var _this = _super.call(this, 'Carbon Dioxide Level', CarbonDioxideLevel.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            maxValue: 100000,
+            minValue: 0,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    CarbonDioxideLevel.UUID = '00000093-0000-1000-8000-0026BB765291';
+    return CarbonDioxideLevel;
+}(Characteristic_1.Characteristic));
+exports.CarbonDioxideLevel = CarbonDioxideLevel;
+Characteristic_1.Characteristic.CarbonDioxideLevel = CarbonDioxideLevel;
 /**
  * Characteristic "Carbon Dioxide Peak Level"
  */
-
-Characteristic.CarbonDioxidePeakLevel = function() {
-  Characteristic.call(this, 'Carbon Dioxide Peak Level', '00000094-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    maxValue: 100000,
-    minValue: 0,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CarbonDioxidePeakLevel, Characteristic);
-
-Characteristic.CarbonDioxidePeakLevel.UUID = '00000094-0000-1000-8000-0026BB765291';
-
+var CarbonDioxidePeakLevel = /** @class */ (function (_super) {
+    __extends(CarbonDioxidePeakLevel, _super);
+    function CarbonDioxidePeakLevel() {
+        var _this = _super.call(this, 'Carbon Dioxide Peak Level', CarbonDioxidePeakLevel.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            maxValue: 100000,
+            minValue: 0,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    CarbonDioxidePeakLevel.UUID = '00000094-0000-1000-8000-0026BB765291';
+    return CarbonDioxidePeakLevel;
+}(Characteristic_1.Characteristic));
+exports.CarbonDioxidePeakLevel = CarbonDioxidePeakLevel;
+Characteristic_1.Characteristic.CarbonDioxidePeakLevel = CarbonDioxidePeakLevel;
 /**
  * Characteristic "Carbon Monoxide Detected"
  */
-
-Characteristic.CarbonMonoxideDetected = function() {
-  Characteristic.call(this, 'Carbon Monoxide Detected', '00000069-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CarbonMonoxideDetected, Characteristic);
-
-Characteristic.CarbonMonoxideDetected.UUID = '00000069-0000-1000-8000-0026BB765291';
-
-// The value property of CarbonMonoxideDetected must be one of the following:
-Characteristic.CarbonMonoxideDetected.CO_LEVELS_NORMAL = 0;
-Characteristic.CarbonMonoxideDetected.CO_LEVELS_ABNORMAL = 1;
-
+var CarbonMonoxideDetected = /** @class */ (function (_super) {
+    __extends(CarbonMonoxideDetected, _super);
+    function CarbonMonoxideDetected() {
+        var _this = _super.call(this, 'Carbon Monoxide Detected', CarbonMonoxideDetected.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of CarbonMonoxideDetected must be one of the following:
+    CarbonMonoxideDetected.CO_LEVELS_NORMAL = 0;
+    CarbonMonoxideDetected.CO_LEVELS_ABNORMAL = 1;
+    CarbonMonoxideDetected.UUID = '00000069-0000-1000-8000-0026BB765291';
+    return CarbonMonoxideDetected;
+}(Characteristic_1.Characteristic));
+exports.CarbonMonoxideDetected = CarbonMonoxideDetected;
+Characteristic_1.Characteristic.CarbonMonoxideDetected = CarbonMonoxideDetected;
 /**
  * Characteristic "Carbon Monoxide Level"
  */
-
-Characteristic.CarbonMonoxideLevel = function() {
-  Characteristic.call(this, 'Carbon Monoxide Level', '00000090-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    maxValue: 100,
-    minValue: 0,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CarbonMonoxideLevel, Characteristic);
-
-Characteristic.CarbonMonoxideLevel.UUID = '00000090-0000-1000-8000-0026BB765291';
-
+var CarbonMonoxideLevel = /** @class */ (function (_super) {
+    __extends(CarbonMonoxideLevel, _super);
+    function CarbonMonoxideLevel() {
+        var _this = _super.call(this, 'Carbon Monoxide Level', CarbonMonoxideLevel.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            maxValue: 100,
+            minValue: 0,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    CarbonMonoxideLevel.UUID = '00000090-0000-1000-8000-0026BB765291';
+    return CarbonMonoxideLevel;
+}(Characteristic_1.Characteristic));
+exports.CarbonMonoxideLevel = CarbonMonoxideLevel;
+Characteristic_1.Characteristic.CarbonMonoxideLevel = CarbonMonoxideLevel;
 /**
  * Characteristic "Carbon Monoxide Peak Level"
  */
-
-Characteristic.CarbonMonoxidePeakLevel = function() {
-  Characteristic.call(this, 'Carbon Monoxide Peak Level', '00000091-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    maxValue: 100,
-    minValue: 0,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CarbonMonoxidePeakLevel, Characteristic);
-
-Characteristic.CarbonMonoxidePeakLevel.UUID = '00000091-0000-1000-8000-0026BB765291';
-
+var CarbonMonoxidePeakLevel = /** @class */ (function (_super) {
+    __extends(CarbonMonoxidePeakLevel, _super);
+    function CarbonMonoxidePeakLevel() {
+        var _this = _super.call(this, 'Carbon Monoxide Peak Level', CarbonMonoxidePeakLevel.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            maxValue: 100,
+            minValue: 0,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    CarbonMonoxidePeakLevel.UUID = '00000091-0000-1000-8000-0026BB765291';
+    return CarbonMonoxidePeakLevel;
+}(Characteristic_1.Characteristic));
+exports.CarbonMonoxidePeakLevel = CarbonMonoxidePeakLevel;
+Characteristic_1.Characteristic.CarbonMonoxidePeakLevel = CarbonMonoxidePeakLevel;
 /**
  * Characteristic "Charging State"
  */
-
-Characteristic.ChargingState = function() {
-  Characteristic.call(this, 'Charging State', '0000008F-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 2,
-    minValue: 0,
-    validValues: [0,1,2],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.ChargingState, Characteristic);
-
-Characteristic.ChargingState.UUID = '0000008F-0000-1000-8000-0026BB765291';
-
-// The value property of ChargingState must be one of the following:
-Characteristic.ChargingState.NOT_CHARGING = 0;
-Characteristic.ChargingState.CHARGING = 1;
-Characteristic.ChargingState.NOT_CHARGEABLE = 2;
-
+var ChargingState = /** @class */ (function (_super) {
+    __extends(ChargingState, _super);
+    function ChargingState() {
+        var _this = _super.call(this, 'Charging State', ChargingState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 2,
+            minValue: 0,
+            validValues: [0, 1, 2],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of ChargingState must be one of the following:
+    ChargingState.NOT_CHARGING = 0;
+    ChargingState.CHARGING = 1;
+    ChargingState.NOT_CHARGEABLE = 2;
+    ChargingState.UUID = '0000008F-0000-1000-8000-0026BB765291';
+    return ChargingState;
+}(Characteristic_1.Characteristic));
+exports.ChargingState = ChargingState;
+Characteristic_1.Characteristic.ChargingState = ChargingState;
 /**
  * Characteristic "Color Temperature"
  */
-
-Characteristic.ColorTemperature = function() {
-  Characteristic.call(this, 'Color Temperature', '000000CE-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT32,
-    maxValue: 500,
-    minValue: 140,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.ColorTemperature, Characteristic);
-
-Characteristic.ColorTemperature.UUID = '000000CE-0000-1000-8000-0026BB765291';
-
+var ColorTemperature = /** @class */ (function (_super) {
+    __extends(ColorTemperature, _super);
+    function ColorTemperature() {
+        var _this = _super.call(this, 'Color Temperature', ColorTemperature.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT32,
+            maxValue: 500,
+            minValue: 140,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    ColorTemperature.UUID = '000000CE-0000-1000-8000-0026BB765291';
+    return ColorTemperature;
+}(Characteristic_1.Characteristic));
+exports.ColorTemperature = ColorTemperature;
+Characteristic_1.Characteristic.ColorTemperature = ColorTemperature;
 /**
  * Characteristic "Contact Sensor State"
  */
-
-Characteristic.ContactSensorState = function() {
-  Characteristic.call(this, 'Contact Sensor State', '0000006A-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.ContactSensorState, Characteristic);
-
-Characteristic.ContactSensorState.UUID = '0000006A-0000-1000-8000-0026BB765291';
-
-// The value property of ContactSensorState must be one of the following:
-Characteristic.ContactSensorState.CONTACT_DETECTED = 0;
-Characteristic.ContactSensorState.CONTACT_NOT_DETECTED = 1;
-
+var ContactSensorState = /** @class */ (function (_super) {
+    __extends(ContactSensorState, _super);
+    function ContactSensorState() {
+        var _this = _super.call(this, 'Contact Sensor State', ContactSensorState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of ContactSensorState must be one of the following:
+    ContactSensorState.CONTACT_DETECTED = 0;
+    ContactSensorState.CONTACT_NOT_DETECTED = 1;
+    ContactSensorState.UUID = '0000006A-0000-1000-8000-0026BB765291';
+    return ContactSensorState;
+}(Characteristic_1.Characteristic));
+exports.ContactSensorState = ContactSensorState;
+Characteristic_1.Characteristic.ContactSensorState = ContactSensorState;
 /**
  * Characteristic "Cooling Threshold Temperature"
  */
-
-Characteristic.CoolingThresholdTemperature = function() {
-  Characteristic.call(this, 'Cooling Threshold Temperature', '0000000D-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    unit: Characteristic.Units.CELSIUS,
-    maxValue: 35,
-    minValue: 10,
-    minStep: 0.1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CoolingThresholdTemperature, Characteristic);
-
-Characteristic.CoolingThresholdTemperature.UUID = '0000000D-0000-1000-8000-0026BB765291';
-
+var CoolingThresholdTemperature = /** @class */ (function (_super) {
+    __extends(CoolingThresholdTemperature, _super);
+    function CoolingThresholdTemperature() {
+        var _this = _super.call(this, 'Cooling Threshold Temperature', CoolingThresholdTemperature.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            unit: Characteristic_1.Units.CELSIUS,
+            maxValue: 35,
+            minValue: 10,
+            minStep: 0.1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    CoolingThresholdTemperature.UUID = '0000000D-0000-1000-8000-0026BB765291';
+    return CoolingThresholdTemperature;
+}(Characteristic_1.Characteristic));
+exports.CoolingThresholdTemperature = CoolingThresholdTemperature;
+Characteristic_1.Characteristic.CoolingThresholdTemperature = CoolingThresholdTemperature;
 /**
  * Characteristic "Current Air Purifier State"
  */
-
-Characteristic.CurrentAirPurifierState = function() {
-  Characteristic.call(this, 'Current Air Purifier State', '000000A9-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 2,
-    minValue: 0,
-    validValues: [0,1,2],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CurrentAirPurifierState, Characteristic);
-
-Characteristic.CurrentAirPurifierState.UUID = '000000A9-0000-1000-8000-0026BB765291';
-
-// The value property of CurrentAirPurifierState must be one of the following:
-Characteristic.CurrentAirPurifierState.INACTIVE = 0;
-Characteristic.CurrentAirPurifierState.IDLE = 1;
-Characteristic.CurrentAirPurifierState.PURIFYING_AIR = 2;
-
+var CurrentAirPurifierState = /** @class */ (function (_super) {
+    __extends(CurrentAirPurifierState, _super);
+    function CurrentAirPurifierState() {
+        var _this = _super.call(this, 'Current Air Purifier State', CurrentAirPurifierState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 2,
+            minValue: 0,
+            validValues: [0, 1, 2],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of CurrentAirPurifierState must be one of the following:
+    CurrentAirPurifierState.INACTIVE = 0;
+    CurrentAirPurifierState.IDLE = 1;
+    CurrentAirPurifierState.PURIFYING_AIR = 2;
+    CurrentAirPurifierState.UUID = '000000A9-0000-1000-8000-0026BB765291';
+    return CurrentAirPurifierState;
+}(Characteristic_1.Characteristic));
+exports.CurrentAirPurifierState = CurrentAirPurifierState;
+Characteristic_1.Characteristic.CurrentAirPurifierState = CurrentAirPurifierState;
 /**
  * Characteristic "Current Ambient Light Level"
  */
-
-Characteristic.CurrentAmbientLightLevel = function() {
-  Characteristic.call(this, 'Current Ambient Light Level', '0000006B-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    unit: Characteristic.Units.LUX,
-    maxValue: 100000,
-    minValue: 0.0001,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CurrentAmbientLightLevel, Characteristic);
-
-Characteristic.CurrentAmbientLightLevel.UUID = '0000006B-0000-1000-8000-0026BB765291';
-
+var CurrentAmbientLightLevel = /** @class */ (function (_super) {
+    __extends(CurrentAmbientLightLevel, _super);
+    function CurrentAmbientLightLevel() {
+        var _this = _super.call(this, 'Current Ambient Light Level', CurrentAmbientLightLevel.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            unit: Characteristic_1.Units.LUX,
+            maxValue: 100000,
+            minValue: 0.0001,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    CurrentAmbientLightLevel.UUID = '0000006B-0000-1000-8000-0026BB765291';
+    return CurrentAmbientLightLevel;
+}(Characteristic_1.Characteristic));
+exports.CurrentAmbientLightLevel = CurrentAmbientLightLevel;
+Characteristic_1.Characteristic.CurrentAmbientLightLevel = CurrentAmbientLightLevel;
 /**
  * Characteristic "Current Door State"
  */
-
-Characteristic.CurrentDoorState = function() {
-  Characteristic.call(this, 'Current Door State', '0000000E-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 4,
-    minValue: 0,
-    validValues: [0,1,2,3,4],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CurrentDoorState, Characteristic);
-
-Characteristic.CurrentDoorState.UUID = '0000000E-0000-1000-8000-0026BB765291';
-
-// The value property of CurrentDoorState must be one of the following:
-Characteristic.CurrentDoorState.OPEN = 0;
-Characteristic.CurrentDoorState.CLOSED = 1;
-Characteristic.CurrentDoorState.OPENING = 2;
-Characteristic.CurrentDoorState.CLOSING = 3;
-Characteristic.CurrentDoorState.STOPPED = 4;
-
+var CurrentDoorState = /** @class */ (function (_super) {
+    __extends(CurrentDoorState, _super);
+    function CurrentDoorState() {
+        var _this = _super.call(this, 'Current Door State', CurrentDoorState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 4,
+            minValue: 0,
+            validValues: [0, 1, 2, 3, 4],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of CurrentDoorState must be one of the following:
+    CurrentDoorState.OPEN = 0;
+    CurrentDoorState.CLOSED = 1;
+    CurrentDoorState.OPENING = 2;
+    CurrentDoorState.CLOSING = 3;
+    CurrentDoorState.STOPPED = 4;
+    CurrentDoorState.UUID = '0000000E-0000-1000-8000-0026BB765291';
+    return CurrentDoorState;
+}(Characteristic_1.Characteristic));
+exports.CurrentDoorState = CurrentDoorState;
+Characteristic_1.Characteristic.CurrentDoorState = CurrentDoorState;
 /**
  * Characteristic "Current Fan State"
  */
-
-Characteristic.CurrentFanState = function() {
-  Characteristic.call(this, 'Current Fan State', '000000AF-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 2,
-    minValue: 0,
-    validValues: [0,1,2],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CurrentFanState, Characteristic);
-
-Characteristic.CurrentFanState.UUID = '000000AF-0000-1000-8000-0026BB765291';
-
-// The value property of CurrentFanState must be one of the following:
-Characteristic.CurrentFanState.INACTIVE = 0;
-Characteristic.CurrentFanState.IDLE = 1;
-Characteristic.CurrentFanState.BLOWING_AIR = 2;
-
+var CurrentFanState = /** @class */ (function (_super) {
+    __extends(CurrentFanState, _super);
+    function CurrentFanState() {
+        var _this = _super.call(this, 'Current Fan State', CurrentFanState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 2,
+            minValue: 0,
+            validValues: [0, 1, 2],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of CurrentFanState must be one of the following:
+    CurrentFanState.INACTIVE = 0;
+    CurrentFanState.IDLE = 1;
+    CurrentFanState.BLOWING_AIR = 2;
+    CurrentFanState.UUID = '000000AF-0000-1000-8000-0026BB765291';
+    return CurrentFanState;
+}(Characteristic_1.Characteristic));
+exports.CurrentFanState = CurrentFanState;
+Characteristic_1.Characteristic.CurrentFanState = CurrentFanState;
 /**
  * Characteristic "Current Heater Cooler State"
  */
-
-Characteristic.CurrentHeaterCoolerState = function() {
-  Characteristic.call(this, 'Current Heater Cooler State', '000000B1-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 3,
-    minValue: 0,
-    validValues: [0,1,2,3],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CurrentHeaterCoolerState, Characteristic);
-
-Characteristic.CurrentHeaterCoolerState.UUID = '000000B1-0000-1000-8000-0026BB765291';
-
-// The value property of CurrentHeaterCoolerState must be one of the following:
-Characteristic.CurrentHeaterCoolerState.INACTIVE = 0;
-Characteristic.CurrentHeaterCoolerState.IDLE = 1;
-Characteristic.CurrentHeaterCoolerState.HEATING = 2;
-Characteristic.CurrentHeaterCoolerState.COOLING = 3;
-
+var CurrentHeaterCoolerState = /** @class */ (function (_super) {
+    __extends(CurrentHeaterCoolerState, _super);
+    function CurrentHeaterCoolerState() {
+        var _this = _super.call(this, 'Current Heater Cooler State', CurrentHeaterCoolerState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 3,
+            minValue: 0,
+            validValues: [0, 1, 2, 3],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of CurrentHeaterCoolerState must be one of the following:
+    CurrentHeaterCoolerState.INACTIVE = 0;
+    CurrentHeaterCoolerState.IDLE = 1;
+    CurrentHeaterCoolerState.HEATING = 2;
+    CurrentHeaterCoolerState.COOLING = 3;
+    CurrentHeaterCoolerState.UUID = '000000B1-0000-1000-8000-0026BB765291';
+    return CurrentHeaterCoolerState;
+}(Characteristic_1.Characteristic));
+exports.CurrentHeaterCoolerState = CurrentHeaterCoolerState;
+Characteristic_1.Characteristic.CurrentHeaterCoolerState = CurrentHeaterCoolerState;
 /**
  * Characteristic "Current Heating Cooling State"
  */
-
-Characteristic.CurrentHeatingCoolingState = function() {
-  Characteristic.call(this, 'Current Heating Cooling State', '0000000F-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 2,
-    minValue: 0,
-    validValues: [0,1,2],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CurrentHeatingCoolingState, Characteristic);
-
-Characteristic.CurrentHeatingCoolingState.UUID = '0000000F-0000-1000-8000-0026BB765291';
-
-// The value property of CurrentHeatingCoolingState must be one of the following:
-Characteristic.CurrentHeatingCoolingState.OFF = 0;
-Characteristic.CurrentHeatingCoolingState.HEAT = 1;
-Characteristic.CurrentHeatingCoolingState.COOL = 2;
-
+var CurrentHeatingCoolingState = /** @class */ (function (_super) {
+    __extends(CurrentHeatingCoolingState, _super);
+    function CurrentHeatingCoolingState() {
+        var _this = _super.call(this, 'Current Heating Cooling State', CurrentHeatingCoolingState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 2,
+            minValue: 0,
+            validValues: [0, 1, 2],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of CurrentHeatingCoolingState must be one of the following:
+    CurrentHeatingCoolingState.OFF = 0;
+    CurrentHeatingCoolingState.HEAT = 1;
+    CurrentHeatingCoolingState.COOL = 2;
+    CurrentHeatingCoolingState.UUID = '0000000F-0000-1000-8000-0026BB765291';
+    return CurrentHeatingCoolingState;
+}(Characteristic_1.Characteristic));
+exports.CurrentHeatingCoolingState = CurrentHeatingCoolingState;
+Characteristic_1.Characteristic.CurrentHeatingCoolingState = CurrentHeatingCoolingState;
 /**
  * Characteristic "Current Horizontal Tilt Angle"
  */
-
-Characteristic.CurrentHorizontalTiltAngle = function() {
-  Characteristic.call(this, 'Current Horizontal Tilt Angle', '0000006C-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.INT,
-    unit: Characteristic.Units.ARC_DEGREE,
-    maxValue: 90,
-    minValue: -90,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CurrentHorizontalTiltAngle, Characteristic);
-
-Characteristic.CurrentHorizontalTiltAngle.UUID = '0000006C-0000-1000-8000-0026BB765291';
-
+var CurrentHorizontalTiltAngle = /** @class */ (function (_super) {
+    __extends(CurrentHorizontalTiltAngle, _super);
+    function CurrentHorizontalTiltAngle() {
+        var _this = _super.call(this, 'Current Horizontal Tilt Angle', CurrentHorizontalTiltAngle.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.INT,
+            unit: Characteristic_1.Units.ARC_DEGREE,
+            maxValue: 90,
+            minValue: -90,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    CurrentHorizontalTiltAngle.UUID = '0000006C-0000-1000-8000-0026BB765291';
+    return CurrentHorizontalTiltAngle;
+}(Characteristic_1.Characteristic));
+exports.CurrentHorizontalTiltAngle = CurrentHorizontalTiltAngle;
+Characteristic_1.Characteristic.CurrentHorizontalTiltAngle = CurrentHorizontalTiltAngle;
 /**
  * Characteristic "Current Humidifier Dehumidifier State"
  */
-
-Characteristic.CurrentHumidifierDehumidifierState = function() {
-  Characteristic.call(this, 'Current Humidifier Dehumidifier State', '000000B3-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 3,
-    minValue: 0,
-    validValues: [0,1,2,3],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CurrentHumidifierDehumidifierState, Characteristic);
-
-Characteristic.CurrentHumidifierDehumidifierState.UUID = '000000B3-0000-1000-8000-0026BB765291';
-
-// The value property of CurrentHumidifierDehumidifierState must be one of the following:
-Characteristic.CurrentHumidifierDehumidifierState.INACTIVE = 0;
-Characteristic.CurrentHumidifierDehumidifierState.IDLE = 1;
-Characteristic.CurrentHumidifierDehumidifierState.HUMIDIFYING = 2;
-Characteristic.CurrentHumidifierDehumidifierState.DEHUMIDIFYING = 3;
-
+var CurrentHumidifierDehumidifierState = /** @class */ (function (_super) {
+    __extends(CurrentHumidifierDehumidifierState, _super);
+    function CurrentHumidifierDehumidifierState() {
+        var _this = _super.call(this, 'Current Humidifier Dehumidifier State', CurrentHumidifierDehumidifierState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 3,
+            minValue: 0,
+            validValues: [0, 1, 2, 3],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of CurrentHumidifierDehumidifierState must be one of the following:
+    CurrentHumidifierDehumidifierState.INACTIVE = 0;
+    CurrentHumidifierDehumidifierState.IDLE = 1;
+    CurrentHumidifierDehumidifierState.HUMIDIFYING = 2;
+    CurrentHumidifierDehumidifierState.DEHUMIDIFYING = 3;
+    CurrentHumidifierDehumidifierState.UUID = '000000B3-0000-1000-8000-0026BB765291';
+    return CurrentHumidifierDehumidifierState;
+}(Characteristic_1.Characteristic));
+exports.CurrentHumidifierDehumidifierState = CurrentHumidifierDehumidifierState;
+Characteristic_1.Characteristic.CurrentHumidifierDehumidifierState = CurrentHumidifierDehumidifierState;
 /**
  * Characteristic "Current Position"
  */
-
-Characteristic.CurrentPosition = function() {
-  Characteristic.call(this, 'Current Position', '0000006D-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    unit: Characteristic.Units.PERCENTAGE,
-    maxValue: 100,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CurrentPosition, Characteristic);
-
-Characteristic.CurrentPosition.UUID = '0000006D-0000-1000-8000-0026BB765291';
-
+var CurrentPosition = /** @class */ (function (_super) {
+    __extends(CurrentPosition, _super);
+    function CurrentPosition() {
+        var _this = _super.call(this, 'Current Position', CurrentPosition.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            unit: Characteristic_1.Units.PERCENTAGE,
+            maxValue: 100,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    CurrentPosition.UUID = '0000006D-0000-1000-8000-0026BB765291';
+    return CurrentPosition;
+}(Characteristic_1.Characteristic));
+exports.CurrentPosition = CurrentPosition;
+Characteristic_1.Characteristic.CurrentPosition = CurrentPosition;
 /**
  * Characteristic "Current Relative Humidity"
  */
-
-Characteristic.CurrentRelativeHumidity = function() {
-  Characteristic.call(this, 'Current Relative Humidity', '00000010-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    unit: Characteristic.Units.PERCENTAGE,
-    maxValue: 100,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CurrentRelativeHumidity, Characteristic);
-
-Characteristic.CurrentRelativeHumidity.UUID = '00000010-0000-1000-8000-0026BB765291';
-
+var CurrentRelativeHumidity = /** @class */ (function (_super) {
+    __extends(CurrentRelativeHumidity, _super);
+    function CurrentRelativeHumidity() {
+        var _this = _super.call(this, 'Current Relative Humidity', CurrentRelativeHumidity.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            unit: Characteristic_1.Units.PERCENTAGE,
+            maxValue: 100,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    CurrentRelativeHumidity.UUID = '00000010-0000-1000-8000-0026BB765291';
+    return CurrentRelativeHumidity;
+}(Characteristic_1.Characteristic));
+exports.CurrentRelativeHumidity = CurrentRelativeHumidity;
+Characteristic_1.Characteristic.CurrentRelativeHumidity = CurrentRelativeHumidity;
 /**
  * Characteristic "Current Slat State"
  */
-
-Characteristic.CurrentSlatState = function() {
-  Characteristic.call(this, 'Current Slat State', '000000AA-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 2,
-    minValue: 0,
-    validValues: [0,1,2],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CurrentSlatState, Characteristic);
-
-Characteristic.CurrentSlatState.UUID = '000000AA-0000-1000-8000-0026BB765291';
-
-// The value property of CurrentSlatState must be one of the following:
-Characteristic.CurrentSlatState.FIXED = 0;
-Characteristic.CurrentSlatState.JAMMED = 1;
-Characteristic.CurrentSlatState.SWINGING = 2;
-
+var CurrentSlatState = /** @class */ (function (_super) {
+    __extends(CurrentSlatState, _super);
+    function CurrentSlatState() {
+        var _this = _super.call(this, 'Current Slat State', CurrentSlatState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 2,
+            minValue: 0,
+            validValues: [0, 1, 2],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of CurrentSlatState must be one of the following:
+    CurrentSlatState.FIXED = 0;
+    CurrentSlatState.JAMMED = 1;
+    CurrentSlatState.SWINGING = 2;
+    CurrentSlatState.UUID = '000000AA-0000-1000-8000-0026BB765291';
+    return CurrentSlatState;
+}(Characteristic_1.Characteristic));
+exports.CurrentSlatState = CurrentSlatState;
+Characteristic_1.Characteristic.CurrentSlatState = CurrentSlatState;
 /**
  * Characteristic "Current Temperature"
  */
-
-Characteristic.CurrentTemperature = function() {
-  Characteristic.call(this, 'Current Temperature', '00000011-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    unit: Characteristic.Units.CELSIUS,
-    maxValue: 100,
-    minValue: 0,
-    minStep: 0.1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CurrentTemperature, Characteristic);
-
-Characteristic.CurrentTemperature.UUID = '00000011-0000-1000-8000-0026BB765291';
-
+var CurrentTemperature = /** @class */ (function (_super) {
+    __extends(CurrentTemperature, _super);
+    function CurrentTemperature() {
+        var _this = _super.call(this, 'Current Temperature', CurrentTemperature.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            unit: Characteristic_1.Units.CELSIUS,
+            maxValue: 100,
+            minValue: 0,
+            minStep: 0.1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    CurrentTemperature.UUID = '00000011-0000-1000-8000-0026BB765291';
+    return CurrentTemperature;
+}(Characteristic_1.Characteristic));
+exports.CurrentTemperature = CurrentTemperature;
+Characteristic_1.Characteristic.CurrentTemperature = CurrentTemperature;
 /**
  * Characteristic "Current Tilt Angle"
  */
-
-Characteristic.CurrentTiltAngle = function() {
-  Characteristic.call(this, 'Current Tilt Angle', '000000C1-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.INT,
-    unit: Characteristic.Units.ARC_DEGREE,
-    maxValue: 90,
-    minValue: -90,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CurrentTiltAngle, Characteristic);
-
-Characteristic.CurrentTiltAngle.UUID = '000000C1-0000-1000-8000-0026BB765291';
-
+var CurrentTiltAngle = /** @class */ (function (_super) {
+    __extends(CurrentTiltAngle, _super);
+    function CurrentTiltAngle() {
+        var _this = _super.call(this, 'Current Tilt Angle', CurrentTiltAngle.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.INT,
+            unit: Characteristic_1.Units.ARC_DEGREE,
+            maxValue: 90,
+            minValue: -90,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    CurrentTiltAngle.UUID = '000000C1-0000-1000-8000-0026BB765291';
+    return CurrentTiltAngle;
+}(Characteristic_1.Characteristic));
+exports.CurrentTiltAngle = CurrentTiltAngle;
+Characteristic_1.Characteristic.CurrentTiltAngle = CurrentTiltAngle;
 /**
  * Characteristic "Current Vertical Tilt Angle"
  */
-
-Characteristic.CurrentVerticalTiltAngle = function() {
-  Characteristic.call(this, 'Current Vertical Tilt Angle', '0000006E-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.INT,
-    unit: Characteristic.Units.ARC_DEGREE,
-    maxValue: 90,
-    minValue: -90,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.CurrentVerticalTiltAngle, Characteristic);
-
-Characteristic.CurrentVerticalTiltAngle.UUID = '0000006E-0000-1000-8000-0026BB765291';
-
+var CurrentVerticalTiltAngle = /** @class */ (function (_super) {
+    __extends(CurrentVerticalTiltAngle, _super);
+    function CurrentVerticalTiltAngle() {
+        var _this = _super.call(this, 'Current Vertical Tilt Angle', CurrentVerticalTiltAngle.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.INT,
+            unit: Characteristic_1.Units.ARC_DEGREE,
+            maxValue: 90,
+            minValue: -90,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    CurrentVerticalTiltAngle.UUID = '0000006E-0000-1000-8000-0026BB765291';
+    return CurrentVerticalTiltAngle;
+}(Characteristic_1.Characteristic));
+exports.CurrentVerticalTiltAngle = CurrentVerticalTiltAngle;
+Characteristic_1.Characteristic.CurrentVerticalTiltAngle = CurrentVerticalTiltAngle;
 /**
  * Characteristic "Digital Zoom"
  */
-
-Characteristic.DigitalZoom = function() {
-  Characteristic.call(this, 'Digital Zoom', '0000011D-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.DigitalZoom, Characteristic);
-
-Characteristic.DigitalZoom.UUID = '0000011D-0000-1000-8000-0026BB765291';
-
+var DigitalZoom = /** @class */ (function (_super) {
+    __extends(DigitalZoom, _super);
+    function DigitalZoom() {
+        var _this = _super.call(this, 'Digital Zoom', DigitalZoom.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    DigitalZoom.UUID = '0000011D-0000-1000-8000-0026BB765291';
+    return DigitalZoom;
+}(Characteristic_1.Characteristic));
+exports.DigitalZoom = DigitalZoom;
+Characteristic_1.Characteristic.DigitalZoom = DigitalZoom;
 /**
  * Characteristic "Filter Change Indication"
  */
-
-Characteristic.FilterChangeIndication = function() {
-  Characteristic.call(this, 'Filter Change Indication', '000000AC-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.FilterChangeIndication, Characteristic);
-
-Characteristic.FilterChangeIndication.UUID = '000000AC-0000-1000-8000-0026BB765291';
-
-// The value property of FilterChangeIndication must be one of the following:
-Characteristic.FilterChangeIndication.FILTER_OK = 0;
-Characteristic.FilterChangeIndication.CHANGE_FILTER = 1;
-
+var FilterChangeIndication = /** @class */ (function (_super) {
+    __extends(FilterChangeIndication, _super);
+    function FilterChangeIndication() {
+        var _this = _super.call(this, 'Filter Change Indication', FilterChangeIndication.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of FilterChangeIndication must be one of the following:
+    FilterChangeIndication.FILTER_OK = 0;
+    FilterChangeIndication.CHANGE_FILTER = 1;
+    FilterChangeIndication.UUID = '000000AC-0000-1000-8000-0026BB765291';
+    return FilterChangeIndication;
+}(Characteristic_1.Characteristic));
+exports.FilterChangeIndication = FilterChangeIndication;
+Characteristic_1.Characteristic.FilterChangeIndication = FilterChangeIndication;
 /**
  * Characteristic "Filter Life Level"
  */
-
-Characteristic.FilterLifeLevel = function() {
-  Characteristic.call(this, 'Filter Life Level', '000000AB-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    maxValue: 100,
-    minValue: 0,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.FilterLifeLevel, Characteristic);
-
-Characteristic.FilterLifeLevel.UUID = '000000AB-0000-1000-8000-0026BB765291';
-
+var FilterLifeLevel = /** @class */ (function (_super) {
+    __extends(FilterLifeLevel, _super);
+    function FilterLifeLevel() {
+        var _this = _super.call(this, 'Filter Life Level', FilterLifeLevel.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            maxValue: 100,
+            minValue: 0,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    FilterLifeLevel.UUID = '000000AB-0000-1000-8000-0026BB765291';
+    return FilterLifeLevel;
+}(Characteristic_1.Characteristic));
+exports.FilterLifeLevel = FilterLifeLevel;
+Characteristic_1.Characteristic.FilterLifeLevel = FilterLifeLevel;
 /**
  * Characteristic "Firmware Revision"
  */
-
-Characteristic.FirmwareRevision = function() {
-  Characteristic.call(this, 'Firmware Revision', '00000052-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.STRING,
-    perms: [Characteristic.Perms.READ]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.FirmwareRevision, Characteristic);
-
-Characteristic.FirmwareRevision.UUID = '00000052-0000-1000-8000-0026BB765291';
-
+var FirmwareRevision = /** @class */ (function (_super) {
+    __extends(FirmwareRevision, _super);
+    function FirmwareRevision() {
+        var _this = _super.call(this, 'Firmware Revision', FirmwareRevision.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.STRING,
+            perms: [Characteristic_1.Perms.READ]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    FirmwareRevision.UUID = '00000052-0000-1000-8000-0026BB765291';
+    return FirmwareRevision;
+}(Characteristic_1.Characteristic));
+exports.FirmwareRevision = FirmwareRevision;
+Characteristic_1.Characteristic.FirmwareRevision = FirmwareRevision;
 /**
  * Characteristic "Hardware Revision"
  */
-
-Characteristic.HardwareRevision = function() {
-  Characteristic.call(this, 'Hardware Revision', '00000053-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.STRING,
-    perms: [Characteristic.Perms.READ]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.HardwareRevision, Characteristic);
-
-Characteristic.HardwareRevision.UUID = '00000053-0000-1000-8000-0026BB765291';
-
+var HardwareRevision = /** @class */ (function (_super) {
+    __extends(HardwareRevision, _super);
+    function HardwareRevision() {
+        var _this = _super.call(this, 'Hardware Revision', HardwareRevision.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.STRING,
+            perms: [Characteristic_1.Perms.READ]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    HardwareRevision.UUID = '00000053-0000-1000-8000-0026BB765291';
+    return HardwareRevision;
+}(Characteristic_1.Characteristic));
+exports.HardwareRevision = HardwareRevision;
+Characteristic_1.Characteristic.HardwareRevision = HardwareRevision;
 /**
  * Characteristic "Heating Threshold Temperature"
  */
-
-Characteristic.HeatingThresholdTemperature = function() {
-  Characteristic.call(this, 'Heating Threshold Temperature', '00000012-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    unit: Characteristic.Units.CELSIUS,
-    maxValue: 25,
-    minValue: 0,
-    minStep: 0.1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.HeatingThresholdTemperature, Characteristic);
-
-Characteristic.HeatingThresholdTemperature.UUID = '00000012-0000-1000-8000-0026BB765291';
-
+var HeatingThresholdTemperature = /** @class */ (function (_super) {
+    __extends(HeatingThresholdTemperature, _super);
+    function HeatingThresholdTemperature() {
+        var _this = _super.call(this, 'Heating Threshold Temperature', HeatingThresholdTemperature.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            unit: Characteristic_1.Units.CELSIUS,
+            maxValue: 25,
+            minValue: 0,
+            minStep: 0.1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    HeatingThresholdTemperature.UUID = '00000012-0000-1000-8000-0026BB765291';
+    return HeatingThresholdTemperature;
+}(Characteristic_1.Characteristic));
+exports.HeatingThresholdTemperature = HeatingThresholdTemperature;
+Characteristic_1.Characteristic.HeatingThresholdTemperature = HeatingThresholdTemperature;
 /**
  * Characteristic "Hold Position"
  */
-
-Characteristic.HoldPosition = function() {
-  Characteristic.call(this, 'Hold Position', '0000006F-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.BOOL,
-    perms: [Characteristic.Perms.WRITE]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.HoldPosition, Characteristic);
-
-Characteristic.HoldPosition.UUID = '0000006F-0000-1000-8000-0026BB765291';
-
+var HoldPosition = /** @class */ (function (_super) {
+    __extends(HoldPosition, _super);
+    function HoldPosition() {
+        var _this = _super.call(this, 'Hold Position', HoldPosition.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.BOOL,
+            perms: [Characteristic_1.Perms.WRITE]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    HoldPosition.UUID = '0000006F-0000-1000-8000-0026BB765291';
+    return HoldPosition;
+}(Characteristic_1.Characteristic));
+exports.HoldPosition = HoldPosition;
+Characteristic_1.Characteristic.HoldPosition = HoldPosition;
 /**
  * Characteristic "Hue"
  */
-
-Characteristic.Hue = function() {
-  Characteristic.call(this, 'Hue', '00000013-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    unit: Characteristic.Units.ARC_DEGREE,
-    maxValue: 360,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.Hue, Characteristic);
-
-Characteristic.Hue.UUID = '00000013-0000-1000-8000-0026BB765291';
-
+var Hue = /** @class */ (function (_super) {
+    __extends(Hue, _super);
+    function Hue() {
+        var _this = _super.call(this, 'Hue', Hue.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            unit: Characteristic_1.Units.ARC_DEGREE,
+            maxValue: 360,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    Hue.UUID = '00000013-0000-1000-8000-0026BB765291';
+    return Hue;
+}(Characteristic_1.Characteristic));
+exports.Hue = Hue;
+Characteristic_1.Characteristic.Hue = Hue;
 /**
  * Characteristic "Identify"
  */
-
-Characteristic.Identify = function() {
-  Characteristic.call(this, 'Identify', '00000014-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.BOOL,
-    perms: [Characteristic.Perms.WRITE]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.Identify, Characteristic);
-
-Characteristic.Identify.UUID = '00000014-0000-1000-8000-0026BB765291';
-
+var Identify = /** @class */ (function (_super) {
+    __extends(Identify, _super);
+    function Identify() {
+        var _this = _super.call(this, 'Identify', Identify.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.BOOL,
+            perms: [Characteristic_1.Perms.WRITE]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    Identify.UUID = '00000014-0000-1000-8000-0026BB765291';
+    return Identify;
+}(Characteristic_1.Characteristic));
+exports.Identify = Identify;
+Characteristic_1.Characteristic.Identify = Identify;
 /**
  * Characteristic "Image Mirroring"
  */
-
-Characteristic.ImageMirroring = function() {
-  Characteristic.call(this, 'Image Mirroring', '0000011F-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.BOOL,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.ImageMirroring, Characteristic);
-
-Characteristic.ImageMirroring.UUID = '0000011F-0000-1000-8000-0026BB765291';
-
+var ImageMirroring = /** @class */ (function (_super) {
+    __extends(ImageMirroring, _super);
+    function ImageMirroring() {
+        var _this = _super.call(this, 'Image Mirroring', ImageMirroring.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.BOOL,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    ImageMirroring.UUID = '0000011F-0000-1000-8000-0026BB765291';
+    return ImageMirroring;
+}(Characteristic_1.Characteristic));
+exports.ImageMirroring = ImageMirroring;
+Characteristic_1.Characteristic.ImageMirroring = ImageMirroring;
 /**
  * Characteristic "Image Rotation"
  */
-
-Characteristic.ImageRotation = function() {
-  Characteristic.call(this, 'Image Rotation', '0000011E-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    unit: Characteristic.Units.ARC_DEGREE,
-    maxValue: 270,
-    minValue: 0,
-    minStep: 90,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.ImageRotation, Characteristic);
-
-Characteristic.ImageRotation.UUID = '0000011E-0000-1000-8000-0026BB765291';
-
+var ImageRotation = /** @class */ (function (_super) {
+    __extends(ImageRotation, _super);
+    function ImageRotation() {
+        var _this = _super.call(this, 'Image Rotation', ImageRotation.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            unit: Characteristic_1.Units.ARC_DEGREE,
+            maxValue: 270,
+            minValue: 0,
+            minStep: 90,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    ImageRotation.UUID = '0000011E-0000-1000-8000-0026BB765291';
+    return ImageRotation;
+}(Characteristic_1.Characteristic));
+exports.ImageRotation = ImageRotation;
+Characteristic_1.Characteristic.ImageRotation = ImageRotation;
 /**
  * Characteristic "In Use"
  */
-
-Characteristic.InUse = function() {
-  Characteristic.call(this, 'In Use', '000000D2-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.InUse, Characteristic);
-
-Characteristic.InUse.UUID = '000000D2-0000-1000-8000-0026BB765291';
-
-// The value property of InUse must be one of the following:
-Characteristic.InUse.NOT_IN_USE = 0;
-Characteristic.InUse.IN_USE = 1;
-
+var InUse = /** @class */ (function (_super) {
+    __extends(InUse, _super);
+    function InUse() {
+        var _this = _super.call(this, 'In Use', InUse.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of InUse must be one of the following:
+    InUse.NOT_IN_USE = 0;
+    InUse.IN_USE = 1;
+    InUse.UUID = '000000D2-0000-1000-8000-0026BB765291';
+    return InUse;
+}(Characteristic_1.Characteristic));
+exports.InUse = InUse;
+Characteristic_1.Characteristic.InUse = InUse;
 /**
  * Characteristic "Is Configured"
  */
-
-Characteristic.IsConfigured = function() {
-  Characteristic.call(this, 'Is Configured', '000000D6-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.IsConfigured, Characteristic);
-
-Characteristic.IsConfigured.UUID = '000000D6-0000-1000-8000-0026BB765291';
-
-// The value property of IsConfigured must be one of the following:
-Characteristic.IsConfigured.NOT_CONFIGURED = 0;
-Characteristic.IsConfigured.CONFIGURED = 1;
-
+var IsConfigured = /** @class */ (function (_super) {
+    __extends(IsConfigured, _super);
+    function IsConfigured() {
+        var _this = _super.call(this, 'Is Configured', IsConfigured.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of IsConfigured must be one of the following:
+    IsConfigured.NOT_CONFIGURED = 0;
+    IsConfigured.CONFIGURED = 1;
+    IsConfigured.UUID = '000000D6-0000-1000-8000-0026BB765291';
+    return IsConfigured;
+}(Characteristic_1.Characteristic));
+exports.IsConfigured = IsConfigured;
+Characteristic_1.Characteristic.IsConfigured = IsConfigured;
 /**
  * Characteristic "Leak Detected"
  */
-
-Characteristic.LeakDetected = function() {
-  Characteristic.call(this, 'Leak Detected', '00000070-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.LeakDetected, Characteristic);
-
-Characteristic.LeakDetected.UUID = '00000070-0000-1000-8000-0026BB765291';
-
-// The value property of LeakDetected must be one of the following:
-Characteristic.LeakDetected.LEAK_NOT_DETECTED = 0;
-Characteristic.LeakDetected.LEAK_DETECTED = 1;
-
+var LeakDetected = /** @class */ (function (_super) {
+    __extends(LeakDetected, _super);
+    function LeakDetected() {
+        var _this = _super.call(this, 'Leak Detected', LeakDetected.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of LeakDetected must be one of the following:
+    LeakDetected.LEAK_NOT_DETECTED = 0;
+    LeakDetected.LEAK_DETECTED = 1;
+    LeakDetected.UUID = '00000070-0000-1000-8000-0026BB765291';
+    return LeakDetected;
+}(Characteristic_1.Characteristic));
+exports.LeakDetected = LeakDetected;
+Characteristic_1.Characteristic.LeakDetected = LeakDetected;
 /**
  * Characteristic "Lock Control Point"
  */
-
-Characteristic.LockControlPoint = function() {
-  Characteristic.call(this, 'Lock Control Point', '00000019-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.TLV8,
-    perms: [Characteristic.Perms.WRITE]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.LockControlPoint, Characteristic);
-
-Characteristic.LockControlPoint.UUID = '00000019-0000-1000-8000-0026BB765291';
-
+var LockControlPoint = /** @class */ (function (_super) {
+    __extends(LockControlPoint, _super);
+    function LockControlPoint() {
+        var _this = _super.call(this, 'Lock Control Point', LockControlPoint.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.WRITE]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    LockControlPoint.UUID = '00000019-0000-1000-8000-0026BB765291';
+    return LockControlPoint;
+}(Characteristic_1.Characteristic));
+exports.LockControlPoint = LockControlPoint;
+Characteristic_1.Characteristic.LockControlPoint = LockControlPoint;
 /**
  * Characteristic "Lock Current State"
  */
-
-Characteristic.LockCurrentState = function() {
-  Characteristic.call(this, 'Lock Current State', '0000001D-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 3,
-    minValue: 0,
-    validValues: [0,1,2,3],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.LockCurrentState, Characteristic);
-
-Characteristic.LockCurrentState.UUID = '0000001D-0000-1000-8000-0026BB765291';
-
-// The value property of LockCurrentState must be one of the following:
-Characteristic.LockCurrentState.UNSECURED = 0;
-Characteristic.LockCurrentState.SECURED = 1;
-Characteristic.LockCurrentState.JAMMED = 2;
-Characteristic.LockCurrentState.UNKNOWN = 3;
-
+var LockCurrentState = /** @class */ (function (_super) {
+    __extends(LockCurrentState, _super);
+    function LockCurrentState() {
+        var _this = _super.call(this, 'Lock Current State', LockCurrentState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 3,
+            minValue: 0,
+            validValues: [0, 1, 2, 3],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of LockCurrentState must be one of the following:
+    LockCurrentState.UNSECURED = 0;
+    LockCurrentState.SECURED = 1;
+    LockCurrentState.JAMMED = 2;
+    LockCurrentState.UNKNOWN = 3;
+    LockCurrentState.UUID = '0000001D-0000-1000-8000-0026BB765291';
+    return LockCurrentState;
+}(Characteristic_1.Characteristic));
+exports.LockCurrentState = LockCurrentState;
+Characteristic_1.Characteristic.LockCurrentState = LockCurrentState;
 /**
  * Characteristic "Lock Last Known Action"
  */
-
-Characteristic.LockLastKnownAction = function() {
-  Characteristic.call(this, 'Lock Last Known Action', '0000001C-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 8,
-    minValue: 0,
-    validValues: [0,1,2,3,4,5,6,7,8],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.LockLastKnownAction, Characteristic);
-
-Characteristic.LockLastKnownAction.UUID = '0000001C-0000-1000-8000-0026BB765291';
-
-// The value property of LockLastKnownAction must be one of the following:
-Characteristic.LockLastKnownAction.SECURED_PHYSICALLY_INTERIOR = 0;
-Characteristic.LockLastKnownAction.UNSECURED_PHYSICALLY_INTERIOR = 1;
-Characteristic.LockLastKnownAction.SECURED_PHYSICALLY_EXTERIOR = 2;
-Characteristic.LockLastKnownAction.UNSECURED_PHYSICALLY_EXTERIOR = 3;
-Characteristic.LockLastKnownAction.SECURED_BY_KEYPAD = 4;
-Characteristic.LockLastKnownAction.UNSECURED_BY_KEYPAD = 5;
-Characteristic.LockLastKnownAction.SECURED_REMOTELY = 6;
-Characteristic.LockLastKnownAction.UNSECURED_REMOTELY = 7;
-Characteristic.LockLastKnownAction.SECURED_BY_AUTO_SECURE_TIMEOUT = 8;
-
+var LockLastKnownAction = /** @class */ (function (_super) {
+    __extends(LockLastKnownAction, _super);
+    function LockLastKnownAction() {
+        var _this = _super.call(this, 'Lock Last Known Action', LockLastKnownAction.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 8,
+            minValue: 0,
+            validValues: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of LockLastKnownAction must be one of the following:
+    LockLastKnownAction.SECURED_PHYSICALLY_INTERIOR = 0;
+    LockLastKnownAction.UNSECURED_PHYSICALLY_INTERIOR = 1;
+    LockLastKnownAction.SECURED_PHYSICALLY_EXTERIOR = 2;
+    LockLastKnownAction.UNSECURED_PHYSICALLY_EXTERIOR = 3;
+    LockLastKnownAction.SECURED_BY_KEYPAD = 4;
+    LockLastKnownAction.UNSECURED_BY_KEYPAD = 5;
+    LockLastKnownAction.SECURED_REMOTELY = 6;
+    LockLastKnownAction.UNSECURED_REMOTELY = 7;
+    LockLastKnownAction.SECURED_BY_AUTO_SECURE_TIMEOUT = 8;
+    LockLastKnownAction.UUID = '0000001C-0000-1000-8000-0026BB765291';
+    return LockLastKnownAction;
+}(Characteristic_1.Characteristic));
+exports.LockLastKnownAction = LockLastKnownAction;
+Characteristic_1.Characteristic.LockLastKnownAction = LockLastKnownAction;
 /**
  * Characteristic "Lock Management Auto Security Timeout"
  */
-
-Characteristic.LockManagementAutoSecurityTimeout = function() {
-  Characteristic.call(this, 'Lock Management Auto Security Timeout', '0000001A-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT32,
-    unit: Characteristic.Units.SECONDS,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.LockManagementAutoSecurityTimeout, Characteristic);
-
-Characteristic.LockManagementAutoSecurityTimeout.UUID = '0000001A-0000-1000-8000-0026BB765291';
-
+var LockManagementAutoSecurityTimeout = /** @class */ (function (_super) {
+    __extends(LockManagementAutoSecurityTimeout, _super);
+    function LockManagementAutoSecurityTimeout() {
+        var _this = _super.call(this, 'Lock Management Auto Security Timeout', LockManagementAutoSecurityTimeout.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT32,
+            unit: Characteristic_1.Units.SECONDS,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    LockManagementAutoSecurityTimeout.UUID = '0000001A-0000-1000-8000-0026BB765291';
+    return LockManagementAutoSecurityTimeout;
+}(Characteristic_1.Characteristic));
+exports.LockManagementAutoSecurityTimeout = LockManagementAutoSecurityTimeout;
+Characteristic_1.Characteristic.LockManagementAutoSecurityTimeout = LockManagementAutoSecurityTimeout;
 /**
  * Characteristic "Lock Physical Controls"
  */
-
-Characteristic.LockPhysicalControls = function() {
-  Characteristic.call(this, 'Lock Physical Controls', '000000A7-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.LockPhysicalControls, Characteristic);
-
-Characteristic.LockPhysicalControls.UUID = '000000A7-0000-1000-8000-0026BB765291';
-
-// The value property of LockPhysicalControls must be one of the following:
-Characteristic.LockPhysicalControls.CONTROL_LOCK_DISABLED = 0;
-Characteristic.LockPhysicalControls.CONTROL_LOCK_ENABLED = 1;
-
+var LockPhysicalControls = /** @class */ (function (_super) {
+    __extends(LockPhysicalControls, _super);
+    function LockPhysicalControls() {
+        var _this = _super.call(this, 'Lock Physical Controls', LockPhysicalControls.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of LockPhysicalControls must be one of the following:
+    LockPhysicalControls.CONTROL_LOCK_DISABLED = 0;
+    LockPhysicalControls.CONTROL_LOCK_ENABLED = 1;
+    LockPhysicalControls.UUID = '000000A7-0000-1000-8000-0026BB765291';
+    return LockPhysicalControls;
+}(Characteristic_1.Characteristic));
+exports.LockPhysicalControls = LockPhysicalControls;
+Characteristic_1.Characteristic.LockPhysicalControls = LockPhysicalControls;
 /**
  * Characteristic "Lock Target State"
  */
-
-Characteristic.LockTargetState = function() {
-  Characteristic.call(this, 'Lock Target State', '0000001E-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.LockTargetState, Characteristic);
-
-Characteristic.LockTargetState.UUID = '0000001E-0000-1000-8000-0026BB765291';
-
-// The value property of LockTargetState must be one of the following:
-Characteristic.LockTargetState.UNSECURED = 0;
-Characteristic.LockTargetState.SECURED = 1;
-
+var LockTargetState = /** @class */ (function (_super) {
+    __extends(LockTargetState, _super);
+    function LockTargetState() {
+        var _this = _super.call(this, 'Lock Target State', LockTargetState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of LockTargetState must be one of the following:
+    LockTargetState.UNSECURED = 0;
+    LockTargetState.SECURED = 1;
+    LockTargetState.UUID = '0000001E-0000-1000-8000-0026BB765291';
+    return LockTargetState;
+}(Characteristic_1.Characteristic));
+exports.LockTargetState = LockTargetState;
+Characteristic_1.Characteristic.LockTargetState = LockTargetState;
 /**
  * Characteristic "Logs"
  */
-
-Characteristic.Logs = function() {
-  Characteristic.call(this, 'Logs', '0000001F-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.TLV8,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.Logs, Characteristic);
-
-Characteristic.Logs.UUID = '0000001F-0000-1000-8000-0026BB765291';
-
+var Logs = /** @class */ (function (_super) {
+    __extends(Logs, _super);
+    function Logs() {
+        var _this = _super.call(this, 'Logs', Logs.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    Logs.UUID = '0000001F-0000-1000-8000-0026BB765291';
+    return Logs;
+}(Characteristic_1.Characteristic));
+exports.Logs = Logs;
+Characteristic_1.Characteristic.Logs = Logs;
 /**
  * Characteristic "Manufacturer"
  */
-
-Characteristic.Manufacturer = function() {
-  Characteristic.call(this, 'Manufacturer', '00000020-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.STRING,
-    perms: [Characteristic.Perms.READ]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.Manufacturer, Characteristic);
-
-Characteristic.Manufacturer.UUID = '00000020-0000-1000-8000-0026BB765291';
-
+var Manufacturer = /** @class */ (function (_super) {
+    __extends(Manufacturer, _super);
+    function Manufacturer() {
+        var _this = _super.call(this, 'Manufacturer', Manufacturer.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.STRING,
+            perms: [Characteristic_1.Perms.READ]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    Manufacturer.UUID = '00000020-0000-1000-8000-0026BB765291';
+    return Manufacturer;
+}(Characteristic_1.Characteristic));
+exports.Manufacturer = Manufacturer;
+Characteristic_1.Characteristic.Manufacturer = Manufacturer;
 /**
  * Characteristic "Model"
  */
-
-Characteristic.Model = function() {
-  Characteristic.call(this, 'Model', '00000021-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.STRING,
-    perms: [Characteristic.Perms.READ]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.Model, Characteristic);
-
-Characteristic.Model.UUID = '00000021-0000-1000-8000-0026BB765291';
-
+var Model = /** @class */ (function (_super) {
+    __extends(Model, _super);
+    function Model() {
+        var _this = _super.call(this, 'Model', Model.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.STRING,
+            perms: [Characteristic_1.Perms.READ]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    Model.UUID = '00000021-0000-1000-8000-0026BB765291';
+    return Model;
+}(Characteristic_1.Characteristic));
+exports.Model = Model;
+Characteristic_1.Characteristic.Model = Model;
 /**
  * Characteristic "Motion Detected"
  */
-
-Characteristic.MotionDetected = function() {
-  Characteristic.call(this, 'Motion Detected', '00000022-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.BOOL,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.MotionDetected, Characteristic);
-
-Characteristic.MotionDetected.UUID = '00000022-0000-1000-8000-0026BB765291';
-
+var MotionDetected = /** @class */ (function (_super) {
+    __extends(MotionDetected, _super);
+    function MotionDetected() {
+        var _this = _super.call(this, 'Motion Detected', MotionDetected.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.BOOL,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    MotionDetected.UUID = '00000022-0000-1000-8000-0026BB765291';
+    return MotionDetected;
+}(Characteristic_1.Characteristic));
+exports.MotionDetected = MotionDetected;
+Characteristic_1.Characteristic.MotionDetected = MotionDetected;
 /**
  * Characteristic "Mute"
  */
-
-Characteristic.Mute = function() {
-  Characteristic.call(this, 'Mute', '0000011A-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.BOOL,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.Mute, Characteristic);
-
-Characteristic.Mute.UUID = '0000011A-0000-1000-8000-0026BB765291';
-
+var Mute = /** @class */ (function (_super) {
+    __extends(Mute, _super);
+    function Mute() {
+        var _this = _super.call(this, 'Mute', Mute.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.BOOL,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    Mute.UUID = '0000011A-0000-1000-8000-0026BB765291';
+    return Mute;
+}(Characteristic_1.Characteristic));
+exports.Mute = Mute;
+Characteristic_1.Characteristic.Mute = Mute;
 /**
  * Characteristic "Name"
  */
-
-Characteristic.Name = function() {
-  Characteristic.call(this, 'Name', '00000023-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.STRING,
-    perms: [Characteristic.Perms.READ]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.Name, Characteristic);
-
-Characteristic.Name.UUID = '00000023-0000-1000-8000-0026BB765291';
-
+var Name = /** @class */ (function (_super) {
+    __extends(Name, _super);
+    function Name() {
+        var _this = _super.call(this, 'Name', Name.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.STRING,
+            perms: [Characteristic_1.Perms.READ]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    Name.UUID = '00000023-0000-1000-8000-0026BB765291';
+    return Name;
+}(Characteristic_1.Characteristic));
+exports.Name = Name;
+Characteristic_1.Characteristic.Name = Name;
 /**
  * Characteristic "Night Vision"
  */
-
-Characteristic.NightVision = function() {
-  Characteristic.call(this, 'Night Vision', '0000011B-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.BOOL,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.NightVision, Characteristic);
-
-Characteristic.NightVision.UUID = '0000011B-0000-1000-8000-0026BB765291';
-
+var NightVision = /** @class */ (function (_super) {
+    __extends(NightVision, _super);
+    function NightVision() {
+        var _this = _super.call(this, 'Night Vision', NightVision.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.BOOL,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    NightVision.UUID = '0000011B-0000-1000-8000-0026BB765291';
+    return NightVision;
+}(Characteristic_1.Characteristic));
+exports.NightVision = NightVision;
+Characteristic_1.Characteristic.NightVision = NightVision;
 /**
  * Characteristic "Nitrogen Dioxide Density"
  */
-
-Characteristic.NitrogenDioxideDensity = function() {
-  Characteristic.call(this, 'Nitrogen Dioxide Density', '000000C4-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    maxValue: 1000,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.NitrogenDioxideDensity, Characteristic);
-
-Characteristic.NitrogenDioxideDensity.UUID = '000000C4-0000-1000-8000-0026BB765291';
-
+var NitrogenDioxideDensity = /** @class */ (function (_super) {
+    __extends(NitrogenDioxideDensity, _super);
+    function NitrogenDioxideDensity() {
+        var _this = _super.call(this, 'Nitrogen Dioxide Density', NitrogenDioxideDensity.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            maxValue: 1000,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    NitrogenDioxideDensity.UUID = '000000C4-0000-1000-8000-0026BB765291';
+    return NitrogenDioxideDensity;
+}(Characteristic_1.Characteristic));
+exports.NitrogenDioxideDensity = NitrogenDioxideDensity;
+Characteristic_1.Characteristic.NitrogenDioxideDensity = NitrogenDioxideDensity;
 /**
  * Characteristic "Obstruction Detected"
  */
-
-Characteristic.ObstructionDetected = function() {
-  Characteristic.call(this, 'Obstruction Detected', '00000024-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.BOOL,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.ObstructionDetected, Characteristic);
-
-Characteristic.ObstructionDetected.UUID = '00000024-0000-1000-8000-0026BB765291';
-
+var ObstructionDetected = /** @class */ (function (_super) {
+    __extends(ObstructionDetected, _super);
+    function ObstructionDetected() {
+        var _this = _super.call(this, 'Obstruction Detected', ObstructionDetected.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.BOOL,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    ObstructionDetected.UUID = '00000024-0000-1000-8000-0026BB765291';
+    return ObstructionDetected;
+}(Characteristic_1.Characteristic));
+exports.ObstructionDetected = ObstructionDetected;
+Characteristic_1.Characteristic.ObstructionDetected = ObstructionDetected;
 /**
  * Characteristic "Occupancy Detected"
  */
-
-Characteristic.OccupancyDetected = function() {
-  Characteristic.call(this, 'Occupancy Detected', '00000071-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.OccupancyDetected, Characteristic);
-
-Characteristic.OccupancyDetected.UUID = '00000071-0000-1000-8000-0026BB765291';
-
-// The value property of OccupancyDetected must be one of the following:
-Characteristic.OccupancyDetected.OCCUPANCY_NOT_DETECTED = 0;
-Characteristic.OccupancyDetected.OCCUPANCY_DETECTED = 1;
-
+var OccupancyDetected = /** @class */ (function (_super) {
+    __extends(OccupancyDetected, _super);
+    function OccupancyDetected() {
+        var _this = _super.call(this, 'Occupancy Detected', OccupancyDetected.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of OccupancyDetected must be one of the following:
+    OccupancyDetected.OCCUPANCY_NOT_DETECTED = 0;
+    OccupancyDetected.OCCUPANCY_DETECTED = 1;
+    OccupancyDetected.UUID = '00000071-0000-1000-8000-0026BB765291';
+    return OccupancyDetected;
+}(Characteristic_1.Characteristic));
+exports.OccupancyDetected = OccupancyDetected;
+Characteristic_1.Characteristic.OccupancyDetected = OccupancyDetected;
 /**
  * Characteristic "On"
  */
-
-Characteristic.On = function() {
-  Characteristic.call(this, 'On', '00000025-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.BOOL,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.On, Characteristic);
-
-Characteristic.On.UUID = '00000025-0000-1000-8000-0026BB765291';
-
+var On = /** @class */ (function (_super) {
+    __extends(On, _super);
+    function On() {
+        var _this = _super.call(this, 'On', On.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.BOOL,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    On.UUID = '00000025-0000-1000-8000-0026BB765291';
+    return On;
+}(Characteristic_1.Characteristic));
+exports.On = On;
+Characteristic_1.Characteristic.On = On;
 /**
  * Characteristic "Optical Zoom"
  */
-
-Characteristic.OpticalZoom = function() {
-  Characteristic.call(this, 'Optical Zoom', '0000011C-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.OpticalZoom, Characteristic);
-
-Characteristic.OpticalZoom.UUID = '0000011C-0000-1000-8000-0026BB765291';
-
+var OpticalZoom = /** @class */ (function (_super) {
+    __extends(OpticalZoom, _super);
+    function OpticalZoom() {
+        var _this = _super.call(this, 'Optical Zoom', OpticalZoom.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    OpticalZoom.UUID = '0000011C-0000-1000-8000-0026BB765291';
+    return OpticalZoom;
+}(Characteristic_1.Characteristic));
+exports.OpticalZoom = OpticalZoom;
+Characteristic_1.Characteristic.OpticalZoom = OpticalZoom;
 /**
  * Characteristic "Outlet In Use"
  */
-
-Characteristic.OutletInUse = function() {
-  Characteristic.call(this, 'Outlet In Use', '00000026-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.BOOL,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.OutletInUse, Characteristic);
-
-Characteristic.OutletInUse.UUID = '00000026-0000-1000-8000-0026BB765291';
-
+var OutletInUse = /** @class */ (function (_super) {
+    __extends(OutletInUse, _super);
+    function OutletInUse() {
+        var _this = _super.call(this, 'Outlet In Use', OutletInUse.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.BOOL,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    OutletInUse.UUID = '00000026-0000-1000-8000-0026BB765291';
+    return OutletInUse;
+}(Characteristic_1.Characteristic));
+exports.OutletInUse = OutletInUse;
+Characteristic_1.Characteristic.OutletInUse = OutletInUse;
 /**
  * Characteristic "Ozone Density"
  */
-
-Characteristic.OzoneDensity = function() {
-  Characteristic.call(this, 'Ozone Density', '000000C3-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    maxValue: 1000,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.OzoneDensity, Characteristic);
-
-Characteristic.OzoneDensity.UUID = '000000C3-0000-1000-8000-0026BB765291';
-
+var OzoneDensity = /** @class */ (function (_super) {
+    __extends(OzoneDensity, _super);
+    function OzoneDensity() {
+        var _this = _super.call(this, 'Ozone Density', OzoneDensity.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            maxValue: 1000,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    OzoneDensity.UUID = '000000C3-0000-1000-8000-0026BB765291';
+    return OzoneDensity;
+}(Characteristic_1.Characteristic));
+exports.OzoneDensity = OzoneDensity;
+Characteristic_1.Characteristic.OzoneDensity = OzoneDensity;
 /**
  * Characteristic "Pair Setup"
  */
-
-Characteristic.PairSetup = function() {
-  Characteristic.call(this, 'Pair Setup', '0000004C-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.TLV8,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.PairSetup, Characteristic);
-
-Characteristic.PairSetup.UUID = '0000004C-0000-1000-8000-0026BB765291';
-
+var PairSetup = /** @class */ (function (_super) {
+    __extends(PairSetup, _super);
+    function PairSetup() {
+        var _this = _super.call(this, 'Pair Setup', PairSetup.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    PairSetup.UUID = '0000004C-0000-1000-8000-0026BB765291';
+    return PairSetup;
+}(Characteristic_1.Characteristic));
+exports.PairSetup = PairSetup;
+Characteristic_1.Characteristic.PairSetup = PairSetup;
 /**
  * Characteristic "Pair Verify"
  */
-
-Characteristic.PairVerify = function() {
-  Characteristic.call(this, 'Pair Verify', '0000004E-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.TLV8,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.PairVerify, Characteristic);
-
-Characteristic.PairVerify.UUID = '0000004E-0000-1000-8000-0026BB765291';
-
+var PairVerify = /** @class */ (function (_super) {
+    __extends(PairVerify, _super);
+    function PairVerify() {
+        var _this = _super.call(this, 'Pair Verify', PairVerify.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    PairVerify.UUID = '0000004E-0000-1000-8000-0026BB765291';
+    return PairVerify;
+}(Characteristic_1.Characteristic));
+exports.PairVerify = PairVerify;
+Characteristic_1.Characteristic.PairVerify = PairVerify;
 /**
  * Characteristic "Pairing Features"
  */
-
-Characteristic.PairingFeatures = function() {
-  Characteristic.call(this, 'Pairing Features', '0000004F-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    perms: [Characteristic.Perms.READ]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.PairingFeatures, Characteristic);
-
-Characteristic.PairingFeatures.UUID = '0000004F-0000-1000-8000-0026BB765291';
-
+var PairingFeatures = /** @class */ (function (_super) {
+    __extends(PairingFeatures, _super);
+    function PairingFeatures() {
+        var _this = _super.call(this, 'Pairing Features', PairingFeatures.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            perms: [Characteristic_1.Perms.READ]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    PairingFeatures.UUID = '0000004F-0000-1000-8000-0026BB765291';
+    return PairingFeatures;
+}(Characteristic_1.Characteristic));
+exports.PairingFeatures = PairingFeatures;
+Characteristic_1.Characteristic.PairingFeatures = PairingFeatures;
 /**
  * Characteristic "Pairing Pairings"
  */
-
-Characteristic.PairingPairings = function() {
-  Characteristic.call(this, 'Pairing Pairings', '00000050-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.TLV8,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.PairingPairings, Characteristic);
-
-Characteristic.PairingPairings.UUID = '00000050-0000-1000-8000-0026BB765291';
-
+var PairingPairings = /** @class */ (function (_super) {
+    __extends(PairingPairings, _super);
+    function PairingPairings() {
+        var _this = _super.call(this, 'Pairing Pairings', PairingPairings.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    PairingPairings.UUID = '00000050-0000-1000-8000-0026BB765291';
+    return PairingPairings;
+}(Characteristic_1.Characteristic));
+exports.PairingPairings = PairingPairings;
+Characteristic_1.Characteristic.PairingPairings = PairingPairings;
 /**
  * Characteristic "PM10 Density"
  */
-
-Characteristic.PM10Density = function() {
-  Characteristic.call(this, 'PM10 Density', '000000C7-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    maxValue: 1000,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.PM10Density, Characteristic);
-
-Characteristic.PM10Density.UUID = '000000C7-0000-1000-8000-0026BB765291';
-
+var PM10Density = /** @class */ (function (_super) {
+    __extends(PM10Density, _super);
+    function PM10Density() {
+        var _this = _super.call(this, 'PM10 Density', PM10Density.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            maxValue: 1000,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    PM10Density.UUID = '000000C7-0000-1000-8000-0026BB765291';
+    return PM10Density;
+}(Characteristic_1.Characteristic));
+exports.PM10Density = PM10Density;
+Characteristic_1.Characteristic.PM10Density = PM10Density;
 /**
  * Characteristic "PM2.5 Density"
  */
-
-Characteristic.PM2_5Density = function() {
-  Characteristic.call(this, 'PM2.5 Density', '000000C6-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    maxValue: 1000,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.PM2_5Density, Characteristic);
-
-Characteristic.PM2_5Density.UUID = '000000C6-0000-1000-8000-0026BB765291';
-
+var PM2_5Density = /** @class */ (function (_super) {
+    __extends(PM2_5Density, _super);
+    function PM2_5Density() {
+        var _this = _super.call(this, 'PM2.5 Density', PM2_5Density.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            maxValue: 1000,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    PM2_5Density.UUID = '000000C6-0000-1000-8000-0026BB765291';
+    return PM2_5Density;
+}(Characteristic_1.Characteristic));
+exports.PM2_5Density = PM2_5Density;
+Characteristic_1.Characteristic.PM2_5Density = PM2_5Density;
 /**
  * Characteristic "Position State"
  */
-
-Characteristic.PositionState = function() {
-  Characteristic.call(this, 'Position State', '00000072-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 2,
-    minValue: 0,
-    validValues: [0,1,2],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.PositionState, Characteristic);
-
-Characteristic.PositionState.UUID = '00000072-0000-1000-8000-0026BB765291';
-
-// The value property of PositionState must be one of the following:
-Characteristic.PositionState.DECREASING = 0;
-Characteristic.PositionState.INCREASING = 1;
-Characteristic.PositionState.STOPPED = 2;
-
+var PositionState = /** @class */ (function (_super) {
+    __extends(PositionState, _super);
+    function PositionState() {
+        var _this = _super.call(this, 'Position State', PositionState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 2,
+            minValue: 0,
+            validValues: [0, 1, 2],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of PositionState must be one of the following:
+    PositionState.DECREASING = 0;
+    PositionState.INCREASING = 1;
+    PositionState.STOPPED = 2;
+    PositionState.UUID = '00000072-0000-1000-8000-0026BB765291';
+    return PositionState;
+}(Characteristic_1.Characteristic));
+exports.PositionState = PositionState;
+Characteristic_1.Characteristic.PositionState = PositionState;
 /**
  * Characteristic "Program Mode"
  */
-
-Characteristic.ProgramMode = function() {
-  Characteristic.call(this, 'Program Mode', '000000D1-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 2,
-    minValue: 0,
-    validValues: [0,1,2],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.ProgramMode, Characteristic);
-
-Characteristic.ProgramMode.UUID = '000000D1-0000-1000-8000-0026BB765291';
-
-// The value property of ProgramMode must be one of the following:
-Characteristic.ProgramMode.NO_PROGRAM_SCHEDULED = 0;
-Characteristic.ProgramMode.PROGRAM_SCHEDULED = 1;
-Characteristic.ProgramMode.PROGRAM_SCHEDULED_MANUAL_MODE_ = 2;
-
+var ProgramMode = /** @class */ (function (_super) {
+    __extends(ProgramMode, _super);
+    function ProgramMode() {
+        var _this = _super.call(this, 'Program Mode', ProgramMode.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 2,
+            minValue: 0,
+            validValues: [0, 1, 2],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of ProgramMode must be one of the following:
+    ProgramMode.NO_PROGRAM_SCHEDULED = 0;
+    ProgramMode.PROGRAM_SCHEDULED = 1;
+    ProgramMode.PROGRAM_SCHEDULED_MANUAL_MODE_ = 2;
+    ProgramMode.UUID = '000000D1-0000-1000-8000-0026BB765291';
+    return ProgramMode;
+}(Characteristic_1.Characteristic));
+exports.ProgramMode = ProgramMode;
+Characteristic_1.Characteristic.ProgramMode = ProgramMode;
 /**
  * Characteristic "Programmable Switch Event"
  */
-
-Characteristic.ProgrammableSwitchEvent = function() {
-  Characteristic.call(this, 'Programmable Switch Event', '00000073-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 2,
-    minValue: 0,
-    validValues: [0,1,2],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.eventOnlyCharacteristic = true; //Manual addition.
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.ProgrammableSwitchEvent, Characteristic);
-
-Characteristic.ProgrammableSwitchEvent.UUID = '00000073-0000-1000-8000-0026BB765291';
-
-// The value property of ProgrammableSwitchEvent must be one of the following:
-Characteristic.ProgrammableSwitchEvent.SINGLE_PRESS = 0;
-Characteristic.ProgrammableSwitchEvent.DOUBLE_PRESS = 1;
-Characteristic.ProgrammableSwitchEvent.LONG_PRESS = 2;
-
+var ProgrammableSwitchEvent = /** @class */ (function (_super) {
+    __extends(ProgrammableSwitchEvent, _super);
+    function ProgrammableSwitchEvent() {
+        var _this = _super.call(this, 'Programmable Switch Event', ProgrammableSwitchEvent.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 2,
+            minValue: 0,
+            validValues: [0, 1, 2],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.eventOnlyCharacteristic = true; //Manual addition.
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of ProgrammableSwitchEvent must be one of the following:
+    ProgrammableSwitchEvent.SINGLE_PRESS = 0;
+    ProgrammableSwitchEvent.DOUBLE_PRESS = 1;
+    ProgrammableSwitchEvent.LONG_PRESS = 2;
+    ProgrammableSwitchEvent.UUID = '00000073-0000-1000-8000-0026BB765291';
+    return ProgrammableSwitchEvent;
+}(Characteristic_1.Characteristic));
+exports.ProgrammableSwitchEvent = ProgrammableSwitchEvent;
+Characteristic_1.Characteristic.ProgrammableSwitchEvent = ProgrammableSwitchEvent;
 /**
  * Characteristic "Relative Humidity Dehumidifier Threshold"
  */
-
-Characteristic.RelativeHumidityDehumidifierThreshold = function() {
-  Characteristic.call(this, 'Relative Humidity Dehumidifier Threshold', '000000C9-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    maxValue: 100,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.RelativeHumidityDehumidifierThreshold, Characteristic);
-
-Characteristic.RelativeHumidityDehumidifierThreshold.UUID = '000000C9-0000-1000-8000-0026BB765291';
-
+var RelativeHumidityDehumidifierThreshold = /** @class */ (function (_super) {
+    __extends(RelativeHumidityDehumidifierThreshold, _super);
+    function RelativeHumidityDehumidifierThreshold() {
+        var _this = _super.call(this, 'Relative Humidity Dehumidifier Threshold', RelativeHumidityDehumidifierThreshold.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            maxValue: 100,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    RelativeHumidityDehumidifierThreshold.UUID = '000000C9-0000-1000-8000-0026BB765291';
+    return RelativeHumidityDehumidifierThreshold;
+}(Characteristic_1.Characteristic));
+exports.RelativeHumidityDehumidifierThreshold = RelativeHumidityDehumidifierThreshold;
+Characteristic_1.Characteristic.RelativeHumidityDehumidifierThreshold = RelativeHumidityDehumidifierThreshold;
 /**
  * Characteristic "Relative Humidity Humidifier Threshold"
  */
-
-Characteristic.RelativeHumidityHumidifierThreshold = function() {
-  Characteristic.call(this, 'Relative Humidity Humidifier Threshold', '000000CA-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    unit: Characteristic.Units.PERCENTAGE,
-    maxValue: 100,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.RelativeHumidityHumidifierThreshold, Characteristic);
-
-Characteristic.RelativeHumidityHumidifierThreshold.UUID = '000000CA-0000-1000-8000-0026BB765291';
-
+var RelativeHumidityHumidifierThreshold = /** @class */ (function (_super) {
+    __extends(RelativeHumidityHumidifierThreshold, _super);
+    function RelativeHumidityHumidifierThreshold() {
+        var _this = _super.call(this, 'Relative Humidity Humidifier Threshold', RelativeHumidityHumidifierThreshold.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            unit: Characteristic_1.Units.PERCENTAGE,
+            maxValue: 100,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    RelativeHumidityHumidifierThreshold.UUID = '000000CA-0000-1000-8000-0026BB765291';
+    return RelativeHumidityHumidifierThreshold;
+}(Characteristic_1.Characteristic));
+exports.RelativeHumidityHumidifierThreshold = RelativeHumidityHumidifierThreshold;
+Characteristic_1.Characteristic.RelativeHumidityHumidifierThreshold = RelativeHumidityHumidifierThreshold;
 /**
  * Characteristic "Remaining Duration"
  */
-
-Characteristic.RemainingDuration = function() {
-  Characteristic.call(this, 'Remaining Duration', '000000D4-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT32,
-    maxValue: 3600,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.RemainingDuration, Characteristic);
-
-Characteristic.RemainingDuration.UUID = '000000D4-0000-1000-8000-0026BB765291';
-
+var RemainingDuration = /** @class */ (function (_super) {
+    __extends(RemainingDuration, _super);
+    function RemainingDuration() {
+        var _this = _super.call(this, 'Remaining Duration', RemainingDuration.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT32,
+            maxValue: 3600,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    RemainingDuration.UUID = '000000D4-0000-1000-8000-0026BB765291';
+    return RemainingDuration;
+}(Characteristic_1.Characteristic));
+exports.RemainingDuration = RemainingDuration;
+Characteristic_1.Characteristic.RemainingDuration = RemainingDuration;
 /**
  * Characteristic "Reset Filter Indication"
  */
-
-Characteristic.ResetFilterIndication = function() {
-  Characteristic.call(this, 'Reset Filter Indication', '000000AD-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 1,
-    minStep: 1,
-    perms: [Characteristic.Perms.WRITE]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.ResetFilterIndication, Characteristic);
-
-Characteristic.ResetFilterIndication.UUID = '000000AD-0000-1000-8000-0026BB765291';
-
+var ResetFilterIndication = /** @class */ (function (_super) {
+    __extends(ResetFilterIndication, _super);
+    function ResetFilterIndication() {
+        var _this = _super.call(this, 'Reset Filter Indication', ResetFilterIndication.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 1,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.WRITE]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    ResetFilterIndication.UUID = '000000AD-0000-1000-8000-0026BB765291';
+    return ResetFilterIndication;
+}(Characteristic_1.Characteristic));
+exports.ResetFilterIndication = ResetFilterIndication;
+Characteristic_1.Characteristic.ResetFilterIndication = ResetFilterIndication;
 /**
  * Characteristic "Rotation Direction"
  */
-
-Characteristic.RotationDirection = function() {
-  Characteristic.call(this, 'Rotation Direction', '00000028-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.INT,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.RotationDirection, Characteristic);
-
-Characteristic.RotationDirection.UUID = '00000028-0000-1000-8000-0026BB765291';
-
-// The value property of RotationDirection must be one of the following:
-Characteristic.RotationDirection.CLOCKWISE = 0;
-Characteristic.RotationDirection.COUNTER_CLOCKWISE = 1;
-
+var RotationDirection = /** @class */ (function (_super) {
+    __extends(RotationDirection, _super);
+    function RotationDirection() {
+        var _this = _super.call(this, 'Rotation Direction', RotationDirection.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.INT,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of RotationDirection must be one of the following:
+    RotationDirection.CLOCKWISE = 0;
+    RotationDirection.COUNTER_CLOCKWISE = 1;
+    RotationDirection.UUID = '00000028-0000-1000-8000-0026BB765291';
+    return RotationDirection;
+}(Characteristic_1.Characteristic));
+exports.RotationDirection = RotationDirection;
+Characteristic_1.Characteristic.RotationDirection = RotationDirection;
 /**
  * Characteristic "Rotation Speed"
  */
-
-Characteristic.RotationSpeed = function() {
-  Characteristic.call(this, 'Rotation Speed', '00000029-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    unit: Characteristic.Units.PERCENTAGE,
-    maxValue: 100,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.RotationSpeed, Characteristic);
-
-Characteristic.RotationSpeed.UUID = '00000029-0000-1000-8000-0026BB765291';
-
+var RotationSpeed = /** @class */ (function (_super) {
+    __extends(RotationSpeed, _super);
+    function RotationSpeed() {
+        var _this = _super.call(this, 'Rotation Speed', RotationSpeed.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            unit: Characteristic_1.Units.PERCENTAGE,
+            maxValue: 100,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    RotationSpeed.UUID = '00000029-0000-1000-8000-0026BB765291';
+    return RotationSpeed;
+}(Characteristic_1.Characteristic));
+exports.RotationSpeed = RotationSpeed;
+Characteristic_1.Characteristic.RotationSpeed = RotationSpeed;
 /**
  * Characteristic "Saturation"
  */
-
-Characteristic.Saturation = function() {
-  Characteristic.call(this, 'Saturation', '0000002F-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    unit: Characteristic.Units.PERCENTAGE,
-    maxValue: 100,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.Saturation, Characteristic);
-
-Characteristic.Saturation.UUID = '0000002F-0000-1000-8000-0026BB765291';
-
+var Saturation = /** @class */ (function (_super) {
+    __extends(Saturation, _super);
+    function Saturation() {
+        var _this = _super.call(this, 'Saturation', Saturation.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            unit: Characteristic_1.Units.PERCENTAGE,
+            maxValue: 100,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    Saturation.UUID = '0000002F-0000-1000-8000-0026BB765291';
+    return Saturation;
+}(Characteristic_1.Characteristic));
+exports.Saturation = Saturation;
+Characteristic_1.Characteristic.Saturation = Saturation;
 /**
  * Characteristic "Security System Alarm Type"
  */
-
-Characteristic.SecuritySystemAlarmType = function() {
-  Characteristic.call(this, 'Security System Alarm Type', '0000008E-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.SecuritySystemAlarmType, Characteristic);
-
-Characteristic.SecuritySystemAlarmType.UUID = '0000008E-0000-1000-8000-0026BB765291';
-
+var SecuritySystemAlarmType = /** @class */ (function (_super) {
+    __extends(SecuritySystemAlarmType, _super);
+    function SecuritySystemAlarmType() {
+        var _this = _super.call(this, 'Security System Alarm Type', SecuritySystemAlarmType.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    SecuritySystemAlarmType.UUID = '0000008E-0000-1000-8000-0026BB765291';
+    return SecuritySystemAlarmType;
+}(Characteristic_1.Characteristic));
+exports.SecuritySystemAlarmType = SecuritySystemAlarmType;
+Characteristic_1.Characteristic.SecuritySystemAlarmType = SecuritySystemAlarmType;
 /**
  * Characteristic "Security System Current State"
  */
-
-Characteristic.SecuritySystemCurrentState = function() {
-  Characteristic.call(this, 'Security System Current State', '00000066-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 4,
-    minValue: 0,
-    validValues: [0,1,2,3,4],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.SecuritySystemCurrentState, Characteristic);
-
-Characteristic.SecuritySystemCurrentState.UUID = '00000066-0000-1000-8000-0026BB765291';
-
-// The value property of SecuritySystemCurrentState must be one of the following:
-Characteristic.SecuritySystemCurrentState.STAY_ARM = 0;
-Characteristic.SecuritySystemCurrentState.AWAY_ARM = 1;
-Characteristic.SecuritySystemCurrentState.NIGHT_ARM = 2;
-Characteristic.SecuritySystemCurrentState.DISARMED = 3;
-Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED = 4;
-
+var SecuritySystemCurrentState = /** @class */ (function (_super) {
+    __extends(SecuritySystemCurrentState, _super);
+    function SecuritySystemCurrentState() {
+        var _this = _super.call(this, 'Security System Current State', SecuritySystemCurrentState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 4,
+            minValue: 0,
+            validValues: [0, 1, 2, 3, 4],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of SecuritySystemCurrentState must be one of the following:
+    SecuritySystemCurrentState.STAY_ARM = 0;
+    SecuritySystemCurrentState.AWAY_ARM = 1;
+    SecuritySystemCurrentState.NIGHT_ARM = 2;
+    SecuritySystemCurrentState.DISARMED = 3;
+    SecuritySystemCurrentState.ALARM_TRIGGERED = 4;
+    SecuritySystemCurrentState.UUID = '00000066-0000-1000-8000-0026BB765291';
+    return SecuritySystemCurrentState;
+}(Characteristic_1.Characteristic));
+exports.SecuritySystemCurrentState = SecuritySystemCurrentState;
+Characteristic_1.Characteristic.SecuritySystemCurrentState = SecuritySystemCurrentState;
 /**
  * Characteristic "Security System Target State"
  */
-
-Characteristic.SecuritySystemTargetState = function() {
-  Characteristic.call(this, 'Security System Target State', '00000067-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 3,
-    minValue: 0,
-    validValues: [0,1,2,3],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.SecuritySystemTargetState, Characteristic);
-
-Characteristic.SecuritySystemTargetState.UUID = '00000067-0000-1000-8000-0026BB765291';
-
-// The value property of SecuritySystemTargetState must be one of the following:
-Characteristic.SecuritySystemTargetState.STAY_ARM = 0;
-Characteristic.SecuritySystemTargetState.AWAY_ARM = 1;
-Characteristic.SecuritySystemTargetState.NIGHT_ARM = 2;
-Characteristic.SecuritySystemTargetState.DISARM = 3;
-
+var SecuritySystemTargetState = /** @class */ (function (_super) {
+    __extends(SecuritySystemTargetState, _super);
+    function SecuritySystemTargetState() {
+        var _this = _super.call(this, 'Security System Target State', SecuritySystemTargetState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 3,
+            minValue: 0,
+            validValues: [0, 1, 2, 3],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of SecuritySystemTargetState must be one of the following:
+    SecuritySystemTargetState.STAY_ARM = 0;
+    SecuritySystemTargetState.AWAY_ARM = 1;
+    SecuritySystemTargetState.NIGHT_ARM = 2;
+    SecuritySystemTargetState.DISARM = 3;
+    SecuritySystemTargetState.UUID = '00000067-0000-1000-8000-0026BB765291';
+    return SecuritySystemTargetState;
+}(Characteristic_1.Characteristic));
+exports.SecuritySystemTargetState = SecuritySystemTargetState;
+Characteristic_1.Characteristic.SecuritySystemTargetState = SecuritySystemTargetState;
 /**
  * Characteristic "Selected RTP Stream Configuration"
  */
-
-Characteristic.SelectedRTPStreamConfiguration = function() {
-  Characteristic.call(this, 'Selected RTP Stream Configuration', '00000117-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.TLV8,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.SelectedRTPStreamConfiguration, Characteristic);
-
-Characteristic.SelectedRTPStreamConfiguration.UUID = '00000117-0000-1000-8000-0026BB765291';
-
+var SelectedRTPStreamConfiguration = /** @class */ (function (_super) {
+    __extends(SelectedRTPStreamConfiguration, _super);
+    function SelectedRTPStreamConfiguration() {
+        var _this = _super.call(this, 'Selected RTP Stream Configuration', SelectedRTPStreamConfiguration.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    SelectedRTPStreamConfiguration.UUID = '00000117-0000-1000-8000-0026BB765291';
+    return SelectedRTPStreamConfiguration;
+}(Characteristic_1.Characteristic));
+exports.SelectedRTPStreamConfiguration = SelectedRTPStreamConfiguration;
+Characteristic_1.Characteristic.SelectedRTPStreamConfiguration = SelectedRTPStreamConfiguration;
 /**
  * Characteristic "Serial Number"
  */
-
-Characteristic.SerialNumber = function() {
-  Characteristic.call(this, 'Serial Number', '00000030-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.STRING,
-    perms: [Characteristic.Perms.READ]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.SerialNumber, Characteristic);
-
-Characteristic.SerialNumber.UUID = '00000030-0000-1000-8000-0026BB765291';
-
+var SerialNumber = /** @class */ (function (_super) {
+    __extends(SerialNumber, _super);
+    function SerialNumber() {
+        var _this = _super.call(this, 'Serial Number', SerialNumber.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.STRING,
+            perms: [Characteristic_1.Perms.READ]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    SerialNumber.UUID = '00000030-0000-1000-8000-0026BB765291';
+    return SerialNumber;
+}(Characteristic_1.Characteristic));
+exports.SerialNumber = SerialNumber;
+Characteristic_1.Characteristic.SerialNumber = SerialNumber;
 /**
  * Characteristic "Service Label Index"
  */
-
-Characteristic.ServiceLabelIndex = function() {
-  Characteristic.call(this, 'Service Label Index', '000000CB-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 255,
-    minValue: 1,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.ServiceLabelIndex, Characteristic);
-
-Characteristic.ServiceLabelIndex.UUID = '000000CB-0000-1000-8000-0026BB765291';
-
+var ServiceLabelIndex = /** @class */ (function (_super) {
+    __extends(ServiceLabelIndex, _super);
+    function ServiceLabelIndex() {
+        var _this = _super.call(this, 'Service Label Index', ServiceLabelIndex.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 255,
+            minValue: 1,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    ServiceLabelIndex.UUID = '000000CB-0000-1000-8000-0026BB765291';
+    return ServiceLabelIndex;
+}(Characteristic_1.Characteristic));
+exports.ServiceLabelIndex = ServiceLabelIndex;
+Characteristic_1.Characteristic.ServiceLabelIndex = ServiceLabelIndex;
 /**
  * Characteristic "Service Label Namespace"
  */
-
-Characteristic.ServiceLabelNamespace = function() {
-  Characteristic.call(this, 'Service Label Namespace', '000000CD-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.ServiceLabelNamespace, Characteristic);
-
-Characteristic.ServiceLabelNamespace.UUID = '000000CD-0000-1000-8000-0026BB765291';
-
-// The value property of ServiceLabelNamespace must be one of the following:
-Characteristic.ServiceLabelNamespace.DOTS = 0;
-Characteristic.ServiceLabelNamespace.ARABIC_NUMERALS = 1;
-
+var ServiceLabelNamespace = /** @class */ (function (_super) {
+    __extends(ServiceLabelNamespace, _super);
+    function ServiceLabelNamespace() {
+        var _this = _super.call(this, 'Service Label Namespace', ServiceLabelNamespace.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of ServiceLabelNamespace must be one of the following:
+    ServiceLabelNamespace.DOTS = 0;
+    ServiceLabelNamespace.ARABIC_NUMERALS = 1;
+    ServiceLabelNamespace.UUID = '000000CD-0000-1000-8000-0026BB765291';
+    return ServiceLabelNamespace;
+}(Characteristic_1.Characteristic));
+exports.ServiceLabelNamespace = ServiceLabelNamespace;
+Characteristic_1.Characteristic.ServiceLabelNamespace = ServiceLabelNamespace;
 /**
  * Characteristic "Set Duration"
  */
-
-Characteristic.SetDuration = function() {
-  Characteristic.call(this, 'Set Duration', '000000D3-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT32,
-    maxValue: 3600,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.SetDuration, Characteristic);
-
-Characteristic.SetDuration.UUID = '000000D3-0000-1000-8000-0026BB765291';
-
+var SetDuration = /** @class */ (function (_super) {
+    __extends(SetDuration, _super);
+    function SetDuration() {
+        var _this = _super.call(this, 'Set Duration', SetDuration.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT32,
+            maxValue: 3600,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    SetDuration.UUID = '000000D3-0000-1000-8000-0026BB765291';
+    return SetDuration;
+}(Characteristic_1.Characteristic));
+exports.SetDuration = SetDuration;
+Characteristic_1.Characteristic.SetDuration = SetDuration;
 /**
  * Characteristic "Setup Endpoints"
  */
-
-Characteristic.SetupEndpoints = function() {
-  Characteristic.call(this, 'Setup Endpoints', '00000118-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.TLV8,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.SetupEndpoints, Characteristic);
-
-Characteristic.SetupEndpoints.UUID = '00000118-0000-1000-8000-0026BB765291';
-
+var SetupEndpoints = /** @class */ (function (_super) {
+    __extends(SetupEndpoints, _super);
+    function SetupEndpoints() {
+        var _this = _super.call(this, 'Setup Endpoints', SetupEndpoints.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    SetupEndpoints.UUID = '00000118-0000-1000-8000-0026BB765291';
+    return SetupEndpoints;
+}(Characteristic_1.Characteristic));
+exports.SetupEndpoints = SetupEndpoints;
+Characteristic_1.Characteristic.SetupEndpoints = SetupEndpoints;
 /**
  * Characteristic "Slat Type"
  */
-
-Characteristic.SlatType = function() {
-  Characteristic.call(this, 'Slat Type', '000000C0-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.SlatType, Characteristic);
-
-Characteristic.SlatType.UUID = '000000C0-0000-1000-8000-0026BB765291';
-
-// The value property of SlatType must be one of the following:
-Characteristic.SlatType.HORIZONTAL = 0;
-Characteristic.SlatType.VERTICAL = 1;
-
+var SlatType = /** @class */ (function (_super) {
+    __extends(SlatType, _super);
+    function SlatType() {
+        var _this = _super.call(this, 'Slat Type', SlatType.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of SlatType must be one of the following:
+    SlatType.HORIZONTAL = 0;
+    SlatType.VERTICAL = 1;
+    SlatType.UUID = '000000C0-0000-1000-8000-0026BB765291';
+    return SlatType;
+}(Characteristic_1.Characteristic));
+exports.SlatType = SlatType;
+Characteristic_1.Characteristic.SlatType = SlatType;
 /**
  * Characteristic "Smoke Detected"
  */
-
-Characteristic.SmokeDetected = function() {
-  Characteristic.call(this, 'Smoke Detected', '00000076-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.SmokeDetected, Characteristic);
-
-Characteristic.SmokeDetected.UUID = '00000076-0000-1000-8000-0026BB765291';
-
-// The value property of SmokeDetected must be one of the following:
-Characteristic.SmokeDetected.SMOKE_NOT_DETECTED = 0;
-Characteristic.SmokeDetected.SMOKE_DETECTED = 1;
-
+var SmokeDetected = /** @class */ (function (_super) {
+    __extends(SmokeDetected, _super);
+    function SmokeDetected() {
+        var _this = _super.call(this, 'Smoke Detected', SmokeDetected.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of SmokeDetected must be one of the following:
+    SmokeDetected.SMOKE_NOT_DETECTED = 0;
+    SmokeDetected.SMOKE_DETECTED = 1;
+    SmokeDetected.UUID = '00000076-0000-1000-8000-0026BB765291';
+    return SmokeDetected;
+}(Characteristic_1.Characteristic));
+exports.SmokeDetected = SmokeDetected;
+Characteristic_1.Characteristic.SmokeDetected = SmokeDetected;
 /**
  * Characteristic "Status Active"
  */
-
-Characteristic.StatusActive = function() {
-  Characteristic.call(this, 'Status Active', '00000075-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.BOOL,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.StatusActive, Characteristic);
-
-Characteristic.StatusActive.UUID = '00000075-0000-1000-8000-0026BB765291';
-
+var StatusActive = /** @class */ (function (_super) {
+    __extends(StatusActive, _super);
+    function StatusActive() {
+        var _this = _super.call(this, 'Status Active', StatusActive.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.BOOL,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    StatusActive.UUID = '00000075-0000-1000-8000-0026BB765291';
+    return StatusActive;
+}(Characteristic_1.Characteristic));
+exports.StatusActive = StatusActive;
+Characteristic_1.Characteristic.StatusActive = StatusActive;
 /**
  * Characteristic "Status Fault"
  */
-
-Characteristic.StatusFault = function() {
-  Characteristic.call(this, 'Status Fault', '00000077-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.StatusFault, Characteristic);
-
-Characteristic.StatusFault.UUID = '00000077-0000-1000-8000-0026BB765291';
-
-// The value property of StatusFault must be one of the following:
-Characteristic.StatusFault.NO_FAULT = 0;
-Characteristic.StatusFault.GENERAL_FAULT = 1;
-
+var StatusFault = /** @class */ (function (_super) {
+    __extends(StatusFault, _super);
+    function StatusFault() {
+        var _this = _super.call(this, 'Status Fault', StatusFault.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of StatusFault must be one of the following:
+    StatusFault.NO_FAULT = 0;
+    StatusFault.GENERAL_FAULT = 1;
+    StatusFault.UUID = '00000077-0000-1000-8000-0026BB765291';
+    return StatusFault;
+}(Characteristic_1.Characteristic));
+exports.StatusFault = StatusFault;
+Characteristic_1.Characteristic.StatusFault = StatusFault;
 /**
  * Characteristic "Status Jammed"
  */
-
-Characteristic.StatusJammed = function() {
-  Characteristic.call(this, 'Status Jammed', '00000078-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.StatusJammed, Characteristic);
-
-Characteristic.StatusJammed.UUID = '00000078-0000-1000-8000-0026BB765291';
-
-// The value property of StatusJammed must be one of the following:
-Characteristic.StatusJammed.NOT_JAMMED = 0;
-Characteristic.StatusJammed.JAMMED = 1;
-
+var StatusJammed = /** @class */ (function (_super) {
+    __extends(StatusJammed, _super);
+    function StatusJammed() {
+        var _this = _super.call(this, 'Status Jammed', StatusJammed.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of StatusJammed must be one of the following:
+    StatusJammed.NOT_JAMMED = 0;
+    StatusJammed.JAMMED = 1;
+    StatusJammed.UUID = '00000078-0000-1000-8000-0026BB765291';
+    return StatusJammed;
+}(Characteristic_1.Characteristic));
+exports.StatusJammed = StatusJammed;
+Characteristic_1.Characteristic.StatusJammed = StatusJammed;
 /**
  * Characteristic "Status Low Battery"
  */
-
-Characteristic.StatusLowBattery = function() {
-  Characteristic.call(this, 'Status Low Battery', '00000079-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.StatusLowBattery, Characteristic);
-
-Characteristic.StatusLowBattery.UUID = '00000079-0000-1000-8000-0026BB765291';
-
-// The value property of StatusLowBattery must be one of the following:
-Characteristic.StatusLowBattery.BATTERY_LEVEL_NORMAL = 0;
-Characteristic.StatusLowBattery.BATTERY_LEVEL_LOW = 1;
-
+var StatusLowBattery = /** @class */ (function (_super) {
+    __extends(StatusLowBattery, _super);
+    function StatusLowBattery() {
+        var _this = _super.call(this, 'Status Low Battery', StatusLowBattery.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of StatusLowBattery must be one of the following:
+    StatusLowBattery.BATTERY_LEVEL_NORMAL = 0;
+    StatusLowBattery.BATTERY_LEVEL_LOW = 1;
+    StatusLowBattery.UUID = '00000079-0000-1000-8000-0026BB765291';
+    return StatusLowBattery;
+}(Characteristic_1.Characteristic));
+exports.StatusLowBattery = StatusLowBattery;
+Characteristic_1.Characteristic.StatusLowBattery = StatusLowBattery;
 /**
  * Characteristic "Status Tampered"
  */
-
-Characteristic.StatusTampered = function() {
-  Characteristic.call(this, 'Status Tampered', '0000007A-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.StatusTampered, Characteristic);
-
-Characteristic.StatusTampered.UUID = '0000007A-0000-1000-8000-0026BB765291';
-
-// The value property of StatusTampered must be one of the following:
-Characteristic.StatusTampered.NOT_TAMPERED = 0;
-Characteristic.StatusTampered.TAMPERED = 1;
-
+var StatusTampered = /** @class */ (function (_super) {
+    __extends(StatusTampered, _super);
+    function StatusTampered() {
+        var _this = _super.call(this, 'Status Tampered', StatusTampered.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of StatusTampered must be one of the following:
+    StatusTampered.NOT_TAMPERED = 0;
+    StatusTampered.TAMPERED = 1;
+    StatusTampered.UUID = '0000007A-0000-1000-8000-0026BB765291';
+    return StatusTampered;
+}(Characteristic_1.Characteristic));
+exports.StatusTampered = StatusTampered;
+Characteristic_1.Characteristic.StatusTampered = StatusTampered;
 /**
  * Characteristic "Streaming Status"
  */
-
-Characteristic.StreamingStatus = function() {
-  Characteristic.call(this, 'Streaming Status', '00000120-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.TLV8,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.StreamingStatus, Characteristic);
-
-Characteristic.StreamingStatus.UUID = '00000120-0000-1000-8000-0026BB765291';
-
+var StreamingStatus = /** @class */ (function (_super) {
+    __extends(StreamingStatus, _super);
+    function StreamingStatus() {
+        var _this = _super.call(this, 'Streaming Status', StreamingStatus.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    StreamingStatus.UUID = '00000120-0000-1000-8000-0026BB765291';
+    return StreamingStatus;
+}(Characteristic_1.Characteristic));
+exports.StreamingStatus = StreamingStatus;
+Characteristic_1.Characteristic.StreamingStatus = StreamingStatus;
 /**
  * Characteristic "Sulphur Dioxide Density"
  */
-
-Characteristic.SulphurDioxideDensity = function() {
-  Characteristic.call(this, 'Sulphur Dioxide Density', '000000C5-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    maxValue: 1000,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.SulphurDioxideDensity, Characteristic);
-
-Characteristic.SulphurDioxideDensity.UUID = '000000C5-0000-1000-8000-0026BB765291';
-
+var SulphurDioxideDensity = /** @class */ (function (_super) {
+    __extends(SulphurDioxideDensity, _super);
+    function SulphurDioxideDensity() {
+        var _this = _super.call(this, 'Sulphur Dioxide Density', SulphurDioxideDensity.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            maxValue: 1000,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    SulphurDioxideDensity.UUID = '000000C5-0000-1000-8000-0026BB765291';
+    return SulphurDioxideDensity;
+}(Characteristic_1.Characteristic));
+exports.SulphurDioxideDensity = SulphurDioxideDensity;
+Characteristic_1.Characteristic.SulphurDioxideDensity = SulphurDioxideDensity;
 /**
  * Characteristic "Supported Audio Stream Configuration"
  */
-
-Characteristic.SupportedAudioStreamConfiguration = function() {
-  Characteristic.call(this, 'Supported Audio Stream Configuration', '00000115-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.TLV8,
-    perms: [Characteristic.Perms.READ]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.SupportedAudioStreamConfiguration, Characteristic);
-
-Characteristic.SupportedAudioStreamConfiguration.UUID = '00000115-0000-1000-8000-0026BB765291';
-
+var SupportedAudioStreamConfiguration = /** @class */ (function (_super) {
+    __extends(SupportedAudioStreamConfiguration, _super);
+    function SupportedAudioStreamConfiguration() {
+        var _this = _super.call(this, 'Supported Audio Stream Configuration', SupportedAudioStreamConfiguration.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    SupportedAudioStreamConfiguration.UUID = '00000115-0000-1000-8000-0026BB765291';
+    return SupportedAudioStreamConfiguration;
+}(Characteristic_1.Characteristic));
+exports.SupportedAudioStreamConfiguration = SupportedAudioStreamConfiguration;
+Characteristic_1.Characteristic.SupportedAudioStreamConfiguration = SupportedAudioStreamConfiguration;
 /**
  * Characteristic "Supported RTP Configuration"
  */
-
-Characteristic.SupportedRTPConfiguration = function() {
-  Characteristic.call(this, 'Supported RTP Configuration', '00000116-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.TLV8,
-    perms: [Characteristic.Perms.READ]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.SupportedRTPConfiguration, Characteristic);
-
-Characteristic.SupportedRTPConfiguration.UUID = '00000116-0000-1000-8000-0026BB765291';
-
+var SupportedRTPConfiguration = /** @class */ (function (_super) {
+    __extends(SupportedRTPConfiguration, _super);
+    function SupportedRTPConfiguration() {
+        var _this = _super.call(this, 'Supported RTP Configuration', SupportedRTPConfiguration.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    SupportedRTPConfiguration.UUID = '00000116-0000-1000-8000-0026BB765291';
+    return SupportedRTPConfiguration;
+}(Characteristic_1.Characteristic));
+exports.SupportedRTPConfiguration = SupportedRTPConfiguration;
+Characteristic_1.Characteristic.SupportedRTPConfiguration = SupportedRTPConfiguration;
 /**
  * Characteristic "Supported Video Stream Configuration"
  */
-
-Characteristic.SupportedVideoStreamConfiguration = function() {
-  Characteristic.call(this, 'Supported Video Stream Configuration', '00000114-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.TLV8,
-    perms: [Characteristic.Perms.READ]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.SupportedVideoStreamConfiguration, Characteristic);
-
-Characteristic.SupportedVideoStreamConfiguration.UUID = '00000114-0000-1000-8000-0026BB765291';
-
+var SupportedVideoStreamConfiguration = /** @class */ (function (_super) {
+    __extends(SupportedVideoStreamConfiguration, _super);
+    function SupportedVideoStreamConfiguration() {
+        var _this = _super.call(this, 'Supported Video Stream Configuration', SupportedVideoStreamConfiguration.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    SupportedVideoStreamConfiguration.UUID = '00000114-0000-1000-8000-0026BB765291';
+    return SupportedVideoStreamConfiguration;
+}(Characteristic_1.Characteristic));
+exports.SupportedVideoStreamConfiguration = SupportedVideoStreamConfiguration;
+Characteristic_1.Characteristic.SupportedVideoStreamConfiguration = SupportedVideoStreamConfiguration;
 /**
  * Characteristic "Swing Mode"
  */
-
-Characteristic.SwingMode = function() {
-  Characteristic.call(this, 'Swing Mode', '000000B6-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.SwingMode, Characteristic);
-
-Characteristic.SwingMode.UUID = '000000B6-0000-1000-8000-0026BB765291';
-
-// The value property of SwingMode must be one of the following:
-Characteristic.SwingMode.SWING_DISABLED = 0;
-Characteristic.SwingMode.SWING_ENABLED = 1;
-
+var SwingMode = /** @class */ (function (_super) {
+    __extends(SwingMode, _super);
+    function SwingMode() {
+        var _this = _super.call(this, 'Swing Mode', SwingMode.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of SwingMode must be one of the following:
+    SwingMode.SWING_DISABLED = 0;
+    SwingMode.SWING_ENABLED = 1;
+    SwingMode.UUID = '000000B6-0000-1000-8000-0026BB765291';
+    return SwingMode;
+}(Characteristic_1.Characteristic));
+exports.SwingMode = SwingMode;
+Characteristic_1.Characteristic.SwingMode = SwingMode;
 /**
  * Characteristic "Target Air Purifier State"
  */
-
-Characteristic.TargetAirPurifierState = function() {
-  Characteristic.call(this, 'Target Air Purifier State', '000000A8-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TargetAirPurifierState, Characteristic);
-
-Characteristic.TargetAirPurifierState.UUID = '000000A8-0000-1000-8000-0026BB765291';
-
-// The value property of TargetAirPurifierState must be one of the following:
-Characteristic.TargetAirPurifierState.MANUAL = 0;
-Characteristic.TargetAirPurifierState.AUTO = 1;
-
+var TargetAirPurifierState = /** @class */ (function (_super) {
+    __extends(TargetAirPurifierState, _super);
+    function TargetAirPurifierState() {
+        var _this = _super.call(this, 'Target Air Purifier State', TargetAirPurifierState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of TargetAirPurifierState must be one of the following:
+    TargetAirPurifierState.MANUAL = 0;
+    TargetAirPurifierState.AUTO = 1;
+    TargetAirPurifierState.UUID = '000000A8-0000-1000-8000-0026BB765291';
+    return TargetAirPurifierState;
+}(Characteristic_1.Characteristic));
+exports.TargetAirPurifierState = TargetAirPurifierState;
+Characteristic_1.Characteristic.TargetAirPurifierState = TargetAirPurifierState;
 /**
  * Characteristic "Target Air Quality"
  */
-
-Characteristic.TargetAirQuality = function() {
-  Characteristic.call(this, 'Target Air Quality', '000000AE-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 2,
-    minValue: 0,
-    validValues: [0,1,2],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TargetAirQuality, Characteristic);
-
-Characteristic.TargetAirQuality.UUID = '000000AE-0000-1000-8000-0026BB765291';
-
-// The value property of TargetAirQuality must be one of the following:
-Characteristic.TargetAirQuality.EXCELLENT = 0;
-Characteristic.TargetAirQuality.GOOD = 1;
-Characteristic.TargetAirQuality.FAIR = 2;
-
+var TargetAirQuality = /** @class */ (function (_super) {
+    __extends(TargetAirQuality, _super);
+    function TargetAirQuality() {
+        var _this = _super.call(this, 'Target Air Quality', TargetAirQuality.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 2,
+            minValue: 0,
+            validValues: [0, 1, 2],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of TargetAirQuality must be one of the following:
+    TargetAirQuality.EXCELLENT = 0;
+    TargetAirQuality.GOOD = 1;
+    TargetAirQuality.FAIR = 2;
+    TargetAirQuality.UUID = '000000AE-0000-1000-8000-0026BB765291';
+    return TargetAirQuality;
+}(Characteristic_1.Characteristic));
+exports.TargetAirQuality = TargetAirQuality;
+Characteristic_1.Characteristic.TargetAirQuality = TargetAirQuality;
 /**
  * Characteristic "Target Door State"
  */
-
-Characteristic.TargetDoorState = function() {
-  Characteristic.call(this, 'Target Door State', '00000032-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TargetDoorState, Characteristic);
-
-Characteristic.TargetDoorState.UUID = '00000032-0000-1000-8000-0026BB765291';
-
-// The value property of TargetDoorState must be one of the following:
-Characteristic.TargetDoorState.OPEN = 0;
-Characteristic.TargetDoorState.CLOSED = 1;
-
+var TargetDoorState = /** @class */ (function (_super) {
+    __extends(TargetDoorState, _super);
+    function TargetDoorState() {
+        var _this = _super.call(this, 'Target Door State', TargetDoorState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of TargetDoorState must be one of the following:
+    TargetDoorState.OPEN = 0;
+    TargetDoorState.CLOSED = 1;
+    TargetDoorState.UUID = '00000032-0000-1000-8000-0026BB765291';
+    return TargetDoorState;
+}(Characteristic_1.Characteristic));
+exports.TargetDoorState = TargetDoorState;
+Characteristic_1.Characteristic.TargetDoorState = TargetDoorState;
 /**
  * Characteristic "Target Fan State"
  */
-
-Characteristic.TargetFanState = function() {
-  Characteristic.call(this, 'Target Fan State', '000000BF-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TargetFanState, Characteristic);
-
-Characteristic.TargetFanState.UUID = '000000BF-0000-1000-8000-0026BB765291';
-
-// The value property of TargetFanState must be one of the following:
-Characteristic.TargetFanState.MANUAL = 0;
-Characteristic.TargetFanState.AUTO = 1;
-
+var TargetFanState = /** @class */ (function (_super) {
+    __extends(TargetFanState, _super);
+    function TargetFanState() {
+        var _this = _super.call(this, 'Target Fan State', TargetFanState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of TargetFanState must be one of the following:
+    TargetFanState.MANUAL = 0;
+    TargetFanState.AUTO = 1;
+    TargetFanState.UUID = '000000BF-0000-1000-8000-0026BB765291';
+    return TargetFanState;
+}(Characteristic_1.Characteristic));
+exports.TargetFanState = TargetFanState;
+Characteristic_1.Characteristic.TargetFanState = TargetFanState;
 /**
  * Characteristic "Target Heater Cooler State"
  */
-
-Characteristic.TargetHeaterCoolerState = function() {
-  Characteristic.call(this, 'Target Heater Cooler State', '000000B2-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 2,
-    minValue: 0,
-    validValues: [0,1,2],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TargetHeaterCoolerState, Characteristic);
-
-Characteristic.TargetHeaterCoolerState.UUID = '000000B2-0000-1000-8000-0026BB765291';
-
-// The value property of TargetHeaterCoolerState must be one of the following:
-Characteristic.TargetHeaterCoolerState.AUTO = 0;
-Characteristic.TargetHeaterCoolerState.HEAT = 1;
-Characteristic.TargetHeaterCoolerState.COOL = 2;
-
+var TargetHeaterCoolerState = /** @class */ (function (_super) {
+    __extends(TargetHeaterCoolerState, _super);
+    function TargetHeaterCoolerState() {
+        var _this = _super.call(this, 'Target Heater Cooler State', TargetHeaterCoolerState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 2,
+            minValue: 0,
+            validValues: [0, 1, 2],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of TargetHeaterCoolerState must be one of the following:
+    TargetHeaterCoolerState.AUTO = 0;
+    TargetHeaterCoolerState.HEAT = 1;
+    TargetHeaterCoolerState.COOL = 2;
+    TargetHeaterCoolerState.UUID = '000000B2-0000-1000-8000-0026BB765291';
+    return TargetHeaterCoolerState;
+}(Characteristic_1.Characteristic));
+exports.TargetHeaterCoolerState = TargetHeaterCoolerState;
+Characteristic_1.Characteristic.TargetHeaterCoolerState = TargetHeaterCoolerState;
 /**
  * Characteristic "Target Heating Cooling State"
  */
-
-Characteristic.TargetHeatingCoolingState = function() {
-  Characteristic.call(this, 'Target Heating Cooling State', '00000033-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 3,
-    minValue: 0,
-    validValues: [0,1,2,3],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TargetHeatingCoolingState, Characteristic);
-
-Characteristic.TargetHeatingCoolingState.UUID = '00000033-0000-1000-8000-0026BB765291';
-
-// The value property of TargetHeatingCoolingState must be one of the following:
-Characteristic.TargetHeatingCoolingState.OFF = 0;
-Characteristic.TargetHeatingCoolingState.HEAT = 1;
-Characteristic.TargetHeatingCoolingState.COOL = 2;
-Characteristic.TargetHeatingCoolingState.AUTO = 3;
-
+var TargetHeatingCoolingState = /** @class */ (function (_super) {
+    __extends(TargetHeatingCoolingState, _super);
+    function TargetHeatingCoolingState() {
+        var _this = _super.call(this, 'Target Heating Cooling State', TargetHeatingCoolingState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 3,
+            minValue: 0,
+            validValues: [0, 1, 2, 3],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of TargetHeatingCoolingState must be one of the following:
+    TargetHeatingCoolingState.OFF = 0;
+    TargetHeatingCoolingState.HEAT = 1;
+    TargetHeatingCoolingState.COOL = 2;
+    TargetHeatingCoolingState.AUTO = 3;
+    TargetHeatingCoolingState.UUID = '00000033-0000-1000-8000-0026BB765291';
+    return TargetHeatingCoolingState;
+}(Characteristic_1.Characteristic));
+exports.TargetHeatingCoolingState = TargetHeatingCoolingState;
+Characteristic_1.Characteristic.TargetHeatingCoolingState = TargetHeatingCoolingState;
 /**
  * Characteristic "Target Horizontal Tilt Angle"
  */
-
-Characteristic.TargetHorizontalTiltAngle = function() {
-  Characteristic.call(this, 'Target Horizontal Tilt Angle', '0000007B-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.INT,
-    unit: Characteristic.Units.ARC_DEGREE,
-    maxValue: 90,
-    minValue: -90,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TargetHorizontalTiltAngle, Characteristic);
-
-Characteristic.TargetHorizontalTiltAngle.UUID = '0000007B-0000-1000-8000-0026BB765291';
-
+var TargetHorizontalTiltAngle = /** @class */ (function (_super) {
+    __extends(TargetHorizontalTiltAngle, _super);
+    function TargetHorizontalTiltAngle() {
+        var _this = _super.call(this, 'Target Horizontal Tilt Angle', TargetHorizontalTiltAngle.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.INT,
+            unit: Characteristic_1.Units.ARC_DEGREE,
+            maxValue: 90,
+            minValue: -90,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    TargetHorizontalTiltAngle.UUID = '0000007B-0000-1000-8000-0026BB765291';
+    return TargetHorizontalTiltAngle;
+}(Characteristic_1.Characteristic));
+exports.TargetHorizontalTiltAngle = TargetHorizontalTiltAngle;
+Characteristic_1.Characteristic.TargetHorizontalTiltAngle = TargetHorizontalTiltAngle;
 /**
  * Characteristic "Target Humidifier Dehumidifier State"
  */
-
-Characteristic.TargetHumidifierDehumidifierState = function() {
-  Characteristic.call(this, 'Target Humidifier Dehumidifier State', '000000B4-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 2,
-    minValue: 0,
-    validValues: [0,1,2],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TargetHumidifierDehumidifierState, Characteristic);
-
-Characteristic.TargetHumidifierDehumidifierState.UUID = '000000B4-0000-1000-8000-0026BB765291';
-
-// The value property of TargetHumidifierDehumidifierState must be one of the following:
-Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER_OR_DEHUMIDIFIER = 0;
-Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER = 1;
-Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER = 2;
-
+var TargetHumidifierDehumidifierState = /** @class */ (function (_super) {
+    __extends(TargetHumidifierDehumidifierState, _super);
+    function TargetHumidifierDehumidifierState() {
+        var _this = _super.call(this, 'Target Humidifier Dehumidifier State', TargetHumidifierDehumidifierState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 2,
+            minValue: 0,
+            validValues: [0, 1, 2],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    /**
+     * @deprecated Removed in iOS 11. Use HUMIDIFIER_OR_DEHUMIDIFIER instead.
+     */
+    TargetHumidifierDehumidifierState.AUTO = 0;
+    // The value property of TargetHumidifierDehumidifierState must be one of the following:
+    TargetHumidifierDehumidifierState.HUMIDIFIER_OR_DEHUMIDIFIER = 0;
+    TargetHumidifierDehumidifierState.HUMIDIFIER = 1;
+    TargetHumidifierDehumidifierState.DEHUMIDIFIER = 2;
+    TargetHumidifierDehumidifierState.UUID = '000000B4-0000-1000-8000-0026BB765291';
+    return TargetHumidifierDehumidifierState;
+}(Characteristic_1.Characteristic));
+exports.TargetHumidifierDehumidifierState = TargetHumidifierDehumidifierState;
+Characteristic_1.Characteristic.TargetHumidifierDehumidifierState = TargetHumidifierDehumidifierState;
 /**
  * Characteristic "Target Position"
  */
-
-Characteristic.TargetPosition = function() {
-  Characteristic.call(this, 'Target Position', '0000007C-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    unit: Characteristic.Units.PERCENTAGE,
-    maxValue: 100,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TargetPosition, Characteristic);
-
-Characteristic.TargetPosition.UUID = '0000007C-0000-1000-8000-0026BB765291';
-
+var TargetPosition = /** @class */ (function (_super) {
+    __extends(TargetPosition, _super);
+    function TargetPosition() {
+        var _this = _super.call(this, 'Target Position', TargetPosition.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            unit: Characteristic_1.Units.PERCENTAGE,
+            maxValue: 100,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    TargetPosition.UUID = '0000007C-0000-1000-8000-0026BB765291';
+    return TargetPosition;
+}(Characteristic_1.Characteristic));
+exports.TargetPosition = TargetPosition;
+Characteristic_1.Characteristic.TargetPosition = TargetPosition;
 /**
  * Characteristic "Target Relative Humidity"
  */
-
-Characteristic.TargetRelativeHumidity = function() {
-  Characteristic.call(this, 'Target Relative Humidity', '00000034-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    unit: Characteristic.Units.PERCENTAGE,
-    maxValue: 100,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TargetRelativeHumidity, Characteristic);
-
-Characteristic.TargetRelativeHumidity.UUID = '00000034-0000-1000-8000-0026BB765291';
-
+var TargetRelativeHumidity = /** @class */ (function (_super) {
+    __extends(TargetRelativeHumidity, _super);
+    function TargetRelativeHumidity() {
+        var _this = _super.call(this, 'Target Relative Humidity', TargetRelativeHumidity.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            unit: Characteristic_1.Units.PERCENTAGE,
+            maxValue: 100,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    TargetRelativeHumidity.UUID = '00000034-0000-1000-8000-0026BB765291';
+    return TargetRelativeHumidity;
+}(Characteristic_1.Characteristic));
+exports.TargetRelativeHumidity = TargetRelativeHumidity;
+Characteristic_1.Characteristic.TargetRelativeHumidity = TargetRelativeHumidity;
 /**
  * Characteristic "Target Slat State"
  */
-
-Characteristic.TargetSlatState = function() {
-  Characteristic.call(this, 'Target Slat State', '000000BE-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TargetSlatState, Characteristic);
-
-Characteristic.TargetSlatState.UUID = '000000BE-0000-1000-8000-0026BB765291';
-
-// The value property of TargetSlatState must be one of the following:
-Characteristic.TargetSlatState.MANUAL = 0;
-Characteristic.TargetSlatState.AUTO = 1;
-
+var TargetSlatState = /** @class */ (function (_super) {
+    __extends(TargetSlatState, _super);
+    function TargetSlatState() {
+        var _this = _super.call(this, 'Target Slat State', TargetSlatState.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of TargetSlatState must be one of the following:
+    TargetSlatState.MANUAL = 0;
+    TargetSlatState.AUTO = 1;
+    TargetSlatState.UUID = '000000BE-0000-1000-8000-0026BB765291';
+    return TargetSlatState;
+}(Characteristic_1.Characteristic));
+exports.TargetSlatState = TargetSlatState;
+Characteristic_1.Characteristic.TargetSlatState = TargetSlatState;
 /**
  * Characteristic "Target Temperature"
  */
-
-Characteristic.TargetTemperature = function() {
-  Characteristic.call(this, 'Target Temperature', '00000035-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    unit: Characteristic.Units.CELSIUS,
-    maxValue: 38,
-    minValue: 10,
-    minStep: 0.1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TargetTemperature, Characteristic);
-
-Characteristic.TargetTemperature.UUID = '00000035-0000-1000-8000-0026BB765291';
-
+var TargetTemperature = /** @class */ (function (_super) {
+    __extends(TargetTemperature, _super);
+    function TargetTemperature() {
+        var _this = _super.call(this, 'Target Temperature', TargetTemperature.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            unit: Characteristic_1.Units.CELSIUS,
+            maxValue: 38,
+            minValue: 10,
+            minStep: 0.1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    TargetTemperature.UUID = '00000035-0000-1000-8000-0026BB765291';
+    return TargetTemperature;
+}(Characteristic_1.Characteristic));
+exports.TargetTemperature = TargetTemperature;
+Characteristic_1.Characteristic.TargetTemperature = TargetTemperature;
 /**
  * Characteristic "Target Tilt Angle"
  */
-
-Characteristic.TargetTiltAngle = function() {
-  Characteristic.call(this, 'Target Tilt Angle', '000000C2-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.INT,
-    unit: Characteristic.Units.ARC_DEGREE,
-    maxValue: 90,
-    minValue: -90,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TargetTiltAngle, Characteristic);
-
-Characteristic.TargetTiltAngle.UUID = '000000C2-0000-1000-8000-0026BB765291';
-
+var TargetTiltAngle = /** @class */ (function (_super) {
+    __extends(TargetTiltAngle, _super);
+    function TargetTiltAngle() {
+        var _this = _super.call(this, 'Target Tilt Angle', TargetTiltAngle.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.INT,
+            unit: Characteristic_1.Units.ARC_DEGREE,
+            maxValue: 90,
+            minValue: -90,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    TargetTiltAngle.UUID = '000000C2-0000-1000-8000-0026BB765291';
+    return TargetTiltAngle;
+}(Characteristic_1.Characteristic));
+exports.TargetTiltAngle = TargetTiltAngle;
+Characteristic_1.Characteristic.TargetTiltAngle = TargetTiltAngle;
 /**
  * Characteristic "Target Vertical Tilt Angle"
  */
-
-Characteristic.TargetVerticalTiltAngle = function() {
-  Characteristic.call(this, 'Target Vertical Tilt Angle', '0000007D-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.INT,
-    unit: Characteristic.Units.ARC_DEGREE,
-    maxValue: 90,
-    minValue: -90,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TargetVerticalTiltAngle, Characteristic);
-
-Characteristic.TargetVerticalTiltAngle.UUID = '0000007D-0000-1000-8000-0026BB765291';
-
+var TargetVerticalTiltAngle = /** @class */ (function (_super) {
+    __extends(TargetVerticalTiltAngle, _super);
+    function TargetVerticalTiltAngle() {
+        var _this = _super.call(this, 'Target Vertical Tilt Angle', TargetVerticalTiltAngle.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.INT,
+            unit: Characteristic_1.Units.ARC_DEGREE,
+            maxValue: 90,
+            minValue: -90,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    TargetVerticalTiltAngle.UUID = '0000007D-0000-1000-8000-0026BB765291';
+    return TargetVerticalTiltAngle;
+}(Characteristic_1.Characteristic));
+exports.TargetVerticalTiltAngle = TargetVerticalTiltAngle;
+Characteristic_1.Characteristic.TargetVerticalTiltAngle = TargetVerticalTiltAngle;
 /**
  * Characteristic "Temperature Display Units"
  */
-
-Characteristic.TemperatureDisplayUnits = function() {
-  Characteristic.call(this, 'Temperature Display Units', '00000036-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 1,
-    minValue: 0,
-    validValues: [0,1],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.TemperatureDisplayUnits, Characteristic);
-
-Characteristic.TemperatureDisplayUnits.UUID = '00000036-0000-1000-8000-0026BB765291';
-
-// The value property of TemperatureDisplayUnits must be one of the following:
-Characteristic.TemperatureDisplayUnits.CELSIUS = 0;
-Characteristic.TemperatureDisplayUnits.FAHRENHEIT = 1;
-
+var TemperatureDisplayUnits = /** @class */ (function (_super) {
+    __extends(TemperatureDisplayUnits, _super);
+    function TemperatureDisplayUnits() {
+        var _this = _super.call(this, 'Temperature Display Units', TemperatureDisplayUnits.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of TemperatureDisplayUnits must be one of the following:
+    TemperatureDisplayUnits.CELSIUS = 0;
+    TemperatureDisplayUnits.FAHRENHEIT = 1;
+    TemperatureDisplayUnits.UUID = '00000036-0000-1000-8000-0026BB765291';
+    return TemperatureDisplayUnits;
+}(Characteristic_1.Characteristic));
+exports.TemperatureDisplayUnits = TemperatureDisplayUnits;
+Characteristic_1.Characteristic.TemperatureDisplayUnits = TemperatureDisplayUnits;
 /**
  * Characteristic "Valve Type"
  */
-
-Characteristic.ValveType = function() {
-  Characteristic.call(this, 'Valve Type', '000000D5-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    maxValue: 3,
-    minValue: 0,
-    validValues: [0,1,2,3],
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.ValveType, Characteristic);
-
-Characteristic.ValveType.UUID = '000000D5-0000-1000-8000-0026BB765291';
-
-// The value property of ValveType must be one of the following:
-Characteristic.ValveType.GENERIC_VALVE = 0;
-Characteristic.ValveType.IRRIGATION = 1;
-Characteristic.ValveType.SHOWER_HEAD = 2;
-Characteristic.ValveType.WATER_FAUCET = 3;
-
+var ValveType = /** @class */ (function (_super) {
+    __extends(ValveType, _super);
+    function ValveType() {
+        var _this = _super.call(this, 'Valve Type', ValveType.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 3,
+            minValue: 0,
+            validValues: [0, 1, 2, 3],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of ValveType must be one of the following:
+    ValveType.GENERIC_VALVE = 0;
+    ValveType.IRRIGATION = 1;
+    ValveType.SHOWER_HEAD = 2;
+    ValveType.WATER_FAUCET = 3;
+    ValveType.UUID = '000000D5-0000-1000-8000-0026BB765291';
+    return ValveType;
+}(Characteristic_1.Characteristic));
+exports.ValveType = ValveType;
+Characteristic_1.Characteristic.ValveType = ValveType;
 /**
  * Characteristic "Version"
  */
-
-Characteristic.Version = function() {
-  Characteristic.call(this, 'Version', '00000037-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.STRING,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.Version, Characteristic);
-
-Characteristic.Version.UUID = '00000037-0000-1000-8000-0026BB765291';
-
+var Version = /** @class */ (function (_super) {
+    __extends(Version, _super);
+    function Version() {
+        var _this = _super.call(this, 'Version', Version.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.STRING,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    Version.UUID = '00000037-0000-1000-8000-0026BB765291';
+    return Version;
+}(Characteristic_1.Characteristic));
+exports.Version = Version;
+Characteristic_1.Characteristic.Version = Version;
 /**
  * Characteristic "VOC Density"
  */
-
-Characteristic.VOCDensity = function() {
-  Characteristic.call(this, 'VOC Density', '000000C8-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    maxValue: 1000,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.VOCDensity, Characteristic);
-
-Characteristic.VOCDensity.UUID = '000000C8-0000-1000-8000-0026BB765291';
-
+var VOCDensity = /** @class */ (function (_super) {
+    __extends(VOCDensity, _super);
+    function VOCDensity() {
+        var _this = _super.call(this, 'VOC Density', VOCDensity.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            maxValue: 1000,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    VOCDensity.UUID = '000000C8-0000-1000-8000-0026BB765291';
+    return VOCDensity;
+}(Characteristic_1.Characteristic));
+exports.VOCDensity = VOCDensity;
+Characteristic_1.Characteristic.VOCDensity = VOCDensity;
 /**
  * Characteristic "Volume"
  */
-
-Characteristic.Volume = function() {
-  Characteristic.call(this, 'Volume', '00000119-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.UINT8,
-    unit: Characteristic.Units.PERCENTAGE,
-    maxValue: 100,
-    minValue: 0,
-    minStep: 1,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.WRITE, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.Volume, Characteristic);
-
-Characteristic.Volume.UUID = '00000119-0000-1000-8000-0026BB765291';
-
+var Volume = /** @class */ (function (_super) {
+    __extends(Volume, _super);
+    function Volume() {
+        var _this = _super.call(this, 'Volume', Volume.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            unit: Characteristic_1.Units.PERCENTAGE,
+            maxValue: 100,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    Volume.UUID = '00000119-0000-1000-8000-0026BB765291';
+    return Volume;
+}(Characteristic_1.Characteristic));
+exports.Volume = Volume;
+Characteristic_1.Characteristic.Volume = Volume;
 /**
  * Characteristic "Water Level"
  */
-
-Characteristic.WaterLevel = function() {
-  Characteristic.call(this, 'Water Level', '000000B5-0000-1000-8000-0026BB765291');
-  this.setProps({
-    format: Characteristic.Formats.FLOAT,
-    maxValue: 100,
-    minValue: 0,
-    perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-  });
-  this.value = this.getDefaultValue();
-};
-
-inherits(Characteristic.WaterLevel, Characteristic);
-
-Characteristic.WaterLevel.UUID = '000000B5-0000-1000-8000-0026BB765291';
-
+var WaterLevel = /** @class */ (function (_super) {
+    __extends(WaterLevel, _super);
+    function WaterLevel() {
+        var _this = _super.call(this, 'Water Level', WaterLevel.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            maxValue: 100,
+            minValue: 0,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    WaterLevel.UUID = '000000B5-0000-1000-8000-0026BB765291';
+    return WaterLevel;
+}(Characteristic_1.Characteristic));
+exports.WaterLevel = WaterLevel;
+Characteristic_1.Characteristic.WaterLevel = WaterLevel;
+/**
+ * Characteristic "Recording Audio Active"
+ */
+var RecordingAudioActive = /** @class */ (function (_super) {
+    __extends(RecordingAudioActive, _super);
+    function RecordingAudioActive() {
+        var _this = _super.call(this, 'Recording Audio Active', RecordingAudioActive.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    RecordingAudioActive.DISABLE = 0;
+    RecordingAudioActive.ENABLE = 1;
+    RecordingAudioActive.UUID = '00000226-0000-1000-8000-0026BB765291';
+    return RecordingAudioActive;
+}(Characteristic_1.Characteristic));
+exports.RecordingAudioActive = RecordingAudioActive;
+Characteristic_1.Characteristic.RecordingAudioActive = RecordingAudioActive;
+/**
+ * Characteristic "Supported Camera Recording Configuration"
+ */
+var SupportedCameraRecordingConfiguration = /** @class */ (function (_super) {
+    __extends(SupportedCameraRecordingConfiguration, _super);
+    function SupportedCameraRecordingConfiguration() {
+        var _this = _super.call(this, 'Supported Camera Recording Configuration', SupportedCameraRecordingConfiguration.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    SupportedCameraRecordingConfiguration.UUID = '00000205-0000-1000-8000-0026BB765291';
+    return SupportedCameraRecordingConfiguration;
+}(Characteristic_1.Characteristic));
+exports.SupportedCameraRecordingConfiguration = SupportedCameraRecordingConfiguration;
+Characteristic_1.Characteristic.SupportedCameraRecordingConfiguration = SupportedCameraRecordingConfiguration;
+/**
+ * Characteristic "Supported Video Recording Configuration"
+ */
+var SupportedVideoRecordingConfiguration = /** @class */ (function (_super) {
+    __extends(SupportedVideoRecordingConfiguration, _super);
+    function SupportedVideoRecordingConfiguration() {
+        var _this = _super.call(this, 'Supported Video Recording Configuration', SupportedVideoRecordingConfiguration.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    SupportedVideoRecordingConfiguration.UUID = '00000206-0000-1000-8000-0026BB765291';
+    return SupportedVideoRecordingConfiguration;
+}(Characteristic_1.Characteristic));
+exports.SupportedVideoRecordingConfiguration = SupportedVideoRecordingConfiguration;
+Characteristic_1.Characteristic.SupportedVideoRecordingConfiguration = SupportedVideoRecordingConfiguration;
+/**
+ * Characteristic "Supported Audio Recording Configuration"
+ */
+var SupportedAudioRecordingConfiguration = /** @class */ (function (_super) {
+    __extends(SupportedAudioRecordingConfiguration, _super);
+    function SupportedAudioRecordingConfiguration() {
+        var _this = _super.call(this, 'Supported Audio Recording Configuration', SupportedAudioRecordingConfiguration.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    SupportedAudioRecordingConfiguration.UUID = '00000207-0000-1000-8000-0026BB765291';
+    return SupportedAudioRecordingConfiguration;
+}(Characteristic_1.Characteristic));
+exports.SupportedAudioRecordingConfiguration = SupportedAudioRecordingConfiguration;
+Characteristic_1.Characteristic.SupportedAudioRecordingConfiguration = SupportedAudioRecordingConfiguration;
+/**
+ * Characteristic "Selected Camera Recording Configuration"
+ */
+var SelectedCameraRecordingConfiguration = /** @class */ (function (_super) {
+    __extends(SelectedCameraRecordingConfiguration, _super);
+    function SelectedCameraRecordingConfiguration() {
+        var _this = _super.call(this, 'Selected Camera Recording Configuration', SelectedCameraRecordingConfiguration.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    SelectedCameraRecordingConfiguration.UUID = '00000209-0000-1000-8000-0026BB765291';
+    return SelectedCameraRecordingConfiguration;
+}(Characteristic_1.Characteristic));
+exports.SelectedCameraRecordingConfiguration = SelectedCameraRecordingConfiguration;
+Characteristic_1.Characteristic.SelectedCameraRecordingConfiguration = SelectedCameraRecordingConfiguration;
+/**
+ * Characteristic "Camera Operating Mode Indicator"
+ */
+var CameraOperatingModeIndicator = /** @class */ (function (_super) {
+    __extends(CameraOperatingModeIndicator, _super);
+    function CameraOperatingModeIndicator() {
+        var _this = _super.call(this, 'Camera Operating Mode Indicator', CameraOperatingModeIndicator.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY, Characteristic_1.Perms.TIMED_WRITE]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    CameraOperatingModeIndicator.DISABLE = 0;
+    CameraOperatingModeIndicator.ENABLE = 1;
+    CameraOperatingModeIndicator.UUID = '0000021D-0000-1000-8000-0026BB765291';
+    return CameraOperatingModeIndicator;
+}(Characteristic_1.Characteristic));
+exports.CameraOperatingModeIndicator = CameraOperatingModeIndicator;
+Characteristic_1.Characteristic.CameraOperatingModeIndicator = CameraOperatingModeIndicator;
+/**
+ * Characteristic "Event Snapshots Active"
+ */
+var EventSnapshotsActive = /** @class */ (function (_super) {
+    __extends(EventSnapshotsActive, _super);
+    function EventSnapshotsActive() {
+        var _this = _super.call(this, 'Event Snapshots Active', EventSnapshotsActive.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    EventSnapshotsActive.DISABLE = 0;
+    EventSnapshotsActive.ENABLE = 1;
+    EventSnapshotsActive.UUID = '00000223-0000-1000-8000-0026BB765291';
+    return EventSnapshotsActive;
+}(Characteristic_1.Characteristic));
+exports.EventSnapshotsActive = EventSnapshotsActive;
+Characteristic_1.Characteristic.EventSnapshotsActive = EventSnapshotsActive;
+/**
+ * Characteristic "Diagonal Field Of View"
+ */
+var DiagonalFieldOfView = /** @class */ (function (_super) {
+    __extends(DiagonalFieldOfView, _super);
+    function DiagonalFieldOfView() {
+        var _this = _super.call(this, 'Diagonal Field Of View', DiagonalFieldOfView.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            unit: Characteristic_1.Units.ARC_DEGREE,
+            maxValue: 360,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    DiagonalFieldOfView.UUID = '00000224-0000-1000-8000-0026BB765291';
+    return DiagonalFieldOfView;
+}(Characteristic_1.Characteristic));
+exports.DiagonalFieldOfView = DiagonalFieldOfView;
+Characteristic_1.Characteristic.DiagonalFieldOfView = DiagonalFieldOfView;
+/**
+ * Characteristic "HomeKit Camera Active"
+ */
+var HomeKitCameraActive = /** @class */ (function (_super) {
+    __extends(HomeKitCameraActive, _super);
+    function HomeKitCameraActive() {
+        var _this = _super.call(this, 'HomeKit Camera Active', HomeKitCameraActive.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY, Characteristic_1.Perms.TIMED_WRITE]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    HomeKitCameraActive.OFF = 0;
+    HomeKitCameraActive.ON = 1;
+    HomeKitCameraActive.UUID = '0000021B-0000-1000-8000-0026BB765291';
+    return HomeKitCameraActive;
+}(Characteristic_1.Characteristic));
+exports.HomeKitCameraActive = HomeKitCameraActive;
+Characteristic_1.Characteristic.HomeKitCameraActive = HomeKitCameraActive;
+/**
+ * Characteristic "Manually disabled"
+ */
+var ManuallyDisabled = /** @class */ (function (_super) {
+    __extends(ManuallyDisabled, _super);
+    function ManuallyDisabled() {
+        var _this = _super.call(this, 'Manually disabled', ManuallyDisabled.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.BOOL,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    ManuallyDisabled.ENABLED = 0;
+    ManuallyDisabled.DISABLED = 1;
+    ManuallyDisabled.UUID = '00000227-0000-1000-8000-0026BB765291';
+    return ManuallyDisabled;
+}(Characteristic_1.Characteristic));
+exports.ManuallyDisabled = ManuallyDisabled;
+Characteristic_1.Characteristic.ManuallyDisabled = ManuallyDisabled;
+/**
+ * Characteristic "Third Party Camera Active"
+ */
+var ThirdPartyCameraActive = /** @class */ (function (_super) {
+    __extends(ThirdPartyCameraActive, _super);
+    function ThirdPartyCameraActive() {
+        var _this = _super.call(this, 'Third Party Camera Active', ThirdPartyCameraActive.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    ThirdPartyCameraActive.OFF = 0;
+    ThirdPartyCameraActive.ON = 1;
+    ThirdPartyCameraActive.UUID = '0000021C-0000-1000-8000-0026BB765291';
+    return ThirdPartyCameraActive;
+}(Characteristic_1.Characteristic));
+exports.ThirdPartyCameraActive = ThirdPartyCameraActive;
+Characteristic_1.Characteristic.ThirdPartyCameraActive = ThirdPartyCameraActive;
+/**
+ * Characteristic "Periodic Snapshots Active"
+ */
+var PeriodicSnapshotsActive = /** @class */ (function (_super) {
+    __extends(PeriodicSnapshotsActive, _super);
+    function PeriodicSnapshotsActive() {
+        var _this = _super.call(this, 'Periodic Snapshots Active', PeriodicSnapshotsActive.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    PeriodicSnapshotsActive.DISABLE = 0;
+    PeriodicSnapshotsActive.ENABLE = 1;
+    PeriodicSnapshotsActive.UUID = '00000225-0000-1000-8000-0026BB765291';
+    return PeriodicSnapshotsActive;
+}(Characteristic_1.Characteristic));
+exports.PeriodicSnapshotsActive = PeriodicSnapshotsActive;
+Characteristic_1.Characteristic.PeriodicSnapshotsActive = PeriodicSnapshotsActive;
+/**
+ * Characteristic "Network Client Profile Control"
+ */
+var NetworkClientProfileControl = /** @class */ (function (_super) {
+    __extends(NetworkClientProfileControl, _super);
+    function NetworkClientProfileControl() {
+        var _this = _super.call(this, 'Network Client Profile Control', NetworkClientProfileControl.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY, Characteristic_1.Perms.TIMED_WRITE, Characteristic_1.Perms.WRITE_RESPONSE]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    NetworkClientProfileControl.UUID = '0000020C-0000-1000-8000-0026BB765291';
+    return NetworkClientProfileControl;
+}(Characteristic_1.Characteristic));
+exports.NetworkClientProfileControl = NetworkClientProfileControl;
+Characteristic_1.Characteristic.NetworkClientProfileControl = NetworkClientProfileControl;
+/**
+ * Characteristic "Network Client Status Control"
+ */
+var NetworkClientStatusControl = /** @class */ (function (_super) {
+    __extends(NetworkClientStatusControl, _super);
+    function NetworkClientStatusControl() {
+        var _this = _super.call(this, 'Network Client Status Control', NetworkClientStatusControl.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.WRITE_RESPONSE]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    NetworkClientStatusControl.UUID = '0000020D-0000-1000-8000-0026BB765291';
+    return NetworkClientStatusControl;
+}(Characteristic_1.Characteristic));
+exports.NetworkClientStatusControl = NetworkClientStatusControl;
+Characteristic_1.Characteristic.NetworkClientStatusControl = NetworkClientStatusControl;
+/**
+ * Characteristic "Router Status"
+ */
+var RouterStatus = /** @class */ (function (_super) {
+    __extends(RouterStatus, _super);
+    function RouterStatus() {
+        var _this = _super.call(this, 'Router Status', RouterStatus.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    RouterStatus.READY = 0;
+    RouterStatus.NOT_READY = 1;
+    RouterStatus.UUID = '0000020E-0000-1000-8000-0026BB765291';
+    return RouterStatus;
+}(Characteristic_1.Characteristic));
+exports.RouterStatus = RouterStatus;
+Characteristic_1.Characteristic.RouterStatus = RouterStatus;
+/**
+ * Characteristic "Supported Router Configuration"
+ */
+var SupportedRouterConfiguration = /** @class */ (function (_super) {
+    __extends(SupportedRouterConfiguration, _super);
+    function SupportedRouterConfiguration() {
+        var _this = _super.call(this, 'Supported Router Configuration', SupportedRouterConfiguration.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    SupportedRouterConfiguration.UUID = '00000210-0000-1000-8000-0026BB765291';
+    return SupportedRouterConfiguration;
+}(Characteristic_1.Characteristic));
+exports.SupportedRouterConfiguration = SupportedRouterConfiguration;
+Characteristic_1.Characteristic.SupportedRouterConfiguration = SupportedRouterConfiguration;
+/**
+ * Characteristic "WAN Configuration List"
+ */
+var WANConfigurationList = /** @class */ (function (_super) {
+    __extends(WANConfigurationList, _super);
+    function WANConfigurationList() {
+        var _this = _super.call(this, 'WAN Configuration List', WANConfigurationList.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    WANConfigurationList.UUID = '00000211-0000-1000-8000-0026BB765291';
+    return WANConfigurationList;
+}(Characteristic_1.Characteristic));
+exports.WANConfigurationList = WANConfigurationList;
+Characteristic_1.Characteristic.WANConfigurationList = WANConfigurationList;
+/**
+ * Characteristic "WAN Status List"
+ */
+var WANStatusList = /** @class */ (function (_super) {
+    __extends(WANStatusList, _super);
+    function WANStatusList() {
+        var _this = _super.call(this, 'WAN Status List', WANStatusList.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    WANStatusList.UUID = '00000212-0000-1000-8000-0026BB765291';
+    return WANStatusList;
+}(Characteristic_1.Characteristic));
+exports.WANStatusList = WANStatusList;
+Characteristic_1.Characteristic.WANStatusList = WANStatusList;
+/**
+ * Characteristic "Managed Network Enable"
+ */
+var ManagedNetworkEnable = /** @class */ (function (_super) {
+    __extends(ManagedNetworkEnable, _super);
+    function ManagedNetworkEnable() {
+        var _this = _super.call(this, 'Managed Network Enable', ManagedNetworkEnable.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 1,
+            minValue: 0,
+            validValues: [0, 1],
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY, Characteristic_1.Perms.TIMED_WRITE]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    ManagedNetworkEnable.DISABLED = 0;
+    ManagedNetworkEnable.ENABLED = 1;
+    ManagedNetworkEnable.UNKNOWN = 2;
+    ManagedNetworkEnable.UUID = '00000215-0000-1000-8000-0026BB765291';
+    return ManagedNetworkEnable;
+}(Characteristic_1.Characteristic));
+exports.ManagedNetworkEnable = ManagedNetworkEnable;
+Characteristic_1.Characteristic.ManagedNetworkEnable = ManagedNetworkEnable;
+/**
+ * Characteristic "Network Access Violation Control"
+ */
+var NetworkAccessViolationControl = /** @class */ (function (_super) {
+    __extends(NetworkAccessViolationControl, _super);
+    function NetworkAccessViolationControl() {
+        var _this = _super.call(this, 'Network Access Violation Control', NetworkAccessViolationControl.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.TLV8,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.WRITE, Characteristic_1.Perms.NOTIFY, Characteristic_1.Perms.TIMED_WRITE, Characteristic_1.Perms.WRITE_RESPONSE]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    NetworkAccessViolationControl.UUID = '0000021F-0000-1000-8000-0026BB765291';
+    return NetworkAccessViolationControl;
+}(Characteristic_1.Characteristic));
+exports.NetworkAccessViolationControl = NetworkAccessViolationControl;
+Characteristic_1.Characteristic.NetworkAccessViolationControl = NetworkAccessViolationControl;
+/**
+ * Characteristic "Wi-Fi Satellite Status"
+ */
+var WiFiSatelliteStatus = /** @class */ (function (_super) {
+    __extends(WiFiSatelliteStatus, _super);
+    function WiFiSatelliteStatus() {
+        var _this = _super.call(this, 'Wi-Fi Satellite Status', WiFiSatelliteStatus.UUID) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.UINT8,
+            maxValue: 2,
+            minValue: 0,
+            validValues: [0, 1, 2],
+            perms: [Characteristic_1.Perms.PAIRED_READ, Characteristic_1.Perms.NOTIFY]
+        });
+        _this.value = _this.getDefaultValue();
+        return _this;
+    }
+    // The value property of WiFiSatelliteStatus must be one of the following:
+    WiFiSatelliteStatus.UNKNOWN = 0;
+    WiFiSatelliteStatus.CONNECTED = 1;
+    WiFiSatelliteStatus.NOT_CONNECTED = 2;
+    WiFiSatelliteStatus.UUID = '0000021E-0000-1000-8000-0026BB765291';
+    return WiFiSatelliteStatus;
+}(Characteristic_1.Characteristic));
+exports.WiFiSatelliteStatus = WiFiSatelliteStatus;
+Characteristic_1.Characteristic.WiFiSatelliteStatus = WiFiSatelliteStatus;
 /**
  * Service "Accessory Information"
  */
-
-Service.AccessoryInformation = function(displayName, subtype) {
-  Service.call(this, displayName, '0000003E-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.Identify);
-  this.addCharacteristic(Characteristic.Manufacturer);
-  this.addCharacteristic(Characteristic.Model);
-  this.addCharacteristic(Characteristic.Name);
-  this.addCharacteristic(Characteristic.SerialNumber);
-  this.addCharacteristic(Characteristic.FirmwareRevision);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.HardwareRevision);
-  this.addOptionalCharacteristic(Characteristic.AccessoryFlags);
-};
-
-inherits(Service.AccessoryInformation, Service);
-
-Service.AccessoryInformation.UUID = '0000003E-0000-1000-8000-0026BB765291';
-
+var AccessoryInformation = /** @class */ (function (_super) {
+    __extends(AccessoryInformation, _super);
+    function AccessoryInformation(displayName, subtype) {
+        var _this = _super.call(this, displayName, AccessoryInformation.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.Identify);
+        _this.addCharacteristic(Characteristic_1.Characteristic.Manufacturer);
+        _this.addCharacteristic(Characteristic_1.Characteristic.Model);
+        _this.addCharacteristic(Characteristic_1.Characteristic.Name);
+        _this.addCharacteristic(Characteristic_1.Characteristic.SerialNumber);
+        _this.addCharacteristic(Characteristic_1.Characteristic.FirmwareRevision);
+        _this.addCharacteristic(Characteristic_1.Characteristic.ProductData);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.HardwareRevision);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.AccessoryFlags);
+        return _this;
+    }
+    AccessoryInformation.UUID = '0000003E-0000-1000-8000-0026BB765291';
+    return AccessoryInformation;
+}(Service_1.Service));
+exports.AccessoryInformation = AccessoryInformation;
+Service_1.Service.AccessoryInformation = AccessoryInformation;
 /**
  * Service "Air Purifier"
  */
-
-Service.AirPurifier = function(displayName, subtype) {
-  Service.call(this, displayName, '000000BB-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.Active);
-  this.addCharacteristic(Characteristic.CurrentAirPurifierState);
-  this.addCharacteristic(Characteristic.TargetAirPurifierState);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.LockPhysicalControls);
-  this.addOptionalCharacteristic(Characteristic.Name);
-  this.addOptionalCharacteristic(Characteristic.SwingMode);
-  this.addOptionalCharacteristic(Characteristic.RotationSpeed);
-};
-
-inherits(Service.AirPurifier, Service);
-
-Service.AirPurifier.UUID = '000000BB-0000-1000-8000-0026BB765291';
-
+var AirPurifier = /** @class */ (function (_super) {
+    __extends(AirPurifier, _super);
+    function AirPurifier(displayName, subtype) {
+        var _this = _super.call(this, displayName, AirPurifier.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.Active);
+        _this.addCharacteristic(Characteristic_1.Characteristic.CurrentAirPurifierState);
+        _this.addCharacteristic(Characteristic_1.Characteristic.TargetAirPurifierState);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.LockPhysicalControls);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.SwingMode);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.RotationSpeed);
+        return _this;
+    }
+    AirPurifier.UUID = '000000BB-0000-1000-8000-0026BB765291';
+    return AirPurifier;
+}(Service_1.Service));
+exports.AirPurifier = AirPurifier;
+Service_1.Service.AirPurifier = AirPurifier;
 /**
  * Service "Air Quality Sensor"
  */
-
-Service.AirQualitySensor = function(displayName, subtype) {
-  Service.call(this, displayName, '0000008D-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.AirQuality);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.StatusActive);
-  this.addOptionalCharacteristic(Characteristic.StatusFault);
-  this.addOptionalCharacteristic(Characteristic.StatusTampered);
-  this.addOptionalCharacteristic(Characteristic.StatusLowBattery);
-  this.addOptionalCharacteristic(Characteristic.Name);
-  this.addOptionalCharacteristic(Characteristic.OzoneDensity);
-  this.addOptionalCharacteristic(Characteristic.NitrogenDioxideDensity);
-  this.addOptionalCharacteristic(Characteristic.SulphurDioxideDensity);
-  this.addOptionalCharacteristic(Characteristic.PM2_5Density);
-  this.addOptionalCharacteristic(Characteristic.PM10Density);
-  this.addOptionalCharacteristic(Characteristic.VOCDensity);
-  this.addOptionalCharacteristic(Characteristic.CarbonMonoxideLevel);
-  this.addOptionalCharacteristic(Characteristic.CarbonDioxideLevel);
-};
-
-inherits(Service.AirQualitySensor, Service);
-
-Service.AirQualitySensor.UUID = '0000008D-0000-1000-8000-0026BB765291';
-
+var AirQualitySensor = /** @class */ (function (_super) {
+    __extends(AirQualitySensor, _super);
+    function AirQualitySensor(displayName, subtype) {
+        var _this = _super.call(this, displayName, AirQualitySensor.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.AirQuality);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusActive);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusFault);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusTampered);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusLowBattery);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.OzoneDensity);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.NitrogenDioxideDensity);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.SulphurDioxideDensity);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.PM2_5Density);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.PM10Density);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.VOCDensity);
+        return _this;
+    }
+    AirQualitySensor.UUID = '0000008D-0000-1000-8000-0026BB765291';
+    return AirQualitySensor;
+}(Service_1.Service));
+exports.AirQualitySensor = AirQualitySensor;
+Service_1.Service.AirQualitySensor = AirQualitySensor;
 /**
  * Service "Battery Service"
  */
-
-Service.BatteryService = function(displayName, subtype) {
-  Service.call(this, displayName, '00000096-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.BatteryLevel);
-  this.addCharacteristic(Characteristic.ChargingState);
-  this.addCharacteristic(Characteristic.StatusLowBattery);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.BatteryService, Service);
-
-Service.BatteryService.UUID = '00000096-0000-1000-8000-0026BB765291';
-
+var BatteryService = /** @class */ (function (_super) {
+    __extends(BatteryService, _super);
+    function BatteryService(displayName, subtype) {
+        var _this = _super.call(this, displayName, BatteryService.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.BatteryLevel);
+        _this.addCharacteristic(Characteristic_1.Characteristic.ChargingState);
+        _this.addCharacteristic(Characteristic_1.Characteristic.StatusLowBattery);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    BatteryService.UUID = '00000096-0000-1000-8000-0026BB765291';
+    return BatteryService;
+}(Service_1.Service));
+exports.BatteryService = BatteryService;
+Service_1.Service.BatteryService = BatteryService;
 /**
  * Service "Camera RTP Stream Management"
  */
-
-Service.CameraRTPStreamManagement = function(displayName, subtype) {
-  Service.call(this, displayName, '00000110-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.SupportedVideoStreamConfiguration);
-  this.addCharacteristic(Characteristic.SupportedAudioStreamConfiguration);
-  this.addCharacteristic(Characteristic.SupportedRTPConfiguration);
-  this.addCharacteristic(Characteristic.SelectedRTPStreamConfiguration);
-  this.addCharacteristic(Characteristic.StreamingStatus);
-  this.addCharacteristic(Characteristic.SetupEndpoints);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.CameraRTPStreamManagement, Service);
-
-Service.CameraRTPStreamManagement.UUID = '00000110-0000-1000-8000-0026BB765291';
-
+var CameraRTPStreamManagement = /** @class */ (function (_super) {
+    __extends(CameraRTPStreamManagement, _super);
+    function CameraRTPStreamManagement(displayName, subtype) {
+        var _this = _super.call(this, displayName, CameraRTPStreamManagement.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.SupportedVideoStreamConfiguration);
+        _this.addCharacteristic(Characteristic_1.Characteristic.SupportedAudioStreamConfiguration);
+        _this.addCharacteristic(Characteristic_1.Characteristic.SupportedRTPConfiguration);
+        _this.addCharacteristic(Characteristic_1.Characteristic.SelectedRTPStreamConfiguration);
+        _this.addCharacteristic(Characteristic_1.Characteristic.StreamingStatus);
+        _this.addCharacteristic(Characteristic_1.Characteristic.SetupEndpoints);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    CameraRTPStreamManagement.UUID = '00000110-0000-1000-8000-0026BB765291';
+    return CameraRTPStreamManagement;
+}(Service_1.Service));
+exports.CameraRTPStreamManagement = CameraRTPStreamManagement;
+Service_1.Service.CameraRTPStreamManagement = CameraRTPStreamManagement;
 /**
  * Service "Carbon Dioxide Sensor"
  */
-
-Service.CarbonDioxideSensor = function(displayName, subtype) {
-  Service.call(this, displayName, '00000097-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.CarbonDioxideDetected);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.StatusActive);
-  this.addOptionalCharacteristic(Characteristic.StatusFault);
-  this.addOptionalCharacteristic(Characteristic.StatusLowBattery);
-  this.addOptionalCharacteristic(Characteristic.StatusTampered);
-  this.addOptionalCharacteristic(Characteristic.CarbonDioxideLevel);
-  this.addOptionalCharacteristic(Characteristic.CarbonDioxidePeakLevel);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.CarbonDioxideSensor, Service);
-
-Service.CarbonDioxideSensor.UUID = '00000097-0000-1000-8000-0026BB765291';
-
+var CarbonDioxideSensor = /** @class */ (function (_super) {
+    __extends(CarbonDioxideSensor, _super);
+    function CarbonDioxideSensor(displayName, subtype) {
+        var _this = _super.call(this, displayName, CarbonDioxideSensor.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.CarbonDioxideDetected);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusActive);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusFault);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusLowBattery);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusTampered);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.CarbonDioxideLevel);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.CarbonDioxidePeakLevel);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    CarbonDioxideSensor.UUID = '00000097-0000-1000-8000-0026BB765291';
+    return CarbonDioxideSensor;
+}(Service_1.Service));
+exports.CarbonDioxideSensor = CarbonDioxideSensor;
+Service_1.Service.CarbonDioxideSensor = CarbonDioxideSensor;
 /**
  * Service "Carbon Monoxide Sensor"
  */
-
-Service.CarbonMonoxideSensor = function(displayName, subtype) {
-  Service.call(this, displayName, '0000007F-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.CarbonMonoxideDetected);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.StatusActive);
-  this.addOptionalCharacteristic(Characteristic.StatusFault);
-  this.addOptionalCharacteristic(Characteristic.StatusLowBattery);
-  this.addOptionalCharacteristic(Characteristic.StatusTampered);
-  this.addOptionalCharacteristic(Characteristic.CarbonMonoxideLevel);
-  this.addOptionalCharacteristic(Characteristic.CarbonMonoxidePeakLevel);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.CarbonMonoxideSensor, Service);
-
-Service.CarbonMonoxideSensor.UUID = '0000007F-0000-1000-8000-0026BB765291';
-
+var CarbonMonoxideSensor = /** @class */ (function (_super) {
+    __extends(CarbonMonoxideSensor, _super);
+    function CarbonMonoxideSensor(displayName, subtype) {
+        var _this = _super.call(this, displayName, CarbonMonoxideSensor.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.CarbonMonoxideDetected);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusActive);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusFault);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusLowBattery);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusTampered);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.CarbonMonoxideLevel);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.CarbonMonoxidePeakLevel);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    CarbonMonoxideSensor.UUID = '0000007F-0000-1000-8000-0026BB765291';
+    return CarbonMonoxideSensor;
+}(Service_1.Service));
+exports.CarbonMonoxideSensor = CarbonMonoxideSensor;
+Service_1.Service.CarbonMonoxideSensor = CarbonMonoxideSensor;
 /**
  * Service "Contact Sensor"
  */
-
-Service.ContactSensor = function(displayName, subtype) {
-  Service.call(this, displayName, '00000080-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.ContactSensorState);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.StatusActive);
-  this.addOptionalCharacteristic(Characteristic.StatusFault);
-  this.addOptionalCharacteristic(Characteristic.StatusTampered);
-  this.addOptionalCharacteristic(Characteristic.StatusLowBattery);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.ContactSensor, Service);
-
-Service.ContactSensor.UUID = '00000080-0000-1000-8000-0026BB765291';
-
+var ContactSensor = /** @class */ (function (_super) {
+    __extends(ContactSensor, _super);
+    function ContactSensor(displayName, subtype) {
+        var _this = _super.call(this, displayName, ContactSensor.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.ContactSensorState);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusActive);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusFault);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusTampered);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusLowBattery);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    ContactSensor.UUID = '00000080-0000-1000-8000-0026BB765291';
+    return ContactSensor;
+}(Service_1.Service));
+exports.ContactSensor = ContactSensor;
+Service_1.Service.ContactSensor = ContactSensor;
 /**
  * Service "Door"
  */
-
-Service.Door = function(displayName, subtype) {
-  Service.call(this, displayName, '00000081-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.CurrentPosition);
-  this.addCharacteristic(Characteristic.PositionState);
-  this.addCharacteristic(Characteristic.TargetPosition);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.HoldPosition);
-  this.addOptionalCharacteristic(Characteristic.ObstructionDetected);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.Door, Service);
-
-Service.Door.UUID = '00000081-0000-1000-8000-0026BB765291';
-
+var Door = /** @class */ (function (_super) {
+    __extends(Door, _super);
+    function Door(displayName, subtype) {
+        var _this = _super.call(this, displayName, Door.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.CurrentPosition);
+        _this.addCharacteristic(Characteristic_1.Characteristic.PositionState);
+        _this.addCharacteristic(Characteristic_1.Characteristic.TargetPosition);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.HoldPosition);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.ObstructionDetected);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    Door.UUID = '00000081-0000-1000-8000-0026BB765291';
+    return Door;
+}(Service_1.Service));
+exports.Door = Door;
+Service_1.Service.Door = Door;
 /**
  * Service "Doorbell"
  */
-
-Service.Doorbell = function(displayName, subtype) {
-  Service.call(this, displayName, '00000121-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.ProgrammableSwitchEvent);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Brightness);
-  this.addOptionalCharacteristic(Characteristic.Volume);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.Doorbell, Service);
-
-Service.Doorbell.UUID = '00000121-0000-1000-8000-0026BB765291';
-
+var Doorbell = /** @class */ (function (_super) {
+    __extends(Doorbell, _super);
+    function Doorbell(displayName, subtype) {
+        var _this = _super.call(this, displayName, Doorbell.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.ProgrammableSwitchEvent);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Brightness);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Volume);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    Doorbell.UUID = '00000121-0000-1000-8000-0026BB765291';
+    return Doorbell;
+}(Service_1.Service));
+exports.Doorbell = Doorbell;
+Service_1.Service.Doorbell = Doorbell;
 /**
  * Service "Fan"
  */
-
-Service.Fan = function(displayName, subtype) {
-  Service.call(this, displayName, '00000040-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.On);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.RotationDirection);
-  this.addOptionalCharacteristic(Characteristic.RotationSpeed);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.Fan, Service);
-
-Service.Fan.UUID = '00000040-0000-1000-8000-0026BB765291';
-
+var Fan = /** @class */ (function (_super) {
+    __extends(Fan, _super);
+    function Fan(displayName, subtype) {
+        var _this = _super.call(this, displayName, Fan.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.On);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.RotationDirection);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.RotationSpeed);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    Fan.UUID = '00000040-0000-1000-8000-0026BB765291';
+    return Fan;
+}(Service_1.Service));
+exports.Fan = Fan;
+Service_1.Service.Fan = Fan;
 /**
  * Service "Fan v2"
  */
-
-Service.Fanv2 = function(displayName, subtype) {
-  Service.call(this, displayName, '000000B7-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.Active);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.CurrentFanState);
-  this.addOptionalCharacteristic(Characteristic.TargetFanState);
-  this.addOptionalCharacteristic(Characteristic.LockPhysicalControls);
-  this.addOptionalCharacteristic(Characteristic.Name);
-  this.addOptionalCharacteristic(Characteristic.RotationDirection);
-  this.addOptionalCharacteristic(Characteristic.RotationSpeed);
-  this.addOptionalCharacteristic(Characteristic.SwingMode);
-};
-
-inherits(Service.Fanv2, Service);
-
-Service.Fanv2.UUID = '000000B7-0000-1000-8000-0026BB765291';
-
+var Fanv2 = /** @class */ (function (_super) {
+    __extends(Fanv2, _super);
+    function Fanv2(displayName, subtype) {
+        var _this = _super.call(this, displayName, Fanv2.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.Active);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.CurrentFanState);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.TargetFanState);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.LockPhysicalControls);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.RotationDirection);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.RotationSpeed);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.SwingMode);
+        return _this;
+    }
+    Fanv2.UUID = '000000B7-0000-1000-8000-0026BB765291';
+    return Fanv2;
+}(Service_1.Service));
+exports.Fanv2 = Fanv2;
+Service_1.Service.Fanv2 = Fanv2;
 /**
  * Service "Filter Maintenance"
  */
-
-Service.FilterMaintenance = function(displayName, subtype) {
-  Service.call(this, displayName, '000000BA-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.FilterChangeIndication);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.FilterLifeLevel);
-  this.addOptionalCharacteristic(Characteristic.ResetFilterIndication);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.FilterMaintenance, Service);
-
-Service.FilterMaintenance.UUID = '000000BA-0000-1000-8000-0026BB765291';
-
+var FilterMaintenance = /** @class */ (function (_super) {
+    __extends(FilterMaintenance, _super);
+    function FilterMaintenance(displayName, subtype) {
+        var _this = _super.call(this, displayName, FilterMaintenance.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.FilterChangeIndication);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.FilterLifeLevel);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.ResetFilterIndication);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    FilterMaintenance.UUID = '000000BA-0000-1000-8000-0026BB765291';
+    return FilterMaintenance;
+}(Service_1.Service));
+exports.FilterMaintenance = FilterMaintenance;
+Service_1.Service.FilterMaintenance = FilterMaintenance;
 /**
  * Service "Faucet"
  */
-
-Service.Faucet = function(displayName, subtype) {
-  Service.call(this, displayName, '000000D7-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.Active);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Name);
-  this.addOptionalCharacteristic(Characteristic.StatusFault);
-};
-
-inherits(Service.Faucet, Service);
-
-Service.Faucet.UUID = '000000D7-0000-1000-8000-0026BB765291';
-
+var Faucet = /** @class */ (function (_super) {
+    __extends(Faucet, _super);
+    function Faucet(displayName, subtype) {
+        var _this = _super.call(this, displayName, Faucet.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.Active);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusFault);
+        return _this;
+    }
+    Faucet.UUID = '000000D7-0000-1000-8000-0026BB765291';
+    return Faucet;
+}(Service_1.Service));
+exports.Faucet = Faucet;
+Service_1.Service.Faucet = Faucet;
 /**
  * Service "Garage Door Opener"
  */
-
-Service.GarageDoorOpener = function(displayName, subtype) {
-  Service.call(this, displayName, '00000041-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.CurrentDoorState);
-  this.addCharacteristic(Characteristic.TargetDoorState);
-  this.addCharacteristic(Characteristic.ObstructionDetected);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.LockCurrentState);
-  this.addOptionalCharacteristic(Characteristic.LockTargetState);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.GarageDoorOpener, Service);
-
-Service.GarageDoorOpener.UUID = '00000041-0000-1000-8000-0026BB765291';
-
+var GarageDoorOpener = /** @class */ (function (_super) {
+    __extends(GarageDoorOpener, _super);
+    function GarageDoorOpener(displayName, subtype) {
+        var _this = _super.call(this, displayName, GarageDoorOpener.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.CurrentDoorState);
+        _this.addCharacteristic(Characteristic_1.Characteristic.TargetDoorState);
+        _this.addCharacteristic(Characteristic_1.Characteristic.ObstructionDetected);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.LockCurrentState);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.LockTargetState);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    GarageDoorOpener.UUID = '00000041-0000-1000-8000-0026BB765291';
+    return GarageDoorOpener;
+}(Service_1.Service));
+exports.GarageDoorOpener = GarageDoorOpener;
+Service_1.Service.GarageDoorOpener = GarageDoorOpener;
 /**
  * Service "Heater Cooler"
  */
-
-Service.HeaterCooler = function(displayName, subtype) {
-  Service.call(this, displayName, '000000BC-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.Active);
-  this.addCharacteristic(Characteristic.CurrentHeaterCoolerState);
-  this.addCharacteristic(Characteristic.TargetHeaterCoolerState);
-  this.addCharacteristic(Characteristic.CurrentTemperature);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.LockPhysicalControls);
-  this.addOptionalCharacteristic(Characteristic.Name);
-  this.addOptionalCharacteristic(Characteristic.SwingMode);
-  this.addOptionalCharacteristic(Characteristic.CoolingThresholdTemperature);
-  this.addOptionalCharacteristic(Characteristic.HeatingThresholdTemperature);
-  this.addOptionalCharacteristic(Characteristic.TemperatureDisplayUnits);
-  this.addOptionalCharacteristic(Characteristic.RotationSpeed);
-};
-
-inherits(Service.HeaterCooler, Service);
-
-Service.HeaterCooler.UUID = '000000BC-0000-1000-8000-0026BB765291';
-
+var HeaterCooler = /** @class */ (function (_super) {
+    __extends(HeaterCooler, _super);
+    function HeaterCooler(displayName, subtype) {
+        var _this = _super.call(this, displayName, HeaterCooler.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.Active);
+        _this.addCharacteristic(Characteristic_1.Characteristic.CurrentHeaterCoolerState);
+        _this.addCharacteristic(Characteristic_1.Characteristic.TargetHeaterCoolerState);
+        _this.addCharacteristic(Characteristic_1.Characteristic.CurrentTemperature);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.LockPhysicalControls);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.SwingMode);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.CoolingThresholdTemperature);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.HeatingThresholdTemperature);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.TemperatureDisplayUnits);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.RotationSpeed);
+        return _this;
+    }
+    HeaterCooler.UUID = '000000BC-0000-1000-8000-0026BB765291';
+    return HeaterCooler;
+}(Service_1.Service));
+exports.HeaterCooler = HeaterCooler;
+Service_1.Service.HeaterCooler = HeaterCooler;
 /**
  * Service "Humidifier Dehumidifier"
  */
-
-Service.HumidifierDehumidifier = function(displayName, subtype) {
-  Service.call(this, displayName, '000000BD-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.CurrentRelativeHumidity);
-  this.addCharacteristic(Characteristic.CurrentHumidifierDehumidifierState);
-  this.addCharacteristic(Characteristic.TargetHumidifierDehumidifierState);
-  this.addCharacteristic(Characteristic.Active);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.LockPhysicalControls);
-  this.addOptionalCharacteristic(Characteristic.Name);
-  this.addOptionalCharacteristic(Characteristic.SwingMode);
-  this.addOptionalCharacteristic(Characteristic.WaterLevel);
-  this.addOptionalCharacteristic(Characteristic.RelativeHumidityDehumidifierThreshold);
-  this.addOptionalCharacteristic(Characteristic.RelativeHumidityHumidifierThreshold);
-  this.addOptionalCharacteristic(Characteristic.RotationSpeed);
-};
-
-inherits(Service.HumidifierDehumidifier, Service);
-
-Service.HumidifierDehumidifier.UUID = '000000BD-0000-1000-8000-0026BB765291';
-
+var HumidifierDehumidifier = /** @class */ (function (_super) {
+    __extends(HumidifierDehumidifier, _super);
+    function HumidifierDehumidifier(displayName, subtype) {
+        var _this = _super.call(this, displayName, HumidifierDehumidifier.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.CurrentRelativeHumidity);
+        _this.addCharacteristic(Characteristic_1.Characteristic.CurrentHumidifierDehumidifierState);
+        _this.addCharacteristic(Characteristic_1.Characteristic.TargetHumidifierDehumidifierState);
+        _this.addCharacteristic(Characteristic_1.Characteristic.Active);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.LockPhysicalControls);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.SwingMode);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.WaterLevel);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.RelativeHumidityDehumidifierThreshold);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.RelativeHumidityHumidifierThreshold);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.RotationSpeed);
+        return _this;
+    }
+    HumidifierDehumidifier.UUID = '000000BD-0000-1000-8000-0026BB765291';
+    return HumidifierDehumidifier;
+}(Service_1.Service));
+exports.HumidifierDehumidifier = HumidifierDehumidifier;
+Service_1.Service.HumidifierDehumidifier = HumidifierDehumidifier;
 /**
  * Service "Humidity Sensor"
  */
-
-Service.HumiditySensor = function(displayName, subtype) {
-  Service.call(this, displayName, '00000082-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.CurrentRelativeHumidity);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.StatusActive);
-  this.addOptionalCharacteristic(Characteristic.StatusFault);
-  this.addOptionalCharacteristic(Characteristic.StatusTampered);
-  this.addOptionalCharacteristic(Characteristic.StatusLowBattery);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.HumiditySensor, Service);
-
-Service.HumiditySensor.UUID = '00000082-0000-1000-8000-0026BB765291';
-
+var HumiditySensor = /** @class */ (function (_super) {
+    __extends(HumiditySensor, _super);
+    function HumiditySensor(displayName, subtype) {
+        var _this = _super.call(this, displayName, HumiditySensor.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.CurrentRelativeHumidity);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusActive);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusFault);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusTampered);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusLowBattery);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    HumiditySensor.UUID = '00000082-0000-1000-8000-0026BB765291';
+    return HumiditySensor;
+}(Service_1.Service));
+exports.HumiditySensor = HumiditySensor;
+Service_1.Service.HumiditySensor = HumiditySensor;
 /**
  * Service "Irrigation System"
  */
-
-Service.IrrigationSystem = function(displayName, subtype) {
-  Service.call(this, displayName, '000000CF-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.Active);
-  this.addCharacteristic(Characteristic.ProgramMode);
-  this.addCharacteristic(Characteristic.InUse);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Name);
-  this.addOptionalCharacteristic(Characteristic.RemainingDuration);
-  this.addOptionalCharacteristic(Characteristic.StatusFault);
-};
-
-inherits(Service.IrrigationSystem, Service);
-
-Service.IrrigationSystem.UUID = '000000CF-0000-1000-8000-0026BB765291';
-
+var IrrigationSystem = /** @class */ (function (_super) {
+    __extends(IrrigationSystem, _super);
+    function IrrigationSystem(displayName, subtype) {
+        var _this = _super.call(this, displayName, IrrigationSystem.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.Active);
+        _this.addCharacteristic(Characteristic_1.Characteristic.ProgramMode);
+        _this.addCharacteristic(Characteristic_1.Characteristic.InUse);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.RemainingDuration);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusFault);
+        return _this;
+    }
+    IrrigationSystem.UUID = '000000CF-0000-1000-8000-0026BB765291';
+    return IrrigationSystem;
+}(Service_1.Service));
+exports.IrrigationSystem = IrrigationSystem;
+Service_1.Service.IrrigationSystem = IrrigationSystem;
 /**
  * Service "Leak Sensor"
  */
-
-Service.LeakSensor = function(displayName, subtype) {
-  Service.call(this, displayName, '00000083-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.LeakDetected);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.StatusActive);
-  this.addOptionalCharacteristic(Characteristic.StatusFault);
-  this.addOptionalCharacteristic(Characteristic.StatusTampered);
-  this.addOptionalCharacteristic(Characteristic.StatusLowBattery);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.LeakSensor, Service);
-
-Service.LeakSensor.UUID = '00000083-0000-1000-8000-0026BB765291';
-
+var LeakSensor = /** @class */ (function (_super) {
+    __extends(LeakSensor, _super);
+    function LeakSensor(displayName, subtype) {
+        var _this = _super.call(this, displayName, LeakSensor.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.LeakDetected);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusActive);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusFault);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusTampered);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusLowBattery);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    LeakSensor.UUID = '00000083-0000-1000-8000-0026BB765291';
+    return LeakSensor;
+}(Service_1.Service));
+exports.LeakSensor = LeakSensor;
+Service_1.Service.LeakSensor = LeakSensor;
 /**
  * Service "Light Sensor"
  */
-
-Service.LightSensor = function(displayName, subtype) {
-  Service.call(this, displayName, '00000084-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.CurrentAmbientLightLevel);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.StatusActive);
-  this.addOptionalCharacteristic(Characteristic.StatusFault);
-  this.addOptionalCharacteristic(Characteristic.StatusTampered);
-  this.addOptionalCharacteristic(Characteristic.StatusLowBattery);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.LightSensor, Service);
-
-Service.LightSensor.UUID = '00000084-0000-1000-8000-0026BB765291';
-
+var LightSensor = /** @class */ (function (_super) {
+    __extends(LightSensor, _super);
+    function LightSensor(displayName, subtype) {
+        var _this = _super.call(this, displayName, LightSensor.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.CurrentAmbientLightLevel);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusActive);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusFault);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusTampered);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusLowBattery);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    LightSensor.UUID = '00000084-0000-1000-8000-0026BB765291';
+    return LightSensor;
+}(Service_1.Service));
+exports.LightSensor = LightSensor;
+Service_1.Service.LightSensor = LightSensor;
 /**
  * Service "Lightbulb"
  */
-
-Service.Lightbulb = function(displayName, subtype) {
-  Service.call(this, displayName, '00000043-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.On);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Brightness);
-  this.addOptionalCharacteristic(Characteristic.Hue);
-  this.addOptionalCharacteristic(Characteristic.Saturation);
-  this.addOptionalCharacteristic(Characteristic.Name);
-  this.addOptionalCharacteristic(Characteristic.ColorTemperature); //Manual fix to add temperature
-};
-
-inherits(Service.Lightbulb, Service);
-
-Service.Lightbulb.UUID = '00000043-0000-1000-8000-0026BB765291';
-
+var Lightbulb = /** @class */ (function (_super) {
+    __extends(Lightbulb, _super);
+    function Lightbulb(displayName, subtype) {
+        var _this = _super.call(this, displayName, Lightbulb.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.On);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Brightness);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Hue);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Saturation);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.ColorTemperature); //Manual fix to add temperature
+        return _this;
+    }
+    Lightbulb.UUID = '00000043-0000-1000-8000-0026BB765291';
+    return Lightbulb;
+}(Service_1.Service));
+exports.Lightbulb = Lightbulb;
+Service_1.Service.Lightbulb = Lightbulb;
 /**
  * Service "Lock Management"
  */
-
-Service.LockManagement = function(displayName, subtype) {
-  Service.call(this, displayName, '00000044-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.LockControlPoint);
-  this.addCharacteristic(Characteristic.Version);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Logs);
-  this.addOptionalCharacteristic(Characteristic.AudioFeedback);
-  this.addOptionalCharacteristic(Characteristic.LockManagementAutoSecurityTimeout);
-  this.addOptionalCharacteristic(Characteristic.AdministratorOnlyAccess);
-  this.addOptionalCharacteristic(Characteristic.LockLastKnownAction);
-  this.addOptionalCharacteristic(Characteristic.CurrentDoorState);
-  this.addOptionalCharacteristic(Characteristic.MotionDetected);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.LockManagement, Service);
-
-Service.LockManagement.UUID = '00000044-0000-1000-8000-0026BB765291';
-
+var LockManagement = /** @class */ (function (_super) {
+    __extends(LockManagement, _super);
+    function LockManagement(displayName, subtype) {
+        var _this = _super.call(this, displayName, LockManagement.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.LockControlPoint);
+        _this.addCharacteristic(Characteristic_1.Characteristic.Version);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Logs);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.AudioFeedback);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.LockManagementAutoSecurityTimeout);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.AdministratorOnlyAccess);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.LockLastKnownAction);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.CurrentDoorState);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.MotionDetected);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    LockManagement.UUID = '00000044-0000-1000-8000-0026BB765291';
+    return LockManagement;
+}(Service_1.Service));
+exports.LockManagement = LockManagement;
+Service_1.Service.LockManagement = LockManagement;
 /**
  * Service "Lock Mechanism"
  */
-
-Service.LockMechanism = function(displayName, subtype) {
-  Service.call(this, displayName, '00000045-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.LockCurrentState);
-  this.addCharacteristic(Characteristic.LockTargetState);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.LockMechanism, Service);
-
-Service.LockMechanism.UUID = '00000045-0000-1000-8000-0026BB765291';
-
+var LockMechanism = /** @class */ (function (_super) {
+    __extends(LockMechanism, _super);
+    function LockMechanism(displayName, subtype) {
+        var _this = _super.call(this, displayName, LockMechanism.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.LockCurrentState);
+        _this.addCharacteristic(Characteristic_1.Characteristic.LockTargetState);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    LockMechanism.UUID = '00000045-0000-1000-8000-0026BB765291';
+    return LockMechanism;
+}(Service_1.Service));
+exports.LockMechanism = LockMechanism;
+Service_1.Service.LockMechanism = LockMechanism;
 /**
  * Service "Microphone"
  */
-
-Service.Microphone = function(displayName, subtype) {
-  Service.call(this, displayName, '00000112-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.Mute);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Volume);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.Microphone, Service);
-
-Service.Microphone.UUID = '00000112-0000-1000-8000-0026BB765291';
-
+var Microphone = /** @class */ (function (_super) {
+    __extends(Microphone, _super);
+    function Microphone(displayName, subtype) {
+        var _this = _super.call(this, displayName, Microphone.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.Mute);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Volume);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    Microphone.UUID = '00000112-0000-1000-8000-0026BB765291';
+    return Microphone;
+}(Service_1.Service));
+exports.Microphone = Microphone;
+Service_1.Service.Microphone = Microphone;
 /**
  * Service "Motion Sensor"
  */
-
-Service.MotionSensor = function(displayName, subtype) {
-  Service.call(this, displayName, '00000085-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.MotionDetected);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.StatusActive);
-  this.addOptionalCharacteristic(Characteristic.StatusFault);
-  this.addOptionalCharacteristic(Characteristic.StatusTampered);
-  this.addOptionalCharacteristic(Characteristic.StatusLowBattery);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.MotionSensor, Service);
-
-Service.MotionSensor.UUID = '00000085-0000-1000-8000-0026BB765291';
-
+var MotionSensor = /** @class */ (function (_super) {
+    __extends(MotionSensor, _super);
+    function MotionSensor(displayName, subtype) {
+        var _this = _super.call(this, displayName, MotionSensor.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.MotionDetected);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusActive);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusFault);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusTampered);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusLowBattery);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    MotionSensor.UUID = '00000085-0000-1000-8000-0026BB765291';
+    return MotionSensor;
+}(Service_1.Service));
+exports.MotionSensor = MotionSensor;
+Service_1.Service.MotionSensor = MotionSensor;
 /**
  * Service "Occupancy Sensor"
  */
-
-Service.OccupancySensor = function(displayName, subtype) {
-  Service.call(this, displayName, '00000086-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.OccupancyDetected);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.StatusActive);
-  this.addOptionalCharacteristic(Characteristic.StatusFault);
-  this.addOptionalCharacteristic(Characteristic.StatusTampered);
-  this.addOptionalCharacteristic(Characteristic.StatusLowBattery);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.OccupancySensor, Service);
-
-Service.OccupancySensor.UUID = '00000086-0000-1000-8000-0026BB765291';
-
+var OccupancySensor = /** @class */ (function (_super) {
+    __extends(OccupancySensor, _super);
+    function OccupancySensor(displayName, subtype) {
+        var _this = _super.call(this, displayName, OccupancySensor.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.OccupancyDetected);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusActive);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusFault);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusTampered);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusLowBattery);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    OccupancySensor.UUID = '00000086-0000-1000-8000-0026BB765291';
+    return OccupancySensor;
+}(Service_1.Service));
+exports.OccupancySensor = OccupancySensor;
+Service_1.Service.OccupancySensor = OccupancySensor;
 /**
  * Service "Outlet"
  */
-
-Service.Outlet = function(displayName, subtype) {
-  Service.call(this, displayName, '00000047-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.On);
-  this.addCharacteristic(Characteristic.OutletInUse);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.Outlet, Service);
-
-Service.Outlet.UUID = '00000047-0000-1000-8000-0026BB765291';
-
+var Outlet = /** @class */ (function (_super) {
+    __extends(Outlet, _super);
+    function Outlet(displayName, subtype) {
+        var _this = _super.call(this, displayName, Outlet.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.On);
+        _this.addCharacteristic(Characteristic_1.Characteristic.OutletInUse);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    Outlet.UUID = '00000047-0000-1000-8000-0026BB765291';
+    return Outlet;
+}(Service_1.Service));
+exports.Outlet = Outlet;
+Service_1.Service.Outlet = Outlet;
 /**
  * Service "Security System"
  */
-
-Service.SecuritySystem = function(displayName, subtype) {
-  Service.call(this, displayName, '0000007E-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.SecuritySystemCurrentState);
-  this.addCharacteristic(Characteristic.SecuritySystemTargetState);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.StatusFault);
-  this.addOptionalCharacteristic(Characteristic.StatusTampered);
-  this.addOptionalCharacteristic(Characteristic.SecuritySystemAlarmType);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.SecuritySystem, Service);
-
-Service.SecuritySystem.UUID = '0000007E-0000-1000-8000-0026BB765291';
-
+var SecuritySystem = /** @class */ (function (_super) {
+    __extends(SecuritySystem, _super);
+    function SecuritySystem(displayName, subtype) {
+        var _this = _super.call(this, displayName, SecuritySystem.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.SecuritySystemCurrentState);
+        _this.addCharacteristic(Characteristic_1.Characteristic.SecuritySystemTargetState);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusFault);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusTampered);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.SecuritySystemAlarmType);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    SecuritySystem.UUID = '0000007E-0000-1000-8000-0026BB765291';
+    return SecuritySystem;
+}(Service_1.Service));
+exports.SecuritySystem = SecuritySystem;
+Service_1.Service.SecuritySystem = SecuritySystem;
 /**
  * Service "Service Label"
  */
-
-Service.ServiceLabel = function(displayName, subtype) {
-  Service.call(this, displayName, '000000CC-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.ServiceLabelNamespace);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.ServiceLabel, Service);
-
-Service.ServiceLabel.UUID = '000000CC-0000-1000-8000-0026BB765291';
-
+var ServiceLabel = /** @class */ (function (_super) {
+    __extends(ServiceLabel, _super);
+    function ServiceLabel(displayName, subtype) {
+        var _this = _super.call(this, displayName, ServiceLabel.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.ServiceLabelNamespace);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    ServiceLabel.UUID = '000000CC-0000-1000-8000-0026BB765291';
+    return ServiceLabel;
+}(Service_1.Service));
+exports.ServiceLabel = ServiceLabel;
+Service_1.Service.ServiceLabel = ServiceLabel;
 /**
  * Service "Slat"
  */
-
-Service.Slat = function(displayName, subtype) {
-  Service.call(this, displayName, '000000B9-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.SlatType);
-  this.addCharacteristic(Characteristic.CurrentSlatState);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Name);
-  this.addOptionalCharacteristic(Characteristic.CurrentTiltAngle);
-  this.addOptionalCharacteristic(Characteristic.TargetTiltAngle);
-  this.addOptionalCharacteristic(Characteristic.SwingMode);
-};
-
-inherits(Service.Slat, Service);
-
-Service.Slat.UUID = '000000B9-0000-1000-8000-0026BB765291';
-
+var Slat = /** @class */ (function (_super) {
+    __extends(Slat, _super);
+    function Slat(displayName, subtype) {
+        var _this = _super.call(this, displayName, Slat.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.SlatType);
+        _this.addCharacteristic(Characteristic_1.Characteristic.CurrentSlatState);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.CurrentTiltAngle);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.TargetTiltAngle);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.SwingMode);
+        return _this;
+    }
+    Slat.UUID = '000000B9-0000-1000-8000-0026BB765291';
+    return Slat;
+}(Service_1.Service));
+exports.Slat = Slat;
+Service_1.Service.Slat = Slat;
 /**
  * Service "Smoke Sensor"
  */
-
-Service.SmokeSensor = function(displayName, subtype) {
-  Service.call(this, displayName, '00000087-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.SmokeDetected);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.StatusActive);
-  this.addOptionalCharacteristic(Characteristic.StatusFault);
-  this.addOptionalCharacteristic(Characteristic.StatusTampered);
-  this.addOptionalCharacteristic(Characteristic.StatusLowBattery);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.SmokeSensor, Service);
-
-Service.SmokeSensor.UUID = '00000087-0000-1000-8000-0026BB765291';
-
+var SmokeSensor = /** @class */ (function (_super) {
+    __extends(SmokeSensor, _super);
+    function SmokeSensor(displayName, subtype) {
+        var _this = _super.call(this, displayName, SmokeSensor.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.SmokeDetected);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusActive);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusFault);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusTampered);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusLowBattery);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    SmokeSensor.UUID = '00000087-0000-1000-8000-0026BB765291';
+    return SmokeSensor;
+}(Service_1.Service));
+exports.SmokeSensor = SmokeSensor;
+Service_1.Service.SmokeSensor = SmokeSensor;
 /**
  * Service "Speaker"
  */
-
-Service.Speaker = function(displayName, subtype) {
-  Service.call(this, displayName, '00000113-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.Mute);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Volume);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.Speaker, Service);
-
-Service.Speaker.UUID = '00000113-0000-1000-8000-0026BB765291';
-
+var Speaker = /** @class */ (function (_super) {
+    __extends(Speaker, _super);
+    function Speaker(displayName, subtype) {
+        var _this = _super.call(this, displayName, Speaker.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.Mute);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Volume);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    Speaker.UUID = '00000113-0000-1000-8000-0026BB765291';
+    return Speaker;
+}(Service_1.Service));
+exports.Speaker = Speaker;
+Service_1.Service.Speaker = Speaker;
 /**
  * Service "Stateless Programmable Switch"
  */
-
-Service.StatelessProgrammableSwitch = function(displayName, subtype) {
-  Service.call(this, displayName, '00000089-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.ProgrammableSwitchEvent);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Name);
-  this.addOptionalCharacteristic(Characteristic.ServiceLabelIndex);
-};
-
-inherits(Service.StatelessProgrammableSwitch, Service);
-
-Service.StatelessProgrammableSwitch.UUID = '00000089-0000-1000-8000-0026BB765291';
-
+var StatelessProgrammableSwitch = /** @class */ (function (_super) {
+    __extends(StatelessProgrammableSwitch, _super);
+    function StatelessProgrammableSwitch(displayName, subtype) {
+        var _this = _super.call(this, displayName, StatelessProgrammableSwitch.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.ProgrammableSwitchEvent);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.ServiceLabelIndex);
+        return _this;
+    }
+    StatelessProgrammableSwitch.UUID = '00000089-0000-1000-8000-0026BB765291';
+    return StatelessProgrammableSwitch;
+}(Service_1.Service));
+exports.StatelessProgrammableSwitch = StatelessProgrammableSwitch;
+Service_1.Service.StatelessProgrammableSwitch = StatelessProgrammableSwitch;
 /**
  * Service "Switch"
  */
-
-Service.Switch = function(displayName, subtype) {
-  Service.call(this, displayName, '00000049-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.On);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.Switch, Service);
-
-Service.Switch.UUID = '00000049-0000-1000-8000-0026BB765291';
-
+var Switch = /** @class */ (function (_super) {
+    __extends(Switch, _super);
+    function Switch(displayName, subtype) {
+        var _this = _super.call(this, displayName, Switch.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.On);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    Switch.UUID = '00000049-0000-1000-8000-0026BB765291';
+    return Switch;
+}(Service_1.Service));
+exports.Switch = Switch;
+Service_1.Service.Switch = Switch;
 /**
  * Service "Temperature Sensor"
  */
-
-Service.TemperatureSensor = function(displayName, subtype) {
-  Service.call(this, displayName, '0000008A-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.CurrentTemperature);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.StatusActive);
-  this.addOptionalCharacteristic(Characteristic.StatusFault);
-  this.addOptionalCharacteristic(Characteristic.StatusLowBattery);
-  this.addOptionalCharacteristic(Characteristic.StatusTampered);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.TemperatureSensor, Service);
-
-Service.TemperatureSensor.UUID = '0000008A-0000-1000-8000-0026BB765291';
-
+var TemperatureSensor = /** @class */ (function (_super) {
+    __extends(TemperatureSensor, _super);
+    function TemperatureSensor(displayName, subtype) {
+        var _this = _super.call(this, displayName, TemperatureSensor.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.CurrentTemperature);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusActive);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusFault);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusLowBattery);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusTampered);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    TemperatureSensor.UUID = '0000008A-0000-1000-8000-0026BB765291';
+    return TemperatureSensor;
+}(Service_1.Service));
+exports.TemperatureSensor = TemperatureSensor;
+Service_1.Service.TemperatureSensor = TemperatureSensor;
 /**
  * Service "Thermostat"
  */
-
-Service.Thermostat = function(displayName, subtype) {
-  Service.call(this, displayName, '0000004A-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.CurrentHeatingCoolingState);
-  this.addCharacteristic(Characteristic.TargetHeatingCoolingState);
-  this.addCharacteristic(Characteristic.CurrentTemperature);
-  this.addCharacteristic(Characteristic.TargetTemperature);
-  this.addCharacteristic(Characteristic.TemperatureDisplayUnits);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.CurrentRelativeHumidity);
-  this.addOptionalCharacteristic(Characteristic.TargetRelativeHumidity);
-  this.addOptionalCharacteristic(Characteristic.CoolingThresholdTemperature);
-  this.addOptionalCharacteristic(Characteristic.HeatingThresholdTemperature);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.Thermostat, Service);
-
-Service.Thermostat.UUID = '0000004A-0000-1000-8000-0026BB765291';
-
+var Thermostat = /** @class */ (function (_super) {
+    __extends(Thermostat, _super);
+    function Thermostat(displayName, subtype) {
+        var _this = _super.call(this, displayName, Thermostat.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.CurrentHeatingCoolingState);
+        _this.addCharacteristic(Characteristic_1.Characteristic.TargetHeatingCoolingState);
+        _this.addCharacteristic(Characteristic_1.Characteristic.CurrentTemperature);
+        _this.addCharacteristic(Characteristic_1.Characteristic.TargetTemperature);
+        _this.addCharacteristic(Characteristic_1.Characteristic.TemperatureDisplayUnits);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.CurrentRelativeHumidity);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.TargetRelativeHumidity);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.CoolingThresholdTemperature);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.HeatingThresholdTemperature);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    Thermostat.UUID = '0000004A-0000-1000-8000-0026BB765291';
+    return Thermostat;
+}(Service_1.Service));
+exports.Thermostat = Thermostat;
+Service_1.Service.Thermostat = Thermostat;
 /**
  * Service "Valve"
  */
-
-Service.Valve = function(displayName, subtype) {
-  Service.call(this, displayName, '000000D0-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.Active);
-  this.addCharacteristic(Characteristic.InUse);
-  this.addCharacteristic(Characteristic.ValveType);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.SetDuration);
-  this.addOptionalCharacteristic(Characteristic.RemainingDuration);
-  this.addOptionalCharacteristic(Characteristic.IsConfigured);
-  this.addOptionalCharacteristic(Characteristic.ServiceLabelIndex);
-  this.addOptionalCharacteristic(Characteristic.StatusFault);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.Valve, Service);
-
-Service.Valve.UUID = '000000D0-0000-1000-8000-0026BB765291';
-
+var Valve = /** @class */ (function (_super) {
+    __extends(Valve, _super);
+    function Valve(displayName, subtype) {
+        var _this = _super.call(this, displayName, Valve.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.Active);
+        _this.addCharacteristic(Characteristic_1.Characteristic.InUse);
+        _this.addCharacteristic(Characteristic_1.Characteristic.ValveType);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.SetDuration);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.RemainingDuration);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.IsConfigured);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.ServiceLabelIndex);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.StatusFault);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    Valve.UUID = '000000D0-0000-1000-8000-0026BB765291';
+    return Valve;
+}(Service_1.Service));
+exports.Valve = Valve;
+Service_1.Service.Valve = Valve;
 /**
  * Service "Window"
  */
-
-Service.Window = function(displayName, subtype) {
-  Service.call(this, displayName, '0000008B-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.CurrentPosition);
-  this.addCharacteristic(Characteristic.TargetPosition);
-  this.addCharacteristic(Characteristic.PositionState);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.HoldPosition);
-  this.addOptionalCharacteristic(Characteristic.ObstructionDetected);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.Window, Service);
-
-Service.Window.UUID = '0000008B-0000-1000-8000-0026BB765291';
-
+var Window = /** @class */ (function (_super) {
+    __extends(Window, _super);
+    function Window(displayName, subtype) {
+        var _this = _super.call(this, displayName, Window.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.CurrentPosition);
+        _this.addCharacteristic(Characteristic_1.Characteristic.TargetPosition);
+        _this.addCharacteristic(Characteristic_1.Characteristic.PositionState);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.HoldPosition);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.ObstructionDetected);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    Window.UUID = '0000008B-0000-1000-8000-0026BB765291';
+    return Window;
+}(Service_1.Service));
+exports.Window = Window;
+Service_1.Service.Window = Window;
 /**
  * Service "Window Covering"
  */
-
-Service.WindowCovering = function(displayName, subtype) {
-  Service.call(this, displayName, '0000008C-0000-1000-8000-0026BB765291', subtype);
-
-  // Required Characteristics
-  this.addCharacteristic(Characteristic.CurrentPosition);
-  this.addCharacteristic(Characteristic.TargetPosition);
-  this.addCharacteristic(Characteristic.PositionState);
-
-  // Optional Characteristics
-  this.addOptionalCharacteristic(Characteristic.HoldPosition);
-  this.addOptionalCharacteristic(Characteristic.TargetHorizontalTiltAngle);
-  this.addOptionalCharacteristic(Characteristic.TargetVerticalTiltAngle);
-  this.addOptionalCharacteristic(Characteristic.CurrentHorizontalTiltAngle);
-  this.addOptionalCharacteristic(Characteristic.CurrentVerticalTiltAngle);
-  this.addOptionalCharacteristic(Characteristic.ObstructionDetected);
-  this.addOptionalCharacteristic(Characteristic.Name);
-};
-
-inherits(Service.WindowCovering, Service);
-
-Service.WindowCovering.UUID = '0000008C-0000-1000-8000-0026BB765291';
-
-var HomeKitTypesBridge = __webpack_require__(/*! ./HomeKitTypes-Bridge */ "../node_modules/hap-nodejs/lib/gen/HomeKitTypes-Bridge.js");
-var HomeKitTypesTelevision = __webpack_require__(/*! ./HomeKitTypes-Television */ "../node_modules/hap-nodejs/lib/gen/HomeKitTypes-Television.js");
-
+var WindowCovering = /** @class */ (function (_super) {
+    __extends(WindowCovering, _super);
+    function WindowCovering(displayName, subtype) {
+        var _this = _super.call(this, displayName, WindowCovering.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.CurrentPosition);
+        _this.addCharacteristic(Characteristic_1.Characteristic.TargetPosition);
+        _this.addCharacteristic(Characteristic_1.Characteristic.PositionState);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.HoldPosition);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.TargetHorizontalTiltAngle);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.TargetVerticalTiltAngle);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.CurrentHorizontalTiltAngle);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.CurrentVerticalTiltAngle);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.ObstructionDetected);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    WindowCovering.UUID = '0000008C-0000-1000-8000-0026BB765291';
+    return WindowCovering;
+}(Service_1.Service));
+exports.WindowCovering = WindowCovering;
+Service_1.Service.WindowCovering = WindowCovering;
+/**
+ * Service "Camera Operating Mode"
+ */
+var CameraOperatingMode = /** @class */ (function (_super) {
+    __extends(CameraOperatingMode, _super);
+    function CameraOperatingMode(displayName, subtype) {
+        var _this = _super.call(this, displayName, CameraOperatingMode.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.EventSnapshotsActive);
+        _this.addCharacteristic(Characteristic_1.Characteristic.HomeKitCameraActive);
+        _this.addCharacteristic(Characteristic_1.Characteristic.PeriodicSnapshotsActive);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.CameraOperatingModeIndicator);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.DiagonalFieldOfView);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.ManuallyDisabled);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.NightVision);
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.ThirdPartyCameraActive);
+        return _this;
+    }
+    CameraOperatingMode.UUID = '0000021A-0000-1000-8000-0026BB765291';
+    return CameraOperatingMode;
+}(Service_1.Service));
+exports.CameraOperatingMode = CameraOperatingMode;
+Service_1.Service.CameraOperatingMode = CameraOperatingMode;
+/**
+ * Service "Camera Event Recording Management"
+ */
+var CameraEventRecordingManagement = /** @class */ (function (_super) {
+    __extends(CameraEventRecordingManagement, _super);
+    function CameraEventRecordingManagement(displayName, subtype) {
+        var _this = _super.call(this, displayName, CameraEventRecordingManagement.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.Active);
+        _this.addCharacteristic(Characteristic_1.Characteristic.SupportedCameraRecordingConfiguration);
+        _this.addCharacteristic(Characteristic_1.Characteristic.SupportedVideoRecordingConfiguration);
+        _this.addCharacteristic(Characteristic_1.Characteristic.SupportedAudioRecordingConfiguration);
+        _this.addCharacteristic(Characteristic_1.Characteristic.SelectedCameraRecordingConfiguration);
+        _this.addCharacteristic(Characteristic_1.Characteristic.RecordingAudioActive);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    CameraEventRecordingManagement.UUID = '00000204-0000-1000-8000-0026BB765291';
+    return CameraEventRecordingManagement;
+}(Service_1.Service));
+exports.CameraEventRecordingManagement = CameraEventRecordingManagement;
+Service_1.Service.CameraEventRecordingManagement = CameraEventRecordingManagement;
+/**
+ * Service "Wi-Fi Router"
+ */
+var WiFiRouter = /** @class */ (function (_super) {
+    __extends(WiFiRouter, _super);
+    function WiFiRouter(displayName, subtype) {
+        var _this = _super.call(this, displayName, WiFiRouter.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.Version);
+        _this.addCharacteristic(Characteristic_1.Characteristic.ConfiguredName);
+        _this.addCharacteristic(Characteristic_1.Characteristic.NetworkClientProfileControl);
+        _this.addCharacteristic(Characteristic_1.Characteristic.NetworkClientStatusControl);
+        _this.addCharacteristic(Characteristic_1.Characteristic.RouterStatus);
+        _this.addCharacteristic(Characteristic_1.Characteristic.SupportedRouterConfiguration);
+        _this.addCharacteristic(Characteristic_1.Characteristic.WANConfigurationList);
+        _this.addCharacteristic(Characteristic_1.Characteristic.WANStatusList);
+        _this.addCharacteristic(Characteristic_1.Characteristic.ManagedNetworkEnable);
+        _this.addCharacteristic(Characteristic_1.Characteristic.NetworkAccessViolationControl);
+        // Optional Characteristics
+        _this.addOptionalCharacteristic(Characteristic_1.Characteristic.Name);
+        return _this;
+    }
+    WiFiRouter.UUID = '0000020A-0000-1000-8000-0026BB765291';
+    return WiFiRouter;
+}(Service_1.Service));
+exports.WiFiRouter = WiFiRouter;
+Service_1.Service.WiFiRouter = WiFiRouter;
+/**
+ * Service "Wi-Fi Satellite"
+ */
+var WiFiSatellite = /** @class */ (function (_super) {
+    __extends(WiFiSatellite, _super);
+    function WiFiSatellite(displayName, subtype) {
+        var _this = _super.call(this, displayName, WiFiSatellite.UUID, subtype) || this;
+        // Required Characteristics
+        _this.addCharacteristic(Characteristic_1.Characteristic.WiFiSatelliteStatus);
+        return _this;
+    }
+    WiFiSatellite.UUID = '0000020F-0000-1000-8000-0026BB765291';
+    return WiFiSatellite;
+}(Service_1.Service));
+exports.WiFiSatellite = WiFiSatellite;
+Service_1.Service.WiFiSatellite = WiFiSatellite;
+//# sourceMappingURL=HomeKit.js.map
 
 /***/ }),
 
-/***/ "../node_modules/hap-nodejs/lib/util/clone.js":
-/*!****************************************************!*\
-  !*** ../node_modules/hap-nodejs/lib/util/clone.js ***!
-  \****************************************************/
+/***/ "../node_modules/hap-nodejs/dist/lib/util/clone.js":
+/*!*********************************************************!*\
+  !*** ../node_modules/hap-nodejs/dist/lib/util/clone.js ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-
-module.exports = {
-  clone: clone
-};
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * A simple clone function that also allows you to pass an "extend" object whose properties will be
  * added to the cloned copy of the original object passed.
  */
 function clone(object, extend) {
-
-  var cloned = {};
-
-  for (var key in object) {
-    cloned[key] = object[key];
-  }
-
-  for (var key in extend) {
-    cloned[key] = extend[key];
-  }
-
-  return cloned;
-};
-
-
-/***/ }),
-
-/***/ "../node_modules/hap-nodejs/lib/util/once.js":
-/*!***************************************************!*\
-  !*** ../node_modules/hap-nodejs/lib/util/once.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = {
-  once: once
-};
-
-function once(func) {
-  var called = false;
-
-  return function() {
-    if (called) {
-      throw new Error("This callback function has already been called by someone else; it can only be called one time.");
+    var cloned = {};
+    for (var key in object) {
+        cloned[key] = object[key];
     }
-    else {
-      called = true;
-      return func.apply(this, arguments);
+    for (var key2 in extend) {
+        cloned[key2] = extend[key2];
     }
-  };
+    return cloned;
 }
-
+exports.clone = clone;
+;
+//# sourceMappingURL=clone.js.map
 
 /***/ }),
 
-/***/ "../node_modules/hap-nodejs/lib/util/uuid.js":
-/*!***************************************************!*\
-  !*** ../node_modules/hap-nodejs/lib/util/uuid.js ***!
-  \***************************************************/
+/***/ "../node_modules/hap-nodejs/dist/lib/util/once.js":
+/*!********************************************************!*\
+  !*** ../node_modules/hap-nodejs/dist/lib/util/once.js ***!
+  \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+Object.defineProperty(exports, "__esModule", { value: true });
+function once(func) {
+    var called = false;
+    return function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (called) {
+            throw new Error("This callback function has already been called by someone else; it can only be called one time.");
+        }
+        else {
+            called = true;
+            return func.apply(void 0, args);
+        }
+    };
+}
+exports.once = once;
+//# sourceMappingURL=once.js.map
 
-var crypto = __webpack_require__(/*! crypto */ "../node_modules/crypto-browserify/index.js");
+/***/ }),
 
-module.exports = {
-  generate: generate,
-  isValid: isValid,
-  unparse: unparse
+/***/ "../node_modules/hap-nodejs/dist/lib/util/uuid.js":
+/*!********************************************************!*\
+  !*** ../node_modules/hap-nodejs/dist/lib/util/uuid.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var crypto_1 = __importDefault(__webpack_require__(/*! crypto */ "../node_modules/crypto-browserify/index.js"));
 // http://stackoverflow.com/a/25951500/66673
 function generate(data) {
-  var sha1sum = crypto.createHash('sha1');
-  sha1sum.update(data);
-  var s = sha1sum.digest('hex');
-  var i = -1;
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    i += 1;
-    switch (c) {
-      case 'x':
-        return s[i];
-      case 'y':
-        return ((parseInt('0x' + s[i], 16) & 0x3) | 0x8).toString(16);
-    }
-  });
+    var sha1sum = crypto_1.default.createHash('sha1');
+    sha1sum.update(data);
+    var s = sha1sum.digest('hex');
+    var i = -1;
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        i += 1;
+        switch (c) {
+            case 'y':
+                return ((parseInt('0x' + s[i], 16) & 0x3) | 0x8).toString(16);
+            case 'x':
+            default:
+                return s[i];
+        }
+    });
 }
-
-var validUUIDRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-
+exports.generate = generate;
+var VALID_UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 function isValid(UUID) {
-  return validUUIDRegex.test(UUID);
+    return VALID_UUID_REGEX.test(UUID);
 }
-
-var _byteToHex = [];
+exports.isValid = isValid;
 // https://github.com/defunctzombie/node-uuid/blob/master/uuid.js
 function unparse(buf, offset) {
-  var i = offset || 0;
-  return buf[i++].toString(16) + buf[i++].toString(16) +
-         buf[i++].toString(16) + buf[i++].toString(16) + '-' +
-         buf[i++].toString(16) + buf[i++].toString(16) + '-' +
-         buf[i++].toString(16) + buf[i++].toString(16) + '-' +
-         buf[i++].toString(16) + buf[i++].toString(16) + '-' +
-         buf[i++].toString(16) + buf[i++].toString(16) +
-         buf[i++].toString(16) + buf[i++].toString(16) +
-         buf[i++].toString(16) + buf[i++].toString(16);
+    if (offset === void 0) { offset = 0; }
+    var i = offset;
+    return buf[i++].toString(16) + buf[i++].toString(16) +
+        buf[i++].toString(16) + buf[i++].toString(16) + '-' +
+        buf[i++].toString(16) + buf[i++].toString(16) + '-' +
+        buf[i++].toString(16) + buf[i++].toString(16) + '-' +
+        buf[i++].toString(16) + buf[i++].toString(16) + '-' +
+        buf[i++].toString(16) + buf[i++].toString(16) +
+        buf[i++].toString(16) + buf[i++].toString(16) +
+        buf[i++].toString(16) + buf[i++].toString(16);
 }
-
+exports.unparse = unparse;
+function write(uuid, buf, offset) {
+    if (offset === void 0) { offset = 0; }
+    uuid = uuid.replace(/-/g, "");
+    for (var i = 0; i < uuid.length; i += 2) {
+        var octet = uuid.substring(i, i + 2);
+        buf.write(octet, offset++, "hex");
+    }
+}
+exports.write = write;
+//# sourceMappingURL=uuid.js.map
 
 /***/ }),
 
@@ -26794,26 +26642,6 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 /***/ }),
 
-/***/ "../node_modules/indexof/index.js":
-/*!****************************************!*\
-  !*** ../node_modules/indexof/index.js ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-var indexOf = [].indexOf;
-
-module.exports = function(arr, obj){
-  if (indexOf) return arr.indexOf(obj);
-  for (var i = 0; i < arr.length; ++i) {
-    if (arr[i] === obj) return i;
-  }
-  return -1;
-};
-
-/***/ }),
-
 /***/ "../node_modules/inherits/inherits_browser.js":
 /*!****************************************************!*\
   !*** ../node_modules/inherits/inherits_browser.js ***!
@@ -27251,7 +27079,7 @@ utils.encode = function encode(arr, enc) {
 /* WEBPACK VAR INJECTION */(function(global) {/*!
  * The buffer module from node.js, for the browser.
  *
- * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @author   Feross Aboukhadijeh <http://feross.org>
  * @license  MIT
  */
 /* eslint-disable no-proto */
@@ -29042,6 +28870,737 @@ function isnan (val) {
 
 /***/ }),
 
+/***/ "../node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js":
+/*!**************************************************************************************!*\
+  !*** ../node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function isBuffer(arg) {
+  return arg && typeof arg === 'object'
+    && typeof arg.copy === 'function'
+    && typeof arg.fill === 'function'
+    && typeof arg.readUInt8 === 'function';
+}
+
+/***/ }),
+
+/***/ "../node_modules/node-libs-browser/node_modules/util/util.js":
+/*!*******************************************************************!*\
+  !*** ../node_modules/node-libs-browser/node_modules/util/util.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors ||
+  function getOwnPropertyDescriptors(obj) {
+    var keys = Object.keys(obj);
+    var descriptors = {};
+    for (var i = 0; i < keys.length; i++) {
+      descriptors[keys[i]] = Object.getOwnPropertyDescriptor(obj, keys[i]);
+    }
+    return descriptors;
+  };
+
+var formatRegExp = /%[sdj%]/g;
+exports.format = function(f) {
+  if (!isString(f)) {
+    var objects = [];
+    for (var i = 0; i < arguments.length; i++) {
+      objects.push(inspect(arguments[i]));
+    }
+    return objects.join(' ');
+  }
+
+  var i = 1;
+  var args = arguments;
+  var len = args.length;
+  var str = String(f).replace(formatRegExp, function(x) {
+    if (x === '%%') return '%';
+    if (i >= len) return x;
+    switch (x) {
+      case '%s': return String(args[i++]);
+      case '%d': return Number(args[i++]);
+      case '%j':
+        try {
+          return JSON.stringify(args[i++]);
+        } catch (_) {
+          return '[Circular]';
+        }
+      default:
+        return x;
+    }
+  });
+  for (var x = args[i]; i < len; x = args[++i]) {
+    if (isNull(x) || !isObject(x)) {
+      str += ' ' + x;
+    } else {
+      str += ' ' + inspect(x);
+    }
+  }
+  return str;
+};
+
+
+// Mark that a method should not be used.
+// Returns a modified function which warns once by default.
+// If --no-deprecation is set, then it is a no-op.
+exports.deprecate = function(fn, msg) {
+  if (typeof process !== 'undefined' && process.noDeprecation === true) {
+    return fn;
+  }
+
+  // Allow for deprecating things in the process of starting up.
+  if (typeof process === 'undefined') {
+    return function() {
+      return exports.deprecate(fn, msg).apply(this, arguments);
+    };
+  }
+
+  var warned = false;
+  function deprecated() {
+    if (!warned) {
+      if (process.throwDeprecation) {
+        throw new Error(msg);
+      } else if (process.traceDeprecation) {
+        console.trace(msg);
+      } else {
+        console.error(msg);
+      }
+      warned = true;
+    }
+    return fn.apply(this, arguments);
+  }
+
+  return deprecated;
+};
+
+
+var debugs = {};
+var debugEnviron;
+exports.debuglog = function(set) {
+  if (isUndefined(debugEnviron))
+    debugEnviron = process.env.NODE_DEBUG || '';
+  set = set.toUpperCase();
+  if (!debugs[set]) {
+    if (new RegExp('\\b' + set + '\\b', 'i').test(debugEnviron)) {
+      var pid = process.pid;
+      debugs[set] = function() {
+        var msg = exports.format.apply(exports, arguments);
+        console.error('%s %d: %s', set, pid, msg);
+      };
+    } else {
+      debugs[set] = function() {};
+    }
+  }
+  return debugs[set];
+};
+
+
+/**
+ * Echos the value of a value. Trys to print the value out
+ * in the best way possible given the different types.
+ *
+ * @param {Object} obj The object to print out.
+ * @param {Object} opts Optional options object that alters the output.
+ */
+/* legacy: obj, showHidden, depth, colors*/
+function inspect(obj, opts) {
+  // default options
+  var ctx = {
+    seen: [],
+    stylize: stylizeNoColor
+  };
+  // legacy...
+  if (arguments.length >= 3) ctx.depth = arguments[2];
+  if (arguments.length >= 4) ctx.colors = arguments[3];
+  if (isBoolean(opts)) {
+    // legacy...
+    ctx.showHidden = opts;
+  } else if (opts) {
+    // got an "options" object
+    exports._extend(ctx, opts);
+  }
+  // set default options
+  if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
+  if (isUndefined(ctx.depth)) ctx.depth = 2;
+  if (isUndefined(ctx.colors)) ctx.colors = false;
+  if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
+  if (ctx.colors) ctx.stylize = stylizeWithColor;
+  return formatValue(ctx, obj, ctx.depth);
+}
+exports.inspect = inspect;
+
+
+// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
+inspect.colors = {
+  'bold' : [1, 22],
+  'italic' : [3, 23],
+  'underline' : [4, 24],
+  'inverse' : [7, 27],
+  'white' : [37, 39],
+  'grey' : [90, 39],
+  'black' : [30, 39],
+  'blue' : [34, 39],
+  'cyan' : [36, 39],
+  'green' : [32, 39],
+  'magenta' : [35, 39],
+  'red' : [31, 39],
+  'yellow' : [33, 39]
+};
+
+// Don't use 'blue' not visible on cmd.exe
+inspect.styles = {
+  'special': 'cyan',
+  'number': 'yellow',
+  'boolean': 'yellow',
+  'undefined': 'grey',
+  'null': 'bold',
+  'string': 'green',
+  'date': 'magenta',
+  // "name": intentionally not styling
+  'regexp': 'red'
+};
+
+
+function stylizeWithColor(str, styleType) {
+  var style = inspect.styles[styleType];
+
+  if (style) {
+    return '\u001b[' + inspect.colors[style][0] + 'm' + str +
+           '\u001b[' + inspect.colors[style][1] + 'm';
+  } else {
+    return str;
+  }
+}
+
+
+function stylizeNoColor(str, styleType) {
+  return str;
+}
+
+
+function arrayToHash(array) {
+  var hash = {};
+
+  array.forEach(function(val, idx) {
+    hash[val] = true;
+  });
+
+  return hash;
+}
+
+
+function formatValue(ctx, value, recurseTimes) {
+  // Provide a hook for user-specified inspect functions.
+  // Check that value is an object with an inspect function on it
+  if (ctx.customInspect &&
+      value &&
+      isFunction(value.inspect) &&
+      // Filter out the util module, it's inspect function is special
+      value.inspect !== exports.inspect &&
+      // Also filter out any prototype objects using the circular check.
+      !(value.constructor && value.constructor.prototype === value)) {
+    var ret = value.inspect(recurseTimes, ctx);
+    if (!isString(ret)) {
+      ret = formatValue(ctx, ret, recurseTimes);
+    }
+    return ret;
+  }
+
+  // Primitive types cannot have properties
+  var primitive = formatPrimitive(ctx, value);
+  if (primitive) {
+    return primitive;
+  }
+
+  // Look up the keys of the object.
+  var keys = Object.keys(value);
+  var visibleKeys = arrayToHash(keys);
+
+  if (ctx.showHidden) {
+    keys = Object.getOwnPropertyNames(value);
+  }
+
+  // IE doesn't make error fields non-enumerable
+  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
+  if (isError(value)
+      && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
+    return formatError(value);
+  }
+
+  // Some type of object without properties can be shortcutted.
+  if (keys.length === 0) {
+    if (isFunction(value)) {
+      var name = value.name ? ': ' + value.name : '';
+      return ctx.stylize('[Function' + name + ']', 'special');
+    }
+    if (isRegExp(value)) {
+      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+    }
+    if (isDate(value)) {
+      return ctx.stylize(Date.prototype.toString.call(value), 'date');
+    }
+    if (isError(value)) {
+      return formatError(value);
+    }
+  }
+
+  var base = '', array = false, braces = ['{', '}'];
+
+  // Make Array say that they are Array
+  if (isArray(value)) {
+    array = true;
+    braces = ['[', ']'];
+  }
+
+  // Make functions say that they are functions
+  if (isFunction(value)) {
+    var n = value.name ? ': ' + value.name : '';
+    base = ' [Function' + n + ']';
+  }
+
+  // Make RegExps say that they are RegExps
+  if (isRegExp(value)) {
+    base = ' ' + RegExp.prototype.toString.call(value);
+  }
+
+  // Make dates with properties first say the date
+  if (isDate(value)) {
+    base = ' ' + Date.prototype.toUTCString.call(value);
+  }
+
+  // Make error with message first say the error
+  if (isError(value)) {
+    base = ' ' + formatError(value);
+  }
+
+  if (keys.length === 0 && (!array || value.length == 0)) {
+    return braces[0] + base + braces[1];
+  }
+
+  if (recurseTimes < 0) {
+    if (isRegExp(value)) {
+      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+    } else {
+      return ctx.stylize('[Object]', 'special');
+    }
+  }
+
+  ctx.seen.push(value);
+
+  var output;
+  if (array) {
+    output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
+  } else {
+    output = keys.map(function(key) {
+      return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
+    });
+  }
+
+  ctx.seen.pop();
+
+  return reduceToSingleString(output, base, braces);
+}
+
+
+function formatPrimitive(ctx, value) {
+  if (isUndefined(value))
+    return ctx.stylize('undefined', 'undefined');
+  if (isString(value)) {
+    var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
+                                             .replace(/'/g, "\\'")
+                                             .replace(/\\"/g, '"') + '\'';
+    return ctx.stylize(simple, 'string');
+  }
+  if (isNumber(value))
+    return ctx.stylize('' + value, 'number');
+  if (isBoolean(value))
+    return ctx.stylize('' + value, 'boolean');
+  // For some reason typeof null is "object", so special case here.
+  if (isNull(value))
+    return ctx.stylize('null', 'null');
+}
+
+
+function formatError(value) {
+  return '[' + Error.prototype.toString.call(value) + ']';
+}
+
+
+function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
+  var output = [];
+  for (var i = 0, l = value.length; i < l; ++i) {
+    if (hasOwnProperty(value, String(i))) {
+      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
+          String(i), true));
+    } else {
+      output.push('');
+    }
+  }
+  keys.forEach(function(key) {
+    if (!key.match(/^\d+$/)) {
+      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
+          key, true));
+    }
+  });
+  return output;
+}
+
+
+function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
+  var name, str, desc;
+  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
+  if (desc.get) {
+    if (desc.set) {
+      str = ctx.stylize('[Getter/Setter]', 'special');
+    } else {
+      str = ctx.stylize('[Getter]', 'special');
+    }
+  } else {
+    if (desc.set) {
+      str = ctx.stylize('[Setter]', 'special');
+    }
+  }
+  if (!hasOwnProperty(visibleKeys, key)) {
+    name = '[' + key + ']';
+  }
+  if (!str) {
+    if (ctx.seen.indexOf(desc.value) < 0) {
+      if (isNull(recurseTimes)) {
+        str = formatValue(ctx, desc.value, null);
+      } else {
+        str = formatValue(ctx, desc.value, recurseTimes - 1);
+      }
+      if (str.indexOf('\n') > -1) {
+        if (array) {
+          str = str.split('\n').map(function(line) {
+            return '  ' + line;
+          }).join('\n').substr(2);
+        } else {
+          str = '\n' + str.split('\n').map(function(line) {
+            return '   ' + line;
+          }).join('\n');
+        }
+      }
+    } else {
+      str = ctx.stylize('[Circular]', 'special');
+    }
+  }
+  if (isUndefined(name)) {
+    if (array && key.match(/^\d+$/)) {
+      return str;
+    }
+    name = JSON.stringify('' + key);
+    if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
+      name = name.substr(1, name.length - 2);
+      name = ctx.stylize(name, 'name');
+    } else {
+      name = name.replace(/'/g, "\\'")
+                 .replace(/\\"/g, '"')
+                 .replace(/(^"|"$)/g, "'");
+      name = ctx.stylize(name, 'string');
+    }
+  }
+
+  return name + ': ' + str;
+}
+
+
+function reduceToSingleString(output, base, braces) {
+  var numLinesEst = 0;
+  var length = output.reduce(function(prev, cur) {
+    numLinesEst++;
+    if (cur.indexOf('\n') >= 0) numLinesEst++;
+    return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
+  }, 0);
+
+  if (length > 60) {
+    return braces[0] +
+           (base === '' ? '' : base + '\n ') +
+           ' ' +
+           output.join(',\n  ') +
+           ' ' +
+           braces[1];
+  }
+
+  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
+}
+
+
+// NOTE: These type checking functions intentionally don't use `instanceof`
+// because it is fragile and can be easily faked with `Object.create()`.
+function isArray(ar) {
+  return Array.isArray(ar);
+}
+exports.isArray = isArray;
+
+function isBoolean(arg) {
+  return typeof arg === 'boolean';
+}
+exports.isBoolean = isBoolean;
+
+function isNull(arg) {
+  return arg === null;
+}
+exports.isNull = isNull;
+
+function isNullOrUndefined(arg) {
+  return arg == null;
+}
+exports.isNullOrUndefined = isNullOrUndefined;
+
+function isNumber(arg) {
+  return typeof arg === 'number';
+}
+exports.isNumber = isNumber;
+
+function isString(arg) {
+  return typeof arg === 'string';
+}
+exports.isString = isString;
+
+function isSymbol(arg) {
+  return typeof arg === 'symbol';
+}
+exports.isSymbol = isSymbol;
+
+function isUndefined(arg) {
+  return arg === void 0;
+}
+exports.isUndefined = isUndefined;
+
+function isRegExp(re) {
+  return isObject(re) && objectToString(re) === '[object RegExp]';
+}
+exports.isRegExp = isRegExp;
+
+function isObject(arg) {
+  return typeof arg === 'object' && arg !== null;
+}
+exports.isObject = isObject;
+
+function isDate(d) {
+  return isObject(d) && objectToString(d) === '[object Date]';
+}
+exports.isDate = isDate;
+
+function isError(e) {
+  return isObject(e) &&
+      (objectToString(e) === '[object Error]' || e instanceof Error);
+}
+exports.isError = isError;
+
+function isFunction(arg) {
+  return typeof arg === 'function';
+}
+exports.isFunction = isFunction;
+
+function isPrimitive(arg) {
+  return arg === null ||
+         typeof arg === 'boolean' ||
+         typeof arg === 'number' ||
+         typeof arg === 'string' ||
+         typeof arg === 'symbol' ||  // ES6 symbol
+         typeof arg === 'undefined';
+}
+exports.isPrimitive = isPrimitive;
+
+exports.isBuffer = __webpack_require__(/*! ./support/isBuffer */ "../node_modules/node-libs-browser/node_modules/util/support/isBufferBrowser.js");
+
+function objectToString(o) {
+  return Object.prototype.toString.call(o);
+}
+
+
+function pad(n) {
+  return n < 10 ? '0' + n.toString(10) : n.toString(10);
+}
+
+
+var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
+              'Oct', 'Nov', 'Dec'];
+
+// 26 Feb 16:19:34
+function timestamp() {
+  var d = new Date();
+  var time = [pad(d.getHours()),
+              pad(d.getMinutes()),
+              pad(d.getSeconds())].join(':');
+  return [d.getDate(), months[d.getMonth()], time].join(' ');
+}
+
+
+// log is just a thin wrapper to console.log that prepends a timestamp
+exports.log = function() {
+  console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
+};
+
+
+/**
+ * Inherit the prototype methods from one constructor into another.
+ *
+ * The Function.prototype.inherits from lang.js rewritten as a standalone
+ * function (not on Function.prototype). NOTE: If this file is to be loaded
+ * during bootstrapping this function needs to be rewritten using some native
+ * functions as prototype setup using normal JavaScript does not work as
+ * expected during bootstrapping (see mirror.js in r114903).
+ *
+ * @param {function} ctor Constructor function which needs to inherit the
+ *     prototype.
+ * @param {function} superCtor Constructor function to inherit prototype from.
+ */
+exports.inherits = __webpack_require__(/*! inherits */ "../node_modules/inherits/inherits_browser.js");
+
+exports._extend = function(origin, add) {
+  // Don't do anything if add isn't an object
+  if (!add || !isObject(add)) return origin;
+
+  var keys = Object.keys(add);
+  var i = keys.length;
+  while (i--) {
+    origin[keys[i]] = add[keys[i]];
+  }
+  return origin;
+};
+
+function hasOwnProperty(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
+var kCustomPromisifiedSymbol = typeof Symbol !== 'undefined' ? Symbol('util.promisify.custom') : undefined;
+
+exports.promisify = function promisify(original) {
+  if (typeof original !== 'function')
+    throw new TypeError('The "original" argument must be of type Function');
+
+  if (kCustomPromisifiedSymbol && original[kCustomPromisifiedSymbol]) {
+    var fn = original[kCustomPromisifiedSymbol];
+    if (typeof fn !== 'function') {
+      throw new TypeError('The "util.promisify.custom" argument must be of type Function');
+    }
+    Object.defineProperty(fn, kCustomPromisifiedSymbol, {
+      value: fn, enumerable: false, writable: false, configurable: true
+    });
+    return fn;
+  }
+
+  function fn() {
+    var promiseResolve, promiseReject;
+    var promise = new Promise(function (resolve, reject) {
+      promiseResolve = resolve;
+      promiseReject = reject;
+    });
+
+    var args = [];
+    for (var i = 0; i < arguments.length; i++) {
+      args.push(arguments[i]);
+    }
+    args.push(function (err, value) {
+      if (err) {
+        promiseReject(err);
+      } else {
+        promiseResolve(value);
+      }
+    });
+
+    try {
+      original.apply(this, args);
+    } catch (err) {
+      promiseReject(err);
+    }
+
+    return promise;
+  }
+
+  Object.setPrototypeOf(fn, Object.getPrototypeOf(original));
+
+  if (kCustomPromisifiedSymbol) Object.defineProperty(fn, kCustomPromisifiedSymbol, {
+    value: fn, enumerable: false, writable: false, configurable: true
+  });
+  return Object.defineProperties(
+    fn,
+    getOwnPropertyDescriptors(original)
+  );
+}
+
+exports.promisify.custom = kCustomPromisifiedSymbol
+
+function callbackifyOnRejected(reason, cb) {
+  // `!reason` guard inspired by bluebird (Ref: https://goo.gl/t5IS6M).
+  // Because `null` is a special error value in callbacks which means "no error
+  // occurred", we error-wrap so the callback consumer can distinguish between
+  // "the promise rejected with null" or "the promise fulfilled with undefined".
+  if (!reason) {
+    var newReason = new Error('Promise was rejected with a falsy value');
+    newReason.reason = reason;
+    reason = newReason;
+  }
+  return cb(reason);
+}
+
+function callbackify(original) {
+  if (typeof original !== 'function') {
+    throw new TypeError('The "original" argument must be of type Function');
+  }
+
+  // We DO NOT return the promise as it gives the user a false sense that
+  // the promise is actually somehow related to the callback's execution
+  // and that the callback throwing will reject the promise.
+  function callbackified() {
+    var args = [];
+    for (var i = 0; i < arguments.length; i++) {
+      args.push(arguments[i]);
+    }
+
+    var maybeCb = args.pop();
+    if (typeof maybeCb !== 'function') {
+      throw new TypeError('The last argument must be of type Function');
+    }
+    var self = this;
+    var cb = function() {
+      return maybeCb.apply(self, arguments);
+    };
+    // In true node style we process the callback on `nextTick` with all the
+    // implications (stack, `uncaughtException`, `async_hooks`)
+    original.apply(this, args)
+      .then(function(ret) { process.nextTick(cb, null, ret) },
+            function(rej) { process.nextTick(callbackifyOnRejected, rej, cb) });
+  }
+
+  Object.setPrototypeOf(callbackified, Object.getPrototypeOf(original));
+  Object.defineProperties(callbackified,
+                          getOwnPropertyDescriptors(original));
+  return callbackified;
+}
+exports.callbackify = callbackify;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../process/browser.js */ "../node_modules/process/browser.js")))
+
+/***/ }),
+
 /***/ "../node_modules/parse-asn1/aesid.json":
 /*!*********************************************!*\
   !*** ../node_modules/parse-asn1/aesid.json ***!
@@ -29049,7 +29608,7 @@ function isnan (val) {
 /*! exports provided: 2.16.840.1.101.3.4.1.1, 2.16.840.1.101.3.4.1.2, 2.16.840.1.101.3.4.1.3, 2.16.840.1.101.3.4.1.4, 2.16.840.1.101.3.4.1.21, 2.16.840.1.101.3.4.1.22, 2.16.840.1.101.3.4.1.23, 2.16.840.1.101.3.4.1.24, 2.16.840.1.101.3.4.1.41, 2.16.840.1.101.3.4.1.42, 2.16.840.1.101.3.4.1.43, 2.16.840.1.101.3.4.1.44, default */
 /***/ (function(module) {
 
-module.exports = {"2.16.840.1.101.3.4.1.1":"aes-128-ecb","2.16.840.1.101.3.4.1.2":"aes-128-cbc","2.16.840.1.101.3.4.1.3":"aes-128-ofb","2.16.840.1.101.3.4.1.4":"aes-128-cfb","2.16.840.1.101.3.4.1.21":"aes-192-ecb","2.16.840.1.101.3.4.1.22":"aes-192-cbc","2.16.840.1.101.3.4.1.23":"aes-192-ofb","2.16.840.1.101.3.4.1.24":"aes-192-cfb","2.16.840.1.101.3.4.1.41":"aes-256-ecb","2.16.840.1.101.3.4.1.42":"aes-256-cbc","2.16.840.1.101.3.4.1.43":"aes-256-ofb","2.16.840.1.101.3.4.1.44":"aes-256-cfb"};
+module.exports = JSON.parse("{\"2.16.840.1.101.3.4.1.1\":\"aes-128-ecb\",\"2.16.840.1.101.3.4.1.2\":\"aes-128-cbc\",\"2.16.840.1.101.3.4.1.3\":\"aes-128-ofb\",\"2.16.840.1.101.3.4.1.4\":\"aes-128-cfb\",\"2.16.840.1.101.3.4.1.21\":\"aes-192-ecb\",\"2.16.840.1.101.3.4.1.22\":\"aes-192-cbc\",\"2.16.840.1.101.3.4.1.23\":\"aes-192-ofb\",\"2.16.840.1.101.3.4.1.24\":\"aes-192-cfb\",\"2.16.840.1.101.3.4.1.41\":\"aes-256-ecb\",\"2.16.840.1.101.3.4.1.42\":\"aes-256-cbc\",\"2.16.840.1.101.3.4.1.43\":\"aes-256-ofb\",\"2.16.840.1.101.3.4.1.44\":\"aes-256-cfb\"}");
 
 /***/ }),
 
@@ -29219,7 +29778,8 @@ var AttributeTypeValue = asn.define('AttributeTypeValue', function () {
 var AlgorithmIdentifier = asn.define('AlgorithmIdentifier', function () {
   this.seq().obj(
     this.key('algorithm').objid(),
-    this.key('parameters').optional()
+    this.key('parameters').optional(),
+    this.key('curve').objid().optional()
   )
 })
 
@@ -29261,7 +29821,7 @@ var Extension = asn.define('Extension', function () {
 
 var TBSCertificate = asn.define('TBSCertificate', function () {
   this.seq().obj(
-    this.key('version').explicit(0).int(),
+    this.key('version').explicit(0).int().optional(),
     this.key('serialNumber').int(),
     this.key('signature').use(AlgorithmIdentifier),
     this.key('issuer').use(Name),
@@ -29294,12 +29854,13 @@ module.exports = X509Certificate
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(Buffer) {// adapted from https://github.com/apatil/pemstrip
+// adapted from https://github.com/apatil/pemstrip
 var findProc = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:256))-CBC,([0-9A-H]+)[\n\r]+([0-9A-z\n\r\+\/\=]+)[\n\r]+/m
-var startRegex = /^-----BEGIN ((?:.* KEY)|CERTIFICATE)-----/m
-var fullRegex = /^-----BEGIN ((?:.* KEY)|CERTIFICATE)-----([0-9A-z\n\r\+\/\=]+)-----END \1-----$/m
+var startRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----/m
+var fullRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----([0-9A-z\n\r\+\/\=]+)-----END \1-----$/m
 var evp = __webpack_require__(/*! evp_bytestokey */ "../node_modules/evp_bytestokey/index.js")
 var ciphers = __webpack_require__(/*! browserify-aes */ "../node_modules/browserify-aes/browser.js")
+var Buffer = __webpack_require__(/*! safe-buffer */ "../node_modules/safe-buffer/index.js").Buffer
 module.exports = function (okey, password) {
   var key = okey.toString()
   var match = key.match(findProc)
@@ -29309,8 +29870,8 @@ module.exports = function (okey, password) {
     decrypted = new Buffer(match2[2].replace(/[\r\n]/g, ''), 'base64')
   } else {
     var suite = 'aes' + match[1]
-    var iv = new Buffer(match[2], 'hex')
-    var cipherText = new Buffer(match[3].replace(/[\r\n]/g, ''), 'base64')
+    var iv = Buffer.from(match[2], 'hex')
+    var cipherText = Buffer.from(match[3].replace(/[\r\n]/g, ''), 'base64')
     var cipherKey = evp(password, iv.slice(0, 8), parseInt(match[1], 10)).key
     var out = []
     var cipher = ciphers.createDecipheriv(suite, cipherKey, iv)
@@ -29325,7 +29886,6 @@ module.exports = function (okey, password) {
   }
 }
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/node_modules/buffer/index.js */ "../node_modules/node-libs-browser/node_modules/buffer/index.js").Buffer))
 
 /***/ }),
 
@@ -29336,11 +29896,12 @@ module.exports = function (okey, password) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(Buffer) {var asn1 = __webpack_require__(/*! ./asn1 */ "../node_modules/parse-asn1/asn1.js")
+var asn1 = __webpack_require__(/*! ./asn1 */ "../node_modules/parse-asn1/asn1.js")
 var aesid = __webpack_require__(/*! ./aesid.json */ "../node_modules/parse-asn1/aesid.json")
 var fixProc = __webpack_require__(/*! ./fixProc */ "../node_modules/parse-asn1/fixProc.js")
 var ciphers = __webpack_require__(/*! browserify-aes */ "../node_modules/browserify-aes/browser.js")
 var compat = __webpack_require__(/*! pbkdf2 */ "../node_modules/pbkdf2/browser.js")
+var Buffer = __webpack_require__(/*! safe-buffer */ "../node_modules/safe-buffer/index.js").Buffer
 module.exports = parseKeys
 
 function parseKeys (buffer) {
@@ -29350,7 +29911,7 @@ function parseKeys (buffer) {
     buffer = buffer.key
   }
   if (typeof buffer === 'string') {
-    buffer = new Buffer(buffer)
+    buffer = Buffer.from(buffer)
   }
 
   var stripped = fixProc(buffer, password)
@@ -29435,7 +29996,7 @@ function decrypt (data, password) {
   var iv = data.algorithm.decrypt.cipher.iv
   var cipherText = data.subjectPrivateKey
   var keylen = parseInt(algo.split('-')[1], 10) / 8
-  var key = compat.pbkdf2Sync(password, salt, iters, keylen)
+  var key = compat.pbkdf2Sync(password, salt, iters, keylen, 'sha1')
   var cipher = ciphers.createDecipheriv(algo, key, iv)
   var out = []
   out.push(cipher.update(cipherText))
@@ -29443,7 +30004,6 @@ function decrypt (data, password) {
   return Buffer.concat(out)
 }
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/node_modules/buffer/index.js */ "../node_modules/node-libs-browser/node_modules/buffer/index.js").Buffer))
 
 /***/ }),
 
@@ -30319,6 +30879,14 @@ module.exports = function xor (a, b) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global, process) {
 
+// limit of Crypto.getRandomValues()
+// https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues
+var MAX_BYTES = 65536
+
+// Node supports requesting up to this number of bytes
+// https://github.com/nodejs/node/blob/master/lib/internal/crypto/random.js#L48
+var MAX_UINT32 = 4294967295
+
 function oldBrowser () {
   throw new Error('Secure random number generation is not supported by this browser.\nUse Chrome, Firefox or Internet Explorer 11')
 }
@@ -30334,18 +30902,22 @@ if (crypto && crypto.getRandomValues) {
 
 function randomBytes (size, cb) {
   // phantomjs needs to throw
-  if (size > 65536) throw new Error('requested too many random bytes')
-  // in case browserify  isn't using the Uint8Array version
-  var rawBytes = new global.Uint8Array(size)
+  if (size > MAX_UINT32) throw new RangeError('requested too many random bytes')
 
-  // This will not work in older browsers.
-  // See https://developer.mozilla.org/en-US/docs/Web/API/window.crypto.getRandomValues
+  var bytes = Buffer.allocUnsafe(size)
+
   if (size > 0) {  // getRandomValues fails on IE if size == 0
-    crypto.getRandomValues(rawBytes)
+    if (size > MAX_BYTES) { // this is the max bytes crypto.getRandomValues
+      // can do at once see https://developer.mozilla.org/en-US/docs/Web/API/window.crypto.getRandomValues
+      for (var generated = 0; generated < size; generated += MAX_BYTES) {
+        // buffer.slice automatically checks if the end is past the end of
+        // the buffer so we don't have to here
+        crypto.getRandomValues(bytes.slice(generated, generated + MAX_BYTES))
+      }
+    } else {
+      crypto.getRandomValues(bytes)
+    }
   }
-
-  // XXX: phantomjs doesn't like a buffer being passed here
-  var bytes = Buffer.from(rawBytes.buffer)
 
   if (typeof cb === 'function') {
     return process.nextTick(function () {
@@ -34816,629 +35388,20 @@ function config (name) {
 
 /***/ }),
 
-/***/ "../node_modules/util/support/isBufferBrowser.js":
-/*!*******************************************************!*\
-  !*** ../node_modules/util/support/isBufferBrowser.js ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function isBuffer(arg) {
-  return arg && typeof arg === 'object'
-    && typeof arg.copy === 'function'
-    && typeof arg.fill === 'function'
-    && typeof arg.readUInt8 === 'function';
-}
-
-/***/ }),
-
-/***/ "../node_modules/util/util.js":
-/*!************************************!*\
-  !*** ../node_modules/util/util.js ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-var formatRegExp = /%[sdj%]/g;
-exports.format = function(f) {
-  if (!isString(f)) {
-    var objects = [];
-    for (var i = 0; i < arguments.length; i++) {
-      objects.push(inspect(arguments[i]));
-    }
-    return objects.join(' ');
-  }
-
-  var i = 1;
-  var args = arguments;
-  var len = args.length;
-  var str = String(f).replace(formatRegExp, function(x) {
-    if (x === '%%') return '%';
-    if (i >= len) return x;
-    switch (x) {
-      case '%s': return String(args[i++]);
-      case '%d': return Number(args[i++]);
-      case '%j':
-        try {
-          return JSON.stringify(args[i++]);
-        } catch (_) {
-          return '[Circular]';
-        }
-      default:
-        return x;
-    }
-  });
-  for (var x = args[i]; i < len; x = args[++i]) {
-    if (isNull(x) || !isObject(x)) {
-      str += ' ' + x;
-    } else {
-      str += ' ' + inspect(x);
-    }
-  }
-  return str;
-};
-
-
-// Mark that a method should not be used.
-// Returns a modified function which warns once by default.
-// If --no-deprecation is set, then it is a no-op.
-exports.deprecate = function(fn, msg) {
-  // Allow for deprecating things in the process of starting up.
-  if (isUndefined(global.process)) {
-    return function() {
-      return exports.deprecate(fn, msg).apply(this, arguments);
-    };
-  }
-
-  if (process.noDeprecation === true) {
-    return fn;
-  }
-
-  var warned = false;
-  function deprecated() {
-    if (!warned) {
-      if (process.throwDeprecation) {
-        throw new Error(msg);
-      } else if (process.traceDeprecation) {
-        console.trace(msg);
-      } else {
-        console.error(msg);
-      }
-      warned = true;
-    }
-    return fn.apply(this, arguments);
-  }
-
-  return deprecated;
-};
-
-
-var debugs = {};
-var debugEnviron;
-exports.debuglog = function(set) {
-  if (isUndefined(debugEnviron))
-    debugEnviron = process.env.NODE_DEBUG || '';
-  set = set.toUpperCase();
-  if (!debugs[set]) {
-    if (new RegExp('\\b' + set + '\\b', 'i').test(debugEnviron)) {
-      var pid = process.pid;
-      debugs[set] = function() {
-        var msg = exports.format.apply(exports, arguments);
-        console.error('%s %d: %s', set, pid, msg);
-      };
-    } else {
-      debugs[set] = function() {};
-    }
-  }
-  return debugs[set];
-};
-
-
-/**
- * Echos the value of a value. Trys to print the value out
- * in the best way possible given the different types.
- *
- * @param {Object} obj The object to print out.
- * @param {Object} opts Optional options object that alters the output.
- */
-/* legacy: obj, showHidden, depth, colors*/
-function inspect(obj, opts) {
-  // default options
-  var ctx = {
-    seen: [],
-    stylize: stylizeNoColor
-  };
-  // legacy...
-  if (arguments.length >= 3) ctx.depth = arguments[2];
-  if (arguments.length >= 4) ctx.colors = arguments[3];
-  if (isBoolean(opts)) {
-    // legacy...
-    ctx.showHidden = opts;
-  } else if (opts) {
-    // got an "options" object
-    exports._extend(ctx, opts);
-  }
-  // set default options
-  if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
-  if (isUndefined(ctx.depth)) ctx.depth = 2;
-  if (isUndefined(ctx.colors)) ctx.colors = false;
-  if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
-  if (ctx.colors) ctx.stylize = stylizeWithColor;
-  return formatValue(ctx, obj, ctx.depth);
-}
-exports.inspect = inspect;
-
-
-// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
-inspect.colors = {
-  'bold' : [1, 22],
-  'italic' : [3, 23],
-  'underline' : [4, 24],
-  'inverse' : [7, 27],
-  'white' : [37, 39],
-  'grey' : [90, 39],
-  'black' : [30, 39],
-  'blue' : [34, 39],
-  'cyan' : [36, 39],
-  'green' : [32, 39],
-  'magenta' : [35, 39],
-  'red' : [31, 39],
-  'yellow' : [33, 39]
-};
-
-// Don't use 'blue' not visible on cmd.exe
-inspect.styles = {
-  'special': 'cyan',
-  'number': 'yellow',
-  'boolean': 'yellow',
-  'undefined': 'grey',
-  'null': 'bold',
-  'string': 'green',
-  'date': 'magenta',
-  // "name": intentionally not styling
-  'regexp': 'red'
-};
-
-
-function stylizeWithColor(str, styleType) {
-  var style = inspect.styles[styleType];
-
-  if (style) {
-    return '\u001b[' + inspect.colors[style][0] + 'm' + str +
-           '\u001b[' + inspect.colors[style][1] + 'm';
-  } else {
-    return str;
-  }
-}
-
-
-function stylizeNoColor(str, styleType) {
-  return str;
-}
-
-
-function arrayToHash(array) {
-  var hash = {};
-
-  array.forEach(function(val, idx) {
-    hash[val] = true;
-  });
-
-  return hash;
-}
-
-
-function formatValue(ctx, value, recurseTimes) {
-  // Provide a hook for user-specified inspect functions.
-  // Check that value is an object with an inspect function on it
-  if (ctx.customInspect &&
-      value &&
-      isFunction(value.inspect) &&
-      // Filter out the util module, it's inspect function is special
-      value.inspect !== exports.inspect &&
-      // Also filter out any prototype objects using the circular check.
-      !(value.constructor && value.constructor.prototype === value)) {
-    var ret = value.inspect(recurseTimes, ctx);
-    if (!isString(ret)) {
-      ret = formatValue(ctx, ret, recurseTimes);
-    }
-    return ret;
-  }
-
-  // Primitive types cannot have properties
-  var primitive = formatPrimitive(ctx, value);
-  if (primitive) {
-    return primitive;
-  }
-
-  // Look up the keys of the object.
-  var keys = Object.keys(value);
-  var visibleKeys = arrayToHash(keys);
-
-  if (ctx.showHidden) {
-    keys = Object.getOwnPropertyNames(value);
-  }
-
-  // IE doesn't make error fields non-enumerable
-  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
-  if (isError(value)
-      && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
-    return formatError(value);
-  }
-
-  // Some type of object without properties can be shortcutted.
-  if (keys.length === 0) {
-    if (isFunction(value)) {
-      var name = value.name ? ': ' + value.name : '';
-      return ctx.stylize('[Function' + name + ']', 'special');
-    }
-    if (isRegExp(value)) {
-      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
-    }
-    if (isDate(value)) {
-      return ctx.stylize(Date.prototype.toString.call(value), 'date');
-    }
-    if (isError(value)) {
-      return formatError(value);
-    }
-  }
-
-  var base = '', array = false, braces = ['{', '}'];
-
-  // Make Array say that they are Array
-  if (isArray(value)) {
-    array = true;
-    braces = ['[', ']'];
-  }
-
-  // Make functions say that they are functions
-  if (isFunction(value)) {
-    var n = value.name ? ': ' + value.name : '';
-    base = ' [Function' + n + ']';
-  }
-
-  // Make RegExps say that they are RegExps
-  if (isRegExp(value)) {
-    base = ' ' + RegExp.prototype.toString.call(value);
-  }
-
-  // Make dates with properties first say the date
-  if (isDate(value)) {
-    base = ' ' + Date.prototype.toUTCString.call(value);
-  }
-
-  // Make error with message first say the error
-  if (isError(value)) {
-    base = ' ' + formatError(value);
-  }
-
-  if (keys.length === 0 && (!array || value.length == 0)) {
-    return braces[0] + base + braces[1];
-  }
-
-  if (recurseTimes < 0) {
-    if (isRegExp(value)) {
-      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
-    } else {
-      return ctx.stylize('[Object]', 'special');
-    }
-  }
-
-  ctx.seen.push(value);
-
-  var output;
-  if (array) {
-    output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
-  } else {
-    output = keys.map(function(key) {
-      return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
-    });
-  }
-
-  ctx.seen.pop();
-
-  return reduceToSingleString(output, base, braces);
-}
-
-
-function formatPrimitive(ctx, value) {
-  if (isUndefined(value))
-    return ctx.stylize('undefined', 'undefined');
-  if (isString(value)) {
-    var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
-                                             .replace(/'/g, "\\'")
-                                             .replace(/\\"/g, '"') + '\'';
-    return ctx.stylize(simple, 'string');
-  }
-  if (isNumber(value))
-    return ctx.stylize('' + value, 'number');
-  if (isBoolean(value))
-    return ctx.stylize('' + value, 'boolean');
-  // For some reason typeof null is "object", so special case here.
-  if (isNull(value))
-    return ctx.stylize('null', 'null');
-}
-
-
-function formatError(value) {
-  return '[' + Error.prototype.toString.call(value) + ']';
-}
-
-
-function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
-  var output = [];
-  for (var i = 0, l = value.length; i < l; ++i) {
-    if (hasOwnProperty(value, String(i))) {
-      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
-          String(i), true));
-    } else {
-      output.push('');
-    }
-  }
-  keys.forEach(function(key) {
-    if (!key.match(/^\d+$/)) {
-      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
-          key, true));
-    }
-  });
-  return output;
-}
-
-
-function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
-  var name, str, desc;
-  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
-  if (desc.get) {
-    if (desc.set) {
-      str = ctx.stylize('[Getter/Setter]', 'special');
-    } else {
-      str = ctx.stylize('[Getter]', 'special');
-    }
-  } else {
-    if (desc.set) {
-      str = ctx.stylize('[Setter]', 'special');
-    }
-  }
-  if (!hasOwnProperty(visibleKeys, key)) {
-    name = '[' + key + ']';
-  }
-  if (!str) {
-    if (ctx.seen.indexOf(desc.value) < 0) {
-      if (isNull(recurseTimes)) {
-        str = formatValue(ctx, desc.value, null);
-      } else {
-        str = formatValue(ctx, desc.value, recurseTimes - 1);
-      }
-      if (str.indexOf('\n') > -1) {
-        if (array) {
-          str = str.split('\n').map(function(line) {
-            return '  ' + line;
-          }).join('\n').substr(2);
-        } else {
-          str = '\n' + str.split('\n').map(function(line) {
-            return '   ' + line;
-          }).join('\n');
-        }
-      }
-    } else {
-      str = ctx.stylize('[Circular]', 'special');
-    }
-  }
-  if (isUndefined(name)) {
-    if (array && key.match(/^\d+$/)) {
-      return str;
-    }
-    name = JSON.stringify('' + key);
-    if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
-      name = name.substr(1, name.length - 2);
-      name = ctx.stylize(name, 'name');
-    } else {
-      name = name.replace(/'/g, "\\'")
-                 .replace(/\\"/g, '"')
-                 .replace(/(^"|"$)/g, "'");
-      name = ctx.stylize(name, 'string');
-    }
-  }
-
-  return name + ': ' + str;
-}
-
-
-function reduceToSingleString(output, base, braces) {
-  var numLinesEst = 0;
-  var length = output.reduce(function(prev, cur) {
-    numLinesEst++;
-    if (cur.indexOf('\n') >= 0) numLinesEst++;
-    return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
-  }, 0);
-
-  if (length > 60) {
-    return braces[0] +
-           (base === '' ? '' : base + '\n ') +
-           ' ' +
-           output.join(',\n  ') +
-           ' ' +
-           braces[1];
-  }
-
-  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
-}
-
-
-// NOTE: These type checking functions intentionally don't use `instanceof`
-// because it is fragile and can be easily faked with `Object.create()`.
-function isArray(ar) {
-  return Array.isArray(ar);
-}
-exports.isArray = isArray;
-
-function isBoolean(arg) {
-  return typeof arg === 'boolean';
-}
-exports.isBoolean = isBoolean;
-
-function isNull(arg) {
-  return arg === null;
-}
-exports.isNull = isNull;
-
-function isNullOrUndefined(arg) {
-  return arg == null;
-}
-exports.isNullOrUndefined = isNullOrUndefined;
-
-function isNumber(arg) {
-  return typeof arg === 'number';
-}
-exports.isNumber = isNumber;
-
-function isString(arg) {
-  return typeof arg === 'string';
-}
-exports.isString = isString;
-
-function isSymbol(arg) {
-  return typeof arg === 'symbol';
-}
-exports.isSymbol = isSymbol;
-
-function isUndefined(arg) {
-  return arg === void 0;
-}
-exports.isUndefined = isUndefined;
-
-function isRegExp(re) {
-  return isObject(re) && objectToString(re) === '[object RegExp]';
-}
-exports.isRegExp = isRegExp;
-
-function isObject(arg) {
-  return typeof arg === 'object' && arg !== null;
-}
-exports.isObject = isObject;
-
-function isDate(d) {
-  return isObject(d) && objectToString(d) === '[object Date]';
-}
-exports.isDate = isDate;
-
-function isError(e) {
-  return isObject(e) &&
-      (objectToString(e) === '[object Error]' || e instanceof Error);
-}
-exports.isError = isError;
-
-function isFunction(arg) {
-  return typeof arg === 'function';
-}
-exports.isFunction = isFunction;
-
-function isPrimitive(arg) {
-  return arg === null ||
-         typeof arg === 'boolean' ||
-         typeof arg === 'number' ||
-         typeof arg === 'string' ||
-         typeof arg === 'symbol' ||  // ES6 symbol
-         typeof arg === 'undefined';
-}
-exports.isPrimitive = isPrimitive;
-
-exports.isBuffer = __webpack_require__(/*! ./support/isBuffer */ "../node_modules/util/support/isBufferBrowser.js");
-
-function objectToString(o) {
-  return Object.prototype.toString.call(o);
-}
-
-
-function pad(n) {
-  return n < 10 ? '0' + n.toString(10) : n.toString(10);
-}
-
-
-var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
-              'Oct', 'Nov', 'Dec'];
-
-// 26 Feb 16:19:34
-function timestamp() {
-  var d = new Date();
-  var time = [pad(d.getHours()),
-              pad(d.getMinutes()),
-              pad(d.getSeconds())].join(':');
-  return [d.getDate(), months[d.getMonth()], time].join(' ');
-}
-
-
-// log is just a thin wrapper to console.log that prepends a timestamp
-exports.log = function() {
-  console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
-};
-
-
-/**
- * Inherit the prototype methods from one constructor into another.
- *
- * The Function.prototype.inherits from lang.js rewritten as a standalone
- * function (not on Function.prototype). NOTE: If this file is to be loaded
- * during bootstrapping this function needs to be rewritten using some native
- * functions as prototype setup using normal JavaScript does not work as
- * expected during bootstrapping (see mirror.js in r114903).
- *
- * @param {function} ctor Constructor function which needs to inherit the
- *     prototype.
- * @param {function} superCtor Constructor function to inherit prototype from.
- */
-exports.inherits = __webpack_require__(/*! inherits */ "../node_modules/inherits/inherits_browser.js");
-
-exports._extend = function(origin, add) {
-  // Don't do anything if add isn't an object
-  if (!add || !isObject(add)) return origin;
-
-  var keys = Object.keys(add);
-  var i = keys.length;
-  while (i--) {
-    origin[keys[i]] = add[keys[i]];
-  }
-  return origin;
-};
-
-function hasOwnProperty(obj, prop) {
-  return Object.prototype.hasOwnProperty.call(obj, prop);
-}
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../process/browser.js */ "../node_modules/process/browser.js")))
-
-/***/ }),
-
 /***/ "../node_modules/vm-browserify/index.js":
 /*!**********************************************!*\
   !*** ../node_modules/vm-browserify/index.js ***!
   \**********************************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-var indexOf = __webpack_require__(/*! indexof */ "../node_modules/indexof/index.js");
-
+var indexOf = function (xs, item) {
+    if (xs.indexOf) return xs.indexOf(item);
+    else for (var i = 0; i < xs.length; i++) {
+        if (xs[i] === item) return i;
+    }
+    return -1;
+};
 var Object_keys = function (obj) {
     if (Object.keys) return Object.keys(obj)
     else {
@@ -35548,9 +35511,11 @@ Script.prototype.runInNewContext = function (context) {
     var ctx = Script.createContext(context);
     var res = this.runInContext(ctx);
 
-    forEach(Object_keys(ctx), function (key) {
-        context[key] = ctx[key];
-    });
+    if (context) {
+        forEach(Object_keys(ctx), function (key) {
+            context[key] = ctx[key];
+        });
+    }
 
     return res;
 };
@@ -35561,6 +35526,10 @@ forEach(Object_keys(Script.prototype), function (name) {
         return s[name].apply(s, [].slice.call(arguments, 1));
     };
 });
+
+exports.isContext = function (context) {
+    return context instanceof Context;
+};
 
 exports.createScript = function (code) {
     return exports.Script(code);
@@ -35670,7 +35639,7 @@ var Defaults;
             '-b:v', '${bitrate}k',
             '-bufsize', '${bitrate}k',
             '-payload_type', '99',
-            '-ssrc', '1',
+            '-ssrc', '${targetVideoSsrc}',
             '-f', 'rtp',
             '-srtp_out_suite', 'AES_CM_128_HMAC_SHA1_80',
             '-srtp_out_params', '${videokey}',
@@ -35701,7 +35670,7 @@ var Defaults;
             '-b:v', '${bitrate}k',
             '-bufsize', '${bitrate}k',
             '-payload_type', '99',
-            '-ssrc', '1',
+            '-ssrc', '${targetVideoSsrc}',
             '-f', 'rtp',
             '-srtp_out_suite', 'AES_CM_128_HMAC_SHA1_80',
             '-srtp_out_params', '${videokey}',
@@ -35797,7 +35766,7 @@ var Utils;
 (function (Utils) {
     function getInputValue(input, emptyStringAsUndefined) {
         if (emptyStringAsUndefined === void 0) { emptyStringAsUndefined = true; }
-        if (input === undefined || input === null)
+        if (input == null)
             return undefined;
         if ((input.type == "checkbox") && ("checked" in input)) {
             return input.checked;
@@ -35825,18 +35794,8 @@ var Utils;
     Utils.getInputValue = getInputValue;
     function getSelectInputValue(input, emptyStringAsUndefined) {
         if (emptyStringAsUndefined === void 0) { emptyStringAsUndefined = true; }
-        if (input === undefined || input === null)
+        if (input == null)
             return undefined;
-        if ("valueAsDate" in input) {
-            var dateValue = input.valueAsDate;
-            if (dateValue)
-                return dateValue;
-        }
-        if ("valueAsNumber" in input) {
-            var numValue = input.valueAsNumber;
-            if (!isNaN(numValue))
-                return numValue;
-        }
         var stringValue = input.value;
         if ((stringValue === "") && emptyStringAsUndefined)
             return undefined;
@@ -35873,15 +35832,16 @@ var Utils;
 
 "use strict";
 
-var __values = (this && this.__values) || function (o) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
-    return {
+    if (o && typeof o.length === "number") return {
         next: function () {
             if (o && i >= o.length) o = void 0;
             return { value: o && o[i++], done: !o };
         }
     };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var ConfigPageBuilder_Base = /** @class */ (function () {
@@ -35923,6 +35883,9 @@ var ConfigPageBuilder_Base = /** @class */ (function () {
         }
     };
     ConfigPageBuilder_Base.prototype.fillSelectByListEntries = function (selectElement, entries) {
+        if (!(selectElement instanceof HTMLSelectElement)) {
+            return;
+        }
         if (entries === undefined)
             return;
         if (Array.isArray(entries))
@@ -35960,10 +35923,12 @@ exports.ConfigPageBuilder_Base = ConfigPageBuilder_Base;
 /*!******************************************************************!*\
   !*** ./admin/pageBuilder/pageBuilder.bridgeConfig.main.inc.html ***!
   \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "<div>\n    <div><label class=\"translate\" for=\"name\">Name:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in homekit apps. Changes are only recognized after readding the bridge in the\n            app.</span></div>\n    <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists. Please change\n        the name!</div>\n    <div class=\"input control flex-grow margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"name\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input control flex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"model\">Model:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"model\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"serial\">Serial:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"serial\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"firmware\">Firmware:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input control flex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"firmware\" placeholder=\"leave empty to use Yahka Version\"/>\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"username\">Username:</label><span class=\"edit-hint translate\">needs\n            to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the\n                bridge needs to be reconfigured in the HomeKit database</b></span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"username\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"pincode\">Pincode:</label><span class=\"edit-hint translate\">needs to\n            be in the form of 123-45-678</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"pincode\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"port\">IP/Port:</label><span class=\"edit-hint translate\">Port 0 =\n            random free port assigned by the operation system (default)</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <select id=\"interface\">\n        </select>\n        <input min=\"0\" max=\"65535\" type=\"number\" id=\"port\" />\n    </div>\n\n</div>\n<div>\n    <div><label class=\"translate\" for=\"verboseLogging\">Verbose Logging:</label><span class=\"edit-hint translate\">true\n            = redirect hap-node logging to adapter logging</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"\" type=\"checkbox\" id=\"verboseLogging\" />\n    </div>\n</div>"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div>\n    <div><label class=\"translate\" for=\"name\">Name:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in homekit apps. Changes are only recognized after readding the bridge in the\n            app.</span></div>\n    <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists. Please change\n        the name!</div>\n    <div class=\"input control flex-grow margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"name\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input control flex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"model\">Model:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"model\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"serial\">Serial:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"serial\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"firmware\">Firmware:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input control flex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"firmware\" placeholder=\"leave empty to use Yahka Version\"/>\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"username\">Username:</label><span class=\"edit-hint translate\">needs\n            to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the\n                bridge needs to be reconfigured in the HomeKit database</b></span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"username\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"pincode\">Pincode:</label><span class=\"edit-hint translate\">needs to\n            be in the form of 123-45-678</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"pincode\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"port\">IP/Port:</label><span class=\"edit-hint translate\">Port 0 =\n            random free port assigned by the operation system (default)</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <select id=\"interface\">\n        </select>\n        <input min=\"0\" max=\"65535\" type=\"number\" id=\"port\" />\n    </div>\n\n</div>\n<div>\n    <div><label class=\"translate\" for=\"verboseLogging\">Verbose Logging:</label><span class=\"edit-hint translate\">true\n            = redirect hap-node logging to adapter logging</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"\" type=\"checkbox\" id=\"verboseLogging\" />\n    </div>\n</div>");
 
 /***/ }),
 
@@ -35977,9 +35942,12 @@ module.exports = "<div>\n    <div><label class=\"translate\" for=\"name\">Name:<
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -35987,10 +35955,11 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -36124,10 +36093,12 @@ exports.ConfigPageBuilder_BridgeConfig = ConfigPageBuilder_BridgeConfig;
 /*!************************************************************************************!*\
   !*** ./admin/pageBuilder/pageBuilder.customDevice.characteristic.propRow.inc.html ***!
   \************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "<div class=\"row\">\n    <div class=\"cell\">\n        <span id=\"propName\"></span>\n    </div>\n    <div class=\"cell\">\n        <div class=\"input-container\">\n            <input type=\"text\" id=\"propValue\"></input>\n        </div>\n    </div>\n</div>"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"row\">\n    <div class=\"cell\">\n        <span id=\"propName\"></span>\n    </div>\n    <div class=\"cell\">\n        <div class=\"input-container\">\n            <input type=\"text\" id=\"propValue\"></input>\n        </div>\n    </div>\n</div>");
 
 /***/ }),
 
@@ -36135,10 +36106,12 @@ module.exports = "<div class=\"row\">\n    <div class=\"cell\">\n        <span i
 /*!*******************************************************************************!*\
   !*** ./admin/pageBuilder/pageBuilder.customDevice.characteristicRow.inc.html ***!
   \*******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "<tbody id=\"characteristic\" class=\"row-group\">\n    <tr>\n        <td class=\"center\">\n            <label class=\"input-control checkbox small-check\">\n                <input type=\"checkbox\" id=\"characteristic_enabled\">\n                <span class=\"check\"></span>\n            </label>\n        </td>\n        <td>\n            <span id=\"characteristic_name\"></span><a href=\"#\" id=\"toggleProperties\" class=\"\">&nbsp;&nbsp;[properties]</a>\n        </td>\n        <td class=\"right inOut\">\n            <span class=\"translate\">InOut: </span>\n        </td>\n        </td>\n        <td class=\"inOut\">\n            <div class=\"input-control select full-width\">\n                <select id=\"characteristic_inoutfunction\"></select>\n            </div>\n        </td>\n    </tr>\n\n    <tr>\n        <td>\n        </td>\n        <td rowspan=\"3\" class=\"characteristic-property-cell\">\n            <div class=\"no-display\" id=\"characteristic_propertyTable_container\">\n                <span>Characteristic Properties</span>\n                <div class=\"editor-table\" id=\"characteristic_propertyTable\">\n                </div>\n            </div>\n\n\n        </td>\n        <td colspan=\"2\" id=\"characteristic_inoutparams_container\" class=\"editor-container-cell inOut\">\n        </td>\n    </tr>\n\n    <tr>\n        <td>\n        </td>\n        <td class=\"right conversion\">\n            <span class=\"translate\">Conversion: </span>\n        </td>\n        <td class=\"conversion\">\n            <div class=\"input-control select full-width\">\n                <select id=\"characteristic_conversionfunction\"></select>\n            </div>\n        </td>\n    </tr>\n\n    <tr class=\"row\">\n        <td>\n        </td>\n        <td colspan=\"2\" id=\"characteristic_conversionparams_container\" class=\"editor-container-cell conversion\">\n        </td>\n    </tr>\n</tbody>"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<tbody id=\"characteristic\" class=\"row-group\">\n    <tr>\n        <td class=\"center\">\n            <label class=\"input-control checkbox small-check\">\n                <input type=\"checkbox\" id=\"characteristic_enabled\">\n                <span class=\"check\"></span>\n            </label>\n        </td>\n        <td>\n            <span id=\"characteristic_name\"></span><a href=\"#\" id=\"toggleProperties\" class=\"\">&nbsp;&nbsp;[properties]</a>\n        </td>\n        <td class=\"right inOut\">\n            <span class=\"translate\">InOut: </span>\n        </td>\n        </td>\n        <td class=\"inOut\">\n            <div class=\"input-control select full-width\">\n                <select id=\"characteristic_inoutfunction\"></select>\n            </div>\n        </td>\n    </tr>\n\n    <tr>\n        <td>\n        </td>\n        <td rowspan=\"3\" class=\"characteristic-property-cell\">\n            <div class=\"no-display\" id=\"characteristic_propertyTable_container\">\n                <span>Characteristic Properties</span>\n                <div class=\"editor-table\" id=\"characteristic_propertyTable\">\n                </div>\n            </div>\n\n\n        </td>\n        <td colspan=\"2\" id=\"characteristic_inoutparams_container\" class=\"editor-container-cell inOut\">\n        </td>\n    </tr>\n\n    <tr>\n        <td>\n        </td>\n        <td class=\"right conversion\">\n            <span class=\"translate\">Conversion: </span>\n        </td>\n        <td class=\"conversion\">\n            <div class=\"input-control select full-width\">\n                <select id=\"characteristic_conversionfunction\"></select>\n            </div>\n        </td>\n    </tr>\n\n    <tr class=\"row\">\n        <td>\n        </td>\n        <td colspan=\"2\" id=\"characteristic_conversionparams_container\" class=\"editor-container-cell conversion\">\n        </td>\n    </tr>\n</tbody>");
 
 /***/ }),
 
@@ -36146,10 +36119,12 @@ module.exports = "<tbody id=\"characteristic\" class=\"row-group\">\n    <tr>\n 
 /*!***********************************************************************!*\
   !*** ./admin/pageBuilder/pageBuilder.customDevice.infoPanel.inc.html ***!
   \***********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "<div class=\"frame\" id=\"yahka_device_info_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Device Properties</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"enabled\">Enabled:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enabled\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"name\">Name:</label></div>\n            <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists.\n                Please change the name!</div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"name\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"model\">Model:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"model\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"serial\">Serial:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"serial\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"firmware\">Firmware:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"firmware\" />\n            </div>\n        </div>\n\n        <div>\n            <div><label class=\"translate\" for=\"category\">Categeory:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select class=\"full-size\" id=\"category\"></select>\n            </div>\n        </div>\n    </div>\n\n</div>"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"frame\" id=\"yahka_device_info_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Device Properties</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"enabled\">Enabled:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enabled\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"name\">Name:</label></div>\n            <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists.\n                Please change the name!</div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"name\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"model\">Model:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"model\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"serial\">Serial:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"serial\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"firmware\">Firmware:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"firmware\" />\n            </div>\n        </div>\n\n        <div>\n            <div><label class=\"translate\" for=\"category\">Categeory:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select class=\"full-size\" id=\"category\"></select>\n            </div>\n        </div>\n    </div>\n\n</div>");
 
 /***/ }),
 
@@ -36157,10 +36132,12 @@ module.exports = "<div class=\"frame\" id=\"yahka_device_info_panel\">\n    <div
 /*!**************************************************************************!*\
   !*** ./admin/pageBuilder/pageBuilder.customDevice.servicePanel.inc.html ***!
   \**************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "<div class=\"frame\" id=\"yahka_service_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Service: </span><span id=\"yahka_service_caption\"></span>\n        <a href=\"#\" class=\"place-right\" id=\"yakha_delete_service\"><span class=\"mif-cross fg-red\"></span></a>\n    </div>\n    <div class=\"content\">\n        <div class=\"flex-container-row flex-grow flex-align-baseline\">\n            <div><label class=\"translate\" for=\"service_name\">Service name:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_name\" />\n            </div>\n            <div><label class=\"translate\" for=\"service_type\">Service Type:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <select class=\"full-size\" id=\"service_type\"></select>\n            </div>\n            <div><label class=\"translate\" for=\"service_subtype\">Service Subtype:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_subtype\" />\n            </div>\n        </div>\n        <div><span class=\"translate\">Characteristics Table</span></div>\n        <table class=\"characteristic-table\" id=\"yahka_characteristic_table\">\n            <thead>\n                <th class=\"translate\">Enabled</th>\n                <th class=\"translate\">Name</th>\n                <th></th>\n                <th></th>\n            </thead>\n        </table>\n    </div>\n</div>"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"frame\" id=\"yahka_service_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Service: </span><span id=\"yahka_service_caption\"></span>\n        <a href=\"#\" class=\"place-right\" id=\"yakha_delete_service\"><span class=\"mif-cross fg-red\"></span></a>\n    </div>\n    <div class=\"content\">\n        <div class=\"flex-container-row flex-grow flex-align-baseline\">\n            <div><label class=\"translate\" for=\"service_name\">Service name:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_name\" />\n            </div>\n            <div><label class=\"translate\" for=\"service_type\">Service Type:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <select class=\"full-size\" id=\"service_type\"></select>\n            </div>\n            <div><label class=\"translate\" for=\"service_subtype\">Service Subtype:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_subtype\" />\n            </div>\n        </div>\n        <div><span class=\"translate\">Characteristics Table</span></div>\n        <table class=\"characteristic-table\" id=\"yahka_characteristic_table\">\n            <thead>\n                <th class=\"translate\">Enabled</th>\n                <th class=\"translate\">Name</th>\n                <th></th>\n                <th></th>\n            </thead>\n        </table>\n    </div>\n</div>");
 
 /***/ }),
 
@@ -36174,24 +36151,28 @@ module.exports = "<div class=\"frame\" id=\"yahka_service_panel\">\n    <div cla
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __values = (this && this.__values) || function (o) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
-    return {
+    if (o && typeof o.length === "number") return {
         next: function () {
             if (o && i >= o.length) o = void 0;
             return { value: o && o[i++], done: !o };
         }
     };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 var __read = (this && this.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
@@ -36470,8 +36451,8 @@ var ConfigPageBuilder_CustomDevice = /** @class */ (function (_super) {
         if (!functionMap.has(functionName)) {
             return new parameterEditor_null_1.ParameterEditor_Null(valueChangeCallback);
         }
-        var constr = functionMap.get(functionName);
-        return new constr(valueChangeCallback);
+        var factory = functionMap.get(functionName);
+        return factory(valueChangeCallback);
     };
     ConfigPageBuilder_CustomDevice.prototype.updateParameterEditor = function (functionName, parameterContainer, parameterValue, parameterChangeCallback, functionMap) {
         var editor = this.getParameterEditor(functionName, parameterChangeCallback, functionMap);
@@ -36493,6 +36474,7 @@ var ConfigPageBuilder_CustomDevice = /** @class */ (function (_super) {
         this.refershOptionalClass(bracketElement, charDef ? charDef.optional : true);
         rowElement.querySelector('#characteristic_name').textContent = name;
         var functionSelector = function (selector, containerSelector, configName, parameterName, functionMap) {
+            var _a;
             var input = rowElement.querySelector(selector);
             var container = rowElement.querySelector(containerSelector);
             if (functionMap !== undefined) {
@@ -36513,11 +36495,12 @@ var ConfigPageBuilder_CustomDevice = /** @class */ (function (_super) {
                 charConfig[parameterName] = newValue;
                 _this.delegate.changeCallback();
             };
-            _this.updateParameterEditor(admin_utils_1.Utils.getSelectInputValue(input), container, parameterValue, paramUpdateMethod, functionMap);
+            _this.updateParameterEditor((_a = admin_utils_1.Utils.getSelectInputValue(input)) === null || _a === void 0 ? void 0 : _a.toString(), container, parameterValue, paramUpdateMethod, functionMap);
             input.addEventListener('input', function (e) {
+                var _a;
                 _this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
                 var charConfig = _this.findConfigCharacteristic(serviceConfig, name);
-                _this.updateParameterEditor(admin_utils_1.Utils.getSelectInputValue(input), container, charConfig[parameterName], paramUpdateMethod, functionMap);
+                _this.updateParameterEditor((_a = admin_utils_1.Utils.getSelectInputValue(input)) === null || _a === void 0 ? void 0 : _a.toString(), container, charConfig[parameterName], paramUpdateMethod, functionMap);
                 return false;
             });
         };
@@ -36599,6 +36582,7 @@ var ConfigPageBuilder_CustomDevice = /** @class */ (function (_super) {
         this.delegate.changeCallback();
     };
     ConfigPageBuilder_CustomDevice.prototype.handleCharacteristicPropertyChange = function (serviceConfig, charName, property, isObjectProperty, ev) {
+        var _a;
         var charConfig = this.findConfigCharacteristic(serviceConfig, charName);
         if (charConfig === undefined) {
             charConfig = { name: charName, enabled: false };
@@ -36611,7 +36595,7 @@ var ConfigPageBuilder_CustomDevice = /** @class */ (function (_super) {
         if (inputValue !== undefined) {
             if (isObjectProperty) {
                 try {
-                    charConfig.properties[property] = JSON.parse(inputValue);
+                    charConfig.properties[property] = JSON.parse((_a = inputValue) === null || _a === void 0 ? void 0 : _a.toString());
                 }
                 catch (e) {
                     console.log("parsing of", inputValue, " failed with: ", e);
@@ -36642,9 +36626,10 @@ var ConfigPageBuilder_CustomDevice = /** @class */ (function (_super) {
         this.delegate.changeCallback();
     };
     ConfigPageBuilder_CustomDevice.prototype.handleServiceTypeChange = function (serviceConfig, servicePanel, ev) {
+        var _a;
         var inputTarget = ev.currentTarget;
         var inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
-        serviceConfig.type = inputValue;
+        serviceConfig.type = (_a = inputValue) === null || _a === void 0 ? void 0 : _a.toString();
         this.refreshServicePanelCaption(serviceConfig, servicePanel);
         this.buildCharacteristicTable(serviceConfig, servicePanel);
         this.delegate.changeCallback();
@@ -36660,10 +36645,12 @@ exports.ConfigPageBuilder_CustomDevice = ConfigPageBuilder_CustomDevice;
 /*!***********************************************************!*\
   !*** ./admin/pageBuilder/pageBuilder.ipCam.main.inc.html ***!
   \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Basic Properties</span>\n    </div>\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"enabled\">Enabled:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enabled\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"name\">Device name:</label></div>\n            <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists.\n                Please change the name!</div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"name\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"model\">Model:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"model\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"serial\">Serial:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"serial\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"firmware\">Firmware:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"firmware\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"username\">Username:</label><span class=\"edit-hint translate\">needs\n                    to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field,\n                        the camera needs to be reconfigured in the HomeKit database</b></span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"username\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"pincode\">Pincode:</label><span class=\"edit-hint translate\">needs\n                    to be in the form of 123-45-678</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"pincode\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"port\">IP/Port:</label><span class=\"edit-hint translate\">Port 0 =\n                    random free port assigned by the operation system (default)</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select id=\"interface\"></select>\n                <input min=\"0\" max=\"65535\" type=\"number\" id=\"port\" />\n            </div>\n        </div>\n    </div>\n</div>\n\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Stream Properties</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"source\">Source:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"source\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"codec\">Codec:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"codec\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"numberOfStreams\">Number of Streams:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"numberOfStreams\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxWidth\">maxWidth:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxWidth\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxHeight\">maxHeight:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxHeight\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxFPS\">maxFPS:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxFPS\" />\n            </div>\n        </div>\n    </div>\n</div>\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Advanced Settings</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"ffmpeg_snapshot\">FFMPEG Command Line - Snapshot:</label></div>\n            <div class=\"errorpanel\" id=\"ffmpeg_snapshot_error\"></div>\n            <div class=\"input control flex-grow margin10 flex-container-row\">\n                <textarea rows=8 class=\"flex-grow\" id=\"ffmpeg_snapshot\"></textarea>\n                <div class=\"margin10\"><span class=\"translate\">Available replacers:</span> <br>\n                    <ul class=\"simple-list blue-bullet replace-list\">\n                        <li>${source}</li>\n                        <li>${width}</li>\n                        <li>${height}</li>\n                    </ul>\n                </div>\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"ffmpeg_stream\">FFMPEG Command Line - Stream:</label></div>\n            <div class=\"errorpanel\" id=\"ffmpeg_stream_error\"></div>\n            <div class=\"input control flex-grow margin10 flex-container-row\">\n                <textarea rows=8 class=\"flex-grow\" id=\"ffmpeg_stream\"></textarea>\n                <div class=\"margin10\"><span class=\"translate\">Available replacers:</span> <br>\n                    <ul class=\"simple-list blue-bullet replace-list\">\n                        <li>${codec}</li>\n                        <li>${fps}</li>\n                        <li>${width}</li>\n                        <li>${height}</li>\n                        <li>${bitrate}</li>\n                        <li>${videokey}</li>\n                        <li>${targetAddress}</li>\n                        <li>${targetVideoPort}</li>\n                    </ul>\n                </div>\n            </div>\n\n        </div>\n    </div>\n</div>"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Basic Properties</span>\n    </div>\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"enabled\">Enabled:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enabled\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"name\">Device name:</label></div>\n            <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists.\n                Please change the name!</div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"name\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"model\">Model:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"model\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"serial\">Serial:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"serial\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"firmware\">Firmware:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"firmware\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"username\">Username:</label><span class=\"edit-hint translate\">needs\n                    to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field,\n                        the camera needs to be reconfigured in the HomeKit database</b></span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"username\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"pincode\">Pincode:</label><span class=\"edit-hint translate\">needs\n                    to be in the form of 123-45-678</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"pincode\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"port\">IP/Port:</label><span class=\"edit-hint translate\">Port 0 =\n                    random free port assigned by the operation system (default)</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select id=\"interface\"></select>\n                <input min=\"0\" max=\"65535\" type=\"number\" id=\"port\" />\n            </div>\n        </div>\n    </div>\n</div>\n\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Stream Properties</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"source\">Source:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"source\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"codec\">Codec:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"codec\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"numberOfStreams\">Number of Streams:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"numberOfStreams\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxWidth\">maxWidth:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxWidth\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxHeight\">maxHeight:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxHeight\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxFPS\">maxFPS:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxFPS\" />\n            </div>\n        </div>\n    </div>\n</div>\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Advanced Settings</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"ffmpeg_snapshot\">FFMPEG Command Line - Snapshot:</label></div>\n            <div class=\"errorpanel\" id=\"ffmpeg_snapshot_error\"></div>\n            <div class=\"input control flex-grow margin10 flex-container-row\">\n                <textarea rows=8 class=\"flex-grow\" id=\"ffmpeg_snapshot\"></textarea>\n                <div class=\"margin10\"><span class=\"translate\">Available replacers:</span> <br>\n                    <ul class=\"simple-list blue-bullet replace-list\">\n                        <li>${source}</li>\n                        <li>${width}</li>\n                        <li>${height}</li>\n                    </ul>\n                </div>\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"ffmpeg_stream\">FFMPEG Command Line - Stream:</label></div>\n            <div class=\"errorpanel\" id=\"ffmpeg_stream_error\"></div>\n            <div class=\"input control flex-grow margin10 flex-container-row\">\n                <textarea rows=8 class=\"flex-grow\" id=\"ffmpeg_stream\"></textarea>\n                <div class=\"margin10\"><span class=\"translate\">Available replacers:</span> <br>\n                    <ul class=\"simple-list blue-bullet replace-list\">\n                        <li>${codec}</li>\n                        <li>${fps}</li>\n                        <li>${width}</li>\n                        <li>${height}</li>\n                        <li>${bitrate}</li>\n                        <li>${videokey}</li>\n                        <li>${targetAddress}</li>\n                        <li>${targetVideoPort}</li>\n                    </ul>\n                </div>\n            </div>\n\n        </div>\n    </div>\n</div>");
 
 /***/ }),
 
@@ -36677,9 +36664,12 @@ module.exports = "<div class=\"frame\">\n    <div class=\"heading\">\n        <s
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -36687,10 +36677,11 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -36824,6 +36815,7 @@ var ConfigPageBuilder_IPCamera = /** @class */ (function (_super) {
     };
     ConfigPageBuilder_IPCamera.prototype.handlePropertyChange = function (config, propertyName, errorElement, validator, ev) {
         var inputTarget = ev.currentTarget;
+        config.codec = inputTarget.value;
         if (inputTarget.type == "checkbox") {
             config[propertyName] = inputTarget.checked;
         }
@@ -36862,10 +36854,12 @@ exports.ConfigPageBuilder_IPCamera = ConfigPageBuilder_IPCamera;
 /*!*********************************************************************!*\
   !*** ./admin/pageBuilder/pageBuilder.main.deviceListEntry.inc.html ***!
   \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "<div class=\"list device-entry\">\n    <span class=\"icon list-icon\"></span>\n    <span class=\"list-title\"> </span>\n</div>"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"list device-entry\">\n    <span class=\"icon list-icon\"></span>\n    <span class=\"list-title\"> </span>\n</div>");
 
 /***/ }),
 
@@ -36879,24 +36873,28 @@ module.exports = "<div class=\"list device-entry\">\n    <span class=\"icon list
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __values = (this && this.__values) || function (o) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
-    return {
+    if (o && typeof o.length === "number") return {
         next: function () {
             if (o && i >= o.length) o = void 0;
             return { value: o && o[i++], done: !o };
         }
     };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 /// <reference path="../../typings/index.d.ts" />
@@ -37229,10 +37227,12 @@ var ioBroker_ButtonHandler = /** @class */ (function (_super) {
 /*!************************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.Map.inc.html ***!
   \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "<div class=\"editor-table\">\n    <div class=\"row padding5\">\n            <div class=\"cell padding5\">\n                    ioBroker\n                </div>\n                <div class=\"cell padding5\">\n                        \n                    </div>                \n        <div class=\"cell padding5\">\n            HomeKit\n        </div>\n        <div class=\"cell padding5\">\n            Actions\n        </div>\n\n    </div>\n    <template id=\"mappingRow\">\n        <div class=\"row\">\n            <div class=\"cell padding5\">\n                <div class=\"input-container flex-container-row full-width\">\n                    <input id=\"ioBrokerValue\" type=\"text\"></input>\n                    <div>\n                        <input type=\"checkbox\" id=\"isSimpleValue\" /><span> is simple value</span>\n                    </div>\n                </div>\n            </div>\n            <div class=\"cell padding5\">\n                &hArr;\n            </div>\n            <div class=\"cell padding5\">\n                <div class=\"input-container full-width\">\n                    <input id=\"homekitValue\" type=\"text\"></input>\n                </div>\n            </div>\n            <div class=\"cell padding5\">\n                <a id=\"moveUp\" href=\"#\"><span class=\"icon mif-move-up fg-black\"></span></a>\n                <a id=\"moveDown\" href=\"#\"><span class=\"icon mif-move-down fg-black\"></span></a>\n                <a id=\"delRow\" href=\"#\"><span class=\"icon mif-minus fg-red\"></span></a>\n            </div>\n        </div>\n    </template>\n    <div class=\"row\" id=\"lastRow\">\n        <div class=\"cell padding5\">\n            <a id=\"addRow\" href=\"#\"><span class=\"icon mif-plus fg-green\"></span><span class=\"translate\">add new mapping</span></a>\n        </div>\n\n    </div>\n</div>"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"editor-table\">\n    <div class=\"row padding5\">\n            <div class=\"cell padding5\">\n                    ioBroker\n                </div>\n                <div class=\"cell padding5\">\n                        \n                    </div>                \n        <div class=\"cell padding5\">\n            HomeKit\n        </div>\n        <div class=\"cell padding5\">\n            Actions\n        </div>\n\n    </div>\n    <template id=\"mappingRow\">\n        <div class=\"row\">\n            <div class=\"cell padding5\">\n                <div class=\"input-container flex-container-row full-width\">\n                    <input id=\"ioBrokerValue\" type=\"text\"></input>\n                    <div>\n                        <input type=\"checkbox\" id=\"isSimpleValue\" /><span> is simple value</span>\n                    </div>\n                </div>\n            </div>\n            <div class=\"cell padding5\">\n                &hArr;\n            </div>\n            <div class=\"cell padding5\">\n                <div class=\"input-container full-width\">\n                    <input id=\"homekitValue\" type=\"text\"></input>\n                </div>\n            </div>\n            <div class=\"cell padding5\">\n                <a id=\"moveUp\" href=\"#\"><span class=\"icon mif-move-up fg-black\"></span></a>\n                <a id=\"moveDown\" href=\"#\"><span class=\"icon mif-move-down fg-black\"></span></a>\n                <a id=\"delRow\" href=\"#\"><span class=\"icon mif-minus fg-red\"></span></a>\n            </div>\n        </div>\n    </template>\n    <div class=\"row\" id=\"lastRow\">\n        <div class=\"cell padding5\">\n            <a id=\"addRow\" href=\"#\"><span class=\"icon mif-plus fg-green\"></span><span class=\"translate\">add new mapping</span></a>\n        </div>\n\n    </div>\n</div>");
 
 /***/ }),
 
@@ -37274,10 +37274,12 @@ exports.ParameterEditor = ParameterEditor;
 /*!**************************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.const.inc.html ***!
   \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "<div class=\"editor-table\" id=\"yahka_characteristic_table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <label class=\"translate\">Value:</label>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container\">\n                <textarea id=\"textfield\" rows=1 class=\"full-width stateSelectTarget\"></textarea>\n            </div>\n        </div>\n    </div>\n</div>"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"editor-table\" id=\"yahka_characteristic_table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <label class=\"translate\">Value:</label>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container\">\n                <textarea id=\"textfield\" rows=1 class=\"full-width stateSelectTarget\"></textarea>\n            </div>\n        </div>\n    </div>\n</div>");
 
 /***/ }),
 
@@ -37291,9 +37293,12 @@ module.exports = "<div class=\"editor-table\" id=\"yahka_characteristic_table\">
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -37332,10 +37337,12 @@ exports.ParameterEditor_Const = ParameterEditor_Const;
 /*!*************************************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.conversionScript.inc.html ***!
   \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "<div>Explanation: use the variable <b>value</b> to access the sourcevalue. Example: <i>return value * 2;</i><br /></div>\n<div class=\"editor-table\" id=\"yahka_characteristic_table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">To HomeKit:</span>\n        </div>\n        <div class=\"cell\">\n            <span>function(value) {</span>\n            <div class=\"input-container full-width\">\n                <textarea id=\"toHomeKit\" rows=4></textarea>\n            </div>\n            <span>}</span>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">To IOBroker:</span>\n        </div>\n        <div class=\"cell\">\n            <span>function(value) {</span>\n            <div class=\"input-container  auto-height full-width\">\n                <textarea id=\"toIOBroker\" rows=4></textarea>\n            </div>\n            <span>}</span>\n        </div>\n    </div>\n</div>"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div>Explanation: use the variable <b>value</b> to access the sourcevalue. Example: <i>return value * 2;</i><br /></div>\n<div class=\"editor-table\" id=\"yahka_characteristic_table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">To HomeKit:</span>\n        </div>\n        <div class=\"cell\">\n            <span>function(value) {</span>\n            <div class=\"input-container full-width\">\n                <textarea id=\"toHomeKit\" rows=4></textarea>\n            </div>\n            <span>}</span>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">To IOBroker:</span>\n        </div>\n        <div class=\"cell\">\n            <span>function(value) {</span>\n            <div class=\"input-container  auto-height full-width\">\n                <textarea id=\"toIOBroker\" rows=4></textarea>\n            </div>\n            <span>}</span>\n        </div>\n    </div>\n</div>");
 
 /***/ }),
 
@@ -37349,9 +37356,12 @@ module.exports = "<div>Explanation: use the variable <b>value</b> to access the 
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -37449,10 +37459,12 @@ exports.convFunctions = new Map([
 /*!************************************************************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.inc.html ***!
   \************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "<div class=\"editor-table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">Level Datapoint:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <textarea id=\"level\" rows=1 class=\"stateSelectTarget\"></textarea>\n                <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">Working Datapoint:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <textarea id=\"working\" rows=1 class=\"stateSelectTarget\"></textarea>\n                <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n            </div>\n\n        </div>\n    </div>\n</div>"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"editor-table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">Level Datapoint:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <textarea id=\"level\" rows=1 class=\"stateSelectTarget\"></textarea>\n                <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">Working Datapoint:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <textarea id=\"working\" rows=1 class=\"stateSelectTarget\"></textarea>\n                <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n            </div>\n\n        </div>\n    </div>\n</div>");
 
 /***/ }),
 
@@ -37466,9 +37478,12 @@ module.exports = "<div class=\"editor-table\">\n    <div class=\"row\">\n       
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -37510,9 +37525,10 @@ var ParameterEditor_HomeMaticWindowCoveringTargetPosition = /** @class */ (funct
         }
     };
     ParameterEditor_HomeMaticWindowCoveringTargetPosition.prototype.buildNewParameterValue = function () {
-        var resultArray = [admin_utils_1.Utils.getInputValue(this.txtLevel)];
+        var _a;
+        var resultArray = [admin_utils_1.Utils.getInputValue(this.txtLevel).toString()];
         if (this.txtWorking.value)
-            resultArray.push(admin_utils_1.Utils.getInputValue(this.txtWorking));
+            resultArray.push((_a = admin_utils_1.Utils.getInputValue(this.txtWorking)) === null || _a === void 0 ? void 0 : _a.toString());
         return resultArray;
     };
     return ParameterEditor_HomeMaticWindowCoveringTargetPosition;
@@ -37526,10 +37542,12 @@ exports.ParameterEditor_HomeMaticWindowCoveringTargetPosition = ParameterEditor_
 /*!*************************************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.homematic.dimmer.inc.html ***!
   \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "<div class=\"editor-table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">Level Datapoint:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <input id=\"level\" type=\"text\" class=\"stateSelectTarget\"></input>\n                <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n            </div>\n        </div>\n    </div>\n    <div class=\"row extended-dimmer-properties\">\n        <div class=\"cell\">\n            <span class=\"translate\">Restore level on switch on:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <input type=\"checkbox\" id=\"restoreToPreviousLevel\" />\n            </div>\n        </div>\n    </div>\n    <div class=\"row extended-dimmer-properties\">\n        <div class=\"cell\">\n            <span class=\"translate\">Default level on switch on:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <input type=\"number\" id=\"defaultLevel\" class=\"full-width\"></input>\n            </div>\n        </div>\n    </div>\n</div>"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"editor-table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">Level Datapoint:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <input id=\"level\" type=\"text\" class=\"stateSelectTarget\"></input>\n                <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n            </div>\n        </div>\n    </div>\n    <div class=\"row extended-dimmer-properties\">\n        <div class=\"cell\">\n            <span class=\"translate\">Restore level on switch on:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <input type=\"checkbox\" id=\"restoreToPreviousLevel\" />\n            </div>\n        </div>\n    </div>\n    <div class=\"row extended-dimmer-properties\">\n        <div class=\"cell\">\n            <span class=\"translate\">Default level on switch on:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <input type=\"number\" id=\"defaultLevel\" class=\"full-width\"></input>\n            </div>\n        </div>\n    </div>\n</div>");
 
 /***/ }),
 
@@ -37543,9 +37561,12 @@ module.exports = "<div class=\"editor-table\">\n    <div class=\"row\">\n       
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -37589,8 +37610,9 @@ var ParameterEditor_HomeMatic_Dimmer = /** @class */ (function (_super) {
         admin_utils_1.Utils.setInputValue(this.txtDefaultLevel, params.defaultSwitchOnLevel);
     };
     ParameterEditor_HomeMatic_Dimmer.prototype.buildNewParameterValue = function () {
+        var _a;
         var result = {
-            levelState: admin_utils_1.Utils.getInputValue(this.txtLevel)
+            levelState: (_a = admin_utils_1.Utils.getInputValue(this.txtLevel)) === null || _a === void 0 ? void 0 : _a.toString()
         };
         if (this.showExtendedDimmerProps) {
             result.restoreToPreviousLevel = admin_utils_1.Utils.getInputValue(this.chkRestoreToPrevious);
@@ -37615,9 +37637,12 @@ exports.ParameterEditor_HomeMatic_Dimmer = ParameterEditor_HomeMatic_Dimmer;
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -37629,7 +37654,7 @@ var parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "
 var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
 var admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
 var conversion_map_1 = __webpack_require__(/*! ../../yahka.functions/conversion.map */ "./yahka.functions/conversion.map.ts");
-var util_1 = __webpack_require__(/*! util */ "../node_modules/util/util.js");
+var util_1 = __webpack_require__(/*! util */ "../node_modules/node-libs-browser/node_modules/util/util.js");
 var ParameterEditor_Map = /** @class */ (function (_super) {
     __extends(ParameterEditor_Map, _super);
     function ParameterEditor_Map(valueChangeCallback) {
@@ -37713,12 +37738,13 @@ var ParameterEditor_Map = /** @class */ (function (_super) {
     ParameterEditor_Map.prototype.buildNewParameterValue = function () {
         return {
             mappings: this.stateRows.map(function (row) {
+                var _a, _b;
                 var ioValue = row.querySelector('#ioBrokerValue');
                 var isSimpleValue = row.querySelector('#isSimpleValue');
                 var leftValue = admin_utils_1.Utils.getInputValue(ioValue);
                 var hkValue = row.querySelector('#homekitValue');
                 return {
-                    left: isSimpleValue.checked ? leftValue : JSON.parse(leftValue),
+                    left: isSimpleValue.checked ? (_a = leftValue) === null || _a === void 0 ? void 0 : _a.toString() : JSON.parse((_b = leftValue) === null || _b === void 0 ? void 0 : _b.toString()),
                     right: admin_utils_1.Utils.getInputValue(hkValue),
                 };
             })
@@ -37735,10 +37761,12 @@ exports.ParameterEditor_Map = ParameterEditor_Map;
 /*!*******************************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.multiState.inc.html ***!
   \*******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "<div class=\"editor-table\">\n    <template id=\"stateRow\">\n        <div class=\"row\">\n            <div class=\"cell\">\n                <span class=\"translate\">Read:</span>\n            </div>\n            <div class=\"cell padding5\">\n                <div class=\"input-container full-width\">\n                    <input id=\"readState\" type=\"text\" class=\"stateSelectTarget\"></input>\n                    <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n                </div>\n            </div>\n            <div class=\"cell \">\n                <span class=\"translate\">Write:</span>\n            </div>\n            <div class=\"cell padding5\">\n                <div class=\"input-container full-width\">\n                    <input id=\"writeState\" type=\"text\" class=\"stateSelectTarget\" placeholder=\"leave empty to use read-state \"></input>\n                    <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n                </div>\n            </div>\n            <div class=\"cell padding5\">\n                <a id=\"moveUp\" href=\"#\"><span class=\"icon mif-move-up fg-black\"></span></a>\n                <a id=\"moveDown\" href=\"#\"><span class=\"icon mif-move-down fg-black\"></span></a>\n                <a id=\"delRow\" href=\"#\"><span class=\"icon mif-minus fg-red\"></span></a>\n            </div>\n        </div>\n    </template>\n    <div class=\"row\" id=\"lastRow\">\n        <div class=\"cell padding5\">\n            <a id=\"addRow\" href=\"#\"><span class=\"icon mif-plus fg-green\"></span><span class=\"translate\">add new state</span></a>\n        </div>\n\n    </div>\n</div>"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"editor-table\">\n    <template id=\"stateRow\">\n        <div class=\"row\">\n            <div class=\"cell\">\n                <span class=\"translate\">Read:</span>\n            </div>\n            <div class=\"cell padding5\">\n                <div class=\"input-container full-width\">\n                    <input id=\"readState\" type=\"text\" class=\"stateSelectTarget\"></input>\n                    <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n                </div>\n            </div>\n            <div class=\"cell \">\n                <span class=\"translate\">Write:</span>\n            </div>\n            <div class=\"cell padding5\">\n                <div class=\"input-container full-width\">\n                    <input id=\"writeState\" type=\"text\" class=\"stateSelectTarget\" placeholder=\"leave empty to use read-state \"></input>\n                    <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n                </div>\n            </div>\n            <div class=\"cell padding5\">\n                <a id=\"moveUp\" href=\"#\"><span class=\"icon mif-move-up fg-black\"></span></a>\n                <a id=\"moveDown\" href=\"#\"><span class=\"icon mif-move-down fg-black\"></span></a>\n                <a id=\"delRow\" href=\"#\"><span class=\"icon mif-minus fg-red\"></span></a>\n            </div>\n        </div>\n    </template>\n    <div class=\"row\" id=\"lastRow\">\n        <div class=\"cell padding5\">\n            <a id=\"addRow\" href=\"#\"><span class=\"icon mif-plus fg-green\"></span><span class=\"translate\">add new state</span></a>\n        </div>\n\n    </div>\n</div>");
 
 /***/ }),
 
@@ -37752,9 +37780,12 @@ module.exports = "<div class=\"editor-table\">\n    <template id=\"stateRow\">\n
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -37840,11 +37871,12 @@ var ParameterEditor_MultiState = /** @class */ (function (_super) {
     };
     ParameterEditor_MultiState.prototype.buildNewParameterValue = function () {
         return this.stateRows.map(function (row) {
+            var _a, _b;
             var readField = row.querySelector('#readState');
             var writeField = row.querySelector('#writeState');
             return {
-                readState: admin_utils_1.Utils.getInputValue(readField),
-                writeState: admin_utils_1.Utils.getInputValue(writeField),
+                readState: (_a = admin_utils_1.Utils.getInputValue(readField)) === null || _a === void 0 ? void 0 : _a.toString(),
+                writeState: (_b = admin_utils_1.Utils.getInputValue(writeField)) === null || _b === void 0 ? void 0 : _b.toString(),
             };
         });
     };
@@ -37865,9 +37897,12 @@ exports.ParameterEditor_MultiState = ParameterEditor_MultiState;
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -37899,10 +37934,12 @@ exports.ParameterEditor_Null = ParameterEditor_Null;
 /*!************************************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.scaleConversion.inc.html ***!
   \************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "<!-- <div>Explanation: <br/>\n        $value is mapped to HomeKit with:  (homekitMin + ((homekitMax - homekitMin) / (ioBrokerMax - ioBrokerMin)) * ($value - ioBrokerMin))</br>\n        $value is mapped to ioBroker with: (ioBrokerMin + ((ioBrokerMax - ioBrokerMin) / (homeKitMax - homeKitMin)) * ($value - homeKitMin))\n    </div> -->\n<div class=\"editor-table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">HomeKit Minimum:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container\">\n                <input type=\"number\" id=\"hkMin\" class=\"full-width\"></input>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">HomeKit Maximum:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container\">\n                <input type=\"number\" id=\"hkMax\" class=\"full-width\"></input>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">ioBroker Minimum:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container\">\n                <input type=\"number\" id=\"ioMin\" class=\"full-width\"></input>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">ioBroker Maximum:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container\">\n                <input type=\"number\" id=\"ioMax\" class=\"full-width\"></input>\n            </div>\n        </div>\n    </div>\n</div>"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<!-- <div>Explanation: <br/>\n        $value is mapped to HomeKit with:  (homekitMin + ((homekitMax - homekitMin) / (ioBrokerMax - ioBrokerMin)) * ($value - ioBrokerMin))</br>\n        $value is mapped to ioBroker with: (ioBrokerMin + ((ioBrokerMax - ioBrokerMin) / (homeKitMax - homeKitMin)) * ($value - homeKitMin))\n    </div> -->\n<div class=\"editor-table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">HomeKit Minimum:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container\">\n                <input type=\"number\" id=\"hkMin\" class=\"full-width\"></input>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">HomeKit Maximum:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container\">\n                <input type=\"number\" id=\"hkMax\" class=\"full-width\"></input>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">ioBroker Minimum:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container\">\n                <input type=\"number\" id=\"ioMin\" class=\"full-width\"></input>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">ioBroker Maximum:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container\">\n                <input type=\"number\" id=\"ioMax\" class=\"full-width\"></input>\n            </div>\n        </div>\n    </div>\n</div>");
 
 /***/ }),
 
@@ -37916,9 +37953,12 @@ module.exports = "<!-- <div>Explanation: <br/>\n        $value is mapped to Home
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -37984,10 +38024,12 @@ exports.ParameterEditor_ScaleConversionEditor = ParameterEditor_ScaleConversionE
 /*!********************************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.singleState.inc.html ***!
   \********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "<div class=\"editor-table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <label class=\"translate\">State:</label>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <textarea id=\"textfield\" rows=1 class=\"stateSelectTarget\"></textarea>\n                <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n            </div>\n        </div>\n    </div>\n</div>"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"editor-table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <label class=\"translate\">State:</label>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <textarea id=\"textfield\" rows=1 class=\"stateSelectTarget\"></textarea>\n                <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n            </div>\n        </div>\n    </div>\n</div>");
 
 /***/ }),
 
@@ -38001,9 +38043,12 @@ module.exports = "<div class=\"editor-table\">\n    <div class=\"row\">\n       
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -38048,10 +38093,11 @@ exports.ParameterEditor_SingleState = ParameterEditor_SingleState;
 "use strict";
 
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -38082,7 +38128,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 /// <reference path="../typings/index.d.ts" />
 var pageBuilder_main_1 = __webpack_require__(/*! ./pageBuilder/pageBuilder.main */ "./admin/pageBuilder/pageBuilder.main.ts");
@@ -38090,7 +38135,7 @@ var resolveMethodForSettingsLoader;
 var ioBrokerSettingsLoaded = new Promise(function (resolve, reject) {
     resolveMethodForSettingsLoader = resolve;
 });
-exports.ioBrokerInterfaceList = new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
+exports.ioBrokerInterfaceList = new Promise(function (resolve, reject) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, ioBrokerSettingsLoaded];
@@ -38136,20 +38181,21 @@ exports.ioBroker_YahkaAdmin = ioBroker_YahkaAdmin;
 
 "use strict";
 
-var __values = (this && this.__values) || function (o) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
-    return {
+    if (o && typeof o.length === "number") return {
         next: function () {
             if (o && i >= o.length) o = void 0;
             return { value: o && o[i++], done: !o };
         }
     };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Characteristic_1 = __webpack_require__(/*! hap-nodejs/lib/Characteristic */ "../node_modules/hap-nodejs/lib/Characteristic.js");
-var Service_1 = __webpack_require__(/*! hap-nodejs/lib/Service */ "../node_modules/hap-nodejs/lib/Service.js");
-__webpack_require__(/*! hap-nodejs/lib/gen/HomeKitTypes */ "../node_modules/hap-nodejs/lib/gen/HomeKitTypes.js");
+var Characteristic_1 = __webpack_require__(/*! hap-nodejs/dist/lib/Characteristic */ "../node_modules/hap-nodejs/dist/lib/Characteristic.js");
+var Service_1 = __webpack_require__(/*! hap-nodejs/dist/lib/Service */ "../node_modules/hap-nodejs/dist/lib/Service.js");
+__webpack_require__(/*! hap-nodejs/dist/lib/gen/HomeKit */ "../node_modules/hap-nodejs/dist/lib/gen/HomeKit.js");
 var yahka_community_types_1 = __webpack_require__(/*! ../yahka.community.types */ "./yahka.community.types.ts");
 yahka_community_types_1.importHAPCommunityTypesAndFixes();
 function generateMetaDataDictionary() {
@@ -38190,7 +38236,7 @@ function generateMetaDataDictionary() {
             };
             var serviceInstance = new Service_1.Service[serviceName]('', '');
             try {
-                for (var _e = __values(serviceInstance.characteristics), _f = _e.next(); !_f.done; _f = _e.next()) {
+                for (var _e = (e_3 = void 0, __values(serviceInstance.characteristics)), _f = _e.next(); !_f.done; _f = _e.next()) {
                     var char = _f.value;
                     var charName = charDictionary[char.UUID];
                     if (charName === undefined) {
@@ -38208,7 +38254,7 @@ function generateMetaDataDictionary() {
                 finally { if (e_3) throw e_3.error; }
             }
             try {
-                for (var _g = __values(serviceInstance.optionalCharacteristics), _h = _g.next(); !_h.done; _h = _g.next()) {
+                for (var _g = (e_4 = void 0, __values(serviceInstance.optionalCharacteristics)), _h = _g.next(); !_h.done; _h = _g.next()) {
                     var char = _h.value;
                     var charName = charDictionary[char.UUID];
                     if (charName === undefined) {
@@ -38338,27 +38384,47 @@ exports.propertyExists = propertyExists;
 
 "use strict";
 
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Characteristic_1 = __webpack_require__(/*! hap-nodejs/lib/Characteristic */ "../node_modules/hap-nodejs/lib/Characteristic.js");
-var Service_1 = __webpack_require__(/*! hap-nodejs/lib/Service */ "../node_modules/hap-nodejs/lib/Service.js");
-__webpack_require__(/*! hap-nodejs/lib/gen/HomeKitTypes */ "../node_modules/hap-nodejs/lib/gen/HomeKitTypes.js");
+var Characteristic_1 = __webpack_require__(/*! hap-nodejs/dist/lib/Characteristic */ "../node_modules/hap-nodejs/dist/lib/Characteristic.js");
+var Service_1 = __webpack_require__(/*! hap-nodejs/dist/lib/Service */ "../node_modules/hap-nodejs/dist/lib/Service.js");
+var HomeKitTypes = __webpack_require__(/*! hap-nodejs/dist/lib/gen/HomeKit */ "../node_modules/hap-nodejs/dist/lib/gen/HomeKit.js");
 var HapCommunity = __webpack_require__(/*! ../hap-nodejs-community-types */ "../hap-nodejs-community-types/types.js");
-var util_1 = __webpack_require__(/*! util */ "../node_modules/util/util.js");
-var uuid = __webpack_require__(/*! hap-nodejs/lib/util/uuid */ "../node_modules/hap-nodejs/lib/util/uuid.js");
+var uuid = __webpack_require__(/*! hap-nodejs/dist/lib/util/uuid */ "../node_modules/hap-nodejs/dist/lib/util/uuid.js");
+var CurrentTemperatureWithNegativeValues = /** @class */ (function (_super) {
+    __extends(CurrentTemperatureWithNegativeValues, _super);
+    function CurrentTemperatureWithNegativeValues() {
+        var _this = _super.call(this) || this;
+        _this.setProps({
+            format: Characteristic_1.Formats.FLOAT,
+            unit: Characteristic_1.Units.CELSIUS,
+            maxValue: 100,
+            minValue: -99,
+            minStep: 0.1,
+            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+        });
+        return _this;
+    }
+    return CurrentTemperatureWithNegativeValues;
+}(HomeKitTypes.CurrentTemperature));
+exports.CurrentTemperatureWithNegativeValues = CurrentTemperatureWithNegativeValues;
 var hapTypesImported = false;
 function importHAPCommunityTypesAndFixes() {
     if (hapTypesImported)
         return;
-    var curTempCharacteristicFunction = Characteristic_1.Characteristic.CurrentTemperature;
-    var curTempCharacteristicType = Characteristic_1.Characteristic.CurrentTemperature;
-    if (curTempCharacteristicFunction !== undefined) {
-        Characteristic_1.Characteristic.CurrentTemperature = function () {
-            curTempCharacteristicFunction.call(this);
-            this.setProps({ minValue: -99 });
-        };
-        util_1.inherits(Characteristic_1.Characteristic.CurrentTemperature, curTempCharacteristicFunction);
-        Characteristic_1.Characteristic.CurrentTemperature.UUID = curTempCharacteristicType.UUID;
-    }
+    Characteristic_1.Characteristic.CurrentTemperature = CurrentTemperatureWithNegativeValues;
     var fakeBridge = {
         hap: {
             Service: Service_1.Service,
@@ -38394,9 +38460,12 @@ exports.importHAPCommunityTypesAndFixes = importHAPCommunityTypesAndFixes;
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -38448,24 +38517,28 @@ exports.TIOBrokerConversionBase = TIOBrokerConversionBase;
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __values = (this && this.__values) || function (o) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
-    return {
+    if (o && typeof o.length === "number") return {
         next: function () {
             if (o && i >= o.length) o = void 0;
             return { value: o && o[i++], done: !o };
         }
     };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
@@ -38608,9 +38681,12 @@ exports.TYahkaFunctionBase = TYahkaFunctionBase;
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -38661,7 +38737,7 @@ var TIoBrokerInOutFunction_StateBase = /** @class */ (function () {
         this.adapter = adapter;
         this.stateName = stateName;
         this.deferredTime = deferredTime;
-        this.debounceTimer = -1;
+        this.debounceTimer = null;
         this.subscriptionRequests = [];
         this.addSubscriptionRequest(stateName);
     }
@@ -38735,7 +38811,7 @@ var TIoBrokerInOutFunction_StateBase = /** @class */ (function () {
     };
     TIoBrokerInOutFunction_StateBase.prototype.cancelDeferredChangeEvent = function () {
         clearTimeout(this.debounceTimer);
-        this.debounceTimer = -1;
+        this.debounceTimer = null;
     };
     TIoBrokerInOutFunction_StateBase.prototype.deferredChangeEvent = function (callback, plainIOValue) {
         this.adapter.log.debug('[' + this.stateName + '] firing deferred change event:' + JSON.stringify(plainIOValue));
@@ -38758,9 +38834,12 @@ exports.TIoBrokerInOutFunction_StateBase = TIoBrokerInOutFunction_StateBase;
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -38769,7 +38848,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
-var util_1 = __webpack_require__(/*! util */ "../node_modules/util/util.js");
+var util_1 = __webpack_require__(/*! util */ "../node_modules/node-libs-browser/node_modules/util/util.js");
 var yahka_utils_1 = __webpack_require__(/*! ../shared/yahka.utils */ "./shared/yahka.utils.ts");
 function isHomematic_Dimmer_Parameter(value) {
     if (value === undefined)
@@ -38927,28 +39006,32 @@ exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = TIoBrokerInOutFunct
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __values = (this && this.__values) || function (o) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
-    return {
+    if (o && typeof o.length === "number") return {
         next: function () {
             if (o && i >= o.length) o = void 0;
             return { value: o && o[i++], done: !o };
         }
     };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
-var util_1 = __webpack_require__(/*! util */ "../node_modules/util/util.js");
+var util_1 = __webpack_require__(/*! util */ "../node_modules/node-libs-browser/node_modules/util/util.js");
 function isMultiStateParameter(value) {
     if (value === undefined)
         return false;

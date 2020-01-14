@@ -108,7 +108,7 @@ export class ParameterEditor_Map extends ParameterEditor {
                 let leftValue = Utils.getInputValue(ioValue);
                 let hkValue = <HTMLInputElement>row.querySelector('#homekitValue');
                 return {
-                    left: isSimpleValue.checked ? leftValue : JSON.parse(leftValue),
+                    left: isSimpleValue.checked ? leftValue?.toString() : JSON.parse(leftValue?.toString()),
                     right: Utils.getInputValue(hkValue),
                 }
 

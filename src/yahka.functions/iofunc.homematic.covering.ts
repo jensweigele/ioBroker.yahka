@@ -3,7 +3,7 @@ import { IInOutFunction, TIoBrokerInOutFunction_StateBase, IInOutChangeNotify } 
 export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition extends TIoBrokerInOutFunction_StateBase {
     protected lastWorkingState: boolean = false;
     protected lastAcknowledgedValue: any = undefined;
-    protected debounceTimer = -1;
+    protected debounceTimer: NodeJS.Timeout = null;
 
     static create(adapter: ioBroker.Adapter, parameters: any): IInOutFunction {
         let p: Array<string>;
@@ -67,7 +67,7 @@ export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition exten
 
     cancelDeferredChangeEvent() {
         clearTimeout(this.debounceTimer);
-        this.debounceTimer = -1;
+        this.debounceTimer = null;
     }
 
     deferredChangeEvent(callback: IInOutChangeNotify) {

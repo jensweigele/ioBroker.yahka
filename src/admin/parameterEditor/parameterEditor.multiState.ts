@@ -45,10 +45,10 @@ export class ParameterEditor_MultiState extends ParameterEditor {
 
             let prevRow = this.stateRows[prevIndex];
             this.stateRows[prevIndex] = myRow;
-            this.stateRows[myIndex] = prevRow;
+            this.stateRows[myIndex] = prevRow;
             this.lastRow.parentElement.insertBefore(myRow, prevRow);
             this.valueChanged();
-        });        
+        });
 
         myRow.querySelector('#moveDown').addEventListener('click', () => {
             let myIndex = this.stateRows.indexOf(myRow);
@@ -59,10 +59,10 @@ export class ParameterEditor_MultiState extends ParameterEditor {
 
             let nextRow = this.stateRows[nextIndex];
             this.stateRows[nextIndex] = myRow;
-            this.stateRows[myIndex] = nextRow;
+            this.stateRows[myIndex] = nextRow;
             this.lastRow.parentElement.insertBefore(nextRow, myRow);
             this.valueChanged();
-        });        
+        });
 
         if (item === undefined)
             return myRow;
@@ -93,13 +93,13 @@ export class ParameterEditor_MultiState extends ParameterEditor {
     }
 
     protected buildNewParameterValue(): any {
-        return this.stateRows.map( (row): TIoBrokerInOutFunction_MultiStateParameter => {
+        return this.stateRows.map((row): TIoBrokerInOutFunction_MultiStateParameter => {
             let readField = <HTMLInputElement>row.querySelector('#readState');
             let writeField = <HTMLInputElement>row.querySelector('#writeState');
             return {
-                readState: Utils.getInputValue(readField),
-                writeState: Utils.getInputValue(writeField),
-            }     
+                readState: Utils.getInputValue(readField)?.toString(),
+                writeState: Utils.getInputValue(writeField)?.toString(),
+            }
         });
     }
 }

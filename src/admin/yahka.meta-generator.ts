@@ -1,6 +1,6 @@
-import { Characteristic } from 'hap-nodejs/lib/Characteristic';
-import { Service } from 'hap-nodejs/lib/Service';
-import 'hap-nodejs/lib/gen/HomeKitTypes';
+import { Characteristic } from 'hap-nodejs/dist/lib/Characteristic';
+import { Service } from 'hap-nodejs/dist/lib/Service';
+import 'hap-nodejs/dist/lib/gen/HomeKit';
 import { importHAPCommunityTypesAndFixes } from '../yahka.community.types';
 import { IDictionary } from '../shared/yahka.configuration';
 import { IHAPServiceDefinition, IHAPCharacteristicDefintion } from './admin.config';

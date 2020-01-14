@@ -17,7 +17,7 @@ export class ParameterEditor_HomeMatic_Dimmer extends ParameterEditor {
         this.chkRestoreToPrevious.addEventListener('click', (ev) => this.valueChanged());
         this.txtDefaultLevel = this.templateNode.querySelector("#defaultLevel");
         this.txtDefaultLevel.addEventListener('input', (ev) => this.valueChanged());
-        if (!showExtendedDimmerProps) {
+        if (!showExtendedDimmerProps) {
             $(this.templateNode).find('.extended-dimmer-properties').hide();
         }
     }
@@ -42,12 +42,12 @@ export class ParameterEditor_HomeMatic_Dimmer extends ParameterEditor {
 
     protected buildNewParameterValue(): any {
         var result: TIoBrokerInOutFunction_Homematic_Dimmer_Parameter = {
-            levelState: Utils.getInputValue(this.txtLevel)
+            levelState: Utils.getInputValue(this.txtLevel)?.toString()
         }
 
         if (this.showExtendedDimmerProps) {
-            result.restoreToPreviousLevel = Utils.getInputValue(this.chkRestoreToPrevious);
-            result.defaultSwitchOnLevel = Utils.getInputValue(this.txtDefaultLevel);
+            result.restoreToPreviousLevel = Utils.getInputValue(this.chkRestoreToPrevious) as boolean;
+            result.defaultSwitchOnLevel = Utils.getInputValue(this.txtDefaultLevel) as number;
         }
         return result;
     }
