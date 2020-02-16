@@ -30,7 +30,7 @@
     "@iobroker/adapter-core": "^2.1.0",
     "debug": "^2.6.6",
     "dev-null": "^0.1.1",
-    "hap-nodejs": "^0.4.48",
+    "hap-nodejs": "^0.4.53",
     "ip": "^1.1.5",
     "macaddress": "0.2.9",
     "util": "^0.10.3"
