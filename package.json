@@ -1,6 +1,6 @@
 {
   "name": "iobroker.yahka",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "ioBroker HomeKit Adapter",
   "author": {
     "name": "Jens Weigele",
@@ -26,20 +26,23 @@
     "type": "git",
     "url": "https://github.com/jensweigele/ioBroker.yahka"
   },
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.1.0",
-    "debug": "^2.6.6",
+    "@iobroker/adapter-core": "^2.2.1",
+    "debug": "^4.1.1",
     "dev-null": "^0.1.1",
     "hap-nodejs": "^0.4.53",
     "ip": "^1.1.5",
     "macaddress": "0.2.9",
-    "util": "^0.10.3"
+    "util": "^0.12.1"
   },
   "devDependencies": {
-    "@types/iobroker": "^2.0.1",
-    "@types/jquery": "^3.3.0",
-    "@types/node": "^7.0.18",
-    "chai": "^4.1.2",
+    "@types/iobroker": "^2.2.1",
+    "@types/jquery": "^3.3.32",
+    "@types/node": "^13.7.1",
+    "chai": "^4.2.0",
     "grunt": "^1.0.1",
     "grunt-contrib-clean": "^1.1.0",
     "grunt-contrib-compress": "^1.4.3",
