@@ -5,7 +5,15 @@
         "news": {
             "0.11.0": {
                 "en": "Updated dependencies, support nodejs 12",
-                "de": "Bibliotheken aktualisiert, Nodejs 12 Unterstützung"
+                "de": "Aktualisierte Abhängigkeiten, Unterstützung NodeJS 12",
+                "ru": "Обновлены зависимости, поддержка nodejs 12",
+                "pt": "Dependências atualizadas, suporte nodejs 12",
+                "nl": "Bijgewerkte afhankelijkheden, ondersteuning van nodejs 12",
+                "fr": "Dépendances mises à jour, prise en charge de nodejs 12",
+                "it": "Dipendenze aggiornate, supporto nodejs 12",
+                "es": "Dependencias actualizadas, soporte nodejs 12",
+                "pl": "Zaktualizowano zależności, wspieraj nodejs 12",
+                "zh-cn": "更新了依赖项，支持nodejs 12"
             },
             "0.10.0": {
                 "en": "Updated dependencies",
@@ -35,32 +43,6 @@
             "0.7.1": {
                 "en": "Fixed the ID select dialog in Admin 2.0.9. restructured repo to allow install via git-url",
                 "de": "Der ID-Auswahldialog in Admin 2.0.9 wurde korrigiert. Repository umstrukturiert um Installation via git-url zu ermöglichen"
-            },
-            "0.7.0": {
-                "en": "Fixed the ID select dialog in Admin3, added new services and fixed some other bugs",
-                "de": "Der ID-Auswahldialog in Admin3 wurde korrigiert, neue Dienste hinzugefügt und kleinere Fehler behoben",
-                "ru": "Исправлено диалоговое окно выбора идентификатора в Admin3",
-                "pt": "Corrigido o diálogo de seleção de ID em Admin3",
-                "nl": "Vaste het ID selectiedialoog in Admin3",
-                "fr": "Correction du dialogue de sélection d'ID dans Admin3",
-                "it": "Risolta la finestra di dialogo di selezione dell'ID in Admin3",
-                "es": "Se corrigió el diálogo de selección de ID en Admin3",
-                "pl": "Naprawiono okno dialogowe wyboru identyfikatora w Admin3"
-            },
-            "0.6.1": {
-                "en": "Fixed a bug which prevent Yahka from Start",
-                "de": "Fixed a bug which prevent Yahka from Start",
-                "ru": "Fixed a bug which prevent Yahka from Start"
-            },
-            "0.6.0": {
-                "en": "Support for IP-Cameras",
-                "de": "Support für IP-Kameras",
-                "ru": "Поддержка IP-Камер"
-            },
-            "0.5.5": {
-                "en": "Make a config dialog bigger",
-                "de": "Config-Dialog ist vergrößert",
-                "ru": "Увеличен размер окна настроек"
             }
         },
         "title": "Homekit",
