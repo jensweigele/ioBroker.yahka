@@ -1,4 +1,5 @@
 Gruntfile.js
+gruntfile.js
 tasks
 node_modules
 .idea
@@ -12,3 +13,4 @@ src
 .vscode
 webpack.config.js
 tsconfig.json
+.gitignore

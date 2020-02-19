@@ -1,20 +1,16 @@
 ![Logo](admin/yahka.png)
 # iobroker.yahka
-=================
 
 ![Number of Installations](http://iobroker.live/badges/yahka-installed.svg) ![Number of Installations](http://iobroker.live/badges/yahka-stable.svg) [![NPM version](http://img.shields.io/npm/v/iobroker.yahka.svg)](https://www.npmjs.com/package/iobroker.yahka)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.yahka.svg)](https://www.npmjs.com/package/iobroker.yahka)
 [![Tests](https://travis-ci.org/ioBroker/ioBroker.yahka.svg?branch=master)](https://travis-ci.org/ioBroker/ioBroker.yahka)
-
-***This adapter needs at least nodejs 6.x***
 
 ## Installation and Usage
 
 For details on how to install and configure this adapter, please see the [Wiki](https://github.com/jensweigele/ioBroker.yahka/wiki)
 
 ## Changelog
-
-### 0.10.0
+### 0.10.0 (2020-02-19)
   (apollon77) updated dependencies, nodejs 12 support<br>
 
 ### 0.10.0
@@ -101,7 +97,7 @@ For details on how to install and configure this adapter, please see the [Wiki](
 ## License
 The MIT License (MIT)
 
-Copyright (c) 2016-2017 Jens Weigele (iobroker.yahka@gmail.com)
+Copyright (c) 2016-2020 Jens Weigele (iobroker.yahka@gmail.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
