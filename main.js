@@ -1362,38 +1362,38 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Characteristic_1 = __webpack_require__(/*! hap-nodejs/dist/lib/Characteristic */ "hap-nodejs/dist/lib/Characteristic");
-var Service_1 = __webpack_require__(/*! hap-nodejs/dist/lib/Service */ "hap-nodejs/dist/lib/Service");
-var HomeKitTypes = __webpack_require__(/*! hap-nodejs/dist/lib/gen/HomeKit */ "hap-nodejs/dist/lib/gen/HomeKit");
+// import { Characteristic, Formats, Units, Perms } from 'hap-nodejs/dist/lib/Characteristic';
+// import { Service } from 'hap-nodejs/dist/lib/Service';
+var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
 var HapCommunity = __webpack_require__(/*! ../hap-nodejs-community-types */ "../hap-nodejs-community-types/types.js");
-var uuid = __webpack_require__(/*! hap-nodejs/dist/lib/util/uuid */ "hap-nodejs/dist/lib/util/uuid");
+// import * as uuid from 'hap-nodejs/dist/lib/util/uuid';
 var CurrentTemperatureWithNegativeValues = /** @class */ (function (_super) {
     __extends(CurrentTemperatureWithNegativeValues, _super);
     function CurrentTemperatureWithNegativeValues() {
         var _this = _super.call(this) || this;
         _this.setProps({
-            format: Characteristic_1.Formats.FLOAT,
-            unit: Characteristic_1.Units.CELSIUS,
+            format: hap_nodejs_1.Formats.FLOAT,
+            unit: hap_nodejs_1.Units.CELSIUS,
             maxValue: 100,
             minValue: -99,
             minStep: 0.1,
-            perms: [Characteristic_1.Perms.READ, Characteristic_1.Perms.NOTIFY]
+            perms: [hap_nodejs_1.Perms.READ, hap_nodejs_1.Perms.NOTIFY]
         });
         return _this;
     }
     return CurrentTemperatureWithNegativeValues;
-}(HomeKitTypes.CurrentTemperature));
+}(hap_nodejs_1.Characteristic.CurrentTemperature));
 exports.CurrentTemperatureWithNegativeValues = CurrentTemperatureWithNegativeValues;
 var hapTypesImported = false;
 function importHAPCommunityTypesAndFixes() {
     if (hapTypesImported)
         return;
-    Characteristic_1.Characteristic.CurrentTemperature = CurrentTemperatureWithNegativeValues;
+    hap_nodejs_1.Characteristic.CurrentTemperature = CurrentTemperatureWithNegativeValues;
     var fakeBridge = {
         hap: {
-            Service: Service_1.Service,
-            Characteristic: Characteristic_1.Characteristic,
-            uuid: uuid
+            Service: hap_nodejs_1.Service,
+            Characteristic: hap_nodejs_1.Characteristic,
+            uuid: hap_nodejs_1.uuid
         }
     };
     var fakeOptions = {};
@@ -1401,10 +1401,10 @@ function importHAPCommunityTypesAndFixes() {
     for (var type in communityTypes) {
         var typeFct = communityTypes[type];
         if (typeFct.length == 0) { // characteristic
-            Characteristic_1.Characteristic["Community: " + type] = typeFct;
+            hap_nodejs_1.Characteristic["Community: " + type] = typeFct;
         }
         else if (typeFct.length == 2) { // service
-            Service_1.Service["Community: " + type] = typeFct;
+            hap_nodejs_1.Service["Community: " + type] = typeFct;
         }
     }
     hapTypesImported = true;
@@ -3183,10 +3183,10 @@ var THomeKitIPCamera = /** @class */ (function () {
         }
     };
     THomeKitIPCamera.prototype.createSecureVideoService = function () {
-        var myCameraOperatingMode = new hap_nodejs_1.Service.CameraOperatingMode('', '');
-        this.services.push(myCameraOperatingMode);
-        var myCameraEventRecordingManagement = new hap_nodejs_1.Service.CameraEventRecordingManagement('', '');
-        this.services.push(myCameraEventRecordingManagement);
+        // var myCameraOperatingMode = new Service.CameraOperatingMode('', '');
+        // this.services.push(myCameraOperatingMode);
+        // var myCameraEventRecordingManagement = new Service.CameraEventRecordingManagement('', '');
+        // this.services.push(myCameraEventRecordingManagement);
     };
     THomeKitIPCamera.prototype.publishCamera = function () {
         this._camera.publish({
@@ -3640,50 +3640,6 @@ module.exports = require("dev-null");
 /***/ (function(module, exports) {
 
 module.exports = require("hap-nodejs");
-
-/***/ }),
-
-/***/ "hap-nodejs/dist/lib/Characteristic":
-/*!*****************************************************!*\
-  !*** external "hap-nodejs/dist/lib/Characteristic" ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("hap-nodejs/dist/lib/Characteristic");
-
-/***/ }),
-
-/***/ "hap-nodejs/dist/lib/Service":
-/*!**********************************************!*\
-  !*** external "hap-nodejs/dist/lib/Service" ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("hap-nodejs/dist/lib/Service");
-
-/***/ }),
-
-/***/ "hap-nodejs/dist/lib/gen/HomeKit":
-/*!**************************************************!*\
-  !*** external "hap-nodejs/dist/lib/gen/HomeKit" ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("hap-nodejs/dist/lib/gen/HomeKit");
-
-/***/ }),
-
-/***/ "hap-nodejs/dist/lib/util/uuid":
-/*!************************************************!*\
-  !*** external "hap-nodejs/dist/lib/util/uuid" ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("hap-nodejs/dist/lib/util/uuid");
 
 /***/ }),
 

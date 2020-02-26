@@ -1,10 +1,10 @@
-import { Characteristic, Formats, Units, Perms } from 'hap-nodejs/dist/lib/Characteristic';
-import { Service } from 'hap-nodejs/dist/lib/Service';
-import * as HomeKitTypes from 'hap-nodejs/dist/lib/gen/HomeKit';
+// import { Characteristic, Formats, Units, Perms } from 'hap-nodejs/dist/lib/Characteristic';
+// import { Service } from 'hap-nodejs/dist/lib/Service';
+import { Characteristic, Formats, Units, Perms, Service, uuid } from 'hap-nodejs';
 import * as HapCommunity from '../hap-nodejs-community-types';
-import * as uuid from 'hap-nodejs/dist/lib/util/uuid';
+// import * as uuid from 'hap-nodejs/dist/lib/util/uuid';
 
-export class CurrentTemperatureWithNegativeValues extends HomeKitTypes.CurrentTemperature {
+export class CurrentTemperatureWithNegativeValues extends Characteristic.CurrentTemperature {
     constructor() {
         super();
         this.setProps({

@@ -432,7 +432,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         if (inputValue !== undefined) {
             if (isObjectProperty) {
                 try {
-                    charConfig.properties[property] = JSON.parse(inputValue?.toString());
+                    charConfig.properties[property] = JSON.parse(inputValue as any);
                 } catch (e) {
                     console.log("parsing of", inputValue, " failed with: ", e);
                 }
@@ -470,7 +470,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
     handleServiceTypeChange(serviceConfig: hkBridge.Configuration.IServiceConfig, servicePanel: HTMLElement, ev: Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
         let inputValue = Utils.getInputValue(inputTarget);
-        serviceConfig.type = inputValue?.toString();
+        serviceConfig.type = inputValue as any; //?.toString();
 
         this.refreshServicePanelCaption(serviceConfig, servicePanel);
 

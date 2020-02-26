@@ -153,11 +153,11 @@ export class THomeKitIPCamera {
     }
 
     public createSecureVideoService() {
-        var myCameraOperatingMode = new Service.CameraOperatingMode('', '');
-        this.services.push(myCameraOperatingMode);
+        // var myCameraOperatingMode = new Service.CameraOperatingMode('', '');
+        // this.services.push(myCameraOperatingMode);
 
-        var myCameraEventRecordingManagement = new Service.CameraEventRecordingManagement('', '');
-        this.services.push(myCameraEventRecordingManagement);
+        // var myCameraEventRecordingManagement = new Service.CameraEventRecordingManagement('', '');
+        // this.services.push(myCameraEventRecordingManagement);
     }
 
 
