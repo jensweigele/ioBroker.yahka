@@ -3,7 +3,7 @@ import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
 import { ILogger } from './yahka.homekit-bridge';
 import util = require('util');
 import ip = require('ip');
-import { uuid, StreamController, Accessory, Service, Characteristic, Camera, StreamControllerOptions, SnapshotRequest, NodeCallback, PrepareStreamRequest, PreparedStreamRequestCallback, SessionInfo, SessionIdentifier, PreparedStreamResponse, Address, StreamRequest } from 'hap-nodejs';
+import { uuid, StreamController, Accessory, Service, Characteristic, Camera, StreamControllerOptions, SnapshotRequest, NodeCallback, PrepareStreamRequest, PreparedStreamRequestCallback, SessionIdentifier, PreparedStreamResponse, Address, StreamRequest } from 'hap-nodejs';
 import { Configuration } from './shared/yahka.configuration';
 import * as crypto from 'crypto';
 
@@ -11,7 +11,7 @@ export class THomeKitIPCamera {
     private _camera: Accessory;
     public services: Service[] = [];
     public streamControllers: Array<StreamController> = [];
-    public pendingSessions: Record<string, SessionInfo> = {};
+    public pendingSessions: Record<string, any> = {};
     public ongoingSessions: Record<string, ChildProcessWithoutNullStreams> = {};
 
 
@@ -206,7 +206,7 @@ export class THomeKitIPCamera {
     }
 
     prepareStream(request: PrepareStreamRequest, callback: PreparedStreamRequestCallback) {
-        let sessionInfo: Partial<SessionInfo> = {};
+        let sessionInfo: Partial<any> = {};
 
         const sessionID: SessionIdentifier = request["sessionID"];
         const targetAddress = request["targetAddress"];
@@ -277,7 +277,7 @@ export class THomeKitIPCamera {
         }
 
         response["address"] = addressResp as Address;
-        this.pendingSessions[uuid.unparse(sessionID)] = sessionInfo as SessionInfo;
+        this.pendingSessions[uuid.unparse(sessionID)];
 
         callback(response as PreparedStreamResponse);
     }
