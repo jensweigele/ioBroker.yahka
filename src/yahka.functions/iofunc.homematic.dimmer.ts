@@ -46,7 +46,7 @@ export class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends TIoBrokerInOut
 
 
 export class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFunction_Homematic_Dimmer_Base {
-        static create(adapter: ioBroker.Adapter, parameters: any): IInOutFunction {
+    static create(adapter: ioBroker.Adapter, parameters: any): IInOutFunction {
         let params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
         if (params === undefined) {
             return undefined
@@ -92,7 +92,7 @@ export class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFu
             let valueChanged = value !== newValue;
             this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
             if (valueChanged) {
-                this.adapter.setForeignState(stateName, newValue, false, (error) => {
+                this.adapter.setForeignState(stateName, newValue as any, false, (error) => {
                     if (error) {
                         this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
                         callback();

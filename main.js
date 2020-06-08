@@ -1216,7 +1216,7 @@ module.exports = function(module) {
 /*! exports provided: name, version, description, author, contributors, homepage, license, keywords, repository, dependencies, devDependencies, bugs, readmeFilename, main, scripts, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"iobroker.yahka\",\"version\":\"0.12.0\",\"description\":\"ioBroker HomeKit Adapter\",\"author\":{\"name\":\"Jens Weigele\",\"email\":\"iobroker.yahka@gmail.com\"},\"contributors\":[{\"name\":\"Jens Weigele\",\"email\":\"iobroker.yahka@gmail.com\"}],\"homepage\":\"https://github.com/jensweigele/ioBroker.yahka\",\"license\":\"MIT\",\"keywords\":[\"ioBroker\",\"iobroker.yahka\",\"Smart Home\",\"home automation\",\"siri\",\"homekit\"],\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/jensweigele/ioBroker.yahka\"},\"dependencies\":{\"@iobroker/adapter-core\":\"^2.1.0\",\"debug\":\"^4.1.1\",\"dev-null\":\"^0.1.1\",\"hap-nodejs\":\"^0.5.5\",\"ip\":\"^1.1.5\",\"macaddress\":\"0.2.9\",\"util\":\"^0.12.1\"},\"devDependencies\":{\"@types/iobroker\":\"^2.0.1\",\"@types/jquery\":\"^3.3.31\",\"@types/node\":\"^13.1.6\",\"chai\":\"^4.2.0\",\"grunt\":\"^1.0.4\",\"grunt-contrib-clean\":\"^2.0.0\",\"grunt-contrib-compress\":\"^1.6.0\",\"grunt-contrib-copy\":\"^1.0.0\",\"grunt-contrib-jshint\":\"^2.1.0\",\"grunt-exec\":\"^3.0.0\",\"grunt-http\":\"^2.3.3\",\"grunt-jscs\":\"^3.0.1\",\"grunt-replace\":\"^1.0.1\",\"grunt-ts\":\"^6.0.0-beta.22\",\"grunt-webpack\":\"^3.1.3\",\"html-webpack-plugin\":\"^3.2.0\",\"mocha\":\"^7.0.0\",\"raw-loader\":\"^4.0.0\",\"ts-loader\":\"^6.2.1\",\"typescript\":\"^3.7.4\",\"webpack\":\"^4.41.5\",\"webpack-cli\":\"^3.3.10\",\"webpack-node-externals\":\"^1.7.2\"},\"bugs\":{\"url\":\"https://github.com/jensweigele/ioBroker.yahka/issues\"},\"readmeFilename\":\"README.md\",\"main\":\"main.js\",\"scripts\":{\"test\":\"node node_modules/mocha/bin/mocha --exit\"}}");
+module.exports = JSON.parse("{\"name\":\"iobroker.yahka\",\"version\":\"0.12.0\",\"description\":\"ioBroker HomeKit Adapter\",\"author\":{\"name\":\"Jens Weigele\",\"email\":\"iobroker.yahka@gmail.com\"},\"contributors\":[{\"name\":\"Jens Weigele\",\"email\":\"iobroker.yahka@gmail.com\"}],\"homepage\":\"https://github.com/jensweigele/ioBroker.yahka\",\"license\":\"MIT\",\"keywords\":[\"ioBroker\",\"iobroker.yahka\",\"Smart Home\",\"home automation\",\"siri\",\"homekit\"],\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/jensweigele/ioBroker.yahka\"},\"dependencies\":{\"@iobroker/adapter-core\":\"^2.4.0\",\"debug\":\"^4.1.1\",\"dev-null\":\"^0.1.1\",\"hap-nodejs\":\"^0.5.5\",\"ip\":\"^1.1.5\",\"macaddress\":\"0.2.9\",\"util\":\"^0.12.3\"},\"devDependencies\":{\"@types/iobroker\":\"^3.0.10\",\"@types/jquery\":\"^3.3.31\",\"@types/node\":\"^13.1.6\",\"chai\":\"^4.2.0\",\"grunt\":\"^1.0.4\",\"grunt-contrib-clean\":\"^2.0.0\",\"grunt-contrib-compress\":\"^1.6.0\",\"grunt-contrib-copy\":\"^1.0.0\",\"grunt-contrib-jshint\":\"^2.1.0\",\"grunt-exec\":\"^3.0.0\",\"grunt-http\":\"^2.3.3\",\"grunt-jscs\":\"^3.0.1\",\"grunt-replace\":\"^1.0.1\",\"grunt-ts\":\"^6.0.0-beta.22\",\"grunt-webpack\":\"^3.1.3\",\"html-webpack-plugin\":\"^3.2.0\",\"mocha\":\"^7.0.0\",\"raw-loader\":\"^4.0.0\",\"ts-loader\":\"^6.2.1\",\"typescript\":\"^3.7.4\",\"webpack\":\"^4.41.5\",\"webpack-cli\":\"^3.3.10\",\"webpack-node-externals\":\"^1.7.2\"},\"bugs\":{\"url\":\"https://github.com/jensweigele/ioBroker.yahka/issues\"},\"readmeFilename\":\"README.md\",\"main\":\"main.js\",\"scripts\":{\"test\":\"node node_modules/mocha/bin/mocha --exit\"}}");
 
 /***/ }),
 
@@ -2315,7 +2315,7 @@ var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = /** @class *
         _this.addSubscriptionRequest(workingItem);
         adapter.getForeignState(workingItem, function (error, ioState) {
             if (ioState)
-                _this.lastWorkingState = ioState.val;
+                _this.lastWorkingState = Boolean(ioState.val);
             else
                 _this.lastWorkingState = undefined;
         });
@@ -2347,7 +2347,7 @@ var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = /** @class *
             return;
         if (stateName == this.workingItem) {
             this.adapter.log.debug('[' + this.stateName + '] got a working item change event: ' + JSON.stringify(ioState));
-            this.lastWorkingState = ioState.val;
+            this.lastWorkingState = Boolean(ioState.val);
             this.setupDeferredChangeEvent(callback);
         }
         else if (stateName == this.stateName) {

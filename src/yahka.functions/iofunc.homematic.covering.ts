@@ -37,7 +37,7 @@ export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition exten
         this.addSubscriptionRequest(workingItem);
         adapter.getForeignState(workingItem, (error, ioState) => {
             if (ioState)
-                this.lastWorkingState = ioState.val;
+                this.lastWorkingState = Boolean(ioState.val);
             else
                 this.lastWorkingState = undefined;
         });
@@ -49,7 +49,7 @@ export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition exten
 
         if (stateName == this.workingItem) {
             this.adapter.log.debug('[' + this.stateName + '] got a working item change event: ' + JSON.stringify(ioState));
-            this.lastWorkingState = ioState.val;
+            this.lastWorkingState = Boolean(ioState.val);
             this.setupDeferredChangeEvent(callback);
         } else if (stateName == this.stateName) {
             this.adapter.log.debug('[' + this.stateName + '] got a target state change event:' + JSON.stringify(ioState));
