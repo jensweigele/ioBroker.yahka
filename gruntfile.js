@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     var srcDir = __dirname + '/';
     var destinationDir = '../../iobroker/'
@@ -15,13 +15,18 @@ module.exports = function(grunt) {
             deployTestInstance: {
                 files: [
                     // copy files to build directory
-                    { expand: true, cwd: '', src: ['**', '!src/**', '!node_modules/**'], dest: destinationDir + 'node_modules/iobroker.yahka/' }
+                    {
+                        expand: true,
+                        cwd: '',
+                        src: ['**', '!src/**', '!node_modules/**'],
+                        dest: destinationDir + 'node_modules/iobroker.yahka/'
+                    }
                 ]
             }
         },
         webpack: {
             webpackConfig
-          },
+        },
 
         exec: {
             refreshIOBroker: {
@@ -46,7 +51,7 @@ module.exports = function(grunt) {
     grunt.registerTask('buildOnly', [
         'webpack',
     ]);
-    
+
     grunt.registerTask('DeployToTest', [
         'copy:deployTestInstance',
         'exec:refreshIOBroker'
@@ -60,11 +65,11 @@ module.exports = function(grunt) {
 
     grunt.registerTask('NPMPublish', [
         'webpack',
-        'exec:NPMPublish'        
+        'exec:NPMPublish'
     ])
 
     grunt.registerTask('NPMBeta', [
         'webpack',
-        'exec:NPMBeta'        
+        'exec:NPMBeta'
     ])
 };
