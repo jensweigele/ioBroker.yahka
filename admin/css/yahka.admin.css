@@ -10,6 +10,16 @@
     height: auto;
 }
 
+.panel-fixed {
+   background-color: white;
+   position: fixed;
+   z-index: 9999;
+}
+
+.treeAndData {
+   padding-top: 60px;
+}
+
 .flex-container-row {
     display: flex;
     flex-direction: row;
