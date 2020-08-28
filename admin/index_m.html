@@ -172,16 +172,9 @@
 <body>
 
     <div id="adapter-container" class="flex-container-col flex-container-stretch">
-        <div>
-            <img src="yahka.png" />
-            <h3 class="translate" style="display: inline; vertical-align: middle;">iobroker.yahka adapter settings</h3>
-            <div class="translate" data-lang="ConfigDescription" style="display: inline-block">The page below is used
-                to assign ioBroker states to HomeKit characteristics.</div>
-        </div>
-
         <div class="flex-grow flex-container-col flex-container-stretch bg-white" id="yahka_bridge_frame">
             <div class="flex-container-row flex-grow">
-                <div class="flex-grow flex-panel">
+                <div class="flex-grow flex-panel panel-fixed">
                     <div>
                         <button class="image-button primary" id="yahka_add_device">
                             <span class="icon mif-plus bg-darkCobalt  fg-white"></span>
@@ -211,7 +204,7 @@
             <div class="flex-grow treeAndData flex-container-row">
                 <div class="flex-panel" style="min-width: 20%">
                     <div class="caption translate">Devices</div>
-                    <div class="listview" id="yahka_deviceList">
+                    <div class="listview" id="yahka_deviceList" style="overflow-y: scroll;">
                     </div>
                 </div>
                 <div class=" flex-grow flex-panel">
