@@ -1,5 +1,5 @@
 import { TIOBrokerConversionBase, IConversionFunction } from "./conversion.base";
-import { HAPCharacteristic } from "../yahka.homekit-bridge";
+import { Characteristic } from "hap-nodejs";
 
 
 export class TIoBrokerConversion_HomematicDirection_To_PositionState extends TIOBrokerConversionBase implements IConversionFunction {
@@ -8,16 +8,16 @@ export class TIoBrokerConversion_HomematicDirection_To_PositionState extends TIO
         let result = undefined;
         switch (num) {
             case 0:
-                result = HAPCharacteristic.PositionState.STOPPED;
+                result = Characteristic.PositionState.STOPPED;
                 break;
             case 1:
-                result = HAPCharacteristic.PositionState.INCREASING;
+                result = Characteristic.PositionState.INCREASING;
                 break;
             case 2:
-                result = HAPCharacteristic.PositionState.DECREASING;
+                result = Characteristic.PositionState.DECREASING;
                 break;
             default:
-                result = HAPCharacteristic.PositionState.STOPPED;
+                result = Characteristic.PositionState.STOPPED;
                 break;
         }
         this.adapter.log.debug('HomematicDirectionToHomekitPositionState.toHomeKit, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
@@ -27,13 +27,13 @@ export class TIoBrokerConversion_HomematicDirection_To_PositionState extends TIO
         let num = TIOBrokerConversionBase.castToNumber(value)
         let result = undefined;
         switch (num) {
-            case HAPCharacteristic.PositionState.STOPPED:
+            case Characteristic.PositionState.STOPPED:
                 result = 0;
                 break;
-            case HAPCharacteristic.PositionState.INCREASING:
+            case Characteristic.PositionState.INCREASING:
                 result = 1;
                 break;
-            case HAPCharacteristic.PositionState.DECREASING:
+            case Characteristic.PositionState.DECREASING:
                 result = 2;
                 break;
             default:
@@ -53,19 +53,19 @@ export class TIoBrokerConversion_HomematicControlMode_To_CoolingState extends TI
         let result = undefined;
         switch (num) {
             case 0:
-                result = HAPCharacteristic.TargetHeatingCoolingState.AUTO;
+                result = Characteristic.TargetHeatingCoolingState.AUTO;
                 break;
             case 1:
-                result = HAPCharacteristic.TargetHeatingCoolingState.HEAT;
+                result = Characteristic.TargetHeatingCoolingState.HEAT;
                 break;
             case 2:
-                result = HAPCharacteristic.TargetHeatingCoolingState.HEAT;
+                result = Characteristic.TargetHeatingCoolingState.HEAT;
                 break;
             case 3:
-                result = HAPCharacteristic.TargetHeatingCoolingState.HEAT;
+                result = Characteristic.TargetHeatingCoolingState.HEAT;
                 break;
             default:
-                result = HAPCharacteristic.TargetHeatingCoolingState.OFF;
+                result = Characteristic.TargetHeatingCoolingState.OFF;
                 break;
         }
         this.adapter.log.debug('HomematicDirectionToHomekitHeatingCoolingState.toHomeKit, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
@@ -76,16 +76,16 @@ export class TIoBrokerConversion_HomematicControlMode_To_CoolingState extends TI
 
         let result = undefined;
         switch (num) {
-            case HAPCharacteristic.TargetHeatingCoolingState.OFF:
+            case Characteristic.TargetHeatingCoolingState.OFF:
                 result = 0;
                 break;
-            case HAPCharacteristic.TargetHeatingCoolingState.HEAT:
+            case Characteristic.TargetHeatingCoolingState.HEAT:
                 result = 1;
                 break;
-            case HAPCharacteristic.TargetHeatingCoolingState.COOL:
+            case Characteristic.TargetHeatingCoolingState.COOL:
                 result = 0;
                 break;
-            case HAPCharacteristic.TargetHeatingCoolingState.AUTO:
+            case Characteristic.TargetHeatingCoolingState.AUTO:
                 result = 0;
                 break;
             default:

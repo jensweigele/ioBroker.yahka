@@ -9,7 +9,7 @@ import { ParameterEditor_ConversionScript } from "./parameterEditor.conversionSc
 import { ParameterEditor_Map } from "./parameterEditor.map";
 import { ParameterEditor_HomeMatic_Dimmer } from "./parameterEditor.homematic.dimmer";
 
-export type ParameterEditorFactory = new (valueChangeCallback: IParameterEditorDelegate) => IParameterEditor;
+export type ParameterEditorFactory = (valueChangeCallback: IParameterEditorDelegate) => IParameterEditor;
 export let inoutFunctions = new Map<string, ParameterEditorFactory>([
     ["", (callback) => new ParameterEditor_Null(callback)],
     ["const", (callback) => new ParameterEditor_Const(callback)],
@@ -21,6 +21,7 @@ export let inoutFunctions = new Map<string, ParameterEditorFactory>([
     ["ioBroker.homematic.Dimmer.On", (callback) => new ParameterEditor_HomeMatic_Dimmer(callback, true)],
     ["ioBroker.homematic.Dimmer.Brightness", (callback) => new ParameterEditor_HomeMatic_Dimmer(callback, false)]
 ]);
+
 export let convFunctions = new Map<string, ParameterEditorFactory>([
     ["", (callback) => new ParameterEditor_Null(callback)],
     ["map", (callback) => new ParameterEditor_Map(callback)],
@@ -33,5 +34,4 @@ export let convFunctions = new Map<string, ParameterEditorFactory>([
     ["HomematicDirectionToHomekitPositionState", (callback) => new ParameterEditor_SingleState(callback)],
     ["HomematicControlModeToHomekitHeathingCoolingState", (callback) => new ParameterEditor_SingleState(callback)],
     ["script", (callback) => new ParameterEditor_ConversionScript(callback)],
-
 ]);

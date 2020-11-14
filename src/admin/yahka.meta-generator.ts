@@ -1,6 +1,4 @@
-import { Characteristic } from 'hap-nodejs/lib/Characteristic';
-import { Service } from 'hap-nodejs/lib/Service';
-import 'hap-nodejs/lib/gen/HomeKitTypes';
+import { Characteristic, Service } from 'hap-nodejs';
 import { importHAPCommunityTypesAndFixes } from '../yahka.community.types';
 import { IDictionary } from '../shared/yahka.configuration';
 import { IHAPServiceDefinition, IHAPCharacteristicDefintion } from './admin.config';
@@ -25,9 +23,10 @@ export function generateMetaDataDictionary(): IDictionary<IHAPServiceDefinition>
         charDictionary[Characteristic[charName].UUID] = charName;
     }
 
+    const serviceExclusionList = ['super_', 'serialize', 'deserialize'];
 
     for (let serviceName of availableServices) {
-        if (serviceName === 'super_') {
+        if (serviceExclusionList.includes(serviceName)) {
             continue;
         }
 

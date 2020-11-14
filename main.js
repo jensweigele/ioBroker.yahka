@@ -1213,10 +1213,10 @@ module.exports = function(module) {
 /*!***********************!*\
   !*** ../package.json ***!
   \***********************/
-/*! exports provided: name, version, description, author, contributors, homepage, license, keywords, repository, dependencies, devDependencies, bugs, readmeFilename, main, scripts, default */
+/*! exports provided: name, version, description, author, contributors, homepage, license, keywords, repository, engines, dependencies, devDependencies, bugs, readmeFilename, main, scripts, default */
 /***/ (function(module) {
 
-module.exports = {"name":"iobroker.yahka","version":"0.9.2","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"dependencies":{"@iobroker/adapter-core":"^2.1.0","debug":"^2.6.6","dev-null":"^0.1.1","hap-nodejs":"^0.4.48","ip":"^1.1.5","macaddress":"0.2.9","util":"^0.10.3"},"devDependencies":{"@types/iobroker":"^2.0.1","@types/jquery":"^3.3.0","@types/node":"^7.0.18","chai":"^4.1.2","grunt":"^1.0.1","grunt-contrib-clean":"^1.1.0","grunt-contrib-compress":"^1.4.3","grunt-contrib-copy":"^1.0.0","grunt-contrib-jshint":"^1.1.0","grunt-exec":"^3.0.0","grunt-http":"^2.2.0","grunt-jscs":"^3.0.1","grunt-replace":"^1.0.1","grunt-ts":"^6.0.0-beta.17","grunt-webpack":"^3.1.3","html-webpack-plugin":"^3.2.0","mocha":"^4.1.0","raw-loader":"^1.0.0","ts-loader":"^5.3.2","typescript":"^2.6.2","webpack":"^4.28.3","webpack-cli":"^3.1.2","webpack-node-externals":"^1.7.2"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","scripts":{"test":"node node_modules/mocha/bin/mocha --exit"}};
+module.exports = JSON.parse("{\"name\":\"iobroker.yahka\",\"version\":\"0.12.0\",\"description\":\"ioBroker HomeKit Adapter\",\"author\":{\"name\":\"Jens Weigele\",\"email\":\"iobroker.yahka@gmail.com\"},\"contributors\":[{\"name\":\"Jens Weigele\",\"email\":\"iobroker.yahka@gmail.com\"}],\"homepage\":\"https://github.com/jensweigele/ioBroker.yahka\",\"license\":\"MIT\",\"keywords\":[\"ioBroker\",\"iobroker.yahka\",\"Smart Home\",\"home automation\",\"siri\",\"homekit\"],\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/jensweigele/ioBroker.yahka\"},\"engines\":{\"node\":\">=6.0.0\"},\"dependencies\":{\"@iobroker/adapter-core\":\"^2.4.0\",\"debug\":\"^4.2.0\",\"dev-null\":\"^0.1.1\",\"hap-nodejs\":\"^0.8.2\",\"ip\":\"^1.1.5\",\"macaddress\":\"0.5.1\",\"util\":\"^0.12.3\"},\"devDependencies\":{\"@types/iobroker\":\"^3.2.4\",\"@types/jquery\":\"^3.5.4\",\"@types/node\":\"^14.14.7\",\"chai\":\"^4.2.0\",\"grunt\":\"^1.3.0\",\"grunt-contrib-clean\":\"^2.0.0\",\"grunt-contrib-compress\":\"^1.6.0\",\"grunt-contrib-copy\":\"^1.0.0\",\"grunt-contrib-jshint\":\"^2.1.0\",\"grunt-exec\":\"^3.0.0\",\"grunt-http\":\"^2.3.3\",\"grunt-jscs\":\"^3.0.1\",\"grunt-replace\":\"^1.0.1\",\"grunt-ts\":\"^6.0.0-beta.22\",\"grunt-webpack\":\"^4.0.2\",\"html-webpack-plugin\":\"^4.5.0\",\"mocha\":\"^8.1.3\",\"raw-loader\":\"^4.0.2\",\"ts-loader\":\"^8.0.4\",\"typescript\":\"^4.0.3\",\"webpack\":\"^4.44.2\",\"webpack-cli\":\"^3.3.12\",\"webpack-node-externals\":\"^2.5.2\"},\"bugs\":{\"url\":\"https://github.com/jensweigele/ioBroker.yahka/issues\"},\"readmeFilename\":\"README.md\",\"main\":\"main.js\",\"scripts\":{\"test\":\"node node_modules/mocha/bin/mocha --exit\"}}");
 
 /***/ }),
 
@@ -1297,6 +1297,7 @@ else {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.YahkaLogger = void 0;
 var YahkaLogger = /** @class */ (function () {
     function YahkaLogger(adapter, logIdentifier) {
         this.adapter = adapter;
@@ -1331,6 +1332,7 @@ exports.YahkaLogger = YahkaLogger;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.propertyExists = void 0;
 function propertyExists(object, property) {
     return property in object;
 }
@@ -1348,32 +1350,50 @@ exports.propertyExists = propertyExists;
 
 "use strict";
 
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Characteristic_1 = __webpack_require__(/*! hap-nodejs/lib/Characteristic */ "hap-nodejs/lib/Characteristic");
-var Service_1 = __webpack_require__(/*! hap-nodejs/lib/Service */ "hap-nodejs/lib/Service");
-__webpack_require__(/*! hap-nodejs/lib/gen/HomeKitTypes */ "hap-nodejs/lib/gen/HomeKitTypes");
+exports.importHAPCommunityTypesAndFixes = exports.CurrentTemperatureWithNegativeValues = void 0;
+var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
 var HapCommunity = __webpack_require__(/*! ../hap-nodejs-community-types */ "../hap-nodejs-community-types/types.js");
-var util_1 = __webpack_require__(/*! util */ "util");
-var uuid = __webpack_require__(/*! hap-nodejs/lib/util/uuid */ "hap-nodejs/lib/util/uuid");
+var CurrentTemperatureWithNegativeValues = /** @class */ (function (_super) {
+    __extends(CurrentTemperatureWithNegativeValues, _super);
+    function CurrentTemperatureWithNegativeValues() {
+        var _this = _super.call(this) || this;
+        _this.setProps({
+            format: "float" /* FLOAT */,
+            unit: "celsius" /* CELSIUS */,
+            maxValue: 100,
+            minValue: -99,
+            minStep: 0.1,
+            perms: ["pr" /* READ */, "ev" /* NOTIFY */]
+        });
+        return _this;
+    }
+    return CurrentTemperatureWithNegativeValues;
+}(hap_nodejs_1.Characteristic.CurrentTemperature));
+exports.CurrentTemperatureWithNegativeValues = CurrentTemperatureWithNegativeValues;
 var hapTypesImported = false;
 function importHAPCommunityTypesAndFixes() {
     if (hapTypesImported)
         return;
-    var curTempCharacteristicFunction = Characteristic_1.Characteristic.CurrentTemperature;
-    var curTempCharacteristicType = Characteristic_1.Characteristic.CurrentTemperature;
-    if (curTempCharacteristicFunction !== undefined) {
-        Characteristic_1.Characteristic.CurrentTemperature = function () {
-            curTempCharacteristicFunction.call(this);
-            this.setProps({ minValue: -99 });
-        };
-        util_1.inherits(Characteristic_1.Characteristic.CurrentTemperature, curTempCharacteristicFunction);
-        Characteristic_1.Characteristic.CurrentTemperature.UUID = curTempCharacteristicType.UUID;
-    }
+    hap_nodejs_1.Characteristic.CurrentTemperature = CurrentTemperatureWithNegativeValues;
     var fakeBridge = {
         hap: {
-            Service: Service_1.Service,
-            Characteristic: Characteristic_1.Characteristic,
-            uuid: uuid
+            Service: hap_nodejs_1.Service,
+            Characteristic: hap_nodejs_1.Characteristic,
+            uuid: hap_nodejs_1.uuid
         }
     };
     var fakeOptions = {};
@@ -1381,10 +1401,10 @@ function importHAPCommunityTypesAndFixes() {
     for (var type in communityTypes) {
         var typeFct = communityTypes[type];
         if (typeFct.length == 0) { // characteristic
-            Characteristic_1.Characteristic["Community: " + type] = typeFct;
+            hap_nodejs_1.Characteristic["Community: " + type] = typeFct;
         }
         else if (typeFct.length == 2) { // service
-            Service_1.Service["Community: " + type] = typeFct;
+            hap_nodejs_1.Service["Community: " + type] = typeFct;
         }
     }
     hapTypesImported = true;
@@ -1404,9 +1424,12 @@ exports.importHAPCommunityTypesAndFixes = importHAPCommunityTypesAndFixes;
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -1414,6 +1437,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIOBrokerConversionBase = void 0;
 var functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
 var TIOBrokerConversionBase = /** @class */ (function (_super) {
     __extends(TIOBrokerConversionBase, _super);
@@ -1458,9 +1482,12 @@ exports.TIOBrokerConversionBase = TIOBrokerConversionBase;
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -1468,8 +1495,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerConversion_HomematicControlMode_To_CoolingState = exports.TIoBrokerConversion_HomematicDirection_To_PositionState = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
-var yahka_homekit_bridge_1 = __webpack_require__(/*! ../yahka.homekit-bridge */ "./yahka.homekit-bridge.ts");
+var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
 var TIoBrokerConversion_HomematicDirection_To_PositionState = /** @class */ (function (_super) {
     __extends(TIoBrokerConversion_HomematicDirection_To_PositionState, _super);
     function TIoBrokerConversion_HomematicDirection_To_PositionState() {
@@ -1480,16 +1508,16 @@ var TIoBrokerConversion_HomematicDirection_To_PositionState = /** @class */ (fun
         var result = undefined;
         switch (num) {
             case 0:
-                result = yahka_homekit_bridge_1.HAPCharacteristic.PositionState.STOPPED;
+                result = hap_nodejs_1.Characteristic.PositionState.STOPPED;
                 break;
             case 1:
-                result = yahka_homekit_bridge_1.HAPCharacteristic.PositionState.INCREASING;
+                result = hap_nodejs_1.Characteristic.PositionState.INCREASING;
                 break;
             case 2:
-                result = yahka_homekit_bridge_1.HAPCharacteristic.PositionState.DECREASING;
+                result = hap_nodejs_1.Characteristic.PositionState.DECREASING;
                 break;
             default:
-                result = yahka_homekit_bridge_1.HAPCharacteristic.PositionState.STOPPED;
+                result = hap_nodejs_1.Characteristic.PositionState.STOPPED;
                 break;
         }
         this.adapter.log.debug('HomematicDirectionToHomekitPositionState.toHomeKit, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
@@ -1499,13 +1527,13 @@ var TIoBrokerConversion_HomematicDirection_To_PositionState = /** @class */ (fun
         var num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
         var result = undefined;
         switch (num) {
-            case yahka_homekit_bridge_1.HAPCharacteristic.PositionState.STOPPED:
+            case hap_nodejs_1.Characteristic.PositionState.STOPPED:
                 result = 0;
                 break;
-            case yahka_homekit_bridge_1.HAPCharacteristic.PositionState.INCREASING:
+            case hap_nodejs_1.Characteristic.PositionState.INCREASING:
                 result = 1;
                 break;
-            case yahka_homekit_bridge_1.HAPCharacteristic.PositionState.DECREASING:
+            case hap_nodejs_1.Characteristic.PositionState.DECREASING:
                 result = 2;
                 break;
             default:
@@ -1528,19 +1556,19 @@ var TIoBrokerConversion_HomematicControlMode_To_CoolingState = /** @class */ (fu
         var result = undefined;
         switch (num) {
             case 0:
-                result = yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.AUTO;
+                result = hap_nodejs_1.Characteristic.TargetHeatingCoolingState.AUTO;
                 break;
             case 1:
-                result = yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.HEAT;
+                result = hap_nodejs_1.Characteristic.TargetHeatingCoolingState.HEAT;
                 break;
             case 2:
-                result = yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.HEAT;
+                result = hap_nodejs_1.Characteristic.TargetHeatingCoolingState.HEAT;
                 break;
             case 3:
-                result = yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.HEAT;
+                result = hap_nodejs_1.Characteristic.TargetHeatingCoolingState.HEAT;
                 break;
             default:
-                result = yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.OFF;
+                result = hap_nodejs_1.Characteristic.TargetHeatingCoolingState.OFF;
                 break;
         }
         this.adapter.log.debug('HomematicDirectionToHomekitHeatingCoolingState.toHomeKit, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
@@ -1550,16 +1578,16 @@ var TIoBrokerConversion_HomematicControlMode_To_CoolingState = /** @class */ (fu
         var num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
         var result = undefined;
         switch (num) {
-            case yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.OFF:
+            case hap_nodejs_1.Characteristic.TargetHeatingCoolingState.OFF:
                 result = 0;
                 break;
-            case yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.HEAT:
+            case hap_nodejs_1.Characteristic.TargetHeatingCoolingState.HEAT:
                 result = 1;
                 break;
-            case yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.COOL:
+            case hap_nodejs_1.Characteristic.TargetHeatingCoolingState.COOL:
                 result = 0;
                 break;
-            case yahka_homekit_bridge_1.HAPCharacteristic.TargetHeatingCoolingState.AUTO:
+            case hap_nodejs_1.Characteristic.TargetHeatingCoolingState.AUTO:
                 result = 0;
                 break;
             default:
@@ -1586,9 +1614,12 @@ exports.TIoBrokerConversion_HomematicControlMode_To_CoolingState = TIoBrokerConv
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -1596,6 +1627,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerConversion_Inverse = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 var TIoBrokerConversion_Inverse = /** @class */ (function (_super) {
     __extends(TIoBrokerConversion_Inverse, _super);
@@ -1637,26 +1669,31 @@ exports.TIoBrokerConversion_Inverse = TIoBrokerConversion_Inverse;
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __values = (this && this.__values) || function (o) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
-    return {
+    if (o && typeof o.length === "number") return {
         next: function () {
             if (o && i >= o.length) o = void 0;
             return { value: o && o[i++], done: !o };
         }
     };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerConversion_Map = exports.isMultiStateParameter = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 function isMultiStateParameter(params) {
     return "mappings" in params;
@@ -1723,9 +1760,12 @@ exports.TIoBrokerConversion_Map = TIoBrokerConversion_Map;
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -1733,6 +1773,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerConversion_Passthrough = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 var TIoBrokerConversion_Passthrough = /** @class */ (function (_super) {
     __extends(TIoBrokerConversion_Passthrough, _super);
@@ -1762,9 +1803,12 @@ exports.TIoBrokerConversion_Passthrough = TIoBrokerConversion_Passthrough;
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -1772,6 +1816,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerConversion_Scale = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 var TIoBrokerConversion_Scale = /** @class */ (function (_super) {
     __extends(TIoBrokerConversion_Scale, _super);
@@ -1808,7 +1853,7 @@ var TIoBrokerConversion_Scale = /** @class */ (function (_super) {
         var ioBrokerMax = this.parameters["iobroker.max"];
         var homeKitMin = this.parameters["homekit.min"];
         var ioBrokerMin = this.parameters["iobroker.min"];
-        var newValue = ((num - ioBrokerMin) / (ioBrokerMax - ioBrokerMin)) * (homeKitMax - homeKitMin);
+        var newValue = ((num - ioBrokerMin) / (ioBrokerMax - ioBrokerMin)) * (homeKitMax - homeKitMin) + homeKitMin;
         this.adapter.log.debug('scaleInt: converting value to homekit: ' + value + ' to ' + newValue);
         return newValue;
     };
@@ -1818,7 +1863,7 @@ var TIoBrokerConversion_Scale = /** @class */ (function (_super) {
         var ioBrokerMax = this.parameters["iobroker.max"];
         var homeKitMin = this.parameters["homekit.min"];
         var ioBrokerMin = this.parameters["iobroker.min"];
-        var newValue = ((num - homeKitMin) / (homeKitMax - homeKitMin)) * (ioBrokerMax - ioBrokerMin);
+        var newValue = ((num - homeKitMin) / (homeKitMax - homeKitMin)) * (ioBrokerMax - ioBrokerMin) + ioBrokerMin;
         this.adapter.log.debug('scaleInt: converting value to ioBroker: ' + value + ' to ' + newValue);
         return newValue;
     };
@@ -1839,9 +1884,12 @@ exports.TIoBrokerConversion_Scale = TIoBrokerConversion_Scale;
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -1849,6 +1897,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerConversion_Script = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 var TIoBrokerConversion_Script = /** @class */ (function (_super) {
     __extends(TIoBrokerConversion_Script, _super);
@@ -1904,6 +1953,7 @@ exports.TIoBrokerConversion_Script = TIoBrokerConversion_Script;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TYahkaFunctionBase = void 0;
 var yahka_logger_1 = __webpack_require__(/*! ../shared/yahka.logger */ "./shared/yahka.logger.ts");
 var TYahkaFunctionBase = /** @class */ (function () {
     function TYahkaFunctionBase(adapter, logIdentifier) {
@@ -1978,6 +2028,7 @@ exports.TYahkaFunctionBase = TYahkaFunctionBase;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.functionFactory = exports.conversionFactory = exports.inOutFactory = void 0;
 exports.inOutFactory = {};
 exports.conversionFactory = {};
 exports.functionFactory = {
@@ -2062,9 +2113,12 @@ functions_factory_1.conversionFactory["map"] = conversion_map_1.TIoBrokerConvers
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -2072,6 +2126,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerInOutFunction_StateBase = exports.TIoBrokerInOutFunctionBase = void 0;
 var functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
 var TIoBrokerInOutFunctionBase = /** @class */ (function (_super) {
     __extends(TIoBrokerInOutFunctionBase, _super);
@@ -2115,7 +2170,7 @@ var TIoBrokerInOutFunction_StateBase = /** @class */ (function () {
         this.adapter = adapter;
         this.stateName = stateName;
         this.deferredTime = deferredTime;
-        this.debounceTimer = -1;
+        this.debounceTimer = null;
         this.subscriptionRequests = [];
         this.addSubscriptionRequest(stateName);
     }
@@ -2189,7 +2244,7 @@ var TIoBrokerInOutFunction_StateBase = /** @class */ (function () {
     };
     TIoBrokerInOutFunction_StateBase.prototype.cancelDeferredChangeEvent = function () {
         clearTimeout(this.debounceTimer);
-        this.debounceTimer = -1;
+        this.debounceTimer = null;
     };
     TIoBrokerInOutFunction_StateBase.prototype.deferredChangeEvent = function (callback, plainIOValue) {
         this.adapter.log.debug('[' + this.stateName + '] firing deferred change event:' + JSON.stringify(plainIOValue));
@@ -2212,6 +2267,7 @@ exports.TIoBrokerInOutFunction_StateBase = TIoBrokerInOutFunction_StateBase;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerInOutFunction_Const = void 0;
 var TIoBrokerInOutFunction_Const = /** @class */ (function () {
     function TIoBrokerInOutFunction_Const(adapter, parameters) {
         this.adapter = adapter;
@@ -2243,9 +2299,12 @@ exports.TIoBrokerInOutFunction_Const = TIoBrokerInOutFunction_Const;
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -2253,6 +2312,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = void 0;
 var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
 var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = /** @class */ (function (_super) {
     __extends(TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition, _super);
@@ -2263,11 +2323,11 @@ var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = /** @class *
         _this.workingItem = workingItem;
         _this.lastWorkingState = false;
         _this.lastAcknowledgedValue = undefined;
-        _this.debounceTimer = -1;
+        _this.debounceTimer = null;
         _this.addSubscriptionRequest(workingItem);
         adapter.getForeignState(workingItem, function (error, ioState) {
             if (ioState)
-                _this.lastWorkingState = ioState.val;
+                _this.lastWorkingState = Boolean(ioState.val);
             else
                 _this.lastWorkingState = undefined;
         });
@@ -2299,7 +2359,7 @@ var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = /** @class *
             return;
         if (stateName == this.workingItem) {
             this.adapter.log.debug('[' + this.stateName + '] got a working item change event: ' + JSON.stringify(ioState));
-            this.lastWorkingState = ioState.val;
+            this.lastWorkingState = Boolean(ioState.val);
             this.setupDeferredChangeEvent(callback);
         }
         else if (stateName == this.stateName) {
@@ -2316,7 +2376,7 @@ var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = /** @class *
     };
     TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.cancelDeferredChangeEvent = function () {
         clearTimeout(this.debounceTimer);
-        this.debounceTimer = -1;
+        this.debounceTimer = null;
     };
     TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.deferredChangeEvent = function (callback) {
         if (!this.lastWorkingState) { // only fire callback if the covering does not move
@@ -2344,9 +2404,12 @@ exports.TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = TIoBroke
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -2354,6 +2417,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = exports.isHomematic_Dimmer_Parameter = void 0;
 var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
 var util_1 = __webpack_require__(/*! util */ "util");
 var yahka_utils_1 = __webpack_require__(/*! ../shared/yahka.utils */ "./shared/yahka.utils.ts");
@@ -2513,26 +2577,31 @@ exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = TIoBrokerInOutFunct
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __values = (this && this.__values) || function (o) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
-    return {
+    if (o && typeof o.length === "number") return {
         next: function () {
             if (o && i >= o.length) o = void 0;
             return { value: o && o[i++], done: !o };
         }
     };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerInOutFunction_MultiState = exports.isMultiStateParameter = void 0;
 var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
 var util_1 = __webpack_require__(/*! util */ "util");
 function isMultiStateParameter(value) {
@@ -2647,9 +2716,12 @@ exports.TIoBrokerInOutFunction_MultiState = TIoBrokerInOutFunction_MultiState;
 "use strict";
 
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -2657,6 +2729,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerInOutFunction_State_OnlyACK = exports.TIoBrokerInOutFunction_StateDeferred = exports.TIoBrokerInOutFunction_State = void 0;
 var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
 var TIoBrokerInOutFunction_State = /** @class */ (function (_super) {
     __extends(TIoBrokerInOutFunction_State, _super);
@@ -2739,26 +2812,25 @@ exports.TIoBrokerInOutFunction_State_OnlyACK = TIoBrokerInOutFunction_State_Only
 
 "use strict";
 
-var __values = (this && this.__values) || function (o) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
-    return {
+    if (o && typeof o.length === "number") return {
         next: function () {
             if (o && i >= o.length) o = void 0;
             return { value: o && o[i++], done: !o };
         }
     };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.deinitHAP = exports.initHAP = exports.THomeKitBridge = void 0;
 /// <reference path="./typings/index.d.ts" />
 var debug = __webpack_require__(/*! debug */ "debug");
 var util = __webpack_require__(/*! util */ "util");
-var HAP = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
 var yahka_community_types_1 = __webpack_require__(/*! ./yahka.community.types */ "./yahka.community.types.ts");
+var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
 var pjson = __webpack_require__(/*! ../package.json */ "../package.json");
-// export let HAPAccessory:any = HAP.Accessory;
-exports.HAPService = HAP.Service;
-exports.HAPCharacteristic = HAP.Characteristic;
 yahka_community_types_1.importHAPCommunityTypesAndFixes();
 var THomeKitBridge = /** @class */ (function () {
     function THomeKitBridge(config, FBridgeFactory, FLogger) {
@@ -2807,16 +2879,16 @@ var THomeKitBridge = /** @class */ (function () {
     };
     THomeKitBridge.prototype.setupBridge = function () {
         var _this = this;
-        var hapBridge = new HAP.Bridge(this.config.name, HAP.uuid.generate(this.config.ident));
-        var infoService = hapBridge.getService(exports.HAPService.AccessoryInformation);
-        infoService.setCharacteristic(exports.HAPCharacteristic.Manufacturer, this.config.manufacturer || 'not configured');
-        infoService.setCharacteristic(exports.HAPCharacteristic.Model, this.config.model || 'not configured');
-        infoService.setCharacteristic(exports.HAPCharacteristic.SerialNumber, this.config.serial || 'not configured');
+        var hapBridge = new hap_nodejs_1.Bridge(this.config.name, hap_nodejs_1.uuid.generate(this.config.ident));
+        var infoService = hapBridge.getService(hap_nodejs_1.Service.AccessoryInformation);
+        infoService.setCharacteristic(hap_nodejs_1.Characteristic.Manufacturer, this.config.manufacturer || 'not configured');
+        infoService.setCharacteristic(hap_nodejs_1.Characteristic.Model, this.config.model || 'not configured');
+        infoService.setCharacteristic(hap_nodejs_1.Characteristic.SerialNumber, this.config.serial || 'not configured');
         if ((this.config.firmware !== undefined) && (this.config.firmware !== "")) {
-            infoService.setCharacteristic(exports.HAPCharacteristic.FirmwareRevision, this.config.firmware);
+            infoService.setCharacteristic(hap_nodejs_1.Characteristic.FirmwareRevision, this.config.firmware);
         }
         else {
-            infoService.setCharacteristic(exports.HAPCharacteristic.FirmwareRevision, pjson.version);
+            infoService.setCharacteristic(hap_nodejs_1.Characteristic.FirmwareRevision, pjson.version);
         }
         // Listen for bridge identification event
         hapBridge.on('identify', function (paired, callback) {
@@ -2826,23 +2898,23 @@ var THomeKitBridge = /** @class */ (function () {
         return hapBridge;
     };
     THomeKitBridge.prototype.createDevice = function (device) {
-        var _this = this;
         var e_2, _a;
+        var _this = this;
         var devName = device.name;
-        var deviceID = HAP.uuid.generate(this.config.ident + ':' + devName);
+        var deviceID = hap_nodejs_1.uuid.generate(this.config.ident + ':' + devName);
         var i = 0;
         while (this.bridgeObject.bridgedAccessories.some(function (a) { return a.UUID == deviceID; })) {
             devName = device.name + '_' + ++i;
-            deviceID = HAP.uuid.generate(this.config.ident + ':' + devName);
+            deviceID = hap_nodejs_1.uuid.generate(this.config.ident + ':' + devName);
         }
         this.FLogger.info('adding ' + devName + ' with UUID: ' + deviceID);
-        var hapDevice = new HAP.Accessory(devName, deviceID);
-        var infoService = hapDevice.getService(exports.HAPService.AccessoryInformation);
-        infoService.setCharacteristic(exports.HAPCharacteristic.Manufacturer, device.manufacturer || 'not configured');
-        infoService.setCharacteristic(exports.HAPCharacteristic.Model, device.model || 'not configured');
-        infoService.setCharacteristic(exports.HAPCharacteristic.SerialNumber, device.serial || 'not configured');
+        var hapDevice = new hap_nodejs_1.Accessory(devName, deviceID);
+        var infoService = hapDevice.getService(hap_nodejs_1.Service.AccessoryInformation);
+        infoService.setCharacteristic(hap_nodejs_1.Characteristic.Manufacturer, device.manufacturer || 'not configured');
+        infoService.setCharacteristic(hap_nodejs_1.Characteristic.Model, device.model || 'not configured');
+        infoService.setCharacteristic(hap_nodejs_1.Characteristic.SerialNumber, device.serial || 'not configured');
         if ((device.firmware !== undefined) && (device.firmware !== "")) {
-            infoService.setCharacteristic(exports.HAPCharacteristic.FirmwareRevision, device.firmware);
+            infoService.setCharacteristic(hap_nodejs_1.Characteristic.FirmwareRevision, device.firmware);
         }
         hapDevice.on('identify', function (paired, callback) {
             _this.FLogger.debug('device identify');
@@ -2865,18 +2937,18 @@ var THomeKitBridge = /** @class */ (function () {
     };
     THomeKitBridge.prototype.initService = function (hapDevice, serviceConfig) {
         var e_3, _a;
-        if (!(serviceConfig.type in HAP.Service)) {
+        if (!(serviceConfig.type in hap_nodejs_1.Service)) {
             throw Error('unknown service type: ' + serviceConfig.type);
         }
         var isNew = false;
-        var hapService = hapDevice.getService(HAP.Service[serviceConfig.type]);
+        var hapService = hapDevice.getService(hap_nodejs_1.Service[serviceConfig.type]);
         if (hapService !== undefined) {
             var existingSubType = hapService.subtype ? hapService.subtype : "";
             if (existingSubType != serviceConfig.subType)
                 hapService = undefined;
         }
         if (hapService === undefined) {
-            hapService = new HAP.Service[serviceConfig.type](serviceConfig.name, serviceConfig.subType);
+            hapService = new hap_nodejs_1.Service[serviceConfig.type](serviceConfig.name, serviceConfig.subType);
             isNew = true;
         }
         try {
@@ -2898,7 +2970,7 @@ var THomeKitBridge = /** @class */ (function () {
     };
     THomeKitBridge.prototype.initCharacteristic = function (hapService, characteristicConfig) {
         var _this = this;
-        var hapCharacteristic = hapService.getCharacteristic(exports.HAPCharacteristic[characteristicConfig.name]);
+        var hapCharacteristic = hapService.getCharacteristic(hap_nodejs_1.Characteristic[characteristicConfig.name]);
         if (!hapCharacteristic) {
             this.FLogger.warn("unknown characteristic: " + characteristicConfig.name);
             return;
@@ -2968,7 +3040,7 @@ function initHAP(storagePath, HAPdebugLogMethod) {
     if (hapInited) {
         return;
     }
-    HAP.init(storagePath);
+    hap_nodejs_1.init(storagePath);
     debug.log = function () {
         HAPdebugLogMethod(util.format.apply(this, arguments));
     };
@@ -2996,29 +3068,18 @@ exports.deinitHAP = deinitHAP;
 
 "use strict";
 
-var __values = (this && this.__values) || function (o) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
-    if (m) return m.call(o);
-    return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.THomeKitIPCamera = void 0;
 /// <reference path="./typings/index.d.ts" />
 var child_process_1 = __webpack_require__(/*! child_process */ "child_process");
-var HAP = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
-var StreamController_1 = __webpack_require__(/*! hap-nodejs/lib/StreamController */ "hap-nodejs/lib/StreamController");
 var ip = __webpack_require__(/*! ip */ "ip");
 var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
-var HAPService = HAP.Service;
-var HAPCharacteristic = HAP.Characteristic;
+var crypto = __webpack_require__(/*! crypto */ "crypto");
 var THomeKitIPCamera = /** @class */ (function () {
     function THomeKitIPCamera(camConfig, FLogger) {
         this.camConfig = camConfig;
         this.FLogger = FLogger;
+        this.services = [];
         this.streamControllers = [];
         this.pendingSessions = {};
         this.ongoingSessions = {};
@@ -3030,7 +3091,8 @@ var THomeKitIPCamera = /** @class */ (function () {
         }
         this.createCameraDevice();
         this.createCameraControlService();
-        this.createStreamControllers();
+        this.createSecureVideoService();
+        this._createStreamControllers();
         this.publishCamera();
     };
     THomeKitIPCamera.prototype.createOptionsDictionary = function () {
@@ -3081,6 +3143,7 @@ var THomeKitIPCamera = /** @class */ (function () {
         }
         var options = {
             proxy: false,
+            disable_audio_proxy: false,
             srtp: true,
             video: {
                 resolutions: videoResolutions,
@@ -3090,6 +3153,7 @@ var THomeKitIPCamera = /** @class */ (function () {
                 }
             },
             audio: {
+                comfort_noise: false,
                 codecs: [
                     {
                         type: "OPUS",
@@ -3106,41 +3170,47 @@ var THomeKitIPCamera = /** @class */ (function () {
     };
     THomeKitIPCamera.prototype.createCameraDevice = function () {
         var _this = this;
-        var deviceID = HAP.uuid.generate(this.camConfig.ident + ':' + this.camConfig.name);
-        var hapDevice = new HAP.Accessory(this.camConfig.name, deviceID);
-        var infoService = hapDevice.getService(HAPService.AccessoryInformation);
-        infoService.setCharacteristic(HAPCharacteristic.Manufacturer, this.camConfig.manufacturer || 'not configured');
-        infoService.setCharacteristic(HAPCharacteristic.Model, this.camConfig.model || 'not configured');
-        infoService.setCharacteristic(HAPCharacteristic.SerialNumber, this.camConfig.serial || 'not configured');
+        var deviceID = hap_nodejs_1.uuid.generate(this.camConfig.ident + ':' + this.camConfig.name);
+        var hapDevice = new hap_nodejs_1.Accessory(this.camConfig.name, deviceID);
+        var infoService = hapDevice.getService(hap_nodejs_1.Service.AccessoryInformation);
+        infoService.setCharacteristic(hap_nodejs_1.Characteristic.Manufacturer, this.camConfig.manufacturer || 'not configured');
+        infoService.setCharacteristic(hap_nodejs_1.Characteristic.Model, this.camConfig.model || 'not configured');
+        infoService.setCharacteristic(hap_nodejs_1.Characteristic.SerialNumber, this.camConfig.serial || 'not configured');
         if ((this.camConfig.firmware !== undefined) && (this.camConfig.firmware !== "")) {
-            infoService.setCharacteristic(HAPCharacteristic.FirmwareRevision, this.camConfig.firmware);
+            infoService.setCharacteristic(hap_nodejs_1.Characteristic.FirmwareRevision, this.camConfig.firmware);
         }
         hapDevice.on('identify', function (paired, callback) {
             _this.FLogger.debug('camera identify');
             callback(); // success
         });
-        hapDevice.cameraSource = this;
+        hapDevice.configureCameraSource(this);
         this._camera = hapDevice;
     };
     THomeKitIPCamera.prototype.createCameraControlService = function () {
-        var controlService = new HAP.Service.CameraControl();
-        this._camera.services.push(controlService);
+        var controlService = new hap_nodejs_1.Service.CameraControl('', '');
+        this.services.push(controlService);
     };
-    THomeKitIPCamera.prototype.createStreamControllers = function () {
+    THomeKitIPCamera.prototype._createStreamControllers = function () {
         var options = this.createOptionsDictionary();
         var maxStreams = this.camConfig.numberOfStreams || 2;
         for (var i = 0; i < maxStreams; i++) {
-            var streamController = new StreamController_1.StreamController(i, options, this);
-            this._camera.services.push(streamController.service);
+            var streamController = new hap_nodejs_1.StreamController(i, options, this);
+            this.services.push(streamController.service);
             this.streamControllers.push(streamController);
         }
+    };
+    THomeKitIPCamera.prototype.createSecureVideoService = function () {
+        // var myCameraOperatingMode = new Service.CameraOperatingMode('', '');
+        // this.services.push(myCameraOperatingMode);
+        // var myCameraEventRecordingManagement = new Service.CameraEventRecordingManagement('', '');
+        // this.services.push(myCameraEventRecordingManagement);
     };
     THomeKitIPCamera.prototype.publishCamera = function () {
         this._camera.publish({
             username: this.camConfig.username,
             port: this.camConfig.port,
             pincode: this.camConfig.pincode,
-            category: HAP.Accessory.Categories.CAMERA,
+            category: 17 /* CAMERA */,
             mdns: {
                 interface: this.camConfig.interface,
                 reuseAddr: true
@@ -3148,20 +3218,9 @@ var THomeKitIPCamera = /** @class */ (function () {
         }, false);
     };
     THomeKitIPCamera.prototype.handleCloseConnection = function (connectionID) {
-        var e_1, _a;
-        try {
-            for (var _b = __values(this.streamControllers), _c = _b.next(); !_c.done; _c = _b.next()) {
-                var controller = _c.value;
-                controller.handleCloseConnection(connectionID);
-            }
-        }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-            }
-            finally { if (e_1) throw e_1.error; }
-        }
+        this.streamControllers.forEach(function (controller) {
+            controller.handleCloseConnection(connectionID);
+        });
     };
     THomeKitIPCamera.prototype.handleSnapshotRequest = function (request, callback) {
         var params = {
@@ -3193,32 +3252,40 @@ var THomeKitIPCamera = /** @class */ (function () {
             var targetPort = videoInfo["port"];
             var srtp_key = videoInfo["srtp_key"];
             var srtp_salt = videoInfo["srtp_salt"];
+            // SSRC is a 32 bit integer that is unique per stream
+            var ssrcSource = crypto.randomBytes(4);
+            ssrcSource[0] = 0;
+            var ssrc = ssrcSource.readInt32BE(0);
             var videoResp = {
                 port: targetPort,
-                ssrc: 1,
+                ssrc: ssrc,
                 srtp_key: srtp_key,
                 srtp_salt: srtp_salt
             };
             response["video"] = videoResp;
             sessionInfo["video_port"] = targetPort;
             sessionInfo["video_srtp"] = Buffer.concat([srtp_key, srtp_salt]);
-            sessionInfo["video_ssrc"] = 1;
+            sessionInfo["video_ssrc"] = ssrc;
         }
         var audioInfo = request["audio"];
         if (audioInfo) {
             var targetPort = audioInfo["port"];
             var srtp_key = audioInfo["srtp_key"];
             var srtp_salt = audioInfo["srtp_salt"];
+            // SSRC is a 32 bit integer that is unique per stream
+            var ssrcSource = crypto.randomBytes(4);
+            ssrcSource[0] = 0;
+            var ssrc = ssrcSource.readInt32BE(0);
             var audioResp = {
                 port: targetPort,
-                ssrc: 1,
+                ssrc: ssrc,
                 srtp_key: srtp_key,
                 srtp_salt: srtp_salt
             };
             response["audio"] = audioResp;
             sessionInfo["audio_port"] = targetPort;
             sessionInfo["audio_srtp"] = Buffer.concat([srtp_key, srtp_salt]);
-            sessionInfo["audio_ssrc"] = 1;
+            sessionInfo["audio_ssrc"] = ssrc;
         }
         var currentAddress = ip.address();
         var addressResp = {
@@ -3231,12 +3298,13 @@ var THomeKitIPCamera = /** @class */ (function () {
             addressResp["type"] = "v6";
         }
         response["address"] = addressResp;
-        this.pendingSessions[hap_nodejs_1.uuid.unparse(sessionID, 0)] = sessionInfo;
+        this.pendingSessions[hap_nodejs_1.uuid.unparse(sessionID)];
         callback(response);
     };
     THomeKitIPCamera.prototype.handleStreamRequest = function (request) {
-        var sessionID = request["sessionID"];
-        var requestType = request["type"];
+        var _a, _b;
+        var sessionID = request.sessionID;
+        var requestType = request.type;
         if (sessionID) {
             var sessionIdentifier = hap_nodejs_1.uuid.unparse(sessionID, 0);
             if (requestType == "start") {
@@ -3247,19 +3315,16 @@ var THomeKitIPCamera = /** @class */ (function () {
                     var fps = 30;
                     var bitrate = 300;
                     var codec = this.camConfig.codec || 'libx264';
-                    var videoInfo = request["video"];
+                    var videoInfo = request.video;
                     if (videoInfo) {
-                        width = videoInfo["width"];
-                        height = videoInfo["height"];
-                        var expectedFPS = videoInfo["fps"];
+                        width = videoInfo.width;
+                        height = videoInfo.height;
+                        var expectedFPS = videoInfo.fps;
                         if (expectedFPS < fps) {
                             fps = expectedFPS;
                         }
-                        bitrate = videoInfo["max_bit_rate"];
+                        bitrate = videoInfo.max_bit_rate;
                     }
-                    var targetAddress = sessionInfo["address"];
-                    var targetVideoPort = sessionInfo["video_port"];
-                    var videoKey = sessionInfo["video_srtp"];
                     var params_1 = {
                         source: this.camConfig.source,
                         codec: codec,
@@ -3267,9 +3332,13 @@ var THomeKitIPCamera = /** @class */ (function () {
                         width: width,
                         height: height,
                         bitrate: bitrate,
-                        videokey: videoKey.toString('base64'),
-                        targetAddress: targetAddress,
-                        targetVideoPort: targetVideoPort
+                        videokey: (_a = sessionInfo.video_srtp) === null || _a === void 0 ? void 0 : _a.toString('base64'),
+                        targetAddress: sessionInfo.address,
+                        targetVideoPort: sessionInfo.video_port,
+                        targetVideoSsrc: sessionInfo.video_ssrc,
+                        targetAudioPort: sessionInfo.audio_port,
+                        targetAudioSsrc: sessionInfo.audio_ssrc,
+                        audiokey: (_b = sessionInfo.audio_srtp) === null || _b === void 0 ? void 0 : _b.toString('base64')
                     };
                     var ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map(function (s) { return s.replace(/\$\{(.*?)\}/g, function (_, word) {
                         return params_1[word];
@@ -3308,17 +3377,19 @@ exports.THomeKitIPCamera = THomeKitIPCamera;
 
 "use strict";
 
-var __values = (this && this.__values) || function (o) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
-    return {
+    if (o && typeof o.length === "number") return {
         next: function () {
             if (o && i >= o.length) o = void 0;
             return { value: o && o[i++], done: !o };
         }
     };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIOBrokerAdapter = void 0;
 var yahka_homekit_ipcamera_1 = __webpack_require__(/*! ./yahka.homekit-ipcamera */ "./yahka.homekit-ipcamera.ts");
 /// <reference path="./typings/index.d.ts" />
 var hkBridge = __webpack_require__(/*! ./yahka.homekit-bridge */ "./yahka.homekit-bridge.ts");
@@ -3546,6 +3617,17 @@ module.exports = require("child_process");
 
 /***/ }),
 
+/***/ "crypto":
+/*!*************************!*\
+  !*** external "crypto" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("crypto");
+
+/***/ }),
+
 /***/ "debug":
 /*!************************!*\
   !*** external "debug" ***!
@@ -3576,61 +3658,6 @@ module.exports = require("dev-null");
 /***/ (function(module, exports) {
 
 module.exports = require("hap-nodejs");
-
-/***/ }),
-
-/***/ "hap-nodejs/lib/Characteristic":
-/*!************************************************!*\
-  !*** external "hap-nodejs/lib/Characteristic" ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("hap-nodejs/lib/Characteristic");
-
-/***/ }),
-
-/***/ "hap-nodejs/lib/Service":
-/*!*****************************************!*\
-  !*** external "hap-nodejs/lib/Service" ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("hap-nodejs/lib/Service");
-
-/***/ }),
-
-/***/ "hap-nodejs/lib/StreamController":
-/*!**************************************************!*\
-  !*** external "hap-nodejs/lib/StreamController" ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("hap-nodejs/lib/StreamController");
-
-/***/ }),
-
-/***/ "hap-nodejs/lib/gen/HomeKitTypes":
-/*!**************************************************!*\
-  !*** external "hap-nodejs/lib/gen/HomeKitTypes" ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("hap-nodejs/lib/gen/HomeKitTypes");
-
-/***/ }),
-
-/***/ "hap-nodejs/lib/util/uuid":
-/*!*******************************************!*\
-  !*** external "hap-nodejs/lib/util/uuid" ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("hap-nodejs/lib/util/uuid");
 
 /***/ }),
 

@@ -1,9 +1,20 @@
-import { Characteristic } from 'hap-nodejs/lib/Characteristic';
-import { Service } from 'hap-nodejs/lib/Service';
-import 'hap-nodejs/lib/gen/HomeKitTypes';
+import { Characteristic, Formats, Units, Perms, Service, uuid } from 'hap-nodejs';
 import * as HapCommunity from '../hap-nodejs-community-types';
-import { inherits } from 'util';
-import * as uuid from 'hap-nodejs/lib/util/uuid';
+
+export class CurrentTemperatureWithNegativeValues extends Characteristic.CurrentTemperature {
+    constructor() {
+        super();
+        this.setProps({
+            format: Formats.FLOAT,
+            unit: Units.CELSIUS,
+            maxValue: 100,
+            minValue: -99,
+            minStep: 0.1,
+            perms: [Perms.READ, Perms.NOTIFY]
+        });
+    }
+}
+
 
 let hapTypesImported = false;
 export function importHAPCommunityTypesAndFixes() {
@@ -11,17 +22,7 @@ export function importHAPCommunityTypesAndFixes() {
     if (hapTypesImported)
         return;
 
-    let curTempCharacteristicFunction = <Function>Characteristic.CurrentTemperature;
-    let curTempCharacteristicType = Characteristic.CurrentTemperature;
-
-    if (curTempCharacteristicFunction !== undefined) {
-        Characteristic.CurrentTemperature = function () {
-            curTempCharacteristicFunction.call(this);
-            this.setProps({ minValue: -99 });
-        }
-        inherits(Characteristic.CurrentTemperature, curTempCharacteristicFunction);
-        Characteristic.CurrentTemperature.UUID = curTempCharacteristicType.UUID;
-    }
+    Characteristic.CurrentTemperature = CurrentTemperatureWithNegativeValues;
 
     let fakeBridge = {
         hap: {

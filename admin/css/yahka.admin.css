@@ -11,13 +11,13 @@
 }
 
 .panel-fixed {
-   background-color: white;
-   position: fixed;
-   z-index: 9999;
+    background-color: white;
+    position: fixed;
+    z-index: 9999;
 }
 
 .treeAndData {
-   padding-top: 60px;
+    padding-top: 60px;
 }
 
 .flex-container-row {
@@ -170,7 +170,8 @@
     flex: 1 1 auto;
 }
 
-.tabcontrol2 .frames .frame.flex-container-col, .tabcontrol2 .frames .frame.flex-container-row {
+.tabcontrol2 .frames .frame.flex-container-col,
+.tabcontrol2 .frames .frame.flex-container-row {
     display: flex;
     background-color: initial;
 }
@@ -183,7 +184,8 @@
 
 /* fix: show dropdown arrow for metro ui control */
 
-.input-control input, .input-control select {
+.input-control input,
+.input-control select {
     -webkit-appearance: menulist;
     -moz-appearance: menulist;
     /*appearance: button-arrow-down;*/
@@ -191,14 +193,16 @@
 
 /* fix: disabled needs to have priority over colors (e.g. primary)*/
 
-.image-button.disabled, .image-button:disabled {
+.image-button.disabled,
+.image-button:disabled {
     background-color: #eaeaea !important;
     color: #bebebe !important;
     cursor: default !important;
     border-color: transparent !important;
 }
 
-.image-button.disabled .icon, .image-button:disabled .icon {
+.image-button.disabled .icon,
+.image-button:disabled .icon {
     background-color: #999 !important;
     color: #bebebe !important;
     cursor: default !important;

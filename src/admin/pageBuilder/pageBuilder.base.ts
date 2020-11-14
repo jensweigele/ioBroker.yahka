@@ -53,7 +53,11 @@ export class ConfigPageBuilder_Base {
         }
     }
 
-    protected fillSelectByListEntries(selectElement: HTMLSelectElement, entries: IDictionary<ISelectListEntry> | ISelectListEntry[]) {
+    protected fillSelectByListEntries(selectElement: HTMLElement, entries: IDictionary<ISelectListEntry> | ISelectListEntry[]) {
+        if (!(selectElement instanceof HTMLSelectElement)) {
+            return;
+        }
+
         if (entries === undefined)
             return;
 

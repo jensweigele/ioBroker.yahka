@@ -28,12 +28,12 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
         translateFragment(configFragment);
 
         let inputHelper = (selector: string, propertyName: keyof hkBridge.Configuration.ICameraConfig, selectList?: IDictionary<ISelectListEntry> | ISelectListEntry[], validator: TValidatorFunction = undefined) => {
-            let input = <HTMLSelectElement>configFragment.querySelector(selector);
+            let input = <HTMLInputElement>configFragment.querySelector(selector);
             let errorElement = <HTMLElement>configFragment.querySelector(selector + '_error');
             this.fillSelectByListEntries(input, selectList);
             let value = config[propertyName];
             if (input.type === 'checkbox') {
-                input.checked = value === undefined ? true : value;
+                input.checked = value === undefined ? true : value as boolean;
                 input.addEventListener('change', this.handlePropertyChange.bind(this, config, propertyName, errorElement, validator))
             } else {
                 if (value !== undefined) {
@@ -98,12 +98,13 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
         return true;
     }
 
-    handlePropertyChange(config: hkBridge.Configuration.ICameraConfig, propertyName: keyof hkBridge.Configuration.ICameraConfig, errorElement: HTMLElement, validator: TValidatorFunction, ev: Event) {
+    public handlePropertyChange(config: hkBridge.Configuration.ICameraConfig, propertyName: keyof hkBridge.Configuration.ICameraConfig, errorElement: HTMLElement, validator: TValidatorFunction, ev: Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
+        config.codec = inputTarget.value;
         if (inputTarget.type == "checkbox") {
-            config[propertyName] = inputTarget.checked;
+            (config[propertyName] as any) = inputTarget.checked;
         } else {
-            config[propertyName] = inputTarget.value;
+            (config[propertyName] as any) = inputTarget.value;
         }
         this.refreshSimpleErrorElement(errorElement, validator);
         this.delegate.refreshDeviceListEntry(config);

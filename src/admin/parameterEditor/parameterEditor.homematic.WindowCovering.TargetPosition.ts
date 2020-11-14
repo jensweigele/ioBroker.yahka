@@ -37,9 +37,9 @@ export class ParameterEditor_HomeMaticWindowCoveringTargetPosition extends Param
     }
 
     protected buildNewParameterValue(): any {
-        var resultArray: Array<string> = [Utils.getInputValue(this.txtLevel)];
+        var resultArray: Array<string> = [Utils.getInputValue(this.txtLevel).toString()];
         if (this.txtWorking.value)
-            resultArray.push(Utils.getInputValue(this.txtWorking));
+            resultArray.push(Utils.getInputValue(this.txtWorking)?.toString());
         return resultArray;
     }
 }

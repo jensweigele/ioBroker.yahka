@@ -88,7 +88,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         translateFragment(devInfoFragment);
 
         let inputHelper = (selector: string, propertyName: string, selectList?: IDictionary<ISelectListEntry>, validator: TValidatorFunction = undefined) => {
-            let input = <HTMLSelectElement>devInfoPanel.querySelector(selector);
+            let input = <HTMLInputElement>devInfoPanel.querySelector(selector);
             let errorElement = <HTMLElement>devInfoPanel.querySelector(selector + '_error');
 
             this.fillSelectByListEntries(input, selectList);
@@ -257,8 +257,8 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         if (!functionMap.has(functionName)) {
             return new ParameterEditor_Null(valueChangeCallback);
         }
-        let constr = functionMap.get(functionName);
-        return new constr(valueChangeCallback);
+        let factory = functionMap.get(functionName);
+        return factory(valueChangeCallback);
     }
 
     updateParameterEditor(functionName: string, parameterContainer: HTMLElement, parameterValue: any, parameterChangeCallback: IParameterEditorDelegate, functionMap: Map<string, ParameterEditorFactory>) {
@@ -311,11 +311,11 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
                 this.delegate.changeCallback();
             }
 
-            this.updateParameterEditor(Utils.getSelectInputValue(input), container, parameterValue, paramUpdateMethod, functionMap);
+            this.updateParameterEditor(Utils.getSelectInputValue(input)?.toString(), container, parameterValue, paramUpdateMethod, functionMap);
             input.addEventListener('input', (e) => {
                 this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
                 let charConfig = this.findConfigCharacteristic(serviceConfig, name);
-                this.updateParameterEditor(Utils.getSelectInputValue(input), container, charConfig[parameterName], paramUpdateMethod, functionMap);
+                this.updateParameterEditor(Utils.getSelectInputValue(input)?.toString(), container, charConfig[parameterName], paramUpdateMethod, functionMap);
                 return false;
             });
         };
@@ -432,7 +432,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         if (inputValue !== undefined) {
             if (isObjectProperty) {
                 try {
-                    charConfig.properties[property] = JSON.parse(inputValue);
+                    charConfig.properties[property] = JSON.parse(inputValue as any);
                 } catch (e) {
                     console.log("parsing of", inputValue, " failed with: ", e);
                 }
@@ -470,7 +470,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
     handleServiceTypeChange(serviceConfig: hkBridge.Configuration.IServiceConfig, servicePanel: HTMLElement, ev: Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
         let inputValue = Utils.getInputValue(inputTarget);
-        serviceConfig.type = inputValue;
+        serviceConfig.type = inputValue as any; //?.toString();
 
         this.refreshServicePanelCaption(serviceConfig, servicePanel);
 

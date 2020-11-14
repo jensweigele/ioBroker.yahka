@@ -7,7 +7,7 @@ export abstract class TIoBrokerInOutFunctionBase extends TYahkaFunctionBase impl
     protected valueForHomeKit: any = undefined;
     protected errorForHomeKit: any = null;
 
-    public fromIOBroker(callback:(error: any, plainIOValue: any) => void) {
+    public fromIOBroker(callback: (error: any, plainIOValue: any) => void) {
         this.log.debug('fromIOBroker event - delivering cached value (' + JSON.stringify(this.valueForHomeKit) + ")");
         callback(null, this.valueForHomeKit);
     }
@@ -23,9 +23,9 @@ export abstract class TIoBrokerInOutFunctionBase extends TYahkaFunctionBase impl
             this.errorForHomeKit = null;
         } catch (e) {
             this.errorForHomeKit = e;
-        }        
-        
-        if(this.valueForHomeKit != null)
+        }
+
+        if (this.valueForHomeKit != null)
             callback(this.valueForHomeKit);
     }
 
@@ -40,7 +40,7 @@ export abstract class TIoBrokerInOutFunctionBase extends TYahkaFunctionBase impl
 }
 
 export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionRequestor, IInOutFunction {
-    protected debounceTimer = -1;
+    protected debounceTimer: NodeJS.Timeout = null;
     public subscriptionRequests: ISubscriptionRequest[] = [];
 
     constructor(protected adapter: ioBroker.Adapter, protected stateName: string, protected deferredTime: number = 0) {
@@ -123,7 +123,7 @@ export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionR
 
     cancelDeferredChangeEvent() {
         clearTimeout(this.debounceTimer);
-        this.debounceTimer = -1;
+        this.debounceTimer = null;
     }
 
     deferredChangeEvent(callback: IInOutChangeNotify, plainIOValue: any) {

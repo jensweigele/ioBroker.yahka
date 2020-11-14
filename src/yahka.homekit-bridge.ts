@@ -1,14 +1,10 @@
 /// <reference path="./typings/index.d.ts" />
 import debug = require('debug');
 import util = require('util');
-import HAP = require('hap-nodejs');
 import { Configuration } from './shared/yahka.configuration';
 import { importHAPCommunityTypesAndFixes } from './yahka.community.types';
+import { Accessory, Bridge, uuid, Characteristic, Service, init as hapInit } from 'hap-nodejs';
 var pjson = require('../package.json');
-
-// export let HAPAccessory:any = HAP.Accessory;
-export let HAPService = HAP.Service;
-export let HAPCharacteristic = HAP.Characteristic;
 
 importHAPCommunityTypesAndFixes();
 
@@ -84,16 +80,16 @@ export class THomeKitBridge {
     }
 
     private setupBridge() {
-        let hapBridge: HAPNodeJS.Accessory = new (<any>HAP).Bridge(this.config.name, HAP.uuid.generate(this.config.ident));
+        let hapBridge: Accessory = new Bridge(this.config.name, uuid.generate(this.config.ident));
 
-        let infoService = hapBridge.getService(HAPService.AccessoryInformation);
-        infoService.setCharacteristic(HAPCharacteristic.Manufacturer, this.config.manufacturer || 'not configured');
-        infoService.setCharacteristic(HAPCharacteristic.Model, this.config.model || 'not configured');
-        infoService.setCharacteristic(HAPCharacteristic.SerialNumber, this.config.serial || 'not configured');
+        let infoService = hapBridge.getService(Service.AccessoryInformation);
+        infoService.setCharacteristic(Characteristic.Manufacturer, this.config.manufacturer || 'not configured');
+        infoService.setCharacteristic(Characteristic.Model, this.config.model || 'not configured');
+        infoService.setCharacteristic(Characteristic.SerialNumber, this.config.serial || 'not configured');
         if ((this.config.firmware !== undefined) && (this.config.firmware !== "")) {
-            infoService.setCharacteristic(HAPCharacteristic.FirmwareRevision, this.config.firmware);
+            infoService.setCharacteristic(Characteristic.FirmwareRevision, this.config.firmware);
         } else {
-            infoService.setCharacteristic(HAPCharacteristic.FirmwareRevision, pjson.version);
+            infoService.setCharacteristic(Characteristic.FirmwareRevision, pjson.version);
         }
 
         // Listen for bridge identification event
@@ -106,22 +102,22 @@ export class THomeKitBridge {
 
     private createDevice(device: Configuration.IDeviceConfig) {
         let devName = device.name;
-        let deviceID = HAP.uuid.generate(this.config.ident + ':' + devName);
+        let deviceID = uuid.generate(this.config.ident + ':' + devName);
         let i = 0;
         while (this.bridgeObject.bridgedAccessories.some((a) => a.UUID == deviceID)) {
             devName = device.name + '_' + ++i;
-            deviceID = HAP.uuid.generate(this.config.ident + ':' + devName);
+            deviceID = uuid.generate(this.config.ident + ':' + devName);
         }
 
         this.FLogger.info('adding ' + devName + ' with UUID: ' + deviceID);
-        let hapDevice = new HAP.Accessory(devName, deviceID);
+        let hapDevice = new Accessory(devName, deviceID);
 
-        let infoService = hapDevice.getService(HAPService.AccessoryInformation);
-        infoService.setCharacteristic(HAPCharacteristic.Manufacturer, device.manufacturer || 'not configured');
-        infoService.setCharacteristic(HAPCharacteristic.Model, device.model || 'not configured');
-        infoService.setCharacteristic(HAPCharacteristic.SerialNumber, device.serial || 'not configured');
+        let infoService = hapDevice.getService(Service.AccessoryInformation);
+        infoService.setCharacteristic(Characteristic.Manufacturer, device.manufacturer || 'not configured');
+        infoService.setCharacteristic(Characteristic.Model, device.model || 'not configured');
+        infoService.setCharacteristic(Characteristic.SerialNumber, device.serial || 'not configured');
         if ((device.firmware !== undefined) && (device.firmware !== "")) {
-            infoService.setCharacteristic(HAPCharacteristic.FirmwareRevision, device.firmware);
+            infoService.setCharacteristic(Characteristic.FirmwareRevision, device.firmware);
         }
 
         hapDevice.on('identify', (paired, callback) => {
@@ -135,12 +131,12 @@ export class THomeKitBridge {
     }
 
     private initService(hapDevice: any, serviceConfig: Configuration.IServiceConfig) {
-        if (!(serviceConfig.type in HAP.Service)) {
+        if (!(serviceConfig.type in Service)) {
             throw Error('unknown service type: ' + serviceConfig.type);
         }
 
         let isNew = false;
-        let hapService = hapDevice.getService(HAP.Service[serviceConfig.type]);
+        let hapService = hapDevice.getService(Service[serviceConfig.type]);
         if (hapService !== undefined) {
             const existingSubType = hapService.subtype ? hapService.subtype : ""
             if (existingSubType != serviceConfig.subType)
@@ -148,7 +144,7 @@ export class THomeKitBridge {
         }
 
         if (hapService === undefined) {
-            hapService = new HAP.Service[serviceConfig.type](serviceConfig.name, serviceConfig.subType);
+            hapService = new Service[serviceConfig.type](serviceConfig.name, serviceConfig.subType);
             isNew = true;
         }
 
@@ -162,7 +158,7 @@ export class THomeKitBridge {
     }
 
     private initCharacteristic(hapService: IHAPService, characteristicConfig: Configuration.ICharacteristicConfig) {
-        let hapCharacteristic = hapService.getCharacteristic(HAPCharacteristic[characteristicConfig.name]);
+        let hapCharacteristic = hapService.getCharacteristic(Characteristic[characteristicConfig.name]);
         if (!hapCharacteristic) {
             this.FLogger.warn("unknown characteristic: " + characteristicConfig.name);
             return;
@@ -243,7 +239,7 @@ export function initHAP(storagePath: string, HAPdebugLogMethod: Function) {
         return;
     }
 
-    HAP.init(storagePath);
+    hapInit(storagePath);
     debug.log = function () {
         HAPdebugLogMethod(util.format.apply(this, arguments));
     };

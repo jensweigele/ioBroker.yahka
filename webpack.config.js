@@ -1,5 +1,7 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const webpack = require('webpack');
+
 let backendConfig = {
   context: path.resolve(__dirname, 'src'),
   target: "node",
@@ -8,13 +10,11 @@ let backendConfig = {
     "main": "./main.ts"
   },
   module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
-      }
-    ],
+    rules: [{
+      test: /\.tsx?$/,
+      use: 'ts-loader',
+      exclude: /node_modules/
+    }],
     noParse: /lib\/utils/
   },
   resolve: {
@@ -35,15 +35,19 @@ let frontendConfig = {
     "yahka.admin": "./admin/yahka.admin.ts"
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/
       },
       {
         test: /\.inc.html$/,
-        use: 'raw-loader'
+        use: [{
+          loader: 'raw-loader',
+          options: {
+            esModule: false,
+          },
+        }]
       }
     ]
   },
@@ -58,9 +62,19 @@ let frontendConfig = {
     library: "yahkaAdmin",
     libraryTarget: "var",
     path: path.resolve(__dirname, "admin/")
-  }
+  },
+  node: {
+    dgram: 'empty',
+    child_process: 'empty',
+    fs: 'empty',
+    net: 'empty'
+  },
+  plugins: [
+    new webpack.NormalModuleReplacementPlugin(
+      /lib\/AccessoryLoader\.js/,
+      path.resolve(__dirname, 'src/AccessoryLoaderForBrowser.js')
+    )
+  ]
 };
-
-
 
 module.exports = [backendConfig, frontendConfig];
