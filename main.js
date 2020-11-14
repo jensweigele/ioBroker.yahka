@@ -1216,7 +1216,7 @@ module.exports = function(module) {
 /*! exports provided: name, version, description, author, contributors, homepage, license, keywords, repository, dependencies, devDependencies, bugs, readmeFilename, main, scripts, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"iobroker.yahka\",\"version\":\"0.12.0\",\"description\":\"ioBroker HomeKit Adapter\",\"author\":{\"name\":\"Jens Weigele\",\"email\":\"iobroker.yahka@gmail.com\"},\"contributors\":[{\"name\":\"Jens Weigele\",\"email\":\"iobroker.yahka@gmail.com\"}],\"homepage\":\"https://github.com/jensweigele/ioBroker.yahka\",\"license\":\"MIT\",\"keywords\":[\"ioBroker\",\"iobroker.yahka\",\"Smart Home\",\"home automation\",\"siri\",\"homekit\"],\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/jensweigele/ioBroker.yahka\"},\"dependencies\":{\"@iobroker/adapter-core\":\"^2.4.0\",\"debug\":\"^4.1.1\",\"dev-null\":\"^0.1.1\",\"hap-nodejs\":\"^0.7.3\",\"ip\":\"^1.1.5\",\"macaddress\":\"0.2.9\",\"util\":\"^0.12.3\"},\"devDependencies\":{\"@types/iobroker\":\"^3.0.10\",\"@types/jquery\":\"^3.3.31\",\"@types/node\":\"^13.1.6\",\"chai\":\"^4.2.0\",\"grunt\":\"^1.0.4\",\"grunt-contrib-clean\":\"^2.0.0\",\"grunt-contrib-compress\":\"^1.6.0\",\"grunt-contrib-copy\":\"^1.0.0\",\"grunt-contrib-jshint\":\"^2.1.0\",\"grunt-exec\":\"^3.0.0\",\"grunt-http\":\"^2.3.3\",\"grunt-jscs\":\"^3.0.1\",\"grunt-replace\":\"^1.0.1\",\"grunt-ts\":\"^6.0.0-beta.22\",\"grunt-webpack\":\"^3.1.3\",\"html-webpack-plugin\":\"^3.2.0\",\"mocha\":\"^7.0.0\",\"raw-loader\":\"^4.0.0\",\"ts-loader\":\"^6.2.1\",\"typescript\":\"^3.7.4\",\"webpack\":\"^4.41.5\",\"webpack-cli\":\"^3.3.10\",\"webpack-node-externals\":\"^1.7.2\"},\"bugs\":{\"url\":\"https://github.com/jensweigele/ioBroker.yahka/issues\"},\"readmeFilename\":\"README.md\",\"main\":\"main.js\",\"scripts\":{\"test\":\"node node_modules/mocha/bin/mocha --exit\"}}");
+module.exports = JSON.parse("{\"name\":\"iobroker.yahka\",\"version\":\"0.12.0\",\"description\":\"ioBroker HomeKit Adapter\",\"author\":{\"name\":\"Jens Weigele\",\"email\":\"iobroker.yahka@gmail.com\"},\"contributors\":[{\"name\":\"Jens Weigele\",\"email\":\"iobroker.yahka@gmail.com\"}],\"homepage\":\"https://github.com/jensweigele/ioBroker.yahka\",\"license\":\"MIT\",\"keywords\":[\"ioBroker\",\"iobroker.yahka\",\"Smart Home\",\"home automation\",\"siri\",\"homekit\"],\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/jensweigele/ioBroker.yahka\"},\"dependencies\":{\"@iobroker/adapter-core\":\"^2.4.0\",\"debug\":\"^4.2.0\",\"dev-null\":\"^0.1.1\",\"hap-nodejs\":\"^0.8.2\",\"ip\":\"^1.1.5\",\"macaddress\":\"0.5.1\",\"util\":\"^0.12.3\"},\"devDependencies\":{\"@types/iobroker\":\"^3.2.4\",\"@types/jquery\":\"^3.5.4\",\"@types/node\":\"^14.14.7\",\"chai\":\"^4.2.0\",\"grunt\":\"^1.3.0\",\"grunt-contrib-clean\":\"^2.0.0\",\"grunt-contrib-compress\":\"^1.6.0\",\"grunt-contrib-copy\":\"^1.0.0\",\"grunt-contrib-jshint\":\"^2.1.0\",\"grunt-exec\":\"^3.0.0\",\"grunt-http\":\"^2.3.3\",\"grunt-jscs\":\"^3.0.1\",\"grunt-replace\":\"^1.0.1\",\"grunt-ts\":\"^6.0.0-beta.22\",\"grunt-webpack\":\"^4.0.2\",\"html-webpack-plugin\":\"^4.5.0\",\"mocha\":\"^8.1.3\",\"raw-loader\":\"^4.0.2\",\"ts-loader\":\"^8.0.4\",\"typescript\":\"^4.0.3\",\"webpack\":\"^4.44.2\",\"webpack-cli\":\"^3.3.12\",\"webpack-node-externals\":\"^2.5.2\"},\"bugs\":{\"url\":\"https://github.com/jensweigele/ioBroker.yahka/issues\"},\"readmeFilename\":\"README.md\",\"main\":\"main.js\",\"scripts\":{\"test\":\"node node_modules/mocha/bin/mocha --exit\"}}");
 
 /***/ }),
 
@@ -1297,6 +1297,7 @@ else {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.YahkaLogger = void 0;
 var YahkaLogger = /** @class */ (function () {
     function YahkaLogger(adapter, logIdentifier) {
         this.adapter = adapter;
@@ -1331,6 +1332,7 @@ exports.YahkaLogger = YahkaLogger;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.propertyExists = void 0;
 function propertyExists(object, property) {
     return property in object;
 }
@@ -1352,7 +1354,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -1362,6 +1364,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.importHAPCommunityTypesAndFixes = exports.CurrentTemperatureWithNegativeValues = void 0;
 // import { Characteristic, Formats, Units, Perms } from 'hap-nodejs/dist/lib/Characteristic';
 // import { Service } from 'hap-nodejs/dist/lib/Service';
 var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
@@ -1427,7 +1430,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -1437,6 +1440,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIOBrokerConversionBase = void 0;
 var functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
 var TIOBrokerConversionBase = /** @class */ (function (_super) {
     __extends(TIOBrokerConversionBase, _super);
@@ -1484,7 +1488,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -1494,6 +1498,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerConversion_HomematicControlMode_To_CoolingState = exports.TIoBrokerConversion_HomematicDirection_To_PositionState = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
 var TIoBrokerConversion_HomematicDirection_To_PositionState = /** @class */ (function (_super) {
@@ -1615,7 +1620,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -1625,6 +1630,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerConversion_Inverse = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 var TIoBrokerConversion_Inverse = /** @class */ (function (_super) {
     __extends(TIoBrokerConversion_Inverse, _super);
@@ -1669,7 +1675,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -1690,6 +1696,7 @@ var __values = (this && this.__values) || function(o) {
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerConversion_Map = exports.isMultiStateParameter = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 function isMultiStateParameter(params) {
     return "mappings" in params;
@@ -1759,7 +1766,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -1769,6 +1776,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerConversion_Passthrough = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 var TIoBrokerConversion_Passthrough = /** @class */ (function (_super) {
     __extends(TIoBrokerConversion_Passthrough, _super);
@@ -1801,7 +1809,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -1811,6 +1819,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerConversion_Scale = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 var TIoBrokerConversion_Scale = /** @class */ (function (_super) {
     __extends(TIoBrokerConversion_Scale, _super);
@@ -1881,7 +1890,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -1891,6 +1900,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerConversion_Script = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 var TIoBrokerConversion_Script = /** @class */ (function (_super) {
     __extends(TIoBrokerConversion_Script, _super);
@@ -1946,6 +1956,7 @@ exports.TIoBrokerConversion_Script = TIoBrokerConversion_Script;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TYahkaFunctionBase = void 0;
 var yahka_logger_1 = __webpack_require__(/*! ../shared/yahka.logger */ "./shared/yahka.logger.ts");
 var TYahkaFunctionBase = /** @class */ (function () {
     function TYahkaFunctionBase(adapter, logIdentifier) {
@@ -2020,6 +2031,7 @@ exports.TYahkaFunctionBase = TYahkaFunctionBase;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.functionFactory = exports.conversionFactory = exports.inOutFactory = void 0;
 exports.inOutFactory = {};
 exports.conversionFactory = {};
 exports.functionFactory = {
@@ -2107,7 +2119,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -2117,6 +2129,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerInOutFunction_StateBase = exports.TIoBrokerInOutFunctionBase = void 0;
 var functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
 var TIoBrokerInOutFunctionBase = /** @class */ (function (_super) {
     __extends(TIoBrokerInOutFunctionBase, _super);
@@ -2257,6 +2270,7 @@ exports.TIoBrokerInOutFunction_StateBase = TIoBrokerInOutFunction_StateBase;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerInOutFunction_Const = void 0;
 var TIoBrokerInOutFunction_Const = /** @class */ (function () {
     function TIoBrokerInOutFunction_Const(adapter, parameters) {
         this.adapter = adapter;
@@ -2291,7 +2305,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -2301,6 +2315,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = void 0;
 var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
 var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = /** @class */ (function (_super) {
     __extends(TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition, _super);
@@ -2395,7 +2410,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -2405,6 +2420,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = exports.isHomematic_Dimmer_Parameter = void 0;
 var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
 var util_1 = __webpack_require__(/*! util */ "util");
 var yahka_utils_1 = __webpack_require__(/*! ../shared/yahka.utils */ "./shared/yahka.utils.ts");
@@ -2567,7 +2583,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -2588,6 +2604,7 @@ var __values = (this && this.__values) || function(o) {
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerInOutFunction_MultiState = exports.isMultiStateParameter = void 0;
 var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
 var util_1 = __webpack_require__(/*! util */ "util");
 function isMultiStateParameter(value) {
@@ -2705,7 +2722,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -2715,6 +2732,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIoBrokerInOutFunction_State_OnlyACK = exports.TIoBrokerInOutFunction_StateDeferred = exports.TIoBrokerInOutFunction_State = void 0;
 var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
 var TIoBrokerInOutFunction_State = /** @class */ (function (_super) {
     __extends(TIoBrokerInOutFunction_State, _super);
@@ -2809,6 +2827,7 @@ var __values = (this && this.__values) || function(o) {
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.deinitHAP = exports.initHAP = exports.THomeKitBridge = void 0;
 /// <reference path="./typings/index.d.ts" />
 var debug = __webpack_require__(/*! debug */ "debug");
 var util = __webpack_require__(/*! util */ "util");
@@ -3053,6 +3072,7 @@ exports.deinitHAP = deinitHAP;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.THomeKitIPCamera = void 0;
 /// <reference path="./typings/index.d.ts" />
 var child_process_1 = __webpack_require__(/*! child_process */ "child_process");
 var ip = __webpack_require__(/*! ip */ "ip");
@@ -3372,6 +3392,7 @@ var __values = (this && this.__values) || function(o) {
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIOBrokerAdapter = void 0;
 var yahka_homekit_ipcamera_1 = __webpack_require__(/*! ./yahka.homekit-ipcamera */ "./yahka.homekit-ipcamera.ts");
 /// <reference path="./typings/index.d.ts" />
 var hkBridge = __webpack_require__(/*! ./yahka.homekit-bridge */ "./yahka.homekit-bridge.ts");
