@@ -1,10 +1,10 @@
 import { THomeKitIPCamera } from './yahka.homekit-ipcamera';
 import { Configuration } from './shared/yahka.configuration';
-import {IInOutFunction} from './yahka.homekit-bridge';
+import { IInOutFunction } from './yahka.homekit-bridge';
 /// <reference path="./typings/index.d.ts" />
 import * as hkBridge from './yahka.homekit-bridge';
 // import * as mac from './node_modules/macaddress';
-import {functionFactory} from './yahka.functions/functions.factory';
+import { functionFactory } from './yahka.functions/functions.factory';
 
 
 export type TSubscriptionType = 'state' | 'object';
@@ -23,13 +23,13 @@ function isSubscriptionRequestor(param: Object): param is ISubscriptionRequestor
         param["subscriptionRequests"] instanceof Array;
 }
 interface ICustomCharacteristicConfig extends Configuration.ICharacteristicConfig {
-    conversionFunction?:string;
-    conversionParameters?:any;
-    inOutFunction?:string;
-    inOutParameters?:any;
+    conversionFunction?: string;
+    conversionParameters?: any;
+    inOutFunction?: string;
+    inOutParameters?: any;
 }
 
-function isCustomCharacteristicConfig(config:Configuration.ICharacteristicConfig):config is ICustomCharacteristicConfig {
+function isCustomCharacteristicConfig(config: Configuration.ICharacteristicConfig): config is ICustomCharacteristicConfig {
     if (!config)
         return false;
     let myConfig = <ICustomCharacteristicConfig>config;
@@ -37,12 +37,12 @@ function isCustomCharacteristicConfig(config:Configuration.ICharacteristicConfig
 }
 
 export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
-    stateToEventMap:Map<string, hkBridge.IInOutChangeNotify[]> = new Map<string, hkBridge.IInOutChangeNotify[]>();
-    objectToEventMap:Map<string, hkBridge.IInOutChangeNotify[]> = new Map<string, hkBridge.IInOutChangeNotify[]>();
+    stateToEventMap: Map<string, hkBridge.IInOutChangeNotify[]> = new Map<string, hkBridge.IInOutChangeNotify[]>();
+    objectToEventMap: Map<string, hkBridge.IInOutChangeNotify[]> = new Map<string, hkBridge.IInOutChangeNotify[]>();
     devices: Array<Object> = [];
-    verboseHAPLogging:boolean = false;
+    verboseHAPLogging: boolean = false;
 
-    constructor(private adapter:ioBroker.Adapter, private controllerPath) {
+    constructor(private adapter: ioBroker.Adapter, private controllerPath) {
         adapter.on('ready', this.adapterReady.bind(this));
         adapter.on('stateChange', this.handleState.bind(this));
         adapter.on('message', this.handleMessage.bind(this));
@@ -59,7 +59,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
     }
 
     private createHomeKitBridges(config: any) {
-        let bridgeConfig:Configuration.IBridgeConfig = config.bridge;
+        let bridgeConfig: Configuration.IBridgeConfig = config.bridge;
         if (!config.firstTimeInitialized) {
             this.adapter.log.info('first time initialization');
             this.adapter.log.debug('system config:' + JSON.stringify(this.adapter.systemConfig));
@@ -75,19 +75,19 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
             bridgeConfig.port = 0;
             bridgeConfig.verboseLogging = false;
             config.firstTimeInitialized = true;
-            this.adapter.extendForeignObject('system.adapter.' + this.adapter.name + '.' + this.adapter.instance, {native: config}, undefined);
+            this.adapter.extendForeignObject('system.adapter.' + this.adapter.name + '.' + this.adapter.instance, { native: config }, undefined);
         }
         this.verboseHAPLogging = bridgeConfig.verboseLogging == true;
 
         this.adapter.log.debug('creating bridge');
-        this.devices.push(new hkBridge.THomeKitBridge(config.bridge, this, this.adapter.log));        
+        this.devices.push(new hkBridge.THomeKitBridge(config.bridge, this, this.adapter.log));
     }
 
     private createCameraDevices(config: any) {
-        let cameraArray:Array<Configuration.ICameraConfig> = config.cameras;
+        let cameraArray: Array<Configuration.ICameraConfig> = config.cameras;
         if (cameraArray === undefined)
             return;
-        
+
         for (let cameraConfig of cameraArray) {
             this.adapter.log.debug('creating camera');
             this.devices.push(new THomeKitIPCamera(cameraConfig, this.adapter.log));
@@ -101,7 +101,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
         }
     }
 
-    private handleState(id:string, state:ioBroker.State) {
+    private handleState(id: string, state: ioBroker.State) {
         // Warning, state can be null if it was deleted
         let notifyArray = this.stateToEventMap.get(id);
         if (!notifyArray) {
@@ -111,13 +111,13 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
         this.adapter.log.debug('got a stateChange for [' + id + ']');
 
         // try to convert it to a number
-        convertStateValueToNumber(state);        
+        convertStateValueToNumber(state);
 
         for (let method of notifyArray)
             method(state);
     }
 
-    private handleMessage(obj:any) {
+    private handleMessage(obj: any) {
         if (typeof obj === 'object' && obj.message) {
             if (obj.command === 'send') {
                 // Send response in callback if required
@@ -138,12 +138,12 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
         }
     }
 
-    private handleInOutSubscriptionRequest(requestor:ISubscriptionRequestor, changeNotify:hkBridge.IInOutChangeNotify) {
+    private handleInOutSubscriptionRequest(requestor: ISubscriptionRequestor, changeNotify: hkBridge.IInOutChangeNotify) {
         if (requestor.subscriptionRequests.length == 0)
             return;
 
         for (let subscriptionRequest of requestor.subscriptionRequests) {
-            let changeInterceptor = (ioValue:any) => subscriptionRequest.subscriptionEvent(ioValue, changeNotify);
+            let changeInterceptor = (ioValue: any) => subscriptionRequest.subscriptionEvent(ioValue, changeNotify);
 
 
             if (subscriptionRequest.subscriptionType === 'state') {
@@ -167,7 +167,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
 
     }
 
-    public CreateBinding(characteristicConfig:Configuration.ICharacteristicConfig, changeNotify:hkBridge.IInOutChangeNotify):hkBridge.IHomeKitBridgeBinding {
+    public CreateBinding(characteristicConfig: Configuration.ICharacteristicConfig, changeNotify: hkBridge.IInOutChangeNotify): hkBridge.IHomeKitBridgeBinding {
         if (isCustomCharacteristicConfig(characteristicConfig)) {
             let inoutFunc = functionFactory.createInOutFunction(this.adapter, characteristicConfig.inOutFunction, characteristicConfig.inOutParameters);
             if (inoutFunc === undefined) {
@@ -180,11 +180,11 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
                 this.adapter.log.error('[' + characteristicConfig.name + '] could not create conversion-function: ' + characteristicConfig.conversionFunction + ' with params: ' + JSON.stringify(characteristicConfig.conversionParameters));
                 return undefined;
             }
-            
-            if(isSubscriptionRequestor(inoutFunc)) {
+
+            if (isSubscriptionRequestor(inoutFunc)) {
                 this.handleInOutSubscriptionRequest(inoutFunc, changeNotify);
             }
-            
+
             return {
                 conversion: convFunc,
                 inOut: inoutFunc

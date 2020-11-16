@@ -100,7 +100,6 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
 
     public handlePropertyChange(config: hkBridge.Configuration.ICameraConfig, propertyName: keyof hkBridge.Configuration.ICameraConfig, errorElement: HTMLElement, validator: TValidatorFunction, ev: Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
-        config.codec = inputTarget.value;
         if (inputTarget.type == "checkbox") {
             (config[propertyName] as any) = inputTarget.checked;
         } else {

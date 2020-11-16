@@ -3072,15 +3072,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.THomeKitIPCamera = void 0;
 /// <reference path="./typings/index.d.ts" />
 var child_process_1 = __webpack_require__(/*! child_process */ "child_process");
-var ip = __webpack_require__(/*! ip */ "ip");
 var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
-var crypto = __webpack_require__(/*! crypto */ "crypto");
 var THomeKitIPCamera = /** @class */ (function () {
     function THomeKitIPCamera(camConfig, FLogger) {
         this.camConfig = camConfig;
         this.FLogger = FLogger;
-        this.services = [];
-        this.streamControllers = [];
         this.pendingSessions = {};
         this.ongoingSessions = {};
         this.init();
@@ -3090,9 +3086,7 @@ var THomeKitIPCamera = /** @class */ (function () {
             return;
         }
         this.createCameraDevice();
-        this.createCameraControlService();
-        this.createSecureVideoService();
-        this._createStreamControllers();
+        this.createCameraController();
         this.publishCamera();
     };
     THomeKitIPCamera.prototype.createOptionsDictionary = function () {
@@ -3148,20 +3142,20 @@ var THomeKitIPCamera = /** @class */ (function () {
             video: {
                 resolutions: videoResolutions,
                 codec: {
-                    profiles: [0, 1, 2],
-                    levels: [0, 1, 2] // Enum, please refer StreamController.VideoCodecParamLevelTypes
-                }
+                    profiles: [0 /* BASELINE */, 1 /* MAIN */, 2 /* HIGH */],
+                    levels: [0 /* LEVEL3_1 */, 1 /* LEVEL3_2 */, 2 /* LEVEL4_0 */],
+                },
             },
             audio: {
                 comfort_noise: false,
                 codecs: [
                     {
-                        type: "OPUS",
-                        samplerate: 24 // 8, 16, 24 KHz
+                        type: "OPUS" /* OPUS */,
+                        samplerate: [16 /* KHZ_16 */, 24 /* KHZ_24 */]
                     },
                     {
-                        type: "AAC-eld",
-                        samplerate: 16
+                        type: "AAC-eld" /* AAC_ELD */,
+                        samplerate: [16 /* KHZ_16 */, 24 /* KHZ_24 */]
                     }
                 ]
             }
@@ -3183,30 +3177,18 @@ var THomeKitIPCamera = /** @class */ (function () {
             _this.FLogger.debug('camera identify');
             callback(); // success
         });
-        hapDevice.configureCameraSource(this);
-        this._camera = hapDevice;
+        this.camera = hapDevice;
     };
-    THomeKitIPCamera.prototype.createCameraControlService = function () {
-        var controlService = new hap_nodejs_1.Service.CameraControl('', '');
-        this.services.push(controlService);
-    };
-    THomeKitIPCamera.prototype._createStreamControllers = function () {
-        var options = this.createOptionsDictionary();
-        var maxStreams = this.camConfig.numberOfStreams || 2;
-        for (var i = 0; i < maxStreams; i++) {
-            var streamController = new hap_nodejs_1.StreamController(i, options, this);
-            this.services.push(streamController.service);
-            this.streamControllers.push(streamController);
-        }
-    };
-    THomeKitIPCamera.prototype.createSecureVideoService = function () {
-        // var myCameraOperatingMode = new Service.CameraOperatingMode('', '');
-        // this.services.push(myCameraOperatingMode);
-        // var myCameraEventRecordingManagement = new Service.CameraEventRecordingManagement('', '');
-        // this.services.push(myCameraEventRecordingManagement);
+    THomeKitIPCamera.prototype.createCameraController = function () {
+        this.cameraController = new hap_nodejs_1.CameraController({
+            cameraStreamCount: 2,
+            delegate: this,
+            streamingOptions: this.createOptionsDictionary()
+        });
+        this.camera.configureController(this.cameraController);
     };
     THomeKitIPCamera.prototype.publishCamera = function () {
-        this._camera.publish({
+        this.camera.publish({
             username: this.camConfig.username,
             port: this.camConfig.port,
             pincode: this.camConfig.pincode,
@@ -3216,11 +3198,6 @@ var THomeKitIPCamera = /** @class */ (function () {
                 reuseAddr: true
             }
         }, false);
-    };
-    THomeKitIPCamera.prototype.handleCloseConnection = function (connectionID) {
-        this.streamControllers.forEach(function (controller) {
-            controller.handleCloseConnection(connectionID);
-        });
     };
     THomeKitIPCamera.prototype.handleSnapshotRequest = function (request, callback) {
         var params = {
@@ -3243,72 +3220,67 @@ var THomeKitIPCamera = /** @class */ (function () {
     };
     THomeKitIPCamera.prototype.prepareStream = function (request, callback) {
         var sessionInfo = {};
-        var sessionID = request["sessionID"];
-        var targetAddress = request["targetAddress"];
-        sessionInfo["address"] = targetAddress;
-        var response = {};
-        var videoInfo = request["video"];
-        if (videoInfo) {
-            var targetPort = videoInfo["port"];
-            var srtp_key = videoInfo["srtp_key"];
-            var srtp_salt = videoInfo["srtp_salt"];
-            // SSRC is a 32 bit integer that is unique per stream
-            var ssrcSource = crypto.randomBytes(4);
-            ssrcSource[0] = 0;
-            var ssrc = ssrcSource.readInt32BE(0);
-            var videoResp = {
-                port: targetPort,
-                ssrc: ssrc,
-                srtp_key: srtp_key,
-                srtp_salt: srtp_salt
-            };
-            response["video"] = videoResp;
-            sessionInfo["video_port"] = targetPort;
-            sessionInfo["video_srtp"] = Buffer.concat([srtp_key, srtp_salt]);
-            sessionInfo["video_ssrc"] = ssrc;
-        }
-        var audioInfo = request["audio"];
-        if (audioInfo) {
-            var targetPort = audioInfo["port"];
-            var srtp_key = audioInfo["srtp_key"];
-            var srtp_salt = audioInfo["srtp_salt"];
-            // SSRC is a 32 bit integer that is unique per stream
-            var ssrcSource = crypto.randomBytes(4);
-            ssrcSource[0] = 0;
-            var ssrc = ssrcSource.readInt32BE(0);
-            var audioResp = {
-                port: targetPort,
-                ssrc: ssrc,
-                srtp_key: srtp_key,
-                srtp_salt: srtp_salt
-            };
-            response["audio"] = audioResp;
-            sessionInfo["audio_port"] = targetPort;
-            sessionInfo["audio_srtp"] = Buffer.concat([srtp_key, srtp_salt]);
-            sessionInfo["audio_ssrc"] = ssrc;
-        }
-        var currentAddress = ip.address();
-        var addressResp = {
-            address: currentAddress
-        };
-        if (ip.isV4Format(currentAddress)) {
-            addressResp["type"] = "v4";
-        }
-        else {
-            addressResp["type"] = "v6";
-        }
-        response["address"] = addressResp;
-        this.pendingSessions[hap_nodejs_1.uuid.unparse(sessionID)];
-        callback(response);
-    };
-    THomeKitIPCamera.prototype.handleStreamRequest = function (request) {
-        var _a, _b;
         var sessionID = request.sessionID;
-        var requestType = request.type;
-        if (sessionID) {
-            var sessionIdentifier = hap_nodejs_1.uuid.unparse(sessionID, 0);
-            if (requestType == "start") {
-                var sessionInfo = this.pendingSessions[sessionIdentifier];
+        var targetAddress = request.targetAddress;
+        sessionInfo.address = targetAddress;
+        var response = {};
+        var videoInfo = request.video;
+        if (videoInfo) {
+            var targetPort = videoInfo.port;
+            var videoCryptoSuite = videoInfo.srtpCryptoSuite; // could be used to support multiple crypto suite (or support no suite for debugging)
+            var videoSrtpKey = videoInfo.srtp_key;
+            var videoSrtpSalt = videoInfo.srtp_salt;
+            var videoSSRC = hap_nodejs_1.CameraController.generateSynchronisationSource();
+            response.video = {
+                port: targetPort,
+                ssrc: videoSSRC,
+                srtp_key: videoSrtpKey,
+                srtp_salt: videoSrtpSalt
+            };
+            sessionInfo.videoPort = targetPort;
+            sessionInfo.videoSRTP = Buffer.concat([videoSrtpKey, videoSrtpSalt]);
+            sessionInfo.videoSSRC = videoSSRC;
+            sessionInfo.videoCryptoSuite = videoCryptoSuite;
+        }
+        var audioInfo = request.audio;
+        // this.FLogger.debug(`∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂ audioInfo ${JSON.stringify(audioInfo)}`);
+        if (audioInfo) {
+            var targetPort = audioInfo.port;
+            var audioCryptoSuite = audioInfo.srtpCryptoSuite; // could be used to support multiple crypto suite (or support no suite for debugging)
+            var audioSrtpKey = audioInfo.srtp_key;
+            var audioSrtpSalt = audioInfo.srtp_salt;
+            var audioSSRC = hap_nodejs_1.CameraController.generateSynchronisationSource();
+            response.audio = {
+                port: targetPort,
+                ssrc: audioSSRC,
+                srtp_key: audioSrtpKey,
+                srtp_salt: audioSrtpSalt
+            };
+            sessionInfo.audioPort = targetPort;
+            sessionInfo.audioSRTP = Buffer.concat([audioSrtpKey, audioSrtpSalt]);
+            sessionInfo.audioSSRC = audioSSRC;
+            sessionInfo.audioCryptoSuite = audioCryptoSuite;
+        }
+        // let currentAddress = ip.address();
+        // var addressResp: Partial<Address> = {
+        //     address: currentAddress
+        // };
+        // if (ip.isV4Format(currentAddress)) {
+        //     addressResp.type = "v4";
+        // } else {
+        //     addressResp.type = "v6";
+        // }
+        // response.address = addressResp as Address;
+        this.pendingSessions[sessionID] = sessionInfo;
+        callback(undefined, response);
+    };
+    THomeKitIPCamera.prototype.handleStreamRequest = function (request, callback) {
+        var _this = this;
+        var _a, _b;
+        var sessionId = request.sessionID;
+        switch (request.type) {
+            case "start" /* START */: {
+                var sessionInfo = this.pendingSessions[sessionId];
                 if (sessionInfo) {
                     var width = 1280;
                     var height = 720;
@@ -3325,6 +3297,8 @@ var THomeKitIPCamera = /** @class */ (function () {
                         }
                         bitrate = videoInfo.max_bit_rate;
                     }
+                    var videoSuite = this.getCryptoSuite(sessionInfo.videoCryptoSuite);
+                    var audioSuite = this.getCryptoSuite(sessionInfo.audioCryptoSuite);
                     var params_1 = {
                         source: this.camConfig.source,
                         codec: codec,
@@ -3332,33 +3306,89 @@ var THomeKitIPCamera = /** @class */ (function () {
                         width: width,
                         height: height,
                         bitrate: bitrate,
-                        videokey: (_a = sessionInfo.video_srtp) === null || _a === void 0 ? void 0 : _a.toString('base64'),
+                        doubledBitrate: 2 * bitrate,
+                        videokey: (_a = sessionInfo.videoSRTP) === null || _a === void 0 ? void 0 : _a.toString('base64'),
                         targetAddress: sessionInfo.address,
-                        targetVideoPort: sessionInfo.video_port,
-                        targetVideoSsrc: sessionInfo.video_ssrc,
-                        targetAudioPort: sessionInfo.audio_port,
-                        targetAudioSsrc: sessionInfo.audio_ssrc,
-                        audiokey: (_b = sessionInfo.audio_srtp) === null || _b === void 0 ? void 0 : _b.toString('base64')
+                        targetVideoPort: sessionInfo.videoPort,
+                        targetVideoSsrc: sessionInfo.videoSSRC,
+                        targetVideoCryptoSuite: videoSuite,
+                        targetAudioPort: sessionInfo.audioPort,
+                        targetAudioSsrc: sessionInfo.audioSSRC,
+                        targetAudioCryptoSuite: audioSuite,
+                        audiokey: (_b = sessionInfo.audioSRTP) === null || _b === void 0 ? void 0 : _b.toString('base64')
                     };
                     var ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map(function (s) { return s.replace(/\$\{(.*?)\}/g, function (_, word) {
                         return params_1[word];
                     }); });
                     this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
                     var ffmpeg = child_process_1.spawn('ffmpeg', ffmpegCommand, { env: process.env });
-                    var devnull = __webpack_require__(/*! dev-null */ "dev-null");
-                    ffmpeg.stdout.pipe(devnull());
-                    ffmpeg.stderr.pipe(devnull());
-                    this.ongoingSessions[sessionIdentifier] = ffmpeg;
+                    var started_1 = false;
+                    ffmpeg.stderr.on('data', function (data) {
+                        console.log(data.toString("utf8"));
+                        if (!started_1) {
+                            started_1 = true;
+                            _this.FLogger.debug("FFMPEG: received first frame");
+                            callback(); // do not forget to execute callback once set up
+                        }
+                    });
+                    ffmpeg.on('error', function (error) {
+                        _this.FLogger.error("[Video] Failed to start video stream: " + error.message);
+                        callback(new Error("ffmpeg process creation failed!"));
+                    });
+                    ffmpeg.on('exit', function (code, signal) {
+                        var message = "[Video] ffmpeg exited with code: " + code + " and signal: " + signal;
+                        if (code == null || code === 255) {
+                            _this.FLogger.debug(message + " (Video stream stopped!)");
+                        }
+                        else {
+                            _this.FLogger.error(message + " (error)");
+                            if (!started_1) {
+                                callback(new Error(message));
+                            }
+                            else {
+                                _this.cameraController.forceStopStreamingSession(sessionId);
+                            }
+                        }
+                    });
+                    this.ongoingSessions[sessionId] = {
+                        localVideoPort: 0,
+                        process: ffmpeg,
+                    };
+                    delete this.pendingSessions[sessionId];
+                    break;
                 }
-                delete this.pendingSessions[sessionIdentifier];
             }
-            else if (requestType == "stop") {
-                var ffmpegProcess = this.ongoingSessions[sessionIdentifier];
-                if (ffmpegProcess) {
-                    ffmpegProcess.kill('SIGKILL');
+            case "reconfigure" /* RECONFIGURE */:
+                // not supported by this example
+                this.FLogger.error("Received (unsupported) request to reconfigure to: " + JSON.stringify(request.video));
+                callback();
+                break;
+            case "stop" /* STOP */:
+                var ongoingSession = this.ongoingSessions[sessionId];
+                // ports.delete(ongoingSession.localVideoPort);
+                try {
+                    ongoingSession.process.kill('SIGKILL');
                 }
-                delete this.ongoingSessions[sessionIdentifier];
-            }
+                catch (e) {
+                    this.FLogger.error("Error occurred terminating the video process!");
+                    this.FLogger.error(e);
+                }
+                delete this.ongoingSessions[sessionId];
+                this.FLogger.debug("Stopped streaming session!");
+                callback();
+                break;
+        }
+    };
+    THomeKitIPCamera.prototype.getCryptoSuite = function (suite) {
+        switch (suite) {
+            case 0 /* AES_CM_128_HMAC_SHA1_80 */: // actually ffmpeg just supports AES_CM_128_HMAC_SHA1_80
+                return "AES_CM_128_HMAC_SHA1_80";
+                break;
+            case 1 /* AES_CM_256_HMAC_SHA1_80 */:
+                return "AES_CM_256_HMAC_SHA1_80";
+                break;
+            default:
+                return undefined;
         }
     };
     return THomeKitIPCamera;
@@ -3617,17 +3647,6 @@ module.exports = require("child_process");
 
 /***/ }),
 
-/***/ "crypto":
-/*!*************************!*\
-  !*** external "crypto" ***!
-  \*************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("crypto");
-
-/***/ }),
-
 /***/ "debug":
 /*!************************!*\
   !*** external "debug" ***!
@@ -3639,17 +3658,6 @@ module.exports = require("debug");
 
 /***/ }),
 
-/***/ "dev-null":
-/*!***************************!*\
-  !*** external "dev-null" ***!
-  \***************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("dev-null");
-
-/***/ }),
-
 /***/ "hap-nodejs":
 /*!*****************************!*\
   !*** external "hap-nodejs" ***!
@@ -3658,17 +3666,6 @@ module.exports = require("dev-null");
 /***/ (function(module, exports) {
 
 module.exports = require("hap-nodejs");
-
-/***/ }),
-
-/***/ "ip":
-/*!*********************!*\
-  !*** external "ip" ***!
-  \*********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("ip");
 
 /***/ }),
 
