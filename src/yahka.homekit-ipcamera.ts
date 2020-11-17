@@ -1,13 +1,14 @@
 /// <reference path="./typings/index.d.ts" />
 import { spawn, ChildProcess } from 'child_process';
 import { ILogger } from './yahka.homekit-bridge';
-import util = require('util');
-import ip = require('ip');
-import { uuid, Accessory, Service, Characteristic, SnapshotRequest, PrepareStreamRequest, SessionIdentifier, CameraStreamingDelegate, CameraController, SRTPCryptoSuites, H264Profile, H264Level, SnapshotRequestCallback, PrepareStreamCallback, PrepareStreamResponse, StreamingRequest, StreamRequestCallback, CameraStreamingOptions, StreamRequestTypes, AudioStreamingCodecType, AudioStreamingSamplerate } from 'hap-nodejs';
+import {
+    uuid, Accessory, Service, Characteristic, SnapshotRequest,
+    PrepareStreamRequest, SessionIdentifier, CameraStreamingDelegate,
+    CameraController, SRTPCryptoSuites, H264Profile, H264Level, SnapshotRequestCallback,
+    PrepareStreamCallback, PrepareStreamResponse, StreamingRequest, StreamRequestCallback,
+    CameraStreamingOptions, StreamRequestTypes, AudioStreamingCodecType, AudioStreamingSamplerate
+} from 'hap-nodejs';
 import { Configuration } from './shared/yahka.configuration';
-import * as crypto from 'crypto';
-
-
 
 type SessionInfo = {
     address: string, // address of the HAP controller
@@ -232,7 +233,6 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
         }
 
         const audioInfo = request.audio;
-        // this.FLogger.debug(`∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂ audioInfo ${JSON.stringify(audioInfo)}`);
         if (audioInfo) {
             const targetPort = audioInfo.port;
             const audioCryptoSuite = audioInfo.srtpCryptoSuite; // could be used to support multiple crypto suite (or support no suite for debugging)
@@ -280,6 +280,7 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                     var height = 720;
                     var fps = 30;
                     var bitrate = 300;
+                    var audioBitrate = 0;
                     var codec = this.camConfig.codec || 'libx264';
 
                     let videoInfo = request.video;
@@ -295,9 +296,10 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                         bitrate = videoInfo.max_bit_rate;
                     }
 
-
-                    const videoSuite = this.getCryptoSuite(sessionInfo.videoCryptoSuite);
-                    const audioSuite = this.getCryptoSuite(sessionInfo.audioCryptoSuite);
+                    let audioInfo = request.audio;
+                    if (audioInfo) {
+                        audioBitrate = audioInfo.max_bit_rate;
+                    }
 
                     let params = {
                         source: this.camConfig.source,
@@ -306,32 +308,37 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                         width: width,
                         height: height,
                         bitrate: bitrate,
-                        doubledBitrate: 2 * bitrate,
                         videokey: sessionInfo.videoSRTP?.toString('base64'),
                         targetAddress: sessionInfo.address,
                         targetVideoPort: sessionInfo.videoPort,
-                        targetVideoSsrc: sessionInfo.videoSSRC,
-                        targetVideoCryptoSuite: videoSuite,
-                        targetAudioPort: sessionInfo.audioPort,
-                        targetAudioSsrc: sessionInfo.audioSSRC,
-                        targetAudioCryptoSuite: audioSuite,
-                        audiokey: sessionInfo.audioSRTP?.toString('base64')
+                        targetVideoSsrc: sessionInfo.videoSSRC
                     }
 
-                    let ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => {
-                        return params[word];
-                    }));
+                    let ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => params[word]));
+
+                    if (this.camConfig.enableAudio && request.audio != null) {
+                        let params = {
+                            source: this.camConfig.source,
+                            bitrate: audioBitrate,
+                            targetAddress: sessionInfo.address,
+                            targetAudioPort: sessionInfo.audioPort,
+                            targetAudioSsrc: sessionInfo.audioSSRC,
+                            audiokey: sessionInfo.audioSRTP?.toString('base64'),
+                        }
+
+                        ffmpegCommand = ffmpegCommand.concat(
+                            this.camConfig.ffmpegCommandLine.streamAudio.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => params[word]))
+                        )
+                    }
 
                     this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
                     let ffmpeg = spawn('ffmpeg', ffmpegCommand, { env: process.env });
 
                     let started = false;
                     ffmpeg.stderr.on('data', (data: Buffer) => {
-                        console.log(data.toString("utf8"));
                         if (!started) {
                             started = true;
                             this.FLogger.debug("FFMPEG: received first frame");
-
                             callback(); // do not forget to execute callback once set up
                         }
                     });
@@ -366,41 +373,27 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
             }
 
             case StreamRequestTypes.RECONFIGURE:
-                // not supported by this example
-                this.FLogger.error("Received (unsupported) request to reconfigure to: " + JSON.stringify(request.video));
                 callback();
                 break;
             case StreamRequestTypes.STOP:
-                const ongoingSession = this.ongoingSessions[sessionId];
-
-                // ports.delete(ongoingSession.localVideoPort);
-
-                try {
-                    ongoingSession.process.kill('SIGKILL');
-                } catch (e) {
-                    this.FLogger.error("Error occurred terminating the video process!");
-                    this.FLogger.error(e);
-                }
-
-                delete this.ongoingSessions[sessionId];
-
-                this.FLogger.debug("Stopped streaming session!");
+                this.stopStreaming(sessionId);
                 callback();
                 break;
         }
     }
 
-    private getCryptoSuite(suite: SRTPCryptoSuites): string {
-        switch (suite) {
-            case SRTPCryptoSuites.AES_CM_128_HMAC_SHA1_80: // actually ffmpeg just supports AES_CM_128_HMAC_SHA1_80
-                return "AES_CM_128_HMAC_SHA1_80";
-                break;
-            case SRTPCryptoSuites.AES_CM_256_HMAC_SHA1_80:
-                return "AES_CM_256_HMAC_SHA1_80";
-                break;
-            default:
-                return undefined;
+    private stopStreaming(sessionId: string) {
+        const ongoingSession = this.ongoingSessions[sessionId];
+        try {
+            ongoingSession.process.kill('SIGKILL');
+        } catch (e) {
+            this.FLogger.error("Error occurred terminating the video process!");
+            this.FLogger.error(e);
         }
+
+        delete this.ongoingSessions[sessionId];
+
+        this.FLogger.debug("Stopped streaming session!");
     }
 }
 

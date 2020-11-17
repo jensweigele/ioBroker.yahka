@@ -96256,8 +96256,13 @@ var Defaults;
 (function (Defaults) {
     Defaults.defaultCommandLine = {
         stream: [
+            '-nostats',
+            '-nostdin',
+            '-y',
             '-re',
             '-i', '${source}',
+            '-map',
+            '0:v:0',
             '-threads', '0',
             '-vcodec', '${codec}',
             '-an',
@@ -96274,6 +96279,37 @@ var Defaults;
             '-srtp_out_suite', 'AES_CM_128_HMAC_SHA1_80',
             '-srtp_out_params', '${videokey}',
             'srtp://${targetAddress}:${targetVideoPort}?rtcpport=${targetVideoPort}&localrtcpport=${targetVideoPort}&pkt_size=1378'
+        ],
+        streamAudio: [
+            '-map',
+            '0:a:0',
+            '-acodec',
+            'libfdk_aac',
+            '-profile:a',
+            'aac_eld',
+            '-flags',
+            '+global_header',
+            '-f',
+            'null',
+            '-ar',
+            '24k',
+            '-b:a',
+            '${bitrate}k',
+            '-bufsize:a',
+            '${bitrate}k',
+            '-ac',
+            '1',
+            '-payload_type',
+            '110',
+            '-ssrc',
+            '${targetAudioSsrc}',
+            '-f',
+            'rtp',
+            '-srtp_out_suite',
+            'AES_CM_128_HMAC_SHA1_80',
+            '-srtp_out_params',
+            '${audiokey}',
+            'srtp://${targetAddress}:${targetAudioPort}?rtcpport=${targetAudioPort}&localrtcpport=${targetAudioPort}&pkt_size=1378'
         ],
         snapshot: [
             '-re',
@@ -96306,6 +96342,7 @@ var Defaults;
             '-srtp_out_params', '${videokey}',
             'srtp://${targetAddress}:${targetVideoPort}?rtcpport=${targetVideoPort}&localrtcpport=${targetVideoPort}&pkt_size=1378'
         ],
+        streamAudio: [],
         snapshot: [
             '-re',
             '-f', 'dshow',
@@ -97272,7 +97309,7 @@ exports.ConfigPageBuilder_CustomDevice = ConfigPageBuilder_CustomDevice;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Basic Properties</span>\n    </div>\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"enabled\">Enabled:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enabled\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"name\">Device name:</label></div>\n            <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists.\n                Please change the name!</div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"name\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"model\">Model:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"model\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"serial\">Serial:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"serial\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"firmware\">Firmware:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"firmware\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"username\">Username:</label><span class=\"edit-hint translate\">needs\n                    to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field,\n                        the camera needs to be reconfigured in the HomeKit database</b></span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"username\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"pincode\">Pincode:</label><span class=\"edit-hint translate\">needs\n                    to be in the form of 123-45-678</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"pincode\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"port\">IP/Port:</label><span class=\"edit-hint translate\">Port 0 =\n                    random free port assigned by the operation system (default)</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select id=\"interface\"></select>\n                <input min=\"0\" max=\"65535\" type=\"number\" id=\"port\" />\n            </div>\n        </div>\n    </div>\n</div>\n\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Stream Properties</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"source\">Source:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"source\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"codec\">Codec:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"codec\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"numberOfStreams\">Number of Streams:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"numberOfStreams\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxWidth\">maxWidth:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxWidth\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxHeight\">maxHeight:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxHeight\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxFPS\">maxFPS:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxFPS\" />\n            </div>\n        </div>\n    </div>\n</div>\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Advanced Settings</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"ffmpeg_snapshot\">FFMPEG Command Line - Snapshot:</label></div>\n            <div class=\"errorpanel\" id=\"ffmpeg_snapshot_error\"></div>\n            <div class=\"input control flex-grow margin10 flex-container-row\">\n                <textarea rows=8 class=\"flex-grow\" id=\"ffmpeg_snapshot\"></textarea>\n                <div class=\"margin10\"><span class=\"translate\">Available replacers:</span> <br>\n                    <ul class=\"simple-list blue-bullet replace-list\">\n                        <li>${source}</li>\n                        <li>${width}</li>\n                        <li>${height}</li>\n                    </ul>\n                </div>\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"ffmpeg_stream\">FFMPEG Command Line - Stream:</label></div>\n            <div class=\"errorpanel\" id=\"ffmpeg_stream_error\"></div>\n            <div class=\"input control flex-grow margin10 flex-container-row\">\n                <textarea rows=8 class=\"flex-grow\" id=\"ffmpeg_stream\"></textarea>\n                <div class=\"margin10\"><span class=\"translate\">Available replacers:</span> <br>\n                    <ul class=\"simple-list blue-bullet replace-list\">\n                        <li>${codec}</li>\n                        <li>${fps}</li>\n                        <li>${width}</li>\n                        <li>${height}</li>\n                        <li>${bitrate}</li>\n                        <li>${videokey}</li>\n                        <li>${targetAddress}</li>\n                        <li>${videokey}</li>\n                        <li>${targetVideoPort}</li>\n                        <li>${targetVideoSsrc}</li>\n                    </ul>\n                </div>\n            </div>\n\n        </div>\n    </div>\n</div>";
+module.exports = "<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Basic Properties</span>\n    </div>\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"enabled\">Enabled:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enabled\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"name\">Device name:</label></div>\n            <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists.\n                Please change the name!</div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"name\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"model\">Model:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"model\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"serial\">Serial:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"serial\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"firmware\">Firmware:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"firmware\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"username\">Username:</label><span class=\"edit-hint translate\">needs\n                    to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field,\n                        the camera needs to be reconfigured in the HomeKit database</b></span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"username\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"pincode\">Pincode:</label><span class=\"edit-hint translate\">needs\n                    to be in the form of 123-45-678</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"pincode\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"port\">IP/Port:</label><span class=\"edit-hint translate\">Port 0 =\n                    random free port assigned by the operation system (default)</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select id=\"interface\"></select>\n                <input min=\"0\" max=\"65535\" type=\"number\" id=\"port\" />\n            </div>\n        </div>\n    </div>\n</div>\n\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Stream Properties</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"source\">Source:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"source\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"codec\">Codec:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"codec\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"numberOfStreams\">Number of Streams:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"numberOfStreams\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxWidth\">maxWidth:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxWidth\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxHeight\">maxHeight:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxHeight\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxFPS\">maxFPS:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxFPS\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"enableAudio\">Enable Audio:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enableAudio\" />\n            </div>\n        </div>\n    </div>\n</div>\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Advanced Settings</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div style=\"display: flex; justify-content: space-between;\">\n                <label class=\"translate\" for=\"ffmpeg_snapshot\">FFMPEG Command Line - Snapshot:</label>\n                <a id=\"ffmpeg_snapshot_reset\" href=\"#\"><span class=\"icon mif-sync-problem translate\">Reset to\n                        default</span></a>\n            </div>\n            <div class=\"errorpanel\" id=\"ffmpeg_snapshot_error\"></div>\n            <div class=\"input control flex-grow margin10 flex-container-row\">\n                <textarea rows=8 class=\"flex-grow\" id=\"ffmpeg_snapshot\"></textarea>\n                <div class=\"margin10\"><span class=\"translate\">Available replacers:</span> <br>\n                    <ul class=\"simple-list blue-bullet replace-list\">\n                        <li>${source}</li>\n                        <li>${width}</li>\n                        <li>${height}</li>\n                    </ul>\n                </div>\n            </div>\n        </div>\n        <div>\n            <div style=\"display: flex; justify-content: space-between;\">\n                <label class=\"translate\" for=\"ffmpeg_stream\">FFMPEG Command Line - Stream:</label>\n                <a id=\"ffmpeg_stream_reset\" href=\"#\"><span class=\"icon mif-sync-problem translate\">Reset to\n                        default</span></a>\n            </div>\n            <div class=\"errorpanel\" id=\"ffmpeg_stream_error\"></div>\n            <div class=\"input control flex-grow margin10 flex-container-row\">\n                <textarea rows=8 class=\"flex-grow\" id=\"ffmpeg_stream\"></textarea>\n                <div class=\"margin10\"><span class=\"translate\">Available replacers:</span> <br>\n                    <ul class=\"simple-list blue-bullet replace-list\">\n                        <li>${codec}</li>\n                        <li>${fps}</li>\n                        <li>${width}</li>\n                        <li>${height}</li>\n                        <li>${bitrate}</li>\n                        <li>${videokey}</li>\n                        <li>${targetAddress}</li>\n                        <li>${targetVideoPort}</li>\n                        <li>${targetVideoSsrc}</li>\n                    </ul>\n                </div>\n            </div>\n\n        </div>\n        <div>\n            <div style=\"display: flex; justify-content: space-between;\">\n                <label class=\"translate\" for=\"ffmpeg_streamAudio\">FFMPEG Command Line - Audio Stream:</label>\n                <a id=\"ffmpeg_streamAudio_reset\" href=\"#\"><span class=\"icon mif-sync-problem translate\">Reset to\n                        default</span></a>\n            </div>\n            <div class=\"errorpanel\" id=\"ffmpeg_streamAudio_error\"></div>\n            <div class=\"input control flex-grow margin10 flex-container-row\">\n                <textarea rows=8 class=\"flex-grow\" id=\"ffmpeg_streamAudio\"></textarea>\n                <div class=\"margin10\"><span class=\"translate\">Available replacers:</span> <br>\n                    <ul class=\"simple-list blue-bullet replace-list\">\n                        <li>${codec}</li>\n                        <li>${bitrate}</li>\n                        <li>${audiokey}</li>\n                        <li>${targetAddress}</li>\n                        <li>${targetAudioPort}</li>\n                        <li>${targetAudioSsrc}</li>\n                    </ul>\n                </div>\n            </div>\n\n        </div>\n\n    </div>\n</div>";
 
 /***/ }),
 
@@ -97342,6 +97379,7 @@ var pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/
 var admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
 var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
 var yahka_admin_1 = __webpack_require__(/*! ../yahka.admin */ "./admin/yahka.admin.ts");
+var admin_defaults_1 = __webpack_require__(/*! ../admin.defaults */ "./admin/admin.defaults.ts");
 var ConfigPageBuilder_IPCamera = /** @class */ (function (_super) {
     __extends(ConfigPageBuilder_IPCamera, _super);
     function ConfigPageBuilder_IPCamera(delegate) {
@@ -97365,14 +97403,15 @@ var ConfigPageBuilder_IPCamera = /** @class */ (function (_super) {
                         }
                         configFragment = document.importNode(this.configPanelTemplate.content, true);
                         admin_translation_1.translateFragment(configFragment);
-                        inputHelper = function (selector, propertyName, selectList, validator) {
+                        inputHelper = function (selector, propertyName, selectList, validator, checkDefault) {
                             if (validator === void 0) { validator = undefined; }
+                            if (checkDefault === void 0) { checkDefault = true; }
                             var input = configFragment.querySelector(selector);
                             var errorElement = configFragment.querySelector(selector + '_error');
                             _this.fillSelectByListEntries(input, selectList);
                             var value = config[propertyName];
                             if (input.type === 'checkbox') {
-                                input.checked = value === undefined ? true : value;
+                                input.checked = value === undefined ? checkDefault : Boolean(value);
                                 input.addEventListener('change', _this.handlePropertyChange.bind(_this, config, propertyName, errorElement, validator));
                             }
                             else {
@@ -97397,6 +97436,11 @@ var ConfigPageBuilder_IPCamera = /** @class */ (function (_super) {
                                 input.value = '';
                             }
                             input.addEventListener('input', _this.handleffMpegPropertyChange.bind(_this, config, propertyName, inputErrorMsg));
+                            configFragment.querySelector(selector + '_reset').addEventListener('click', function () {
+                                input.value = JSON.stringify(admin_defaults_1.Defaults.ffmpegCommandLines.default[propertyName], null, 2);
+                                input.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+                                return true;
+                            });
                         };
                         inputHelper('#enabled', 'enabled');
                         inputHelper('#name', 'name', undefined, function () { return !_this.delegate.deviceIsUnique(config); });
@@ -97414,12 +97458,14 @@ var ConfigPageBuilder_IPCamera = /** @class */ (function (_super) {
                         inputHelper('#interface', 'interface', ipListForSelectBox);
                         inputHelper('#source', 'source');
                         inputHelper('#codec', 'codec');
+                        inputHelper('#enableAudio', 'enableAudio', undefined, undefined, false);
                         inputHelper('#numberOfStreams', 'numberOfStreams');
                         inputHelper('#maxWidth', 'maxWidth');
                         inputHelper('#maxHeight', 'maxHeight');
                         inputHelper('#maxFPS', 'maxFPS');
                         ffmpegHelper('#ffmpeg_snapshot', 'snapshot');
                         ffmpegHelper('#ffmpeg_stream', 'stream');
+                        ffmpegHelper('#ffmpeg_streamAudio', 'streamAudio');
                         devicePanel.appendChild(configFragment);
                         return [2 /*return*/];
                 }
@@ -97743,6 +97789,7 @@ var ioBroker_ButtonHandler = /** @class */ (function (_super) {
                     verboseLogging: false,
                     numberOfStreams: undefined,
                     ffmpegCommandLine: admin_defaults_1.Defaults.ffmpegCommandLines.default,
+                    enableAudio: false,
                     devices: []
                 };
                 _this.delegate.cameraConfigs.push(newIPCamera);

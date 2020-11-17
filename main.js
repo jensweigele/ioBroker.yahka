@@ -3243,7 +3243,6 @@ var THomeKitIPCamera = /** @class */ (function () {
             sessionInfo.videoCryptoSuite = videoCryptoSuite;
         }
         var audioInfo = request.audio;
-        // this.FLogger.debug(`∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂∂ audioInfo ${JSON.stringify(audioInfo)}`);
         if (audioInfo) {
             var targetPort = audioInfo.port;
             var audioCryptoSuite = audioInfo.srtpCryptoSuite; // could be used to support multiple crypto suite (or support no suite for debugging)
@@ -3286,6 +3285,7 @@ var THomeKitIPCamera = /** @class */ (function () {
                     var height = 720;
                     var fps = 30;
                     var bitrate = 300;
+                    var audioBitrate = 0;
                     var codec = this.camConfig.codec || 'libx264';
                     var videoInfo = request.video;
                     if (videoInfo) {
@@ -3297,8 +3297,10 @@ var THomeKitIPCamera = /** @class */ (function () {
                         }
                         bitrate = videoInfo.max_bit_rate;
                     }
-                    var videoSuite = this.getCryptoSuite(sessionInfo.videoCryptoSuite);
-                    var audioSuite = this.getCryptoSuite(sessionInfo.audioCryptoSuite);
+                    var audioInfo = request.audio;
+                    if (audioInfo) {
+                        audioBitrate = audioInfo.max_bit_rate;
+                    }
                     var params_1 = {
                         source: this.camConfig.source,
                         codec: codec,
@@ -3306,25 +3308,27 @@ var THomeKitIPCamera = /** @class */ (function () {
                         width: width,
                         height: height,
                         bitrate: bitrate,
-                        doubledBitrate: 2 * bitrate,
                         videokey: (_a = sessionInfo.videoSRTP) === null || _a === void 0 ? void 0 : _a.toString('base64'),
                         targetAddress: sessionInfo.address,
                         targetVideoPort: sessionInfo.videoPort,
-                        targetVideoSsrc: sessionInfo.videoSSRC,
-                        targetVideoCryptoSuite: videoSuite,
-                        targetAudioPort: sessionInfo.audioPort,
-                        targetAudioSsrc: sessionInfo.audioSSRC,
-                        targetAudioCryptoSuite: audioSuite,
-                        audiokey: (_b = sessionInfo.audioSRTP) === null || _b === void 0 ? void 0 : _b.toString('base64')
+                        targetVideoSsrc: sessionInfo.videoSSRC
                     };
-                    var ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map(function (s) { return s.replace(/\$\{(.*?)\}/g, function (_, word) {
-                        return params_1[word];
-                    }); });
+                    var ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map(function (s) { return s.replace(/\$\{(.*?)\}/g, function (_, word) { return params_1[word]; }); });
+                    if (this.camConfig.enableAudio && request.audio != null) {
+                        var params_2 = {
+                            source: this.camConfig.source,
+                            bitrate: audioBitrate,
+                            targetAddress: sessionInfo.address,
+                            targetAudioPort: sessionInfo.audioPort,
+                            targetAudioSsrc: sessionInfo.audioSSRC,
+                            audiokey: (_b = sessionInfo.audioSRTP) === null || _b === void 0 ? void 0 : _b.toString('base64'),
+                        };
+                        ffmpegCommand = ffmpegCommand.concat(this.camConfig.ffmpegCommandLine.streamAudio.map(function (s) { return s.replace(/\$\{(.*?)\}/g, function (_, word) { return params_2[word]; }); }));
+                    }
                     this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
                     var ffmpeg = child_process_1.spawn('ffmpeg', ffmpegCommand, { env: process.env });
                     var started_1 = false;
                     ffmpeg.stderr.on('data', function (data) {
-                        console.log(data.toString("utf8"));
                         if (!started_1) {
                             started_1 = true;
                             _this.FLogger.debug("FFMPEG: received first frame");
@@ -3359,37 +3363,25 @@ var THomeKitIPCamera = /** @class */ (function () {
                 }
             }
             case "reconfigure" /* RECONFIGURE */:
-                // not supported by this example
-                this.FLogger.error("Received (unsupported) request to reconfigure to: " + JSON.stringify(request.video));
                 callback();
                 break;
             case "stop" /* STOP */:
-                var ongoingSession = this.ongoingSessions[sessionId];
-                // ports.delete(ongoingSession.localVideoPort);
-                try {
-                    ongoingSession.process.kill('SIGKILL');
-                }
-                catch (e) {
-                    this.FLogger.error("Error occurred terminating the video process!");
-                    this.FLogger.error(e);
-                }
-                delete this.ongoingSessions[sessionId];
-                this.FLogger.debug("Stopped streaming session!");
+                this.stopStreaming(sessionId);
                 callback();
                 break;
         }
     };
-    THomeKitIPCamera.prototype.getCryptoSuite = function (suite) {
-        switch (suite) {
-            case 0 /* AES_CM_128_HMAC_SHA1_80 */: // actually ffmpeg just supports AES_CM_128_HMAC_SHA1_80
-                return "AES_CM_128_HMAC_SHA1_80";
-                break;
-            case 1 /* AES_CM_256_HMAC_SHA1_80 */:
-                return "AES_CM_256_HMAC_SHA1_80";
-                break;
-            default:
-                return undefined;
+    THomeKitIPCamera.prototype.stopStreaming = function (sessionId) {
+        var ongoingSession = this.ongoingSessions[sessionId];
+        try {
+            ongoingSession.process.kill('SIGKILL');
         }
+        catch (e) {
+            this.FLogger.error("Error occurred terminating the video process!");
+            this.FLogger.error(e);
+        }
+        delete this.ongoingSessions[sessionId];
+        this.FLogger.debug("Stopped streaming session!");
     };
     return THomeKitIPCamera;
 }());

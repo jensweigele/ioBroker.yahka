@@ -5,8 +5,13 @@ export module Defaults {
     export let defaultCommandLine: Configuration.ICameraFfmpegCommandLine =
     {
         stream: [
+            '-nostats',
+            '-nostdin',
+            '-y',
             '-re',
             '-i', '${source}',
+            '-map',
+            '0:v:0',
             '-threads', '0',
             '-vcodec', '${codec}',
             '-an',
@@ -23,6 +28,37 @@ export module Defaults {
             '-srtp_out_suite', 'AES_CM_128_HMAC_SHA1_80',
             '-srtp_out_params', '${videokey}',
             'srtp://${targetAddress}:${targetVideoPort}?rtcpport=${targetVideoPort}&localrtcpport=${targetVideoPort}&pkt_size=1378'
+        ],
+        streamAudio: [
+            '-map',
+            '0:a:0',
+            '-acodec',
+            'libfdk_aac',
+            '-profile:a',
+            'aac_eld',
+            '-flags',
+            '+global_header',
+            '-f',
+            'null',
+            '-ar',
+            '24k',
+            '-b:a',
+            '${bitrate}k',
+            '-bufsize:a',
+            '${bitrate}k',
+            '-ac',
+            '1',
+            '-payload_type',
+            '110',
+            '-ssrc',
+            '${targetAudioSsrc}',
+            '-f',
+            'rtp',
+            '-srtp_out_suite',
+            'AES_CM_128_HMAC_SHA1_80',
+            '-srtp_out_params',
+            '${audiokey}',
+            'srtp://${targetAddress}:${targetAudioPort}?rtcpport=${targetAudioPort}&localrtcpport=${targetAudioPort}&pkt_size=1378'
         ],
         snapshot: [
             '-re',
@@ -55,6 +91,7 @@ export module Defaults {
             '-srtp_out_params', '${videokey}',
             'srtp://${targetAddress}:${targetVideoPort}?rtcpport=${targetVideoPort}&localrtcpport=${targetVideoPort}&pkt_size=1378'
         ],
+        streamAudio: [],
         snapshot: [
             '-re',
             '-f', 'dshow',

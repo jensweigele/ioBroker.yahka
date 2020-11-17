@@ -240,6 +240,7 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
                     verboseLogging: false,
                     numberOfStreams: undefined,
                     ffmpegCommandLine: Defaults.ffmpegCommandLines.default,
+                    enableAudio: false,
                     devices: []
                 };
 

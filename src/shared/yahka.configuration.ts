@@ -56,6 +56,7 @@ export module Configuration {
 
     export interface ICameraFfmpegCommandLine {
         stream: String[],
+        streamAudio: String[],
         snapshot: String[]
     }
 
@@ -68,7 +69,9 @@ export module Configuration {
         maxHeight: number;
         maxFPS: number;
         ffmpegCommandLine: ICameraFfmpegCommandLine;
+        enableAudio?: boolean;
     }
+
 
     export function isBridgeConfig(config: IBaseConfigNode): config is IBridgeConfig {
         if (config === undefined)

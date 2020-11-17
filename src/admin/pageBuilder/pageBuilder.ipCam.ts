@@ -8,6 +8,7 @@ import { createTemplateElement } from '../admin.pageLoader';
 import { IDictionary } from '../../shared/yahka.configuration';
 import { ISelectListEntry } from '../admin.config';
 import { ioBrokerInterfaceList } from '../yahka.admin';
+import { Defaults } from '../admin.defaults';
 
 export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConfigPageBuilder {
     public addServiceAvailable: boolean = false;
@@ -27,13 +28,13 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
         let configFragment = <DocumentFragment>document.importNode(this.configPanelTemplate.content, true);
         translateFragment(configFragment);
 
-        let inputHelper = (selector: string, propertyName: keyof hkBridge.Configuration.ICameraConfig, selectList?: IDictionary<ISelectListEntry> | ISelectListEntry[], validator: TValidatorFunction = undefined) => {
+        let inputHelper = (selector: string, propertyName: keyof hkBridge.Configuration.ICameraConfig, selectList?: IDictionary<ISelectListEntry> | ISelectListEntry[], validator: TValidatorFunction = undefined, checkDefault = true) => {
             let input = <HTMLInputElement>configFragment.querySelector(selector);
             let errorElement = <HTMLElement>configFragment.querySelector(selector + '_error');
             this.fillSelectByListEntries(input, selectList);
             let value = config[propertyName];
             if (input.type === 'checkbox') {
-                input.checked = value === undefined ? true : value as boolean;
+                input.checked = value === undefined ? checkDefault : Boolean(value);
                 input.addEventListener('change', this.handlePropertyChange.bind(this, config, propertyName, errorElement, validator))
             } else {
                 if (value !== undefined) {
@@ -58,6 +59,11 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
             }
             input.addEventListener('input', this.handleffMpegPropertyChange.bind(this, config, propertyName, inputErrorMsg));
 
+            configFragment.querySelector(selector + '_reset').addEventListener('click', () => {
+                input.value = JSON.stringify(Defaults.ffmpegCommandLines.default[propertyName], null, 2);
+                input.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+                return true;
+            });
         };
 
         inputHelper('#enabled', 'enabled');
@@ -75,6 +81,7 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
 
         inputHelper('#source', 'source');
         inputHelper('#codec', 'codec');
+        inputHelper('#enableAudio', 'enableAudio', undefined, undefined, false);
         inputHelper('#numberOfStreams', 'numberOfStreams');
         inputHelper('#maxWidth', 'maxWidth');
         inputHelper('#maxHeight', 'maxHeight');
@@ -82,6 +89,7 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
 
         ffmpegHelper('#ffmpeg_snapshot', 'snapshot');
         ffmpegHelper('#ffmpeg_stream', 'stream');
+        ffmpegHelper('#ffmpeg_streamAudio', 'streamAudio');
 
         devicePanel.appendChild(configFragment);
     }

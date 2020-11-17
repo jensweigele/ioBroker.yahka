@@ -109,6 +109,12 @@
                 <input class="full-size" type="text" id="maxFPS" />
             </div>
         </div>
+        <div>
+            <div><label class="translate" for="enableAudio">Enable Audio:</label></div>
+            <div class="input control flex-grow margin10">
+                <input type="checkbox" id="enableAudio" />
+            </div>
+        </div>
     </div>
 </div>
 <div class="frame">
@@ -118,7 +124,11 @@
 
     <div class="content">
         <div>
-            <div><label class="translate" for="ffmpeg_snapshot">FFMPEG Command Line - Snapshot:</label></div>
+            <div style="display: flex; justify-content: space-between;">
+                <label class="translate" for="ffmpeg_snapshot">FFMPEG Command Line - Snapshot:</label>
+                <a id="ffmpeg_snapshot_reset" href="#"><span class="icon mif-sync-problem translate">Reset to
+                        default</span></a>
+            </div>
             <div class="errorpanel" id="ffmpeg_snapshot_error"></div>
             <div class="input control flex-grow margin10 flex-container-row">
                 <textarea rows=8 class="flex-grow" id="ffmpeg_snapshot"></textarea>
@@ -132,7 +142,11 @@
             </div>
         </div>
         <div>
-            <div><label class="translate" for="ffmpeg_stream">FFMPEG Command Line - Stream:</label></div>
+            <div style="display: flex; justify-content: space-between;">
+                <label class="translate" for="ffmpeg_stream">FFMPEG Command Line - Stream:</label>
+                <a id="ffmpeg_stream_reset" href="#"><span class="icon mif-sync-problem translate">Reset to
+                        default</span></a>
+            </div>
             <div class="errorpanel" id="ffmpeg_stream_error"></div>
             <div class="input control flex-grow margin10 flex-container-row">
                 <textarea rows=8 class="flex-grow" id="ffmpeg_stream"></textarea>
@@ -145,7 +159,6 @@
                         <li>${bitrate}</li>
                         <li>${videokey}</li>
                         <li>${targetAddress}</li>
-                        <li>${videokey}</li>
                         <li>${targetVideoPort}</li>
                         <li>${targetVideoSsrc}</li>
                     </ul>
@@ -153,5 +166,28 @@
             </div>
 
         </div>
+        <div>
+            <div style="display: flex; justify-content: space-between;">
+                <label class="translate" for="ffmpeg_streamAudio">FFMPEG Command Line - Audio Stream:</label>
+                <a id="ffmpeg_streamAudio_reset" href="#"><span class="icon mif-sync-problem translate">Reset to
+                        default</span></a>
+            </div>
+            <div class="errorpanel" id="ffmpeg_streamAudio_error"></div>
+            <div class="input control flex-grow margin10 flex-container-row">
+                <textarea rows=8 class="flex-grow" id="ffmpeg_streamAudio"></textarea>
+                <div class="margin10"><span class="translate">Available replacers:</span> <br>
+                    <ul class="simple-list blue-bullet replace-list">
+                        <li>${codec}</li>
+                        <li>${bitrate}</li>
+                        <li>${audiokey}</li>
+                        <li>${targetAddress}</li>
+                        <li>${targetAudioPort}</li>
+                        <li>${targetAudioSsrc}</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 </div>
