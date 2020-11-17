@@ -1,5 +1,10 @@
 #adapter-container {
     font-size: 1em;
+    height: 100%;
+}
+
+.auto-scroll {
+    overflow: auto;
 }
 
 .full-width {
@@ -8,16 +13,6 @@
 
 .auto-height {
     height: auto;
-}
-
-.panel-fixed {
-    background-color: white;
-    position: fixed;
-    z-index: 9999;
-}
-
-.treeAndData {
-    padding-top: 60px;
 }
 
 .flex-container-row {
