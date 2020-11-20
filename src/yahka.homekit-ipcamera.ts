@@ -109,23 +109,21 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
             proxy: false, // Requires RTP/RTCP MUX Proxy
             disable_audio_proxy: false, // If proxy = true, you can opt out audio proxy via this
             srtp: true, // Supports SRTP AES_CM_128_HMAC_SHA1_80 encryption
+            supportedCryptoSuites: [SRTPCryptoSuites.AES_CM_128_HMAC_SHA1_80],
             video: {
                 resolutions: videoResolutions,
                 codec: {
                     profiles: [H264Profile.BASELINE, H264Profile.MAIN, H264Profile.HIGH],
                     levels: [H264Level.LEVEL3_1, H264Level.LEVEL3_2, H264Level.LEVEL4_0],
+
                 },
             },
             audio: {
                 comfort_noise: false,
                 codecs: [
                     {
-                        type: AudioStreamingCodecType.OPUS,
-                        samplerate: [AudioStreamingSamplerate.KHZ_16, AudioStreamingSamplerate.KHZ_24]
-                    },
-                    {
                         type: AudioStreamingCodecType.AAC_ELD,
-                        samplerate: [AudioStreamingSamplerate.KHZ_16, AudioStreamingSamplerate.KHZ_24]
+                        samplerate: AudioStreamingSamplerate.KHZ_16
                     }
                 ]
             }
@@ -276,14 +274,14 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
         switch (request.type) {
             case StreamRequestTypes.START: {
                 var sessionInfo = this.pendingSessions[sessionId];
+                this.FLogger.debug('Session Request:' + JSON.stringify(request, undefined, 2));
                 if (sessionInfo) {
-                    var width = 1280;
-                    var height = 720;
-                    var fps = 30;
-                    var bitrate = 300;
-                    var audioBitrate = 0;
-                    var codec = this.camConfig.codec || 'libx264';
-
+                    let width = 1280;
+                    let height = 720;
+                    let fps = 30;
+                    let bitrate = 300;
+                    let codec = this.camConfig.codec ?? 'libx264';
+                    const mtu = request.video?.mtu ?? 1316;
                     let videoInfo = request.video;
                     if (videoInfo) {
                         width = videoInfo.width;
@@ -297,10 +295,6 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                         bitrate = videoInfo.max_bit_rate;
                     }
 
-                    let audioInfo = request.audio;
-                    if (audioInfo) {
-                        audioBitrate = audioInfo.max_bit_rate;
-                    }
 
                     let params = {
                         source: this.camConfig.source,
@@ -309,10 +303,12 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                         width: width,
                         height: height,
                         bitrate: bitrate,
+                        payloadtype: request.video.pt ?? 99,
                         videokey: sessionInfo.videoSRTP?.toString('base64'),
                         targetAddress: sessionInfo.address,
                         targetVideoPort: sessionInfo.videoPort,
-                        targetVideoSsrc: sessionInfo.videoSSRC
+                        targetVideoSsrc: sessionInfo.videoSSRC,
+                        mtu
                     }
 
                     let ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => params[word]));
@@ -320,7 +316,10 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                     if (this.camConfig.enableAudio && request.audio != null) {
                         let params = {
                             source: this.camConfig.source,
-                            bitrate: audioBitrate,
+                            bitrate: request.audio.max_bit_rate ?? 16,
+                            samplerate: request.audio.sample_rate ?? 16,
+                            channel: request.audio.channel ?? 1,
+                            payloadtype: request.audio.pt ?? 110,
                             targetAddress: sessionInfo.address,
                             targetAudioPort: sessionInfo.audioPort,
                             targetAudioSsrc: sessionInfo.audioSSRC,
@@ -342,6 +341,7 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                             this.FLogger.debug("FFMPEG: received first frame");
                             callback(); // do not forget to execute callback once set up
                         }
+                        //this.FLogger.debug("FFMPEG:" + data.toString('utf8'));
                     });
                     ffmpeg.on('error', error => {
                         this.FLogger.error("[Video] Failed to start video stream: " + error.message);

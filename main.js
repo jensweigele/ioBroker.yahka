@@ -3141,6 +3141,7 @@ var THomeKitIPCamera = /** @class */ (function () {
             proxy: false,
             disable_audio_proxy: false,
             srtp: true,
+            supportedCryptoSuites: [0 /* AES_CM_128_HMAC_SHA1_80 */],
             video: {
                 resolutions: videoResolutions,
                 codec: {
@@ -3152,12 +3153,8 @@ var THomeKitIPCamera = /** @class */ (function () {
                 comfort_noise: false,
                 codecs: [
                     {
-                        type: "OPUS" /* OPUS */,
-                        samplerate: [16 /* KHZ_16 */, 24 /* KHZ_24 */]
-                    },
-                    {
                         type: "AAC-eld" /* AAC_ELD */,
-                        samplerate: [16 /* KHZ_16 */, 24 /* KHZ_24 */]
+                        samplerate: 16 /* KHZ_16 */
                     }
                 ]
             }
@@ -3279,18 +3276,19 @@ var THomeKitIPCamera = /** @class */ (function () {
     };
     THomeKitIPCamera.prototype.handleStreamRequest = function (request, callback) {
         var _this = this;
-        var _a, _b;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
         var sessionId = request.sessionID;
         switch (request.type) {
             case "start" /* START */: {
                 var sessionInfo = this.pendingSessions[sessionId];
+                this.FLogger.debug('Session Request:' + JSON.stringify(request, undefined, 2));
                 if (sessionInfo) {
                     var width = 1280;
                     var height = 720;
                     var fps = 30;
                     var bitrate = 300;
-                    var audioBitrate = 0;
-                    var codec = this.camConfig.codec || 'libx264';
+                    var codec = (_a = this.camConfig.codec) !== null && _a !== void 0 ? _a : 'libx264';
+                    var mtu = (_c = (_b = request.video) === null || _b === void 0 ? void 0 : _b.mtu) !== null && _c !== void 0 ? _c : 1316;
                     var videoInfo = request.video;
                     if (videoInfo) {
                         width = videoInfo.width;
@@ -3301,10 +3299,6 @@ var THomeKitIPCamera = /** @class */ (function () {
                         }
                         bitrate = videoInfo.max_bit_rate;
                     }
-                    var audioInfo = request.audio;
-                    if (audioInfo) {
-                        audioBitrate = audioInfo.max_bit_rate;
-                    }
                     var params_1 = {
                         source: this.camConfig.source,
                         codec: codec,
@@ -3312,20 +3306,25 @@ var THomeKitIPCamera = /** @class */ (function () {
                         width: width,
                         height: height,
                         bitrate: bitrate,
-                        videokey: (_a = sessionInfo.videoSRTP) === null || _a === void 0 ? void 0 : _a.toString('base64'),
+                        payloadtype: (_d = request.video.pt) !== null && _d !== void 0 ? _d : 99,
+                        videokey: (_e = sessionInfo.videoSRTP) === null || _e === void 0 ? void 0 : _e.toString('base64'),
                         targetAddress: sessionInfo.address,
                         targetVideoPort: sessionInfo.videoPort,
-                        targetVideoSsrc: sessionInfo.videoSSRC
+                        targetVideoSsrc: sessionInfo.videoSSRC,
+                        mtu: mtu
                     };
                     var ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map(function (s) { return s.replace(/\$\{(.*?)\}/g, function (_, word) { return params_1[word]; }); });
                     if (this.camConfig.enableAudio && request.audio != null) {
                         var params_2 = {
                             source: this.camConfig.source,
-                            bitrate: audioBitrate,
+                            bitrate: (_f = request.audio.max_bit_rate) !== null && _f !== void 0 ? _f : 16,
+                            samplerate: (_g = request.audio.sample_rate) !== null && _g !== void 0 ? _g : 16,
+                            channel: (_h = request.audio.channel) !== null && _h !== void 0 ? _h : 1,
+                            payloadtype: (_j = request.audio.pt) !== null && _j !== void 0 ? _j : 110,
                             targetAddress: sessionInfo.address,
                             targetAudioPort: sessionInfo.audioPort,
                             targetAudioSsrc: sessionInfo.audioSSRC,
-                            audiokey: (_b = sessionInfo.audioSRTP) === null || _b === void 0 ? void 0 : _b.toString('base64'),
+                            audiokey: (_k = sessionInfo.audioSRTP) === null || _k === void 0 ? void 0 : _k.toString('base64'),
                         };
                         ffmpegCommand = ffmpegCommand.concat(this.camConfig.ffmpegCommandLine.streamAudio.map(function (s) { return s.replace(/\$\{(.*?)\}/g, function (_, word) { return params_2[word]; }); }));
                     }
@@ -3338,6 +3337,7 @@ var THomeKitIPCamera = /** @class */ (function () {
                             _this.FLogger.debug("FFMPEG: received first frame");
                             callback(); // do not forget to execute callback once set up
                         }
+                        //this.FLogger.debug("FFMPEG:" + data.toString('utf8'));
                     });
                     ffmpeg.on('error', function (error) {
                         _this.FLogger.error("[Video] Failed to start video stream: " + error.message);
