@@ -331,7 +331,7 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                         )
                     }
 
-                    this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
+                    // this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
                     let ffmpeg = spawn('ffmpeg', ffmpegCommand, { env: process.env });
 
                     let started = false;

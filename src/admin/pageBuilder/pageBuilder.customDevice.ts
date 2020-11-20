@@ -120,23 +120,29 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         let servicePanel = <DocumentFragment>document.importNode(this.deviceServicePanelTemplate.content, true);
         let frameNode = <HTMLElement>servicePanel.querySelector('#yahka_service_panel');
         translateFragment(servicePanel);
-        let inputHelper = (selector: string, configName: string, popuplateServices?: boolean, eventHandler?) => {
+        let inputHelper = (selector: string, configName: keyof hkBridge.Configuration.IServiceConfig, popuplateServices?: boolean, eventHandler?) => {
             let input = <HTMLSelectElement>frameNode.querySelector(selector);
             if (popuplateServices === true) {
                 let selectList: string[] = Object.keys(HAPServiceDictionary);
                 this.fillSelectByArray(input, selectList);
             }
 
-            if (serviceConfig)
+            if (serviceConfig) {
                 Utils.setInputValue(input, serviceConfig[configName]);
+            }
 
-            if (eventHandler !== undefined)
+            if (input.type === 'checkbox') {
+                (input as unknown as HTMLInputElement).checked = serviceConfig[configName] !== false;
+                input.addEventListener('change', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
+            } else if (eventHandler !== undefined) {
                 input.addEventListener('input', eventHandler);
-            else
+            } else {
                 input.addEventListener('input', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
+            }
         };
 
         this.refreshServicePanelCaption(serviceConfig, frameNode);
+        inputHelper('#service_enabled', 'enabled');
         inputHelper('#service_name', 'name');
         inputHelper('#service_type', 'type', true, this.handleServiceTypeChange.bind(this, serviceConfig, frameNode));
         inputHelper('#service_subtype', 'subType');
@@ -158,7 +164,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
     }
 
     refreshServicePanelCaption(serviceConfig: hkBridge.Configuration.IServiceConfig, servicePanel: HTMLElement) {
-        servicePanel.querySelector('#yahka_service_caption').textContent = serviceConfig.name + '[' + serviceConfig.type + ']';
+        servicePanel.querySelector('#yahka_service_caption').textContent = `${serviceConfig.enabled === false ? '[## disabled ##]' : ''} ${serviceConfig.name}[${serviceConfig.type}]`;
     }
 
     findHAPCharacteristic(serviceDef: IHAPServiceDefinition, characteristicName: string): IHAPCharacteristicDefintion {

@@ -8,9 +8,11 @@ var pjson = require('../package.json');
 
 importHAPCommunityTypesAndFixes();
 
-type IHAPService = any;
-
-// type IHAPCharacteristic = any;
+interface IHasIHomeKitBridgeBinding {
+    binding: IHomeKitBridgeBinding;
+}
+type IHAPService = Service;
+type IHAPCharacteristic = Characteristic & IHasIHomeKitBridgeBinding;
 
 export interface IConversionFunction {
     toHomeKit(value: any): any;
@@ -122,19 +124,25 @@ export class THomeKitBridge {
         }
 
         hapDevice.on('identify', (paired, callback) => {
-            this.FLogger.debug('device identify');
+            this.FLogger.debug(`[${device.name}] device identify`);
             callback(); // success
         });
-
         for (let serviceConfig of device.services)
             this.initService(hapDevice, serviceConfig);
         return hapDevice;
     }
 
-    private initService(hapDevice: any, serviceConfig: Configuration.IServiceConfig) {
-        if (!(serviceConfig.type in Service)) {
-            throw Error('unknown service type: ' + serviceConfig.type);
+    private initService(hapDevice: Accessory, serviceConfig: Configuration.IServiceConfig) {
+        if (serviceConfig.enabled === false) {
+            this.FLogger.debug(`[${hapDevice.displayName}] service ${serviceConfig.name} is disabled`);
+            return;
         }
+
+        if (!(serviceConfig.type in Service)) {
+            throw Error(`[${hapDevice.displayName}] unknown service type: ${serviceConfig.type}`);
+        }
+
+        this.FLogger.debug(`[${hapDevice.displayName}] adding Service ${serviceConfig.name}`);
 
         let isNew = false;
         let hapService = hapDevice.getService(Service[serviceConfig.type]);
@@ -159,58 +167,60 @@ export class THomeKitBridge {
     }
 
     private initCharacteristic(hapService: IHAPService, characteristicConfig: Configuration.ICharacteristicConfig) {
-        let hapCharacteristic = hapService.getCharacteristic(Characteristic[characteristicConfig.name]);
-        if (!hapCharacteristic) {
-            this.FLogger.warn("unknown characteristic: " + characteristicConfig.name);
+        const logName = `[${hapService.displayName}.${characteristicConfig.name}]`;
+        if (!characteristicConfig.enabled) {
             return;
         }
 
-        if (!characteristicConfig.enabled)
+        let hapCharacteristic = hapService.getCharacteristic(Characteristic[characteristicConfig.name]) as IHAPCharacteristic;
+        if (!hapCharacteristic) {
+            this.FLogger.warn(`${logName} unknown characteristic: ${characteristicConfig.name}`);
             return;
+        }
 
         if (characteristicConfig.properties !== undefined)
             hapCharacteristic.setProps(characteristicConfig.properties);
 
         hapCharacteristic.binding = this.FBridgeFactory.CreateBinding(characteristicConfig, (plainIOValue: any) => {
-            this.FLogger.debug('[' + characteristicConfig.name + '] got a change notify event, ioValue: ' + JSON.stringify(plainIOValue));
+            this.FLogger.debug(`${logName} got a change notify event, ioValue: ${JSON.stringify(plainIOValue)}`);
             let binding: IHomeKitBridgeBinding = hapCharacteristic.binding;
             if (!binding) {
-                this.FLogger.error('[' + characteristicConfig.name + '] no binding!');
+                this.FLogger.error(`${logName} no binding!`);
                 return;
             }
 
             let hkValue = binding.conversion.toHomeKit(plainIOValue);
-            this.FLogger.debug('[' + characteristicConfig.name + '] forwarding value from ioBroker (' + JSON.stringify(plainIOValue) + ') to homekit as (' + JSON.stringify(hkValue) + ')');
+            this.FLogger.debug(`${logName} forwarding value from ioBroker (${JSON.stringify(plainIOValue)}) to homekit as (${JSON.stringify(hkValue)})`);
             hapCharacteristic.setValue(hkValue, undefined, binding);
         });
 
         hapCharacteristic.on('set', (hkValue: any, callback: () => void, context: any) => {
-            this.FLogger.debug('[' + characteristicConfig.name + '] got a set event, hkValue: ' + JSON.stringify(hkValue));
+            this.FLogger.debug(`${logName} got a set event, hkValue: ${JSON.stringify(hkValue)}`);
             let binding: IHomeKitBridgeBinding = hapCharacteristic.binding;
             if (!binding) {
-                this.FLogger.error('[' + characteristicConfig.name + '] no binding!');
+                this.FLogger.error(`${logName} no binding!`);
                 callback();
                 return;
             }
 
             if (context === binding) {
-                this.FLogger.debug('[' + characteristicConfig.name + '] set was initiated from ioBroker - exiting here');
+                this.FLogger.debug(`${logName} set was initiated from ioBroker - exiting here`);
                 callback();
                 return;
             }
 
             let ioValue = binding.conversion.toIOBroker(hkValue);
             binding.inOut.toIOBroker(ioValue, () => {
-                this.FLogger.debug('[' + characteristicConfig.name + '] set was accepted by ioBroker (value: ' + JSON.stringify(ioValue) + ')');
+                this.FLogger.debug(`${logName} set was accepted by ioBroker (value: ${JSON.stringify(ioValue)})`);
                 callback();
             });
         });
 
         hapCharacteristic.on('get', (hkCallback) => {
-            this.FLogger.debug('[' + characteristicConfig.name + '] got a get event');
+            this.FLogger.debug(`${logName} got a get event`);
             let binding: IHomeKitBridgeBinding = hapCharacteristic.binding;
             if (!binding) {
-                this.FLogger.error('[' + characteristicConfig.name + '] no binding!');
+                this.FLogger.error(`${logName} no binding!`);
                 hkCallback('no binding', null);
                 return;
             }
@@ -225,7 +235,7 @@ export class THomeKitBridge {
                     }
                 }
 
-                this.FLogger.debug('[' + characteristicConfig.name + '] forwarding value from ioBroker (' + JSON.stringify(ioValue) + ') to homekit as (' + JSON.stringify(hkValue) + ')');
+                this.FLogger.debug(`${logName} forwarding value from ioBroker (${JSON.stringify(ioValue)}) to homekit as (${JSON.stringify(hkValue)})`);
                 hkCallback(ioBrokerError, hkValue);
             });
         });

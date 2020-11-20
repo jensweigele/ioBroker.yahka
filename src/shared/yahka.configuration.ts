@@ -18,6 +18,7 @@ export module Configuration {
 
     export interface IServiceConfig {
         name: string;
+        enabled?: boolean;
         type: string;
         subType: string;
         characteristics: (ICharacteristicConfig)[];

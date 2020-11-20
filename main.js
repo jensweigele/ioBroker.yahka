@@ -2915,7 +2915,7 @@ var THomeKitBridge = /** @class */ (function () {
             infoService.setCharacteristic(hap_nodejs_1.Characteristic.FirmwareRevision, device.firmware);
         }
         hapDevice.on('identify', function (paired, callback) {
-            _this.FLogger.debug('device identify');
+            _this.FLogger.debug("[" + device.name + "] device identify");
             callback(); // success
         });
         try {
@@ -2935,9 +2935,14 @@ var THomeKitBridge = /** @class */ (function () {
     };
     THomeKitBridge.prototype.initService = function (hapDevice, serviceConfig) {
         var e_3, _a;
-        if (!(serviceConfig.type in hap_nodejs_1.Service)) {
-            throw Error('unknown service type: ' + serviceConfig.type);
+        if (serviceConfig.enabled === false) {
+            this.FLogger.debug("[" + hapDevice.displayName + "] service " + serviceConfig.name + " is disabled");
+            return;
         }
+        if (!(serviceConfig.type in hap_nodejs_1.Service)) {
+            throw Error("[" + hapDevice.displayName + "] unknown service type: " + serviceConfig.type);
+        }
+        this.FLogger.debug("[" + hapDevice.displayName + "] adding Service " + serviceConfig.name);
         var isNew = false;
         var hapService = hapDevice.getService(hap_nodejs_1.Service[serviceConfig.type]);
         if (hapService !== undefined) {
@@ -2968,50 +2973,52 @@ var THomeKitBridge = /** @class */ (function () {
     };
     THomeKitBridge.prototype.initCharacteristic = function (hapService, characteristicConfig) {
         var _this = this;
-        var hapCharacteristic = hapService.getCharacteristic(hap_nodejs_1.Characteristic[characteristicConfig.name]);
-        if (!hapCharacteristic) {
-            this.FLogger.warn("unknown characteristic: " + characteristicConfig.name);
+        var logName = "[" + hapService.displayName + "." + characteristicConfig.name + "]";
+        if (!characteristicConfig.enabled) {
             return;
         }
-        if (!characteristicConfig.enabled)
+        var hapCharacteristic = hapService.getCharacteristic(hap_nodejs_1.Characteristic[characteristicConfig.name]);
+        if (!hapCharacteristic) {
+            this.FLogger.warn(logName + " unknown characteristic: " + characteristicConfig.name);
             return;
+        }
         if (characteristicConfig.properties !== undefined)
             hapCharacteristic.setProps(characteristicConfig.properties);
         hapCharacteristic.binding = this.FBridgeFactory.CreateBinding(characteristicConfig, function (plainIOValue) {
-            _this.FLogger.debug('[' + characteristicConfig.name + '] got a change notify event, ioValue: ' + JSON.stringify(plainIOValue));
+            _this.FLogger.debug(logName + " got a change notify event, ioValue: " + JSON.stringify(plainIOValue));
             var binding = hapCharacteristic.binding;
             if (!binding) {
-                _this.FLogger.error('[' + characteristicConfig.name + '] no binding!');
+                _this.FLogger.error(logName + " no binding!");
                 return;
             }
             var hkValue = binding.conversion.toHomeKit(plainIOValue);
-            _this.FLogger.debug('[' + characteristicConfig.name + '] forwarding value from ioBroker (' + JSON.stringify(plainIOValue) + ') to homekit as (' + JSON.stringify(hkValue) + ')');
+            _this.FLogger.debug(logName + " forwarding value from ioBroker (" + JSON.stringify(plainIOValue) + ") to homekit as (" + JSON.stringify(hkValue) + ")");
             hapCharacteristic.setValue(hkValue, undefined, binding);
         });
         hapCharacteristic.on('set', function (hkValue, callback, context) {
-            _this.FLogger.debug('[' + characteristicConfig.name + '] got a set event, hkValue: ' + JSON.stringify(hkValue));
+            _this.FLogger.debug(logName + " got a set event, hkValue: " + JSON.stringify(hkValue));
             var binding = hapCharacteristic.binding;
             if (!binding) {
-                _this.FLogger.error('[' + characteristicConfig.name + '] no binding!');
+                _this.FLogger.error(logName + " no binding!");
                 callback();
                 return;
             }
             if (context === binding) {
-                _this.FLogger.debug('[' + characteristicConfig.name + '] set was initiated from ioBroker - exiting here');
+                _this.FLogger.debug(logName + " set was initiated from ioBroker - exiting here");
                 callback();
                 return;
             }
             var ioValue = binding.conversion.toIOBroker(hkValue);
             binding.inOut.toIOBroker(ioValue, function () {
-                _this.FLogger.debug('[' + characteristicConfig.name + '] set was accepted by ioBroker (value: ' + JSON.stringify(ioValue) + ')');
+                _this.FLogger.debug(logName + " set was accepted by ioBroker (value: " + JSON.stringify(ioValue) + ")");
                 callback();
             });
         });
         hapCharacteristic.on('get', function (hkCallback) {
-            _this.FLogger.debug('[' + characteristicConfig.name + '] got a get event');
+            _this.FLogger.debug(logName + " got a get event");
             var binding = hapCharacteristic.binding;
             if (!binding) {
-                _this.FLogger.error('[' + characteristicConfig.name + '] no binding!');
+                _this.FLogger.error(logName + " no binding!");
                 hkCallback('no binding', null);
                 return;
             }
@@ -3024,7 +3031,7 @@ var THomeKitBridge = /** @class */ (function () {
                         hkValue = numValue;
                     }
                 }
-                _this.FLogger.debug('[' + characteristicConfig.name + '] forwarding value from ioBroker (' + JSON.stringify(ioValue) + ') to homekit as (' + JSON.stringify(hkValue) + ')');
+                _this.FLogger.debug(logName + " forwarding value from ioBroker (" + JSON.stringify(ioValue) + ") to homekit as (" + JSON.stringify(hkValue) + ")");
                 hkCallback(ioBrokerError, hkValue);
             });
         });
@@ -3324,7 +3331,7 @@ var THomeKitIPCamera = /** @class */ (function () {
                         };
                         ffmpegCommand = ffmpegCommand.concat(this.camConfig.ffmpegCommandLine.streamAudio.map(function (s) { return s.replace(/\$\{(.*?)\}/g, function (_, word) { return params_2[word]; }); }));
                     }
-                    this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
+                    // this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
                     var ffmpeg = child_process_1.spawn('ffmpeg', ffmpegCommand, { env: process.env });
                     var started_1 = false;
                     ffmpeg.stderr.on('data', function (data) {

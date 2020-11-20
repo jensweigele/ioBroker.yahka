@@ -96795,7 +96795,7 @@ module.exports = "<div class=\"frame\" id=\"yahka_device_info_panel\">\n    <div
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"frame\" id=\"yahka_service_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Service: </span><span id=\"yahka_service_caption\"></span>\n        <a href=\"#\" class=\"place-right\" id=\"yakha_delete_service\"><span class=\"mif-cross fg-red\"></span></a>\n    </div>\n    <div class=\"content\">\n        <div class=\"flex-container-row flex-grow flex-align-baseline\">\n            <div><label class=\"translate\" for=\"service_name\">Service name:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_name\" />\n            </div>\n            <div><label class=\"translate\" for=\"service_type\">Service Type:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <select class=\"full-size\" id=\"service_type\"></select>\n            </div>\n            <div><label class=\"translate\" for=\"service_subtype\">Service Subtype:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_subtype\" />\n            </div>\n        </div>\n        <div><span class=\"translate\">Characteristics Table</span></div>\n        <table class=\"characteristic-table\" id=\"yahka_characteristic_table\">\n            <thead>\n                <th class=\"translate\">Enabled</th>\n                <th class=\"translate\">Name</th>\n                <th></th>\n                <th></th>\n            </thead>\n        </table>\n    </div>\n</div>";
+module.exports = "<div class=\"frame\" id=\"yahka_service_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Service: </span><span id=\"yahka_service_caption\"></span>\n        <a href=\"#\" class=\"place-right\" id=\"yakha_delete_service\"><span class=\"mif-cross fg-red\"></span></a>\n    </div>\n    <div class=\"content\">\n        <div class=\"flex-container-row flex-grow flex-align-baseline\">\n            <div>\n                <label class=\"input-control checkbox small-check\">\n                    <input type=\"checkbox\" id=\"service_enabled\">\n                    <span class=\"check\"></span>\n                </label>\n            </div>\n            <div><label class=\"translate\" for=\"service_name\">Service name:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_name\" />\n            </div>\n            <div><label class=\"translate\" for=\"service_type\">Service Type:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <select class=\"full-size\" id=\"service_type\"></select>\n            </div>\n            <div><label class=\"translate\" for=\"service_subtype\">Service Subtype:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_subtype\" />\n            </div>\n        </div>\n        <div><span class=\"translate\">Characteristics Table</span></div>\n        <table class=\"characteristic-table\" id=\"yahka_characteristic_table\">\n            <thead>\n                <th class=\"translate\">Enabled</th>\n                <th class=\"translate\">Name</th>\n                <th></th>\n                <th></th>\n            </thead>\n        </table>\n    </div>\n</div>";
 
 /***/ }),
 
@@ -96971,14 +96971,22 @@ var ConfigPageBuilder_CustomDevice = /** @class */ (function (_super) {
                 var selectList = Object.keys(HAPServiceDictionary);
                 _this.fillSelectByArray(input, selectList);
             }
-            if (serviceConfig)
+            if (serviceConfig) {
                 admin_utils_1.Utils.setInputValue(input, serviceConfig[configName]);
-            if (eventHandler !== undefined)
+            }
+            if (input.type === 'checkbox') {
+                input.checked = serviceConfig[configName] !== false;
+                input.addEventListener('change', _this.handleServiceMetaDataChange.bind(_this, serviceConfig, frameNode, configName));
+            }
+            else if (eventHandler !== undefined) {
                 input.addEventListener('input', eventHandler);
-            else
+            }
+            else {
                 input.addEventListener('input', _this.handleServiceMetaDataChange.bind(_this, serviceConfig, frameNode, configName));
+            }
         };
         this.refreshServicePanelCaption(serviceConfig, frameNode);
+        inputHelper('#service_enabled', 'enabled');
         inputHelper('#service_name', 'name');
         inputHelper('#service_type', 'type', true, this.handleServiceTypeChange.bind(this, serviceConfig, frameNode));
         inputHelper('#service_subtype', 'subType');
@@ -96996,7 +97004,7 @@ var ConfigPageBuilder_CustomDevice = /** @class */ (function (_super) {
         return frameNode;
     };
     ConfigPageBuilder_CustomDevice.prototype.refreshServicePanelCaption = function (serviceConfig, servicePanel) {
-        servicePanel.querySelector('#yahka_service_caption').textContent = serviceConfig.name + '[' + serviceConfig.type + ']';
+        servicePanel.querySelector('#yahka_service_caption').textContent = (serviceConfig.enabled === false ? '[## disabled ##]' : '') + " " + serviceConfig.name + "[" + serviceConfig.type + "]";
     };
     ConfigPageBuilder_CustomDevice.prototype.findHAPCharacteristic = function (serviceDef, characteristicName) {
         if (!serviceDef)
