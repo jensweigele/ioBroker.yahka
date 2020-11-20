@@ -34,8 +34,8 @@ export class TIoBrokerInOutFunction_State_OnlyACK extends TIoBrokerInOutFunction
     getValueOnRead(ioState: ioBroker.State): any {
         if (ioState)
             if (ioState.ack) {
-                this.lastAcknowledgedValue = ioState.val;
-                return ioState.val;
+                this.lastAcknowledgedValue = ioState?.val;
+                return ioState?.val;
             } else {
                 this.adapter.log.debug("faking CurrentState.Read for [" + this.stateName + ']: ' + JSON.stringify(this.lastAcknowledgedValue));
                 return this.lastAcknowledgedValue;
@@ -47,8 +47,8 @@ export class TIoBrokerInOutFunction_State_OnlyACK extends TIoBrokerInOutFunction
     getValueOnNotify(ioState: ioBroker.State): any {
         if (ioState)
             if (ioState.ack) {
-                this.lastAcknowledgedValue = ioState.val;
-                return ioState.val;
+                this.lastAcknowledgedValue = ioState?.val;
+                return ioState?.val;
             } else {
                 this.adapter.log.debug("discarding CurrentState.Notify for [" + this.stateName + ']');
                 return undefined;

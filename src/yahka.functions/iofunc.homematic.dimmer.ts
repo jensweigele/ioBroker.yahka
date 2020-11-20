@@ -60,7 +60,7 @@ export class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFu
 
     protected recalculateHomekitValues(stateName: string) {
         let hkValue = this.stateCache.get(this.parameters.levelState);
-        return Boolean(hkValue.val > 0);
+        return Boolean(hkValue?.val > 0);
     }
 
     protected updateIOBrokerValue(plainIoValue: any, callback: () => void) {
@@ -71,18 +71,18 @@ export class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFu
         const isSwitchingOn = Boolean(plainIoValue);
         const stateName = this.parameters.levelState;
 
-        const newOnValue = (this.parameters.restoreToPreviousLevel ? this.lastOnLevel.val : this.parameters.defaultSwitchOnLevel) || this.parameters.defaultSwitchOnLevel || 100;
+        const newOnValue = (this.parameters.restoreToPreviousLevel ? this.lastOnLevel?.val : this.parameters.defaultSwitchOnLevel) || this.parameters.defaultSwitchOnLevel || 100;
         const newOffValue = 0;
         const newValue = isSwitchingOn ? newOnValue : newOffValue;
 
         if (isSwitchingOn && this.parameters.restoreToPreviousLevel) {
-            this.log.debug('using previous level for switching on: ' + JSON.stringify(this.lastOnLevel.val));
+            this.log.debug('using previous level for switching on: ' + JSON.stringify(this.lastOnLevel?.val));
         }
 
 
         this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
         this.adapter.getForeignState(stateName, (error, ioState) => {
-            let value = ioState.val;
+            let value = ioState?.val;
             if (isSwitchingOn && value > 0) {
                 this.log.debug('function should switch on but level is already not equal to 0: ' + JSON.stringify(value));
                 callback();
@@ -123,7 +123,7 @@ export class TIoBrokerInOutFunction_Homematic_Dimmer_Brightness extends TIoBroke
 
     protected recalculateHomekitValues(stateName: string) {
         let hkValue = this.stateCache.get(this.parameters.levelState);
-        return hkValue.val == 0 ? this.lastOnLevel.val : hkValue.val;
+        return hkValue.val == 0 ? this.lastOnLevel?.val : hkValue?.val;
     }
 
     protected updateIOBrokerValue(plainIoValue: any, callback: () => void) {
@@ -133,7 +133,7 @@ export class TIoBrokerInOutFunction_Homematic_Dimmer_Brightness extends TIoBroke
 
         this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
         this.adapter.getForeignState(stateName, (error, ioState) => {
-            let value = ioState.val;
+            let value = ioState?.val;
             let valueChanged = value !== newValue;
             this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
             if (valueChanged) {

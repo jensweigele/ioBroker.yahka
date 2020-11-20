@@ -1987,7 +1987,7 @@ var TYahkaFunctionBase = /** @class */ (function () {
         var needUpdate = false;
         if (this.stateCache.has(stateName)) {
             var curVal = this.stateCache.get(stateName);
-            needUpdate = curVal.val !== ioState.val;
+            needUpdate = (curVal === null || curVal === void 0 ? void 0 : curVal.val) !== (ioState === null || ioState === void 0 ? void 0 : ioState.val);
         }
         else {
             needUpdate = true;
@@ -2183,16 +2183,10 @@ var TIoBrokerInOutFunction_StateBase = /** @class */ (function () {
         });
     };
     TIoBrokerInOutFunction_StateBase.prototype.getValueOnRead = function (ioState) {
-        if (ioState)
-            return ioState.val;
-        else
-            return null;
+        return ioState === null || ioState === void 0 ? void 0 : ioState.val;
     };
     TIoBrokerInOutFunction_StateBase.prototype.getValueOnNotify = function (ioState) {
-        if (ioState)
-            return ioState.val;
-        else
-            return null;
+        return ioState === null || ioState === void 0 ? void 0 : ioState.val;
     };
     TIoBrokerInOutFunction_StateBase.prototype.toIOBroker = function (plainIoValue, callback) {
         var _this = this;
@@ -2359,13 +2353,13 @@ var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = /** @class *
             return;
         if (stateName == this.workingItem) {
             this.adapter.log.debug('[' + this.stateName + '] got a working item change event: ' + JSON.stringify(ioState));
-            this.lastWorkingState = Boolean(ioState.val);
+            this.lastWorkingState = Boolean(ioState === null || ioState === void 0 ? void 0 : ioState.val);
             this.setupDeferredChangeEvent(callback);
         }
         else if (stateName == this.stateName) {
             this.adapter.log.debug('[' + this.stateName + '] got a target state change event:' + JSON.stringify(ioState));
             if (ioState.ack) {
-                this.lastAcknowledgedValue = ioState.val;
+                this.lastAcknowledgedValue = ioState === null || ioState === void 0 ? void 0 : ioState.val;
                 this.setupDeferredChangeEvent(callback);
             }
         }
@@ -2475,7 +2469,7 @@ var TIoBrokerInOutFunction_Homematic_Dimmer_On = /** @class */ (function (_super
     };
     TIoBrokerInOutFunction_Homematic_Dimmer_On.prototype.recalculateHomekitValues = function (stateName) {
         var hkValue = this.stateCache.get(this.parameters.levelState);
-        return Boolean(hkValue.val > 0);
+        return Boolean((hkValue === null || hkValue === void 0 ? void 0 : hkValue.val) > 0);
     };
     TIoBrokerInOutFunction_Homematic_Dimmer_On.prototype.updateIOBrokerValue = function (plainIoValue, callback) {
         var _this = this;
@@ -2483,17 +2477,18 @@ var TIoBrokerInOutFunction_Homematic_Dimmer_On = /** @class */ (function (_super
     };
     TIoBrokerInOutFunction_Homematic_Dimmer_On.prototype.executeIOBrokerValue = function (plainIoValue, callback) {
         var _this = this;
+        var _a, _b;
         var isSwitchingOn = Boolean(plainIoValue);
         var stateName = this.parameters.levelState;
-        var newOnValue = (this.parameters.restoreToPreviousLevel ? this.lastOnLevel.val : this.parameters.defaultSwitchOnLevel) || this.parameters.defaultSwitchOnLevel || 100;
+        var newOnValue = (this.parameters.restoreToPreviousLevel ? (_a = this.lastOnLevel) === null || _a === void 0 ? void 0 : _a.val : this.parameters.defaultSwitchOnLevel) || this.parameters.defaultSwitchOnLevel || 100;
         var newOffValue = 0;
         var newValue = isSwitchingOn ? newOnValue : newOffValue;
         if (isSwitchingOn && this.parameters.restoreToPreviousLevel) {
-            this.log.debug('using previous level for switching on: ' + JSON.stringify(this.lastOnLevel.val));
+            this.log.debug('using previous level for switching on: ' + JSON.stringify((_b = this.lastOnLevel) === null || _b === void 0 ? void 0 : _b.val));
         }
         this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
         this.adapter.getForeignState(stateName, function (error, ioState) {
-            var value = ioState.val;
+            var value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
             if (isSwitchingOn && value > 0) {
                 _this.log.debug('function should switch on but level is already not equal to 0: ' + JSON.stringify(value));
                 callback();
@@ -2534,8 +2529,9 @@ var TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = /** @class */ (function
         return new TIoBrokerInOutFunction_Homematic_Dimmer_Brightness(adapter, params);
     };
     TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.prototype.recalculateHomekitValues = function (stateName) {
+        var _a;
         var hkValue = this.stateCache.get(this.parameters.levelState);
-        return hkValue.val == 0 ? this.lastOnLevel.val : hkValue.val;
+        return hkValue.val == 0 ? (_a = this.lastOnLevel) === null || _a === void 0 ? void 0 : _a.val : hkValue === null || hkValue === void 0 ? void 0 : hkValue.val;
     };
     TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.prototype.updateIOBrokerValue = function (plainIoValue, callback) {
         var _this = this;
@@ -2543,7 +2539,7 @@ var TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = /** @class */ (function
         var stateName = this.parameters.levelState;
         this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
         this.adapter.getForeignState(stateName, function (error, ioState) {
-            var value = ioState.val;
+            var value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
             var valueChanged = value !== newValue;
             _this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
             if (valueChanged) {
@@ -2655,7 +2651,7 @@ var TIoBrokerInOutFunction_MultiState = /** @class */ (function (_super) {
     };
     TIoBrokerInOutFunction_MultiState.prototype.recalculateHomekitValues = function (stateName) {
         var _this = this;
-        var hkValues = this.stateProperties.map(function (state) { return _this.stateCache.get(state.readState).val; });
+        var hkValues = this.stateProperties.map(function (state) { var _a; return (_a = _this.stateCache.get(state.readState)) === null || _a === void 0 ? void 0 : _a.val; });
         return hkValues.length === 1 ? hkValues[0] : hkValues;
     };
     TIoBrokerInOutFunction_MultiState.prototype.updateSingleIOBrokerValue = function (state, newValue) {
@@ -2773,8 +2769,8 @@ var TIoBrokerInOutFunction_State_OnlyACK = /** @class */ (function (_super) {
     TIoBrokerInOutFunction_State_OnlyACK.prototype.getValueOnRead = function (ioState) {
         if (ioState)
             if (ioState.ack) {
-                this.lastAcknowledgedValue = ioState.val;
-                return ioState.val;
+                this.lastAcknowledgedValue = ioState === null || ioState === void 0 ? void 0 : ioState.val;
+                return ioState === null || ioState === void 0 ? void 0 : ioState.val;
             }
             else {
                 this.adapter.log.debug("faking CurrentState.Read for [" + this.stateName + ']: ' + JSON.stringify(this.lastAcknowledgedValue));
@@ -2786,8 +2782,8 @@ var TIoBrokerInOutFunction_State_OnlyACK = /** @class */ (function (_super) {
     TIoBrokerInOutFunction_State_OnlyACK.prototype.getValueOnNotify = function (ioState) {
         if (ioState)
             if (ioState.ack) {
-                this.lastAcknowledgedValue = ioState.val;
-                return ioState.val;
+                this.lastAcknowledgedValue = ioState === null || ioState === void 0 ? void 0 : ioState.val;
+                return ioState === null || ioState === void 0 ? void 0 : ioState.val;
             }
             else {
                 this.adapter.log.debug("discarding CurrentState.Notify for [" + this.stateName + ']');
@@ -3610,7 +3606,7 @@ var TIOBrokerAdapter = /** @class */ (function () {
 }());
 exports.TIOBrokerAdapter = TIOBrokerAdapter;
 function convertStateValueToNumber(state) {
-    if ((state) && (state.val !== "") && (state.val != null)) {
+    if (((state === null || state === void 0 ? void 0 : state.val) != null)) {
         var numValue = Number(state.val);
         if (!isNaN(numValue)) {
             state.val = numValue;

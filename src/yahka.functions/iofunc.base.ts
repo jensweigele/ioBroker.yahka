@@ -57,17 +57,11 @@ export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionR
     }
 
     getValueOnRead(ioState: ioBroker.State): any {
-        if (ioState)
-            return ioState.val;
-        else
-            return null;
+        return ioState?.val;
     }
 
     getValueOnNotify(ioState: ioBroker.State): any {
-        if (ioState)
-            return ioState.val;
-        else
-            return null;
+        return ioState?.val;
     }
 
     toIOBroker(plainIoValue, callback) {

@@ -41,19 +41,19 @@ export class TIoBrokerInOutFunction_MultiState extends TIoBrokerInOutFunctionBas
         for (let state of stateProperties) {
             this.addSubscriptionRequest(state.readState);
         }
-    }    
+    }
 
     protected recalculateHomekitValues(stateName: string) {
-        let hkValues = this.stateProperties.map( (state) => this.stateCache.get(state.readState).val);
+        let hkValues = this.stateProperties.map((state) => this.stateCache.get(state.readState)?.val);
         return hkValues.length === 1 ? hkValues[0] : hkValues;
     }
 
     private updateSingleIOBrokerValue(state: TIoBrokerInOutFunction_MultiStateParameter, newValue: any): Promise<void> {
-        if (newValue === undefined) 
+        if (newValue === undefined)
             return Promise.resolve();
-        
+
         return new Promise<void>((resolve, reject) => {
-            let stateName = state.writeState || state.readState;
+            let stateName = state.writeState || state.readState;
             this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
             this.adapter.getForeignState(stateName, (error, ioState) => {
                 let value = ioState.val;
@@ -76,16 +76,16 @@ export class TIoBrokerInOutFunction_MultiState extends TIoBrokerInOutFunctionBas
 
     protected updateIOBrokerValue(plainIoValue: any, callback: () => void) {
         let ioValueArray = Array.isArray(plainIoValue) ? plainIoValue : [plainIoValue];
-        let promiseArray = this.stateProperties.map( (state, index) => {
+        let promiseArray = this.stateProperties.map((state, index) => {
             let newValueForThisState = ioValueArray[index];
             return this.updateSingleIOBrokerValue(state, newValueForThisState);
         });
-        Promise.all(promiseArray).then( () => {
+        Promise.all(promiseArray).then(() => {
             this.log.debug('wrote all states sucessfully to ioBroker');
             callback();
-        }).catch( (e) => {
+        }).catch((e) => {
             this.log.error('could not write all states to ioBroker: ' + JSON.stringify(e));
             callback();
         });
-    }    
+    }
 }

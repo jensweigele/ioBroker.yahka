@@ -23,7 +23,7 @@ export abstract class TYahkaFunctionBase implements ISubscriptionRequestor {
     protected shouldStateBeFiltered(stateName: string, ioState: ioBroker.State): boolean {
         return false;
     }
-    
+
     protected readValueFromCache(stateName: string): ioBroker.State {
         if (this.stateCache.has(stateName)) {
             return this.stateCache.get(stateName);
@@ -36,12 +36,12 @@ export abstract class TYahkaFunctionBase implements ISubscriptionRequestor {
         let needUpdate = false;
         if (this.stateCache.has(stateName)) {
             let curVal = this.stateCache.get(stateName);
-            needUpdate = curVal.val !== ioState.val;
+            needUpdate = curVal?.val !== ioState?.val;
         } else {
             needUpdate = true;
         }
 
-        if (needUpdate) 
+        if (needUpdate)
             this.stateCache.set(stateName, ioState);
         return needUpdate;
     }
@@ -53,7 +53,7 @@ export abstract class TYahkaFunctionBase implements ISubscriptionRequestor {
         }
 
         let cacheChange = this.updateCache(stateName, ioState);
-        if(!cacheChange) {
+        if (!cacheChange) {
             this.log.debug('state value already in cache - notification is canceled');
             return;
         }

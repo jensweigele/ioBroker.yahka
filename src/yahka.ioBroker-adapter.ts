@@ -195,7 +195,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
 }
 
 function convertStateValueToNumber(state: ioBroker.State) {
-    if ((state) && (state.val !== "") && (state.val != null)) {
+    if ((state?.val != null)) {
         let numValue = Number(state.val);
         if (!isNaN(numValue)) {
             state.val = numValue;

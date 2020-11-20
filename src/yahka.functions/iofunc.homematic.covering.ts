@@ -49,12 +49,12 @@ export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition exten
 
         if (stateName == this.workingItem) {
             this.adapter.log.debug('[' + this.stateName + '] got a working item change event: ' + JSON.stringify(ioState));
-            this.lastWorkingState = Boolean(ioState.val);
+            this.lastWorkingState = Boolean(ioState?.val);
             this.setupDeferredChangeEvent(callback);
         } else if (stateName == this.stateName) {
             this.adapter.log.debug('[' + this.stateName + '] got a target state change event:' + JSON.stringify(ioState));
             if (ioState.ack) {
-                this.lastAcknowledgedValue = ioState.val;
+                this.lastAcknowledgedValue = ioState?.val;
                 this.setupDeferredChangeEvent(callback);
             }
         }
