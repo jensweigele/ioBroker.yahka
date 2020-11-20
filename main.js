@@ -2841,11 +2841,12 @@ var THomeKitBridge = /** @class */ (function () {
     }
     THomeKitBridge.prototype.init = function () {
         var e_1, _a;
+        var _b;
         this.bridgeObject = this.setupBridge();
         if (this.config.devices)
             try {
-                for (var _b = __values(this.config.devices), _c = _b.next(); !_c.done; _c = _b.next()) {
-                    var device = _c.value;
+                for (var _c = __values(this.config.devices), _d = _c.next(); !_d.done; _d = _c.next()) {
+                    var device = _d.value;
                     if (device.enabled === false) {
                         continue;
                     }
@@ -2862,10 +2863,11 @@ var THomeKitBridge = /** @class */ (function () {
             catch (e_1_1) { e_1 = { error: e_1_1 }; }
             finally {
                 try {
-                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                    if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
                 }
                 finally { if (e_1) throw e_1.error; }
             }
+        this.FLogger.info("pubishing bridge " + this.config.name + " on " + ((_b = this.config.interface) !== null && _b !== void 0 ? _b : '0.0.0.0'));
         this.bridgeObject.publish({
             username: this.config.username,
             port: this.config.port,
@@ -3188,6 +3190,8 @@ var THomeKitIPCamera = /** @class */ (function () {
         this.camera.configureController(this.cameraController);
     };
     THomeKitIPCamera.prototype.publishCamera = function () {
+        var _a;
+        this.FLogger.info("pubishing camera " + this.camConfig.name + " on " + ((_a = this.camConfig.interface) !== null && _a !== void 0 ? _a : '0.0.0.0'));
         this.camera.publish({
             username: this.camConfig.username,
             port: this.camConfig.port,

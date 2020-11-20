@@ -6,7 +6,7 @@ import {
     PrepareStreamRequest, SessionIdentifier, CameraStreamingDelegate,
     CameraController, SRTPCryptoSuites, H264Profile, H264Level, SnapshotRequestCallback,
     PrepareStreamCallback, PrepareStreamResponse, StreamingRequest, StreamRequestCallback,
-    CameraStreamingOptions, StreamRequestTypes, AudioStreamingCodecType, AudioStreamingSamplerate
+    CameraStreamingOptions, StreamRequestTypes, AudioStreamingCodecType, AudioStreamingSamplerate, Categories
 } from 'hap-nodejs';
 import { Configuration } from './shared/yahka.configuration';
 
@@ -165,11 +165,12 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
     }
 
     private publishCamera() {
+        this.FLogger.info(`pubishing camera ${this.camConfig.name} on ${this.camConfig.interface ?? '0.0.0.0'}`);
         this.camera.publish({
             username: this.camConfig.username,
             port: this.camConfig.port,
             pincode: this.camConfig.pincode,
-            category: Accessory.Categories.CAMERA,
+            category: Categories.CAMERA,
             mdns: {
                 interface: this.camConfig.interface,
                 reuseAddr: true

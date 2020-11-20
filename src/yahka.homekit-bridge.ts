@@ -67,6 +67,7 @@ export class THomeKitBridge {
                 }
             }
 
+        this.FLogger.info(`pubishing bridge ${this.config.name} on ${this.config.interface ?? '0.0.0.0'}`);
         this.bridgeObject.publish({
             username: this.config.username,
             port: this.config.port,
