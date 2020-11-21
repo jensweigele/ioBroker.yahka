@@ -96755,28 +96755,6 @@ exports.ConfigPageBuilder_BridgeConfig = ConfigPageBuilder_BridgeConfig;
 
 /***/ }),
 
-/***/ "./admin/pageBuilder/pageBuilder.customDevice.characteristic.propRow.inc.html":
-/*!************************************************************************************!*\
-  !*** ./admin/pageBuilder/pageBuilder.customDevice.characteristic.propRow.inc.html ***!
-  \************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"row\">\n    <div class=\"cell\">\n        <span id=\"propName\"></span>\n    </div>\n    <div class=\"cell\">\n        <div class=\"input-container\">\n            <input type=\"text\" id=\"propValue\"></input>\n        </div>\n    </div>\n</div>";
-
-/***/ }),
-
-/***/ "./admin/pageBuilder/pageBuilder.customDevice.characteristicRow.inc.html":
-/*!*******************************************************************************!*\
-  !*** ./admin/pageBuilder/pageBuilder.customDevice.characteristicRow.inc.html ***!
-  \*******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<tbody id=\"characteristic\" class=\"row-group\">\n    <tr>\n        <td class=\"center\">\n            <label class=\"input-control checkbox small-check\">\n                <input type=\"checkbox\" id=\"characteristic_enabled\">\n                <span class=\"check\"></span>\n            </label>\n        </td>\n        <td>\n            <span id=\"characteristic_name\"></span><a href=\"#\" id=\"toggleProperties\" class=\"\">&nbsp;&nbsp;[properties]</a>\n        </td>\n        <td class=\"right inOut\">\n            <span class=\"translate\">InOut: </span>\n        </td>\n        </td>\n        <td class=\"inOut\">\n            <div class=\"input-control select full-width\">\n                <select id=\"characteristic_inoutfunction\"></select>\n            </div>\n        </td>\n    </tr>\n\n    <tr>\n        <td>\n        </td>\n        <td rowspan=\"3\" class=\"characteristic-property-cell\">\n            <div class=\"no-display\" id=\"characteristic_propertyTable_container\">\n                <span>Characteristic Properties</span>\n                <div class=\"editor-table\" id=\"characteristic_propertyTable\">\n                </div>\n            </div>\n\n\n        </td>\n        <td colspan=\"2\" id=\"characteristic_inoutparams_container\" class=\"editor-container-cell inOut\">\n        </td>\n    </tr>\n\n    <tr>\n        <td>\n        </td>\n        <td class=\"right conversion\">\n            <span class=\"translate\">Conversion: </span>\n        </td>\n        <td class=\"conversion\">\n            <div class=\"input-control select full-width\">\n                <select id=\"characteristic_conversionfunction\"></select>\n            </div>\n        </td>\n    </tr>\n\n    <tr class=\"row\">\n        <td>\n        </td>\n        <td colspan=\"2\" id=\"characteristic_conversionparams_container\" class=\"editor-container-cell conversion\">\n        </td>\n    </tr>\n</tbody>";
-
-/***/ }),
-
 /***/ "./admin/pageBuilder/pageBuilder.customDevice.infoPanel.inc.html":
 /*!***********************************************************************!*\
   !*** ./admin/pageBuilder/pageBuilder.customDevice.infoPanel.inc.html ***!
@@ -96785,17 +96763,6 @@ module.exports = "<tbody id=\"characteristic\" class=\"row-group\">\n    <tr>\n 
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"frame\" id=\"yahka_device_info_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Device Properties</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"enabled\">Enabled:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enabled\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"name\">Name:</label></div>\n            <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists.\n                Please change the name!</div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"name\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"model\">Model:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"model\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"serial\">Serial:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"serial\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"firmware\">Firmware:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"firmware\" />\n            </div>\n        </div>\n\n        <div>\n            <div><label class=\"translate\" for=\"category\">Categeory:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select class=\"full-size\" id=\"category\"></select>\n            </div>\n        </div>\n    </div>\n\n</div>";
-
-/***/ }),
-
-/***/ "./admin/pageBuilder/pageBuilder.customDevice.servicePanel.inc.html":
-/*!**************************************************************************!*\
-  !*** ./admin/pageBuilder/pageBuilder.customDevice.servicePanel.inc.html ***!
-  \**************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"frame\" id=\"yahka_service_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Service: </span><span id=\"yahka_service_caption\"></span>\n        <a href=\"#\" class=\"place-right\" id=\"yakha_delete_service\"><span class=\"mif-cross fg-red\"></span></a>\n    </div>\n    <div class=\"content\">\n        <div class=\"flex-container-row flex-grow flex-align-baseline\">\n            <div>\n                <label class=\"input-control checkbox small-check\">\n                    <input type=\"checkbox\" id=\"service_enabled\">\n                    <span class=\"check\"></span>\n                </label>\n            </div>\n            <div><label class=\"translate\" for=\"service_name\">Service name:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_name\" />\n            </div>\n            <div><label class=\"translate\" for=\"service_type\">Service Type:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <select class=\"full-size\" id=\"service_type\"></select>\n            </div>\n            <div><label class=\"translate\" for=\"service_subtype\">Service Subtype:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_subtype\" />\n            </div>\n        </div>\n        <div><span class=\"translate\">Characteristics Table</span></div>\n        <table class=\"characteristic-table\" id=\"yahka_characteristic_table\">\n            <thead>\n                <th class=\"translate\">Enabled</th>\n                <th class=\"translate\">Name</th>\n                <th></th>\n                <th></th>\n            </thead>\n        </table>\n    </div>\n</div>";
 
 /***/ }),
 
@@ -96832,42 +96799,19 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
-var __read = (this && this.__read) || function (o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
-};
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConfigPageBuilder_CustomDevice = void 0;
 /// <reference path="../../typings/index.d.ts" />
 var hkBridge = __webpack_require__(/*! ../../shared/yahka.configuration */ "./shared/yahka.configuration.ts");
-var yahka_meta_generator_1 = __webpack_require__(/*! ../yahka.meta-generator */ "./admin/yahka.meta-generator.ts");
 var pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
-var parameterEditor_factory_1 = __webpack_require__(/*! ../parameterEditor/parameterEditor.factory */ "./admin/parameterEditor/parameterEditor.factory.ts");
-var parameterEditor_null_1 = __webpack_require__(/*! ../parameterEditor/parameterEditor.null */ "./admin/parameterEditor/parameterEditor.null.ts");
 var admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
 var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
 var admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+var pageBuilder_servicePanel_1 = __webpack_require__(/*! ./pageBuilder.servicePanel */ "./admin/pageBuilder/pageBuilder.servicePanel.ts");
 var accessoryCategories = {};
 getObject('yahka.meta._accessoryCategories', function (_, object) {
     accessoryCategories = object.native;
 });
-var HAPServiceDictionary = yahka_meta_generator_1.generateMetaDataDictionary();
 var ConfigPageBuilder_CustomDevice = /** @class */ (function (_super) {
     __extends(ConfigPageBuilder_CustomDevice, _super);
     function ConfigPageBuilder_CustomDevice(delegate) {
@@ -96876,10 +96820,8 @@ var ConfigPageBuilder_CustomDevice = /** @class */ (function (_super) {
         _this.addServiceAvailable = true;
         _this.removeDeviceAvailable = true;
         _this.dupliacteDeviceAvailable = true;
+        _this.servicePanelBuilder = new pageBuilder_servicePanel_1.ConfigPageBuilder_ServicePanel(delegate);
         _this.deviceInfoPanelTemplate = admin_pageLoader_1.createTemplateElement(__webpack_require__(/*! ./pageBuilder.customDevice.infoPanel.inc.html */ "./admin/pageBuilder/pageBuilder.customDevice.infoPanel.inc.html"));
-        _this.deviceServicePanelTemplate = admin_pageLoader_1.createTemplateElement(__webpack_require__(/*! ./pageBuilder.customDevice.servicePanel.inc.html */ "./admin/pageBuilder/pageBuilder.customDevice.servicePanel.inc.html"));
-        _this.characteristicRow = admin_pageLoader_1.createTemplateElement(__webpack_require__(/*! ./pageBuilder.customDevice.characteristicRow.inc.html */ "./admin/pageBuilder/pageBuilder.customDevice.characteristicRow.inc.html"));
-        _this.characteristicPropRow = admin_pageLoader_1.createTemplateElement(__webpack_require__(/*! ./pageBuilder.customDevice.characteristic.propRow.inc.html */ "./admin/pageBuilder/pageBuilder.customDevice.characteristic.propRow.inc.html"));
         return _this;
     }
     ConfigPageBuilder_CustomDevice.prototype.refresh = function (config, AFocusLastPanel, devicePanel) {
@@ -96891,7 +96833,7 @@ var ConfigPageBuilder_CustomDevice = /** @class */ (function (_super) {
         try {
             for (var _b = __values(config.services), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var serviceConfig = _c.value;
-                var servicePanel = this.createServicePanel(config, serviceConfig);
+                var servicePanel = this.servicePanelBuilder.createServicePanel(config.services, serviceConfig);
                 devicePanel.appendChild(servicePanel);
                 lastPane = servicePanel;
             }
@@ -96960,343 +96902,12 @@ var ConfigPageBuilder_CustomDevice = /** @class */ (function (_super) {
         devicePane.appendChild(devInfoFragment);
         return devInfoPanel;
     };
-    ConfigPageBuilder_CustomDevice.prototype.createServicePanel = function (deviceConfig, serviceConfig) {
-        var _this = this;
-        var servicePanel = document.importNode(this.deviceServicePanelTemplate.content, true);
-        var frameNode = servicePanel.querySelector('#yahka_service_panel');
-        admin_translation_1.translateFragment(servicePanel);
-        var inputHelper = function (selector, configName, popuplateServices, eventHandler) {
-            var input = frameNode.querySelector(selector);
-            if (popuplateServices === true) {
-                var selectList = Object.keys(HAPServiceDictionary);
-                _this.fillSelectByArray(input, selectList);
-            }
-            if (serviceConfig) {
-                admin_utils_1.Utils.setInputValue(input, serviceConfig[configName]);
-            }
-            if (input.type === 'checkbox') {
-                input.checked = serviceConfig[configName] !== false;
-                input.addEventListener('change', _this.handleServiceMetaDataChange.bind(_this, serviceConfig, frameNode, configName));
-            }
-            else if (eventHandler !== undefined) {
-                input.addEventListener('input', eventHandler);
-            }
-            else {
-                input.addEventListener('input', _this.handleServiceMetaDataChange.bind(_this, serviceConfig, frameNode, configName));
-            }
-        };
-        this.refreshServicePanelCaption(serviceConfig, frameNode);
-        inputHelper('#service_enabled', 'enabled');
-        inputHelper('#service_name', 'name');
-        inputHelper('#service_type', 'type', true, this.handleServiceTypeChange.bind(this, serviceConfig, frameNode));
-        inputHelper('#service_subtype', 'subType');
-        this.buildCharacteristicTable(serviceConfig, frameNode);
-        // bind delete buttton
-        frameNode.querySelector('#yakha_delete_service').addEventListener('click', function () {
-            var idx = deviceConfig.services.indexOf(serviceConfig);
-            if (idx > -1) {
-                deviceConfig.services.splice(idx, 1);
-                _this.delegate.changeCallback();
-                frameNode.parentNode.removeChild(frameNode);
-            }
-            _this.delegate.setSelectedDeviceConfig(undefined, false);
-        });
-        return frameNode;
-    };
-    ConfigPageBuilder_CustomDevice.prototype.refreshServicePanelCaption = function (serviceConfig, servicePanel) {
-        servicePanel.querySelector('#yahka_service_caption').textContent = (serviceConfig.enabled === false ? '[## disabled ##]' : '') + " " + serviceConfig.name + "[" + serviceConfig.type + "]";
-    };
-    ConfigPageBuilder_CustomDevice.prototype.findHAPCharacteristic = function (serviceDef, characteristicName) {
-        if (!serviceDef)
-            return undefined;
-        var x;
-        if (x = serviceDef.characteristics[characteristicName])
-            return x;
-        return undefined;
-    };
-    ConfigPageBuilder_CustomDevice.prototype.findConfigCharacteristic = function (service, characteristicName) {
-        var e_2, _a;
-        if (!service) {
-            return undefined;
-        }
-        try {
-            for (var _b = __values(service.characteristics), _c = _b.next(); !_c.done; _c = _b.next()) {
-                var cfg = _c.value;
-                if (cfg.name == characteristicName) {
-                    return cfg;
-                }
-            }
-        }
-        catch (e_2_1) { e_2 = { error: e_2_1 }; }
-        finally {
-            try {
-                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-            }
-            finally { if (e_2) throw e_2.error; }
-        }
-        return undefined;
-    };
-    ConfigPageBuilder_CustomDevice.prototype.isEmptyCharacteristic = function (charConfig) {
-        if (charConfig === undefined)
-            return true;
-        if (charConfig.name === '')
-            return true;
-        if ((charConfig['inOutFunction'] === '') || (charConfig['inOutFunction'] === undefined))
-            return true;
-        return false;
-    };
-    ConfigPageBuilder_CustomDevice.prototype.removeCharacteristic = function (serviceConfig, charConfig) {
-        if (serviceConfig === undefined) {
-            return;
-        }
-        var idx = serviceConfig.characteristics.indexOf(charConfig);
-        if (idx > -1) {
-            serviceConfig.characteristics.splice(idx, 1);
-            this.delegate.changeCallback();
-        }
-    };
-    ConfigPageBuilder_CustomDevice.prototype.buildCharacteristicTable = function (serviceConfig, servicePanel) {
-        var e_3, _a, e_4, _b;
-        var serviceDef = HAPServiceDictionary[serviceConfig.type];
-        var createdCharacteristics = {};
-        try {
-            for (var _c = __values(serviceConfig.characteristics), _d = _c.next(); !_d.done; _d = _c.next()) {
-                var charConfig = _d.value;
-                var charDef = this.findHAPCharacteristic(serviceDef, charConfig.name);
-                if ((charDef === undefined) && (this.isEmptyCharacteristic(charConfig))) {
-                    this.removeCharacteristic(serviceConfig, charConfig);
-                    continue;
-                }
-                var charRow = this.createCharacteristicRow(charDef, serviceConfig, charConfig);
-                createdCharacteristics[charConfig.name] = [charConfig.name, charDef ? charDef.optional : false, charRow];
-            }
-        }
-        catch (e_3_1) { e_3 = { error: e_3_1 }; }
-        finally {
-            try {
-                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
-            }
-            finally { if (e_3) throw e_3.error; }
-        }
-        // add undefined characteristics
-        if (serviceDef) {
-            for (var charName in serviceDef.characteristics) {
-                if (createdCharacteristics[charName] === undefined) {
-                    var charDef = serviceDef.characteristics[charName];
-                    var charRow = this.createCharacteristicRow(charDef, serviceConfig, undefined);
-                    createdCharacteristics[charName] = [charName, charDef.optional, charRow];
-                }
-            }
-        }
-        var charRows = [];
-        for (var charRow in createdCharacteristics)
-            charRows.push(createdCharacteristics[charRow]);
-        charRows.sort(function (a, b) {
-            if (a[1] != b[1])
-                return a[1] ? -1 : 1;
-            return a[0].localeCompare(b[0]);
-        });
-        var table = servicePanel.querySelector('#yahka_characteristic_table');
-        while (table.childElementCount > 1) { // first row is the header row
-            table.removeChild(table.lastElementChild);
-        }
-        try {
-            for (var charRows_1 = __values(charRows), charRows_1_1 = charRows_1.next(); !charRows_1_1.done; charRows_1_1 = charRows_1.next()) {
-                var row = charRows_1_1.value;
-                table.appendChild(row[2]);
-            }
-        }
-        catch (e_4_1) { e_4 = { error: e_4_1 }; }
-        finally {
-            try {
-                if (charRows_1_1 && !charRows_1_1.done && (_b = charRows_1.return)) _b.call(charRows_1);
-            }
-            finally { if (e_4) throw e_4.error; }
-        }
-    };
-    ConfigPageBuilder_CustomDevice.prototype.getParameterEditor = function (functionName, valueChangeCallback, functionMap) {
-        if (!functionMap.has(functionName)) {
-            return new parameterEditor_null_1.ParameterEditor_Null(valueChangeCallback);
-        }
-        var factory = functionMap.get(functionName);
-        return factory(valueChangeCallback);
-    };
-    ConfigPageBuilder_CustomDevice.prototype.updateParameterEditor = function (functionName, parameterContainer, parameterValue, parameterChangeCallback, functionMap) {
-        var editor = this.getParameterEditor(functionName, parameterChangeCallback, functionMap);
-        if (editor == undefined)
-            return;
-        editor.refreshAndShow(parameterContainer, parameterValue);
-    };
-    ConfigPageBuilder_CustomDevice.prototype.createCharacteristicRow = function (charDef, serviceConfig, charConfig) {
-        var _this = this;
-        var name = charConfig ? charConfig.name : charDef.name;
-        var enabled = charConfig ? charConfig.enabled : false;
-        var rowElement = document.importNode(this.characteristicRow.content, true);
-        admin_translation_1.translateFragment(rowElement);
-        var bracketElement = rowElement.querySelector('#characteristic');
-        var checkBox = rowElement.querySelector('#characteristic_enabled');
-        checkBox.checked = enabled;
-        checkBox.addEventListener('click', this.handleCharacteristicEnabledChange.bind(this, serviceConfig, name, bracketElement));
-        this.refreshEnabledClass(bracketElement, enabled);
-        this.refershOptionalClass(bracketElement, charDef ? charDef.optional : true);
-        rowElement.querySelector('#characteristic_name').textContent = name;
-        var functionSelector = function (selector, containerSelector, configName, parameterName, functionMap) {
-            var _a;
-            var input = rowElement.querySelector(selector);
-            var container = rowElement.querySelector(containerSelector);
-            if (functionMap !== undefined) {
-                var mapKeys = __spread(functionMap.keys());
-                _this.fillSelectByArray(input, mapKeys);
-            }
-            var parameterValue = undefined;
-            if (charConfig) {
-                admin_utils_1.Utils.setInputValue(input, charConfig[configName]);
-                parameterValue = charConfig[parameterName];
-            }
-            var paramUpdateMethod = function (newValue) {
-                var charConfig = _this.findConfigCharacteristic(serviceConfig, name);
-                if (charConfig === undefined) {
-                    charConfig = { name: name, enabled: false };
-                    serviceConfig.characteristics.push(charConfig);
-                }
-                charConfig[parameterName] = newValue;
-                _this.delegate.changeCallback();
-            };
-            _this.updateParameterEditor((_a = admin_utils_1.Utils.getSelectInputValue(input)) === null || _a === void 0 ? void 0 : _a.toString(), container, parameterValue, paramUpdateMethod, functionMap);
-            input.addEventListener('input', function (e) {
-                var _a;
-                _this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
-                var charConfig = _this.findConfigCharacteristic(serviceConfig, name);
-                _this.updateParameterEditor((_a = admin_utils_1.Utils.getSelectInputValue(input)) === null || _a === void 0 ? void 0 : _a.toString(), container, charConfig[parameterName], paramUpdateMethod, functionMap);
-                return false;
-            });
-        };
-        functionSelector('#characteristic_inoutfunction', '#characteristic_inoutparams_container', 'inOutFunction', 'inOutParameters', parameterEditor_factory_1.inoutFunctions);
-        functionSelector('#characteristic_conversionfunction', '#characteristic_conversionparams_container', 'conversionFunction', 'conversionParameters', parameterEditor_factory_1.convFunctions);
-        this.updateCharacteristicProperties(rowElement, serviceConfig, charDef, charConfig);
-        return rowElement;
-    };
-    ConfigPageBuilder_CustomDevice.prototype.updateCharacteristicProperties = function (rowElement, serviceConfig, charDef, charConfig) {
-        var charName = charConfig ? charConfig.name : charDef.name;
-        var toggleLink = rowElement.querySelector('#toggleProperties');
-        var propContainer = rowElement.querySelector('#characteristic_propertyTable_container');
-        var hasCustomProperties = charConfig ? (charConfig.properties !== undefined) && (Object.keys(charConfig.properties).length > 0) : false;
-        if (toggleLink) {
-            toggleLink.addEventListener('click', function () {
-                propContainer.classList.toggle('no-display');
-            });
-            propContainer.classList.toggle('no-display', !hasCustomProperties);
-            toggleLink.classList.toggle('properties-defined', hasCustomProperties);
-        }
-        var propTable = rowElement.querySelector('#characteristic_propertyTable');
-        function transformValue(value) {
-            var result = value;
-            var isObject = false;
-            if (typeof result === 'object') {
-                result = JSON.stringify(result);
-                isObject = true;
-            }
-            return { asString: result, isObject: isObject };
-        }
-        for (var propertyName in charDef.properties) {
-            var propertyDefaultValue = transformValue(charDef.properties[propertyName]);
-            var propElement = document.importNode(this.characteristicPropRow.content, true);
-            var nameSpan = propElement.querySelector('#propName');
-            nameSpan.id = "";
-            nameSpan.textContent = propertyName;
-            var propInput = propElement.querySelector('#propValue');
-            propInput.id = propertyName;
-            propInput.placeholder = propertyDefaultValue.asString;
-            if (charConfig !== undefined) {
-                if (charConfig.properties !== undefined) {
-                    if (charConfig.properties[propertyName] !== undefined) {
-                        var charValue = transformValue(charConfig.properties[propertyName]);
-                        admin_utils_1.Utils.setInputValue(propInput, charValue.asString);
-                    }
-                }
-            }
-            nameSpan.classList.toggle('properties-defined', propInput.value != "");
-            propInput.addEventListener('input', this.handleCharacteristicPropertyChange.bind(this, serviceConfig, charName, propertyName, propertyDefaultValue.isObject));
-            propTable.appendChild(propElement);
-        }
-    };
-    ConfigPageBuilder_CustomDevice.prototype.refreshEnabledClass = function (row, enabled) {
-        row.classList.toggle('disabled', !enabled);
-    };
-    ConfigPageBuilder_CustomDevice.prototype.refershOptionalClass = function (row, optional) {
-        row.classList.toggle('optional-characteristic', optional);
-    };
-    ConfigPageBuilder_CustomDevice.prototype.handleCharacteristicEnabledChange = function (serviceConfig, charName, charRow, ev) {
-        var charConfig = this.findConfigCharacteristic(serviceConfig, charName);
-        if (charConfig === undefined) {
-            charConfig = { name: charName, enabled: false };
-            serviceConfig.characteristics.push(charConfig);
-        }
-        var inputTarget = ev.currentTarget;
-        charConfig.enabled = inputTarget.checked;
-        this.refreshEnabledClass(charRow, charConfig.enabled);
-        this.delegate.changeCallback();
-    };
-    ConfigPageBuilder_CustomDevice.prototype.handleCharacteristicInputChange = function (serviceConfig, charName, attribute, ev) {
-        var charConfig = this.findConfigCharacteristic(serviceConfig, charName);
-        if (charConfig === undefined) {
-            charConfig = { name: charName, enabled: false };
-            serviceConfig.characteristics.push(charConfig);
-        }
-        var inputTarget = ev.currentTarget;
-        var inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
-        charConfig[attribute] = inputValue;
-        this.delegate.changeCallback();
-    };
-    ConfigPageBuilder_CustomDevice.prototype.handleCharacteristicPropertyChange = function (serviceConfig, charName, property, isObjectProperty, ev) {
-        var charConfig = this.findConfigCharacteristic(serviceConfig, charName);
-        if (charConfig === undefined) {
-            charConfig = { name: charName, enabled: false };
-            serviceConfig.characteristics.push(charConfig);
-        }
-        var inputTarget = ev.currentTarget;
-        var inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
-        if (charConfig.properties === undefined)
-            charConfig.properties = {};
-        if (inputValue !== undefined) {
-            if (isObjectProperty) {
-                try {
-                    charConfig.properties[property] = JSON.parse(inputValue);
-                }
-                catch (e) {
-                    console.log("parsing of", inputValue, " failed with: ", e);
-                }
-            }
-            else {
-                charConfig.properties[property] = inputValue;
-            }
-        }
-        else {
-            delete charConfig.properties[property];
-        }
-        this.delegate.changeCallback();
-    };
     ConfigPageBuilder_CustomDevice.prototype.handleDeviceMetaDataChange = function (deviceConfig, propertyName, errorElement, validator, ev) {
         var inputTarget = ev.currentTarget;
         var inputValue = (inputTarget.type === 'checkbox') ? inputTarget.checked : inputTarget.value;
         deviceConfig[propertyName] = inputValue;
         this.refreshSimpleErrorElement(errorElement, validator);
         this.delegate.refreshDeviceListEntry(deviceConfig);
-        this.delegate.changeCallback();
-    };
-    ConfigPageBuilder_CustomDevice.prototype.handleServiceMetaDataChange = function (serviceConfig, servicePanel, attribute, ev) {
-        var inputTarget = ev.currentTarget;
-        var inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
-        serviceConfig[attribute] = inputValue;
-        this.refreshServicePanelCaption(serviceConfig, servicePanel);
-        this.delegate.changeCallback();
-    };
-    ConfigPageBuilder_CustomDevice.prototype.handleServiceTypeChange = function (serviceConfig, servicePanel, ev) {
-        var inputTarget = ev.currentTarget;
-        var inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
-        serviceConfig.type = inputValue; //?.toString();
-        this.refreshServicePanelCaption(serviceConfig, servicePanel);
-        this.buildCharacteristicTable(serviceConfig, servicePanel);
         this.delegate.changeCallback();
     };
     return ConfigPageBuilder_CustomDevice;
@@ -97375,6 +96986,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConfigPageBuilder_IPCamera = void 0;
 /// <reference path="../../typings/index.d.ts" />
@@ -97384,27 +97006,38 @@ var admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./adm
 var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
 var yahka_admin_1 = __webpack_require__(/*! ../yahka.admin */ "./admin/yahka.admin.ts");
 var admin_defaults_1 = __webpack_require__(/*! ../admin.defaults */ "./admin/admin.defaults.ts");
+var pageBuilder_servicePanel_1 = __webpack_require__(/*! ./pageBuilder.servicePanel */ "./admin/pageBuilder/pageBuilder.servicePanel.ts");
 var ConfigPageBuilder_IPCamera = /** @class */ (function (_super) {
     __extends(ConfigPageBuilder_IPCamera, _super);
     function ConfigPageBuilder_IPCamera(delegate) {
         var _this = _super.call(this, delegate) || this;
         _this.delegate = delegate;
-        _this.addServiceAvailable = false;
+        _this.addServiceAvailable = true;
         _this.removeDeviceAvailable = true;
         _this.dupliacteDeviceAvailable = true;
+        _this.servicePanelBuilder = new pageBuilder_servicePanel_1.ConfigPageBuilder_ServicePanel(delegate);
         _this.configPanelTemplate = admin_pageLoader_1.createTemplateElement(__webpack_require__(/*! ./pageBuilder.ipCam.main.inc.html */ "./admin/pageBuilder/pageBuilder.ipCam.main.inc.html"));
         return _this;
     }
     ConfigPageBuilder_IPCamera.prototype.refresh = function (config, AFocusLastPanel, devicePanel) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                if (!hkBridge.Configuration.isIPCameraConfig(config)) {
+                    return [2 /*return*/];
+                }
+                this.refreshCameraPanels(config, AFocusLastPanel, devicePanel);
+                this.refreshServicePanels(config, AFocusLastPanel, devicePanel);
+                return [2 /*return*/];
+            });
+        });
+    };
+    ConfigPageBuilder_IPCamera.prototype.refreshCameraPanels = function (config, AFocusLastPanel, devicePanel) {
         return __awaiter(this, void 0, void 0, function () {
             var configFragment, inputHelper, ffmpegHelper, ipList, ipListForSelectBox;
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!hkBridge.Configuration.isIPCameraConfig(config)) {
-                            return [2 /*return*/];
-                        }
                         configFragment = document.importNode(this.configPanelTemplate.content, true);
                         admin_translation_1.translateFragment(configFragment);
                         inputHelper = function (selector, propertyName, selectList, validator, checkDefault) {
@@ -97475,6 +97108,35 @@ var ConfigPageBuilder_IPCamera = /** @class */ (function (_super) {
                 }
             });
         });
+    };
+    ConfigPageBuilder_IPCamera.prototype.refreshServicePanels = function (config, AFocusLastPanel, devicePanel) {
+        var e_1, _a;
+        var _b;
+        var lastPane;
+        config.services = (_b = config.services) !== null && _b !== void 0 ? _b : [];
+        try {
+            for (var _c = __values(config.services), _d = _c.next(); !_d.done; _d = _c.next()) {
+                var serviceConfig = _d.value;
+                var servicePanel = this.servicePanelBuilder.createServicePanel(config.services, serviceConfig);
+                devicePanel.appendChild(servicePanel);
+                lastPane = servicePanel;
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+        if (AFocusLastPanel && lastPane) {
+            lastPane.scrollIntoView();
+            if (!lastPane.classList.contains('active')) {
+                var heading = lastPane.querySelector('.heading');
+                if (heading)
+                    heading.click();
+            }
+        }
     };
     ConfigPageBuilder_IPCamera.prototype.styleListItem = function (listItem, deviceConfig) {
         if (!hkBridge.Configuration.isIPCameraConfig(deviceConfig)) {
@@ -97655,6 +97317,9 @@ var ioBroker_YahkaPageBuilder = /** @class */ (function () {
         this.refreshDevicePanel(deviceConfig, AFocusLastPanel);
         this.buttonHandler.refreshBridgeButtons(document.body);
     };
+    ioBroker_YahkaPageBuilder.prototype.refreshSelectedDeviceConfig = function () {
+        this.setSelectedDeviceConfig(this._selectedDeviceConfig, false);
+    };
     ioBroker_YahkaPageBuilder.prototype.refreshDeviceListEntry = function (deviceConfig) {
         this.deviceListHandler.refreshDeviceList();
     };
@@ -97794,7 +97459,8 @@ var ioBroker_ButtonHandler = /** @class */ (function (_super) {
                     numberOfStreams: undefined,
                     ffmpegCommandLine: admin_defaults_1.Defaults.ffmpegCommandLines.default,
                     enableAudio: false,
-                    devices: []
+                    devices: [],
+                    services: []
                 };
                 _this.delegate.cameraConfigs.push(newIPCamera);
                 _this.delegate.setSelectedDeviceConfig(newIPCamera, true);
@@ -97891,6 +97557,450 @@ var ioBroker_ButtonHandler = /** @class */ (function (_super) {
     };
     return ioBroker_ButtonHandler;
 }(pageBuilder_base_1.ConfigPageBuilder_Base));
+
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.servicePanel.characteristic.propRow.inc.html":
+/*!************************************************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.servicePanel.characteristic.propRow.inc.html ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row\">\n    <div class=\"cell\">\n        <span id=\"propName\"></span>\n    </div>\n    <div class=\"cell\">\n        <div class=\"input-container\">\n            <input type=\"text\" id=\"propValue\"></input>\n        </div>\n    </div>\n</div>";
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.servicePanel.characteristicRow.inc.html":
+/*!*******************************************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.servicePanel.characteristicRow.inc.html ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<tbody id=\"characteristic\" class=\"row-group\">\n    <tr>\n        <td class=\"center\">\n            <label class=\"input-control checkbox small-check\">\n                <input type=\"checkbox\" id=\"characteristic_enabled\">\n                <span class=\"check\"></span>\n            </label>\n        </td>\n        <td>\n            <span id=\"characteristic_name\"></span><a href=\"#\" id=\"toggleProperties\" class=\"\">&nbsp;&nbsp;[properties]</a>\n        </td>\n        <td class=\"right inOut\">\n            <span class=\"translate\">InOut: </span>\n        </td>\n        </td>\n        <td class=\"inOut\">\n            <div class=\"input-control select full-width\">\n                <select id=\"characteristic_inoutfunction\"></select>\n            </div>\n        </td>\n    </tr>\n\n    <tr>\n        <td>\n        </td>\n        <td rowspan=\"3\" class=\"characteristic-property-cell\">\n            <div class=\"no-display\" id=\"characteristic_propertyTable_container\">\n                <span>Characteristic Properties</span>\n                <div class=\"editor-table\" id=\"characteristic_propertyTable\">\n                </div>\n            </div>\n\n\n        </td>\n        <td colspan=\"2\" id=\"characteristic_inoutparams_container\" class=\"editor-container-cell inOut\">\n        </td>\n    </tr>\n\n    <tr>\n        <td>\n        </td>\n        <td class=\"right conversion\">\n            <span class=\"translate\">Conversion: </span>\n        </td>\n        <td class=\"conversion\">\n            <div class=\"input-control select full-width\">\n                <select id=\"characteristic_conversionfunction\"></select>\n            </div>\n        </td>\n    </tr>\n\n    <tr class=\"row\">\n        <td>\n        </td>\n        <td colspan=\"2\" id=\"characteristic_conversionparams_container\" class=\"editor-container-cell conversion\">\n        </td>\n    </tr>\n</tbody>";
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.servicePanel.servicePanel.inc.html":
+/*!**************************************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.servicePanel.servicePanel.inc.html ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"frame\" id=\"yahka_service_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Service: </span><span id=\"yahka_service_caption\"></span>\n        <a href=\"#\" class=\"place-right\" id=\"yakha_delete_service\"><span class=\"mif-cross fg-red\"></span></a>\n    </div>\n    <div class=\"content\">\n        <div class=\"flex-container-row flex-grow flex-align-baseline\">\n            <div>\n                <label class=\"input-control checkbox small-check\">\n                    <input type=\"checkbox\" id=\"service_enabled\">\n                    <span class=\"check\"></span>\n                </label>\n            </div>\n            <div><label class=\"translate\" for=\"service_name\">Service name:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_name\" />\n            </div>\n            <div><label class=\"translate\" for=\"service_type\">Service Type:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <select class=\"full-size\" id=\"service_type\"></select>\n            </div>\n            <div><label class=\"translate\" for=\"service_subtype\">Service Subtype:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_subtype\" />\n            </div>\n        </div>\n        <div><span class=\"translate\">Characteristics Table</span></div>\n        <table class=\"characteristic-table\" id=\"yahka_characteristic_table\">\n            <thead>\n                <th class=\"translate\">Enabled</th>\n                <th class=\"translate\">Name</th>\n                <th></th>\n                <th></th>\n            </thead>\n        </table>\n    </div>\n</div>";
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.servicePanel.ts":
+/*!*******************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.servicePanel.ts ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spread = (this && this.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+    return ar;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ConfigPageBuilder_ServicePanel = void 0;
+var yahka_meta_generator_1 = __webpack_require__(/*! ../yahka.meta-generator */ "./admin/yahka.meta-generator.ts");
+var pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
+var parameterEditor_factory_1 = __webpack_require__(/*! ../parameterEditor/parameterEditor.factory */ "./admin/parameterEditor/parameterEditor.factory.ts");
+var parameterEditor_null_1 = __webpack_require__(/*! ../parameterEditor/parameterEditor.null */ "./admin/parameterEditor/parameterEditor.null.ts");
+var admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
+var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+var admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+var HAPServiceDictionary = yahka_meta_generator_1.generateMetaDataDictionary();
+var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
+    __extends(ConfigPageBuilder_ServicePanel, _super);
+    function ConfigPageBuilder_ServicePanel(delegate) {
+        var _this = _super.call(this, delegate) || this;
+        _this.delegate = delegate;
+        _this.deviceServicePanelTemplate = admin_pageLoader_1.createTemplateElement(__webpack_require__(/*! ./pageBuilder.servicePanel.servicePanel.inc.html */ "./admin/pageBuilder/pageBuilder.servicePanel.servicePanel.inc.html"));
+        _this.characteristicRow = admin_pageLoader_1.createTemplateElement(__webpack_require__(/*! ./pageBuilder.servicePanel.characteristicRow.inc.html */ "./admin/pageBuilder/pageBuilder.servicePanel.characteristicRow.inc.html"));
+        _this.characteristicPropRow = admin_pageLoader_1.createTemplateElement(__webpack_require__(/*! ./pageBuilder.servicePanel.characteristic.propRow.inc.html */ "./admin/pageBuilder/pageBuilder.servicePanel.characteristic.propRow.inc.html"));
+        return _this;
+    }
+    ConfigPageBuilder_ServicePanel.prototype.createServicePanel = function (services, serviceConfig) {
+        var _this = this;
+        var servicePanel = document.importNode(this.deviceServicePanelTemplate.content, true);
+        var frameNode = servicePanel.querySelector('#yahka_service_panel');
+        admin_translation_1.translateFragment(servicePanel);
+        var inputHelper = function (selector, configName, popuplateServices, eventHandler) {
+            var input = frameNode.querySelector(selector);
+            if (popuplateServices === true) {
+                var selectList = Object.keys(HAPServiceDictionary);
+                _this.fillSelectByArray(input, selectList);
+            }
+            if (serviceConfig) {
+                admin_utils_1.Utils.setInputValue(input, serviceConfig[configName]);
+            }
+            if (input.type === 'checkbox') {
+                input.checked = serviceConfig[configName] !== false;
+                input.addEventListener('change', _this.handleServiceMetaDataChange.bind(_this, serviceConfig, frameNode, configName));
+            }
+            else if (eventHandler !== undefined) {
+                input.addEventListener('input', eventHandler);
+            }
+            else {
+                input.addEventListener('input', _this.handleServiceMetaDataChange.bind(_this, serviceConfig, frameNode, configName));
+            }
+        };
+        this.refreshServicePanelCaption(serviceConfig, frameNode);
+        inputHelper('#service_enabled', 'enabled');
+        inputHelper('#service_name', 'name');
+        inputHelper('#service_type', 'type', true, this.handleServiceTypeChange.bind(this, serviceConfig, frameNode));
+        inputHelper('#service_subtype', 'subType');
+        this.buildCharacteristicTable(serviceConfig, frameNode);
+        // bind delete buttton
+        frameNode.querySelector('#yakha_delete_service').addEventListener('click', function () {
+            var idx = services.indexOf(serviceConfig);
+            if (idx > -1) {
+                services.splice(idx, 1);
+                _this.delegate.changeCallback();
+                frameNode.parentNode.removeChild(frameNode);
+            }
+            _this.delegate.refreshSelectedDeviceConfig();
+        });
+        return frameNode;
+    };
+    ConfigPageBuilder_ServicePanel.prototype.refreshServicePanelCaption = function (serviceConfig, servicePanel) {
+        servicePanel.querySelector('#yahka_service_caption').textContent = (serviceConfig.enabled === false ? '[## disabled ##]' : '') + " " + serviceConfig.name + "[" + serviceConfig.type + "]";
+    };
+    ConfigPageBuilder_ServicePanel.prototype.findHAPCharacteristic = function (serviceDef, characteristicName) {
+        if (!serviceDef)
+            return undefined;
+        var x;
+        if (x = serviceDef.characteristics[characteristicName])
+            return x;
+        return undefined;
+    };
+    ConfigPageBuilder_ServicePanel.prototype.findConfigCharacteristic = function (service, characteristicName) {
+        var e_1, _a;
+        if (!service) {
+            return undefined;
+        }
+        try {
+            for (var _b = __values(service.characteristics), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var cfg = _c.value;
+                if (cfg.name == characteristicName) {
+                    return cfg;
+                }
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+        return undefined;
+    };
+    ConfigPageBuilder_ServicePanel.prototype.isEmptyCharacteristic = function (charConfig) {
+        if (charConfig === undefined)
+            return true;
+        if (charConfig.name === '')
+            return true;
+        if ((charConfig['inOutFunction'] === '') || (charConfig['inOutFunction'] === undefined))
+            return true;
+        return false;
+    };
+    ConfigPageBuilder_ServicePanel.prototype.removeCharacteristic = function (serviceConfig, charConfig) {
+        if (serviceConfig === undefined) {
+            return;
+        }
+        var idx = serviceConfig.characteristics.indexOf(charConfig);
+        if (idx > -1) {
+            serviceConfig.characteristics.splice(idx, 1);
+            this.delegate.changeCallback();
+        }
+    };
+    ConfigPageBuilder_ServicePanel.prototype.buildCharacteristicTable = function (serviceConfig, servicePanel) {
+        var e_2, _a, e_3, _b;
+        var serviceDef = HAPServiceDictionary[serviceConfig.type];
+        var createdCharacteristics = {};
+        try {
+            for (var _c = __values(serviceConfig.characteristics), _d = _c.next(); !_d.done; _d = _c.next()) {
+                var charConfig = _d.value;
+                var charDef = this.findHAPCharacteristic(serviceDef, charConfig.name);
+                if ((charDef === undefined) && (this.isEmptyCharacteristic(charConfig))) {
+                    this.removeCharacteristic(serviceConfig, charConfig);
+                    continue;
+                }
+                var charRow = this.createCharacteristicRow(charDef, serviceConfig, charConfig);
+                createdCharacteristics[charConfig.name] = [charConfig.name, charDef ? charDef.optional : false, charRow];
+            }
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+            }
+            finally { if (e_2) throw e_2.error; }
+        }
+        // add undefined characteristics
+        if (serviceDef) {
+            for (var charName in serviceDef.characteristics) {
+                if (createdCharacteristics[charName] === undefined) {
+                    var charDef = serviceDef.characteristics[charName];
+                    var charRow = this.createCharacteristicRow(charDef, serviceConfig, undefined);
+                    createdCharacteristics[charName] = [charName, charDef.optional, charRow];
+                }
+            }
+        }
+        var charRows = [];
+        for (var charRow in createdCharacteristics)
+            charRows.push(createdCharacteristics[charRow]);
+        charRows.sort(function (a, b) {
+            if (a[1] != b[1])
+                return a[1] ? -1 : 1;
+            return a[0].localeCompare(b[0]);
+        });
+        var table = servicePanel.querySelector('#yahka_characteristic_table');
+        while (table.childElementCount > 1) { // first row is the header row
+            table.removeChild(table.lastElementChild);
+        }
+        try {
+            for (var charRows_1 = __values(charRows), charRows_1_1 = charRows_1.next(); !charRows_1_1.done; charRows_1_1 = charRows_1.next()) {
+                var row = charRows_1_1.value;
+                table.appendChild(row[2]);
+            }
+        }
+        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+        finally {
+            try {
+                if (charRows_1_1 && !charRows_1_1.done && (_b = charRows_1.return)) _b.call(charRows_1);
+            }
+            finally { if (e_3) throw e_3.error; }
+        }
+    };
+    ConfigPageBuilder_ServicePanel.prototype.getParameterEditor = function (functionName, valueChangeCallback, functionMap) {
+        if (!functionMap.has(functionName)) {
+            return new parameterEditor_null_1.ParameterEditor_Null(valueChangeCallback);
+        }
+        var factory = functionMap.get(functionName);
+        return factory(valueChangeCallback);
+    };
+    ConfigPageBuilder_ServicePanel.prototype.updateParameterEditor = function (functionName, parameterContainer, parameterValue, parameterChangeCallback, functionMap) {
+        var editor = this.getParameterEditor(functionName, parameterChangeCallback, functionMap);
+        if (editor == undefined)
+            return;
+        editor.refreshAndShow(parameterContainer, parameterValue);
+    };
+    ConfigPageBuilder_ServicePanel.prototype.createCharacteristicRow = function (charDef, serviceConfig, charConfig) {
+        var _this = this;
+        var name = charConfig ? charConfig.name : charDef.name;
+        var enabled = charConfig ? charConfig.enabled : false;
+        var rowElement = document.importNode(this.characteristicRow.content, true);
+        admin_translation_1.translateFragment(rowElement);
+        var bracketElement = rowElement.querySelector('#characteristic');
+        var checkBox = rowElement.querySelector('#characteristic_enabled');
+        checkBox.checked = enabled;
+        checkBox.addEventListener('click', this.handleCharacteristicEnabledChange.bind(this, serviceConfig, name, bracketElement));
+        this.refreshEnabledClass(bracketElement, enabled);
+        this.refershOptionalClass(bracketElement, charDef ? charDef.optional : true);
+        rowElement.querySelector('#characteristic_name').textContent = name;
+        var functionSelector = function (selector, containerSelector, configName, parameterName, functionMap) {
+            var _a;
+            var input = rowElement.querySelector(selector);
+            var container = rowElement.querySelector(containerSelector);
+            if (functionMap !== undefined) {
+                var mapKeys = __spread(functionMap.keys());
+                _this.fillSelectByArray(input, mapKeys);
+            }
+            var parameterValue = undefined;
+            if (charConfig) {
+                admin_utils_1.Utils.setInputValue(input, charConfig[configName]);
+                parameterValue = charConfig[parameterName];
+            }
+            var paramUpdateMethod = function (newValue) {
+                var charConfig = _this.findConfigCharacteristic(serviceConfig, name);
+                if (charConfig === undefined) {
+                    charConfig = { name: name, enabled: false };
+                    serviceConfig.characteristics.push(charConfig);
+                }
+                charConfig[parameterName] = newValue;
+                _this.delegate.changeCallback();
+            };
+            _this.updateParameterEditor((_a = admin_utils_1.Utils.getSelectInputValue(input)) === null || _a === void 0 ? void 0 : _a.toString(), container, parameterValue, paramUpdateMethod, functionMap);
+            input.addEventListener('input', function (e) {
+                var _a;
+                _this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
+                var charConfig = _this.findConfigCharacteristic(serviceConfig, name);
+                _this.updateParameterEditor((_a = admin_utils_1.Utils.getSelectInputValue(input)) === null || _a === void 0 ? void 0 : _a.toString(), container, charConfig[parameterName], paramUpdateMethod, functionMap);
+                return false;
+            });
+        };
+        functionSelector('#characteristic_inoutfunction', '#characteristic_inoutparams_container', 'inOutFunction', 'inOutParameters', parameterEditor_factory_1.inoutFunctions);
+        functionSelector('#characteristic_conversionfunction', '#characteristic_conversionparams_container', 'conversionFunction', 'conversionParameters', parameterEditor_factory_1.convFunctions);
+        this.updateCharacteristicProperties(rowElement, serviceConfig, charDef, charConfig);
+        return rowElement;
+    };
+    ConfigPageBuilder_ServicePanel.prototype.updateCharacteristicProperties = function (rowElement, serviceConfig, charDef, charConfig) {
+        var charName = charConfig ? charConfig.name : charDef.name;
+        var toggleLink = rowElement.querySelector('#toggleProperties');
+        var propContainer = rowElement.querySelector('#characteristic_propertyTable_container');
+        var hasCustomProperties = charConfig ? (charConfig.properties !== undefined) && (Object.keys(charConfig.properties).length > 0) : false;
+        if (toggleLink) {
+            toggleLink.addEventListener('click', function () {
+                propContainer.classList.toggle('no-display');
+            });
+            propContainer.classList.toggle('no-display', !hasCustomProperties);
+            toggleLink.classList.toggle('properties-defined', hasCustomProperties);
+        }
+        var propTable = rowElement.querySelector('#characteristic_propertyTable');
+        function transformValue(value) {
+            var result = value;
+            var isObject = false;
+            if (typeof result === 'object') {
+                result = JSON.stringify(result);
+                isObject = true;
+            }
+            return { asString: result, isObject: isObject };
+        }
+        for (var propertyName in charDef.properties) {
+            var propertyDefaultValue = transformValue(charDef.properties[propertyName]);
+            var propElement = document.importNode(this.characteristicPropRow.content, true);
+            var nameSpan = propElement.querySelector('#propName');
+            nameSpan.id = "";
+            nameSpan.textContent = propertyName;
+            var propInput = propElement.querySelector('#propValue');
+            propInput.id = propertyName;
+            propInput.placeholder = propertyDefaultValue.asString;
+            if (charConfig !== undefined) {
+                if (charConfig.properties !== undefined) {
+                    if (charConfig.properties[propertyName] !== undefined) {
+                        var charValue = transformValue(charConfig.properties[propertyName]);
+                        admin_utils_1.Utils.setInputValue(propInput, charValue.asString);
+                    }
+                }
+            }
+            nameSpan.classList.toggle('properties-defined', propInput.value != "");
+            propInput.addEventListener('input', this.handleCharacteristicPropertyChange.bind(this, serviceConfig, charName, propertyName, propertyDefaultValue.isObject));
+            propTable.appendChild(propElement);
+        }
+    };
+    ConfigPageBuilder_ServicePanel.prototype.refreshEnabledClass = function (row, enabled) {
+        row.classList.toggle('disabled', !enabled);
+    };
+    ConfigPageBuilder_ServicePanel.prototype.refershOptionalClass = function (row, optional) {
+        row.classList.toggle('optional-characteristic', optional);
+    };
+    ConfigPageBuilder_ServicePanel.prototype.handleCharacteristicEnabledChange = function (serviceConfig, charName, charRow, ev) {
+        var charConfig = this.findConfigCharacteristic(serviceConfig, charName);
+        if (charConfig === undefined) {
+            charConfig = { name: charName, enabled: false };
+            serviceConfig.characteristics.push(charConfig);
+        }
+        var inputTarget = ev.currentTarget;
+        charConfig.enabled = inputTarget.checked;
+        this.refreshEnabledClass(charRow, charConfig.enabled);
+        this.delegate.changeCallback();
+    };
+    ConfigPageBuilder_ServicePanel.prototype.handleCharacteristicInputChange = function (serviceConfig, charName, attribute, ev) {
+        var charConfig = this.findConfigCharacteristic(serviceConfig, charName);
+        if (charConfig === undefined) {
+            charConfig = { name: charName, enabled: false };
+            serviceConfig.characteristics.push(charConfig);
+        }
+        var inputTarget = ev.currentTarget;
+        var inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
+        charConfig[attribute] = inputValue;
+        this.delegate.changeCallback();
+    };
+    ConfigPageBuilder_ServicePanel.prototype.handleCharacteristicPropertyChange = function (serviceConfig, charName, property, isObjectProperty, ev) {
+        var charConfig = this.findConfigCharacteristic(serviceConfig, charName);
+        if (charConfig === undefined) {
+            charConfig = { name: charName, enabled: false };
+            serviceConfig.characteristics.push(charConfig);
+        }
+        var inputTarget = ev.currentTarget;
+        var inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
+        if (charConfig.properties === undefined)
+            charConfig.properties = {};
+        if (inputValue !== undefined) {
+            if (isObjectProperty) {
+                try {
+                    charConfig.properties[property] = JSON.parse(inputValue);
+                }
+                catch (e) {
+                    console.log("parsing of", inputValue, " failed with: ", e);
+                }
+            }
+            else {
+                charConfig.properties[property] = inputValue;
+            }
+        }
+        else {
+            delete charConfig.properties[property];
+        }
+        this.delegate.changeCallback();
+    };
+    ConfigPageBuilder_ServicePanel.prototype.handleServiceMetaDataChange = function (serviceConfig, servicePanel, attribute, ev) {
+        var inputTarget = ev.currentTarget;
+        var inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
+        serviceConfig[attribute] = inputValue;
+        this.refreshServicePanelCaption(serviceConfig, servicePanel);
+        this.delegate.changeCallback();
+    };
+    ConfigPageBuilder_ServicePanel.prototype.handleServiceTypeChange = function (serviceConfig, servicePanel, ev) {
+        var inputTarget = ev.currentTarget;
+        var inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
+        serviceConfig.type = inputValue; //?.toString();
+        this.refreshServicePanelCaption(serviceConfig, servicePanel);
+        this.buildCharacteristicTable(serviceConfig, servicePanel);
+        this.delegate.changeCallback();
+    };
+    return ConfigPageBuilder_ServicePanel;
+}(pageBuilder_base_1.ConfigPageBuilder_Base));
+exports.ConfigPageBuilder_ServicePanel = ConfigPageBuilder_ServicePanel;
 
 
 /***/ }),

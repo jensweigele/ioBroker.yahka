@@ -2826,13 +2826,14 @@ var debug = __webpack_require__(/*! debug */ "debug");
 var util = __webpack_require__(/*! util */ "util");
 var yahka_community_types_1 = __webpack_require__(/*! ./yahka.community.types */ "./yahka.community.types.ts");
 var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
+var yahka_homekit_service_1 = __webpack_require__(/*! ./yahka.homekit-service */ "./yahka.homekit-service.ts");
 var pjson = __webpack_require__(/*! ../package.json */ "../package.json");
 yahka_community_types_1.importHAPCommunityTypesAndFixes();
 var THomeKitBridge = /** @class */ (function () {
     function THomeKitBridge(config, FBridgeFactory, FLogger) {
         this.config = config;
-        this.FBridgeFactory = FBridgeFactory;
         this.FLogger = FLogger;
+        this.serviceInitializer = new yahka_homekit_service_1.YahkaServiceInitializer(FBridgeFactory, FLogger);
         this.init();
     }
     THomeKitBridge.prototype.init = function () {
@@ -2896,7 +2897,6 @@ var THomeKitBridge = /** @class */ (function () {
         return hapBridge;
     };
     THomeKitBridge.prototype.createDevice = function (device) {
-        var e_2, _a;
         var _this = this;
         var devName = device.name;
         var deviceID = hap_nodejs_1.uuid.generate(this.config.ident + ':' + devName);
@@ -2918,123 +2918,8 @@ var THomeKitBridge = /** @class */ (function () {
             _this.FLogger.debug("[" + device.name + "] device identify");
             callback(); // success
         });
-        try {
-            for (var _b = __values(device.services), _c = _b.next(); !_c.done; _c = _b.next()) {
-                var serviceConfig = _c.value;
-                this.initService(hapDevice, serviceConfig);
-            }
-        }
-        catch (e_2_1) { e_2 = { error: e_2_1 }; }
-        finally {
-            try {
-                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-            }
-            finally { if (e_2) throw e_2.error; }
-        }
+        this.serviceInitializer.initServices(hapDevice, device.services);
         return hapDevice;
-    };
-    THomeKitBridge.prototype.initService = function (hapDevice, serviceConfig) {
-        var e_3, _a;
-        if (serviceConfig.enabled === false) {
-            this.FLogger.debug("[" + hapDevice.displayName + "] service " + serviceConfig.name + " is disabled");
-            return;
-        }
-        if (!(serviceConfig.type in hap_nodejs_1.Service)) {
-            throw Error("[" + hapDevice.displayName + "] unknown service type: " + serviceConfig.type);
-        }
-        this.FLogger.debug("[" + hapDevice.displayName + "] adding Service " + serviceConfig.name);
-        var isNew = false;
-        var hapService = hapDevice.getService(hap_nodejs_1.Service[serviceConfig.type]);
-        if (hapService !== undefined) {
-            var existingSubType = hapService.subtype ? hapService.subtype : "";
-            if (existingSubType != serviceConfig.subType)
-                hapService = undefined;
-        }
-        if (hapService === undefined) {
-            hapService = new hap_nodejs_1.Service[serviceConfig.type](serviceConfig.name, serviceConfig.subType);
-            isNew = true;
-        }
-        try {
-            for (var _b = __values(serviceConfig.characteristics), _c = _b.next(); !_c.done; _c = _b.next()) {
-                var charactConfig = _c.value;
-                this.initCharacteristic(hapService, charactConfig);
-            }
-        }
-        catch (e_3_1) { e_3 = { error: e_3_1 }; }
-        finally {
-            try {
-                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-            }
-            finally { if (e_3) throw e_3.error; }
-        }
-        if (isNew) {
-            hapDevice.addService(hapService);
-        }
-    };
-    THomeKitBridge.prototype.initCharacteristic = function (hapService, characteristicConfig) {
-        var _this = this;
-        var logName = "[" + hapService.displayName + "." + characteristicConfig.name + "]";
-        if (!characteristicConfig.enabled) {
-            return;
-        }
-        var hapCharacteristic = hapService.getCharacteristic(hap_nodejs_1.Characteristic[characteristicConfig.name]);
-        if (!hapCharacteristic) {
-            this.FLogger.warn(logName + " unknown characteristic: " + characteristicConfig.name);
-            return;
-        }
-        if (characteristicConfig.properties !== undefined)
-            hapCharacteristic.setProps(characteristicConfig.properties);
-        hapCharacteristic.binding = this.FBridgeFactory.CreateBinding(characteristicConfig, function (plainIOValue) {
-            _this.FLogger.debug(logName + " got a change notify event, ioValue: " + JSON.stringify(plainIOValue));
-            var binding = hapCharacteristic.binding;
-            if (!binding) {
-                _this.FLogger.error(logName + " no binding!");
-                return;
-            }
-            var hkValue = binding.conversion.toHomeKit(plainIOValue);
-            _this.FLogger.debug(logName + " forwarding value from ioBroker (" + JSON.stringify(plainIOValue) + ") to homekit as (" + JSON.stringify(hkValue) + ")");
-            hapCharacteristic.setValue(hkValue, undefined, binding);
-        });
-        hapCharacteristic.on('set', function (hkValue, callback, context) {
-            _this.FLogger.debug(logName + " got a set event, hkValue: " + JSON.stringify(hkValue));
-            var binding = hapCharacteristic.binding;
-            if (!binding) {
-                _this.FLogger.error(logName + " no binding!");
-                callback();
-                return;
-            }
-            if (context === binding) {
-                _this.FLogger.debug(logName + " set was initiated from ioBroker - exiting here");
-                callback();
-                return;
-            }
-            var ioValue = binding.conversion.toIOBroker(hkValue);
-            binding.inOut.toIOBroker(ioValue, function () {
-                _this.FLogger.debug(logName + " set was accepted by ioBroker (value: " + JSON.stringify(ioValue) + ")");
-                callback();
-            });
-        });
-        hapCharacteristic.on('get', function (hkCallback) {
-            _this.FLogger.debug(logName + " got a get event");
-            var binding = hapCharacteristic.binding;
-            if (!binding) {
-                _this.FLogger.error(logName + " no binding!");
-                hkCallback('no binding', null);
-                return;
-            }
-            binding.inOut.fromIOBroker(function (ioBrokerError, ioValue) {
-                var hkValue = binding.conversion.toHomeKit(ioValue);
-                // check if the value can be converetd to a number
-                if ((hkValue !== undefined) && (hkValue !== "")) {
-                    var numValue = Number(hkValue);
-                    if (!isNaN(numValue)) {
-                        hkValue = numValue;
-                    }
-                }
-                _this.FLogger.debug(logName + " forwarding value from ioBroker (" + JSON.stringify(ioValue) + ") to homekit as (" + JSON.stringify(hkValue) + ")");
-                hkCallback(ioBrokerError, hkValue);
-            });
-        });
     };
     return THomeKitBridge;
 }());
@@ -3078,12 +2963,14 @@ exports.THomeKitIPCamera = void 0;
 /// <reference path="./typings/index.d.ts" />
 var child_process_1 = __webpack_require__(/*! child_process */ "child_process");
 var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
+var yahka_homekit_service_1 = __webpack_require__(/*! ./yahka.homekit-service */ "./yahka.homekit-service.ts");
 var THomeKitIPCamera = /** @class */ (function () {
-    function THomeKitIPCamera(camConfig, FLogger) {
+    function THomeKitIPCamera(camConfig, FBridgeFactory, FLogger) {
         this.camConfig = camConfig;
         this.FLogger = FLogger;
         this.pendingSessions = {};
         this.ongoingSessions = {};
+        this.serviceInitializer = new yahka_homekit_service_1.YahkaServiceInitializer(FBridgeFactory, FLogger);
         this.init();
     }
     THomeKitIPCamera.prototype.init = function () {
@@ -3092,6 +2979,7 @@ var THomeKitIPCamera = /** @class */ (function () {
         }
         this.createCameraDevice();
         this.createCameraController();
+        this.createAdditionalServices();
         this.publishCamera();
     };
     THomeKitIPCamera.prototype.createOptionsDictionary = function () {
@@ -3188,6 +3076,9 @@ var THomeKitIPCamera = /** @class */ (function () {
             streamingOptions: this.createOptionsDictionary()
         });
         this.camera.configureController(this.cameraController);
+    };
+    THomeKitIPCamera.prototype.createAdditionalServices = function () {
+        this.serviceInitializer.initServices(this.camera, this.camConfig.services);
     };
     THomeKitIPCamera.prototype.publishCamera = function () {
         var _a;
@@ -3397,6 +3288,163 @@ exports.THomeKitIPCamera = THomeKitIPCamera;
 
 /***/ }),
 
+/***/ "./yahka.homekit-service.ts":
+/*!**********************************!*\
+  !*** ./yahka.homekit-service.ts ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.YahkaServiceInitializer = void 0;
+var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
+var YahkaServiceInitializer = /** @class */ (function () {
+    function YahkaServiceInitializer(FBridgeFactory, FLogger) {
+        this.FBridgeFactory = FBridgeFactory;
+        this.FLogger = FLogger;
+    }
+    YahkaServiceInitializer.prototype.initServices = function (hapDevice, serviceConfigs) {
+        var e_1, _a;
+        if (serviceConfigs == null) {
+            return;
+        }
+        try {
+            for (var serviceConfigs_1 = __values(serviceConfigs), serviceConfigs_1_1 = serviceConfigs_1.next(); !serviceConfigs_1_1.done; serviceConfigs_1_1 = serviceConfigs_1.next()) {
+                var service = serviceConfigs_1_1.value;
+                this.initService(hapDevice, service);
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (serviceConfigs_1_1 && !serviceConfigs_1_1.done && (_a = serviceConfigs_1.return)) _a.call(serviceConfigs_1);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+    };
+    YahkaServiceInitializer.prototype.initService = function (hapDevice, serviceConfig) {
+        var e_2, _a;
+        if (serviceConfig.enabled === false) {
+            this.FLogger.debug("[" + hapDevice.displayName + "] service " + serviceConfig.name + " is disabled");
+            return;
+        }
+        if (!(serviceConfig.type in hap_nodejs_1.Service)) {
+            throw Error("[" + hapDevice.displayName + "] unknown service type: " + serviceConfig.type);
+        }
+        this.FLogger.debug("[" + hapDevice.displayName + "] adding Service " + serviceConfig.name);
+        var isNew = false;
+        var hapService = hapDevice.getService(hap_nodejs_1.Service[serviceConfig.type]);
+        if (hapService !== undefined) {
+            var existingSubType = hapService.subtype ? hapService.subtype : "";
+            if (existingSubType != serviceConfig.subType)
+                hapService = undefined;
+        }
+        if (hapService === undefined) {
+            hapService = new hap_nodejs_1.Service[serviceConfig.type](serviceConfig.name, serviceConfig.subType);
+            isNew = true;
+        }
+        try {
+            for (var _b = __values(serviceConfig.characteristics), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var charactConfig = _c.value;
+                this.initCharacteristic(hapService, charactConfig);
+            }
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_2) throw e_2.error; }
+        }
+        if (isNew) {
+            hapDevice.addService(hapService);
+        }
+    };
+    YahkaServiceInitializer.prototype.initCharacteristic = function (hapService, characteristicConfig) {
+        var _this = this;
+        var logName = "[" + hapService.displayName + "." + characteristicConfig.name + "]";
+        if (!characteristicConfig.enabled) {
+            return;
+        }
+        var hapCharacteristic = hapService.getCharacteristic(hap_nodejs_1.Characteristic[characteristicConfig.name]);
+        if (!hapCharacteristic) {
+            this.FLogger.warn(logName + " unknown characteristic: " + characteristicConfig.name);
+            return;
+        }
+        if (characteristicConfig.properties !== undefined)
+            hapCharacteristic.setProps(characteristicConfig.properties);
+        hapCharacteristic.binding = this.FBridgeFactory.CreateBinding(characteristicConfig, function (plainIOValue) {
+            _this.FLogger.debug(logName + " got a change notify event, ioValue: " + JSON.stringify(plainIOValue));
+            var binding = hapCharacteristic.binding;
+            if (!binding) {
+                _this.FLogger.error(logName + " no binding!");
+                return;
+            }
+            var hkValue = binding.conversion.toHomeKit(plainIOValue);
+            _this.FLogger.debug(logName + " forwarding value from ioBroker (" + JSON.stringify(plainIOValue) + ") to homekit as (" + JSON.stringify(hkValue) + ")");
+            hapCharacteristic.setValue(hkValue, undefined, binding);
+        });
+        hapCharacteristic.on('set', function (hkValue, callback, context) {
+            _this.FLogger.debug(logName + " got a set event, hkValue: " + JSON.stringify(hkValue));
+            var binding = hapCharacteristic.binding;
+            if (!binding) {
+                _this.FLogger.error(logName + " no binding!");
+                callback();
+                return;
+            }
+            if (context === binding) {
+                _this.FLogger.debug(logName + " set was initiated from ioBroker - exiting here");
+                callback();
+                return;
+            }
+            var ioValue = binding.conversion.toIOBroker(hkValue);
+            binding.inOut.toIOBroker(ioValue, function () {
+                _this.FLogger.debug(logName + " set was accepted by ioBroker (value: " + JSON.stringify(ioValue) + ")");
+                callback();
+            });
+        });
+        hapCharacteristic.on('get', function (hkCallback) {
+            _this.FLogger.debug(logName + " got a get event");
+            var binding = hapCharacteristic.binding;
+            if (!binding) {
+                _this.FLogger.error(logName + " no binding!");
+                hkCallback('no binding', null);
+                return;
+            }
+            binding.inOut.fromIOBroker(function (ioBrokerError, ioValue) {
+                var hkValue = binding.conversion.toHomeKit(ioValue);
+                // check if the value can be converetd to a number
+                if ((hkValue !== undefined) && (hkValue !== "")) {
+                    var numValue = Number(hkValue);
+                    if (!isNaN(numValue)) {
+                        hkValue = numValue;
+                    }
+                }
+                _this.FLogger.debug(logName + " forwarding value from ioBroker (" + JSON.stringify(ioValue) + ") to homekit as (" + JSON.stringify(hkValue) + ")");
+                hkCallback(ioBrokerError, hkValue);
+            });
+        });
+    };
+    return YahkaServiceInitializer;
+}());
+exports.YahkaServiceInitializer = YahkaServiceInitializer;
+
+
+/***/ }),
+
 /***/ "./yahka.ioBroker-adapter.ts":
 /*!***********************************!*\
   !*** ./yahka.ioBroker-adapter.ts ***!
@@ -3419,11 +3467,10 @@ var __values = (this && this.__values) || function(o) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TIOBrokerAdapter = void 0;
-var yahka_homekit_ipcamera_1 = __webpack_require__(/*! ./yahka.homekit-ipcamera */ "./yahka.homekit-ipcamera.ts");
 /// <reference path="./typings/index.d.ts" />
-var hkBridge = __webpack_require__(/*! ./yahka.homekit-bridge */ "./yahka.homekit-bridge.ts");
-// import * as mac from './node_modules/macaddress';
+var yahka_homekit_ipcamera_1 = __webpack_require__(/*! ./yahka.homekit-ipcamera */ "./yahka.homekit-ipcamera.ts");
 var functions_factory_1 = __webpack_require__(/*! ./yahka.functions/functions.factory */ "./yahka.functions/functions.factory.ts");
+var yahka_homekit_bridge_1 = __webpack_require__(/*! ./yahka.homekit-bridge */ "./yahka.homekit-bridge.ts");
 function isSubscriptionRequestor(param) {
     return param["subscriptionRequests"] !== undefined &&
         param["subscriptionRequests"] instanceof Array;
@@ -3448,7 +3495,7 @@ var TIOBrokerAdapter = /** @class */ (function () {
         adapter.on('unload', this.handleUnload.bind(this));
     }
     TIOBrokerAdapter.prototype.adapterReady = function () {
-        hkBridge.initHAP(this.controllerPath + '/' + this.adapter.systemConfig.dataDir + this.adapter.name + '.' + this.adapter.instance + '.hapdata', this.handleHAPLogEvent.bind(this));
+        yahka_homekit_bridge_1.initHAP(this.controllerPath + '/' + this.adapter.systemConfig.dataDir + this.adapter.name + '.' + this.adapter.instance + '.hapdata', this.handleHAPLogEvent.bind(this));
         this.adapter.log.info('adapter ready, checking config');
         var config = this.adapter.config;
         this.createHomeKitBridges(config);
@@ -3474,7 +3521,7 @@ var TIOBrokerAdapter = /** @class */ (function () {
         }
         this.verboseHAPLogging = bridgeConfig.verboseLogging == true;
         this.adapter.log.debug('creating bridge');
-        this.devices.push(new hkBridge.THomeKitBridge(config.bridge, this, this.adapter.log));
+        this.devices.push(new yahka_homekit_bridge_1.THomeKitBridge(config.bridge, this, this.adapter.log));
     };
     TIOBrokerAdapter.prototype.createCameraDevices = function (config) {
         var e_1, _a;
@@ -3485,7 +3532,7 @@ var TIOBrokerAdapter = /** @class */ (function () {
             for (var cameraArray_1 = __values(cameraArray), cameraArray_1_1 = cameraArray_1.next(); !cameraArray_1_1.done; cameraArray_1_1 = cameraArray_1.next()) {
                 var cameraConfig = cameraArray_1_1.value;
                 this.adapter.log.debug('creating camera');
-                this.devices.push(new yahka_homekit_ipcamera_1.THomeKitIPCamera(cameraConfig, this.adapter.log));
+                this.devices.push(new yahka_homekit_ipcamera_1.THomeKitIPCamera(cameraConfig, this, this.adapter.log));
             }
         }
         catch (e_1_1) { e_1 = { error: e_1_1 }; }
@@ -3539,7 +3586,7 @@ var TIOBrokerAdapter = /** @class */ (function () {
     TIOBrokerAdapter.prototype.handleUnload = function (callback) {
         try {
             this.adapter.log.info('cleaning up ...');
-            hkBridge.deinitHAP();
+            yahka_homekit_bridge_1.deinitHAP();
             this.adapter.log.info('cleaned up ...');
             callback();
         }

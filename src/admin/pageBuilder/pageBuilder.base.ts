@@ -16,8 +16,9 @@ export interface IConfigPageBuilderDelegate {
     readonly selectedDeviceConfig: hkBridge.Configuration.IBaseConfigNode;
     readonly bridgeSettings: hkBridge.Configuration.IBridgeConfig;
     cameraConfigs: [hkBridge.Configuration.ICameraConfig];
+    refreshSelectedDeviceConfig(): void;
     setSelectedDeviceConfig(deviceConfig: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean): void;
-    refreshDeviceListEntry(deviceConfig: hkBridge.Configuration.IBaseConfigNode);
+    refreshDeviceListEntry(deviceConfig: hkBridge.Configuration.IBaseConfigNode): void;
     refreshDevicePanel(deviceConfig: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean): void;
     changeCallback();
     deviceIsUnique(deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean;

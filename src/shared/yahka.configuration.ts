@@ -40,7 +40,7 @@ export module Configuration {
     export interface IDeviceConfig extends IBaseHomeKitDeviceConfig {
         enabled: boolean;
         category: number;
-        services: (IServiceConfig)[];
+        services: IServiceConfig[];
         [key: string]: any;
     }
 
@@ -52,7 +52,7 @@ export module Configuration {
         port: number;
         interface?: string;
         verboseLogging: boolean;
-        devices: (IDeviceConfig)[];
+        devices: IDeviceConfig[];
     }
 
     export interface ICameraFfmpegCommandLine {
@@ -71,6 +71,7 @@ export module Configuration {
         maxFPS: number;
         ffmpegCommandLine: ICameraFfmpegCommandLine;
         enableAudio?: boolean;
+        services?: IServiceConfig[];
     }
 
 

@@ -1,4 +1,4 @@
-import { IInOutFunction, IInOutChangeNotify, ILogger } from "../yahka.homekit-bridge";
+import { IInOutFunction, IInOutChangeNotify, ILogger } from "../yahka.interfaces";
 import { ISubscriptionRequestor, ISubscriptionRequest } from "../yahka.ioBroker-adapter";
 import { YahkaLogger } from "../shared/yahka.logger";
 

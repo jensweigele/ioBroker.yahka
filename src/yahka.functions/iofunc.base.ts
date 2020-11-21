@@ -1,7 +1,7 @@
 import { TYahkaFunctionBase } from './functions.base';
-import { IInOutFunction, IInOutChangeNotify } from '../yahka.homekit-bridge';
+import { IInOutFunction, IInOutChangeNotify } from '../yahka.interfaces';
 import { ISubscriptionRequest, ISubscriptionRequestor } from '../yahka.ioBroker-adapter';
-export { IInOutChangeNotify, IInOutFunction } from '../yahka.homekit-bridge';
+export { IInOutChangeNotify, IInOutFunction } from '../yahka.interfaces';
 
 export abstract class TIoBrokerInOutFunctionBase extends TYahkaFunctionBase implements IInOutFunction {
     protected valueForHomeKit: any = undefined;

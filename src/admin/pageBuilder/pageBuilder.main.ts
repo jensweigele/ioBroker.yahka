@@ -89,10 +89,14 @@ export class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
         }
     }
 
-    setSelectedDeviceConfig(deviceConfig: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean) {
+    public setSelectedDeviceConfig(deviceConfig: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean) {
         this._selectedDeviceConfig = deviceConfig;
         this.refreshDevicePanel(deviceConfig, AFocusLastPanel);
         this.buttonHandler.refreshBridgeButtons(document.body);
+    }
+
+    public refreshSelectedDeviceConfig() {
+        this.setSelectedDeviceConfig(this._selectedDeviceConfig, false);
     }
 
 
@@ -241,7 +245,8 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
                     numberOfStreams: undefined,
                     ffmpegCommandLine: Defaults.ffmpegCommandLines.default,
                     enableAudio: false,
-                    devices: []
+                    devices: [],
+                    services: []
                 };
 
                 this.delegate.cameraConfigs.push(newIPCamera);

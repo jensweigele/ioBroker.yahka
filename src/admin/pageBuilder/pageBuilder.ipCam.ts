@@ -9,14 +9,17 @@ import { IDictionary } from '../../shared/yahka.configuration';
 import { ISelectListEntry } from '../admin.config';
 import { ioBrokerInterfaceList } from '../yahka.admin';
 import { Defaults } from '../admin.defaults';
+import { ConfigPageBuilder_ServicePanel } from './pageBuilder.servicePanel';
 
 export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConfigPageBuilder {
-    public addServiceAvailable: boolean = false;
+    public addServiceAvailable: boolean = true;
     public removeDeviceAvailable: boolean = true;
     public dupliacteDeviceAvailable: boolean = true;
-    configPanelTemplate: HTMLTemplateElement;
+    private configPanelTemplate: HTMLTemplateElement;
+    private servicePanelBuilder: ConfigPageBuilder_ServicePanel;
     constructor(protected delegate: IConfigPageBuilderDelegate) {
         super(delegate);
+        this.servicePanelBuilder = new ConfigPageBuilder_ServicePanel(delegate);
         this.configPanelTemplate = createTemplateElement(require('./pageBuilder.ipCam.main.inc.html'));
     }
 
@@ -25,6 +28,12 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
             return
         }
 
+        this.refreshCameraPanels(config, AFocusLastPanel, devicePanel);
+        this.refreshServicePanels(config, AFocusLastPanel, devicePanel);
+    }
+
+
+    private async refreshCameraPanels(config: hkBridge.Configuration.ICameraConfig, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
         let configFragment = <DocumentFragment>document.importNode(this.configPanelTemplate.content, true);
         translateFragment(configFragment);
 
@@ -94,6 +103,26 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
         devicePanel.appendChild(configFragment);
     }
 
+    private refreshServicePanels(config: hkBridge.Configuration.ICameraConfig, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
+        let lastPane: HTMLElement
+        config.services = config.services ?? [];
+        for (let serviceConfig of config.services) {
+            let servicePanel = this.servicePanelBuilder.createServicePanel(config.services, serviceConfig);
+            devicePanel.appendChild(servicePanel);
+            lastPane = servicePanel;
+        }
+
+        if (AFocusLastPanel && lastPane) {
+            lastPane.scrollIntoView();
+            if (!lastPane.classList.contains('active')) {
+                let heading = (<HTMLElement>lastPane.querySelector('.heading'));
+                if (heading)
+                    heading.click();
+            }
+        }
+    }
+
+
     public styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean {
         if (!hkBridge.Configuration.isIPCameraConfig(deviceConfig)) {
             return false;
@@ -118,15 +147,13 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
         this.delegate.changeCallback();
     }
 
-    displayExceptionHint(textArea: HTMLTextAreaElement, msgPanel: HTMLElement, message: string | undefined) {
+    private displayExceptionHint(textArea: HTMLTextAreaElement, msgPanel: HTMLElement, message: string | undefined) {
         textArea.classList.toggle('validationError', message !== undefined);
         msgPanel.classList.toggle('validationError', message !== undefined);
         msgPanel.innerText = message
     }
 
-
-
-    handleffMpegPropertyChange(config: hkBridge.Configuration.ICameraConfig, propertyName: keyof hkBridge.Configuration.ICameraFfmpegCommandLine, inputErrorMsgPanel: HTMLElement, ev: Event) {
+    private handleffMpegPropertyChange(config: hkBridge.Configuration.ICameraConfig, propertyName: keyof hkBridge.Configuration.ICameraFfmpegCommandLine, inputErrorMsgPanel: HTMLElement, ev: Event) {
         let inputTarget = <HTMLTextAreaElement>ev.currentTarget;
         try {
             config.ffmpegCommandLine[propertyName] = JSON.parse(inputTarget.value);

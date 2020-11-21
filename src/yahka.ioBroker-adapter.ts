@@ -1,10 +1,9 @@
+/// <reference path="./typings/index.d.ts" />
 import { THomeKitIPCamera } from './yahka.homekit-ipcamera';
 import { Configuration } from './shared/yahka.configuration';
-import { IInOutFunction } from './yahka.homekit-bridge';
-/// <reference path="./typings/index.d.ts" />
-import * as hkBridge from './yahka.homekit-bridge';
-// import * as mac from './node_modules/macaddress';
 import { functionFactory } from './yahka.functions/functions.factory';
+import { IHomeKitBridgeBinding, IHomeKitBridgeBindingFactory, IInOutChangeNotify } from './yahka.interfaces';
+import { THomeKitBridge, initHAP, deinitHAP } from './yahka.homekit-bridge';
 
 
 export type TSubscriptionType = 'state' | 'object';
@@ -12,7 +11,7 @@ export type TSubscriptionType = 'state' | 'object';
 export interface ISubscriptionRequest {
     subscriptionType: TSubscriptionType;
     subscriptionIdentifier: string;
-    subscriptionEvent: (ioValue: any, callback: hkBridge.IInOutChangeNotify) => void;
+    subscriptionEvent: (ioValue: any, callback: IInOutChangeNotify) => void;
 }
 export interface ISubscriptionRequestor {
     subscriptionRequests: ISubscriptionRequest[];
@@ -36,10 +35,10 @@ function isCustomCharacteristicConfig(config: Configuration.ICharacteristicConfi
     return (myConfig.inOutFunction !== undefined) || (myConfig.conversionFunction !== undefined) || (myConfig.inOutParameters !== undefined);
 }
 
-export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
-    stateToEventMap: Map<string, hkBridge.IInOutChangeNotify[]> = new Map<string, hkBridge.IInOutChangeNotify[]>();
-    objectToEventMap: Map<string, hkBridge.IInOutChangeNotify[]> = new Map<string, hkBridge.IInOutChangeNotify[]>();
-    devices: Array<Object> = [];
+export class TIOBrokerAdapter implements IHomeKitBridgeBindingFactory {
+    stateToEventMap: Map<string, IInOutChangeNotify[]> = new Map<string, IInOutChangeNotify[]>();
+    objectToEventMap: Map<string, IInOutChangeNotify[]> = new Map<string, IInOutChangeNotify[]>();
+    devices: Array<THomeKitBridge | THomeKitIPCamera> = [];
     verboseHAPLogging: boolean = false;
 
     constructor(private adapter: ioBroker.Adapter, private controllerPath) {
@@ -50,7 +49,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
     }
 
     private adapterReady() {
-        hkBridge.initHAP(this.controllerPath + '/' + this.adapter.systemConfig.dataDir + this.adapter.name + '.' + this.adapter.instance + '.hapdata', this.handleHAPLogEvent.bind(this));
+        initHAP(this.controllerPath + '/' + this.adapter.systemConfig.dataDir + this.adapter.name + '.' + this.adapter.instance + '.hapdata', this.handleHAPLogEvent.bind(this));
 
         this.adapter.log.info('adapter ready, checking config');
         let config = this.adapter.config;
@@ -80,7 +79,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
         this.verboseHAPLogging = bridgeConfig.verboseLogging == true;
 
         this.adapter.log.debug('creating bridge');
-        this.devices.push(new hkBridge.THomeKitBridge(config.bridge, this, this.adapter.log));
+        this.devices.push(new THomeKitBridge(config.bridge, this, this.adapter.log));
     }
 
     private createCameraDevices(config: any) {
@@ -90,7 +89,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
 
         for (let cameraConfig of cameraArray) {
             this.adapter.log.debug('creating camera');
-            this.devices.push(new THomeKitIPCamera(cameraConfig, this.adapter.log));
+            this.devices.push(new THomeKitIPCamera(cameraConfig, this, this.adapter.log));
         }
     }
 
@@ -130,7 +129,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
     private handleUnload(callback) {
         try {
             this.adapter.log.info('cleaning up ...');
-            hkBridge.deinitHAP();
+            deinitHAP();
             this.adapter.log.info('cleaned up ...');
             callback();
         } catch (e) {
@@ -138,7 +137,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
         }
     }
 
-    private handleInOutSubscriptionRequest(requestor: ISubscriptionRequestor, changeNotify: hkBridge.IInOutChangeNotify) {
+    private handleInOutSubscriptionRequest(requestor: ISubscriptionRequestor, changeNotify: IInOutChangeNotify) {
         if (requestor.subscriptionRequests.length == 0)
             return;
 
@@ -167,7 +166,7 @@ export class TIOBrokerAdapter implements hkBridge.IHomeKitBridgeBindingFactory {
 
     }
 
-    public CreateBinding(characteristicConfig: Configuration.ICharacteristicConfig, changeNotify: hkBridge.IInOutChangeNotify): hkBridge.IHomeKitBridgeBinding {
+    public CreateBinding(characteristicConfig: Configuration.ICharacteristicConfig, changeNotify: IInOutChangeNotify): IHomeKitBridgeBinding {
         if (isCustomCharacteristicConfig(characteristicConfig)) {
             let inoutFunc = functionFactory.createInOutFunction(this.adapter, characteristicConfig.inOutFunction, characteristicConfig.inOutParameters);
             if (inoutFunc === undefined) {

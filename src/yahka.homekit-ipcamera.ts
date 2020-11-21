@@ -1,6 +1,5 @@
 /// <reference path="./typings/index.d.ts" />
 import { spawn, ChildProcess } from 'child_process';
-import { ILogger } from './yahka.homekit-bridge';
 import {
     uuid, Accessory, Service, Characteristic, SnapshotRequest,
     PrepareStreamRequest, SessionIdentifier, CameraStreamingDelegate,
@@ -8,7 +7,9 @@ import {
     PrepareStreamCallback, PrepareStreamResponse, StreamingRequest, StreamRequestCallback,
     CameraStreamingOptions, StreamRequestTypes, AudioStreamingCodecType, AudioStreamingSamplerate, Categories
 } from 'hap-nodejs';
+import { IHomeKitBridgeBindingFactory, ILogger } from './yahka.interfaces';
 import { Configuration } from './shared/yahka.configuration';
+import { YahkaServiceInitializer } from './yahka.homekit-service';
 
 type SessionInfo = {
     address: string, // address of the HAP controller
@@ -36,7 +37,9 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
     private camera: Accessory;
     private pendingSessions: Record<string, Partial<SessionInfo>> = {};
     private ongoingSessions: Record<string, OngoingSession> = {};
-    constructor(private camConfig: Configuration.ICameraConfig, private FLogger: ILogger) {
+    private serviceInitializer: YahkaServiceInitializer;
+    constructor(private camConfig: Configuration.ICameraConfig, FBridgeFactory: IHomeKitBridgeBindingFactory, private FLogger: ILogger) {
+        this.serviceInitializer = new YahkaServiceInitializer(FBridgeFactory, FLogger);
         this.init();
     }
 
@@ -46,6 +49,7 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
         }
         this.createCameraDevice()
         this.createCameraController();
+        this.createAdditionalServices();
         this.publishCamera();
     }
 
@@ -160,6 +164,10 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
         });
 
         this.camera.configureController(this.cameraController);
+    }
+
+    public createAdditionalServices() {
+        this.serviceInitializer.initServices(this.camera, this.camConfig.services);
     }
 
     private publishCamera() {

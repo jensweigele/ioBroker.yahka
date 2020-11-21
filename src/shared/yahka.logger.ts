@@ -1,4 +1,4 @@
-import { ILogger } from "../yahka.homekit-bridge";
+import { ILogger } from "../yahka.interfaces";
 
 export class YahkaLogger implements ILogger {
     constructor(protected adapter: ioBroker.Adapter, private logIdentifier: string) {
