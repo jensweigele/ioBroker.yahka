@@ -152,15 +152,18 @@
                 <textarea rows=8 class="flex-grow" id="ffmpeg_stream"></textarea>
                 <div class="margin10"><span class="translate">Available replacers:</span> <br>
                     <ul class="simple-list blue-bullet replace-list">
+                        <li>${source}</li>
                         <li>${codec}</li>
                         <li>${fps}</li>
                         <li>${width}</li>
                         <li>${height}</li>
                         <li>${bitrate}</li>
+                        <li>${payloadtype}</li>
+                        <li>${targetVideoSsrc}</li>
                         <li>${videokey}</li>
                         <li>${targetAddress}</li>
                         <li>${targetVideoPort}</li>
-                        <li>${targetVideoSsrc}</li>
+                        <li>${mtu}</li>
                     </ul>
                 </div>
             </div>
@@ -177,12 +180,15 @@
                 <textarea rows=8 class="flex-grow" id="ffmpeg_streamAudio"></textarea>
                 <div class="margin10"><span class="translate">Available replacers:</span> <br>
                     <ul class="simple-list blue-bullet replace-list">
-                        <li>${codec}</li>
+                        <li>${source}</li>
                         <li>${bitrate}</li>
-                        <li>${audiokey}</li>
+                        <li>${samplerate}</li>
+                        <li>${channel}</li>
+                        <li>${payloadtype}</li>
                         <li>${targetAddress}</li>
                         <li>${targetAudioPort}</li>
                         <li>${targetAudioSsrc}</li>
+                        <li>${audiokey}</li>
                     </ul>
                 </div>
             </div>
