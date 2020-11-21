@@ -28,15 +28,15 @@ conversionFactory["level255"] = (adapter, param) => new TIoBrokerConversion_Scal
     "homekit.max": 100,
     "iobroker.min": 0,
     "iobroker.max": 255
-});
-conversionFactory["scaleInt"] = TIoBrokerConversion_Scale.create;
-conversionFactory["scaleFloat"] = TIoBrokerConversion_Scale.create;
+}, 'level255');
+conversionFactory["scaleInt"] = (adapter, param) => new TIoBrokerConversion_Scale(adapter, param, 'scaleInt');
+conversionFactory["scaleFloat"] = (adapter, param) => new TIoBrokerConversion_Scale(adapter, param, 'scaleFloat');
 conversionFactory["hue"] = (adapter, param) => new TIoBrokerConversion_Scale(adapter, {
     "homekit.min": 0,
     "homekit.max": 360,
     "iobroker.min": 0,
     "iobroker.max": 65535
-});
+}, 'hue');
 conversionFactory["inverse"] = TIoBrokerConversion_Inverse.create;
 conversionFactory["script"] = (adapter, param) => new TIoBrokerConversion_Script(adapter, param);
 // 255 -> 65535.0

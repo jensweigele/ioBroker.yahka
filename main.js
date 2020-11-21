@@ -1820,9 +1820,18 @@ exports.TIoBrokerConversion_Scale = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 var TIoBrokerConversion_Scale = /** @class */ (function (_super) {
     __extends(TIoBrokerConversion_Scale, _super);
-    function TIoBrokerConversion_Scale(adapter, parameters) {
+    function TIoBrokerConversion_Scale(adapter, parameters, logName) {
         var _this = _super.call(this, adapter) || this;
         _this.parameters = parameters;
+        _this.logName = logName;
+        if (!TIoBrokerConversion_Scale.isScaleParameter(parameters)) {
+            _this.parameters = {
+                "homekit.min": 0,
+                "homekit.max": 1,
+                "iobroker.min": 0,
+                "iobroker.max": 1
+            };
+        }
         return _this;
     }
     TIoBrokerConversion_Scale.isScaleParameter = function (parameters) {
@@ -1832,21 +1841,6 @@ var TIoBrokerConversion_Scale = /** @class */ (function (_super) {
             castedParam["iobroker.min"] !== undefined &&
             castedParam["iobroker.max"] !== undefined;
     };
-    TIoBrokerConversion_Scale.create = function (adapter, parameters) {
-        var params;
-        if (TIoBrokerConversion_Scale.isScaleParameter(parameters)) {
-            params = parameters;
-        }
-        else {
-            params = {
-                "homekit.min": 0,
-                "homekit.max": 1,
-                "iobroker.min": 0,
-                "iobroker.max": 1
-            };
-        }
-        return new TIoBrokerConversion_Scale(adapter, params);
-    };
     TIoBrokerConversion_Scale.prototype.toHomeKit = function (value) {
         var num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
         var homeKitMax = this.parameters["homekit.max"];
@@ -1854,7 +1848,7 @@ var TIoBrokerConversion_Scale = /** @class */ (function (_super) {
         var homeKitMin = this.parameters["homekit.min"];
         var ioBrokerMin = this.parameters["iobroker.min"];
         var newValue = ((num - ioBrokerMin) / (ioBrokerMax - ioBrokerMin)) * (homeKitMax - homeKitMin) + homeKitMin;
-        this.adapter.log.debug('scaleInt: converting value to homekit: ' + value + ' to ' + newValue);
+        this.adapter.log.debug(this.logName + ": converting value to homekit: " + value + " to " + newValue);
         return newValue;
     };
     TIoBrokerConversion_Scale.prototype.toIOBroker = function (value) {
@@ -1864,7 +1858,7 @@ var TIoBrokerConversion_Scale = /** @class */ (function (_super) {
         var homeKitMin = this.parameters["homekit.min"];
         var ioBrokerMin = this.parameters["iobroker.min"];
         var newValue = ((num - homeKitMin) / (homeKitMax - homeKitMin)) * (ioBrokerMax - ioBrokerMin) + ioBrokerMin;
-        this.adapter.log.debug('scaleInt: converting value to ioBroker: ' + value + ' to ' + newValue);
+        this.adapter.log.debug(this.logName + ": converting value to ioBroker: " + value + " to " + newValue);
         return newValue;
     };
     return TIoBrokerConversion_Scale;
@@ -2085,15 +2079,15 @@ functions_factory_1.conversionFactory["level255"] = function (adapter, param) { 
     "homekit.max": 100,
     "iobroker.min": 0,
     "iobroker.max": 255
-}); };
-functions_factory_1.conversionFactory["scaleInt"] = conversion_scale_1.TIoBrokerConversion_Scale.create;
-functions_factory_1.conversionFactory["scaleFloat"] = conversion_scale_1.TIoBrokerConversion_Scale.create;
+}, 'level255'); };
+functions_factory_1.conversionFactory["scaleInt"] = function (adapter, param) { return new conversion_scale_1.TIoBrokerConversion_Scale(adapter, param, 'scaleInt'); };
+functions_factory_1.conversionFactory["scaleFloat"] = function (adapter, param) { return new conversion_scale_1.TIoBrokerConversion_Scale(adapter, param, 'scaleFloat'); };
 functions_factory_1.conversionFactory["hue"] = function (adapter, param) { return new conversion_scale_1.TIoBrokerConversion_Scale(adapter, {
     "homekit.min": 0,
     "homekit.max": 360,
     "iobroker.min": 0,
     "iobroker.max": 65535
-}); };
+}, 'hue'); };
 functions_factory_1.conversionFactory["inverse"] = conversion_inverse_1.TIoBrokerConversion_Inverse.create;
 functions_factory_1.conversionFactory["script"] = function (adapter, param) { return new conversion_script_1.TIoBrokerConversion_Script(adapter, param); };
 // 255 -> 65535.0

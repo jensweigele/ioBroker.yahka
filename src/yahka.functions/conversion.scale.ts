@@ -15,22 +15,17 @@ export class TIoBrokerConversion_Scale extends TIOBrokerConversionBase implement
             castedParam["iobroker.min"] !== undefined &&
             castedParam["iobroker.max"] !== undefined;
     }
-    static create(adapter: ioBroker.Adapter, parameters: any): IConversionFunction {
-        let params: IIoBrokerConversionScaleParameters;
-        if (TIoBrokerConversion_Scale.isScaleParameter(parameters)) {
-            params = parameters;
-        } else {
-            params = {
+
+    constructor(adapter: ioBroker.Adapter, protected parameters: IIoBrokerConversionScaleParameters, protected logName: string) {
+        super(adapter);
+        if (!TIoBrokerConversion_Scale.isScaleParameter(parameters)) {
+            this.parameters = {
                 "homekit.min": 0,
                 "homekit.max": 1,
                 "iobroker.min": 0,
                 "iobroker.max": 1
             }
         }
-        return new TIoBrokerConversion_Scale(adapter, params);
-    }
-    constructor(adapter: ioBroker.Adapter, protected parameters: IIoBrokerConversionScaleParameters) {
-        super(adapter);
     }
 
     toHomeKit(value) {
@@ -40,7 +35,7 @@ export class TIoBrokerConversion_Scale extends TIOBrokerConversionBase implement
         let homeKitMin = this.parameters["homekit.min"];
         let ioBrokerMin = this.parameters["iobroker.min"];
         let newValue = ((num - ioBrokerMin) / (ioBrokerMax - ioBrokerMin)) * (homeKitMax - homeKitMin) + homeKitMin;
-        this.adapter.log.debug('scaleInt: converting value to homekit: ' + value + ' to ' + newValue);
+        this.adapter.log.debug(`${this.logName}: converting value to homekit: ${value} to ${newValue}`);
         return newValue;
     }
     toIOBroker(value) {
@@ -50,7 +45,7 @@ export class TIoBrokerConversion_Scale extends TIOBrokerConversionBase implement
         let homeKitMin = this.parameters["homekit.min"];
         let ioBrokerMin = this.parameters["iobroker.min"];
         let newValue = ((num - homeKitMin) / (homeKitMax - homeKitMin)) * (ioBrokerMax - ioBrokerMin) + ioBrokerMin;
-        this.adapter.log.debug('scaleInt: converting value to ioBroker: ' + value + ' to ' + newValue);
+        this.adapter.log.debug(`${this.logName}: converting value to ioBroker: ${value} to ${newValue}`);
         return newValue;
     }
 }
