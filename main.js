@@ -2315,7 +2315,7 @@ var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = /** @class *
         _this.addSubscriptionRequest(workingItem);
         adapter.getForeignState(workingItem, function (error, ioState) {
             if (ioState)
-                _this.lastWorkingState = Boolean(ioState.val);
+                _this.lastWorkingState = Boolean(ioState === null || ioState === void 0 ? void 0 : ioState.val);
             else
                 _this.lastWorkingState = undefined;
         });
@@ -2525,7 +2525,7 @@ var TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = /** @class */ (function
     TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.prototype.recalculateHomekitValues = function (stateName) {
         var _a;
         var hkValue = this.stateCache.get(this.parameters.levelState);
-        return hkValue.val == 0 ? (_a = this.lastOnLevel) === null || _a === void 0 ? void 0 : _a.val : hkValue === null || hkValue === void 0 ? void 0 : hkValue.val;
+        return (hkValue === null || hkValue === void 0 ? void 0 : hkValue.val) == 0 ? (_a = this.lastOnLevel) === null || _a === void 0 ? void 0 : _a.val : hkValue === null || hkValue === void 0 ? void 0 : hkValue.val;
     };
     TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.prototype.updateIOBrokerValue = function (plainIoValue, callback) {
         var _this = this;
@@ -2656,7 +2656,7 @@ var TIoBrokerInOutFunction_MultiState = /** @class */ (function (_super) {
             var stateName = state.writeState || state.readState;
             _this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
             _this.adapter.getForeignState(stateName, function (error, ioState) {
-                var value = ioState.val;
+                var value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
                 var valueChanged = value !== newValue;
                 _this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
                 if (valueChanged) {

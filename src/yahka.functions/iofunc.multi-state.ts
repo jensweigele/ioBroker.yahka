@@ -56,7 +56,7 @@ export class TIoBrokerInOutFunction_MultiState extends TIoBrokerInOutFunctionBas
             let stateName = state.writeState || state.readState;
             this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
             this.adapter.getForeignState(stateName, (error, ioState) => {
-                let value = ioState.val;
+                let value = ioState?.val;
                 let valueChanged = value !== newValue;
                 this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
                 if (valueChanged) {

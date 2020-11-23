@@ -37,7 +37,7 @@ export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition exten
         this.addSubscriptionRequest(workingItem);
         adapter.getForeignState(workingItem, (error, ioState) => {
             if (ioState)
-                this.lastWorkingState = Boolean(ioState.val);
+                this.lastWorkingState = Boolean(ioState?.val);
             else
                 this.lastWorkingState = undefined;
         });

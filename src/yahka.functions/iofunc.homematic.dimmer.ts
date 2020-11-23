@@ -123,7 +123,7 @@ export class TIoBrokerInOutFunction_Homematic_Dimmer_Brightness extends TIoBroke
 
     protected recalculateHomekitValues(stateName: string) {
         let hkValue = this.stateCache.get(this.parameters.levelState);
-        return hkValue.val == 0 ? this.lastOnLevel?.val : hkValue?.val;
+        return hkValue?.val == 0 ? this.lastOnLevel?.val : hkValue?.val;
     }
 
     protected updateIOBrokerValue(plainIoValue: any, callback: () => void) {
