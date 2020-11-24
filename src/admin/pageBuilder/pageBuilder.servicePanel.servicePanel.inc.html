@@ -16,7 +16,7 @@
                 <input class="full-size" type="text" id="service_name" />
             </div>
             <div><label class="translate" for="service_type">Service Type:</label></div>
-            <div class="input control flex-grow  margin10">
+            <div class="input control select flex-grow  margin10">
                 <select class="full-size" id="service_type"></select>
             </div>
             <div><label class="translate" for="service_subtype">Service Subtype:</label></div>
@@ -31,7 +31,19 @@
                 <th class="translate">Name</th>
                 <th></th>
                 <th></th>
+                <th></th>
             </thead>
         </table>
+        <div class="flex-container-row flex-align-baseline">
+            <div><label class="translate" for="new_custom_characteristic">Custom Characteristic</label></div>
+            <div class="input-control select flex-grow margin10">
+                <select class="full-size" id="new_custom_characteristic"></select>
+            </div>
+            <button class="image-button primary" id="yahka_add_characteristic">
+                <span class="icon mif-plus bg-darkCobalt  fg-white"></span>
+                <span class="translate">Add Custom Characteristic</span>
+            </button>
+        </div>
+
     </div>
 </div>

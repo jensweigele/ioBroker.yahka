@@ -864,6 +864,24 @@ module.exports = function(homebridge, options) {
   inherits(CommunityTypes.Latency, Characteristic);
 
 
+// https://github.com/naofireblade/homebridge-weather-plus
+
+  CommunityTypes.DewPoint = function() {
+    Characteristic.call(this, 'Dew Point', CommunityTypes.DewPoint.UUID);
+    this.setProps({
+      format: Characteristic.Formats.FLOAT,
+      unit: Characteristic.Units.CELSIUS,
+      maxValue: 50,
+      minValue: -50,
+      minStep: 0.1,
+      perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+    });
+    this.value = this.getDefaultValue();
+  };
+  CommunityTypes.DewPoint.UUID = '095c46e2-278e-4e3c-b9e7-364622a0f501';
+  inherits(CommunityTypes.DewPoint, Characteristic);
+
+
   // Services
 
   CommunityTypes.AudioDeviceService = function(displayName, subtype) {
@@ -3391,6 +3409,10 @@ var YahkaServiceInitializer = /** @class */ (function () {
             _this.FLogger.debug(logName + " forwarding value from ioBroker (" + JSON.stringify(plainIOValue) + ") to homekit as (" + JSON.stringify(hkValue) + ")");
             hapCharacteristic.setValue(hkValue, undefined, binding);
         });
+        this.getValueFromIOBroker(hapCharacteristic.binding, function (error, ioValue, hkValue) {
+            _this.FLogger.debug(logName + " initializing homekit with value from ioBroker (" + JSON.stringify(ioValue) + ") to homekit as (" + JSON.stringify(hkValue) + ")");
+            hapCharacteristic.setValue(hkValue, undefined, hapCharacteristic.binding);
+        });
         hapCharacteristic.on('set', function (hkValue, callback, context) {
             _this.FLogger.debug(logName + " got a set event, hkValue: " + JSON.stringify(hkValue));
             var binding = hapCharacteristic.binding;
@@ -3412,24 +3434,27 @@ var YahkaServiceInitializer = /** @class */ (function () {
         });
         hapCharacteristic.on('get', function (hkCallback) {
             _this.FLogger.debug(logName + " got a get event");
-            var binding = hapCharacteristic.binding;
-            if (!binding) {
-                _this.FLogger.error(logName + " no binding!");
-                hkCallback('no binding', null);
-                return;
-            }
-            binding.inOut.fromIOBroker(function (ioBrokerError, ioValue) {
-                var hkValue = binding.conversion.toHomeKit(ioValue);
-                // check if the value can be converetd to a number
-                if ((hkValue !== undefined) && (hkValue !== "")) {
-                    var numValue = Number(hkValue);
-                    if (!isNaN(numValue)) {
-                        hkValue = numValue;
-                    }
-                }
+            _this.getValueFromIOBroker(hapCharacteristic.binding, function (error, ioValue, hkValue) {
                 _this.FLogger.debug(logName + " forwarding value from ioBroker (" + JSON.stringify(ioValue) + ") to homekit as (" + JSON.stringify(hkValue) + ")");
-                hkCallback(ioBrokerError, hkValue);
+                hkCallback(error, hkValue);
             });
+        });
+    };
+    YahkaServiceInitializer.prototype.getValueFromIOBroker = function (binding, callback) {
+        if (!binding) {
+            callback('no binding', null, null);
+            return;
+        }
+        binding.inOut.fromIOBroker(function (ioBrokerError, ioValue) {
+            var hkValue = binding.conversion.toHomeKit(ioValue);
+            // check if the value can be converetd to a number
+            if ((hkValue !== undefined) && (hkValue !== "")) {
+                var numValue = Number(hkValue);
+                if (!isNaN(numValue)) {
+                    hkValue = numValue;
+                }
+            }
+            callback(ioBrokerError, ioValue, hkValue);
         });
     };
     return YahkaServiceInitializer;

@@ -84,6 +84,11 @@ export class YahkaServiceInitializer {
             hapCharacteristic.setValue(hkValue, undefined, binding);
         });
 
+        this.getValueFromIOBroker(hapCharacteristic.binding, (error, ioValue, hkValue) => {
+            this.FLogger.debug(`${logName} initializing homekit with value from ioBroker (${JSON.stringify(ioValue)}) to homekit as (${JSON.stringify(hkValue)})`);
+            hapCharacteristic.setValue(hkValue, undefined, hapCharacteristic.binding);
+        });
+
         hapCharacteristic.on('set', (hkValue: any, callback: () => void, context: any) => {
             this.FLogger.debug(`${logName} got a set event, hkValue: ${JSON.stringify(hkValue)}`);
             let binding: IHomeKitBridgeBinding = hapCharacteristic.binding;
@@ -108,26 +113,29 @@ export class YahkaServiceInitializer {
 
         hapCharacteristic.on('get', (hkCallback) => {
             this.FLogger.debug(`${logName} got a get event`);
-            let binding: IHomeKitBridgeBinding = hapCharacteristic.binding;
-            if (!binding) {
-                this.FLogger.error(`${logName} no binding!`);
-                hkCallback('no binding', null);
-                return;
-            }
-
-            binding.inOut.fromIOBroker((ioBrokerError, ioValue) => {
-                let hkValue = binding.conversion.toHomeKit(ioValue);
-                // check if the value can be converetd to a number
-                if ((hkValue !== undefined) && (hkValue !== "")) {
-                    let numValue = Number(hkValue);
-                    if (!isNaN(numValue)) {
-                        hkValue = numValue;
-                    }
-                }
-
+            this.getValueFromIOBroker(hapCharacteristic.binding, (error, ioValue, hkValue) => {
                 this.FLogger.debug(`${logName} forwarding value from ioBroker (${JSON.stringify(ioValue)}) to homekit as (${JSON.stringify(hkValue)})`);
-                hkCallback(ioBrokerError, hkValue);
+                hkCallback(error, hkValue);
             });
+        });
+    }
+
+    private getValueFromIOBroker(binding: IHomeKitBridgeBinding, callback: (error: any, ioValue: any, hkValue: string | number | undefined) => void) {
+        if (!binding) {
+            callback('no binding', null, null);
+            return;
+        }
+
+        binding.inOut.fromIOBroker((ioBrokerError, ioValue) => {
+            let hkValue = binding.conversion.toHomeKit(ioValue);
+            // check if the value can be converetd to a number
+            if ((hkValue !== undefined) && (hkValue !== "")) {
+                let numValue = Number(hkValue);
+                if (!isNaN(numValue)) {
+                    hkValue = numValue;
+                }
+            }
+            callback(ioBrokerError, ioValue, hkValue);
         });
     }
 }

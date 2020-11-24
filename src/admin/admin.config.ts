@@ -9,7 +9,9 @@ export interface IHAPServiceDefinition {
 }
 
 export interface IHAPCharacteristicDefintion {
+    uuid: string;
     name: string;
+    displayName: string;
     optional: boolean;
     properties: IHAPCharacteristicProperties;
 }

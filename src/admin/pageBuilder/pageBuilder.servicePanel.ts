@@ -3,7 +3,7 @@
 import * as hkBridge from '../../shared/yahka.configuration';
 import { generateMetaDataDictionary } from '../yahka.meta-generator';
 import { IDictionary } from '../../shared/yahka.configuration';
-import { IHAPServiceDefinition, IHAPCharacteristicDefintion } from '../admin.config';
+import { IHAPServiceDefinition, IHAPCharacteristicDefintion, ISelectListEntry } from '../admin.config';
 import { ConfigPageBuilder_Base, IConfigPageBuilderDelegate, TValidatorFunction } from './pageBuilder.base';
 import { IParameterEditorDelegate, IParameterEditor } from '../parameterEditor/parameterEditor.base';
 import { ParameterEditorFactory, inoutFunctions, convFunctions } from '../parameterEditor/parameterEditor.factory';
@@ -13,7 +13,8 @@ import { createTemplateElement } from '../admin.pageLoader';
 import { Utils } from '../admin.utils';
 
 
-let HAPServiceDictionary: IDictionary<IHAPServiceDefinition> = generateMetaDataDictionary();
+let HAPServiceDictionary = generateMetaDataDictionary();
+
 export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
     protected deviceServicePanelTemplate: HTMLTemplateElement;
     protected characteristicRow: HTMLTemplateElement;
@@ -30,11 +31,10 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
         let servicePanel = <DocumentFragment>document.importNode(this.deviceServicePanelTemplate.content, true);
         let frameNode = <HTMLElement>servicePanel.querySelector('#yahka_service_panel');
         translateFragment(servicePanel);
-        let inputHelper = (selector: string, configName: keyof hkBridge.Configuration.IServiceConfig, popuplateServices?: boolean, eventHandler?) => {
+        let inputHelper = (selector: string, configName: keyof hkBridge.Configuration.IServiceConfig, selectList?: IDictionary<ISelectListEntry> | ISelectListEntry[], eventHandler?: (this: HTMLSelectElement, ev: Event) => any) => {
             let input = <HTMLSelectElement>frameNode.querySelector(selector);
-            if (popuplateServices === true) {
-                let selectList: string[] = Object.keys(HAPServiceDictionary);
-                this.fillSelectByArray(input, selectList);
+            if (selectList != null) {
+                this.fillSelectByListEntries(input, selectList);
             }
 
             if (serviceConfig) {
@@ -54,8 +54,28 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
         this.refreshServicePanelCaption(serviceConfig, frameNode);
         inputHelper('#service_enabled', 'enabled');
         inputHelper('#service_name', 'name');
-        inputHelper('#service_type', 'type', true, this.handleServiceTypeChange.bind(this, serviceConfig, frameNode));
+        inputHelper(
+            '#service_type',
+            'type',
+            Object.keys(HAPServiceDictionary.services).map(s => ({
+                text: s,
+                value: s
+            })),
+            this.handleServiceTypeChange.bind(this, serviceConfig, frameNode)
+        );
         inputHelper('#service_subtype', 'subType');
+
+        inputHelper(
+            '#new_custom_characteristic',
+            '',
+            Object.entries(HAPServiceDictionary.characteristics)
+                .map(([key, c]) => ({
+                    text: c.name,
+                    value: key
+                }))
+                .sort((a, b) => (a.text ?? a.value).localeCompare(b.text ?? b.value)),
+            () => { }
+        );
 
         this.buildCharacteristicTable(serviceConfig, frameNode);
 
@@ -70,6 +90,8 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
             this.delegate.refreshSelectedDeviceConfig();
         });
 
+        frameNode.querySelector('#yahka_add_characteristic').addEventListener('click',
+            this.addCustomCharacteristic.bind(this, serviceConfig, frameNode));
         return frameNode;
     }
 
@@ -80,9 +102,9 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
     private findHAPCharacteristic(serviceDef: IHAPServiceDefinition, characteristicName: string): IHAPCharacteristicDefintion {
         if (!serviceDef)
             return undefined;
-        let x;
-        if (x = serviceDef.characteristics[characteristicName])
-            return x;
+        const serviceChar = serviceDef.characteristics[characteristicName];
+        if (serviceChar != null)
+            return serviceChar;
         return undefined;
     }
 
@@ -101,6 +123,9 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
     }
 
     private isEmptyCharacteristic(charConfig: hkBridge.Configuration.ICharacteristicConfig): boolean {
+        if (charConfig.customCharacteristic) {
+            return false;
+        }
         if (charConfig === undefined)
             return true;
         if (charConfig.name === '')
@@ -126,7 +151,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
     }
 
     private buildCharacteristicTable(serviceConfig: hkBridge.Configuration.IServiceConfig, servicePanel: HTMLElement) {
-        let serviceDef = HAPServiceDictionary[serviceConfig.type];
+        let serviceDef = HAPServiceDictionary.services[serviceConfig.type];
         let createdCharacteristics: IDictionary<[string, boolean, DocumentFragment]> = {};
         for (let charConfig of serviceConfig.characteristics) {
             let charDef = this.findHAPCharacteristic(serviceDef, charConfig.name);
@@ -134,7 +159,10 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
                 this.removeCharacteristic(serviceConfig, charConfig);
                 continue;
             }
-            let charRow = this.createCharacteristicRow(charDef, serviceConfig, charConfig);
+            if (charDef == null) {
+                charDef = HAPServiceDictionary.characteristics[charConfig.name]
+            }
+            let charRow = this.createCharacteristicRow(charDef, serviceConfig, charConfig, servicePanel);
             createdCharacteristics[charConfig.name] = [charConfig.name, charDef ? charDef.optional : false, charRow];
         }
 
@@ -143,7 +171,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
             for (let charName in serviceDef.characteristics) {
                 if (createdCharacteristics[charName] === undefined) {
                     let charDef = serviceDef.characteristics[charName];
-                    let charRow = this.createCharacteristicRow(charDef, serviceConfig, undefined);
+                    let charRow = this.createCharacteristicRow(charDef, serviceConfig, undefined, servicePanel);
                     createdCharacteristics[charName] = [charName, charDef.optional, charRow];
                 }
             }
@@ -184,13 +212,19 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
         editor.refreshAndShow(parameterContainer, parameterValue);
     }
 
-    private createCharacteristicRow(charDef: IHAPCharacteristicDefintion, serviceConfig: hkBridge.Configuration.IServiceConfig, charConfig: hkBridge.Configuration.ICharacteristicConfig): DocumentFragment {
+    private createCharacteristicRow(charDef: IHAPCharacteristicDefintion, serviceConfig: hkBridge.Configuration.IServiceConfig, charConfig: hkBridge.Configuration.ICharacteristicConfig, servicePanel: HTMLElement): DocumentFragment {
         let name = charConfig ? charConfig.name : charDef.name;
         let enabled = charConfig ? charConfig.enabled : false;
 
         let rowElement = <DocumentFragment>document.importNode(this.characteristicRow.content, true);
 
         translateFragment(rowElement);
+        let anchor = rowElement.querySelector('#anchor') as HTMLElement;
+        if (anchor != null) {
+            const anchorAttribute = document.createAttribute('x-yahka-anchor');
+            anchorAttribute.value = name;
+            anchor.attributes.setNamedItem(anchorAttribute);
+        }
 
         let bracketElement = <HTMLElement>rowElement.querySelector('#characteristic');
 
@@ -198,8 +232,19 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
         checkBox.checked = enabled;
         checkBox.addEventListener('click', this.handleCharacteristicEnabledChange.bind(this, serviceConfig, name, bracketElement))
 
+        let delButton = rowElement.querySelector('#yakha_delete_characteristic');
+        delButton.addEventListener('click', () => {
+            const charConfig = this.findConfigCharacteristic(serviceConfig, name);
+            if (charConfig != null) {
+                charConfig.customCharacteristic = false;
+                this.removeCharacteristic(serviceConfig, charConfig);
+                this.buildCharacteristicTable(serviceConfig, servicePanel);
+            }
+        });
+
         this.refreshEnabledClass(bracketElement, enabled);
-        this.refershOptionalClass(bracketElement, charDef ? charDef.optional : true);
+        this.refreshOptionalClass(bracketElement, charDef?.optional ?? true);
+        this.refershCustomClass(bracketElement, charConfig?.customCharacteristic ?? false);
 
         rowElement.querySelector('#characteristic_name').textContent = name;
 
@@ -293,15 +338,16 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
         }
     }
 
-
-
-
     private refreshEnabledClass(row: HTMLElement, enabled: boolean) {
         row.classList.toggle('disabled', !enabled);
     }
 
-    private refershOptionalClass(row: HTMLElement, optional: boolean) {
+    private refreshOptionalClass(row: HTMLElement, optional: boolean) {
         row.classList.toggle('optional-characteristic', optional);
+    }
+
+    private refershCustomClass(row: HTMLElement, custom: boolean) {
+        row.classList.toggle('custom-characteristic', custom);
     }
 
     private handleCharacteristicEnabledChange(serviceConfig: hkBridge.Configuration.IServiceConfig, charName: string, charRow: HTMLElement, ev: Event) {
@@ -382,5 +428,34 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
         this.buildCharacteristicTable(serviceConfig, servicePanel);
 
         this.delegate.changeCallback();
+    }
+
+    private addCustomCharacteristic(serviceConfig: hkBridge.Configuration.IServiceConfig, servicePanel: HTMLElement) {
+        const select = servicePanel.querySelector('#new_custom_characteristic') as HTMLSelectElement;
+        const charName = Utils.getSelectInputValue(select)?.toString();
+        const existingChar = serviceConfig.characteristics.find((c) => c.name === charName);
+        if (existingChar != null) {
+            this.setFocusToCharacteristic(servicePanel, charName);
+            return;
+        }
+        serviceConfig.characteristics.push({
+            name: charName,
+            enabled: true,
+            customCharacteristic: true
+        });
+        Utils.setInputValue(select, '');
+
+        this.buildCharacteristicTable(serviceConfig, servicePanel);
+        this.delegate.changeCallback();
+
+        this.setFocusToCharacteristic(servicePanel, charName);
+    }
+
+    private setFocusToCharacteristic(servicePanel: HTMLElement, name: string) {
+        const element = servicePanel.querySelector(`[x-yahka-anchor='${name}']`);
+        if (element == null) {
+            return;
+        }
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 }

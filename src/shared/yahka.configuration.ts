@@ -13,6 +13,7 @@ export module Configuration {
         name: string;
         enabled: boolean;
         properties?: ICharacteristicProperties;
+        customCharacteristic?: boolean;
         [key: string]: any;
     }
 

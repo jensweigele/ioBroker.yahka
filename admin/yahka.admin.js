@@ -865,6 +865,24 @@ module.exports = function(homebridge, options) {
   inherits(CommunityTypes.Latency, Characteristic);
 
 
+// https://github.com/naofireblade/homebridge-weather-plus
+
+  CommunityTypes.DewPoint = function() {
+    Characteristic.call(this, 'Dew Point', CommunityTypes.DewPoint.UUID);
+    this.setProps({
+      format: Characteristic.Formats.FLOAT,
+      unit: Characteristic.Units.CELSIUS,
+      maxValue: 50,
+      minValue: -50,
+      minStep: 0.1,
+      perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+    });
+    this.value = this.getDefaultValue();
+  };
+  CommunityTypes.DewPoint.UUID = '095c46e2-278e-4e3c-b9e7-364622a0f501';
+  inherits(CommunityTypes.DewPoint, Characteristic);
+
+
   // Services
 
   CommunityTypes.AudioDeviceService = function(displayName, subtype) {
@@ -97579,7 +97597,7 @@ module.exports = "<div class=\"row\">\n    <div class=\"cell\">\n        <span i
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<tbody id=\"characteristic\" class=\"row-group\">\n    <tr>\n        <td class=\"center\">\n            <label class=\"input-control checkbox small-check\">\n                <input type=\"checkbox\" id=\"characteristic_enabled\">\n                <span class=\"check\"></span>\n            </label>\n        </td>\n        <td>\n            <span id=\"characteristic_name\"></span><a href=\"#\" id=\"toggleProperties\" class=\"\">&nbsp;&nbsp;[properties]</a>\n        </td>\n        <td class=\"right inOut\">\n            <span class=\"translate\">InOut: </span>\n        </td>\n        </td>\n        <td class=\"inOut\">\n            <div class=\"input-control select full-width\">\n                <select id=\"characteristic_inoutfunction\"></select>\n            </div>\n        </td>\n    </tr>\n\n    <tr>\n        <td>\n        </td>\n        <td rowspan=\"3\" class=\"characteristic-property-cell\">\n            <div class=\"no-display\" id=\"characteristic_propertyTable_container\">\n                <span>Characteristic Properties</span>\n                <div class=\"editor-table\" id=\"characteristic_propertyTable\">\n                </div>\n            </div>\n\n\n        </td>\n        <td colspan=\"2\" id=\"characteristic_inoutparams_container\" class=\"editor-container-cell inOut\">\n        </td>\n    </tr>\n\n    <tr>\n        <td>\n        </td>\n        <td class=\"right conversion\">\n            <span class=\"translate\">Conversion: </span>\n        </td>\n        <td class=\"conversion\">\n            <div class=\"input-control select full-width\">\n                <select id=\"characteristic_conversionfunction\"></select>\n            </div>\n        </td>\n    </tr>\n\n    <tr class=\"row\">\n        <td>\n        </td>\n        <td colspan=\"2\" id=\"characteristic_conversionparams_container\" class=\"editor-container-cell conversion\">\n        </td>\n    </tr>\n</tbody>";
+module.exports = "<tbody id=\"characteristic\" class=\"row-group\">\n    <tr id=\"anchor\">\n        <td class=\"center\">\n            <label class=\"input-control checkbox small-check\">\n                <input type=\"checkbox\" id=\"characteristic_enabled\">\n                <span class=\"check\"></span>\n            </label>\n        </td>\n        <td>\n            <span id=\"characteristic_name\"></span><a href=\"#\" id=\"toggleProperties\"\n                class=\"\">&nbsp;&nbsp;[properties]</a>\n        </td>\n        <td class=\"right inOut\">\n            <span class=\"translate\">InOut: </span>\n        </td>\n        </td>\n        <td class=\"inOut\">\n            <div class=\"input-control select full-width\">\n                <select id=\"characteristic_inoutfunction\"></select>\n            </div>\n        </td>\n        <td rowspan=\"3\" style=\"vertical-align: middle;\">\n            <a href=\"#\" class=\"place-right\" id=\"yakha_delete_characteristic\"><span class=\"mif-cross fg-red\"></span></a>\n        </td>\n    </tr>\n\n    <tr>\n        <td>\n        </td>\n        <td rowspan=\"3\" class=\"characteristic-property-cell\">\n            <div class=\"no-display\" id=\"characteristic_propertyTable_container\">\n                <span>Characteristic Properties</span>\n                <div class=\"editor-table\" id=\"characteristic_propertyTable\">\n                </div>\n            </div>\n\n\n        </td>\n        <td colspan=\"2\" id=\"characteristic_inoutparams_container\" class=\"editor-container-cell inOut\">\n        </td>\n    </tr>\n\n    <tr>\n        <td>\n        </td>\n        <td class=\"right conversion\">\n            <span class=\"translate\">Conversion: </span>\n        </td>\n        <td class=\"conversion\">\n            <div class=\"input-control select full-width\">\n                <select id=\"characteristic_conversionfunction\"></select>\n            </div>\n        </td>\n    </tr>\n\n    <tr class=\"row\">\n        <td>\n        </td>\n        <td colspan=\"2\" id=\"characteristic_conversionparams_container\" class=\"editor-container-cell conversion\">\n        </td>\n    </tr>\n</tbody>";
 
 /***/ }),
 
@@ -97590,7 +97608,7 @@ module.exports = "<tbody id=\"characteristic\" class=\"row-group\">\n    <tr>\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"frame\" id=\"yahka_service_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Service: </span><span id=\"yahka_service_caption\"></span>\n        <a href=\"#\" class=\"place-right\" id=\"yakha_delete_service\"><span class=\"mif-cross fg-red\"></span></a>\n    </div>\n    <div class=\"content\">\n        <div class=\"flex-container-row flex-grow flex-align-baseline\">\n            <div>\n                <label class=\"input-control checkbox small-check\">\n                    <input type=\"checkbox\" id=\"service_enabled\">\n                    <span class=\"check\"></span>\n                </label>\n            </div>\n            <div><label class=\"translate\" for=\"service_name\">Service name:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_name\" />\n            </div>\n            <div><label class=\"translate\" for=\"service_type\">Service Type:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <select class=\"full-size\" id=\"service_type\"></select>\n            </div>\n            <div><label class=\"translate\" for=\"service_subtype\">Service Subtype:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_subtype\" />\n            </div>\n        </div>\n        <div><span class=\"translate\">Characteristics Table</span></div>\n        <table class=\"characteristic-table\" id=\"yahka_characteristic_table\">\n            <thead>\n                <th class=\"translate\">Enabled</th>\n                <th class=\"translate\">Name</th>\n                <th></th>\n                <th></th>\n            </thead>\n        </table>\n    </div>\n</div>";
+module.exports = "<div class=\"frame\" id=\"yahka_service_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Service: </span><span id=\"yahka_service_caption\"></span>\n        <a href=\"#\" class=\"place-right\" id=\"yakha_delete_service\"><span class=\"mif-cross fg-red\"></span></a>\n    </div>\n    <div class=\"content\">\n        <div class=\"flex-container-row flex-grow flex-align-baseline\">\n            <div>\n                <label class=\"input-control checkbox small-check\">\n                    <input type=\"checkbox\" id=\"service_enabled\">\n                    <span class=\"check\"></span>\n                </label>\n            </div>\n            <div><label class=\"translate\" for=\"service_name\">Service name:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_name\" />\n            </div>\n            <div><label class=\"translate\" for=\"service_type\">Service Type:</label></div>\n            <div class=\"input control select flex-grow  margin10\">\n                <select class=\"full-size\" id=\"service_type\"></select>\n            </div>\n            <div><label class=\"translate\" for=\"service_subtype\">Service Subtype:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_subtype\" />\n            </div>\n        </div>\n        <div><span class=\"translate\">Characteristics Table</span></div>\n        <table class=\"characteristic-table\" id=\"yahka_characteristic_table\">\n            <thead>\n                <th class=\"translate\">Enabled</th>\n                <th class=\"translate\">Name</th>\n                <th></th>\n                <th></th>\n                <th></th>\n            </thead>\n        </table>\n        <div class=\"flex-container-row flex-align-baseline\">\n            <div><label class=\"translate\" for=\"new_custom_characteristic\">Custom Characteristic</label></div>\n            <div class=\"input-control select flex-grow margin10\">\n                <select class=\"full-size\" id=\"new_custom_characteristic\"></select>\n            </div>\n            <button class=\"image-button primary\" id=\"yahka_add_characteristic\">\n                <span class=\"icon mif-plus bg-darkCobalt  fg-white\"></span>\n                <span class=\"translate\">Add Custom Characteristic</span>\n            </button>\n        </div>\n\n    </div>\n</div>";
 
 /***/ }),
 
@@ -97616,17 +97634,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 var __read = (this && this.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
@@ -97642,6 +97649,17 @@ var __read = (this && this.__read) || function (o, n) {
         finally { if (e) throw e.error; }
     }
     return ar;
+};
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 var __spread = (this && this.__spread) || function () {
     for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
@@ -97672,11 +97690,10 @@ var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
         var servicePanel = document.importNode(this.deviceServicePanelTemplate.content, true);
         var frameNode = servicePanel.querySelector('#yahka_service_panel');
         admin_translation_1.translateFragment(servicePanel);
-        var inputHelper = function (selector, configName, popuplateServices, eventHandler) {
+        var inputHelper = function (selector, configName, selectList, eventHandler) {
             var input = frameNode.querySelector(selector);
-            if (popuplateServices === true) {
-                var selectList = Object.keys(HAPServiceDictionary);
-                _this.fillSelectByArray(input, selectList);
+            if (selectList != null) {
+                _this.fillSelectByListEntries(input, selectList);
             }
             if (serviceConfig) {
                 admin_utils_1.Utils.setInputValue(input, serviceConfig[configName]);
@@ -97695,8 +97712,20 @@ var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
         this.refreshServicePanelCaption(serviceConfig, frameNode);
         inputHelper('#service_enabled', 'enabled');
         inputHelper('#service_name', 'name');
-        inputHelper('#service_type', 'type', true, this.handleServiceTypeChange.bind(this, serviceConfig, frameNode));
+        inputHelper('#service_type', 'type', Object.keys(HAPServiceDictionary.services).map(function (s) { return ({
+            text: s,
+            value: s
+        }); }), this.handleServiceTypeChange.bind(this, serviceConfig, frameNode));
         inputHelper('#service_subtype', 'subType');
+        inputHelper('#new_custom_characteristic', '', Object.entries(HAPServiceDictionary.characteristics)
+            .map(function (_a) {
+            var _b = __read(_a, 2), key = _b[0], c = _b[1];
+            return ({
+                text: c.name,
+                value: key
+            });
+        })
+            .sort(function (a, b) { var _a, _b; return ((_a = a.text) !== null && _a !== void 0 ? _a : a.value).localeCompare((_b = b.text) !== null && _b !== void 0 ? _b : b.value); }), function () { });
         this.buildCharacteristicTable(serviceConfig, frameNode);
         // bind delete buttton
         frameNode.querySelector('#yakha_delete_service').addEventListener('click', function () {
@@ -97708,6 +97737,7 @@ var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
             }
             _this.delegate.refreshSelectedDeviceConfig();
         });
+        frameNode.querySelector('#yahka_add_characteristic').addEventListener('click', this.addCustomCharacteristic.bind(this, serviceConfig, frameNode));
         return frameNode;
     };
     ConfigPageBuilder_ServicePanel.prototype.refreshServicePanelCaption = function (serviceConfig, servicePanel) {
@@ -97716,9 +97746,9 @@ var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
     ConfigPageBuilder_ServicePanel.prototype.findHAPCharacteristic = function (serviceDef, characteristicName) {
         if (!serviceDef)
             return undefined;
-        var x;
-        if (x = serviceDef.characteristics[characteristicName])
-            return x;
+        var serviceChar = serviceDef.characteristics[characteristicName];
+        if (serviceChar != null)
+            return serviceChar;
         return undefined;
     };
     ConfigPageBuilder_ServicePanel.prototype.findConfigCharacteristic = function (service, characteristicName) {
@@ -97744,6 +97774,9 @@ var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
         return undefined;
     };
     ConfigPageBuilder_ServicePanel.prototype.isEmptyCharacteristic = function (charConfig) {
+        if (charConfig.customCharacteristic) {
+            return false;
+        }
         if (charConfig === undefined)
             return true;
         if (charConfig.name === '')
@@ -97764,7 +97797,7 @@ var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
     };
     ConfigPageBuilder_ServicePanel.prototype.buildCharacteristicTable = function (serviceConfig, servicePanel) {
         var e_2, _a, e_3, _b;
-        var serviceDef = HAPServiceDictionary[serviceConfig.type];
+        var serviceDef = HAPServiceDictionary.services[serviceConfig.type];
         var createdCharacteristics = {};
         try {
             for (var _c = __values(serviceConfig.characteristics), _d = _c.next(); !_d.done; _d = _c.next()) {
@@ -97774,7 +97807,10 @@ var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
                     this.removeCharacteristic(serviceConfig, charConfig);
                     continue;
                 }
-                var charRow = this.createCharacteristicRow(charDef, serviceConfig, charConfig);
+                if (charDef == null) {
+                    charDef = HAPServiceDictionary.characteristics[charConfig.name];
+                }
+                var charRow = this.createCharacteristicRow(charDef, serviceConfig, charConfig, servicePanel);
                 createdCharacteristics[charConfig.name] = [charConfig.name, charDef ? charDef.optional : false, charRow];
             }
         }
@@ -97790,7 +97826,7 @@ var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
             for (var charName in serviceDef.characteristics) {
                 if (createdCharacteristics[charName] === undefined) {
                     var charDef = serviceDef.characteristics[charName];
-                    var charRow = this.createCharacteristicRow(charDef, serviceConfig, undefined);
+                    var charRow = this.createCharacteristicRow(charDef, serviceConfig, undefined, servicePanel);
                     createdCharacteristics[charName] = [charName, charDef.optional, charRow];
                 }
             }
@@ -97834,18 +97870,35 @@ var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
             return;
         editor.refreshAndShow(parameterContainer, parameterValue);
     };
-    ConfigPageBuilder_ServicePanel.prototype.createCharacteristicRow = function (charDef, serviceConfig, charConfig) {
+    ConfigPageBuilder_ServicePanel.prototype.createCharacteristicRow = function (charDef, serviceConfig, charConfig, servicePanel) {
         var _this = this;
+        var _a, _b;
         var name = charConfig ? charConfig.name : charDef.name;
         var enabled = charConfig ? charConfig.enabled : false;
         var rowElement = document.importNode(this.characteristicRow.content, true);
         admin_translation_1.translateFragment(rowElement);
+        var anchor = rowElement.querySelector('#anchor');
+        if (anchor != null) {
+            var anchorAttribute = document.createAttribute('x-yahka-anchor');
+            anchorAttribute.value = name;
+            anchor.attributes.setNamedItem(anchorAttribute);
+        }
         var bracketElement = rowElement.querySelector('#characteristic');
         var checkBox = rowElement.querySelector('#characteristic_enabled');
         checkBox.checked = enabled;
         checkBox.addEventListener('click', this.handleCharacteristicEnabledChange.bind(this, serviceConfig, name, bracketElement));
+        var delButton = rowElement.querySelector('#yakha_delete_characteristic');
+        delButton.addEventListener('click', function () {
+            var charConfig = _this.findConfigCharacteristic(serviceConfig, name);
+            if (charConfig != null) {
+                charConfig.customCharacteristic = false;
+                _this.removeCharacteristic(serviceConfig, charConfig);
+                _this.buildCharacteristicTable(serviceConfig, servicePanel);
+            }
+        });
         this.refreshEnabledClass(bracketElement, enabled);
-        this.refershOptionalClass(bracketElement, charDef ? charDef.optional : true);
+        this.refreshOptionalClass(bracketElement, (_a = charDef === null || charDef === void 0 ? void 0 : charDef.optional) !== null && _a !== void 0 ? _a : true);
+        this.refershCustomClass(bracketElement, (_b = charConfig === null || charConfig === void 0 ? void 0 : charConfig.customCharacteristic) !== null && _b !== void 0 ? _b : false);
         rowElement.querySelector('#characteristic_name').textContent = name;
         var functionSelector = function (selector, containerSelector, configName, parameterName, functionMap) {
             var _a;
@@ -97930,8 +97983,11 @@ var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
     ConfigPageBuilder_ServicePanel.prototype.refreshEnabledClass = function (row, enabled) {
         row.classList.toggle('disabled', !enabled);
     };
-    ConfigPageBuilder_ServicePanel.prototype.refershOptionalClass = function (row, optional) {
+    ConfigPageBuilder_ServicePanel.prototype.refreshOptionalClass = function (row, optional) {
         row.classList.toggle('optional-characteristic', optional);
+    };
+    ConfigPageBuilder_ServicePanel.prototype.refershCustomClass = function (row, custom) {
+        row.classList.toggle('custom-characteristic', custom);
     };
     ConfigPageBuilder_ServicePanel.prototype.handleCharacteristicEnabledChange = function (serviceConfig, charName, charRow, ev) {
         var charConfig = this.findConfigCharacteristic(serviceConfig, charName);
@@ -97997,6 +98053,32 @@ var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
         this.refreshServicePanelCaption(serviceConfig, servicePanel);
         this.buildCharacteristicTable(serviceConfig, servicePanel);
         this.delegate.changeCallback();
+    };
+    ConfigPageBuilder_ServicePanel.prototype.addCustomCharacteristic = function (serviceConfig, servicePanel) {
+        var _a;
+        var select = servicePanel.querySelector('#new_custom_characteristic');
+        var charName = (_a = admin_utils_1.Utils.getSelectInputValue(select)) === null || _a === void 0 ? void 0 : _a.toString();
+        var existingChar = serviceConfig.characteristics.find(function (c) { return c.name === charName; });
+        if (existingChar != null) {
+            this.setFocusToCharacteristic(servicePanel, charName);
+            return;
+        }
+        serviceConfig.characteristics.push({
+            name: charName,
+            enabled: true,
+            customCharacteristic: true
+        });
+        admin_utils_1.Utils.setInputValue(select, '');
+        this.buildCharacteristicTable(serviceConfig, servicePanel);
+        this.delegate.changeCallback();
+        this.setFocusToCharacteristic(servicePanel, charName);
+    };
+    ConfigPageBuilder_ServicePanel.prototype.setFocusToCharacteristic = function (servicePanel, name) {
+        var element = servicePanel.querySelector("[x-yahka-anchor='" + name + "']");
+        if (element == null) {
+            return;
+        }
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
     };
     return ConfigPageBuilder_ServicePanel;
 }(pageBuilder_base_1.ConfigPageBuilder_Base));
@@ -98975,15 +99057,30 @@ var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "../node_modules/hap-no
 var yahka_community_types_1 = __webpack_require__(/*! ../yahka.community.types */ "./yahka.community.types.ts");
 yahka_community_types_1.importHAPCommunityTypesAndFixes();
 function generateMetaDataDictionary() {
-    var e_1, _a, e_2, _b, e_3, _c, e_4, _d;
     var availableServices = Object.keys(hap_nodejs_1.Service);
     var availableCharacteristics = Object.keys(hap_nodejs_1.Characteristic);
-    var result = {};
+    var services = buildServiceDictionary(availableServices, availableCharacteristics);
+    var characteristics = buildCharacteristicDictionary(availableCharacteristics);
+    return {
+        services: services,
+        characteristics: characteristics
+    };
+}
+exports.generateMetaDataDictionary = generateMetaDataDictionary;
+function createCharacteristicDescriper(name, optional, char) {
+    return {
+        uuid: char === null || char === void 0 ? void 0 : char.UUID,
+        name: name,
+        displayName: char === null || char === void 0 ? void 0 : char.displayName,
+        optional: optional,
+        properties: char === null || char === void 0 ? void 0 : char.props
+    };
+}
+function buildServiceDictionary(availableServices, availableCharacteristics) {
+    var e_1, _a, e_2, _b, e_3, _c, e_4, _d;
     var serviceDictionary = {};
+    var serviceExclusionList = ['super_', 'serialize', 'deserialize'];
     var charDictionary = {};
-    function getProperties(char) {
-        return char.props;
-    }
     try {
         for (var availableCharacteristics_1 = __values(availableCharacteristics), availableCharacteristics_1_1 = availableCharacteristics_1.next(); !availableCharacteristics_1_1.done; availableCharacteristics_1_1 = availableCharacteristics_1.next()) {
             var charName = availableCharacteristics_1_1.value;
@@ -99000,7 +99097,6 @@ function generateMetaDataDictionary() {
         }
         finally { if (e_1) throw e_1.error; }
     }
-    var serviceExclusionList = ['super_', 'serialize', 'deserialize'];
     try {
         for (var availableServices_1 = __values(availableServices), availableServices_1_1 = availableServices_1.next(); !availableServices_1_1.done; availableServices_1_1 = availableServices_1.next()) {
             var serviceName = availableServices_1_1.value;
@@ -99019,8 +99115,7 @@ function generateMetaDataDictionary() {
                     if (charName === undefined) {
                         continue;
                     }
-                    var charDescriptor = { name: charName, optional: false, properties: getProperties(char) };
-                    serviceDescriptor.characteristics[charName] = charDescriptor;
+                    serviceDescriptor.characteristics[charName] = createCharacteristicDescriper(charName, false, char);
                 }
             }
             catch (e_3_1) { e_3 = { error: e_3_1 }; }
@@ -99037,8 +99132,7 @@ function generateMetaDataDictionary() {
                     if (charName === undefined) {
                         continue;
                     }
-                    var charDescriptor = { name: charName, optional: true, properties: getProperties(char) };
-                    serviceDescriptor.characteristics[charName] = charDescriptor;
+                    serviceDescriptor.characteristics[charName] = createCharacteristicDescriper(charName, true, char);
                 }
             }
             catch (e_4_1) { e_4 = { error: e_4_1 }; }
@@ -99060,7 +99154,36 @@ function generateMetaDataDictionary() {
     }
     return serviceDictionary;
 }
-exports.generateMetaDataDictionary = generateMetaDataDictionary;
+function buildCharacteristicDictionary(availableCharacteristics) {
+    var e_5, _a;
+    var characteristicExclusionList = [
+        'super_',
+        'Formats',
+        'Units',
+        'Perms',
+        'serialize',
+        'deserialize'
+    ];
+    var characteristicDictionary = {};
+    try {
+        for (var availableCharacteristics_2 = __values(availableCharacteristics), availableCharacteristics_2_1 = availableCharacteristics_2.next(); !availableCharacteristics_2_1.done; availableCharacteristics_2_1 = availableCharacteristics_2.next()) {
+            var charName = availableCharacteristics_2_1.value;
+            if (characteristicExclusionList.includes(charName)) {
+                continue;
+            }
+            var charInstance = new hap_nodejs_1.Characteristic[charName]();
+            characteristicDictionary[charName] = createCharacteristicDescriper(charName, true, charInstance);
+        }
+    }
+    catch (e_5_1) { e_5 = { error: e_5_1 }; }
+    finally {
+        try {
+            if (availableCharacteristics_2_1 && !availableCharacteristics_2_1.done && (_a = availableCharacteristics_2.return)) _a.call(availableCharacteristics_2);
+        }
+        finally { if (e_5) throw e_5.error; }
+    }
+    return characteristicDictionary;
+}
 
 
 /***/ }),

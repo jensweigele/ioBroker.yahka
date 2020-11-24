@@ -3,18 +3,39 @@ import { importHAPCommunityTypesAndFixes } from '../yahka.community.types';
 import { IDictionary } from '../shared/yahka.configuration';
 import { IHAPServiceDefinition, IHAPCharacteristicDefintion } from './admin.config';
 
+interface IServiceDictionary {
+    services: IDictionary<IHAPServiceDefinition>
+    characteristics: IDictionary<IHAPCharacteristicDefintion>
+}
+
 importHAPCommunityTypesAndFixes();
-export function generateMetaDataDictionary(): IDictionary<IHAPServiceDefinition> {
+export function generateMetaDataDictionary(): IServiceDictionary {
 
     let availableServices = Object.keys(Service);
     let availableCharacteristics = Object.keys(Characteristic);
-    let result = {};
-    let serviceDictionary = {};
-    let charDictionary = {};
 
-    function getProperties(char: Characteristic) {
-        return char.props;
+    const services = buildServiceDictionary(availableServices, availableCharacteristics);
+    const characteristics = buildCharacteristicDictionary(availableCharacteristics);
+    return {
+        services,
+        characteristics
+    };
+}
+
+function createCharacteristicDescriper(name: string, optional: boolean, char: Characteristic): IHAPCharacteristicDefintion {
+    return {
+        uuid: char?.UUID,
+        name: name,
+        displayName: char?.displayName,
+        optional: optional,
+        properties: char?.props
     }
+}
+
+function buildServiceDictionary(availableServices: string[], availableCharacteristics: string[]): IDictionary<IHAPServiceDefinition> {
+    const serviceDictionary: IDictionary<IHAPServiceDefinition> = {};
+    const serviceExclusionList = ['super_', 'serialize', 'deserialize'];
+    let charDictionary = {};
 
     for (let charName of availableCharacteristics) {
         if (charName === 'super_') {
@@ -22,8 +43,6 @@ export function generateMetaDataDictionary(): IDictionary<IHAPServiceDefinition>
         }
         charDictionary[Characteristic[charName].UUID] = charName;
     }
-
-    const serviceExclusionList = ['super_', 'serialize', 'deserialize'];
 
     for (let serviceName of availableServices) {
         if (serviceExclusionList.includes(serviceName)) {
@@ -41,20 +60,42 @@ export function generateMetaDataDictionary(): IDictionary<IHAPServiceDefinition>
             if (charName === undefined) {
                 continue;
             }
-            let charDescriptor: IHAPCharacteristicDefintion = { name: charName, optional: false, properties: getProperties(char) };
-            serviceDescriptor.characteristics[charName] = charDescriptor;
+
+            serviceDescriptor.characteristics[charName] = createCharacteristicDescriper(charName, false, char);
         }
+
         for (let char of serviceInstance.optionalCharacteristics) {
             let charName = charDictionary[char.UUID];
             if (charName === undefined) {
                 continue;
             }
-            let charDescriptor: IHAPCharacteristicDefintion = { name: charName, optional: true, properties: getProperties(char) };
-            serviceDescriptor.characteristics[charName] = charDescriptor;
+
+            serviceDescriptor.characteristics[charName] = createCharacteristicDescriper(charName, true, char);
         }
 
         serviceDictionary[serviceName] = serviceDescriptor;
     }
 
     return serviceDictionary;
+}
+
+function buildCharacteristicDictionary(availableCharacteristics: string[]): IDictionary<IHAPCharacteristicDefintion> {
+    const characteristicExclusionList = [
+        'super_',
+        'Formats',
+        'Units',
+        'Perms',
+        'serialize',
+        'deserialize'
+    ];
+    const characteristicDictionary: IDictionary<IHAPCharacteristicDefintion> = {};
+    for (let charName of availableCharacteristics) {
+        if (characteristicExclusionList.includes(charName)) {
+            continue;
+        }
+
+        let charInstance = new Characteristic[charName]();
+        characteristicDictionary[charName] = createCharacteristicDescriper(charName, true, charInstance);
+    }
+    return characteristicDictionary;
 }

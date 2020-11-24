@@ -1,5 +1,5 @@
 <tbody id="characteristic" class="row-group">
-    <tr>
+    <tr id="anchor">
         <td class="center">
             <label class="input-control checkbox small-check">
                 <input type="checkbox" id="characteristic_enabled">
@@ -7,7 +7,8 @@
             </label>
         </td>
         <td>
-            <span id="characteristic_name"></span><a href="#" id="toggleProperties" class="">&nbsp;&nbsp;[properties]</a>
+            <span id="characteristic_name"></span><a href="#" id="toggleProperties"
+                class="">&nbsp;&nbsp;[properties]</a>
         </td>
         <td class="right inOut">
             <span class="translate">InOut: </span>
@@ -17,6 +18,9 @@
             <div class="input-control select full-width">
                 <select id="characteristic_inoutfunction"></select>
             </div>
+        </td>
+        <td rowspan="3" style="vertical-align: middle;">
+            <a href="#" class="place-right" id="yakha_delete_characteristic"><span class="mif-cross fg-red"></span></a>
         </td>
     </tr>
 

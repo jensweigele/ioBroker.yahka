@@ -3,7 +3,7 @@
 module.exports = function (grunt) {
 
     var srcDir = __dirname + '/';
-    var destinationDir = '../../iobroker/'
+    var destinationDir = '/usr/local/iobroker/'
     var pkg = grunt.file.readJSON('package.json');
     const webpackConfig = require('./webpack.config.js');
 
