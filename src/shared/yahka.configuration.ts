@@ -22,6 +22,7 @@ export module Configuration {
         enabled?: boolean;
         type: string;
         subType: string;
+        linkTo?: string;
         characteristics: (ICharacteristicConfig)[];
         [key: string]: any;
     }
@@ -42,6 +43,11 @@ export module Configuration {
         enabled: boolean;
         category: number;
         services: IServiceConfig[];
+        publishAsOwnDevice?: boolean;
+        username?: string;
+        pincode?: string;
+        port?: number;
+        interface?: string;
         [key: string]: any;
     }
 

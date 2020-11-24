@@ -2850,43 +2850,70 @@ var THomeKitBridge = /** @class */ (function () {
     }
     THomeKitBridge.prototype.init = function () {
         var e_1, _a;
-        var _b;
+        var _this = this;
         this.bridgeObject = this.setupBridge();
-        if (this.config.devices)
-            try {
-                for (var _c = __values(this.config.devices), _d = _c.next(); !_d.done; _d = _c.next()) {
-                    var device = _d.value;
-                    if (device.enabled === false) {
-                        continue;
+        var devicesToPublish = [function () {
+                var _a;
+                _this.FLogger.info("publishing bridge " + _this.config.name + " on " + ((_a = _this.config.interface) !== null && _a !== void 0 ? _a : '0.0.0.0'));
+                _this.bridgeObject.publish({
+                    username: _this.config.username,
+                    port: _this.config.port,
+                    pincode: _this.config.pincode,
+                    category: 2,
+                    mdns: {
+                        interface: _this.config.interface,
+                        reuseAddr: true
                     }
-                    var hapDevice = this.createDevice(device);
+                });
+            }];
+        if (this.config.devices) {
+            var _loop_1 = function (device) {
+                if (device.enabled === false) {
+                    return "continue";
+                }
+                var hapDevice = this_1.createDevice(device);
+                if (device.publishAsOwnDevice) {
+                    devicesToPublish.push(function () {
+                        var _a;
+                        _this.FLogger.info("publishing device " + device.name + " on " + ((_a = device.interface) !== null && _a !== void 0 ? _a : '0.0.0.0'));
+                        hapDevice.publish({
+                            username: device.username,
+                            port: device.port,
+                            pincode: device.pincode,
+                            category: device.category,
+                            mdns: {
+                                interface: device.interface,
+                                reuseAddr: true
+                            }
+                        });
+                    });
+                }
+                else {
                     try {
-                        this.bridgeObject.addBridgedAccessory(hapDevice);
+                        this_1.bridgeObject.addBridgedAccessory(hapDevice);
                     }
                     catch (e) {
-                        this.FLogger.warn(e);
-                        this.FLogger.warn('Error by adding: ' + JSON.stringify(device));
+                        this_1.FLogger.warn(e);
+                        this_1.FLogger.warn('Error by adding: ' + JSON.stringify(device));
                     }
+                }
+            };
+            var this_1 = this;
+            try {
+                for (var _b = __values(this.config.devices), _c = _b.next(); !_c.done; _c = _b.next()) {
+                    var device = _c.value;
+                    _loop_1(device);
                 }
             }
             catch (e_1_1) { e_1 = { error: e_1_1 }; }
             finally {
                 try {
-                    if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
                 }
                 finally { if (e_1) throw e_1.error; }
             }
-        this.FLogger.info("pubishing bridge " + this.config.name + " on " + ((_b = this.config.interface) !== null && _b !== void 0 ? _b : '0.0.0.0'));
-        this.bridgeObject.publish({
-            username: this.config.username,
-            port: this.config.port,
-            pincode: this.config.pincode,
-            category: 2,
-            mdns: {
-                interface: this.config.interface,
-                reuseAddr: true
-            }
-        });
+        }
+        devicesToPublish.forEach(function (m) { return m(); });
     };
     THomeKitBridge.prototype.setupBridge = function () {
         var _this = this;
@@ -3094,7 +3121,7 @@ var THomeKitIPCamera = /** @class */ (function () {
     };
     THomeKitIPCamera.prototype.publishCamera = function () {
         var _a;
-        this.FLogger.info("pubishing camera " + this.camConfig.name + " on " + ((_a = this.camConfig.interface) !== null && _a !== void 0 ? _a : '0.0.0.0'));
+        this.FLogger.info("publishing camera " + this.camConfig.name + " on " + ((_a = this.camConfig.interface) !== null && _a !== void 0 ? _a : '0.0.0.0'));
         this.camera.publish({
             username: this.camConfig.username,
             port: this.camConfig.port,
@@ -3329,7 +3356,7 @@ var YahkaServiceInitializer = /** @class */ (function () {
         this.FLogger = FLogger;
     }
     YahkaServiceInitializer.prototype.initServices = function (hapDevice, serviceConfigs) {
-        var e_1, _a;
+        var e_1, _a, e_2, _b;
         if (serviceConfigs == null) {
             return;
         }
@@ -3346,9 +3373,22 @@ var YahkaServiceInitializer = /** @class */ (function () {
             }
             finally { if (e_1) throw e_1.error; }
         }
+        try {
+            for (var serviceConfigs_2 = __values(serviceConfigs), serviceConfigs_2_1 = serviceConfigs_2.next(); !serviceConfigs_2_1.done; serviceConfigs_2_1 = serviceConfigs_2.next()) {
+                var service = serviceConfigs_2_1.value;
+                this.establishServiceLinks(hapDevice, service);
+            }
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (serviceConfigs_2_1 && !serviceConfigs_2_1.done && (_b = serviceConfigs_2.return)) _b.call(serviceConfigs_2);
+            }
+            finally { if (e_2) throw e_2.error; }
+        }
     };
     YahkaServiceInitializer.prototype.initService = function (hapDevice, serviceConfig) {
-        var e_2, _a;
+        var e_3, _a;
         if (serviceConfig.enabled === false) {
             this.FLogger.debug("[" + hapDevice.displayName + "] service " + serviceConfig.name + " is disabled");
             return;
@@ -3374,16 +3414,35 @@ var YahkaServiceInitializer = /** @class */ (function () {
                 this.initCharacteristic(hapService, charactConfig);
             }
         }
-        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        catch (e_3_1) { e_3 = { error: e_3_1 }; }
         finally {
             try {
                 if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
             }
-            finally { if (e_2) throw e_2.error; }
+            finally { if (e_3) throw e_3.error; }
         }
         if (isNew) {
             hapDevice.addService(hapService);
         }
+    };
+    YahkaServiceInitializer.prototype.establishServiceLinks = function (hapDevice, serviceConfig) {
+        if (serviceConfig.enabled == false) {
+            return;
+        }
+        if (serviceConfig.linkTo == null) {
+            return;
+        }
+        if (serviceConfig.linkTo == '') {
+            return;
+        }
+        var existingService = hapDevice.getService(serviceConfig.name);
+        var linkToService = hapDevice.getService(serviceConfig.linkTo);
+        if (existingService == null || linkToService == null) {
+            this.FLogger.error("[" + serviceConfig.name + "] unable to establish link between " + serviceConfig.linkTo + " and " + serviceConfig.name + " - one of the services was not found or is disabled");
+            return;
+        }
+        linkToService.addLinkedService(existingService);
+        this.FLogger.debug("[" + serviceConfig.name + "] established link from " + existingService.displayName + " to " + linkToService.displayName);
     };
     YahkaServiceInitializer.prototype.initCharacteristic = function (hapService, characteristicConfig) {
         var _this = this;

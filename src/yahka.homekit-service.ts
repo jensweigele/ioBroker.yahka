@@ -20,9 +20,13 @@ export class YahkaServiceInitializer {
         for (const service of serviceConfigs) {
             this.initService(hapDevice, service);
         }
+
+        for (const service of serviceConfigs) {
+            this.establishServiceLinks(hapDevice, service);
+        }
     }
 
-    public initService(hapDevice: Accessory, serviceConfig: Configuration.IServiceConfig) {
+    private initService(hapDevice: Accessory, serviceConfig: Configuration.IServiceConfig) {
         if (serviceConfig.enabled === false) {
             this.FLogger.debug(`[${hapDevice.displayName}] service ${serviceConfig.name} is disabled`);
             return;
@@ -55,6 +59,28 @@ export class YahkaServiceInitializer {
             hapDevice.addService(hapService);
         }
     }
+
+    private establishServiceLinks(hapDevice: Accessory, serviceConfig: Configuration.IServiceConfig) {
+        if (serviceConfig.enabled == false) {
+            return
+        }
+        if (serviceConfig.linkTo == null) {
+            return;
+        }
+        if (serviceConfig.linkTo == '') {
+            return;
+        }
+
+        const existingService = hapDevice.getService(serviceConfig.name);
+        const linkToService = hapDevice.getService(serviceConfig.linkTo);
+        if (existingService == null || linkToService == null) {
+            this.FLogger.error(`[${serviceConfig.name}] unable to establish link between ${serviceConfig.linkTo} and ${serviceConfig.name} - one of the services was not found or is disabled`);
+            return;
+        }
+        linkToService.addLinkedService(existingService);
+        this.FLogger.debug(`[${serviceConfig.name}] established link from ${existingService.displayName} to ${linkToService.displayName}`);
+    }
+
 
     private initCharacteristic(hapService: Service, characteristicConfig: Configuration.ICharacteristicConfig) {
         const logName = `[${hapService.displayName}.${characteristicConfig.name}]`;

@@ -64,6 +64,17 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
             this.handleServiceTypeChange.bind(this, serviceConfig, frameNode)
         );
         inputHelper('#service_subtype', 'subType');
+        inputHelper(
+            '#service_link_to',
+            'linkTo',
+            [{
+                text: '',
+                value: '',
+            }].concat(services.map((s) => ({
+                text: s.name,
+                value: s.name
+            })))
+        );
 
         inputHelper(
             '#new_custom_characteristic',

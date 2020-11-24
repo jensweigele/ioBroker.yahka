@@ -96611,7 +96611,7 @@ exports.ConfigPageBuilder_Base = ConfigPageBuilder_Base;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n    <div><label class=\"translate\" for=\"name\">Name:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in homekit apps. Changes are only recognized after readding the bridge in the\n            app.</span></div>\n    <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists. Please change\n        the name!</div>\n    <div class=\"input control flex-grow margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"name\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input control flex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"model\">Model:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"model\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"serial\">Serial:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"serial\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"firmware\">Firmware:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input control flex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"firmware\" placeholder=\"leave empty to use Yahka Version\"/>\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"username\">Username:</label><span class=\"edit-hint translate\">needs\n            to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the\n                bridge needs to be reconfigured in the HomeKit database</b></span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"username\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"pincode\">Pincode:</label><span class=\"edit-hint translate\">needs to\n            be in the form of 123-45-678</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"pincode\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"port\">IP/Port:</label><span class=\"edit-hint translate\">Port 0 =\n            random free port assigned by the operation system (default)</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <select id=\"interface\">\n        </select>\n        <input min=\"0\" max=\"65535\" type=\"number\" id=\"port\" />\n    </div>\n\n</div>\n<div>\n    <div><label class=\"translate\" for=\"verboseLogging\">Verbose Logging:</label><span class=\"edit-hint translate\">true\n            = redirect hap-node logging to adapter logging</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"\" type=\"checkbox\" id=\"verboseLogging\" />\n    </div>\n</div>";
+module.exports = "<div>\n    <div><label class=\"translate\" for=\"name\">Name:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in homekit apps. Changes are only recognized after readding the bridge in the\n            app.</span></div>\n    <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists. Please change\n        the name!</div>\n    <div class=\"input control flex-grow margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"name\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input control flex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"model\">Model:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"model\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"serial\">Serial:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"serial\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"firmware\">Firmware:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input control flex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"firmware\" placeholder=\"leave empty to use Yahka Version\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"username\">Username:</label><span class=\"edit-hint translate\">needs\n            to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the\n                bridge needs to be reconfigured in the HomeKit database</b></span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"username\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"pincode\">Pincode:</label><span class=\"edit-hint translate\">needs to\n            be in the form of 123-45-678</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"pincode\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"port\">IP/Port:</label><span class=\"edit-hint translate\">Port 0 =\n            random free port assigned by the operation system (default)</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <select id=\"interface\">\n        </select>\n        <input min=\"0\" max=\"65535\" type=\"number\" id=\"port\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"verboseLogging\">Verbose Logging:</label><span class=\"edit-hint translate\">true\n            = redirect hap-node logging to adapter logging</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"\" type=\"checkbox\" id=\"verboseLogging\" />\n    </div>\n</div>";
 
 /***/ }),
 
@@ -96780,7 +96780,7 @@ exports.ConfigPageBuilder_BridgeConfig = ConfigPageBuilder_BridgeConfig;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"frame\" id=\"yahka_device_info_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Device Properties</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"enabled\">Enabled:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enabled\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"name\">Name:</label></div>\n            <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists.\n                Please change the name!</div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"name\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"model\">Model:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"model\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"serial\">Serial:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"serial\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"firmware\">Firmware:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"firmware\" />\n            </div>\n        </div>\n\n        <div>\n            <div><label class=\"translate\" for=\"category\">Categeory:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select class=\"full-size\" id=\"category\"></select>\n            </div>\n        </div>\n    </div>\n\n</div>";
+module.exports = "<div class=\"frame\" id=\"yahka_device_info_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Device Properties</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"enabled\">Enabled:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enabled\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"name\">Name:</label></div>\n            <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists.\n                Please change the name!</div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"name\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"model\">Model:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"model\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"serial\">Serial:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"serial\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"firmware\">Firmware:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"firmware\" />\n            </div>\n        </div>\n\n        <div>\n            <div><label class=\"translate\" for=\"category\">Categeory:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select class=\"full-size\" id=\"category\"></select>\n            </div>\n        </div>\n        <div>\n            <label class=\"input-control checkbox small-check\">\n                <input type=\"checkbox\" id=\"publish_as_own_device\">\n                <span class=\"check\"></span>\n            </label>\n            <span>Publish as own device</span>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"username\">Username:</label><span class=\"edit-hint translate\">needs\n                    to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the\n                        bridge needs to be reconfigured in the HomeKit database</b></span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"username\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"pincode\">Pincode:</label><span class=\"edit-hint translate\">needs to\n                    be in the form of 123-45-678</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"pincode\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"port\">IP/Port:</label><span class=\"edit-hint translate\">Port 0 =\n                    random free port assigned by the operation system (default)</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select id=\"interface\">\n                </select>\n                <input min=\"0\" max=\"65535\" type=\"number\" id=\"port\" />\n            </div>\n        </div>\n    </div>\n\n</div>";
 
 /***/ }),
 
@@ -96806,6 +96806,42 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
@@ -96826,6 +96862,7 @@ var admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./adm
 var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
 var admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
 var pageBuilder_servicePanel_1 = __webpack_require__(/*! ./pageBuilder.servicePanel */ "./admin/pageBuilder/pageBuilder.servicePanel.ts");
+var yahka_admin_1 = __webpack_require__(/*! ../yahka.admin */ "./admin/yahka.admin.ts");
 var accessoryCategories = {};
 getObject('yahka.meta._accessoryCategories', function (_, object) {
     accessoryCategories = object.native;
@@ -96843,34 +96880,45 @@ var ConfigPageBuilder_CustomDevice = /** @class */ (function (_super) {
         return _this;
     }
     ConfigPageBuilder_CustomDevice.prototype.refresh = function (config, AFocusLastPanel, devicePanel) {
-        var e_1, _a;
-        if (!hkBridge.Configuration.isDeviceConfig(config)) {
-            return;
-        }
-        var lastPane = this.buildDeviceInformationPanel(config, devicePanel);
-        try {
-            for (var _b = __values(config.services), _c = _b.next(); !_c.done; _c = _b.next()) {
-                var serviceConfig = _c.value;
-                var servicePanel = this.servicePanelBuilder.createServicePanel(config.services, serviceConfig);
-                devicePanel.appendChild(servicePanel);
-                lastPane = servicePanel;
-            }
-        }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-            }
-            finally { if (e_1) throw e_1.error; }
-        }
-        if (AFocusLastPanel && lastPane) {
-            lastPane.scrollIntoView();
-            if (!lastPane.classList.contains('active')) {
-                var heading = lastPane.querySelector('.heading');
-                if (heading)
-                    heading.click();
-            }
-        }
+        return __awaiter(this, void 0, void 0, function () {
+            var lastPane, _a, _b, serviceConfig, servicePanel, heading;
+            var e_1, _c;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        if (!hkBridge.Configuration.isDeviceConfig(config)) {
+                            return [2 /*return*/];
+                        }
+                        return [4 /*yield*/, this.buildDeviceInformationPanel(config, devicePanel)];
+                    case 1:
+                        lastPane = _d.sent();
+                        try {
+                            for (_a = __values(config.services), _b = _a.next(); !_b.done; _b = _a.next()) {
+                                serviceConfig = _b.value;
+                                servicePanel = this.servicePanelBuilder.createServicePanel(config.services, serviceConfig);
+                                devicePanel.appendChild(servicePanel);
+                                lastPane = servicePanel;
+                            }
+                        }
+                        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                        finally {
+                            try {
+                                if (_b && !_b.done && (_c = _a.return)) _c.call(_a);
+                            }
+                            finally { if (e_1) throw e_1.error; }
+                        }
+                        if (AFocusLastPanel && lastPane) {
+                            lastPane.scrollIntoView();
+                            if (!lastPane.classList.contains('active')) {
+                                heading = lastPane.querySelector('.heading');
+                                if (heading)
+                                    heading.click();
+                            }
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     ConfigPageBuilder_CustomDevice.prototype.styleListItem = function (listItem, deviceConfig) {
         if (!hkBridge.Configuration.isDeviceConfig(deviceConfig)) {
@@ -96890,35 +96938,53 @@ var ConfigPageBuilder_CustomDevice = /** @class */ (function (_super) {
         return true;
     };
     ConfigPageBuilder_CustomDevice.prototype.buildDeviceInformationPanel = function (deviceConfig, devicePane) {
-        var _this = this;
-        var devInfoFragment = document.importNode(this.deviceInfoPanelTemplate.content, true);
-        var devInfoPanel = devInfoFragment.querySelector('#yahka_device_info_panel');
-        admin_translation_1.translateFragment(devInfoFragment);
-        var inputHelper = function (selector, propertyName, selectList, validator) {
-            if (validator === void 0) { validator = undefined; }
-            var input = devInfoPanel.querySelector(selector);
-            var errorElement = devInfoPanel.querySelector(selector + '_error');
-            _this.fillSelectByListEntries(input, selectList);
-            var value = deviceConfig[propertyName];
-            if (input.type === 'checkbox') {
-                input.checked = value === undefined ? true : value;
-                input.addEventListener('change', _this.handleDeviceMetaDataChange.bind(_this, deviceConfig, propertyName, errorElement, validator));
-            }
-            else {
-                admin_utils_1.Utils.setInputValue(input, value);
-                input.addEventListener('input', _this.handleDeviceMetaDataChange.bind(_this, deviceConfig, propertyName, errorElement, validator));
-            }
-            _this.refreshSimpleErrorElement(errorElement, validator);
-        };
-        inputHelper('#name', 'name', undefined, function () { return !_this.delegate.deviceIsUnique(deviceConfig); });
-        inputHelper('#enabled', 'enabled');
-        inputHelper('#manufacturer', 'manufacturer');
-        inputHelper('#model', 'model');
-        inputHelper('#serial', 'serial');
-        inputHelper('#firmware', 'firmware');
-        inputHelper('#category', 'category', accessoryCategories);
-        devicePane.appendChild(devInfoFragment);
-        return devInfoPanel;
+        return __awaiter(this, void 0, void 0, function () {
+            var devInfoFragment, devInfoPanel, inputHelper, ipList, ipListForSelectBox;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        devInfoFragment = document.importNode(this.deviceInfoPanelTemplate.content, true);
+                        devInfoPanel = devInfoFragment.querySelector('#yahka_device_info_panel');
+                        admin_translation_1.translateFragment(devInfoFragment);
+                        inputHelper = function (selector, propertyName, selectList, validator, checkDefault) {
+                            if (validator === void 0) { validator = undefined; }
+                            if (checkDefault === void 0) { checkDefault = true; }
+                            var input = devInfoPanel.querySelector(selector);
+                            var errorElement = devInfoPanel.querySelector(selector + '_error');
+                            _this.fillSelectByListEntries(input, selectList);
+                            var value = deviceConfig[propertyName];
+                            if (input.type === 'checkbox') {
+                                input.checked = value === undefined ? checkDefault : value;
+                                input.addEventListener('change', _this.handleDeviceMetaDataChange.bind(_this, deviceConfig, propertyName, errorElement, validator));
+                            }
+                            else {
+                                admin_utils_1.Utils.setInputValue(input, value);
+                                input.addEventListener('input', _this.handleDeviceMetaDataChange.bind(_this, deviceConfig, propertyName, errorElement, validator));
+                            }
+                            _this.refreshSimpleErrorElement(errorElement, validator);
+                        };
+                        inputHelper('#name', 'name', undefined, function () { return !_this.delegate.deviceIsUnique(deviceConfig); });
+                        inputHelper('#enabled', 'enabled');
+                        inputHelper('#manufacturer', 'manufacturer');
+                        inputHelper('#model', 'model');
+                        inputHelper('#serial', 'serial');
+                        inputHelper('#firmware', 'firmware');
+                        inputHelper('#category', 'category', accessoryCategories);
+                        inputHelper('#publish_as_own_device', 'publishAsOwnDevice', undefined, undefined, false);
+                        inputHelper('#username', 'username');
+                        inputHelper('#pincode', 'pincode');
+                        inputHelper('#port', 'port');
+                        return [4 /*yield*/, yahka_admin_1.ioBrokerInterfaceList];
+                    case 1:
+                        ipList = _a.sent();
+                        ipListForSelectBox = ipList.filter(function (a) { return a.family === "ipv4"; }).map(function (a) { return { value: a.address, text: a.name }; });
+                        inputHelper('#interface', 'interface', ipListForSelectBox);
+                        devicePane.appendChild(devInfoFragment);
+                        return [2 /*return*/, devInfoPanel];
+                }
+            });
+        });
     };
     ConfigPageBuilder_CustomDevice.prototype.handleDeviceMetaDataChange = function (deviceConfig, propertyName, errorElement, validator, ev) {
         var inputTarget = ev.currentTarget;
@@ -97608,7 +97674,7 @@ module.exports = "<tbody id=\"characteristic\" class=\"row-group\">\n    <tr id=
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"frame\" id=\"yahka_service_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Service: </span><span id=\"yahka_service_caption\"></span>\n        <a href=\"#\" class=\"place-right\" id=\"yakha_delete_service\"><span class=\"mif-cross fg-red\"></span></a>\n    </div>\n    <div class=\"content\">\n        <div class=\"flex-container-row flex-grow flex-align-baseline\">\n            <div>\n                <label class=\"input-control checkbox small-check\">\n                    <input type=\"checkbox\" id=\"service_enabled\">\n                    <span class=\"check\"></span>\n                </label>\n            </div>\n            <div><label class=\"translate\" for=\"service_name\">Service name:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_name\" />\n            </div>\n            <div><label class=\"translate\" for=\"service_type\">Service Type:</label></div>\n            <div class=\"input control select flex-grow  margin10\">\n                <select class=\"full-size\" id=\"service_type\"></select>\n            </div>\n            <div><label class=\"translate\" for=\"service_subtype\">Service Subtype:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_subtype\" />\n            </div>\n        </div>\n        <div><span class=\"translate\">Characteristics Table</span></div>\n        <table class=\"characteristic-table\" id=\"yahka_characteristic_table\">\n            <thead>\n                <th class=\"translate\">Enabled</th>\n                <th class=\"translate\">Name</th>\n                <th></th>\n                <th></th>\n                <th></th>\n            </thead>\n        </table>\n        <div class=\"flex-container-row flex-align-baseline\">\n            <div><label class=\"translate\" for=\"new_custom_characteristic\">Custom Characteristic</label></div>\n            <div class=\"input-control select flex-grow margin10\">\n                <select class=\"full-size\" id=\"new_custom_characteristic\"></select>\n            </div>\n            <button class=\"image-button primary\" id=\"yahka_add_characteristic\">\n                <span class=\"icon mif-plus bg-darkCobalt  fg-white\"></span>\n                <span class=\"translate\">Add Custom Characteristic</span>\n            </button>\n        </div>\n\n    </div>\n</div>";
+module.exports = "<div class=\"frame\" id=\"yahka_service_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Service: </span><span id=\"yahka_service_caption\"></span>\n        <a href=\"#\" class=\"place-right\" id=\"yakha_delete_service\"><span class=\"mif-cross fg-red\"></span></a>\n    </div>\n    <div class=\"content\">\n        <div class=\"flex-container-row flex-grow flex-align-baseline\">\n            <div>\n                <label class=\"input-control checkbox small-check\">\n                    <input type=\"checkbox\" id=\"service_enabled\">\n                    <span class=\"check\"></span>\n                </label>\n            </div>\n            <div><label class=\"translate\" for=\"service_name\">Service name:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_name\" />\n            </div>\n            <div><label class=\"translate\" for=\"service_type\">Service Type:</label></div>\n            <div class=\"input control select flex-grow  margin10\">\n                <select class=\"full-size\" id=\"service_type\"></select>\n            </div>\n            <div><label class=\"translate\" for=\"service_subtype\">Service Subtype:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_subtype\" />\n            </div>\n            <div><label class=\"translate\" for=\"service_type\">Link to:</label></div>\n            <div class=\"input control select flex-grow  margin10\">\n                <select class=\"full-size\" id=\"service_link_to\"></select>\n            </div>\n\n        </div>\n        <div><span class=\"translate\">Characteristics Table</span></div>\n        <table class=\"characteristic-table\" id=\"yahka_characteristic_table\">\n            <thead>\n                <th class=\"translate\">Enabled</th>\n                <th class=\"translate\">Name</th>\n                <th></th>\n                <th></th>\n                <th></th>\n            </thead>\n        </table>\n        <div class=\"flex-container-row flex-align-baseline\">\n            <div><label class=\"translate\" for=\"new_custom_characteristic\">Custom Characteristic</label></div>\n            <div class=\"input-control select flex-grow margin10\">\n                <select class=\"full-size\" id=\"new_custom_characteristic\"></select>\n            </div>\n            <button class=\"image-button primary\" id=\"yahka_add_characteristic\">\n                <span class=\"icon mif-plus bg-darkCobalt  fg-white\"></span>\n                <span class=\"translate\">Add Custom Characteristic</span>\n            </button>\n        </div>\n\n    </div>\n</div>";
 
 /***/ }),
 
@@ -97717,6 +97783,13 @@ var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
             value: s
         }); }), this.handleServiceTypeChange.bind(this, serviceConfig, frameNode));
         inputHelper('#service_subtype', 'subType');
+        inputHelper('#service_link_to', 'linkTo', [{
+                text: '',
+                value: '',
+            }].concat(services.map(function (s) { return ({
+            text: s.name,
+            value: s.name
+        }); })));
         inputHelper('#new_custom_characteristic', '', Object.entries(HAPServiceDictionary.characteristics)
             .map(function (_a) {
             var _b = __read(_a, 2), key = _b[0], c = _b[1];

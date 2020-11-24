@@ -8,6 +8,7 @@ import { translateFragment } from '../admin.translation';
 import { createTemplateElement } from '../admin.pageLoader';
 import { Utils } from '../admin.utils';
 import { ConfigPageBuilder_ServicePanel } from './pageBuilder.servicePanel';
+import { ioBrokerInterfaceList } from '../yahka.admin';
 
 
 declare function getObject(id: string, callback: (error: any, object: any) => void);
@@ -30,12 +31,12 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         this.deviceInfoPanelTemplate = createTemplateElement(require('./pageBuilder.customDevice.infoPanel.inc.html'));
     }
 
-    public refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
+    public async refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
         if (!hkBridge.Configuration.isDeviceConfig(config)) {
             return
         }
 
-        let lastPane: HTMLElement = this.buildDeviceInformationPanel(config, devicePanel);
+        let lastPane: HTMLElement = await this.buildDeviceInformationPanel(config, devicePanel);
         for (let serviceConfig of config.services) {
             let servicePanel = this.servicePanelBuilder.createServicePanel(config.services, serviceConfig);
             devicePanel.appendChild(servicePanel);
@@ -72,12 +73,12 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
 
     }
 
-    private buildDeviceInformationPanel(deviceConfig: hkBridge.Configuration.IDeviceConfig, devicePane: HTMLElement): HTMLElement {
+    private async buildDeviceInformationPanel(deviceConfig: hkBridge.Configuration.IDeviceConfig, devicePane: HTMLElement): Promise<HTMLElement> {
         let devInfoFragment = <DocumentFragment>document.importNode(this.deviceInfoPanelTemplate.content, true);
         let devInfoPanel = <HTMLElement>devInfoFragment.querySelector('#yahka_device_info_panel');
         translateFragment(devInfoFragment);
 
-        let inputHelper = (selector: string, propertyName: string, selectList?: IDictionary<ISelectListEntry>, validator: TValidatorFunction = undefined) => {
+        let inputHelper = (selector: string, propertyName: keyof hkBridge.Configuration.IDeviceConfig, selectList?: IDictionary<ISelectListEntry> | ISelectListEntry[], validator: TValidatorFunction = undefined, checkDefault = true) => {
             let input = <HTMLInputElement>devInfoPanel.querySelector(selector);
             let errorElement = <HTMLElement>devInfoPanel.querySelector(selector + '_error');
 
@@ -85,7 +86,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
 
             let value = deviceConfig[propertyName];
             if (input.type === 'checkbox') {
-                input.checked = value === undefined ? true : value;
+                input.checked = value === undefined ? checkDefault : value;
                 input.addEventListener('change', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator))
             } else {
                 Utils.setInputValue(input, value);
@@ -101,6 +102,13 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         inputHelper('#serial', 'serial');
         inputHelper('#firmware', 'firmware');
         inputHelper('#category', 'category', accessoryCategories);
+        inputHelper('#publish_as_own_device', 'publishAsOwnDevice', undefined, undefined, false);
+        inputHelper('#username', 'username');
+        inputHelper('#pincode', 'pincode');
+        inputHelper('#port', 'port');
+        let ipList = await ioBrokerInterfaceList;
+        const ipListForSelectBox = ipList.filter((a) => a.family === "ipv4").map((a) => { return { value: a.address, text: a.name }; });
+        inputHelper('#interface', 'interface', ipListForSelectBox);
 
         devicePane.appendChild(devInfoFragment);
         return devInfoPanel;

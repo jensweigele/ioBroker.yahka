@@ -10,6 +10,8 @@ var pjson = require('../package.json');
 
 importHAPCommunityTypesAndFixes();
 
+type IPublishingMethod = () => void;
+
 export class THomeKitBridge {
     private bridgeObject: Bridge;
     private serviceInitializer: YahkaServiceInitializer;
@@ -20,31 +22,53 @@ export class THomeKitBridge {
 
     public init() {
         this.bridgeObject = this.setupBridge();
-        if (this.config.devices)
+        const devicesToPublish: IPublishingMethod[] = [() => {
+            this.FLogger.info(`publishing bridge ${this.config.name} on ${this.config.interface ?? '0.0.0.0'}`);
+            this.bridgeObject.publish({
+                username: this.config.username,
+                port: this.config.port,
+                pincode: this.config.pincode,
+                category: 2,
+                mdns: {
+                    interface: this.config.interface,
+                    reuseAddr: true
+                } as any
+            });
+        }];
+
+        if (this.config.devices) {
             for (let device of this.config.devices) {
                 if (device.enabled === false) {
                     continue;
                 }
-                let hapDevice = this.createDevice(device);
-                try {
-                    this.bridgeObject.addBridgedAccessory(hapDevice);
-                } catch (e) {
-                    this.FLogger.warn(e);
-                    this.FLogger.warn('Error by adding: ' + JSON.stringify(device));
+                const hapDevice = this.createDevice(device);
+
+                if (device.publishAsOwnDevice) {
+                    devicesToPublish.push(() => {
+                        this.FLogger.info(`publishing device ${device.name} on ${device.interface ?? '0.0.0.0'}`);
+                        hapDevice.publish({
+                            username: device.username,
+                            port: device.port,
+                            pincode: device.pincode,
+                            category: device.category,
+                            mdns: {
+                                interface: device.interface,
+                                reuseAddr: true
+                            } as any
+                        });
+                    });
+                } else {
+                    try {
+                        this.bridgeObject.addBridgedAccessory(hapDevice);
+                    } catch (e) {
+                        this.FLogger.warn(e);
+                        this.FLogger.warn('Error by adding: ' + JSON.stringify(device));
+                    }
                 }
             }
+        }
 
-        this.FLogger.info(`pubishing bridge ${this.config.name} on ${this.config.interface ?? '0.0.0.0'}`);
-        this.bridgeObject.publish({
-            username: this.config.username,
-            port: this.config.port,
-            pincode: this.config.pincode,
-            category: 2,
-            mdns: {
-                interface: this.config.interface,
-                reuseAddr: true
-            } as any
-        });
+        devicesToPublish.forEach((m) => m());
     }
 
     private setupBridge() {

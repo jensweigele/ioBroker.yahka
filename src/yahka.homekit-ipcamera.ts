@@ -171,7 +171,7 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
     }
 
     private publishCamera() {
-        this.FLogger.info(`pubishing camera ${this.camConfig.name} on ${this.camConfig.interface ?? '0.0.0.0'}`);
+        this.FLogger.info(`publishing camera ${this.camConfig.name} on ${this.camConfig.interface ?? '0.0.0.0'}`);
         this.camera.publish({
             username: this.camConfig.username,
             port: this.camConfig.port,

@@ -176,7 +176,84 @@
             "17": {
                 "text": "Camera",
                 "icon": "mif-video-camera"
+            },
+            "18": {
+                "text": "VIDEO_DOORBELL",
+                "icon": "mif-question"
+            },
+            "19": {
+                "text": "AIR_PURIFIER",
+                "icon": "mif-question"
+            },
+            "20": {
+                "text": "AIR_HEATER",
+                "icon": "mif-question"
+            },
+            "21": {
+                "text": "AIR_CONDITIONER",
+                "icon": "mif-question"
+            },
+            "22": {
+                "text": "AIR_HUMIDIFIER",
+                "icon": "mif-question"
+            },
+            "23": {
+                "text": "AIR_DEHUMIDIFIER",
+                "icon": "mif-question"
+            },
+            "24": {
+                "text": "APPLE_TV",
+                "icon": "mif-question"
+            },
+            "25": {
+                "text": "HOMEPOD",
+                "icon": "mif-question"
+            },
+            "26": {
+                "text": "SPEAKER",
+                "icon": "mif-question"
+            },
+            "27": {
+                "text": "AIRPORT",
+                "icon": "mif-question"
+            },
+            "28": {
+                "text": "SPRINKLER",
+                "icon": "mif-question"
+            },
+            "29": {
+                "text": "FAUCET",
+                "icon": "mif-question"
+            },
+            "30": {
+                "text": "SHOWER_HEAD",
+                "icon": "mif-question"
+            },
+            "31": {
+                "text": "TELEVISION",
+                "icon": "mif-question"
+            },
+            "32": {
+                "text": "TARGET_CONTROLLER",
+                "icon": "mif-question"
+            },
+            "33": {
+                "text": "ROUTER",
+                "icon": "mif-question"
+            },
+            "34": {
+                "text": "AUDIO_RECEIVER",
+                "icon": "mif-question"
+            },
+            "35": {
+                "text": "TV_SET_TOP_BOX",
+                "icon": "mif-question"
+            },
+            "36": {
+                "text": "TV_STREAMING_STIC",
+                "icon": "mif-question"
             }
+
         }
     }]
 }
