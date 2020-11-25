@@ -123,7 +123,7 @@
             },
             "4": {
                 "text": "Garage door opener",
-                "icon": "mif-truck"
+                "icon": "mif-drive-eta"
             },
             "5": {
                 "text": "Lightbulb",
@@ -155,15 +155,15 @@
             },
             "12": {
                 "text": "Door",
-                "icon": "mif-hotel"
+                "icon": "mif-enter"
             },
             "13": {
                 "text": "Window",
-                "icon": "mif-hotel"
+                "icon": "mif-enter"
             },
             "14": {
                 "text": "Window covering",
-                "icon": "mif-hammer"
+                "icon": "mif-hotel"
             },
             "15": {
                 "text": "Programmable switch",
