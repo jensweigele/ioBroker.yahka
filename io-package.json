@@ -119,15 +119,15 @@
             },
             "3": {
                 "text": "Fan",
-                "icon": "mif-air"
+                "icon": "mif-spinner4"
             },
             "4": {
                 "text": "Garage door opener",
-                "icon": "mif-dialpad"
+                "icon": "mif-truck"
             },
             "5": {
                 "text": "Lightbulb",
-                "icon": "mif-dialpad"
+                "icon": "mif-lamp"
             },
             "6": {
                 "text": "Door lock",
@@ -135,7 +135,7 @@
             },
             "7": {
                 "text": "Outlet",
-                "icon": "mif-dialpad"
+                "icon": "mif-power-cord"
             },
             "8": {
                 "text": "Switch",
@@ -147,23 +147,23 @@
             },
             "10": {
                 "text": "Sensor",
-                "icon": "mif-dialpad"
+                "icon": "mif-filter"
             },
             "11": {
                 "text": "Alarm system",
-                "icon": "mif-bell"
+                "icon": "mif-security"
             },
             "12": {
                 "text": "Door",
-                "icon": "mif-dialpad"
+                "icon": "mif-hotel"
             },
             "13": {
                 "text": "Window",
-                "icon": "mif-dialpad"
+                "icon": "mif-hotel"
             },
             "14": {
                 "text": "Window covering",
-                "icon": "mif-dialpad"
+                "icon": "mif-hammer"
             },
             "15": {
                 "text": "Programmable switch",
@@ -179,79 +179,79 @@
             },
             "18": {
                 "text": "VIDEO_DOORBELL",
-                "icon": "mif-question"
+                "icon": "mif-bell"
             },
             "19": {
                 "text": "AIR_PURIFIER",
-                "icon": "mif-question"
+                "icon": "mif-air"
             },
             "20": {
                 "text": "AIR_HEATER",
-                "icon": "mif-question"
+                "icon": "mif-air"
             },
             "21": {
                 "text": "AIR_CONDITIONER",
-                "icon": "mif-question"
+                "icon": "mif-air"
             },
             "22": {
                 "text": "AIR_HUMIDIFIER",
-                "icon": "mif-question"
+                "icon": "mif-air"
             },
             "23": {
                 "text": "AIR_DEHUMIDIFIER",
-                "icon": "mif-question"
+                "icon": "mif-air"
             },
             "24": {
                 "text": "APPLE_TV",
-                "icon": "mif-question"
+                "icon": "mif-display"
             },
             "25": {
                 "text": "HOMEPOD",
-                "icon": "mif-question"
+                "icon": "mif-music"
             },
             "26": {
                 "text": "SPEAKER",
-                "icon": "mif-question"
+                "icon": "mif-volume-high"
             },
             "27": {
                 "text": "AIRPORT",
-                "icon": "mif-question"
+                "icon": "mif-wifi-full"
             },
             "28": {
                 "text": "SPRINKLER",
-                "icon": "mif-question"
+                "icon": "mif-water"
             },
             "29": {
                 "text": "FAUCET",
-                "icon": "mif-question"
+                "icon": "mif-water"
             },
             "30": {
                 "text": "SHOWER_HEAD",
-                "icon": "mif-question"
+                "icon": "mif-water"
             },
             "31": {
                 "text": "TELEVISION",
-                "icon": "mif-question"
+                "icon": "mif-display"
             },
             "32": {
                 "text": "TARGET_CONTROLLER",
-                "icon": "mif-question"
+                "icon": "mif-gamepad"
             },
             "33": {
                 "text": "ROUTER",
-                "icon": "mif-question"
+                "icon": "mif-vpn-publ"
             },
             "34": {
                 "text": "AUDIO_RECEIVER",
-                "icon": "mif-question"
+                "icon": "mif-volume-high"
             },
             "35": {
                 "text": "TV_SET_TOP_BOX",
-                "icon": "mif-question"
+                "icon": "mif-display"
             },
             "36": {
                 "text": "TV_STREAMING_STIC",
-                "icon": "mif-question"
+                "icon": "mif-display"
             }
 
         }
