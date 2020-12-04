@@ -36,7 +36,7 @@ export class TIoBrokerConversion_Scale extends TIOBrokerConversionBase implement
         let ioBrokerMin = this.parameters["iobroker.min"];
         let newValue = ((num - ioBrokerMin) / (ioBrokerMax - ioBrokerMin)) * (homeKitMax - homeKitMin) + homeKitMin;
         this.adapter.log.debug(`${this.logName}: converting value to homekit: ${value} to ${newValue}`);
-        return this.logName === "scaleInt" ? Math.round(newValue) : newValue;
+        return newValue;
     }
     toIOBroker(value) {
         let num: number = TIOBrokerConversionBase.castToNumber(value);
@@ -46,6 +46,6 @@ export class TIoBrokerConversion_Scale extends TIOBrokerConversionBase implement
         let ioBrokerMin = this.parameters["iobroker.min"];
         let newValue = ((num - homeKitMin) / (homeKitMax - homeKitMin)) * (ioBrokerMax - ioBrokerMin) + ioBrokerMin;
         this.adapter.log.debug(`${this.logName}: converting value to ioBroker: ${value} to ${newValue}`);
-        return this.logName === "scaleInt" ? Math.round(newValue) : newValue;
+        return newValue;
     }
 }
