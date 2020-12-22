@@ -1204,33 +1204,13 @@ module.exports = function(homebridge, options) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(Buffer, process) {
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CiaoService = exports.InternalServiceEvent = exports.ServiceEvent = exports.ServiceState = exports.ServiceType = void 0;
-const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
-const debug_1 = __importDefault(__webpack_require__(/*! debug */ "../node_modules/debug/src/browser.js"));
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const debug_1 = tslib_1.__importDefault(__webpack_require__(/*! debug */ "../node_modules/@homebridge/ciao/node_modules/debug/src/browser.js"));
 const events_1 = __webpack_require__(/*! events */ "../node_modules/events/events.js");
+const net_1 = tslib_1.__importDefault(__webpack_require__(/*! net */ "../node_modules/node-libs-browser/mock/empty.js"));
 const AAAARecord_1 = __webpack_require__(/*! ./coder/records/AAAARecord */ "../node_modules/@homebridge/ciao/lib/coder/records/AAAARecord.js");
 const ARecord_1 = __webpack_require__(/*! ./coder/records/ARecord */ "../node_modules/@homebridge/ciao/lib/coder/records/ARecord.js");
 const NSECRecord_1 = __webpack_require__(/*! ./coder/records/NSECRecord */ "../node_modules/@homebridge/ciao/lib/coder/records/NSECRecord.js");
@@ -1239,7 +1219,9 @@ const SRVRecord_1 = __webpack_require__(/*! ./coder/records/SRVRecord */ "../nod
 const TXTRecord_1 = __webpack_require__(/*! ./coder/records/TXTRecord */ "../node_modules/@homebridge/ciao/lib/coder/records/TXTRecord.js");
 const ResourceRecord_1 = __webpack_require__(/*! ./coder/ResourceRecord */ "../node_modules/@homebridge/ciao/lib/coder/ResourceRecord.js");
 const index_1 = __webpack_require__(/*! ./index */ "../node_modules/@homebridge/ciao/lib/index.js");
-const domainFormatter = __importStar(__webpack_require__(/*! ./util/domain-formatter */ "../node_modules/@homebridge/ciao/lib/util/domain-formatter.js"));
+const NetworkManager_1 = __webpack_require__(/*! ./NetworkManager */ "../node_modules/@homebridge/ciao/lib/NetworkManager.js");
+const dns_equal_1 = __webpack_require__(/*! ./util/dns-equal */ "../node_modules/@homebridge/ciao/lib/util/dns-equal.js");
+const domainFormatter = tslib_1.__importStar(__webpack_require__(/*! ./util/domain-formatter */ "../node_modules/@homebridge/ciao/lib/util/domain-formatter.js"));
 const domain_formatter_1 = __webpack_require__(/*! ./util/domain-formatter */ "../node_modules/@homebridge/ciao/lib/util/domain-formatter.js");
 const debug = debug_1.default("ciao:CiaoService");
 const numberedServiceNamePattern = /^(.*) \((\d+)\)$/; // matches a name lik "My Service (2)"
@@ -1270,7 +1252,7 @@ var ServiceType;
     ServiceType["PRINTER"] = "printer";
 })(ServiceType = exports.ServiceType || (exports.ServiceType = {}));
 /**
- * @internal
+ * @private
  */
 var ServiceState;
 (function (ServiceState) {
@@ -1304,7 +1286,7 @@ var ServiceEvent;
 })(ServiceEvent = exports.ServiceEvent || (exports.ServiceEvent = {}));
 /**
  * Events thrown by a CiaoService, internal use only!
- * @internal
+ * @private
  */
 var InternalServiceEvent;
 (function (InternalServiceEvent) {
@@ -1334,44 +1316,76 @@ class CiaoService extends events_1.EventEmitter {
      * Constructs a new service. Please use {@link Responder.createService} to create new service.
      * When calling the constructor a callee must listen to certain events in order to provide
      * correct functionality.
-     * @internal used by the Responder instance to create a new service
+     * @private used by the Responder instance to create a new service
      */
     constructor(networkManager, options) {
         super();
         /**
          * this field is entirely controlled by the Responder class
-         * @internal use by the Responder to set the current service state
+         * @private use by the Responder to set the current service state
          */
         this.serviceState = "unannounced" /* UNANNOUNCED */;
+        this.destroyed = false;
         assert_1.default(networkManager, "networkManager is required");
         assert_1.default(options, "parameters options is required");
         assert_1.default(options.name, "service options parameter 'name' is required");
         assert_1.default(options.type, "service options parameter 'type' is required");
         assert_1.default(options.type.length <= 15, "service options parameter 'type' must not be longer than 15 characters");
         this.networkManager = networkManager;
-        this.networkManager.on("network-update" /* NETWORK_UPDATE */, this.handleNetworkInterfaceUpdate.bind(this));
         this.name = options.name;
         this.type = options.type;
         this.subTypes = options.subtypes;
         this.protocol = options.protocol || "tcp" /* TCP */;
         this.serviceDomain = options.domain || "local";
         this.fqdn = this.formatFQDN();
+        this.loweredFqdn = dns_equal_1.dnsLowerCase(this.fqdn);
         this.typePTR = domainFormatter.stringify({
             type: this.type,
             protocol: this.protocol,
             domain: this.serviceDomain,
         });
+        this.loweredTypePTR = dns_equal_1.dnsLowerCase(this.typePTR);
         if (this.subTypes) {
             this.subTypePTRs = this.subTypes.map(subtype => domainFormatter.stringify({
                 subtype: subtype,
                 type: this.type,
                 protocol: this.protocol,
                 domain: this.serviceDomain,
-            }));
+            })).map(dns_equal_1.dnsLowerCase);
         }
         this.hostname = domainFormatter.formatHostname(options.hostname || this.name, this.serviceDomain)
             .replace(/ /g, "-"); // replacing all spaces with dashes in the hostname
+        this.loweredHostname = dns_equal_1.dnsLowerCase(this.hostname);
         this.port = options.port;
+        if (options.restrictedAddresses) {
+            assert_1.default(options.restrictedAddresses, "The service property 'restrictedAddresses' cannot be an empty array!");
+            this.restrictedAddresses = new Map();
+            for (const entry of options.restrictedAddresses) {
+                if (net_1.default.isIP(entry)) {
+                    if (entry === "0.0.0.0" || entry === "::") {
+                        throw new Error(`[${this.fqdn}] Unspecified ip address (${entry}) cannot be used to restrict on to!`);
+                    }
+                    const interfaceName = NetworkManager_1.NetworkManager.resolveInterface(entry);
+                    if (!interfaceName) {
+                        throw new Error(`[${this.fqdn}] Could not restrict service to address ${entry} as we could not resolve it to an interface name!`);
+                    }
+                    const current = this.restrictedAddresses.get(interfaceName);
+                    if (current) {
+                        // empty interface signals "catch all" was already configured for this
+                        if (current.length && !current.includes(entry)) {
+                            current.push(entry);
+                        }
+                    }
+                    else {
+                        this.restrictedAddresses.set(interfaceName, [entry]);
+                    }
+                }
+                else {
+                    this.restrictedAddresses.set(entry, []); // empty array signals "use all addresses for interface"
+                }
+            }
+        }
+        this.disableIpv6 = options.disabledIpv6;
         this.txt = options.txt ? CiaoService.txtBuffersFromRecord(options.txt) : [];
         // checks if hostname or name are already numbered and adjusts the numbers if necessary
         this.incrementName(true);
@@ -1388,6 +1402,7 @@ class CiaoService extends events_1.EventEmitter {
      *    - One of the announcement packets could not be sent successfully
      */
     advertise() {
+        assert_1.default(!this.destroyed, "Cannot publish destroyed service!");
         assert_1.default(this.port, "Service port must be defined before advertising the service on the network!");
         if (this.listeners("name-change" /* NAME_CHANGED */).length === 0) {
             debug("[%s] WARN: No listeners found for a potential name change on the 'name-change' event!", this.name);
@@ -1400,14 +1415,30 @@ class CiaoService extends events_1.EventEmitter {
      * This method will remove the advertisement for the service on all connected network interfaces.
      * If the service is still in the Probing state, probing will simply be cancelled.
      *
+     * @returns Promise will resolve once the last goodbye packet was sent out
      */
     end() {
+        assert_1.default(!this.destroyed, "Cannot end destroyed service!");
         if (this.serviceState === "unannounced" /* UNANNOUNCED */) {
             return Promise.resolve();
         }
         return new Promise((resolve, reject) => {
             this.emit("unpublish" /* UNPUBLISH */, error => error ? reject(error) : resolve());
         });
+    }
+    /**
+     * This method must be called if you want to free the memory used by this service.
+     * The service instance is not usable anymore after this call.
+     *
+     * If the service is still announced, the service will first be removed
+     * from the network by calling {@link end}.
+     *
+     * @returns
+     */
+    async destroy() {
+        await this.end();
+        this.destroyed = true;
+        this.removeAllListeners();
     }
     /**
      * @returns The fully qualified domain name of the service, used to identify the service.
@@ -1424,7 +1455,7 @@ class CiaoService extends events_1.EventEmitter {
     /**
      * @returns Array of subtype pointers (undefined if no subtypes are specified).
      */
-    getSubtypePTRs() {
+    getLowerCasedSubtypePTRs() {
         return this.subTypePTRs;
     }
     /**
@@ -1442,10 +1473,28 @@ class CiaoService extends events_1.EventEmitter {
     }
     /**
      * @returns The current TXT of the service represented as Buffer array.
-     * @internal There is not need for this to be public API
+     * @private There is not need for this to be public API
      */
     getTXT() {
         return this.txt;
+    }
+    /**
+     * @private used for internal comparison {@link dnsLowerCase}
+     */
+    getLowerCasedFQDN() {
+        return this.loweredFqdn;
+    }
+    /**
+     * @private used for internal comparison {@link dnsLowerCase}
+     */
+    getLowerCasedTypePTR() {
+        return this.loweredTypePTR;
+    }
+    /**
+     * @private used for internal comparison {@link dnsLowerCase}
+     */
+    getLowerCasedHostname() {
+        return this.loweredHostname;
     }
     /**
      * Sets or updates the txt of the service.
@@ -1454,6 +1503,7 @@ class CiaoService extends events_1.EventEmitter {
      * @param {boolean} silent - If set to true no announcement is sent for the updated record.
      */
     updateTxt(txt, silent = false) {
+        assert_1.default(!this.destroyed, "Cannot update destroyed service!");
         assert_1.default(txt, "txt cannot be undefined");
         this.txt = CiaoService.txtBuffersFromRecord(txt);
         debug("[%s] Updating txt record%s...", this.name, silent ? " silently" : "");
@@ -1489,7 +1539,13 @@ class CiaoService extends events_1.EventEmitter {
             // and we would change our name without it being necessary
             this.txtTimer = setTimeout(() => {
                 this.txtTimer = undefined;
-                this.emit("records-update" /* RECORD_UPDATE */, [this.txtRecord()]);
+                if (this.serviceState !== "announced" /* ANNOUNCED */) { // stuff changed in the last 50 milliseconds
+                    return;
+                }
+                this.emit("records-update" /* RECORD_UPDATE */, {
+                    answers: [this.txtRecord()],
+                    additionals: [this.serviceNSECRecord()],
+                });
             }, 50);
         }
     }
@@ -1507,12 +1563,13 @@ class CiaoService extends events_1.EventEmitter {
     /**
      * This method updates the name of the service.
      * @param name - The new service name.
-     * @internal Currently not public API and only used for bonjour conformance testing.
+     * @private Currently not public API and only used for bonjour conformance testing.
      */
     updateName(name) {
         if (this.serviceState === "unannounced" /* UNANNOUNCED */) {
             this.name = name;
             this.fqdn = this.formatFQDN();
+            this.loweredFqdn = dns_equal_1.dnsLowerCase(this.fqdn);
             return Promise.resolve();
         }
         else {
@@ -1520,6 +1577,7 @@ class CiaoService extends events_1.EventEmitter {
                 .then(() => {
                 this.name = name;
                 this.fqdn = this.formatFQDN();
+                this.loweredFqdn = dns_equal_1.dnsLowerCase(this.fqdn);
                 // service records are going to be rebuilt on the advertise step
                 return this.advertise();
             });
@@ -1533,7 +1591,13 @@ class CiaoService extends events_1.EventEmitter {
         });
         return result;
     }
+    /**
+     * @param networkUpdate
+     * @private
+     */
     handleNetworkInterfaceUpdate(networkUpdate) {
+        assert_1.default(!this.destroyed, "Cannot update network of destroyed service!");
+        // this will currently only be called when service is ANNOUNCED or in ANNOUNCING state
         if (this.serviceState !== "announced" /* ANNOUNCED */) {
             if (this.serviceState === "announcing" /* ANNOUNCING */) {
                 this.rebuildServiceRecords();
@@ -1551,39 +1615,61 @@ class CiaoService extends events_1.EventEmitter {
         this.rebuildServiceRecords();
         // records for a removed interface are now no longer present after the call above
         // records for a new interface got now built by the call above
+        /* logic disabled for now
         if (networkUpdate.changes) {
-            // we could optimize this and don't send the announcement of records if we have also added a new interface
-            // Though probing will take at least 750 ms and thus sending it out immediately will get the information out faster.
-            for (const change of networkUpdate.changes) {
-                const records = [];
-                if (change.outdatedIpv4) {
-                    records.push(new ARecord_1.ARecord(this.hostname, change.outdatedIpv4, true, 0));
-                    // records.push(new PTRRecord(formatReverseAddressPTRName(change.outdatedIpv4), this.hostname, false, 0));
-                }
-                if (change.outdatedIpv6) {
-                    records.push(new AAAARecord_1.AAAARecord(this.hostname, change.outdatedIpv6, true, 0));
-                    // records.push(new PTRRecord(formatReverseAddressPTRName(change.outdatedIpv6), this.hostname, false, 0));
-                }
-                if (change.outdatedGloballyRoutableIpv6) {
-                    records.push(new AAAARecord_1.AAAARecord(this.hostname, change.outdatedGloballyRoutableIpv6, true, 0));
-                    // records.push(new PTRRecord(formatReverseAddressPTRName(change.outdatedGloballyRoutableIpv6), this.hostname, false, 0));
-                }
-                if (change.updatedIpv4) {
-                    records.push(new ARecord_1.ARecord(this.hostname, change.updatedIpv4, true));
-                    // records.push(new PTRRecord(formatReverseAddressPTRName(change.updatedIpv4), this.hostname));
-                }
-                if (change.updatedIpv6) {
-                    records.push(new AAAARecord_1.AAAARecord(this.hostname, change.updatedIpv6, true));
-                    // records.push(new PTRRecord(formatReverseAddressPTRName(change.updatedIpv6), this.hostname));
-                }
-                if (change.updatedGloballyRoutableIpv6) {
-                    records.push(new AAAARecord_1.AAAARecord(this.hostname, change.updatedGloballyRoutableIpv6, true));
-                    // records.push(new PTRRecord(formatReverseAddressPTRName(change.updatedGloballyRoutableIpv6), this.hostname));
-                }
-                this.emit("records-update-interface" /* RECORD_UPDATE_ON_INTERFACE */, change.name, records);
+          // we could optimize this and don't send the announcement of records if we have also added a new interface
+          // Though probing will take at least 750 ms and thus sending it out immediately will get the information out faster.
+    
+          for (const change of networkUpdate.changes) {
+            if (!this.advertisesOnInterface(change.name, true)) {
+              continue;
             }
+    
+            let restrictedAddresses: IPAddress[] | undefined = this.restrictedAddresses? this.restrictedAddresses.get(change.name): undefined;
+            if (restrictedAddresses && restrictedAddresses.length === 0) {
+              restrictedAddresses = undefined;
+            }
+            const records: ResourceRecord[] = [];
+    
+            if (change.outdatedIpv4 && (!restrictedAddresses || restrictedAddresses.includes(change.outdatedIpv4))) {
+              records.push(new ARecord(this.hostname, change.outdatedIpv4, true, 0));
+              // records.push(new PTRRecord(formatReverseAddressPTRName(change.outdatedIpv4), this.hostname, false, 0));
+            }
+            if (change.outdatedIpv6 && !this.disableIpv6 && (!restrictedAddresses || restrictedAddresses.includes(change.outdatedIpv6))) {
+              records.push(new AAAARecord(this.hostname, change.outdatedIpv6, true, 0));
+              // records.push(new PTRRecord(formatReverseAddressPTRName(change.outdatedIpv6), this.hostname, false, 0));
+            }
+            if (change.outdatedGloballyRoutableIpv6 && !this.disableIpv6 && (!restrictedAddresses || restrictedAddresses.includes(change.outdatedGloballyRoutableIpv6))) {
+              records.push(new AAAARecord(this.hostname, change.outdatedGloballyRoutableIpv6, true, 0));
+              // records.push(new PTRRecord(formatReverseAddressPTRName(change.outdatedGloballyRoutableIpv6), this.hostname, false, 0));
+            }
+            if (change.outdatedUniqueLocalIpv6 && !this.disableIpv6 && (!restrictedAddresses || restrictedAddresses.includes(change.outdatedUniqueLocalIpv6))) {
+              records.push(new AAAARecord(this.hostname, change.outdatedUniqueLocalIpv6, true, 0));
+              // records.push(new PTRRecord(formatReverseAddressPTRName(change.outdatedUniqueLocalIpv6), this.hostname, false, 0));
+            }
+    
+            if (change.updatedIpv4 && (!restrictedAddresses || restrictedAddresses.includes(change.updatedIpv4))) {
+              records.push(new ARecord(this.hostname, change.updatedIpv4, true));
+              // records.push(new PTRRecord(formatReverseAddressPTRName(change.updatedIpv4), this.hostname));
+            }
+            if (change.updatedIpv6 && !this.disableIpv6 && (!restrictedAddresses || restrictedAddresses.includes(change.updatedIpv6))) {
+              records.push(new AAAARecord(this.hostname, change.updatedIpv6, true));
+              // records.push(new PTRRecord(formatReverseAddressPTRName(change.updatedIpv6), this.hostname));
+            }
+            if (change.updatedGloballyRoutableIpv6 && !this.disableIpv6 && (!restrictedAddresses || restrictedAddresses.includes(change.updatedGloballyRoutableIpv6))) {
+              records.push(new AAAARecord(this.hostname, change.updatedGloballyRoutableIpv6, true));
+              // records.push(new PTRRecord(formatReverseAddressPTRName(change.updatedGloballyRoutableIpv6), this.hostname));
+            }
+            if (change.updatedUniqueLocalIpv6 && !this.disableIpv6 && (!restrictedAddresses || restrictedAddresses.includes(change.updatedUniqueLocalIpv6))) {
+              records.push(new AAAARecord(this.hostname, change.updatedUniqueLocalIpv6, true));
+              // records.push(new PTRRecord(formatReverseAddressPTRName(change.updatedUniqueLocalIpv6), this.hostname));
+            }
+    
+            this.emit(InternalServiceEvent.RECORD_UPDATE_ON_INTERFACE, change.name, records);
+          }
         }
-        if (networkUpdate.added) {
+        */
+        if (networkUpdate.added || networkUpdate.changes) {
             // a new network interface got added. We must return into probing state,
             // as we don't know if we still own uniqueness for our service name on the new network.
             // To make things easy and keep the SAME name on all networks, we probe on ALL interfaces.
@@ -1604,7 +1690,7 @@ class CiaoService extends events_1.EventEmitter {
      * This method is called by the Prober when encountering a conflict on the network.
      * It advices the service to change its name, like incrementing a number appended to the name.
      * So "My Service" will become "My Service (2)", and "My Service (2)" would become "My Service (3)"
-     * @internal must only be called by the {@link Prober}
+     * @private must only be called by the {@link Prober}
      */
     incrementName(nameCheckOnly) {
         if (this.serviceState !== "unannounced" /* UNANNOUNCED */) {
@@ -1650,7 +1736,9 @@ class CiaoService extends events_1.EventEmitter {
         // reassemble the name
         this.name = newNumber === 1 ? nameBase : `${nameBase} (${newNumber})`;
         this.hostname = newNumber === 1 ? `${hostnameBase}${hostnameTLD}` : `${hostnameBase}-(${newNumber})${hostnameTLD}`;
+        this.loweredHostname = dns_equal_1.dnsLowerCase(this.hostname);
         this.fqdn = this.formatFQDN(); // update the fqdn
+        this.loweredFqdn = dns_equal_1.dnsLowerCase(this.fqdn);
         // we must inform the user that the names changed, so the new names can be persisted
         // This is done after the Probing finish, as multiple name changes could happen in one probing session
         // It is the responsibility of the Prober to call the informAboutNameUpdates function
@@ -1662,7 +1750,7 @@ class CiaoService extends events_1.EventEmitter {
         }
     }
     /**
-     * @internal called by the Prober once finished with probing to signal a (or more)
+     * @private called by the Prober once finished with probing to signal a (or more)
      *   name change(s) happened {@see incrementName}.
      */
     informAboutNameUpdates() {
@@ -1688,7 +1776,7 @@ class CiaoService extends events_1.EventEmitter {
         return fqdn;
     }
     /**
-     * @internal called once the service data/state is updated and the records should be updated with the new data
+     * @private called once the service data/state is updated and the records should be updated with the new data
      */
     rebuildServiceRecords() {
         assert_1.default(this.port, "port must be set before building records");
@@ -1700,19 +1788,26 @@ class CiaoService extends events_1.EventEmitter {
         const reverseAddressMap = {};
         let subtypePTRs = undefined;
         for (const [name, networkInterface] of this.networkManager.getInterfaceMap()) {
-            if (networkInterface.ipv4) {
+            if (!this.advertisesOnInterface(name, true)) {
+                continue;
+            }
+            let restrictedAddresses = this.restrictedAddresses ? this.restrictedAddresses.get(name) : undefined;
+            if (restrictedAddresses && restrictedAddresses.length === 0) {
+                restrictedAddresses = undefined;
+            }
+            if (networkInterface.ipv4 && (!restrictedAddresses || restrictedAddresses.includes(networkInterface.ipv4))) {
                 aRecordMap[name] = new ARecord_1.ARecord(this.hostname, networkInterface.ipv4, true);
                 reverseAddressMap[networkInterface.ipv4] = new PTRRecord_1.PTRRecord(domain_formatter_1.formatReverseAddressPTRName(networkInterface.ipv4), this.hostname);
             }
-            if (networkInterface.ipv6) {
+            if (networkInterface.ipv6 && !this.disableIpv6 && (!restrictedAddresses || restrictedAddresses.includes(networkInterface.ipv6))) {
                 aaaaRecordMap[name] = new AAAARecord_1.AAAARecord(this.hostname, networkInterface.ipv6, true);
                 reverseAddressMap[networkInterface.ipv6] = new PTRRecord_1.PTRRecord(domain_formatter_1.formatReverseAddressPTRName(networkInterface.ipv6), this.hostname);
             }
-            if (networkInterface.globallyRoutableIpv6) {
+            if (networkInterface.globallyRoutableIpv6 && !this.disableIpv6 && (!restrictedAddresses || restrictedAddresses.includes(networkInterface.globallyRoutableIpv6))) {
                 aaaaRoutableRecordMap[name] = new AAAARecord_1.AAAARecord(this.hostname, networkInterface.globallyRoutableIpv6, true);
                 reverseAddressMap[networkInterface.globallyRoutableIpv6] = new PTRRecord_1.PTRRecord(domain_formatter_1.formatReverseAddressPTRName(networkInterface.globallyRoutableIpv6), this.hostname);
             }
-            if (networkInterface.uniqueLocalIpv6) {
+            if (networkInterface.uniqueLocalIpv6 && !this.disableIpv6 && (!restrictedAddresses || restrictedAddresses.includes(networkInterface.uniqueLocalIpv6))) {
                 aaaaUniqueLocalRecordMap[name] = new AAAARecord_1.AAAARecord(this.hostname, networkInterface.uniqueLocalIpv6, true);
                 reverseAddressMap[networkInterface.uniqueLocalIpv6] = new PTRRecord_1.PTRRecord(domain_formatter_1.formatReverseAddressPTRName(networkInterface.uniqueLocalIpv6), this.hostname);
             }
@@ -1729,74 +1824,90 @@ class CiaoService extends events_1.EventEmitter {
             metaQueryPtr: new PTRRecord_1.PTRRecord(index_1.Responder.SERVICE_TYPE_ENUMERATION_NAME, this.typePTR),
             srv: new SRVRecord_1.SRVRecord(this.fqdn, this.hostname, this.port, true),
             txt: new TXTRecord_1.TXTRecord(this.fqdn, this.txt, true),
+            serviceNSEC: new NSECRecord_1.NSECRecord(this.fqdn, this.fqdn, [16 /* TXT */, 33 /* SRV */], 4500, true),
             a: aRecordMap,
             aaaa: aaaaRecordMap,
             aaaaR: aaaaRoutableRecordMap,
             aaaaULA: aaaaUniqueLocalRecordMap,
             reverseAddressPTRs: reverseAddressMap,
-            nsec: new NSECRecord_1.NSECRecord(this.hostname, this.hostname, [1 /* A */, 28 /* AAAA */], 120, true),
+            addressNSEC: new NSECRecord_1.NSECRecord(this.hostname, this.hostname, [1 /* A */, 28 /* AAAA */], 120, true),
         };
     }
     /**
-     * @internal used to get a copy of the main PTR record
+     * Returns if the given service is advertising on the provided network interface.
+     *
+     * @param name - The desired interface name.
+     * @param skipAddressCheck - If true it is not checked if the service actually has
+     *   an address record for the given interface.
+     * @private returns if the service should be advertised on the given service
+     */
+    advertisesOnInterface(name, skipAddressCheck) {
+        var _a, _b, _c, _d;
+        return !this.restrictedAddresses || this.restrictedAddresses.has(name) && (skipAddressCheck ||
+            // must have at least one address record on the given interface
+            !!((_a = this.serviceRecords) === null || _a === void 0 ? void 0 : _a.a[name]) || !!((_b = this.serviceRecords) === null || _b === void 0 ? void 0 : _b.aaaa[name])
+            || !!((_c = this.serviceRecords) === null || _c === void 0 ? void 0 : _c.aaaaR[name]) || !!((_d = this.serviceRecords) === null || _d === void 0 ? void 0 : _d.aaaaULA[name]));
+    }
+    /**
+     * @private used to get a copy of the main PTR record
      */
     ptrRecord() {
         return this.serviceRecords.ptr.clone();
     }
     /**
-     * @internal used to get a copy of the array of sub-type PTR records
+     * @private used to get a copy of the array of sub-type PTR records
      */
     subtypePtrRecords() {
         return this.serviceRecords.subtypePTRs ? ResourceRecord_1.ResourceRecord.clone(this.serviceRecords.subtypePTRs) : [];
     }
     /**
-     * @internal used to get a copy of the meta-query PTR record
+     * @private used to get a copy of the meta-query PTR record
      */
     metaQueryPtrRecord() {
         return this.serviceRecords.metaQueryPtr.clone();
     }
     /**
-     * @internal used to get a copy of the SRV record
+     * @private used to get a copy of the SRV record
      */
     srvRecord() {
         return this.serviceRecords.srv.clone();
     }
     /**
-     * @internal used to get a copy of the TXT record
+     * @private used to get a copy of the TXT record
      */
     txtRecord() {
         return this.serviceRecords.txt.clone();
     }
     /**
-     * @internal used to get a copy of the A record
+     * @private used to get a copy of the A record
      */
-    aRecord(id) {
-        const record = this.serviceRecords.a[id];
+    aRecord(name) {
+        const record = this.serviceRecords.a[name];
         return record ? record.clone() : undefined;
     }
     /**
-     * @internal used to get a copy of the AAAA record for the link-local ipv6 address
+     * @private used to get a copy of the AAAA record for the link-local ipv6 address
      */
-    aaaaRecord(id) {
-        const record = this.serviceRecords.aaaa[id];
+    aaaaRecord(name) {
+        const record = this.serviceRecords.aaaa[name];
         return record ? record.clone() : undefined;
     }
     /**
-     * @internal used to get a copy of the AAAA record for the routable ipv6 address
+     * @private used to get a copy of the AAAA record for the routable ipv6 address
      */
-    aaaaRoutableRecord(id) {
-        const record = this.serviceRecords.aaaaR[id];
+    aaaaRoutableRecord(name) {
+        const record = this.serviceRecords.aaaaR[name];
         return record ? record.clone() : undefined;
     }
     /**
-     * @internal used to get a copy of the AAAA fore the unique local ipv6 address
+     * @private used to get a copy of the AAAA fore the unique local ipv6 address
      */
-    aaaaUniqueLocalRecord(id) {
-        const record = this.serviceRecords.aaaaULA[id];
+    aaaaUniqueLocalRecord(name) {
+        const record = this.serviceRecords.aaaaULA[name];
         return record ? record.clone() : undefined;
     }
     /**
-     * @internal used to get a copy of the A and AAAA records
+     * @private used to get a copy of the A and AAAA records
      */
     allAddressRecords() {
         const records = [];
@@ -1815,14 +1926,24 @@ class CiaoService extends events_1.EventEmitter {
         return records;
     }
     /**
-     * @internal used to get a copy of the NSEC record
+     * @private used to get a copy of the address NSEC record
      */
-    nsecRecord() {
-        return this.serviceRecords.nsec.clone();
+    addressNSECRecord() {
+        return this.serviceRecords.addressNSEC.clone();
+    }
+    /**
+     * @private user to get a copy of the service NSEC record
+     */
+    serviceNSECRecord(shortenTTL = false) {
+        const record = this.serviceRecords.serviceNSEC.clone();
+        if (shortenTTL) {
+            record.ttl = 120;
+        }
+        return record;
     }
     /**
      * @param address - The IP address to check.
-     * @internal used to check if given address is exposed by this service
+     * @private used to check if given address is exposed by this service
      */
     hasAddress(address) {
         return !!this.serviceRecords.reverseAddressPTRs[address];
@@ -1843,18 +1964,17 @@ exports.CiaoService = CiaoService;
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MDNSServer = exports.SendResultFormatError = exports.SendResultFailedRatio = void 0;
-const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
-const debug_1 = __importDefault(__webpack_require__(/*! debug */ "../node_modules/debug/src/browser.js"));
-const dgram_1 = __importDefault(__webpack_require__(/*! dgram */ "../node_modules/node-libs-browser/mock/empty.js"));
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const debug_1 = tslib_1.__importDefault(__webpack_require__(/*! debug */ "../node_modules/@homebridge/ciao/node_modules/debug/src/browser.js"));
+const dgram_1 = tslib_1.__importDefault(__webpack_require__(/*! dgram */ "../node_modules/node-libs-browser/mock/empty.js"));
 const DNSPacket_1 = __webpack_require__(/*! ./coder/DNSPacket */ "../node_modules/@homebridge/ciao/lib/coder/DNSPacket.js");
 const NetworkManager_1 = __webpack_require__(/*! ./NetworkManager */ "../node_modules/@homebridge/ciao/lib/NetworkManager.js");
 const domain_formatter_1 = __webpack_require__(/*! ./util/domain-formatter */ "../node_modules/@homebridge/ciao/lib/util/domain-formatter.js");
 const errors_1 = __webpack_require__(/*! ./util/errors */ "../node_modules/@homebridge/ciao/lib/util/errors.js");
+const promise_utils_1 = __webpack_require__(/*! ./util/promise-utils */ "../node_modules/@homebridge/ciao/lib/util/promise-utils.js");
 const debug = debug_1.default("ciao:MDNSServer");
 /**
  * Returns the ration of rejected SendResults in the array.
@@ -1870,7 +1990,7 @@ function SendResultFailedRatio(results) {
     }
     let failedCount = 0;
     for (const result of results) {
-        if (result.status === "rejected") {
+        if (result.status !== "fulfilled") {
             failedCount++;
         }
     }
@@ -1880,7 +2000,7 @@ exports.SendResultFailedRatio = SendResultFailedRatio;
 function SendResultFormatError(results, prefix, includeStack = false) {
     let failedCount = 0;
     for (const result of results) {
-        if (result.status === "rejected") {
+        if (result.status !== "fulfilled") {
             failedCount++;
         }
     }
@@ -1900,6 +2020,10 @@ function SendResultFormatError(results, prefix, includeStack = false) {
                 string += "\n--------------------\n" +
                     "Failed to send packet on interface " + result.interface + ": " + result.reason.stack;
             }
+            else if (result.status === "timeout") {
+                string += "\n--------------------\n" +
+                    "Sending packet on interface " + result.interface + " timed out!";
+            }
         }
         string += "\n=============================";
         return string;
@@ -1909,6 +2033,9 @@ function SendResultFormatError(results, prefix, includeStack = false) {
         for (const result of results) {
             if (result.status === "rejected") {
                 string += "\n- Failed to send packet on interface " + result.interface + ": " + result.reason.message;
+            }
+            else if (result.status === "timeout") {
+                string += "\n- Sending packet on interface " + result.interface + " timed out!";
             }
         }
         return string;
@@ -1923,6 +2050,7 @@ exports.SendResultFormatError = SendResultFormatError;
 class MDNSServer {
     constructor(handler, options) {
         this.sockets = new Map();
+        this.sentPackets = new Map();
         // RFC 6762 15.1. If we are not the first responder bound to 5353 we can't receive unicast responses
         // thus the QU flag must not be used in queries. Responders are only affected when sending probe queries.
         // Probe queries should be sent with QU set, though can't be sent with QU when we can't receive unicast responses.
@@ -1933,6 +2061,7 @@ class MDNSServer {
         this.handler = handler;
         this.networkManager = new NetworkManager_1.NetworkManager({
             interface: options && options.interface,
+            excludeIpv6: options && options.disableIpv6,
             excludeIpv6Only: true,
         });
         this.networkManager.on("network-update" /* NETWORK_UPDATE */, this.handleUpdatedNetworkInterfaces.bind(this));
@@ -1954,12 +2083,10 @@ class MDNSServer {
         // wait for the first network interfaces to be discovered
         await this.networkManager.waitForInit();
         const promises = [];
-        for (const name of this.networkManager.getInterfaceMap().keys()) {
+        for (const [name, networkInterface] of this.networkManager.getInterfaceMap()) {
             const socket = this.createDgramSocket(name, true);
-            const promise = this.bindSocket(socket, name, "IPv4" /* IPv4 */)
-                .then(() => {
-                this.sockets.set(name, socket);
-            }, reason => {
+            const promise = this.bindSocket(socket, networkInterface, "IPv4" /* IPv4 */)
+                .catch(reason => {
                 // TODO if bind errors we probably will never bind again
                 console.log("Could not bind detected network interface: " + reason.stack);
             });
@@ -1979,14 +2106,14 @@ class MDNSServer {
         this.closed = true;
         this.sockets.clear();
     }
-    sendQueryBroadcast(query) {
+    sendQueryBroadcast(query, service) {
         const packets = DNSPacket_1.DNSPacket.createDNSQueryPackets(query);
         if (packets.length > 1) {
             debug("Query broadcast is split into %d packets!", packets.length);
         }
         const promises = [];
         for (const packet of packets) {
-            promises.push(this.sendOnAllNetworks(packet));
+            promises.push(this.sendOnAllNetworksForService(packet, service));
         }
         return Promise.all(promises).then((values) => {
             const results = [];
@@ -1996,9 +2123,9 @@ class MDNSServer {
             return results;
         });
     }
-    sendResponseBroadcast(response) {
+    sendResponseBroadcast(response, service) {
         const packet = DNSPacket_1.DNSPacket.createDNSResponsePacketsFromRRSet(response);
-        return this.sendOnAllNetworks(packet);
+        return this.sendOnAllNetworksForService(packet, service);
     }
     sendResponse(response, endpointOrInterface, callback) {
         this.send(response, endpointOrInterface).then(result => {
@@ -2015,31 +2142,45 @@ class MDNSServer {
             }
         });
     }
-    sendOnAllNetworks(packet) {
+    sendOnAllNetworksForService(packet, service) {
         this.checkUnicastResponseFlag(packet);
         const message = packet.encode();
         this.assertBeforeSend(message, "IPv4" /* IPv4 */);
         const promises = [];
         for (const [name, socket] of this.sockets) {
+            if (!service.advertisesOnInterface(name)) {
+                // i don't like the fact that we put the check inside the MDNSServer, as it should be independent of the above layer.
+                // Though I think this is currently the easiest approach.
+                continue;
+            }
             const promise = new Promise(resolve => {
                 socket.send(message, MDNSServer.MDNS_PORT, MDNSServer.MULTICAST_IPV4, error => {
-                    if (error && !MDNSServer.isSilencedSocketError(error)) {
-                        resolve({
-                            status: "rejected",
-                            interface: name,
-                            reason: error,
-                        });
+                    if (error) {
+                        if (!MDNSServer.isSilencedSocketError(error)) {
+                            resolve({
+                                status: "rejected",
+                                interface: name,
+                                reason: error,
+                            });
+                            return;
+                        }
                     }
                     else {
-                        resolve({
-                            status: "fulfilled",
-                            interface: name,
-                            value: undefined,
-                        });
+                        this.maintainSentPacketsInterface(name, message);
                     }
+                    resolve({
+                        status: "fulfilled",
+                        interface: name,
+                    });
                 });
             });
-            promises.push(promise);
+            promises.push(Promise.race([
+                promise,
+                promise_utils_1.PromiseTimeout(MDNSServer.SEND_TIMEOUT).then(() => ({
+                    status: "timeout",
+                    interface: name,
+                })),
+            ]));
         }
         return Promise.all(promises);
     }
@@ -2066,20 +2207,23 @@ class MDNSServer {
         }
         return new Promise(resolve => {
             socket.send(message, port, address, error => {
-                if (error && !MDNSServer.isSilencedSocketError(error)) {
-                    resolve({
-                        status: "rejected",
-                        interface: name,
-                        reason: error,
-                    });
+                if (error) {
+                    if (!MDNSServer.isSilencedSocketError(error)) {
+                        resolve({
+                            status: "rejected",
+                            interface: name,
+                            reason: error,
+                        });
+                        return;
+                    }
                 }
                 else {
-                    resolve({
-                        status: "fulfilled",
-                        interface: name,
-                        value: undefined,
-                    });
+                    this.maintainSentPacketsInterface(name, message);
                 }
+                resolve({
+                    status: "fulfilled",
+                    interface: name,
+                });
             });
         });
     }
@@ -2097,6 +2241,28 @@ class MDNSServer {
         // RFC 6762 17.
         assert_1.default(ipHeaderSize + MDNSServer.UDP_HEADER + message.length <= 9000, "DNS cannot exceed the size of 9000 bytes even with IP Fragmentation!");
     }
+    maintainSentPacketsInterface(name, packet) {
+        const base64 = packet.toString("base64");
+        const packets = this.sentPackets.get(name);
+        if (!packets) {
+            this.sentPackets.set(name, [base64]);
+        }
+        else {
+            packets.push(base64);
+        }
+    }
+    checkIfPreviouslySentPacketOnLoopbackInterface(name, packet) {
+        const base64 = packet.toString("base64");
+        const packets = this.sentPackets.get(name);
+        if (packets) {
+            const index = packets.indexOf(base64);
+            if (index !== -1) {
+                packets.splice(index, 1);
+                return true;
+            }
+        }
+        return false;
+    }
     createDgramSocket(name, reuseAddr = false, type = "udp4") {
         const socket = dgram_1.default.createSocket({
             type: type,
@@ -2110,26 +2276,26 @@ class MDNSServer {
         });
         return socket;
     }
-    bindSocket(socket, name, family) {
-        const networkInterface = this.networkManager.getInterface(name);
-        if (!networkInterface) {
-            throw new errors_1.InterfaceNotFoundError(`Could not find network interface '${name}' in network manager which socket is going to be bind to!`);
-        }
+    bindSocket(socket, networkInterface, family) {
         return new Promise((resolve, reject) => {
-            const errorHandler = (error) => reject(new Error("Failed to bind on interface " + name + ": " + error.message));
+            const errorHandler = (error) => reject(new Error("Failed to bind on interface " + networkInterface.name + ": " + error.message));
             socket.once("error", errorHandler);
+            socket.on("close", () => {
+                this.sockets.delete(networkInterface.name);
+            });
             socket.bind(MDNSServer.MDNS_PORT, () => {
                 socket.setRecvBufferSize(800 * 1024); // setting max recv buffer size to 800KiB (Pi will max out at 352KiB)
                 socket.removeListener("error", errorHandler);
                 const multicastAddress = family === "IPv4" /* IPv4 */ ? MDNSServer.MULTICAST_IPV4 : MDNSServer.MULTICAST_IPV6;
                 const interfaceAddress = family === "IPv4" /* IPv4 */ ? networkInterface.ipv4 : networkInterface.ipv6;
-                assert_1.default(interfaceAddress, "Interface address for " + name + " cannot be undefined!");
+                assert_1.default(interfaceAddress, "Interface address for " + networkInterface.name + " cannot be undefined!");
                 try {
                     socket.addMembership(multicastAddress, interfaceAddress);
                     socket.setMulticastInterface(interfaceAddress);
                     socket.setMulticastTTL(MDNSServer.MDNS_TTL); // outgoing multicast datagrams
                     socket.setTTL(MDNSServer.MDNS_TTL); // outgoing unicast datagrams
-                    socket.setMulticastLoopback(true);
+                    socket.setMulticastLoopback(true); // We can't disable multicast loopback, as otherwise queriers on the same host won't receive our packets
+                    this.sockets.set(networkInterface.name, socket);
                     resolve();
                 }
                 catch (error) {
@@ -2139,7 +2305,7 @@ class MDNSServer {
                     catch (error) {
                         debug("Error while closing socket which failed to bind. Error may be expected: " + error.message);
                     }
-                    reject(new Error("Error binding socket on " + name + ": " + error.stack));
+                    reject(new Error("Error binding socket on " + networkInterface.name + ": " + error.stack));
                 }
             });
         });
@@ -2153,16 +2319,28 @@ class MDNSServer {
             debug("Received packet on non existing network interface: %s!", name);
             return;
         }
+        if (this.checkIfPreviouslySentPacketOnLoopbackInterface(networkInterface.name, buffer)) {
+            // multicastLoopback is enabled for every interface, meaning we would receive our own response
+            // packets here. Thus we silence them. We can't disable multicast loopback, as otherwise
+            // queriers on the same host won't receive our packets
+            return;
+        }
         const ip4Netaddress = domain_formatter_1.getNetAddress(rinfo.address, networkInterface.ip4Netmask);
         if (ip4Netaddress !== networkInterface.ipv4Netaddress) {
             // This isn't a problem on macOS (it seems like to respect the desired interface we supply for our membership)
             // On Linux based system such filtering seems to not happen :thinking: we just get any traffic and it's like
             // we are just bound to 0.0.0.0
+            /* disabled debug message for now
+            if (!name.includes("lo")) { // exclude the loopback interface for this error
+              debug("Received packet on " + name + " which is not coming from the same subnet. %o",
+                {address: rinfo.address, netaddress: ip4Netaddress, interface: networkInterface.ipv4});
+            }
+            */
             return;
         }
         let packet;
         try {
-            packet = DNSPacket_1.DNSPacket.decode(buffer);
+            packet = DNSPacket_1.DNSPacket.decode(rinfo, buffer);
         }
         catch (error) {
             debug("Received a malformed packet from %o on interface %s. This might or might not be a problem. " +
@@ -2211,7 +2389,8 @@ class MDNSServer {
         // caused by yet undetected network changes.
         // as we listen to 0.0.0.0 and the socket stays valid, this is not a problem
         const silenced = error.message.includes("EADDRNOTAVAIL") || error.message.includes("EHOSTDOWN")
-            || error.message.includes("ENETUNREACH") || error.message.includes("EHOSTUNREACH");
+            || error.message.includes("ENETUNREACH") || error.message.includes("EHOSTUNREACH")
+            || error.message.includes("EPERM") || error.message.includes("EINVAL");
         if (silenced) {
             debug("Silenced and ignored error (This is/should not be a problem, this message is only for informational purposes): " + error.message);
         }
@@ -2265,9 +2444,7 @@ class MDNSServer {
         if (networkUpdate.added) {
             for (const networkInterface of networkUpdate.added) {
                 const socket = this.createDgramSocket(networkInterface.name, true);
-                this.bindSocket(socket, networkInterface.name, "IPv4" /* IPv4 */).then(() => {
-                    this.sockets.set(networkInterface.name, socket);
-                }, reason => {
+                this.bindSocket(socket, networkInterface, "IPv4" /* IPv4 */).catch(reason => {
                     // TODO if bind errors we probably will never bind again
                     console.log("Could not bind detected network interface: " + reason.stack);
                 });
@@ -2283,6 +2460,7 @@ MDNSServer.MDNS_PORT = 5353;
 MDNSServer.MDNS_TTL = 255;
 MDNSServer.MULTICAST_IPV4 = "224.0.0.251";
 MDNSServer.MULTICAST_IPV6 = "FF02::FB";
+MDNSServer.SEND_TIMEOUT = 200; // milliseconds
 //# sourceMappingURL=MDNSServer.js.map
 
 /***/ }),
@@ -2296,18 +2474,16 @@ MDNSServer.MULTICAST_IPV6 = "FF02::FB";
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NetworkManager = exports.NetworkManagerEvent = exports.WifiState = exports.IPFamily = void 0;
-const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
-const child_process_1 = __importDefault(__webpack_require__(/*! child_process */ "../node_modules/node-libs-browser/mock/empty.js"));
-const debug_1 = __importDefault(__webpack_require__(/*! debug */ "../node_modules/debug/src/browser.js"));
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const child_process_1 = tslib_1.__importDefault(__webpack_require__(/*! child_process */ "../node_modules/node-libs-browser/mock/empty.js"));
+const debug_1 = tslib_1.__importDefault(__webpack_require__(/*! debug */ "../node_modules/@homebridge/ciao/node_modules/debug/src/browser.js"));
 const events_1 = __webpack_require__(/*! events */ "../node_modules/events/events.js");
-const fast_deep_equal_1 = __importDefault(__webpack_require__(/*! fast-deep-equal */ "../node_modules/@homebridge/ciao/node_modules/fast-deep-equal/index.js"));
-const net_1 = __importDefault(__webpack_require__(/*! net */ "../node_modules/node-libs-browser/mock/empty.js"));
-const os_1 = __importDefault(__webpack_require__(/*! os */ "../node_modules/os-browserify/browser.js"));
+const fast_deep_equal_1 = tslib_1.__importDefault(__webpack_require__(/*! fast-deep-equal */ "../node_modules/@homebridge/ciao/node_modules/fast-deep-equal/index.js"));
+const net_1 = tslib_1.__importDefault(__webpack_require__(/*! net */ "../node_modules/node-libs-browser/mock/empty.js"));
+const os_1 = tslib_1.__importDefault(__webpack_require__(/*! os */ "../node_modules/os-browserify/browser.js"));
 const domain_formatter_1 = __webpack_require__(/*! ./util/domain-formatter */ "../node_modules/@homebridge/ciao/lib/util/domain-formatter.js");
 const debug = debug_1.default("ciao:NetworkManager");
 var IPFamily;
@@ -2341,22 +2517,42 @@ class NetworkManager extends events_1.EventEmitter {
     constructor(options) {
         super();
         this.currentInterfaces = new Map();
+        this.setMaxListeners(100); // we got one listener for every Responder, 100 should be fine for now
         if (options && options.interface) {
-            if (typeof options.interface === "string" && net_1.default.isIP(options.interface)) {
-                const interfaceName = NetworkManager.resolveInterface(options.interface);
-                if (interfaceName) {
-                    this.restrictedInterfaces = [interfaceName];
-                }
-                else {
-                    console.log("CIAO: Interface was specified as ip (%s), though couldn't find a matching interface for the given address. " +
-                        "Going to fallback to bind on all available interfaces.", options.interface);
-                }
+            let interfaces;
+            if (typeof options.interface === "string") {
+                interfaces = [options.interface];
+            }
+            else if (Array.isArray(options.interface)) {
+                interfaces = options.interface;
             }
             else {
-                this.restrictedInterfaces = Array.isArray(options.interface) ? options.interface : [options.interface];
+                throw new Error("Found invalid type for 'interfaces' NetworkManager option!");
+            }
+            const restrictedInterfaces = [];
+            for (const iface of interfaces) {
+                if (net_1.default.isIP(iface)) {
+                    const interfaceName = NetworkManager.resolveInterface(iface);
+                    if (interfaceName) {
+                        restrictedInterfaces.push(interfaceName);
+                    }
+                    else {
+                        console.log("CIAO: Interface was specified as ip (%s), though couldn't find a matching interface for the given address.", options.interface);
+                    }
+                }
+                else {
+                    restrictedInterfaces.push(iface);
+                }
+            }
+            if (restrictedInterfaces.length === 0) {
+                console.log("CIAO: 'restrictedInterfaces' array was empty. Going to fallback to bind on all available interfaces.");
+            }
+            else {
+                this.restrictedInterfaces = restrictedInterfaces;
             }
         }
-        this.excludeIpv6Only = !!(options && options.excludeIpv6Only);
+        this.excludeIpv6 = !!(options && options.excludeIpv6);
+        this.excludeIpv6Only = this.excludeIpv6 || !!(options && options.excludeIpv6Only);
         if (options) {
             debug("Created NetworkManager with options: %s", JSON.stringify(options));
         }
@@ -2389,6 +2585,7 @@ class NetworkManager extends events_1.EventEmitter {
             clearTimeout(this.currentTimer);
             this.currentTimer = undefined;
         }
+        this.removeAllListeners();
     }
     getInterfaceMap() {
         if (this.initPromise) {
@@ -2455,14 +2652,12 @@ class NetworkManager extends events_1.EventEmitter {
                         }
                     }
                     this.currentInterfaces.set(name, networkInterface);
-                    (changes || (changes = [])) // get or create array
-                        .push(change);
+                    (changes !== null && changes !== void 0 ? changes : (changes = [])).push(change);
                 }
             }
             else { // new interface was added/started
                 this.currentInterfaces.set(name, networkInterface);
-                (added || (added = [])) // get or create array
-                    .push(networkInterface);
+                (added !== null && added !== void 0 ? added : (added = [])).push(networkInterface);
             }
         }
         // at this point we updated any existing interfaces and added all new interfaces
@@ -2472,8 +2667,7 @@ class NetworkManager extends events_1.EventEmitter {
             for (const [name, networkInterface] of this.currentInterfaces) {
                 if (!latestInterfaces.has(name)) { // interface was removed
                     this.currentInterfaces.delete(name);
-                    (removed || (removed = [])) // get or create new array
-                        .push(networkInterface);
+                    (removed !== null && removed !== void 0 ? removed : (removed = [])).push(networkInterface);
                 }
             }
         }
@@ -2544,6 +2738,9 @@ class NetworkManager extends events_1.EventEmitter {
                     ipv4Info = info;
                 }
                 else if (info.family === "IPv6") {
+                    if (this.excludeIpv6) {
+                        continue;
+                    }
                     if (info.scopeid && !ipv6Info) { // we only care about non zero scope (aka link-local ipv6)
                         ipv6Info = info;
                     }
@@ -2945,23 +3142,25 @@ NetworkManager.POLLING_TIME = 15 * 1000; // 15 seconds
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Responder = void 0;
-const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
-const debug_1 = __importDefault(__webpack_require__(/*! debug */ "../node_modules/debug/src/browser.js"));
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const debug_1 = tslib_1.__importDefault(__webpack_require__(/*! debug */ "../node_modules/@homebridge/ciao/node_modules/debug/src/browser.js"));
 const CiaoService_1 = __webpack_require__(/*! ./CiaoService */ "../node_modules/@homebridge/ciao/lib/CiaoService.js");
 const DNSPacket_1 = __webpack_require__(/*! ./coder/DNSPacket */ "../node_modules/@homebridge/ciao/lib/coder/DNSPacket.js");
+const Question_1 = __webpack_require__(/*! ./coder/Question */ "../node_modules/@homebridge/ciao/lib/coder/Question.js");
+const AAAARecord_1 = __webpack_require__(/*! ./coder/records/AAAARecord */ "../node_modules/@homebridge/ciao/lib/coder/records/AAAARecord.js");
+const ARecord_1 = __webpack_require__(/*! ./coder/records/ARecord */ "../node_modules/@homebridge/ciao/lib/coder/records/ARecord.js");
 const PTRRecord_1 = __webpack_require__(/*! ./coder/records/PTRRecord */ "../node_modules/@homebridge/ciao/lib/coder/records/PTRRecord.js");
+const SRVRecord_1 = __webpack_require__(/*! ./coder/records/SRVRecord */ "../node_modules/@homebridge/ciao/lib/coder/records/SRVRecord.js");
+const TXTRecord_1 = __webpack_require__(/*! ./coder/records/TXTRecord */ "../node_modules/@homebridge/ciao/lib/coder/records/TXTRecord.js");
 const MDNSServer_1 = __webpack_require__(/*! ./MDNSServer */ "../node_modules/@homebridge/ciao/lib/MDNSServer.js");
 const Announcer_1 = __webpack_require__(/*! ./responder/Announcer */ "../node_modules/@homebridge/ciao/lib/responder/Announcer.js");
 const Prober_1 = __webpack_require__(/*! ./responder/Prober */ "../node_modules/@homebridge/ciao/lib/responder/Prober.js");
 const QueryResponse_1 = __webpack_require__(/*! ./responder/QueryResponse */ "../node_modules/@homebridge/ciao/lib/responder/QueryResponse.js");
 const QueuedResponse_1 = __webpack_require__(/*! ./responder/QueuedResponse */ "../node_modules/@homebridge/ciao/lib/responder/QueuedResponse.js");
 const TruncatedQuery_1 = __webpack_require__(/*! ./responder/TruncatedQuery */ "../node_modules/@homebridge/ciao/lib/responder/TruncatedQuery.js");
-const dns_equal_1 = __webpack_require__(/*! ./util/dns-equal */ "../node_modules/@homebridge/ciao/lib/util/dns-equal.js");
 const errors_1 = __webpack_require__(/*! ./util/errors */ "../node_modules/@homebridge/ciao/lib/util/errors.js");
 const promise_utils_1 = __webpack_require__(/*! ./util/promise-utils */ "../node_modules/@homebridge/ciao/lib/util/promise-utils.js");
 const sorted_array_1 = __webpack_require__(/*! ./util/sorted-array */ "../node_modules/@homebridge/ciao/lib/util/sorted-array.js");
@@ -2969,6 +3168,12 @@ const debug = debug_1.default("ciao:Responder");
 const queuedResponseComparator = (a, b) => {
     return a.estimatedTimeToBeSent - b.estimatedTimeToBeSent;
 };
+var ConflictType;
+(function (ConflictType) {
+    ConflictType[ConflictType["NO_CONFLICT"] = 0] = "NO_CONFLICT";
+    ConflictType[ConflictType["CONFLICTING_RDATA"] = 1] = "CONFLICTING_RDATA";
+    ConflictType[ConflictType["CONFLICTING_TTL"] = 2] = "CONFLICTING_TTL";
+})(ConflictType || (ConflictType = {}));
 /**
  * A Responder instance represents a running MDNSServer and a set of advertised services.
  *
@@ -2980,25 +3185,34 @@ class Responder {
         this.refCount = 1;
         this.optionsString = "";
         this.bound = false;
-        // announcedServices is indexed by dnsLowerCase(service.fqdn) (as of RFC 1035 3.1)
+        /**
+         * Announced services is indexed by the {@link dnsLowerCase} if the fqdn (as of RFC 1035 3.1).
+         * As soon as the probing step is finished the service is added to the announced services Map.
+         */
         this.announcedServices = new Map();
-        /*
+        /**
          * map representing all our shared PTR records.
          * Typically we hold stuff like '_services._dns-sd._udp.local' (RFC 6763 9.), '_hap._tcp.local'.
          * Also pointers for every subtype like '_printer._sub._http._tcp.local' are inserted here.
          *
          * For every pointer we may hold multiple entries (like multiple services can advertise on _hap._tcp.local).
+         * The key as well as all values are {@link dnsLowerCase}
          */
         this.servicePointer = new Map();
         this.truncatedQueries = {}; // indexed by <ip>:<port>
         this.delayedMulticastResponses = [];
         this.server = new MDNSServer_1.MDNSServer(this, options);
         this.promiseChain = this.start();
+        this.server.getNetworkManager().on("network-update" /* NETWORK_UPDATE */, this.handleNetworkUpdate.bind(this));
+        this.ignoreUnicastResponseFlag = options === null || options === void 0 ? void 0 : options.ignoreUnicastResponseFlag;
+        if (options === null || options === void 0 ? void 0 : options.periodicBroadcasts) {
+            this.broadcastInterval = setTimeout(this.handlePeriodicBroadcasts.bind(this), 30000).unref();
+        }
     }
     /**
      * Refer to {@link getResponder} in the index file
      *
-     * @internal should not be used directly. Please use the getResponder method defined in index file.
+     * @private should not be used directly. Please use the getResponder method defined in index file.
      */
     static getResponder(options) {
         const optionsString = options ? JSON.stringify(options) : "";
@@ -3013,6 +3227,26 @@ class Responder {
             responder.optionsString = optionsString;
             return responder;
         }
+    }
+    handlePeriodicBroadcasts() {
+        this.broadcastInterval = undefined;
+        debug("Sending periodic announcement on " + Array.from(this.server.getNetworkManager().getInterfaceMap().keys()).join(", "));
+        for (const networkInterface of this.server.getNetworkManager().getInterfaceMap().values()) {
+            const question = new Question_1.Question("_hap._tcp.local.", 12 /* PTR */, false);
+            const responses = this.answerQuestion(question, {
+                port: 5353,
+                address: (networkInterface.ipv4Netaddress || networkInterface.globallyRoutableIpv6 || networkInterface.uniqueLocalIpv6 || networkInterface.ipv6),
+                interface: networkInterface.name,
+            });
+            QueryResponse_1.QueryResponse.combineResponses(responses);
+            for (const response of responses) {
+                if (!response.hasAnswers()) {
+                    continue;
+                }
+                this.server.sendResponse(response.asPacket(), networkInterface.name);
+            }
+        }
+        this.broadcastInterval = setTimeout(this.handlePeriodicBroadcasts.bind(this), Math.random() * 3000 + 27000).unref();
     }
     /**
      * Creates a new CiaoService instance and links it to this Responder instance.
@@ -3045,6 +3279,14 @@ class Responder {
         if (this.refCount > 0) {
             return Promise.resolve();
         }
+        if (this.currentProber) {
+            // Services which are in Probing step aren't included in announcedServices Map
+            // thus we need to cancel them as well
+            this.currentProber.cancel();
+        }
+        if (this.broadcastInterval) {
+            clearTimeout(this.broadcastInterval);
+        }
         Responder.INSTANCES.delete(this.optionsString);
         debug("Shutting down Responder...");
         const promises = [];
@@ -3056,6 +3298,9 @@ class Responder {
             this.server.shutdown();
             this.bound = false;
         });
+    }
+    getAnnouncedServices() {
+        return this.announcedServices.values();
     }
     start() {
         if (this.bound) {
@@ -3084,8 +3329,12 @@ class Responder {
                 return service.currentAnnouncer.cancel().then(() => this.advertiseService(service, callback));
             }
         }
-        debug("[%s] Going to advertise service...", service.getFQDN());
-        // we have multicast loopback enabled, if there where any conflicting names, they would be resolved by the Prober
+        debug("[%s] Going to advertise service...", service.getFQDN()); // TODO include restricted addresses and stuff
+        // multicast loopback is not enabled for our sockets, though we do some stuff, so Prober will handle potential
+        // name conflicts with our own services:
+        //  - One Responder will always run ONE prober: no need to handle simultaneous probe tiebreaking
+        //  - Prober will call the Responder to generate responses to its queries to
+        //      resolve name conflicts the same way as with other services on the network
         this.promiseChain = this.promiseChain // we synchronize all ongoing probes here
             .then(() => service.rebuildServiceRecords()) // build the records the first time for the prober
             .then(() => this.probe(service)); // probe errors are catch below
@@ -3181,19 +3430,21 @@ class Responder {
         return Promise.resolve();
     }
     clearService(service) {
-        const serviceFQDN = service.getFQDN();
-        const typePTR = service.getTypePTR();
-        const subtypePTRs = service.getSubtypePTRs(); // possibly undefined
+        const serviceFQDN = service.getLowerCasedFQDN();
+        const typePTR = service.getLowerCasedTypePTR();
+        const subtypePTRs = service.getLowerCasedSubtypePTRs(); // possibly undefined
         this.removePTR(Responder.SERVICE_TYPE_ENUMERATION_NAME, typePTR);
-        this.removePTR(dns_equal_1.dnsLowerCase(typePTR), serviceFQDN);
+        this.removePTR(typePTR, serviceFQDN);
         if (subtypePTRs) {
             for (const ptr of subtypePTRs) {
-                this.removePTR(dns_equal_1.dnsLowerCase(ptr), serviceFQDN);
+                this.removePTR(ptr, serviceFQDN);
             }
         }
-        this.announcedServices.delete(dns_equal_1.dnsLowerCase(serviceFQDN));
+        this.announcedServices.delete(service.getLowerCasedFQDN());
     }
     addPTR(ptr, name) {
+        // we don't call lower case here, as we expect the caller to have done that already
+        // name = dnsLowerCase(name); // worst case is that the meta query ptr record contains lower cased destination
         const names = this.servicePointer.get(ptr);
         if (names) {
             if (!names.includes(name)) {
@@ -3222,7 +3473,7 @@ class Responder {
         }
         service.serviceState = "probing" /* PROBING */;
         assert_1.default(this.currentProber === undefined, "Tried creating new Prober when there already was one active!");
-        this.currentProber = new Prober_1.Prober(this.server, service);
+        this.currentProber = new Prober_1.Prober(this, this.server, service);
         return this.currentProber.probe()
             .then(() => {
             this.currentProber = undefined;
@@ -3243,24 +3494,24 @@ class Responder {
             repetitions: 3,
         });
         service.currentAnnouncer = announcer;
-        const serviceFQDN = service.getFQDN();
-        const typePTR = service.getTypePTR();
-        const subtypePTRs = service.getSubtypePTRs(); // possibly undefined
+        const serviceFQDN = service.getLowerCasedFQDN();
+        const typePTR = service.getLowerCasedTypePTR();
+        const subtypePTRs = service.getLowerCasedSubtypePTRs(); // possibly undefined
         this.addPTR(Responder.SERVICE_TYPE_ENUMERATION_NAME, typePTR);
-        this.addPTR(dns_equal_1.dnsLowerCase(typePTR), serviceFQDN);
+        this.addPTR(typePTR, serviceFQDN);
         if (subtypePTRs) {
             for (const ptr of subtypePTRs) {
-                this.addPTR(dns_equal_1.dnsLowerCase(ptr), serviceFQDN);
+                this.addPTR(ptr, serviceFQDN);
             }
         }
-        this.announcedServices.set(dns_equal_1.dnsLowerCase(serviceFQDN), service);
+        this.announcedServices.set(serviceFQDN, service);
         return announcer.announce().then(() => {
             service.serviceState = "announced" /* ANNOUNCED */;
             service.currentAnnouncer = undefined;
         }, reason => {
             service.serviceState = "unannounced" /* UNANNOUNCED */;
             service.currentAnnouncer = undefined;
-            this.clearService(service);
+            this.clearService(service); // also removes entry from announcedServices
             if (reason !== Announcer_1.Announcer.CANCEL_REASON) {
                 // forward reason if it is not a cancellation.
                 // We do not forward cancel reason. Announcements only get cancelled if we have something "better" to do.
@@ -3269,15 +3520,17 @@ class Responder {
             }
         });
     }
-    handleServiceRecordUpdate(service, records, callback) {
+    handleServiceRecordUpdate(service, response, callback) {
+        var _a;
         // when updating we just repeat the announce step
         if (service.serviceState !== "announced" /* ANNOUNCED */) { // different states are already handled in CiaoService where this event handler is fired
             throw new Error("Cannot update txt of service which is not announced yet. Received " + service.serviceState + " for service " + service.getFQDN());
         }
-        debug("[%s] Updating %d record(s) for given service!", service.getFQDN(), records.length);
-        this.server.sendResponseBroadcast({ answers: records }).then(results => {
+        debug("[%s] Updating %d record(s) for given service!", service.getFQDN(), response.answers.length + (((_a = response.additionals) === null || _a === void 0 ? void 0 : _a.length) || 0));
+        // TODO we should do a announcement at this point "in theory"
+        this.server.sendResponseBroadcast(response, service).then(results => {
             const failRatio = MDNSServer_1.SendResultFailedRatio(results);
-            if (failRatio === 1) { // TODO loopback will most likely always succeed
+            if (failRatio === 1) {
                 console.log(MDNSServer_1.SendResultFormatError(results, `Failed to send records update for '${service.getFQDN()}'`), true);
                 if (callback) {
                     callback(new Error("Updating records failed as of socket errors!"));
@@ -3322,8 +3575,13 @@ class Responder {
             return Promise.reject(reason);
         });
     }
+    handleNetworkUpdate(change) {
+        for (const service of this.announcedServices.values()) {
+            service.handleNetworkInterfaceUpdate(change);
+        }
+    }
     /**
-     * @internal method called by the MDNSServer when an incoming query needs ot be handled
+     * @private method called by the MDNSServer when an incoming query needs ot be handled
      */
     handleQuery(packet, endpoint) {
         const start = new Date().getTime();
@@ -3368,15 +3626,20 @@ class Responder {
         }
         // responses must not include questions RFC 6762 6.
         // known answer suppression according to RFC 6762 7.1.
-        const multicastResponses = [new QueryResponse_1.QueryResponse(packet.answers)];
-        const unicastResponses = [new QueryResponse_1.QueryResponse(packet.answers)];
+        const multicastResponses = [];
+        const unicastResponses = [];
         // gather answers for all the questions
         packet.questions.forEach(question => {
-            const responses = (question.unicastResponseFlag || isUnicastQuerier) ? unicastResponses : multicastResponses;
-            responses.push(...this.answerQuestion(question, endpoint, responses[0]));
+            const responses = this.answerQuestion(question, endpoint, packet.answers);
+            if (isUnicastQuerier || question.unicastResponseFlag && !this.ignoreUnicastResponseFlag) {
+                unicastResponses.push(...responses);
+            }
+            else {
+                multicastResponses.push(...responses);
+            }
         });
         if (this.currentProber) {
-            this.currentProber.handleQuery(packet);
+            this.currentProber.handleQuery(packet, endpoint);
         }
         if (isUnicastQuerier) {
             // we are dealing with a legacy unicast dns query (RFC 6762 6.7.)
@@ -3419,12 +3682,12 @@ class Responder {
             if (!multicastResponse.hasAnswers()) {
                 continue;
             }
-            const time = new Date().getTime() - start;
             if ((multicastResponse.containsSharedAnswer() || packet.questions.size > 1) && !isProbeQuery) {
                 // We must delay the response on a interval of 20-120ms if we can't assure that we are the only one responding (shared records).
                 // This is also the case if there are multiple questions. If multiple questions are asked
                 // we probably could not answer them all (because not all of them were directed to us).
                 // All those conditions are overridden if this is a probe query. To those queries we must respond instantly!
+                const time = new Date().getTime() - start;
                 this.enqueueDelayedMulticastResponse(multicastResponse.asPacket(), endpoint.interface, time);
             }
             else {
@@ -3439,6 +3702,7 @@ class Responder {
                         break;
                     }
                     if (delayedResponse.combineWithUniqueResponseIfPossible(multicastResponse, endpoint.interface)) {
+                        const time = new Date().getTime() - start;
                         sentWithLaterPacket = true;
                         debug("Multicast response on interface %s containing unique records (took %d ms) was combined with response which is sent out later", endpoint.interface, time);
                         break;
@@ -3446,41 +3710,51 @@ class Responder {
                 }
                 if (!sentWithLaterPacket) {
                     this.server.sendResponse(multicastResponse.asPacket(), endpoint.interface);
+                    const time = new Date().getTime() - start;
                     debug("Sending response via multicast on network %s (took %d ms): %s", endpoint.interface, time, multicastResponse.asString(udpPayloadSize));
                 }
             }
         }
     }
     /**
-     * @internal method called by the MDNSServer when an incoming response needs to be handled
+     * @private method called by the MDNSServer when an incoming response needs to be handled
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     handleResponse(packet, endpoint) {
         // any questions in a response must be ignored RFC 6762 6.
         if (this.currentProber) { // if there is a probing process running currently, just forward all messages to it
-            this.currentProber.handleResponse(packet);
+            this.currentProber.handleResponse(packet, endpoint);
         }
         for (const service of this.announcedServices.values()) {
-            let conflictingRecord = undefined;
+            let conflictingRData = false;
+            let ttlConflicts = 0; // we currently do a full blown announcement with all records, we could in the future track which records have invalid ttl
             for (const record of packet.answers.values()) {
-                if (Responder.hasConflict(service, record)) {
-                    conflictingRecord = record;
-                    break;
+                const type = Responder.checkRecordConflictType(service, record, endpoint);
+                if (type === 1 /* CONFLICTING_RDATA */) {
+                    conflictingRData = true;
+                    break; // we will republish in any case
+                }
+                else if (type === 2 /* CONFLICTING_TTL */) {
+                    ttlConflicts++;
                 }
             }
-            if (!conflictingRecord) {
+            if (!conflictingRData) {
                 for (const record of packet.additionals.values()) {
-                    if (Responder.hasConflict(service, record)) {
-                        conflictingRecord = record;
-                        break;
+                    const type = Responder.checkRecordConflictType(service, record, endpoint);
+                    if (type === 1 /* CONFLICTING_RDATA */) {
+                        conflictingRData = true;
+                        break; // we will republish in any case
+                    }
+                    else if (type === 2 /* CONFLICTING_TTL */) {
+                        ttlConflicts++;
                     }
                 }
             }
-            if (conflictingRecord) {
+            if (conflictingRData) {
                 // noinspection JSIgnoredPromiseFromCall
                 this.republishService(service, error => {
                     if (error) {
-                        console.log("FATAL Error occurred trying to resolve conflict for service " + service.getFQDN() + "! We can't recover from this!");
+                        console.log(`FATAL Error occurred trying to resolve conflict for service ${service.getFQDN()}! We can't recover from this!`);
                         console.log(error.stack);
                         process.exit(1); // we have a service which should be announced, though we failed to reannounce.
                         // if this should ever happen in reality, whe might want to introduce a more sophisticated recovery
@@ -3488,9 +3762,27 @@ class Responder {
                     }
                 }, true);
             }
+            else if (ttlConflicts && !service.currentAnnouncer) {
+                service.serviceState = "announcing" /* ANNOUNCING */; // all code above doesn't expect a Announcer object in state ANNOUNCED
+                const announcer = new Announcer_1.Announcer(this.server, service, {
+                    repetitions: 1,
+                });
+                service.currentAnnouncer = announcer;
+                announcer.announce().then(() => {
+                    service.currentAnnouncer = undefined;
+                    service.serviceState = "announced" /* ANNOUNCED */;
+                }, reason => {
+                    service.currentAnnouncer = undefined;
+                    service.serviceState = "announced" /* ANNOUNCED */;
+                    if (reason === Announcer_1.Announcer.CANCEL_REASON) {
+                        return; // nothing to worry about
+                    }
+                    console.warn("When trying to resolve a ttl conflict on the network, we were unable to send our response packet: " + reason.message);
+                });
+            }
         }
     }
-    static hasConflict(service, record) {
+    static checkRecordConflictType(service, record, endpoint) {
         // RFC 6762 9. Conflict Resolution:
         //    A conflict occurs when a Multicast DNS responder has a unique record
         //    for which it is currently authoritative, and it receives a Multicast
@@ -3517,17 +3809,23 @@ class Responder {
         //    Section 8, "Probing and Announcing on Startup".  The protocol used in
         //    the Probing phase will determine a winner and a loser, and the loser
         //    MUST cease using the name, and reconfigure.
-        const recordName = dns_equal_1.dnsLowerCase(record.name);
-        if (recordName === dns_equal_1.dnsLowerCase(service.getFQDN())) {
+        if (!service.advertisesOnInterface(endpoint.interface)) {
+            return 0 /* NO_CONFLICT */;
+        }
+        const recordName = record.getLowerCasedName();
+        if (recordName === service.getLowerCasedFQDN()) {
             if (record.type === 33 /* SRV */) {
                 const srvRecord = record;
-                if (dns_equal_1.dnsLowerCase(srvRecord.hostname) !== dns_equal_1.dnsLowerCase(service.getHostname())) {
+                if (srvRecord.getLowerCasedHostname() !== service.getLowerCasedHostname()) {
                     debug("[%s] Noticed conflicting record on the network. SRV with hostname: %s", service.getFQDN(), srvRecord.hostname);
-                    return true;
+                    return 1 /* CONFLICTING_RDATA */;
                 }
                 else if (srvRecord.port !== service.getPort()) {
                     debug("[%s] Noticed conflicting record on the network. SRV with port: %s", service.getFQDN(), srvRecord.port);
-                    return true;
+                    return 1 /* CONFLICTING_RDATA */;
+                }
+                if (srvRecord.ttl < SRVRecord_1.SRVRecord.DEFAULT_TTL / 2) {
+                    return 2 /* CONFLICTING_TTL */;
                 }
             }
             else if (record.type === 16 /* TXT */) {
@@ -3535,25 +3833,31 @@ class Responder {
                 const txt = service.getTXT();
                 if (txt.length !== txtRecord.txt.length) { // length differs, can't be the same data
                     debug("[%s] Noticed conflicting record on the network. TXT with differing data length", service.getFQDN());
-                    return true;
+                    return 1 /* CONFLICTING_RDATA */;
                 }
                 for (let i = 0; i < txt.length; i++) {
                     const buffer0 = txt[i];
                     const buffer1 = txtRecord.txt[i];
                     if (buffer0.length !== buffer1.length || buffer0.toString("hex") !== buffer1.toString("hex")) {
                         debug("[%s] Noticed conflicting record on the network. TXT with differing data.", service.getFQDN());
-                        return true;
+                        return 1 /* CONFLICTING_RDATA */;
                     }
+                }
+                if (txtRecord.ttl < TXTRecord_1.TXTRecord.DEFAULT_TTL / 2) {
+                    return 2 /* CONFLICTING_TTL */;
                 }
             }
         }
-        else if (recordName === dns_equal_1.dnsLowerCase(service.getHostname())) {
+        else if (recordName === service.getLowerCasedHostname()) {
             if (record.type === 1 /* A */) {
                 const aRecord = record;
                 if (!service.hasAddress(aRecord.ipAddress)) {
                     // if the service doesn't expose the listed address we have a conflict
                     debug("[%s] Noticed conflicting record on the network. A with ip address: %s", service.getFQDN(), aRecord.ipAddress);
-                    return true;
+                    return 1 /* CONFLICTING_RDATA */;
+                }
+                if (aRecord.ttl < ARecord_1.ARecord.DEFAULT_TTL / 2) {
+                    return 2 /* CONFLICTING_TTL */;
                 }
             }
             else if (record.type === 28 /* AAAA */) {
@@ -3561,11 +3865,32 @@ class Responder {
                 if (!service.hasAddress(aaaaRecord.ipAddress)) {
                     // if the service doesn't expose the listed address we have a conflict
                     debug("[%s] Noticed conflicting record on the network. AAAA with ip address: %s", service.getFQDN(), aaaaRecord.ipAddress);
-                    return true;
+                    return 1 /* CONFLICTING_RDATA */;
+                }
+                if (aaaaRecord.ttl < AAAARecord_1.AAAARecord.DEFAULT_TTL / 2) {
+                    return 2 /* CONFLICTING_TTL */;
                 }
             }
         }
-        return false;
+        else if (record.type === 12 /* PTR */) {
+            const ptrRecord = record;
+            if (recordName === service.getLowerCasedTypePTR()) {
+                if (ptrRecord.getLowerCasedPTRName() === service.getLowerCasedFQDN() && ptrRecord.ttl < PTRRecord_1.PTRRecord.DEFAULT_TTL / 2) {
+                    return 2 /* CONFLICTING_TTL */;
+                }
+            }
+            else if (recordName === Responder.SERVICE_TYPE_ENUMERATION_NAME) {
+                // nothing to do here, i guess
+            }
+            else {
+                const subTypes = service.getLowerCasedSubtypePTRs();
+                if (subTypes && subTypes.includes(recordName)
+                    && ptrRecord.getLowerCasedPTRName() === service.getLowerCasedFQDN() && ptrRecord.ttl < PTRRecord_1.PTRRecord.DEFAULT_TTL / 2) {
+                    return 2 /* CONFLICTING_TTL */;
+                }
+            }
+        }
+        return 0 /* NO_CONFLICT */;
     }
     enqueueDelayedMulticastResponse(packet, interfaceName, time) {
         const response = new QueuedResponse_1.QueuedResponse(packet, interfaceName);
@@ -3619,7 +3944,7 @@ class Responder {
             });
         }
     }
-    answerQuestion(question, endpoint, mainResponse) {
+    answerQuestion(question, endpoint, knownAnswers) {
         // RFC 6762 6: The determination of whether a given record answers a given question
         //    is made using the standard DNS rules: the record name must match the
         //    question name, the record rrtype must match the question qtype unless
@@ -3630,26 +3955,34 @@ class Responder {
             return [];
         }
         const serviceResponses = [];
+        let metaQueryResponse = undefined;
         if (question.type === 12 /* PTR */ || question.type === 255 /* ANY */ || question.type === 5 /* CNAME */) {
-            const loweredQuestionName = dns_equal_1.dnsLowerCase(question.name);
-            const destinations = this.servicePointer.get(loweredQuestionName); // look up the pointer
+            const destinations = this.servicePointer.get(question.getLowerCasedName()); // look up the pointer, all entries are dnsLowerCased
             if (destinations) {
                 // if it's a pointer name, we handle it here
                 for (const data of destinations) {
                     // check if the PTR is pointing towards a service, like in questions for PTR '_hap._tcp.local'
                     // if that's the case, let the question be answered by the service itself
-                    const service = this.announcedServices.get(dns_equal_1.dnsLowerCase(data));
+                    const service = this.announcedServices.get(data);
                     if (service) {
-                        // call the method for original question, so additionals get added properly
-                        const response = Responder.answerServiceQuestion(service, question, endpoint, mainResponse);
-                        if (response.hasAnswers()) {
-                            serviceResponses.push(response);
+                        if (service.advertisesOnInterface(endpoint.interface)) {
+                            // call the method for original question, so additionals get added properly
+                            const response = Responder.answerServiceQuestion(service, question, endpoint, knownAnswers);
+                            if (response.hasAnswers()) {
+                                serviceResponses.push(response);
+                            }
                         }
                     }
                     else {
+                        if (!metaQueryResponse) {
+                            metaQueryResponse = new QueryResponse_1.QueryResponse(knownAnswers);
+                            serviceResponses.unshift(metaQueryResponse);
+                        }
                         // it's probably question for PTR '_services._dns-sd._udp.local'
                         // the PTR will just point to something like '_hap._tcp.local' thus no additional records need to be included
-                        mainResponse.addAnswer(new PTRRecord_1.PTRRecord(question.name, data));
+                        metaQueryResponse.addAnswer(new PTRRecord_1.PTRRecord(question.name, data));
+                        // we may send out meta queries on interfaces where there aren't any services, because they are
+                        //  restricted to other interfaces.
                     }
                 }
                 return serviceResponses; // if we got in this if-body, it was a pointer name and we handled it correctly
@@ -3668,19 +4001,22 @@ class Responder {
               */
         }
         for (const service of this.announcedServices.values()) {
-            const response = Responder.answerServiceQuestion(service, question, endpoint, mainResponse);
+            if (!service.advertisesOnInterface(endpoint.interface)) {
+                continue;
+            }
+            const response = Responder.answerServiceQuestion(service, question, endpoint, knownAnswers);
             if (response.hasAnswers()) {
                 serviceResponses.push(response);
             }
         }
         return serviceResponses;
     }
-    static answerServiceQuestion(service, question, endpoint, mainResponse) {
+    static answerServiceQuestion(service, question, endpoint, knownAnswers) {
         // This assumes to be called from answerQuestion inside the Responder class and thus that certain
         // preconditions or special cases are already covered.
         // For one we assume classes are already matched.
-        const response = new QueryResponse_1.QueryResponse(mainResponse.knownAnswers);
-        const questionName = dns_equal_1.dnsLowerCase(question.name);
+        const response = new QueryResponse_1.QueryResponse(knownAnswers);
+        const loweredQuestionName = question.getLowerCasedName();
         const askingAny = question.type === 255 /* ANY */ || question.type === 5 /* CNAME */;
         const addAnswer = response.addAnswer.bind(response);
         const addAdditional = response.addAdditional.bind(response);
@@ -3688,26 +4024,28 @@ class Responder {
         //    addresses, or vice versa, then the appropriate NSEC record SHOULD be
         //    placed into the additional section, so that queriers can know with
         //    certainty that the device has no addresses of that kind.
-        if (questionName === dns_equal_1.dnsLowerCase(service.getTypePTR())) {
+        if (loweredQuestionName === service.getLowerCasedTypePTR()) {
             if (askingAny || question.type === 12 /* PTR */) {
                 const added = response.addAnswer(service.ptrRecord());
                 if (added) {
                     // only add additionals if answer is not suppressed by the known answer section
                     // RFC 6763 12.1: include additionals: srv, txt, a, aaaa
-                    response.addAdditional(service.srvRecord(), service.txtRecord());
+                    response.addAdditional(service.txtRecord(), service.srvRecord());
                     this.addAddressRecords(service, endpoint, 1 /* A */, addAdditional);
                     this.addAddressRecords(service, endpoint, 28 /* AAAA */, addAdditional);
+                    response.addAdditional(service.serviceNSECRecord(), service.addressNSECRecord());
                 }
             }
         }
-        else if (questionName === dns_equal_1.dnsLowerCase(service.getFQDN())) {
+        else if (loweredQuestionName === service.getLowerCasedFQDN()) {
             if (askingAny) {
-                const addedSrv = response.addAnswer(service.srvRecord());
                 response.addAnswer(service.txtRecord());
+                const addedSrv = response.addAnswer(service.srvRecord());
                 if (addedSrv) {
                     // RFC 6763 12.2: include additionals: a, aaaa
                     this.addAddressRecords(service, endpoint, 1 /* A */, addAdditional);
                     this.addAddressRecords(service, endpoint, 28 /* AAAA */, addAdditional);
+                    response.addAdditional(service.serviceNSECRecord(), service.addressNSECRecord());
                 }
             }
             else if (question.type === 33 /* SRV */) {
@@ -3716,18 +4054,20 @@ class Responder {
                     // RFC 6763 12.2: include additionals: a, aaaa
                     this.addAddressRecords(service, endpoint, 1 /* A */, addAdditional);
                     this.addAddressRecords(service, endpoint, 28 /* AAAA */, addAdditional);
+                    response.addAdditional(service.serviceNSECRecord(true), service.addressNSECRecord());
                 }
             }
             else if (question.type === 16 /* TXT */) {
                 response.addAnswer(service.txtRecord());
-                // RFC 6763 12.3: no not any other additionals
+                response.addAdditional(service.serviceNSECRecord());
+                // RFC 6763 12.3: not any other additionals
             }
         }
-        else if (questionName === dns_equal_1.dnsLowerCase(service.getHostname())) {
+        else if (loweredQuestionName === service.getLowerCasedHostname() || loweredQuestionName + "local." === service.getLowerCasedHostname()) {
             if (askingAny) {
                 this.addAddressRecords(service, endpoint, 1 /* A */, addAnswer);
                 this.addAddressRecords(service, endpoint, 28 /* AAAA */, addAnswer);
-                response.addAnswer(service.nsecRecord());
+                response.addAdditional(service.addressNSECRecord());
             }
             else if (question.type === 1 /* A */) {
                 // RFC 6762 6.2 When a Multicast DNS responder places an IPv4 or IPv6 address record
@@ -3738,7 +4078,7 @@ class Responder {
                 if (added) {
                     this.addAddressRecords(service, endpoint, 28 /* AAAA */, addAdditional);
                 }
-                response.addAnswer(service.nsecRecord()); // always add the negative response, always assert dominance
+                response.addAdditional(service.addressNSECRecord()); // always add the negative response, always assert dominance
             }
             else if (question.type === 28 /* AAAA */) {
                 // RFC 6762 6.2 When a Multicast DNS responder places an IPv4 or IPv6 address record
@@ -3749,23 +4089,24 @@ class Responder {
                 if (added) {
                     this.addAddressRecords(service, endpoint, 1 /* A */, addAdditional);
                 }
-                response.addAnswer(service.nsecRecord()); // always add the negative response, always assert dominance
+                response.addAdditional(service.addressNSECRecord()); // always add the negative response, always assert dominance
             }
         }
-        else if (service.getSubtypePTRs()) {
+        else if (service.getLowerCasedSubtypePTRs()) {
             if (askingAny || question.type === 12 /* PTR */) {
-                const dnsLowerSubTypes = service.getSubtypePTRs().map(dns_equal_1.dnsLowerCase);
-                const index = dnsLowerSubTypes.indexOf(questionName);
+                const dnsLowerSubTypes = service.getLowerCasedSubtypePTRs();
+                const index = dnsLowerSubTypes.indexOf(loweredQuestionName);
                 if (index !== -1) { // we have a sub type for the question
                     const records = service.subtypePtrRecords();
                     const record = records[index];
-                    assert_1.default(questionName === dns_equal_1.dnsLowerCase(record.name), "Question Name didn't match selected sub type ptr record!");
+                    assert_1.default(loweredQuestionName === record.name, "Question Name didn't match selected sub type ptr record!");
                     const added = response.addAnswer(record);
                     if (added) {
                         // RFC 6763 12.1: include additionals: srv, txt, a, aaaa
-                        response.addAdditional(service.srvRecord(), service.txtRecord());
+                        response.addAdditional(service.txtRecord(), service.srvRecord());
                         this.addAddressRecords(service, endpoint, 1 /* A */, addAdditional);
                         this.addAddressRecords(service, endpoint, 28 /* AAAA */, addAdditional);
+                        response.addAdditional(service.serviceNSECRecord(), service.addressNSECRecord());
                     }
                 }
             }
@@ -3814,7 +4155,7 @@ class Responder {
 }
 exports.Responder = Responder;
 /**
- * @internal
+ * @private
  */
 Responder.SERVICE_TYPE_ENUMERATION_NAME = "_services._dns-sd._udp.local.";
 Responder.INSTANCES = new Map();
@@ -3832,12 +4173,10 @@ Responder.INSTANCES = new Map();
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(Buffer) {
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NonCompressionLabelCoder = exports.DNSLabelCoder = void 0;
-const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
 class DNSLabelCoder {
     constructor(legacyUnicastEncoding) {
         this.trackedLengths = [];
@@ -3846,6 +4185,16 @@ class DNSLabelCoder {
     }
     initBuf(buffer) {
         this.buffer = buffer;
+    }
+    initRRLocation(recordOffset, rDataOffset, rDataLength) {
+        this.startOfRR = recordOffset;
+        this.startOfRData = rDataOffset;
+        this.rDataLength = rDataLength;
+    }
+    clearRRLocation() {
+        this.startOfRR = undefined;
+        this.startOfRData = undefined;
+        this.rDataLength = undefined;
     }
     getUncompressedNameLength(name) {
         if (name === ".") {
@@ -3864,6 +4213,9 @@ class DNSLabelCoder {
         return length;
     }
     getNameLength(name) {
+        if (DNSLabelCoder.DISABLE_COMPRESSION) {
+            return this.getUncompressedNameLength(name);
+        }
         if (name === ".") {
             return 1; // root label takes one zero byte and is not compressible
         }
@@ -3937,6 +4289,9 @@ class DNSLabelCoder {
         return offset - oldOffset; // written bytes
     }
     encodeName(name, offset) {
+        if (DNSLabelCoder.DISABLE_COMPRESSION) {
+            return this.encodeUncompressedName(name, offset);
+        }
         if (!this.buffer) {
             assert_1.default.fail("Illegal state. Buffer not initialized!");
         }
@@ -3991,7 +4346,7 @@ class DNSLabelCoder {
         this.writtenNames.push(writtenName);
         return offset - oldOffset; // written bytes
     }
-    decodeName(offset) {
+    decodeName(offset, resolvePointers = true) {
         if (!this.buffer) {
             assert_1.default.fail("Illegal state. Buffer not initialized!");
         }
@@ -4009,9 +4364,43 @@ class DNSLabelCoder {
                     // we got a pointer here
                     const pointer = this.buffer.readUInt16BE(offset - 1) & DNSLabelCoder.NOT_POINTER_MASK; // extract the offset
                     offset++; // increment for the second byte of the pointer
-                    assert_1.default(pointer < oldOffset, "Pointer MUST point to a prior location!");
+                    if (!resolvePointers) {
+                        name += name ? ".~" : "~";
+                        break;
+                    }
+                    // if we would allow pointers to a later location, we MUST ensure that we don't end up in a endless loop
+                    assert_1.default(pointer < oldOffset, "Pointer at " + (offset - 2) + " MUST point to a prior location!");
                     name += (name ? "." : "") + this.decodeName(pointer).data; // recursively decode the rest of the name
                     break; // pointer marks end of name
+                }
+                else if (labelTypePattern === DNSLabelCoder.LOCAL_COMPRESSION_ONE_BYTE) {
+                    let localPointer = this.buffer.readUInt16BE(offset - 1) & DNSLabelCoder.NOT_POINTER_MASK;
+                    offset++; // increment for the second byte of the pointer;
+                    if (!resolvePointers) {
+                        name += name ? ".~" : "~";
+                        break;
+                    }
+                    if (localPointer >= 0 && localPointer < 255) { // 255 is reserved
+                        assert_1.default(this.startOfRR !== undefined, "Cannot decompress locally compressed name as record is not initialized!");
+                        localPointer += this.startOfRR;
+                        assert_1.default(localPointer < oldOffset, "LocalPointer <255 at " + (offset - 2) + " MUST point to a prior location!");
+                        name += (name ? "." : "") + this.decodeName(localPointer).data; // recursively decode the rest of the name
+                    }
+                    else if (localPointer >= 256) {
+                        assert_1.default(this.startOfRData !== undefined && this.rDataLength !== undefined, "Cannot decompress locally compressed name as record is not initialized!");
+                        localPointer -= -256; // subtract the offset 256
+                        localPointer += this.startOfRData;
+                        assert_1.default(localPointer < oldOffset, "LocationPoint >265 at " + (offset + 2) + " MUST point to a prior location!");
+                        name += (name ? "." : "") + this.decodeName(localPointer).data; // recursively decode the rest of the name
+                    }
+                    else {
+                        assert_1.default.fail("Encountered unknown pointer range " + localPointer);
+                    }
+                    break; // pointer marks end of name
+                }
+                else if (labelTypePattern === DNSLabelCoder.EXTENDED_LABEL_TYPE_ONE_BYTE) {
+                    const extendedLabelType = length & DNSLabelCoder.NOT_POINTER_MASK_ONE_BYTE;
+                    assert_1.default.fail("Received extended label type " + extendedLabelType + " at " + (offset - 1));
                 }
                 else {
                     assert_1.default.fail("Encountered unknown pointer type: " + Buffer.from([labelTypePattern >> 6]).toString("hex") + " (with original byte " +
@@ -4076,6 +4465,7 @@ class DNSLabelCoder {
     }
 }
 exports.DNSLabelCoder = DNSLabelCoder;
+DNSLabelCoder.DISABLE_COMPRESSION = false;
 // RFC 1035 4.1.4. Message compression:
 //  In order to reduce the size of messages, the domain system utilizes a
 //   compression scheme which eliminates the repetition of domain names in a
@@ -4091,7 +4481,10 @@ exports.DNSLabelCoder = DNSLabelCoder;
 // RFC 6762 name compression for rdata should be used in: NS, CNAME, PTR, DNAME, SOA, MX, AFSDB, RT, KX, RP, PX, SRV, NSEC
 DNSLabelCoder.POINTER_MASK = 0xC000; // 2 bytes, starting with 11
 DNSLabelCoder.POINTER_MASK_ONE_BYTE = 0xC0; // same deal as above, just on a 1 byte level
+DNSLabelCoder.LOCAL_COMPRESSION_ONE_BYTE = 0x80; // "10" label type https://tools.ietf.org/html/draft-ietf-dnsind-local-compression-05#section-4
+DNSLabelCoder.EXTENDED_LABEL_TYPE_ONE_BYTE = 0x40; // "01" edns extended label type https://tools.ietf.org/html/rfc6891#section-4.2
 DNSLabelCoder.NOT_POINTER_MASK = 0x3FFF;
+DNSLabelCoder.NOT_POINTER_MASK_ONE_BYTE = 0x3F;
 class NonCompressionLabelCoder extends DNSLabelCoder {
     getNameLength(name) {
         return this.getUncompressedNameLength(name);
@@ -4116,13 +4509,12 @@ NonCompressionLabelCoder.INSTANCE = new NonCompressionLabelCoder();
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(Buffer, process) {
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DNSPacket = exports.PacketType = exports.QClass = exports.RClass = exports.dnsTypeToString = exports.QType = exports.RType = exports.RCode = exports.OpCode = void 0;
-const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
-const fast_deep_equal_1 = __importDefault(__webpack_require__(/*! fast-deep-equal */ "../node_modules/@homebridge/ciao/node_modules/fast-deep-equal/index.js"));
+exports.DNSPacket = exports.PacketType = exports.QClass = exports.RClass = exports.QType = exports.RType = exports.RCode = exports.OpCode = void 0;
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const fast_deep_equal_1 = tslib_1.__importDefault(__webpack_require__(/*! fast-deep-equal */ "../node_modules/@homebridge/ciao/node_modules/fast-deep-equal/index.js"));
+const dns_string_utils_1 = __webpack_require__(/*! ./dns-string-utils */ "../node_modules/@homebridge/ciao/lib/coder/dns-string-utils.js");
 const DNSLabelCoder_1 = __webpack_require__(/*! ./DNSLabelCoder */ "../node_modules/@homebridge/ciao/lib/coder/DNSLabelCoder.js");
 const Question_1 = __webpack_require__(/*! ./Question */ "../node_modules/@homebridge/ciao/lib/coder/Question.js");
 __webpack_require__(/*! ./records */ "../node_modules/@homebridge/ciao/lib/coder/records/index.js");
@@ -4162,28 +4554,6 @@ var QType;
     QType[QType["ANY"] = 255] = "ANY";
     // incomplete list
 })(QType = exports.QType || (exports.QType = {}));
-function dnsTypeToString(type) {
-    switch (type) {
-        case 1:
-            return "A";
-        case 5:
-            return "CNAME";
-        case 12:
-            return "PTR";
-        case 16:
-            return "TXT";
-        case 28:
-            return "AAAA";
-        case 33:
-            return "SRV";
-        case 47:
-            return "NSEC";
-        case 255:
-            return "ANY";
-    }
-    return "UNSUPPORTED";
-}
-exports.dnsTypeToString = dnsTypeToString;
 var RClass;
 (function (RClass) {
     RClass[RClass["IN"] = 1] = "IN";
@@ -4473,7 +4843,7 @@ class DNSPacket {
         assert_1.default(offset === buffer.length, "Bytes written didn't match the buffer size!");
         return buffer;
     }
-    static decode(buffer, offset = 0) {
+    static decode(context, buffer, offset = 0) {
         const labelCoder = new DNSLabelCoder_1.DNSLabelCoder();
         labelCoder.initBuf(buffer);
         const id = buffer.readUInt16BE(offset);
@@ -4488,30 +4858,14 @@ class DNSPacket {
         offset += 2;
         const additionalsLength = buffer.readUInt16BE(offset);
         offset += 2;
-        const questions = new Array(questionLength);
-        const answers = new Array(answerLength);
-        const authorities = new Array(authoritiesLength);
-        const additionals = new Array(additionalsLength);
-        for (let i = 0; i < questionLength; i++) {
-            const decodedQuestion = Question_1.Question.decode(labelCoder, buffer, offset);
-            offset += decodedQuestion.readBytes;
-            questions[i] = decodedQuestion.data;
-        }
-        for (let i = 0; i < answerLength; i++) {
-            const decodedRecord = ResourceRecord_1.ResourceRecord.decode(labelCoder, buffer, offset);
-            offset += decodedRecord.readBytes;
-            answers[i] = decodedRecord.data;
-        }
-        for (let i = 0; i < authoritiesLength; i++) {
-            const decodedRecord = ResourceRecord_1.ResourceRecord.decode(labelCoder, buffer, offset);
-            offset += decodedRecord.readBytes;
-            authorities[i] = decodedRecord.data;
-        }
-        for (let i = 0; i < additionalsLength; i++) {
-            const decodedRecord = ResourceRecord_1.ResourceRecord.decode(labelCoder, buffer, offset);
-            offset += decodedRecord.readBytes;
-            additionals[i] = decodedRecord.data;
-        }
+        const questions = [];
+        const answers = [];
+        const authorities = [];
+        const additionals = [];
+        offset += DNSPacket.decodeList(context, labelCoder, buffer, offset, questionLength, Question_1.Question.decode.bind(Question_1.Question), questions);
+        offset += DNSPacket.decodeList(context, labelCoder, buffer, offset, answerLength, ResourceRecord_1.ResourceRecord.decode.bind(ResourceRecord_1.ResourceRecord), answers);
+        offset += DNSPacket.decodeList(context, labelCoder, buffer, offset, authoritiesLength, ResourceRecord_1.ResourceRecord.decode.bind(ResourceRecord_1.ResourceRecord), authorities);
+        offset += DNSPacket.decodeList(context, labelCoder, buffer, offset, additionalsLength, ResourceRecord_1.ResourceRecord.decode.bind(ResourceRecord_1.ResourceRecord), additionals);
         assert_1.default(offset === buffer.length, "Didn't read the full buffer (offset=" + offset + ", length=" + buffer.length + ")");
         const qr = (flags >> 15);
         const opcode = ((flags >> 11) & 0xf);
@@ -4550,6 +4904,17 @@ class DNSPacket {
             additionals: additionals,
         });
     }
+    static decodeList(context, coder, buffer, offset, length, decoder, destination) {
+        const oldOffset = offset;
+        for (let i = 0; i < length; i++) {
+            const decoded = decoder(context, coder, buffer, offset);
+            offset += decoded.readBytes;
+            if (decoded.data) { // if the rdata is not supported by us or we encountered an parsing error, we ignore the record
+                destination.push(decoded.data);
+            }
+        }
+        return offset - oldOffset;
+    }
     asLoggingString(udpPayloadSize) {
         let answerString = "";
         let additionalsString = "";
@@ -4557,13 +4922,13 @@ class DNSPacket {
             if (answerString) {
                 answerString += ",";
             }
-            answerString += dnsTypeToString(record.type);
+            answerString += dns_string_utils_1.dnsTypeToString(record.type);
         }
         for (const record of this.additionals.values()) {
             if (additionalsString) {
                 additionalsString += ",";
             }
-            additionalsString += dnsTypeToString(record.type);
+            additionalsString += dns_string_utils_1.dnsTypeToString(record.type);
         }
         const optionsStrings = [];
         if (this.legacyUnicastEncodingEnabled()) {
@@ -4573,7 +4938,7 @@ class DNSPacket {
             optionsStrings.push("UPS: " + udpPayloadSize);
         }
         const optionsString = optionsStrings.length !== 0 ? ` (${optionsStrings})` : "";
-        return `[${answerString}] answers and [${additionalsString}] additionals${optionsString}`;
+        return `[${answerString}] answers and [${additionalsString}] additionals with size ${this.getEncodingLength()}B${optionsString}`;
     }
 }
 exports.DNSPacket = DNSPacket;
@@ -4605,6 +4970,7 @@ DNSPacket.DNS_PACKET_HEADER_SIZE = 12;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Question = void 0;
+const dns_equal_1 = __webpack_require__(/*! ../util/dns-equal */ "../node_modules/@homebridge/ciao/lib/util/dns-equal.js");
 class Question {
     constructor(name, type, unicastResponseFlag = false, clazz = 1 /* IN */) {
         this.unicastResponseFlag = false;
@@ -4615,6 +4981,9 @@ class Question {
         this.type = type;
         this.class = clazz;
         this.unicastResponseFlag = unicastResponseFlag;
+    }
+    getLowerCasedName() {
+        return this.lowerCasedName || (this.lowerCasedName = dns_equal_1.dnsLowerCase(this.name));
     }
     getEncodingLength(coder) {
         return coder.getNameLength(this.name) + 4; // 2 bytes type; 2 bytes class
@@ -4639,7 +5008,7 @@ class Question {
     asString() {
         return `Q ${this.name} ${this.type} ${this.class}`;
     }
-    static decode(coder, buffer, offset) {
+    static decode(context, coder, buffer, offset) {
         const oldOffset = offset;
         const decodedName = coder.decodeName(offset);
         offset += decodedName.readBytes;
@@ -4672,15 +5041,17 @@ Question.NOT_QU_MASK = 0x7FFF;
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(Buffer) {
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ResourceRecord = void 0;
-const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const debug_1 = tslib_1.__importDefault(__webpack_require__(/*! debug */ "../node_modules/@homebridge/ciao/node_modules/debug/src/browser.js"));
+const dns_equal_1 = __webpack_require__(/*! ../util/dns-equal */ "../node_modules/@homebridge/ciao/lib/util/dns-equal.js");
+const dns_string_utils_1 = __webpack_require__(/*! ./dns-string-utils */ "../node_modules/@homebridge/ciao/lib/coder/dns-string-utils.js");
 const DNSLabelCoder_1 = __webpack_require__(/*! ./DNSLabelCoder */ "../node_modules/@homebridge/ciao/lib/coder/DNSLabelCoder.js");
+const debug = debug_1.default("ciao:decoder");
 class ResourceRecord {
-    constructor(name, type, ttl = ResourceRecord.DEFAULT_TTL, flushFlag = false, clazz = 1 /* IN */) {
+    constructor(name, type, ttl = ResourceRecord.RR_DEFAULT_TTL, flushFlag = false, clazz = 1 /* IN */) {
         this.flushFlag = false;
         if (typeof name === "string") {
             if (!name.endsWith(".")) {
@@ -4699,6 +5070,9 @@ class ResourceRecord {
             this.ttl = name.ttl;
             this.flushFlag = name.flushFlag;
         }
+    }
+    getLowerCasedName() {
+        return this.lowerCasedName || (this.lowerCasedName = dns_equal_1.dnsLowerCase(this.name));
     }
     getEncodingLength(coder) {
         return coder.getNameLength(this.name)
@@ -4765,15 +5139,29 @@ class ResourceRecord {
         // same as aboutEqual, ttl is not included
         return `RR ${this.name} ${this.type} ${this.class} ${this.dataAsString()}`;
     }
-    static decode(coder, buffer, offset) {
+    static decode(context, coder, buffer, offset) {
         const oldOffset = offset;
         const decodedHeader = this.decodeRecordHeader(coder, buffer, offset);
         offset += decodedHeader.readBytes;
         const header = decodedHeader.data;
-        const rrDecoder = this.typeToRecordDecoder.get(header.type) || this.unsupportedRecordDecoder;
-        // we slice the buffer (below), so out of bounds error are instantly detected
-        const decodedRecord = rrDecoder(coder, header, buffer.slice(0, offset + header.rDataLength), offset);
+        const rrDecoder = this.typeToRecordDecoder.get(header.type);
+        if (!rrDecoder) {
+            return { readBytes: (offset + header.rDataLength) - oldOffset };
+        }
+        coder.initRRLocation(oldOffset, offset, header.rDataLength); // defines record offset and rdata offset for local compression
+        const rdata = buffer.slice(0, offset + header.rDataLength);
+        let decodedRecord;
+        try {
+            // we slice the buffer (below), so out of bounds error are instantly detected
+            decodedRecord = rrDecoder(coder, header, rdata, offset);
+        }
+        catch (error) {
+            debug(`Received malformed rdata section for ${dns_string_utils_1.dnsTypeToString(header.type)} ${header.name} ${header.ttl} \
+from ${context.address}:${context.port} with data '${rdata.slice(offset).toString("hex")}': ${error.stack}`);
+            return { readBytes: (offset + header.rDataLength) - oldOffset };
+        }
         offset += decodedRecord.readBytes;
+        coder.clearRRLocation();
         return {
             data: decodedRecord.data,
             readBytes: offset - oldOffset,
@@ -4819,9 +5207,48 @@ exports.ResourceRecord = ResourceRecord;
 ResourceRecord.typeToRecordDecoder = new Map();
 ResourceRecord.FLUSH_MASK = 0x8000; // 2 bytes, first bit set
 ResourceRecord.NOT_FLUSH_MASK = 0x7FFF;
-ResourceRecord.DEFAULT_TTL = 4500; // 75 minutes
+ResourceRecord.RR_DEFAULT_TTL = 4500; // 75 minutes
 //# sourceMappingURL=ResourceRecord.js.map
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../node-libs-browser/node_modules/buffer/index.js */ "../node_modules/node-libs-browser/node_modules/buffer/index.js").Buffer))
+
+/***/ }),
+
+/***/ "../node_modules/@homebridge/ciao/lib/coder/dns-string-utils.js":
+/*!**********************************************************************!*\
+  !*** ../node_modules/@homebridge/ciao/lib/coder/dns-string-utils.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.dnsTypeToString = void 0;
+function dnsTypeToString(type) {
+    switch (type) {
+        case 1:
+            return "A";
+        case 5:
+            return "CNAME";
+        case 12:
+            return "PTR";
+        case 16:
+            return "TXT";
+        case 28:
+            return "AAAA";
+        case 33:
+            return "SRV";
+        case 41:
+            return "OPT";
+        case 47:
+            return "NSEC";
+        case 255:
+            return "ANY";
+    }
+    return "UNSUPPORTED_" + type;
+}
+exports.dnsTypeToString = dnsTypeToString;
+//# sourceMappingURL=dns-string-utils.js.map
 
 /***/ }),
 
@@ -4834,13 +5261,11 @@ ResourceRecord.DEFAULT_TTL = 4500; // 75 minutes
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AAAARecord = void 0;
-const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
-const net_1 = __importDefault(__webpack_require__(/*! net */ "../node_modules/node-libs-browser/mock/empty.js"));
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const net_1 = tslib_1.__importDefault(__webpack_require__(/*! net */ "../node_modules/node-libs-browser/mock/empty.js"));
 const domain_formatter_1 = __webpack_require__(/*! ../../util/domain-formatter */ "../node_modules/@homebridge/ciao/lib/util/domain-formatter.js");
 const ResourceRecord_1 = __webpack_require__(/*! ../ResourceRecord */ "../node_modules/@homebridge/ciao/lib/coder/ResourceRecord.js");
 class AAAARecord extends ResourceRecord_1.ResourceRecord {
@@ -4895,6 +5320,7 @@ class AAAARecord extends ResourceRecord_1.ResourceRecord {
     }
 }
 exports.AAAARecord = AAAARecord;
+AAAARecord.DEFAULT_TTL = 120;
 //# sourceMappingURL=AAAARecord.js.map
 
 /***/ }),
@@ -4908,13 +5334,11 @@ exports.AAAARecord = AAAARecord;
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ARecord = void 0;
-const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
-const net_1 = __importDefault(__webpack_require__(/*! net */ "../node_modules/node-libs-browser/mock/empty.js"));
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const net_1 = tslib_1.__importDefault(__webpack_require__(/*! net */ "../node_modules/node-libs-browser/mock/empty.js"));
 const ResourceRecord_1 = __webpack_require__(/*! ../ResourceRecord */ "../node_modules/@homebridge/ciao/lib/coder/ResourceRecord.js");
 class ARecord extends ResourceRecord_1.ResourceRecord {
     constructor(name, ipAddress, flushFlag, ttl) {
@@ -4965,6 +5389,7 @@ class ARecord extends ResourceRecord_1.ResourceRecord {
     }
 }
 exports.ARecord = ARecord;
+ARecord.DEFAULT_TTL = 120;
 //# sourceMappingURL=ARecord.js.map
 
 /***/ }),
@@ -4978,12 +5403,11 @@ exports.ARecord = ARecord;
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CNAMERecord = void 0;
-const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const dns_equal_1 = __webpack_require__(/*! ../../util/dns-equal */ "../node_modules/@homebridge/ciao/lib/util/dns-equal.js");
 const ResourceRecord_1 = __webpack_require__(/*! ../ResourceRecord */ "../node_modules/@homebridge/ciao/lib/coder/ResourceRecord.js");
 class CNAMERecord extends ResourceRecord_1.ResourceRecord {
     constructor(name, cname, flushFlag, ttl) {
@@ -4998,6 +5422,9 @@ class CNAMERecord extends ResourceRecord_1.ResourceRecord {
             cname += ".";
         }
         this.cname = cname;
+    }
+    getLowerCasedCName() {
+        return this.lowerCasedCName || (this.lowerCasedCName = dns_equal_1.dnsLowerCase(this.cname));
     }
     getRDataEncodingLength(coder) {
         return coder.getNameLength(this.cname);
@@ -5024,10 +5451,11 @@ class CNAMERecord extends ResourceRecord_1.ResourceRecord {
         return this.cname;
     }
     dataEquals(record) {
-        return this.cname === record.cname;
+        return this.getLowerCasedCName() === record.getLowerCasedCName();
     }
 }
 exports.CNAMERecord = CNAMERecord;
+CNAMERecord.DEFAULT_TTL = ResourceRecord_1.ResourceRecord.RR_DEFAULT_TTL;
 //# sourceMappingURL=CNAMERecord.js.map
 
 /***/ }),
@@ -5041,13 +5469,12 @@ exports.CNAMERecord = CNAMERecord;
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(Buffer) {
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NSECRecord = void 0;
-const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
-const fast_deep_equal_1 = __importDefault(__webpack_require__(/*! fast-deep-equal */ "../node_modules/@homebridge/ciao/node_modules/fast-deep-equal/index.js"));
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const fast_deep_equal_1 = tslib_1.__importDefault(__webpack_require__(/*! fast-deep-equal */ "../node_modules/@homebridge/ciao/node_modules/fast-deep-equal/index.js"));
+const dns_equal_1 = __webpack_require__(/*! ../../util/dns-equal */ "../node_modules/@homebridge/ciao/lib/util/dns-equal.js");
 const ResourceRecord_1 = __webpack_require__(/*! ../ResourceRecord */ "../node_modules/@homebridge/ciao/lib/coder/ResourceRecord.js");
 class NSECRecord extends ResourceRecord_1.ResourceRecord {
     constructor(name, nextDomainName, rrtypes, ttl, flushFlag) {
@@ -5064,6 +5491,9 @@ class NSECRecord extends ResourceRecord_1.ResourceRecord {
         this.nextDomainName = nextDomainName;
         this.rrTypeWindows = NSECRecord.rrTypesToWindowMap(rrtypes);
     }
+    getLowerCasedNextDomainName() {
+        return this.lowerCasedNextDomainName || (this.lowerCasedNextDomainName = dns_equal_1.dnsLowerCase(this.nextDomainName));
+    }
     getRRTypesBitMapEncodingLength() {
         let rrTypesBitMapLength = 0;
         for (const window of this.rrTypeWindows) {
@@ -5075,12 +5505,16 @@ class NSECRecord extends ResourceRecord_1.ResourceRecord {
     }
     getRDataEncodingLength(coder) {
         // RFC 4034 4.1.1. name compression MUST NOT be used for the nextDomainName, though RFC 6762 18.14 specifies it should
-        return coder.getNameLength(this.nextDomainName)
+        return (coder.legacyUnicastEncoding
+            ? coder.getUncompressedNameLength(this.nextDomainName)
+            : coder.getUncompressedNameLength(this.nextDomainName)) // we skip compression for NSEC records for now, as Ubiquiti mdns forward can't handle that
             + this.getRRTypesBitMapEncodingLength();
     }
     encodeRData(coder, buffer, offset) {
         const oldOffset = offset;
-        const length = coder.encodeName(this.nextDomainName, offset);
+        const length = coder.legacyUnicastEncoding
+            ? coder.encodeUncompressedName(this.nextDomainName, offset)
+            : coder.encodeUncompressedName(this.nextDomainName, offset); // we skip compression for NSEC records for now, as Ubiquiti mdns forward can't handle that
         offset += length;
         // RFC 4034 4.1.2. type bit maps field has the following format ( Window Block # | Bitmap Length | Bitmap )+ (with | concatenation)
         // e.g. 0x00 0x01 0x40 => defines the window 0; bitmap length 1; and the bitmap 10000000, meaning the first bit is
@@ -5103,7 +5537,15 @@ class NSECRecord extends ResourceRecord_1.ResourceRecord {
     }
     static decodeData(coder, header, buffer, offset) {
         const oldOffset = offset;
-        const decodedNextDomainName = coder.decodeName(offset);
+        /**
+         * Quick note to the line below. We base "false" as the second argument to decodeName, telling
+         * it to not resolve pointers.
+         * We discovered that especially UniFi routers with a VLAN setup and mdns forwarding enabled,
+         * fail to properly encode pointers inside the nextDomainName field.
+         * Those pointers simply point to random points in the record data, resulting in decoding to fail.
+         * As the field doesn't have any meaning and we simply don't use it, we just skip decoding for now.
+         */
+        const decodedNextDomainName = coder.decodeName(offset, false);
         offset += decodedNextDomainName.readBytes;
         const rrTypes = [];
         while (offset < buffer.length) {
@@ -5132,7 +5574,7 @@ class NSECRecord extends ResourceRecord_1.ResourceRecord {
         return `${this.nextDomainName} [${NSECRecord.windowsToRRTypes(this.rrTypeWindows).map(rtype => "" + rtype).join(",")}]`;
     }
     dataEquals(record) {
-        return this.nextDomainName === record.nextDomainName && fast_deep_equal_1.default(this.rrTypeWindows, record.rrTypeWindows);
+        return this.getLowerCasedNextDomainName() === record.getLowerCasedNextDomainName() && fast_deep_equal_1.default(this.rrTypeWindows, record.rrTypeWindows);
     }
     static rrTypesToWindowMap(rrtypes) {
         const rrTypeWindows = [];
@@ -5189,13 +5631,11 @@ exports.NSECRecord = NSECRecord;
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OPTRecord = void 0;
-const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
-const fast_deep_equal_1 = __importDefault(__webpack_require__(/*! fast-deep-equal */ "../node_modules/@homebridge/ciao/node_modules/fast-deep-equal/index.js"));
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const fast_deep_equal_1 = tslib_1.__importDefault(__webpack_require__(/*! fast-deep-equal */ "../node_modules/@homebridge/ciao/node_modules/fast-deep-equal/index.js"));
 const ResourceRecord_1 = __webpack_require__(/*! ../ResourceRecord */ "../node_modules/@homebridge/ciao/lib/coder/ResourceRecord.js");
 class OPTRecord extends ResourceRecord_1.ResourceRecord {
     constructor(udpPayloadSize, options, extendedRCode, flags, ednsVersion, ttl) {
@@ -5324,12 +5764,11 @@ OPTRecord.NOT_DNS_SEC_OK_MASK = 0x7FFF;
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PTRRecord = void 0;
-const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const dns_equal_1 = __webpack_require__(/*! ../../util/dns-equal */ "../node_modules/@homebridge/ciao/lib/util/dns-equal.js");
 const ResourceRecord_1 = __webpack_require__(/*! ../ResourceRecord */ "../node_modules/@homebridge/ciao/lib/coder/ResourceRecord.js");
 class PTRRecord extends ResourceRecord_1.ResourceRecord {
     constructor(name, ptrName, flushFlag, ttl) {
@@ -5344,6 +5783,9 @@ class PTRRecord extends ResourceRecord_1.ResourceRecord {
             ptrName += ".";
         }
         this.ptrName = ptrName;
+    }
+    getLowerCasedPTRName() {
+        return this.lowerCasedPtrName || (this.lowerCasedPtrName = dns_equal_1.dnsLowerCase(this.ptrName));
     }
     getRDataEncodingLength(coder) {
         return coder.getNameLength(this.ptrName);
@@ -5370,10 +5812,11 @@ class PTRRecord extends ResourceRecord_1.ResourceRecord {
         return this.ptrName;
     }
     dataEquals(record) {
-        return this.ptrName === record.ptrName;
+        return this.getLowerCasedPTRName() === record.getLowerCasedPTRName();
     }
 }
 exports.PTRRecord = PTRRecord;
+PTRRecord.DEFAULT_TTL = ResourceRecord_1.ResourceRecord.RR_DEFAULT_TTL;
 //# sourceMappingURL=PTRRecord.js.map
 
 /***/ }),
@@ -5387,17 +5830,16 @@ exports.PTRRecord = PTRRecord;
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SRVRecord = void 0;
-const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const dns_equal_1 = __webpack_require__(/*! ../../util/dns-equal */ "../node_modules/@homebridge/ciao/lib/util/dns-equal.js");
 const ResourceRecord_1 = __webpack_require__(/*! ../ResourceRecord */ "../node_modules/@homebridge/ciao/lib/coder/ResourceRecord.js");
 class SRVRecord extends ResourceRecord_1.ResourceRecord {
     constructor(name, hostname, port, flushFlag, ttl) {
         if (typeof name === "string") {
-            super(name, 33 /* SRV */, ttl || 120, flushFlag);
+            super(name, 33 /* SRV */, ttl || SRVRecord.RR_DEFAULT_TTL, flushFlag);
         }
         else {
             assert_1.default(name.type === 33 /* SRV */);
@@ -5413,6 +5855,9 @@ class SRVRecord extends ResourceRecord_1.ResourceRecord {
         // priority and weight are not supported to encode or read
         this.priority = 0;
         this.weight = 0;
+    }
+    getLowerCasedHostname() {
+        return this.lowerCasedHostname || (this.lowerCasedHostname = dns_equal_1.dnsLowerCase(this.hostname));
     }
     getRDataEncodingLength(coder) {
         return 6 // 2 byte priority; 2 byte weight; 2 byte port;
@@ -5457,10 +5902,11 @@ class SRVRecord extends ResourceRecord_1.ResourceRecord {
         return `${this.hostname} ${this.port} ${this.priority} ${this.weight}`;
     }
     dataEquals(record) {
-        return this.hostname === record.hostname && this.port === record.port && this.weight === record.weight && this.priority === record.priority;
+        return this.getLowerCasedHostname() === record.getLowerCasedHostname() && this.port === record.port && this.weight === record.weight && this.priority === record.priority;
     }
 }
 exports.SRVRecord = SRVRecord;
+SRVRecord.DEFAULT_TTL = 120;
 //# sourceMappingURL=SRVRecord.js.map
 
 /***/ }),
@@ -5474,12 +5920,10 @@ exports.SRVRecord = SRVRecord;
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TXTRecord = void 0;
-const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
 const ResourceRecord_1 = __webpack_require__(/*! ../ResourceRecord */ "../node_modules/@homebridge/ciao/lib/coder/ResourceRecord.js");
 class TXTRecord extends ResourceRecord_1.ResourceRecord {
     constructor(name, txt, flushFlag, ttl) {
@@ -5542,52 +5986,8 @@ class TXTRecord extends ResourceRecord_1.ResourceRecord {
     }
 }
 exports.TXTRecord = TXTRecord;
+TXTRecord.DEFAULT_TTL = ResourceRecord_1.ResourceRecord.RR_DEFAULT_TTL;
 //# sourceMappingURL=TXTRecord.js.map
-
-/***/ }),
-
-/***/ "../node_modules/@homebridge/ciao/lib/coder/records/UnsupportedRecord.js":
-/*!*******************************************************************************!*\
-  !*** ../node_modules/@homebridge/ciao/lib/coder/records/UnsupportedRecord.js ***!
-  \*******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.UnsupportedRecord = void 0;
-const ResourceRecord_1 = __webpack_require__(/*! ../ResourceRecord */ "../node_modules/@homebridge/ciao/lib/coder/ResourceRecord.js");
-class UnsupportedRecord extends ResourceRecord_1.ResourceRecord {
-    constructor(header, data) {
-        super(header);
-        this.data = data;
-    }
-    encodeRData(coder, buffer, offset) {
-        return this.data.copy(buffer, offset);
-    }
-    getRDataEncodingLength() {
-        return this.data.length;
-    }
-    clone() {
-        return new UnsupportedRecord(this.getRecordRepresentation(), this.data);
-    }
-    dataAsString() {
-        return this.data.toString("base64");
-    }
-    dataEquals(record) {
-        return this.data.toString("base64") === record.data.toString("base64");
-    }
-    static decodeData(coder, header, buffer, offset) {
-        const data = buffer.slice(offset);
-        return {
-            data: new UnsupportedRecord(header, data),
-            readBytes: data.length,
-        };
-    }
-}
-exports.UnsupportedRecord = UnsupportedRecord;
-//# sourceMappingURL=UnsupportedRecord.js.map
 
 /***/ }),
 
@@ -5610,7 +6010,6 @@ const OPTRecord_1 = __webpack_require__(/*! ./OPTRecord */ "../node_modules/@hom
 const PTRRecord_1 = __webpack_require__(/*! ./PTRRecord */ "../node_modules/@homebridge/ciao/lib/coder/records/PTRRecord.js");
 const SRVRecord_1 = __webpack_require__(/*! ./SRVRecord */ "../node_modules/@homebridge/ciao/lib/coder/records/SRVRecord.js");
 const TXTRecord_1 = __webpack_require__(/*! ./TXTRecord */ "../node_modules/@homebridge/ciao/lib/coder/records/TXTRecord.js");
-const UnsupportedRecord_1 = __webpack_require__(/*! ./UnsupportedRecord */ "../node_modules/@homebridge/ciao/lib/coder/records/UnsupportedRecord.js");
 ResourceRecord_1.ResourceRecord.typeToRecordDecoder.set(28 /* AAAA */, AAAARecord_1.AAAARecord.decodeData);
 ResourceRecord_1.ResourceRecord.typeToRecordDecoder.set(1 /* A */, ARecord_1.ARecord.decodeData);
 ResourceRecord_1.ResourceRecord.typeToRecordDecoder.set(5 /* CNAME */, CNAMERecord_1.CNAMERecord.decodeData);
@@ -5619,7 +6018,6 @@ ResourceRecord_1.ResourceRecord.typeToRecordDecoder.set(12 /* PTR */, PTRRecord_
 ResourceRecord_1.ResourceRecord.typeToRecordDecoder.set(33 /* SRV */, SRVRecord_1.SRVRecord.decodeData);
 ResourceRecord_1.ResourceRecord.typeToRecordDecoder.set(41 /* OPT */, OPTRecord_1.OPTRecord.decodeData);
 ResourceRecord_1.ResourceRecord.typeToRecordDecoder.set(16 /* TXT */, TXTRecord_1.TXTRecord.decodeData);
-ResourceRecord_1.ResourceRecord.unsupportedRecordDecoder = UnsupportedRecord_1.UnsupportedRecord.decodeData;
 //# sourceMappingURL=index.js.map
 
 /***/ }),
@@ -5633,39 +6031,28 @@ ResourceRecord_1.ResourceRecord.unsupportedRecordDecoder = UnsupportedRecord_1.U
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getResponder = exports.Protocol = void 0;
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+__webpack_require__(/*! source-map-support/register */ "../node_modules/@homebridge/ciao/node_modules/source-map-support/register.js"); // registering node-source-map-support for typescript stack traces
+const debug_1 = tslib_1.__importDefault(__webpack_require__(/*! debug */ "../node_modules/@homebridge/ciao/node_modules/debug/src/browser.js"));
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const version = __webpack_require__(/*! ../package.json */ "../node_modules/@homebridge/ciao/package.json").version;
 if (version.includes("beta") || process.env.BCT) { // enable debug output if beta version or running bonjour conformance testing
     const debug = process.env.DEBUG;
     if (!debug || !debug.includes("ciao")) {
         if (!debug) {
-            process.env.DEBUG = "ciao:*";
+            debug_1.default.enable("ciao:*");
         }
         else {
-            process.env.DEBUG = debug + ",ciao:*";
+            debug_1.default.enable(debug + ",ciao:*");
         }
     }
 }
 __webpack_require__(/*! ./coder/records/index */ "../node_modules/@homebridge/ciao/lib/coder/records/index.js");
 const Responder_1 = __webpack_require__(/*! ./Responder */ "../node_modules/@homebridge/ciao/lib/Responder.js");
-const debug_1 = __importDefault(__webpack_require__(/*! debug */ "../node_modules/debug/src/browser.js"));
-__exportStar(__webpack_require__(/*! ./CiaoService */ "../node_modules/@homebridge/ciao/lib/CiaoService.js"), exports);
-__exportStar(__webpack_require__(/*! ./Responder */ "../node_modules/@homebridge/ciao/lib/Responder.js"), exports);
+tslib_1.__exportStar(__webpack_require__(/*! ./CiaoService */ "../node_modules/@homebridge/ciao/lib/CiaoService.js"), exports);
+tslib_1.__exportStar(__webpack_require__(/*! ./Responder */ "../node_modules/@homebridge/ciao/lib/Responder.js"), exports);
 function printInitInfo() {
     const debug = debug_1.default("ciao:init");
     debug("Loading ciao v" + version + "...");
@@ -5713,15 +6100,14 @@ exports.default = {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Announcer = void 0;
-const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
-const debug_1 = __importDefault(__webpack_require__(/*! debug */ "../node_modules/debug/src/browser.js"));
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const debug_1 = tslib_1.__importDefault(__webpack_require__(/*! debug */ "../node_modules/@homebridge/ciao/node_modules/debug/src/browser.js"));
 const DNSPacket_1 = __webpack_require__(/*! ../coder/DNSPacket */ "../node_modules/@homebridge/ciao/lib/coder/DNSPacket.js");
 const MDNSServer_1 = __webpack_require__(/*! ../MDNSServer */ "../node_modules/@homebridge/ciao/lib/MDNSServer.js");
+const promise_utils_1 = __webpack_require__(/*! ../util/promise-utils */ "../node_modules/@homebridge/ciao/lib/util/promise-utils.js");
 const debug = debug_1.default("ciao:Announcer");
 /**
  * This class is used to execute the announce process for a given service as define in RFC 6762 8.3.
@@ -5817,7 +6203,7 @@ class Announcer {
         }
         Announcer.sendResponseAddingAddressRecords(this.server, this.service, records, this.goodbye).then(results => {
             const failRatio = MDNSServer_1.SendResultFailedRatio(results);
-            if (failRatio === 1) { // TODO loopback will most likely always succeed
+            if (failRatio === 1) {
                 console.error(MDNSServer_1.SendResultFormatError(results, `[${this.service.getFQDN()}] Failed to send ${this.goodbye ? "goodbye" : "announcement"} requests`), true);
                 this.promiseReject(new Error(`${this.goodbye ? "Goodbye" : "Announcement"} failed as of socket errors!`));
                 return; // all failed => thus announcement failed
@@ -5847,13 +6233,17 @@ class Announcer {
     static sendResponseAddingAddressRecords(server, service, records, goodbye) {
         const promises = [];
         for (const name of server.getBoundInterfaceNames()) {
+            if (!service.advertisesOnInterface(name)) {
+                continue;
+            }
             const answer = records.concat([]);
             const aRecord = service.aRecord(name);
             const aaaaRecord = service.aaaaRecord(name);
             const aaaaRoutableRecord = service.aaaaRoutableRecord(name);
             const aaaaUniqueLocalRecord = service.aaaaUniqueLocalRecord(name);
             //const reversMappings: PTRRecord[] = service.reverseAddressMappings(networkInterface);
-            const nsecRecord = service.nsecRecord();
+            const nsecRecord = service.addressNSECRecord();
+            const serviceNsecRecord = service.serviceNSECRecord();
             if (aRecord) {
                 if (goodbye) {
                     aRecord.ttl = 0;
@@ -5888,10 +6278,21 @@ class Announcer {
             */
             if (goodbye) {
                 nsecRecord.ttl = 0;
+                serviceNsecRecord.ttl = 0;
             }
-            answer.push(nsecRecord);
-            const packet = DNSPacket_1.DNSPacket.createDNSResponsePacketsFromRRSet({ answers: answer });
-            promises.push(server.send(packet, name));
+            const additionals = [];
+            additionals.push(nsecRecord, serviceNsecRecord);
+            const packet = DNSPacket_1.DNSPacket.createDNSResponsePacketsFromRRSet({
+                answers: answer,
+                additionals: additionals,
+            });
+            promises.push(Promise.race([
+                server.send(packet, name),
+                promise_utils_1.PromiseTimeout(MDNSServer_1.MDNSServer.SEND_TIMEOUT).then(() => ({
+                    status: "timeout",
+                    interface: name,
+                })),
+            ]));
         }
         return Promise.all(promises);
     }
@@ -5911,36 +6312,14 @@ Announcer.CANCEL_REASON = "CIAO ANNOUNCEMENT CANCELLED";
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Prober = void 0;
-const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
-const debug_1 = __importDefault(__webpack_require__(/*! debug */ "../node_modules/debug/src/browser.js"));
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const debug_1 = tslib_1.__importDefault(__webpack_require__(/*! debug */ "../node_modules/@homebridge/ciao/node_modules/debug/src/browser.js"));
 const Question_1 = __webpack_require__(/*! ../coder/Question */ "../node_modules/@homebridge/ciao/lib/coder/Question.js");
 const MDNSServer_1 = __webpack_require__(/*! ../MDNSServer */ "../node_modules/@homebridge/ciao/lib/MDNSServer.js");
-const dns_equal_1 = __importDefault(__webpack_require__(/*! ../util/dns-equal */ "../node_modules/@homebridge/ciao/lib/util/dns-equal.js"));
-const tiebreaking = __importStar(__webpack_require__(/*! ../util/tiebreaking */ "../node_modules/@homebridge/ciao/lib/util/tiebreaking.js"));
+const tiebreaking = tslib_1.__importStar(__webpack_require__(/*! ../util/tiebreaking */ "../node_modules/@homebridge/ciao/lib/util/tiebreaking.js"));
 const tiebreaking_1 = __webpack_require__(/*! ../util/tiebreaking */ "../node_modules/@homebridge/ciao/lib/util/tiebreaking.js");
 const PROBE_INTERVAL = 250; // 250ms as defined in RFC 6762 8.1.
 const LIMITED_PROBE_INTERVAL = 1000;
@@ -5953,15 +6332,17 @@ const debug = debug_1.default("ciao:Prober");
  * for the same name are detected.
  */
 class Prober {
-    constructor(server, service) {
+    constructor(responder, server, service) {
         this.records = [];
         this.currentInterval = PROBE_INTERVAL;
         this.serviceEncounteredNameChange = false;
         this.sentFirstProbeQuery = false; // we MUST ignore responses received BEFORE the first probe is sent
         this.sentQueriesForCurrentTry = 0;
         this.sentQueries = 0;
+        assert_1.default(responder, "responder must be defined");
         assert_1.default(server, "server must be defined");
         assert_1.default(service, "service must be defined");
+        this.responder = responder;
         this.server = server;
         this.service = service;
     }
@@ -6051,17 +6432,19 @@ class Prober {
         }
         debug("Sending prober query number %d for '%s'...", this.sentQueriesForCurrentTry + 1, this.service.getFQDN());
         assert_1.default(this.records.length > 0, "Tried sending probing request for zero record length!");
+        const questions = [
+            // probes SHOULD be send with unicast response flag as of the RFC
+            // MDNServer might overwrite the QU flag to false, as we can't use unicast if there is another responder on the machine
+            new Question_1.Question(this.service.getFQDN(), 255 /* ANY */, true),
+            new Question_1.Question(this.service.getHostname(), 255 /* ANY */, true),
+        ];
         this.server.sendQueryBroadcast({
-            questions: [
-                // probes SHOULD be send with unicast response flag as of the RFC
-                // MDNServer might overwrite the QU flag to false, as we can't use unicast if there is another responder on the machine
-                new Question_1.Question(this.service.getFQDN(), 255 /* ANY */, true),
-                new Question_1.Question(this.service.getHostname(), 255 /* ANY */, true),
-            ],
+            questions: questions,
+            // TODO certified homekit accessories only include the main service PTR record
             authorities: this.records,
-        }).then(results => {
+        }, this.service).then(results => {
             const failRatio = MDNSServer_1.SendResultFailedRatio(results);
-            if (failRatio === 1) { // TODO loopback will most likely always succeed
+            if (failRatio === 1) {
                 console.error(MDNSServer_1.SendResultFormatError(results, `Failed to send probe queries for '${this.service.getFQDN()}'`), true);
                 this.endProbing(false);
                 this.promiseReject(new Error("Probing failed as of socket errors!"));
@@ -6082,47 +6465,67 @@ class Prober {
             this.sentQueries++;
             this.timer = setTimeout(this.sendProbeRequest.bind(this), this.currentInterval);
             this.timer.unref();
+            this.checkLocalConflicts();
         });
     }
-    handleResponse(packet) {
-        if (!this.sentFirstProbeQuery) {
+    checkLocalConflicts() {
+        let containsAnswer = false;
+        for (const service of this.responder.getAnnouncedServices()) {
+            if (service.getLowerCasedFQDN() === this.service.getLowerCasedFQDN() || service.getLowerCasedHostname() === this.service.getLowerCasedHostname()) {
+                containsAnswer = true;
+                break;
+            }
+        }
+        if (containsAnswer) {
+            debug("Probing for '%s' failed as of local service. Doing a name change", this.service.getFQDN());
+            this.handleNameChange();
+        }
+    }
+    handleResponse(packet, endpoint) {
+        if (!this.sentFirstProbeQuery || !this.service.advertisesOnInterface(endpoint.interface)) {
             return;
         }
         let containsAnswer = false;
         // search answers and additionals for answers to our probe queries
-        packet.answers.forEach(record => {
-            if (dns_equal_1.default(record.name, this.service.getFQDN()) || dns_equal_1.default(record.name, this.service.getHostname())) {
+        for (const record of packet.answers.values()) {
+            if (record.getLowerCasedName() === this.service.getLowerCasedFQDN() || record.getLowerCasedName() === this.service.getLowerCasedHostname()) {
                 containsAnswer = true;
+                break;
             }
-        });
-        packet.additionals.forEach(record => {
-            if (dns_equal_1.default(record.name, this.service.getFQDN()) || dns_equal_1.default(record.name, this.service.getHostname())) {
+        }
+        for (const record of packet.additionals.values()) {
+            if (record.getLowerCasedName() === this.service.getLowerCasedFQDN() || record.getLowerCasedName() === this.service.getLowerCasedHostname()) {
                 containsAnswer = true;
+                break;
             }
-        });
+        }
         if (containsAnswer) { // abort and cancel probes
             debug("Probing for '%s' failed. Doing a name change", this.service.getFQDN());
-            this.endProbing(false); // reset the prober
-            this.service.serviceState = "unannounced" /* UNANNOUNCED */;
-            this.service.incrementName();
-            this.service.serviceState = "probing" /* PROBING */;
-            this.serviceEncounteredNameChange = true;
-            this.timer = setTimeout(this.sendProbeRequest.bind(this), 1000);
-            this.timer.unref();
+            this.handleNameChange();
         }
     }
-    handleQuery(packet) {
-        if (!this.sentFirstProbeQuery) { // ignore queries if we are not sending
+    handleNameChange() {
+        this.endProbing(false); // reset the prober
+        this.service.serviceState = "unannounced" /* UNANNOUNCED */;
+        this.service.incrementName();
+        this.service.serviceState = "probing" /* PROBING */;
+        this.serviceEncounteredNameChange = true;
+        this.timer = setTimeout(this.sendProbeRequest.bind(this), 1000);
+        this.timer.unref();
+    }
+    handleQuery(packet, endpoint) {
+        if (!this.sentFirstProbeQuery || !this.service.advertisesOnInterface(endpoint.interface)) {
             return;
         }
         // if we are currently probing and receiving a query which is also a probing query
         // which matches the desired name we run the tiebreaking algorithm to decide on the winner
         let needsTiebreaking = false;
-        packet.questions.forEach(question => {
-            if (dns_equal_1.default(question.name, this.service.getFQDN()) || dns_equal_1.default(question.name, this.service.getHostname())) {
+        for (const question of packet.questions.values()) {
+            if (question.getLowerCasedName() === this.service.getLowerCasedFQDN() || question.getLowerCasedName() === this.service.getLowerCasedHostname()) {
                 needsTiebreaking = true;
+                break;
             }
-        });
+        }
         if (needsTiebreaking) {
             this.doTiebreaking(packet);
         }
@@ -6133,11 +6536,12 @@ class Prober {
         }
         // first of all check if the contents of authorities answers our query
         let conflict = packet.authorities.size === 0;
-        packet.authorities.forEach(record => {
-            if (dns_equal_1.default(record.name, this.service.getFQDN()) || dns_equal_1.default(record.name, this.service.getHostname())) {
+        for (const record of packet.authorities.values()) {
+            if (record.getLowerCasedName() === this.service.getLowerCasedFQDN() || record.getLowerCasedName() === this.service.getLowerCasedHostname()) {
                 conflict = true;
+                break;
             }
-        });
+        }
         if (!conflict) {
             return;
         }
@@ -6440,6 +6844,7 @@ class TruncatedQuery extends events_1.EventEmitter {
         }
         else {
             clearTimeout(this.timer);
+            this.removeAllListeners();
             return 3 /* FINISHED */;
         }
     }
@@ -6452,6 +6857,7 @@ class TruncatedQuery extends events_1.EventEmitter {
     }
     timeout() {
         this.emit("timeout" /* TIMEOUT */);
+        this.removeAllListeners();
     }
 }
 exports.TruncatedQuery = TruncatedQuery;
@@ -6476,10 +6882,6 @@ function dnsLowerCase(value) {
     return value.replace(asciiPattern, s => s.toLowerCase());
 }
 exports.dnsLowerCase = dnsLowerCase;
-function dnsEqual(name0, name1) {
-    return dnsLowerCase(name0) === dnsLowerCase(name1);
-}
-exports.default = dnsEqual;
 //# sourceMappingURL=dns-equal.js.map
 
 /***/ }),
@@ -6493,13 +6895,11 @@ exports.default = dnsEqual;
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getNetAddress = exports.ipAddressFromReversAddressName = exports.formatReverseAddressPTRName = exports.shortenIPv6 = exports.enlargeIPv6 = exports.removeTLD = exports.formatHostname = exports.stringify = exports.parseFQDN = void 0;
-const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
-const net_1 = __importDefault(__webpack_require__(/*! net */ "../node_modules/node-libs-browser/mock/empty.js"));
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
+const net_1 = tslib_1.__importDefault(__webpack_require__(/*! net */ "../node_modules/node-libs-browser/mock/empty.js"));
 function isProtocol(part) {
     return part === "_" + "tcp" /* TCP */ || part === "_" + "udp" /* UDP */;
 }
@@ -6929,6 +7329,559 @@ exports.runTiebreaking = runTiebreaking;
 
 /***/ }),
 
+/***/ "../node_modules/@homebridge/ciao/node_modules/debug/src/browser.js":
+/*!**************************************************************************!*\
+  !*** ../node_modules/@homebridge/ciao/node_modules/debug/src/browser.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {/* eslint-env browser */
+
+/**
+ * This is the web browser implementation of `debug()`.
+ */
+
+exports.formatArgs = formatArgs;
+exports.save = save;
+exports.load = load;
+exports.useColors = useColors;
+exports.storage = localstorage();
+exports.destroy = (() => {
+	let warned = false;
+
+	return () => {
+		if (!warned) {
+			warned = true;
+			console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
+		}
+	};
+})();
+
+/**
+ * Colors.
+ */
+
+exports.colors = [
+	'#0000CC',
+	'#0000FF',
+	'#0033CC',
+	'#0033FF',
+	'#0066CC',
+	'#0066FF',
+	'#0099CC',
+	'#0099FF',
+	'#00CC00',
+	'#00CC33',
+	'#00CC66',
+	'#00CC99',
+	'#00CCCC',
+	'#00CCFF',
+	'#3300CC',
+	'#3300FF',
+	'#3333CC',
+	'#3333FF',
+	'#3366CC',
+	'#3366FF',
+	'#3399CC',
+	'#3399FF',
+	'#33CC00',
+	'#33CC33',
+	'#33CC66',
+	'#33CC99',
+	'#33CCCC',
+	'#33CCFF',
+	'#6600CC',
+	'#6600FF',
+	'#6633CC',
+	'#6633FF',
+	'#66CC00',
+	'#66CC33',
+	'#9900CC',
+	'#9900FF',
+	'#9933CC',
+	'#9933FF',
+	'#99CC00',
+	'#99CC33',
+	'#CC0000',
+	'#CC0033',
+	'#CC0066',
+	'#CC0099',
+	'#CC00CC',
+	'#CC00FF',
+	'#CC3300',
+	'#CC3333',
+	'#CC3366',
+	'#CC3399',
+	'#CC33CC',
+	'#CC33FF',
+	'#CC6600',
+	'#CC6633',
+	'#CC9900',
+	'#CC9933',
+	'#CCCC00',
+	'#CCCC33',
+	'#FF0000',
+	'#FF0033',
+	'#FF0066',
+	'#FF0099',
+	'#FF00CC',
+	'#FF00FF',
+	'#FF3300',
+	'#FF3333',
+	'#FF3366',
+	'#FF3399',
+	'#FF33CC',
+	'#FF33FF',
+	'#FF6600',
+	'#FF6633',
+	'#FF9900',
+	'#FF9933',
+	'#FFCC00',
+	'#FFCC33'
+];
+
+/**
+ * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+ * and the Firebug extension (any Firefox version) are known
+ * to support "%c" CSS customizations.
+ *
+ * TODO: add a `localStorage` variable to explicitly enable/disable colors
+ */
+
+// eslint-disable-next-line complexity
+function useColors() {
+	// NB: In an Electron preload script, document will be defined but not fully
+	// initialized. Since we know we're in Chrome, we'll just detect this case
+	// explicitly
+	if (typeof window !== 'undefined' && window.process && (window.process.type === 'renderer' || window.process.__nwjs)) {
+		return true;
+	}
+
+	// Internet Explorer and Edge do not support colors.
+	if (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/(edge|trident)\/(\d+)/)) {
+		return false;
+	}
+
+	// Is webkit? http://stackoverflow.com/a/16459606/376773
+	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
+		// Is firebug? http://stackoverflow.com/a/398120/376773
+		(typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
+		// Is firefox >= v31?
+		// https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+		(typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
+		// Double check webkit in userAgent just in case we are in a worker
+		(typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
+}
+
+/**
+ * Colorize log arguments if enabled.
+ *
+ * @api public
+ */
+
+function formatArgs(args) {
+	args[0] = (this.useColors ? '%c' : '') +
+		this.namespace +
+		(this.useColors ? ' %c' : ' ') +
+		args[0] +
+		(this.useColors ? '%c ' : ' ') +
+		'+' + module.exports.humanize(this.diff);
+
+	if (!this.useColors) {
+		return;
+	}
+
+	const c = 'color: ' + this.color;
+	args.splice(1, 0, c, 'color: inherit');
+
+	// The final "%c" is somewhat tricky, because there could be other
+	// arguments passed either before or after the %c, so we need to
+	// figure out the correct index to insert the CSS into
+	let index = 0;
+	let lastC = 0;
+	args[0].replace(/%[a-zA-Z%]/g, match => {
+		if (match === '%%') {
+			return;
+		}
+		index++;
+		if (match === '%c') {
+			// We only are interested in the *last* %c
+			// (the user may have provided their own)
+			lastC = index;
+		}
+	});
+
+	args.splice(lastC, 0, c);
+}
+
+/**
+ * Invokes `console.debug()` when available.
+ * No-op when `console.debug` is not a "function".
+ * If `console.debug` is not available, falls back
+ * to `console.log`.
+ *
+ * @api public
+ */
+exports.log = console.debug || console.log || (() => {});
+
+/**
+ * Save `namespaces`.
+ *
+ * @param {String} namespaces
+ * @api private
+ */
+function save(namespaces) {
+	try {
+		if (namespaces) {
+			exports.storage.setItem('debug', namespaces);
+		} else {
+			exports.storage.removeItem('debug');
+		}
+	} catch (error) {
+		// Swallow
+		// XXX (@Qix-) should we be logging these?
+	}
+}
+
+/**
+ * Load `namespaces`.
+ *
+ * @return {String} returns the previously persisted debug modes
+ * @api private
+ */
+function load() {
+	let r;
+	try {
+		r = exports.storage.getItem('debug');
+	} catch (error) {
+		// Swallow
+		// XXX (@Qix-) should we be logging these?
+	}
+
+	// If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+	if (!r && typeof process !== 'undefined' && 'env' in process) {
+		r = process.env.DEBUG;
+	}
+
+	return r;
+}
+
+/**
+ * Localstorage attempts to return the localstorage.
+ *
+ * This is necessary because safari throws
+ * when a user disables cookies/localstorage
+ * and you attempt to access it.
+ *
+ * @return {LocalStorage}
+ * @api private
+ */
+
+function localstorage() {
+	try {
+		// TVMLKit (Apple TV JS Runtime) does not have a window object, just localStorage in the global context
+		// The Browser also has localStorage in the global context.
+		return localStorage;
+	} catch (error) {
+		// Swallow
+		// XXX (@Qix-) should we be logging these?
+	}
+}
+
+module.exports = __webpack_require__(/*! ./common */ "../node_modules/@homebridge/ciao/node_modules/debug/src/common.js")(exports);
+
+const {formatters} = module.exports;
+
+/**
+ * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+ */
+
+formatters.j = function (v) {
+	try {
+		return JSON.stringify(v);
+	} catch (error) {
+		return '[UnexpectedJSONParseError]: ' + error.message;
+	}
+};
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../process/browser.js */ "../node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "../node_modules/@homebridge/ciao/node_modules/debug/src/common.js":
+/*!*************************************************************************!*\
+  !*** ../node_modules/@homebridge/ciao/node_modules/debug/src/common.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/**
+ * This is the common logic for both the Node.js and web browser
+ * implementations of `debug()`.
+ */
+
+function setup(env) {
+	createDebug.debug = createDebug;
+	createDebug.default = createDebug;
+	createDebug.coerce = coerce;
+	createDebug.disable = disable;
+	createDebug.enable = enable;
+	createDebug.enabled = enabled;
+	createDebug.humanize = __webpack_require__(/*! ms */ "../node_modules/ms/index.js");
+	createDebug.destroy = destroy;
+
+	Object.keys(env).forEach(key => {
+		createDebug[key] = env[key];
+	});
+
+	/**
+	* The currently active debug mode names, and names to skip.
+	*/
+
+	createDebug.names = [];
+	createDebug.skips = [];
+
+	/**
+	* Map of special "%n" handling functions, for the debug "format" argument.
+	*
+	* Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
+	*/
+	createDebug.formatters = {};
+
+	/**
+	* Selects a color for a debug namespace
+	* @param {String} namespace The namespace string for the for the debug instance to be colored
+	* @return {Number|String} An ANSI color code for the given namespace
+	* @api private
+	*/
+	function selectColor(namespace) {
+		let hash = 0;
+
+		for (let i = 0; i < namespace.length; i++) {
+			hash = ((hash << 5) - hash) + namespace.charCodeAt(i);
+			hash |= 0; // Convert to 32bit integer
+		}
+
+		return createDebug.colors[Math.abs(hash) % createDebug.colors.length];
+	}
+	createDebug.selectColor = selectColor;
+
+	/**
+	* Create a debugger with the given `namespace`.
+	*
+	* @param {String} namespace
+	* @return {Function}
+	* @api public
+	*/
+	function createDebug(namespace) {
+		let prevTime;
+		let enableOverride = null;
+
+		function debug(...args) {
+			// Disabled?
+			if (!debug.enabled) {
+				return;
+			}
+
+			const self = debug;
+
+			// Set `diff` timestamp
+			const curr = Number(new Date());
+			const ms = curr - (prevTime || curr);
+			self.diff = ms;
+			self.prev = prevTime;
+			self.curr = curr;
+			prevTime = curr;
+
+			args[0] = createDebug.coerce(args[0]);
+
+			if (typeof args[0] !== 'string') {
+				// Anything else let's inspect with %O
+				args.unshift('%O');
+			}
+
+			// Apply any `formatters` transformations
+			let index = 0;
+			args[0] = args[0].replace(/%([a-zA-Z%])/g, (match, format) => {
+				// If we encounter an escaped % then don't increase the array index
+				if (match === '%%') {
+					return '%';
+				}
+				index++;
+				const formatter = createDebug.formatters[format];
+				if (typeof formatter === 'function') {
+					const val = args[index];
+					match = formatter.call(self, val);
+
+					// Now we need to remove `args[index]` since it's inlined in the `format`
+					args.splice(index, 1);
+					index--;
+				}
+				return match;
+			});
+
+			// Apply env-specific formatting (colors, etc.)
+			createDebug.formatArgs.call(self, args);
+
+			const logFn = self.log || createDebug.log;
+			logFn.apply(self, args);
+		}
+
+		debug.namespace = namespace;
+		debug.useColors = createDebug.useColors();
+		debug.color = createDebug.selectColor(namespace);
+		debug.extend = extend;
+		debug.destroy = createDebug.destroy; // XXX Temporary. Will be removed in the next major release.
+
+		Object.defineProperty(debug, 'enabled', {
+			enumerable: true,
+			configurable: false,
+			get: () => enableOverride === null ? createDebug.enabled(namespace) : enableOverride,
+			set: v => {
+				enableOverride = v;
+			}
+		});
+
+		// Env-specific initialization logic for debug instances
+		if (typeof createDebug.init === 'function') {
+			createDebug.init(debug);
+		}
+
+		return debug;
+	}
+
+	function extend(namespace, delimiter) {
+		const newDebug = createDebug(this.namespace + (typeof delimiter === 'undefined' ? ':' : delimiter) + namespace);
+		newDebug.log = this.log;
+		return newDebug;
+	}
+
+	/**
+	* Enables a debug mode by namespaces. This can include modes
+	* separated by a colon and wildcards.
+	*
+	* @param {String} namespaces
+	* @api public
+	*/
+	function enable(namespaces) {
+		createDebug.save(namespaces);
+
+		createDebug.names = [];
+		createDebug.skips = [];
+
+		let i;
+		const split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
+		const len = split.length;
+
+		for (i = 0; i < len; i++) {
+			if (!split[i]) {
+				// ignore empty strings
+				continue;
+			}
+
+			namespaces = split[i].replace(/\*/g, '.*?');
+
+			if (namespaces[0] === '-') {
+				createDebug.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+			} else {
+				createDebug.names.push(new RegExp('^' + namespaces + '$'));
+			}
+		}
+	}
+
+	/**
+	* Disable debug output.
+	*
+	* @return {String} namespaces
+	* @api public
+	*/
+	function disable() {
+		const namespaces = [
+			...createDebug.names.map(toNamespace),
+			...createDebug.skips.map(toNamespace).map(namespace => '-' + namespace)
+		].join(',');
+		createDebug.enable('');
+		return namespaces;
+	}
+
+	/**
+	* Returns true if the given mode name is enabled, false otherwise.
+	*
+	* @param {String} name
+	* @return {Boolean}
+	* @api public
+	*/
+	function enabled(name) {
+		if (name[name.length - 1] === '*') {
+			return true;
+		}
+
+		let i;
+		let len;
+
+		for (i = 0, len = createDebug.skips.length; i < len; i++) {
+			if (createDebug.skips[i].test(name)) {
+				return false;
+			}
+		}
+
+		for (i = 0, len = createDebug.names.length; i < len; i++) {
+			if (createDebug.names[i].test(name)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	* Convert regexp to namespace
+	*
+	* @param {RegExp} regxep
+	* @return {String} namespace
+	* @api private
+	*/
+	function toNamespace(regexp) {
+		return regexp.toString()
+			.substring(2, regexp.toString().length - 2)
+			.replace(/\.\*\?$/, '*');
+	}
+
+	/**
+	* Coerce `val`.
+	*
+	* @param {Mixed} val
+	* @return {Mixed}
+	* @api private
+	*/
+	function coerce(val) {
+		if (val instanceof Error) {
+			return val.stack || val.message;
+		}
+		return val;
+	}
+
+	/**
+	* XXX DO NOT USE. This is a temporary stub function.
+	* XXX It WILL be removed in the next major release.
+	*/
+	function destroy() {
+		console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
+	}
+
+	createDebug.enable(createDebug.load());
+
+	return createDebug;
+}
+
+module.exports = setup;
+
+
+/***/ }),
+
 /***/ "../node_modules/@homebridge/ciao/node_modules/fast-deep-equal/index.js":
 /*!******************************************************************************!*\
   !*** ../node_modules/@homebridge/ciao/node_modules/fast-deep-equal/index.js ***!
@@ -6987,6 +7940,4129 @@ module.exports = function equal(a, b) {
 
 /***/ }),
 
+/***/ "../node_modules/@homebridge/ciao/node_modules/source-map-support/register.js":
+/*!************************************************************************************!*\
+  !*** ../node_modules/@homebridge/ciao/node_modules/source-map-support/register.js ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! ./ */ "../node_modules/@homebridge/ciao/node_modules/source-map-support/source-map-support.js").install();
+
+
+/***/ }),
+
+/***/ "../node_modules/@homebridge/ciao/node_modules/source-map-support/source-map-support.js":
+/*!**********************************************************************************************!*\
+  !*** ../node_modules/@homebridge/ciao/node_modules/source-map-support/source-map-support.js ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process, module) {var SourceMapConsumer = __webpack_require__(/*! source-map */ "../node_modules/@homebridge/ciao/node_modules/source-map/source-map.js").SourceMapConsumer;
+var path = __webpack_require__(/*! path */ "../node_modules/path-browserify/index.js");
+
+var fs;
+try {
+  fs = __webpack_require__(/*! fs */ "../node_modules/node-libs-browser/mock/empty.js");
+  if (!fs.existsSync || !fs.readFileSync) {
+    // fs doesn't have all methods we need
+    fs = null;
+  }
+} catch (err) {
+  /* nop */
+}
+
+var bufferFrom = __webpack_require__(/*! buffer-from */ "../node_modules/buffer-from/index.js");
+
+/**
+ * Requires a module which is protected against bundler minification.
+ *
+ * @param {NodeModule} mod
+ * @param {string} request
+ */
+function dynamicRequire(mod, request) {
+  return mod.require(request);
+}
+
+// Only install once if called multiple times
+var errorFormatterInstalled = false;
+var uncaughtShimInstalled = false;
+
+// If true, the caches are reset before a stack trace formatting operation
+var emptyCacheBetweenOperations = false;
+
+// Supports {browser, node, auto}
+var environment = "auto";
+
+// Maps a file path to a string containing the file contents
+var fileContentsCache = {};
+
+// Maps a file path to a source map for that file
+var sourceMapCache = {};
+
+// Regex for detecting source maps
+var reSourceMap = /^data:application\/json[^,]+base64,/;
+
+// Priority list of retrieve handlers
+var retrieveFileHandlers = [];
+var retrieveMapHandlers = [];
+
+function isInBrowser() {
+  if (environment === "browser")
+    return true;
+  if (environment === "node")
+    return false;
+  return ((typeof window !== 'undefined') && (typeof XMLHttpRequest === 'function') && !(window.require && window.module && window.process && window.process.type === "renderer"));
+}
+
+function hasGlobalProcessEventEmitter() {
+  return ((typeof process === 'object') && (process !== null) && (typeof process.on === 'function'));
+}
+
+function handlerExec(list) {
+  return function(arg) {
+    for (var i = 0; i < list.length; i++) {
+      var ret = list[i](arg);
+      if (ret) {
+        return ret;
+      }
+    }
+    return null;
+  };
+}
+
+var retrieveFile = handlerExec(retrieveFileHandlers);
+
+retrieveFileHandlers.push(function(path) {
+  // Trim the path to make sure there is no extra whitespace.
+  path = path.trim();
+  if (/^file:/.test(path)) {
+    // existsSync/readFileSync can't handle file protocol, but once stripped, it works
+    path = path.replace(/file:\/\/\/(\w:)?/, function(protocol, drive) {
+      return drive ?
+        '' : // file:///C:/dir/file -> C:/dir/file
+        '/'; // file:///root-dir/file -> /root-dir/file
+    });
+  }
+  if (path in fileContentsCache) {
+    return fileContentsCache[path];
+  }
+
+  var contents = '';
+  try {
+    if (!fs) {
+      // Use SJAX if we are in the browser
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', path, /** async */ false);
+      xhr.send(null);
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        contents = xhr.responseText;
+      }
+    } else if (fs.existsSync(path)) {
+      // Otherwise, use the filesystem
+      contents = fs.readFileSync(path, 'utf8');
+    }
+  } catch (er) {
+    /* ignore any errors */
+  }
+
+  return fileContentsCache[path] = contents;
+});
+
+// Support URLs relative to a directory, but be careful about a protocol prefix
+// in case we are in the browser (i.e. directories may start with "http://" or "file:///")
+function supportRelativeURL(file, url) {
+  if (!file) return url;
+  var dir = path.dirname(file);
+  var match = /^\w+:\/\/[^\/]*/.exec(dir);
+  var protocol = match ? match[0] : '';
+  var startPath = dir.slice(protocol.length);
+  if (protocol && /^\/\w\:/.test(startPath)) {
+    // handle file:///C:/ paths
+    protocol += '/';
+    return protocol + path.resolve(dir.slice(protocol.length), url).replace(/\\/g, '/');
+  }
+  return protocol + path.resolve(dir.slice(protocol.length), url);
+}
+
+function retrieveSourceMapURL(source) {
+  var fileData;
+
+  if (isInBrowser()) {
+     try {
+       var xhr = new XMLHttpRequest();
+       xhr.open('GET', source, false);
+       xhr.send(null);
+       fileData = xhr.readyState === 4 ? xhr.responseText : null;
+
+       // Support providing a sourceMappingURL via the SourceMap header
+       var sourceMapHeader = xhr.getResponseHeader("SourceMap") ||
+                             xhr.getResponseHeader("X-SourceMap");
+       if (sourceMapHeader) {
+         return sourceMapHeader;
+       }
+     } catch (e) {
+     }
+  }
+
+  // Get the URL of the source map
+  fileData = retrieveFile(source);
+  var re = /(?:\/\/[@#][\s]*sourceMappingURL=([^\s'"]+)[\s]*$)|(?:\/\*[@#][\s]*sourceMappingURL=([^\s*'"]+)[\s]*(?:\*\/)[\s]*$)/mg;
+  // Keep executing the search to find the *last* sourceMappingURL to avoid
+  // picking up sourceMappingURLs from comments, strings, etc.
+  var lastMatch, match;
+  while (match = re.exec(fileData)) lastMatch = match;
+  if (!lastMatch) return null;
+  return lastMatch[1];
+};
+
+// Can be overridden by the retrieveSourceMap option to install. Takes a
+// generated source filename; returns a {map, optional url} object, or null if
+// there is no source map.  The map field may be either a string or the parsed
+// JSON object (ie, it must be a valid argument to the SourceMapConsumer
+// constructor).
+var retrieveSourceMap = handlerExec(retrieveMapHandlers);
+retrieveMapHandlers.push(function(source) {
+  var sourceMappingURL = retrieveSourceMapURL(source);
+  if (!sourceMappingURL) return null;
+
+  // Read the contents of the source map
+  var sourceMapData;
+  if (reSourceMap.test(sourceMappingURL)) {
+    // Support source map URL as a data url
+    var rawData = sourceMappingURL.slice(sourceMappingURL.indexOf(',') + 1);
+    sourceMapData = bufferFrom(rawData, "base64").toString();
+    sourceMappingURL = source;
+  } else {
+    // Support source map URLs relative to the source URL
+    sourceMappingURL = supportRelativeURL(source, sourceMappingURL);
+    sourceMapData = retrieveFile(sourceMappingURL);
+  }
+
+  if (!sourceMapData) {
+    return null;
+  }
+
+  return {
+    url: sourceMappingURL,
+    map: sourceMapData
+  };
+});
+
+function mapSourcePosition(position) {
+  var sourceMap = sourceMapCache[position.source];
+  if (!sourceMap) {
+    // Call the (overrideable) retrieveSourceMap function to get the source map.
+    var urlAndMap = retrieveSourceMap(position.source);
+    if (urlAndMap) {
+      sourceMap = sourceMapCache[position.source] = {
+        url: urlAndMap.url,
+        map: new SourceMapConsumer(urlAndMap.map)
+      };
+
+      // Load all sources stored inline with the source map into the file cache
+      // to pretend like they are already loaded. They may not exist on disk.
+      if (sourceMap.map.sourcesContent) {
+        sourceMap.map.sources.forEach(function(source, i) {
+          var contents = sourceMap.map.sourcesContent[i];
+          if (contents) {
+            var url = supportRelativeURL(sourceMap.url, source);
+            fileContentsCache[url] = contents;
+          }
+        });
+      }
+    } else {
+      sourceMap = sourceMapCache[position.source] = {
+        url: null,
+        map: null
+      };
+    }
+  }
+
+  // Resolve the source URL relative to the URL of the source map
+  if (sourceMap && sourceMap.map && typeof sourceMap.map.originalPositionFor === 'function') {
+    var originalPosition = sourceMap.map.originalPositionFor(position);
+
+    // Only return the original position if a matching line was found. If no
+    // matching line is found then we return position instead, which will cause
+    // the stack trace to print the path and line for the compiled file. It is
+    // better to give a precise location in the compiled file than a vague
+    // location in the original file.
+    if (originalPosition.source !== null) {
+      originalPosition.source = supportRelativeURL(
+        sourceMap.url, originalPosition.source);
+      return originalPosition;
+    }
+  }
+
+  return position;
+}
+
+// Parses code generated by FormatEvalOrigin(), a function inside V8:
+// https://code.google.com/p/v8/source/browse/trunk/src/messages.js
+function mapEvalOrigin(origin) {
+  // Most eval() calls are in this format
+  var match = /^eval at ([^(]+) \((.+):(\d+):(\d+)\)$/.exec(origin);
+  if (match) {
+    var position = mapSourcePosition({
+      source: match[2],
+      line: +match[3],
+      column: match[4] - 1
+    });
+    return 'eval at ' + match[1] + ' (' + position.source + ':' +
+      position.line + ':' + (position.column + 1) + ')';
+  }
+
+  // Parse nested eval() calls using recursion
+  match = /^eval at ([^(]+) \((.+)\)$/.exec(origin);
+  if (match) {
+    return 'eval at ' + match[1] + ' (' + mapEvalOrigin(match[2]) + ')';
+  }
+
+  // Make sure we still return useful information if we didn't find anything
+  return origin;
+}
+
+// This is copied almost verbatim from the V8 source code at
+// https://code.google.com/p/v8/source/browse/trunk/src/messages.js. The
+// implementation of wrapCallSite() used to just forward to the actual source
+// code of CallSite.prototype.toString but unfortunately a new release of V8
+// did something to the prototype chain and broke the shim. The only fix I
+// could find was copy/paste.
+function CallSiteToString() {
+  var fileName;
+  var fileLocation = "";
+  if (this.isNative()) {
+    fileLocation = "native";
+  } else {
+    fileName = this.getScriptNameOrSourceURL();
+    if (!fileName && this.isEval()) {
+      fileLocation = this.getEvalOrigin();
+      fileLocation += ", ";  // Expecting source position to follow.
+    }
+
+    if (fileName) {
+      fileLocation += fileName;
+    } else {
+      // Source code does not originate from a file and is not native, but we
+      // can still get the source position inside the source string, e.g. in
+      // an eval string.
+      fileLocation += "<anonymous>";
+    }
+    var lineNumber = this.getLineNumber();
+    if (lineNumber != null) {
+      fileLocation += ":" + lineNumber;
+      var columnNumber = this.getColumnNumber();
+      if (columnNumber) {
+        fileLocation += ":" + columnNumber;
+      }
+    }
+  }
+
+  var line = "";
+  var functionName = this.getFunctionName();
+  var addSuffix = true;
+  var isConstructor = this.isConstructor();
+  var isMethodCall = !(this.isToplevel() || isConstructor);
+  if (isMethodCall) {
+    var typeName = this.getTypeName();
+    // Fixes shim to be backward compatable with Node v0 to v4
+    if (typeName === "[object Object]") {
+      typeName = "null";
+    }
+    var methodName = this.getMethodName();
+    if (functionName) {
+      if (typeName && functionName.indexOf(typeName) != 0) {
+        line += typeName + ".";
+      }
+      line += functionName;
+      if (methodName && functionName.indexOf("." + methodName) != functionName.length - methodName.length - 1) {
+        line += " [as " + methodName + "]";
+      }
+    } else {
+      line += typeName + "." + (methodName || "<anonymous>");
+    }
+  } else if (isConstructor) {
+    line += "new " + (functionName || "<anonymous>");
+  } else if (functionName) {
+    line += functionName;
+  } else {
+    line += fileLocation;
+    addSuffix = false;
+  }
+  if (addSuffix) {
+    line += " (" + fileLocation + ")";
+  }
+  return line;
+}
+
+function cloneCallSite(frame) {
+  var object = {};
+  Object.getOwnPropertyNames(Object.getPrototypeOf(frame)).forEach(function(name) {
+    object[name] = /^(?:is|get)/.test(name) ? function() { return frame[name].call(frame); } : frame[name];
+  });
+  object.toString = CallSiteToString;
+  return object;
+}
+
+function wrapCallSite(frame, state) {
+  // provides interface backward compatibility
+  if (state === undefined) {
+    state = { nextPosition: null, curPosition: null }
+  }
+  if(frame.isNative()) {
+    state.curPosition = null;
+    return frame;
+  }
+
+  // Most call sites will return the source file from getFileName(), but code
+  // passed to eval() ending in "//# sourceURL=..." will return the source file
+  // from getScriptNameOrSourceURL() instead
+  var source = frame.getFileName() || frame.getScriptNameOrSourceURL();
+  if (source) {
+    var line = frame.getLineNumber();
+    var column = frame.getColumnNumber() - 1;
+
+    // Fix position in Node where some (internal) code is prepended.
+    // See https://github.com/evanw/node-source-map-support/issues/36
+    // Header removed in node at ^10.16 || >=11.11.0
+    // v11 is not an LTS candidate, we can just test the one version with it.
+    // Test node versions for: 10.16-19, 10.20+, 12-19, 20-99, 100+, or 11.11
+    var noHeader = /^v(10\.1[6-9]|10\.[2-9][0-9]|10\.[0-9]{3,}|1[2-9]\d*|[2-9]\d|\d{3,}|11\.11)/;
+    var headerLength = noHeader.test(process.version) ? 0 : 62;
+    if (line === 1 && column > headerLength && !isInBrowser() && !frame.isEval()) {
+      column -= headerLength;
+    }
+
+    var position = mapSourcePosition({
+      source: source,
+      line: line,
+      column: column
+    });
+    state.curPosition = position;
+    frame = cloneCallSite(frame);
+    var originalFunctionName = frame.getFunctionName;
+    frame.getFunctionName = function() {
+      if (state.nextPosition == null) {
+        return originalFunctionName();
+      }
+      return state.nextPosition.name || originalFunctionName();
+    };
+    frame.getFileName = function() { return position.source; };
+    frame.getLineNumber = function() { return position.line; };
+    frame.getColumnNumber = function() { return position.column + 1; };
+    frame.getScriptNameOrSourceURL = function() { return position.source; };
+    return frame;
+  }
+
+  // Code called using eval() needs special handling
+  var origin = frame.isEval() && frame.getEvalOrigin();
+  if (origin) {
+    origin = mapEvalOrigin(origin);
+    frame = cloneCallSite(frame);
+    frame.getEvalOrigin = function() { return origin; };
+    return frame;
+  }
+
+  // If we get here then we were unable to change the source position
+  return frame;
+}
+
+// This function is part of the V8 stack trace API, for more info see:
+// https://v8.dev/docs/stack-trace-api
+function prepareStackTrace(error, stack) {
+  if (emptyCacheBetweenOperations) {
+    fileContentsCache = {};
+    sourceMapCache = {};
+  }
+
+  var name = error.name || 'Error';
+  var message = error.message || '';
+  var errorString = name + ": " + message;
+
+  var state = { nextPosition: null, curPosition: null };
+  var processedStack = [];
+  for (var i = stack.length - 1; i >= 0; i--) {
+    processedStack.push('\n    at ' + wrapCallSite(stack[i], state));
+    state.nextPosition = state.curPosition;
+  }
+  state.curPosition = state.nextPosition = null;
+  return errorString + processedStack.reverse().join('');
+}
+
+// Generate position and snippet of original source with pointer
+function getErrorSource(error) {
+  var match = /\n    at [^(]+ \((.*):(\d+):(\d+)\)/.exec(error.stack);
+  if (match) {
+    var source = match[1];
+    var line = +match[2];
+    var column = +match[3];
+
+    // Support the inline sourceContents inside the source map
+    var contents = fileContentsCache[source];
+
+    // Support files on disk
+    if (!contents && fs && fs.existsSync(source)) {
+      try {
+        contents = fs.readFileSync(source, 'utf8');
+      } catch (er) {
+        contents = '';
+      }
+    }
+
+    // Format the line from the original source code like node does
+    if (contents) {
+      var code = contents.split(/(?:\r\n|\r|\n)/)[line - 1];
+      if (code) {
+        return source + ':' + line + '\n' + code + '\n' +
+          new Array(column).join(' ') + '^';
+      }
+    }
+  }
+  return null;
+}
+
+function printErrorAndExit (error) {
+  var source = getErrorSource(error);
+
+  // Ensure error is printed synchronously and not truncated
+  if (process.stderr._handle && process.stderr._handle.setBlocking) {
+    process.stderr._handle.setBlocking(true);
+  }
+
+  if (source) {
+    console.error();
+    console.error(source);
+  }
+
+  console.error(error.stack);
+  process.exit(1);
+}
+
+function shimEmitUncaughtException () {
+  var origEmit = process.emit;
+
+  process.emit = function (type) {
+    if (type === 'uncaughtException') {
+      var hasStack = (arguments[1] && arguments[1].stack);
+      var hasListeners = (this.listeners(type).length > 0);
+
+      if (hasStack && !hasListeners) {
+        return printErrorAndExit(arguments[1]);
+      }
+    }
+
+    return origEmit.apply(this, arguments);
+  };
+}
+
+var originalRetrieveFileHandlers = retrieveFileHandlers.slice(0);
+var originalRetrieveMapHandlers = retrieveMapHandlers.slice(0);
+
+exports.wrapCallSite = wrapCallSite;
+exports.getErrorSource = getErrorSource;
+exports.mapSourcePosition = mapSourcePosition;
+exports.retrieveSourceMap = retrieveSourceMap;
+
+exports.install = function(options) {
+  options = options || {};
+
+  if (options.environment) {
+    environment = options.environment;
+    if (["node", "browser", "auto"].indexOf(environment) === -1) {
+      throw new Error("environment " + environment + " was unknown. Available options are {auto, browser, node}")
+    }
+  }
+
+  // Allow sources to be found by methods other than reading the files
+  // directly from disk.
+  if (options.retrieveFile) {
+    if (options.overrideRetrieveFile) {
+      retrieveFileHandlers.length = 0;
+    }
+
+    retrieveFileHandlers.unshift(options.retrieveFile);
+  }
+
+  // Allow source maps to be found by methods other than reading the files
+  // directly from disk.
+  if (options.retrieveSourceMap) {
+    if (options.overrideRetrieveSourceMap) {
+      retrieveMapHandlers.length = 0;
+    }
+
+    retrieveMapHandlers.unshift(options.retrieveSourceMap);
+  }
+
+  // Support runtime transpilers that include inline source maps
+  if (options.hookRequire && !isInBrowser()) {
+    // Use dynamicRequire to avoid including in browser bundles
+    var Module = dynamicRequire(module, 'module');
+    var $compile = Module.prototype._compile;
+
+    if (!$compile.__sourceMapSupport) {
+      Module.prototype._compile = function(content, filename) {
+        fileContentsCache[filename] = content;
+        sourceMapCache[filename] = undefined;
+        return $compile.call(this, content, filename);
+      };
+
+      Module.prototype._compile.__sourceMapSupport = true;
+    }
+  }
+
+  // Configure options
+  if (!emptyCacheBetweenOperations) {
+    emptyCacheBetweenOperations = 'emptyCacheBetweenOperations' in options ?
+      options.emptyCacheBetweenOperations : false;
+  }
+
+  // Install the error reformatter
+  if (!errorFormatterInstalled) {
+    errorFormatterInstalled = true;
+    Error.prepareStackTrace = prepareStackTrace;
+  }
+
+  if (!uncaughtShimInstalled) {
+    var installHandler = 'handleUncaughtExceptions' in options ?
+      options.handleUncaughtExceptions : true;
+
+    // Do not override 'uncaughtException' with our own handler in Node.js
+    // Worker threads. Workers pass the error to the main thread as an event,
+    // rather than printing something to stderr and exiting.
+    try {
+      // We need to use `dynamicRequire` because `require` on it's own will be optimized by WebPack/Browserify.
+      var worker_threads = dynamicRequire(module, 'worker_threads');
+      if (worker_threads.isMainThread === false) {
+        installHandler = false;
+      }
+    } catch(e) {}
+
+    // Provide the option to not install the uncaught exception handler. This is
+    // to support other uncaught exception handlers (in test frameworks, for
+    // example). If this handler is not installed and there are no other uncaught
+    // exception handlers, uncaught exceptions will be caught by node's built-in
+    // exception handler and the process will still be terminated. However, the
+    // generated JavaScript code will be shown above the stack trace instead of
+    // the original source code.
+    if (installHandler && hasGlobalProcessEventEmitter()) {
+      uncaughtShimInstalled = true;
+      shimEmitUncaughtException();
+    }
+  }
+};
+
+exports.resetRetrieveHandlers = function() {
+  retrieveFileHandlers.length = 0;
+  retrieveMapHandlers.length = 0;
+
+  retrieveFileHandlers = originalRetrieveFileHandlers.slice(0);
+  retrieveMapHandlers = originalRetrieveMapHandlers.slice(0);
+
+  retrieveSourceMap = handlerExec(retrieveMapHandlers);
+  retrieveFile = handlerExec(retrieveFileHandlers);
+}
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../process/browser.js */ "../node_modules/process/browser.js"), __webpack_require__(/*! ./../../../../webpack/buildin/module.js */ "../node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/array-set.js":
+/*!*********************************************************************************!*\
+  !*** ../node_modules/@homebridge/ciao/node_modules/source-map/lib/array-set.js ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
+var util = __webpack_require__(/*! ./util */ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/util.js");
+var has = Object.prototype.hasOwnProperty;
+var hasNativeMap = typeof Map !== "undefined";
+
+/**
+ * A data structure which is a combination of an array and a set. Adding a new
+ * member is O(1), testing for membership is O(1), and finding the index of an
+ * element is O(1). Removing elements from the set is not supported. Only
+ * strings are supported for membership.
+ */
+function ArraySet() {
+  this._array = [];
+  this._set = hasNativeMap ? new Map() : Object.create(null);
+}
+
+/**
+ * Static method for creating ArraySet instances from an existing array.
+ */
+ArraySet.fromArray = function ArraySet_fromArray(aArray, aAllowDuplicates) {
+  var set = new ArraySet();
+  for (var i = 0, len = aArray.length; i < len; i++) {
+    set.add(aArray[i], aAllowDuplicates);
+  }
+  return set;
+};
+
+/**
+ * Return how many unique items are in this ArraySet. If duplicates have been
+ * added, than those do not count towards the size.
+ *
+ * @returns Number
+ */
+ArraySet.prototype.size = function ArraySet_size() {
+  return hasNativeMap ? this._set.size : Object.getOwnPropertyNames(this._set).length;
+};
+
+/**
+ * Add the given string to this set.
+ *
+ * @param String aStr
+ */
+ArraySet.prototype.add = function ArraySet_add(aStr, aAllowDuplicates) {
+  var sStr = hasNativeMap ? aStr : util.toSetString(aStr);
+  var isDuplicate = hasNativeMap ? this.has(aStr) : has.call(this._set, sStr);
+  var idx = this._array.length;
+  if (!isDuplicate || aAllowDuplicates) {
+    this._array.push(aStr);
+  }
+  if (!isDuplicate) {
+    if (hasNativeMap) {
+      this._set.set(aStr, idx);
+    } else {
+      this._set[sStr] = idx;
+    }
+  }
+};
+
+/**
+ * Is the given string a member of this set?
+ *
+ * @param String aStr
+ */
+ArraySet.prototype.has = function ArraySet_has(aStr) {
+  if (hasNativeMap) {
+    return this._set.has(aStr);
+  } else {
+    var sStr = util.toSetString(aStr);
+    return has.call(this._set, sStr);
+  }
+};
+
+/**
+ * What is the index of the given string in the array?
+ *
+ * @param String aStr
+ */
+ArraySet.prototype.indexOf = function ArraySet_indexOf(aStr) {
+  if (hasNativeMap) {
+    var idx = this._set.get(aStr);
+    if (idx >= 0) {
+        return idx;
+    }
+  } else {
+    var sStr = util.toSetString(aStr);
+    if (has.call(this._set, sStr)) {
+      return this._set[sStr];
+    }
+  }
+
+  throw new Error('"' + aStr + '" is not in the set.');
+};
+
+/**
+ * What is the element at the given index?
+ *
+ * @param Number aIdx
+ */
+ArraySet.prototype.at = function ArraySet_at(aIdx) {
+  if (aIdx >= 0 && aIdx < this._array.length) {
+    return this._array[aIdx];
+  }
+  throw new Error('No element indexed by ' + aIdx);
+};
+
+/**
+ * Returns the array representation of this set (which has the proper indices
+ * indicated by indexOf). Note that this is a copy of the internal array used
+ * for storing the members so that no one can mess with internal state.
+ */
+ArraySet.prototype.toArray = function ArraySet_toArray() {
+  return this._array.slice();
+};
+
+exports.ArraySet = ArraySet;
+
+
+/***/ }),
+
+/***/ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/base64-vlq.js":
+/*!**********************************************************************************!*\
+  !*** ../node_modules/@homebridge/ciao/node_modules/source-map/lib/base64-vlq.js ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ *
+ * Based on the Base 64 VLQ implementation in Closure Compiler:
+ * https://code.google.com/p/closure-compiler/source/browse/trunk/src/com/google/debugging/sourcemap/Base64VLQ.java
+ *
+ * Copyright 2011 The Closure Compiler Authors. All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above
+ *    copyright notice, this list of conditions and the following
+ *    disclaimer in the documentation and/or other materials provided
+ *    with the distribution.
+ *  * Neither the name of Google Inc. nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+var base64 = __webpack_require__(/*! ./base64 */ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/base64.js");
+
+// A single base 64 digit can contain 6 bits of data. For the base 64 variable
+// length quantities we use in the source map spec, the first bit is the sign,
+// the next four bits are the actual value, and the 6th bit is the
+// continuation bit. The continuation bit tells us whether there are more
+// digits in this value following this digit.
+//
+//   Continuation
+//   |    Sign
+//   |    |
+//   V    V
+//   101011
+
+var VLQ_BASE_SHIFT = 5;
+
+// binary: 100000
+var VLQ_BASE = 1 << VLQ_BASE_SHIFT;
+
+// binary: 011111
+var VLQ_BASE_MASK = VLQ_BASE - 1;
+
+// binary: 100000
+var VLQ_CONTINUATION_BIT = VLQ_BASE;
+
+/**
+ * Converts from a two-complement value to a value where the sign bit is
+ * placed in the least significant bit.  For example, as decimals:
+ *   1 becomes 2 (10 binary), -1 becomes 3 (11 binary)
+ *   2 becomes 4 (100 binary), -2 becomes 5 (101 binary)
+ */
+function toVLQSigned(aValue) {
+  return aValue < 0
+    ? ((-aValue) << 1) + 1
+    : (aValue << 1) + 0;
+}
+
+/**
+ * Converts to a two-complement value from a value where the sign bit is
+ * placed in the least significant bit.  For example, as decimals:
+ *   2 (10 binary) becomes 1, 3 (11 binary) becomes -1
+ *   4 (100 binary) becomes 2, 5 (101 binary) becomes -2
+ */
+function fromVLQSigned(aValue) {
+  var isNegative = (aValue & 1) === 1;
+  var shifted = aValue >> 1;
+  return isNegative
+    ? -shifted
+    : shifted;
+}
+
+/**
+ * Returns the base 64 VLQ encoded value.
+ */
+exports.encode = function base64VLQ_encode(aValue) {
+  var encoded = "";
+  var digit;
+
+  var vlq = toVLQSigned(aValue);
+
+  do {
+    digit = vlq & VLQ_BASE_MASK;
+    vlq >>>= VLQ_BASE_SHIFT;
+    if (vlq > 0) {
+      // There are still more digits in this value, so we must make sure the
+      // continuation bit is marked.
+      digit |= VLQ_CONTINUATION_BIT;
+    }
+    encoded += base64.encode(digit);
+  } while (vlq > 0);
+
+  return encoded;
+};
+
+/**
+ * Decodes the next base 64 VLQ value from the given string and returns the
+ * value and the rest of the string via the out parameter.
+ */
+exports.decode = function base64VLQ_decode(aStr, aIndex, aOutParam) {
+  var strLen = aStr.length;
+  var result = 0;
+  var shift = 0;
+  var continuation, digit;
+
+  do {
+    if (aIndex >= strLen) {
+      throw new Error("Expected more digits in base 64 VLQ value.");
+    }
+
+    digit = base64.decode(aStr.charCodeAt(aIndex++));
+    if (digit === -1) {
+      throw new Error("Invalid base64 digit: " + aStr.charAt(aIndex - 1));
+    }
+
+    continuation = !!(digit & VLQ_CONTINUATION_BIT);
+    digit &= VLQ_BASE_MASK;
+    result = result + (digit << shift);
+    shift += VLQ_BASE_SHIFT;
+  } while (continuation);
+
+  aOutParam.value = fromVLQSigned(result);
+  aOutParam.rest = aIndex;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/base64.js":
+/*!******************************************************************************!*\
+  !*** ../node_modules/@homebridge/ciao/node_modules/source-map/lib/base64.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
+var intToCharMap = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split('');
+
+/**
+ * Encode an integer in the range of 0 to 63 to a single base 64 digit.
+ */
+exports.encode = function (number) {
+  if (0 <= number && number < intToCharMap.length) {
+    return intToCharMap[number];
+  }
+  throw new TypeError("Must be between 0 and 63: " + number);
+};
+
+/**
+ * Decode a single base 64 character code digit to an integer. Returns -1 on
+ * failure.
+ */
+exports.decode = function (charCode) {
+  var bigA = 65;     // 'A'
+  var bigZ = 90;     // 'Z'
+
+  var littleA = 97;  // 'a'
+  var littleZ = 122; // 'z'
+
+  var zero = 48;     // '0'
+  var nine = 57;     // '9'
+
+  var plus = 43;     // '+'
+  var slash = 47;    // '/'
+
+  var littleOffset = 26;
+  var numberOffset = 52;
+
+  // 0 - 25: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+  if (bigA <= charCode && charCode <= bigZ) {
+    return (charCode - bigA);
+  }
+
+  // 26 - 51: abcdefghijklmnopqrstuvwxyz
+  if (littleA <= charCode && charCode <= littleZ) {
+    return (charCode - littleA + littleOffset);
+  }
+
+  // 52 - 61: 0123456789
+  if (zero <= charCode && charCode <= nine) {
+    return (charCode - zero + numberOffset);
+  }
+
+  // 62: +
+  if (charCode == plus) {
+    return 62;
+  }
+
+  // 63: /
+  if (charCode == slash) {
+    return 63;
+  }
+
+  // Invalid base64 digit.
+  return -1;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/binary-search.js":
+/*!*************************************************************************************!*\
+  !*** ../node_modules/@homebridge/ciao/node_modules/source-map/lib/binary-search.js ***!
+  \*************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
+exports.GREATEST_LOWER_BOUND = 1;
+exports.LEAST_UPPER_BOUND = 2;
+
+/**
+ * Recursive implementation of binary search.
+ *
+ * @param aLow Indices here and lower do not contain the needle.
+ * @param aHigh Indices here and higher do not contain the needle.
+ * @param aNeedle The element being searched for.
+ * @param aHaystack The non-empty array being searched.
+ * @param aCompare Function which takes two elements and returns -1, 0, or 1.
+ * @param aBias Either 'binarySearch.GREATEST_LOWER_BOUND' or
+ *     'binarySearch.LEAST_UPPER_BOUND'. Specifies whether to return the
+ *     closest element that is smaller than or greater than the one we are
+ *     searching for, respectively, if the exact element cannot be found.
+ */
+function recursiveSearch(aLow, aHigh, aNeedle, aHaystack, aCompare, aBias) {
+  // This function terminates when one of the following is true:
+  //
+  //   1. We find the exact element we are looking for.
+  //
+  //   2. We did not find the exact element, but we can return the index of
+  //      the next-closest element.
+  //
+  //   3. We did not find the exact element, and there is no next-closest
+  //      element than the one we are searching for, so we return -1.
+  var mid = Math.floor((aHigh - aLow) / 2) + aLow;
+  var cmp = aCompare(aNeedle, aHaystack[mid], true);
+  if (cmp === 0) {
+    // Found the element we are looking for.
+    return mid;
+  }
+  else if (cmp > 0) {
+    // Our needle is greater than aHaystack[mid].
+    if (aHigh - mid > 1) {
+      // The element is in the upper half.
+      return recursiveSearch(mid, aHigh, aNeedle, aHaystack, aCompare, aBias);
+    }
+
+    // The exact needle element was not found in this haystack. Determine if
+    // we are in termination case (3) or (2) and return the appropriate thing.
+    if (aBias == exports.LEAST_UPPER_BOUND) {
+      return aHigh < aHaystack.length ? aHigh : -1;
+    } else {
+      return mid;
+    }
+  }
+  else {
+    // Our needle is less than aHaystack[mid].
+    if (mid - aLow > 1) {
+      // The element is in the lower half.
+      return recursiveSearch(aLow, mid, aNeedle, aHaystack, aCompare, aBias);
+    }
+
+    // we are in termination case (3) or (2) and return the appropriate thing.
+    if (aBias == exports.LEAST_UPPER_BOUND) {
+      return mid;
+    } else {
+      return aLow < 0 ? -1 : aLow;
+    }
+  }
+}
+
+/**
+ * This is an implementation of binary search which will always try and return
+ * the index of the closest element if there is no exact hit. This is because
+ * mappings between original and generated line/col pairs are single points,
+ * and there is an implicit region between each of them, so a miss just means
+ * that you aren't on the very start of a region.
+ *
+ * @param aNeedle The element you are looking for.
+ * @param aHaystack The array that is being searched.
+ * @param aCompare A function which takes the needle and an element in the
+ *     array and returns -1, 0, or 1 depending on whether the needle is less
+ *     than, equal to, or greater than the element, respectively.
+ * @param aBias Either 'binarySearch.GREATEST_LOWER_BOUND' or
+ *     'binarySearch.LEAST_UPPER_BOUND'. Specifies whether to return the
+ *     closest element that is smaller than or greater than the one we are
+ *     searching for, respectively, if the exact element cannot be found.
+ *     Defaults to 'binarySearch.GREATEST_LOWER_BOUND'.
+ */
+exports.search = function search(aNeedle, aHaystack, aCompare, aBias) {
+  if (aHaystack.length === 0) {
+    return -1;
+  }
+
+  var index = recursiveSearch(-1, aHaystack.length, aNeedle, aHaystack,
+                              aCompare, aBias || exports.GREATEST_LOWER_BOUND);
+  if (index < 0) {
+    return -1;
+  }
+
+  // We have found either the exact element, or the next-closest element than
+  // the one we are searching for. However, there may be more than one such
+  // element. Make sure we always return the smallest of these.
+  while (index - 1 >= 0) {
+    if (aCompare(aHaystack[index], aHaystack[index - 1], true) !== 0) {
+      break;
+    }
+    --index;
+  }
+
+  return index;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/mapping-list.js":
+/*!************************************************************************************!*\
+  !*** ../node_modules/@homebridge/ciao/node_modules/source-map/lib/mapping-list.js ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2014 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
+var util = __webpack_require__(/*! ./util */ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/util.js");
+
+/**
+ * Determine whether mappingB is after mappingA with respect to generated
+ * position.
+ */
+function generatedPositionAfter(mappingA, mappingB) {
+  // Optimized for most common case
+  var lineA = mappingA.generatedLine;
+  var lineB = mappingB.generatedLine;
+  var columnA = mappingA.generatedColumn;
+  var columnB = mappingB.generatedColumn;
+  return lineB > lineA || lineB == lineA && columnB >= columnA ||
+         util.compareByGeneratedPositionsInflated(mappingA, mappingB) <= 0;
+}
+
+/**
+ * A data structure to provide a sorted view of accumulated mappings in a
+ * performance conscious manner. It trades a neglibable overhead in general
+ * case for a large speedup in case of mappings being added in order.
+ */
+function MappingList() {
+  this._array = [];
+  this._sorted = true;
+  // Serves as infimum
+  this._last = {generatedLine: -1, generatedColumn: 0};
+}
+
+/**
+ * Iterate through internal items. This method takes the same arguments that
+ * `Array.prototype.forEach` takes.
+ *
+ * NOTE: The order of the mappings is NOT guaranteed.
+ */
+MappingList.prototype.unsortedForEach =
+  function MappingList_forEach(aCallback, aThisArg) {
+    this._array.forEach(aCallback, aThisArg);
+  };
+
+/**
+ * Add the given source mapping.
+ *
+ * @param Object aMapping
+ */
+MappingList.prototype.add = function MappingList_add(aMapping) {
+  if (generatedPositionAfter(this._last, aMapping)) {
+    this._last = aMapping;
+    this._array.push(aMapping);
+  } else {
+    this._sorted = false;
+    this._array.push(aMapping);
+  }
+};
+
+/**
+ * Returns the flat, sorted array of mappings. The mappings are sorted by
+ * generated position.
+ *
+ * WARNING: This method returns internal data without copying, for
+ * performance. The return value must NOT be mutated, and should be treated as
+ * an immutable borrow. If you want to take ownership, you must make your own
+ * copy.
+ */
+MappingList.prototype.toArray = function MappingList_toArray() {
+  if (!this._sorted) {
+    this._array.sort(util.compareByGeneratedPositionsInflated);
+    this._sorted = true;
+  }
+  return this._array;
+};
+
+exports.MappingList = MappingList;
+
+
+/***/ }),
+
+/***/ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/quick-sort.js":
+/*!**********************************************************************************!*\
+  !*** ../node_modules/@homebridge/ciao/node_modules/source-map/lib/quick-sort.js ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
+// It turns out that some (most?) JavaScript engines don't self-host
+// `Array.prototype.sort`. This makes sense because C++ will likely remain
+// faster than JS when doing raw CPU-intensive sorting. However, when using a
+// custom comparator function, calling back and forth between the VM's C++ and
+// JIT'd JS is rather slow *and* loses JIT type information, resulting in
+// worse generated code for the comparator function than would be optimal. In
+// fact, when sorting with a comparator, these costs outweigh the benefits of
+// sorting in C++. By using our own JS-implemented Quick Sort (below), we get
+// a ~3500ms mean speed-up in `bench/bench.html`.
+
+/**
+ * Swap the elements indexed by `x` and `y` in the array `ary`.
+ *
+ * @param {Array} ary
+ *        The array.
+ * @param {Number} x
+ *        The index of the first item.
+ * @param {Number} y
+ *        The index of the second item.
+ */
+function swap(ary, x, y) {
+  var temp = ary[x];
+  ary[x] = ary[y];
+  ary[y] = temp;
+}
+
+/**
+ * Returns a random integer within the range `low .. high` inclusive.
+ *
+ * @param {Number} low
+ *        The lower bound on the range.
+ * @param {Number} high
+ *        The upper bound on the range.
+ */
+function randomIntInRange(low, high) {
+  return Math.round(low + (Math.random() * (high - low)));
+}
+
+/**
+ * The Quick Sort algorithm.
+ *
+ * @param {Array} ary
+ *        An array to sort.
+ * @param {function} comparator
+ *        Function to use to compare two items.
+ * @param {Number} p
+ *        Start index of the array
+ * @param {Number} r
+ *        End index of the array
+ */
+function doQuickSort(ary, comparator, p, r) {
+  // If our lower bound is less than our upper bound, we (1) partition the
+  // array into two pieces and (2) recurse on each half. If it is not, this is
+  // the empty array and our base case.
+
+  if (p < r) {
+    // (1) Partitioning.
+    //
+    // The partitioning chooses a pivot between `p` and `r` and moves all
+    // elements that are less than or equal to the pivot to the before it, and
+    // all the elements that are greater than it after it. The effect is that
+    // once partition is done, the pivot is in the exact place it will be when
+    // the array is put in sorted order, and it will not need to be moved
+    // again. This runs in O(n) time.
+
+    // Always choose a random pivot so that an input array which is reverse
+    // sorted does not cause O(n^2) running time.
+    var pivotIndex = randomIntInRange(p, r);
+    var i = p - 1;
+
+    swap(ary, pivotIndex, r);
+    var pivot = ary[r];
+
+    // Immediately after `j` is incremented in this loop, the following hold
+    // true:
+    //
+    //   * Every element in `ary[p .. i]` is less than or equal to the pivot.
+    //
+    //   * Every element in `ary[i+1 .. j-1]` is greater than the pivot.
+    for (var j = p; j < r; j++) {
+      if (comparator(ary[j], pivot) <= 0) {
+        i += 1;
+        swap(ary, i, j);
+      }
+    }
+
+    swap(ary, i + 1, j);
+    var q = i + 1;
+
+    // (2) Recurse on each half.
+
+    doQuickSort(ary, comparator, p, q - 1);
+    doQuickSort(ary, comparator, q + 1, r);
+  }
+}
+
+/**
+ * Sort the given array in-place with the given comparator function.
+ *
+ * @param {Array} ary
+ *        An array to sort.
+ * @param {function} comparator
+ *        Function to use to compare two items.
+ */
+exports.quickSort = function (ary, comparator) {
+  doQuickSort(ary, comparator, 0, ary.length - 1);
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/source-map-consumer.js":
+/*!*******************************************************************************************!*\
+  !*** ../node_modules/@homebridge/ciao/node_modules/source-map/lib/source-map-consumer.js ***!
+  \*******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
+var util = __webpack_require__(/*! ./util */ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/util.js");
+var binarySearch = __webpack_require__(/*! ./binary-search */ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/binary-search.js");
+var ArraySet = __webpack_require__(/*! ./array-set */ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/array-set.js").ArraySet;
+var base64VLQ = __webpack_require__(/*! ./base64-vlq */ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/base64-vlq.js");
+var quickSort = __webpack_require__(/*! ./quick-sort */ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/quick-sort.js").quickSort;
+
+function SourceMapConsumer(aSourceMap, aSourceMapURL) {
+  var sourceMap = aSourceMap;
+  if (typeof aSourceMap === 'string') {
+    sourceMap = util.parseSourceMapInput(aSourceMap);
+  }
+
+  return sourceMap.sections != null
+    ? new IndexedSourceMapConsumer(sourceMap, aSourceMapURL)
+    : new BasicSourceMapConsumer(sourceMap, aSourceMapURL);
+}
+
+SourceMapConsumer.fromSourceMap = function(aSourceMap, aSourceMapURL) {
+  return BasicSourceMapConsumer.fromSourceMap(aSourceMap, aSourceMapURL);
+}
+
+/**
+ * The version of the source mapping spec that we are consuming.
+ */
+SourceMapConsumer.prototype._version = 3;
+
+// `__generatedMappings` and `__originalMappings` are arrays that hold the
+// parsed mapping coordinates from the source map's "mappings" attribute. They
+// are lazily instantiated, accessed via the `_generatedMappings` and
+// `_originalMappings` getters respectively, and we only parse the mappings
+// and create these arrays once queried for a source location. We jump through
+// these hoops because there can be many thousands of mappings, and parsing
+// them is expensive, so we only want to do it if we must.
+//
+// Each object in the arrays is of the form:
+//
+//     {
+//       generatedLine: The line number in the generated code,
+//       generatedColumn: The column number in the generated code,
+//       source: The path to the original source file that generated this
+//               chunk of code,
+//       originalLine: The line number in the original source that
+//                     corresponds to this chunk of generated code,
+//       originalColumn: The column number in the original source that
+//                       corresponds to this chunk of generated code,
+//       name: The name of the original symbol which generated this chunk of
+//             code.
+//     }
+//
+// All properties except for `generatedLine` and `generatedColumn` can be
+// `null`.
+//
+// `_generatedMappings` is ordered by the generated positions.
+//
+// `_originalMappings` is ordered by the original positions.
+
+SourceMapConsumer.prototype.__generatedMappings = null;
+Object.defineProperty(SourceMapConsumer.prototype, '_generatedMappings', {
+  configurable: true,
+  enumerable: true,
+  get: function () {
+    if (!this.__generatedMappings) {
+      this._parseMappings(this._mappings, this.sourceRoot);
+    }
+
+    return this.__generatedMappings;
+  }
+});
+
+SourceMapConsumer.prototype.__originalMappings = null;
+Object.defineProperty(SourceMapConsumer.prototype, '_originalMappings', {
+  configurable: true,
+  enumerable: true,
+  get: function () {
+    if (!this.__originalMappings) {
+      this._parseMappings(this._mappings, this.sourceRoot);
+    }
+
+    return this.__originalMappings;
+  }
+});
+
+SourceMapConsumer.prototype._charIsMappingSeparator =
+  function SourceMapConsumer_charIsMappingSeparator(aStr, index) {
+    var c = aStr.charAt(index);
+    return c === ";" || c === ",";
+  };
+
+/**
+ * Parse the mappings in a string in to a data structure which we can easily
+ * query (the ordered arrays in the `this.__generatedMappings` and
+ * `this.__originalMappings` properties).
+ */
+SourceMapConsumer.prototype._parseMappings =
+  function SourceMapConsumer_parseMappings(aStr, aSourceRoot) {
+    throw new Error("Subclasses must implement _parseMappings");
+  };
+
+SourceMapConsumer.GENERATED_ORDER = 1;
+SourceMapConsumer.ORIGINAL_ORDER = 2;
+
+SourceMapConsumer.GREATEST_LOWER_BOUND = 1;
+SourceMapConsumer.LEAST_UPPER_BOUND = 2;
+
+/**
+ * Iterate over each mapping between an original source/line/column and a
+ * generated line/column in this source map.
+ *
+ * @param Function aCallback
+ *        The function that is called with each mapping.
+ * @param Object aContext
+ *        Optional. If specified, this object will be the value of `this` every
+ *        time that `aCallback` is called.
+ * @param aOrder
+ *        Either `SourceMapConsumer.GENERATED_ORDER` or
+ *        `SourceMapConsumer.ORIGINAL_ORDER`. Specifies whether you want to
+ *        iterate over the mappings sorted by the generated file's line/column
+ *        order or the original's source/line/column order, respectively. Defaults to
+ *        `SourceMapConsumer.GENERATED_ORDER`.
+ */
+SourceMapConsumer.prototype.eachMapping =
+  function SourceMapConsumer_eachMapping(aCallback, aContext, aOrder) {
+    var context = aContext || null;
+    var order = aOrder || SourceMapConsumer.GENERATED_ORDER;
+
+    var mappings;
+    switch (order) {
+    case SourceMapConsumer.GENERATED_ORDER:
+      mappings = this._generatedMappings;
+      break;
+    case SourceMapConsumer.ORIGINAL_ORDER:
+      mappings = this._originalMappings;
+      break;
+    default:
+      throw new Error("Unknown order of iteration.");
+    }
+
+    var sourceRoot = this.sourceRoot;
+    mappings.map(function (mapping) {
+      var source = mapping.source === null ? null : this._sources.at(mapping.source);
+      source = util.computeSourceURL(sourceRoot, source, this._sourceMapURL);
+      return {
+        source: source,
+        generatedLine: mapping.generatedLine,
+        generatedColumn: mapping.generatedColumn,
+        originalLine: mapping.originalLine,
+        originalColumn: mapping.originalColumn,
+        name: mapping.name === null ? null : this._names.at(mapping.name)
+      };
+    }, this).forEach(aCallback, context);
+  };
+
+/**
+ * Returns all generated line and column information for the original source,
+ * line, and column provided. If no column is provided, returns all mappings
+ * corresponding to a either the line we are searching for or the next
+ * closest line that has any mappings. Otherwise, returns all mappings
+ * corresponding to the given line and either the column we are searching for
+ * or the next closest column that has any offsets.
+ *
+ * The only argument is an object with the following properties:
+ *
+ *   - source: The filename of the original source.
+ *   - line: The line number in the original source.  The line number is 1-based.
+ *   - column: Optional. the column number in the original source.
+ *    The column number is 0-based.
+ *
+ * and an array of objects is returned, each with the following properties:
+ *
+ *   - line: The line number in the generated source, or null.  The
+ *    line number is 1-based.
+ *   - column: The column number in the generated source, or null.
+ *    The column number is 0-based.
+ */
+SourceMapConsumer.prototype.allGeneratedPositionsFor =
+  function SourceMapConsumer_allGeneratedPositionsFor(aArgs) {
+    var line = util.getArg(aArgs, 'line');
+
+    // When there is no exact match, BasicSourceMapConsumer.prototype._findMapping
+    // returns the index of the closest mapping less than the needle. By
+    // setting needle.originalColumn to 0, we thus find the last mapping for
+    // the given line, provided such a mapping exists.
+    var needle = {
+      source: util.getArg(aArgs, 'source'),
+      originalLine: line,
+      originalColumn: util.getArg(aArgs, 'column', 0)
+    };
+
+    needle.source = this._findSourceIndex(needle.source);
+    if (needle.source < 0) {
+      return [];
+    }
+
+    var mappings = [];
+
+    var index = this._findMapping(needle,
+                                  this._originalMappings,
+                                  "originalLine",
+                                  "originalColumn",
+                                  util.compareByOriginalPositions,
+                                  binarySearch.LEAST_UPPER_BOUND);
+    if (index >= 0) {
+      var mapping = this._originalMappings[index];
+
+      if (aArgs.column === undefined) {
+        var originalLine = mapping.originalLine;
+
+        // Iterate until either we run out of mappings, or we run into
+        // a mapping for a different line than the one we found. Since
+        // mappings are sorted, this is guaranteed to find all mappings for
+        // the line we found.
+        while (mapping && mapping.originalLine === originalLine) {
+          mappings.push({
+            line: util.getArg(mapping, 'generatedLine', null),
+            column: util.getArg(mapping, 'generatedColumn', null),
+            lastColumn: util.getArg(mapping, 'lastGeneratedColumn', null)
+          });
+
+          mapping = this._originalMappings[++index];
+        }
+      } else {
+        var originalColumn = mapping.originalColumn;
+
+        // Iterate until either we run out of mappings, or we run into
+        // a mapping for a different line than the one we were searching for.
+        // Since mappings are sorted, this is guaranteed to find all mappings for
+        // the line we are searching for.
+        while (mapping &&
+               mapping.originalLine === line &&
+               mapping.originalColumn == originalColumn) {
+          mappings.push({
+            line: util.getArg(mapping, 'generatedLine', null),
+            column: util.getArg(mapping, 'generatedColumn', null),
+            lastColumn: util.getArg(mapping, 'lastGeneratedColumn', null)
+          });
+
+          mapping = this._originalMappings[++index];
+        }
+      }
+    }
+
+    return mappings;
+  };
+
+exports.SourceMapConsumer = SourceMapConsumer;
+
+/**
+ * A BasicSourceMapConsumer instance represents a parsed source map which we can
+ * query for information about the original file positions by giving it a file
+ * position in the generated source.
+ *
+ * The first parameter is the raw source map (either as a JSON string, or
+ * already parsed to an object). According to the spec, source maps have the
+ * following attributes:
+ *
+ *   - version: Which version of the source map spec this map is following.
+ *   - sources: An array of URLs to the original source files.
+ *   - names: An array of identifiers which can be referrenced by individual mappings.
+ *   - sourceRoot: Optional. The URL root from which all sources are relative.
+ *   - sourcesContent: Optional. An array of contents of the original source files.
+ *   - mappings: A string of base64 VLQs which contain the actual mappings.
+ *   - file: Optional. The generated file this source map is associated with.
+ *
+ * Here is an example source map, taken from the source map spec[0]:
+ *
+ *     {
+ *       version : 3,
+ *       file: "out.js",
+ *       sourceRoot : "",
+ *       sources: ["foo.js", "bar.js"],
+ *       names: ["src", "maps", "are", "fun"],
+ *       mappings: "AA,AB;;ABCDE;"
+ *     }
+ *
+ * The second parameter, if given, is a string whose value is the URL
+ * at which the source map was found.  This URL is used to compute the
+ * sources array.
+ *
+ * [0]: https://docs.google.com/document/d/1U1RGAehQwRypUTovF1KRlpiOFze0b-_2gc6fAH0KY0k/edit?pli=1#
+ */
+function BasicSourceMapConsumer(aSourceMap, aSourceMapURL) {
+  var sourceMap = aSourceMap;
+  if (typeof aSourceMap === 'string') {
+    sourceMap = util.parseSourceMapInput(aSourceMap);
+  }
+
+  var version = util.getArg(sourceMap, 'version');
+  var sources = util.getArg(sourceMap, 'sources');
+  // Sass 3.3 leaves out the 'names' array, so we deviate from the spec (which
+  // requires the array) to play nice here.
+  var names = util.getArg(sourceMap, 'names', []);
+  var sourceRoot = util.getArg(sourceMap, 'sourceRoot', null);
+  var sourcesContent = util.getArg(sourceMap, 'sourcesContent', null);
+  var mappings = util.getArg(sourceMap, 'mappings');
+  var file = util.getArg(sourceMap, 'file', null);
+
+  // Once again, Sass deviates from the spec and supplies the version as a
+  // string rather than a number, so we use loose equality checking here.
+  if (version != this._version) {
+    throw new Error('Unsupported version: ' + version);
+  }
+
+  if (sourceRoot) {
+    sourceRoot = util.normalize(sourceRoot);
+  }
+
+  sources = sources
+    .map(String)
+    // Some source maps produce relative source paths like "./foo.js" instead of
+    // "foo.js".  Normalize these first so that future comparisons will succeed.
+    // See bugzil.la/1090768.
+    .map(util.normalize)
+    // Always ensure that absolute sources are internally stored relative to
+    // the source root, if the source root is absolute. Not doing this would
+    // be particularly problematic when the source root is a prefix of the
+    // source (valid, but why??). See github issue #199 and bugzil.la/1188982.
+    .map(function (source) {
+      return sourceRoot && util.isAbsolute(sourceRoot) && util.isAbsolute(source)
+        ? util.relative(sourceRoot, source)
+        : source;
+    });
+
+  // Pass `true` below to allow duplicate names and sources. While source maps
+  // are intended to be compressed and deduplicated, the TypeScript compiler
+  // sometimes generates source maps with duplicates in them. See Github issue
+  // #72 and bugzil.la/889492.
+  this._names = ArraySet.fromArray(names.map(String), true);
+  this._sources = ArraySet.fromArray(sources, true);
+
+  this._absoluteSources = this._sources.toArray().map(function (s) {
+    return util.computeSourceURL(sourceRoot, s, aSourceMapURL);
+  });
+
+  this.sourceRoot = sourceRoot;
+  this.sourcesContent = sourcesContent;
+  this._mappings = mappings;
+  this._sourceMapURL = aSourceMapURL;
+  this.file = file;
+}
+
+BasicSourceMapConsumer.prototype = Object.create(SourceMapConsumer.prototype);
+BasicSourceMapConsumer.prototype.consumer = SourceMapConsumer;
+
+/**
+ * Utility function to find the index of a source.  Returns -1 if not
+ * found.
+ */
+BasicSourceMapConsumer.prototype._findSourceIndex = function(aSource) {
+  var relativeSource = aSource;
+  if (this.sourceRoot != null) {
+    relativeSource = util.relative(this.sourceRoot, relativeSource);
+  }
+
+  if (this._sources.has(relativeSource)) {
+    return this._sources.indexOf(relativeSource);
+  }
+
+  // Maybe aSource is an absolute URL as returned by |sources|.  In
+  // this case we can't simply undo the transform.
+  var i;
+  for (i = 0; i < this._absoluteSources.length; ++i) {
+    if (this._absoluteSources[i] == aSource) {
+      return i;
+    }
+  }
+
+  return -1;
+};
+
+/**
+ * Create a BasicSourceMapConsumer from a SourceMapGenerator.
+ *
+ * @param SourceMapGenerator aSourceMap
+ *        The source map that will be consumed.
+ * @param String aSourceMapURL
+ *        The URL at which the source map can be found (optional)
+ * @returns BasicSourceMapConsumer
+ */
+BasicSourceMapConsumer.fromSourceMap =
+  function SourceMapConsumer_fromSourceMap(aSourceMap, aSourceMapURL) {
+    var smc = Object.create(BasicSourceMapConsumer.prototype);
+
+    var names = smc._names = ArraySet.fromArray(aSourceMap._names.toArray(), true);
+    var sources = smc._sources = ArraySet.fromArray(aSourceMap._sources.toArray(), true);
+    smc.sourceRoot = aSourceMap._sourceRoot;
+    smc.sourcesContent = aSourceMap._generateSourcesContent(smc._sources.toArray(),
+                                                            smc.sourceRoot);
+    smc.file = aSourceMap._file;
+    smc._sourceMapURL = aSourceMapURL;
+    smc._absoluteSources = smc._sources.toArray().map(function (s) {
+      return util.computeSourceURL(smc.sourceRoot, s, aSourceMapURL);
+    });
+
+    // Because we are modifying the entries (by converting string sources and
+    // names to indices into the sources and names ArraySets), we have to make
+    // a copy of the entry or else bad things happen. Shared mutable state
+    // strikes again! See github issue #191.
+
+    var generatedMappings = aSourceMap._mappings.toArray().slice();
+    var destGeneratedMappings = smc.__generatedMappings = [];
+    var destOriginalMappings = smc.__originalMappings = [];
+
+    for (var i = 0, length = generatedMappings.length; i < length; i++) {
+      var srcMapping = generatedMappings[i];
+      var destMapping = new Mapping;
+      destMapping.generatedLine = srcMapping.generatedLine;
+      destMapping.generatedColumn = srcMapping.generatedColumn;
+
+      if (srcMapping.source) {
+        destMapping.source = sources.indexOf(srcMapping.source);
+        destMapping.originalLine = srcMapping.originalLine;
+        destMapping.originalColumn = srcMapping.originalColumn;
+
+        if (srcMapping.name) {
+          destMapping.name = names.indexOf(srcMapping.name);
+        }
+
+        destOriginalMappings.push(destMapping);
+      }
+
+      destGeneratedMappings.push(destMapping);
+    }
+
+    quickSort(smc.__originalMappings, util.compareByOriginalPositions);
+
+    return smc;
+  };
+
+/**
+ * The version of the source mapping spec that we are consuming.
+ */
+BasicSourceMapConsumer.prototype._version = 3;
+
+/**
+ * The list of original sources.
+ */
+Object.defineProperty(BasicSourceMapConsumer.prototype, 'sources', {
+  get: function () {
+    return this._absoluteSources.slice();
+  }
+});
+
+/**
+ * Provide the JIT with a nice shape / hidden class.
+ */
+function Mapping() {
+  this.generatedLine = 0;
+  this.generatedColumn = 0;
+  this.source = null;
+  this.originalLine = null;
+  this.originalColumn = null;
+  this.name = null;
+}
+
+/**
+ * Parse the mappings in a string in to a data structure which we can easily
+ * query (the ordered arrays in the `this.__generatedMappings` and
+ * `this.__originalMappings` properties).
+ */
+BasicSourceMapConsumer.prototype._parseMappings =
+  function SourceMapConsumer_parseMappings(aStr, aSourceRoot) {
+    var generatedLine = 1;
+    var previousGeneratedColumn = 0;
+    var previousOriginalLine = 0;
+    var previousOriginalColumn = 0;
+    var previousSource = 0;
+    var previousName = 0;
+    var length = aStr.length;
+    var index = 0;
+    var cachedSegments = {};
+    var temp = {};
+    var originalMappings = [];
+    var generatedMappings = [];
+    var mapping, str, segment, end, value;
+
+    while (index < length) {
+      if (aStr.charAt(index) === ';') {
+        generatedLine++;
+        index++;
+        previousGeneratedColumn = 0;
+      }
+      else if (aStr.charAt(index) === ',') {
+        index++;
+      }
+      else {
+        mapping = new Mapping();
+        mapping.generatedLine = generatedLine;
+
+        // Because each offset is encoded relative to the previous one,
+        // many segments often have the same encoding. We can exploit this
+        // fact by caching the parsed variable length fields of each segment,
+        // allowing us to avoid a second parse if we encounter the same
+        // segment again.
+        for (end = index; end < length; end++) {
+          if (this._charIsMappingSeparator(aStr, end)) {
+            break;
+          }
+        }
+        str = aStr.slice(index, end);
+
+        segment = cachedSegments[str];
+        if (segment) {
+          index += str.length;
+        } else {
+          segment = [];
+          while (index < end) {
+            base64VLQ.decode(aStr, index, temp);
+            value = temp.value;
+            index = temp.rest;
+            segment.push(value);
+          }
+
+          if (segment.length === 2) {
+            throw new Error('Found a source, but no line and column');
+          }
+
+          if (segment.length === 3) {
+            throw new Error('Found a source and line, but no column');
+          }
+
+          cachedSegments[str] = segment;
+        }
+
+        // Generated column.
+        mapping.generatedColumn = previousGeneratedColumn + segment[0];
+        previousGeneratedColumn = mapping.generatedColumn;
+
+        if (segment.length > 1) {
+          // Original source.
+          mapping.source = previousSource + segment[1];
+          previousSource += segment[1];
+
+          // Original line.
+          mapping.originalLine = previousOriginalLine + segment[2];
+          previousOriginalLine = mapping.originalLine;
+          // Lines are stored 0-based
+          mapping.originalLine += 1;
+
+          // Original column.
+          mapping.originalColumn = previousOriginalColumn + segment[3];
+          previousOriginalColumn = mapping.originalColumn;
+
+          if (segment.length > 4) {
+            // Original name.
+            mapping.name = previousName + segment[4];
+            previousName += segment[4];
+          }
+        }
+
+        generatedMappings.push(mapping);
+        if (typeof mapping.originalLine === 'number') {
+          originalMappings.push(mapping);
+        }
+      }
+    }
+
+    quickSort(generatedMappings, util.compareByGeneratedPositionsDeflated);
+    this.__generatedMappings = generatedMappings;
+
+    quickSort(originalMappings, util.compareByOriginalPositions);
+    this.__originalMappings = originalMappings;
+  };
+
+/**
+ * Find the mapping that best matches the hypothetical "needle" mapping that
+ * we are searching for in the given "haystack" of mappings.
+ */
+BasicSourceMapConsumer.prototype._findMapping =
+  function SourceMapConsumer_findMapping(aNeedle, aMappings, aLineName,
+                                         aColumnName, aComparator, aBias) {
+    // To return the position we are searching for, we must first find the
+    // mapping for the given position and then return the opposite position it
+    // points to. Because the mappings are sorted, we can use binary search to
+    // find the best mapping.
+
+    if (aNeedle[aLineName] <= 0) {
+      throw new TypeError('Line must be greater than or equal to 1, got '
+                          + aNeedle[aLineName]);
+    }
+    if (aNeedle[aColumnName] < 0) {
+      throw new TypeError('Column must be greater than or equal to 0, got '
+                          + aNeedle[aColumnName]);
+    }
+
+    return binarySearch.search(aNeedle, aMappings, aComparator, aBias);
+  };
+
+/**
+ * Compute the last column for each generated mapping. The last column is
+ * inclusive.
+ */
+BasicSourceMapConsumer.prototype.computeColumnSpans =
+  function SourceMapConsumer_computeColumnSpans() {
+    for (var index = 0; index < this._generatedMappings.length; ++index) {
+      var mapping = this._generatedMappings[index];
+
+      // Mappings do not contain a field for the last generated columnt. We
+      // can come up with an optimistic estimate, however, by assuming that
+      // mappings are contiguous (i.e. given two consecutive mappings, the
+      // first mapping ends where the second one starts).
+      if (index + 1 < this._generatedMappings.length) {
+        var nextMapping = this._generatedMappings[index + 1];
+
+        if (mapping.generatedLine === nextMapping.generatedLine) {
+          mapping.lastGeneratedColumn = nextMapping.generatedColumn - 1;
+          continue;
+        }
+      }
+
+      // The last mapping for each line spans the entire line.
+      mapping.lastGeneratedColumn = Infinity;
+    }
+  };
+
+/**
+ * Returns the original source, line, and column information for the generated
+ * source's line and column positions provided. The only argument is an object
+ * with the following properties:
+ *
+ *   - line: The line number in the generated source.  The line number
+ *     is 1-based.
+ *   - column: The column number in the generated source.  The column
+ *     number is 0-based.
+ *   - bias: Either 'SourceMapConsumer.GREATEST_LOWER_BOUND' or
+ *     'SourceMapConsumer.LEAST_UPPER_BOUND'. Specifies whether to return the
+ *     closest element that is smaller than or greater than the one we are
+ *     searching for, respectively, if the exact element cannot be found.
+ *     Defaults to 'SourceMapConsumer.GREATEST_LOWER_BOUND'.
+ *
+ * and an object is returned with the following properties:
+ *
+ *   - source: The original source file, or null.
+ *   - line: The line number in the original source, or null.  The
+ *     line number is 1-based.
+ *   - column: The column number in the original source, or null.  The
+ *     column number is 0-based.
+ *   - name: The original identifier, or null.
+ */
+BasicSourceMapConsumer.prototype.originalPositionFor =
+  function SourceMapConsumer_originalPositionFor(aArgs) {
+    var needle = {
+      generatedLine: util.getArg(aArgs, 'line'),
+      generatedColumn: util.getArg(aArgs, 'column')
+    };
+
+    var index = this._findMapping(
+      needle,
+      this._generatedMappings,
+      "generatedLine",
+      "generatedColumn",
+      util.compareByGeneratedPositionsDeflated,
+      util.getArg(aArgs, 'bias', SourceMapConsumer.GREATEST_LOWER_BOUND)
+    );
+
+    if (index >= 0) {
+      var mapping = this._generatedMappings[index];
+
+      if (mapping.generatedLine === needle.generatedLine) {
+        var source = util.getArg(mapping, 'source', null);
+        if (source !== null) {
+          source = this._sources.at(source);
+          source = util.computeSourceURL(this.sourceRoot, source, this._sourceMapURL);
+        }
+        var name = util.getArg(mapping, 'name', null);
+        if (name !== null) {
+          name = this._names.at(name);
+        }
+        return {
+          source: source,
+          line: util.getArg(mapping, 'originalLine', null),
+          column: util.getArg(mapping, 'originalColumn', null),
+          name: name
+        };
+      }
+    }
+
+    return {
+      source: null,
+      line: null,
+      column: null,
+      name: null
+    };
+  };
+
+/**
+ * Return true if we have the source content for every source in the source
+ * map, false otherwise.
+ */
+BasicSourceMapConsumer.prototype.hasContentsOfAllSources =
+  function BasicSourceMapConsumer_hasContentsOfAllSources() {
+    if (!this.sourcesContent) {
+      return false;
+    }
+    return this.sourcesContent.length >= this._sources.size() &&
+      !this.sourcesContent.some(function (sc) { return sc == null; });
+  };
+
+/**
+ * Returns the original source content. The only argument is the url of the
+ * original source file. Returns null if no original source content is
+ * available.
+ */
+BasicSourceMapConsumer.prototype.sourceContentFor =
+  function SourceMapConsumer_sourceContentFor(aSource, nullOnMissing) {
+    if (!this.sourcesContent) {
+      return null;
+    }
+
+    var index = this._findSourceIndex(aSource);
+    if (index >= 0) {
+      return this.sourcesContent[index];
+    }
+
+    var relativeSource = aSource;
+    if (this.sourceRoot != null) {
+      relativeSource = util.relative(this.sourceRoot, relativeSource);
+    }
+
+    var url;
+    if (this.sourceRoot != null
+        && (url = util.urlParse(this.sourceRoot))) {
+      // XXX: file:// URIs and absolute paths lead to unexpected behavior for
+      // many users. We can help them out when they expect file:// URIs to
+      // behave like it would if they were running a local HTTP server. See
+      // https://bugzilla.mozilla.org/show_bug.cgi?id=885597.
+      var fileUriAbsPath = relativeSource.replace(/^file:\/\//, "");
+      if (url.scheme == "file"
+          && this._sources.has(fileUriAbsPath)) {
+        return this.sourcesContent[this._sources.indexOf(fileUriAbsPath)]
+      }
+
+      if ((!url.path || url.path == "/")
+          && this._sources.has("/" + relativeSource)) {
+        return this.sourcesContent[this._sources.indexOf("/" + relativeSource)];
+      }
+    }
+
+    // This function is used recursively from
+    // IndexedSourceMapConsumer.prototype.sourceContentFor. In that case, we
+    // don't want to throw if we can't find the source - we just want to
+    // return null, so we provide a flag to exit gracefully.
+    if (nullOnMissing) {
+      return null;
+    }
+    else {
+      throw new Error('"' + relativeSource + '" is not in the SourceMap.');
+    }
+  };
+
+/**
+ * Returns the generated line and column information for the original source,
+ * line, and column positions provided. The only argument is an object with
+ * the following properties:
+ *
+ *   - source: The filename of the original source.
+ *   - line: The line number in the original source.  The line number
+ *     is 1-based.
+ *   - column: The column number in the original source.  The column
+ *     number is 0-based.
+ *   - bias: Either 'SourceMapConsumer.GREATEST_LOWER_BOUND' or
+ *     'SourceMapConsumer.LEAST_UPPER_BOUND'. Specifies whether to return the
+ *     closest element that is smaller than or greater than the one we are
+ *     searching for, respectively, if the exact element cannot be found.
+ *     Defaults to 'SourceMapConsumer.GREATEST_LOWER_BOUND'.
+ *
+ * and an object is returned with the following properties:
+ *
+ *   - line: The line number in the generated source, or null.  The
+ *     line number is 1-based.
+ *   - column: The column number in the generated source, or null.
+ *     The column number is 0-based.
+ */
+BasicSourceMapConsumer.prototype.generatedPositionFor =
+  function SourceMapConsumer_generatedPositionFor(aArgs) {
+    var source = util.getArg(aArgs, 'source');
+    source = this._findSourceIndex(source);
+    if (source < 0) {
+      return {
+        line: null,
+        column: null,
+        lastColumn: null
+      };
+    }
+
+    var needle = {
+      source: source,
+      originalLine: util.getArg(aArgs, 'line'),
+      originalColumn: util.getArg(aArgs, 'column')
+    };
+
+    var index = this._findMapping(
+      needle,
+      this._originalMappings,
+      "originalLine",
+      "originalColumn",
+      util.compareByOriginalPositions,
+      util.getArg(aArgs, 'bias', SourceMapConsumer.GREATEST_LOWER_BOUND)
+    );
+
+    if (index >= 0) {
+      var mapping = this._originalMappings[index];
+
+      if (mapping.source === needle.source) {
+        return {
+          line: util.getArg(mapping, 'generatedLine', null),
+          column: util.getArg(mapping, 'generatedColumn', null),
+          lastColumn: util.getArg(mapping, 'lastGeneratedColumn', null)
+        };
+      }
+    }
+
+    return {
+      line: null,
+      column: null,
+      lastColumn: null
+    };
+  };
+
+exports.BasicSourceMapConsumer = BasicSourceMapConsumer;
+
+/**
+ * An IndexedSourceMapConsumer instance represents a parsed source map which
+ * we can query for information. It differs from BasicSourceMapConsumer in
+ * that it takes "indexed" source maps (i.e. ones with a "sections" field) as
+ * input.
+ *
+ * The first parameter is a raw source map (either as a JSON string, or already
+ * parsed to an object). According to the spec for indexed source maps, they
+ * have the following attributes:
+ *
+ *   - version: Which version of the source map spec this map is following.
+ *   - file: Optional. The generated file this source map is associated with.
+ *   - sections: A list of section definitions.
+ *
+ * Each value under the "sections" field has two fields:
+ *   - offset: The offset into the original specified at which this section
+ *       begins to apply, defined as an object with a "line" and "column"
+ *       field.
+ *   - map: A source map definition. This source map could also be indexed,
+ *       but doesn't have to be.
+ *
+ * Instead of the "map" field, it's also possible to have a "url" field
+ * specifying a URL to retrieve a source map from, but that's currently
+ * unsupported.
+ *
+ * Here's an example source map, taken from the source map spec[0], but
+ * modified to omit a section which uses the "url" field.
+ *
+ *  {
+ *    version : 3,
+ *    file: "app.js",
+ *    sections: [{
+ *      offset: {line:100, column:10},
+ *      map: {
+ *        version : 3,
+ *        file: "section.js",
+ *        sources: ["foo.js", "bar.js"],
+ *        names: ["src", "maps", "are", "fun"],
+ *        mappings: "AAAA,E;;ABCDE;"
+ *      }
+ *    }],
+ *  }
+ *
+ * The second parameter, if given, is a string whose value is the URL
+ * at which the source map was found.  This URL is used to compute the
+ * sources array.
+ *
+ * [0]: https://docs.google.com/document/d/1U1RGAehQwRypUTovF1KRlpiOFze0b-_2gc6fAH0KY0k/edit#heading=h.535es3xeprgt
+ */
+function IndexedSourceMapConsumer(aSourceMap, aSourceMapURL) {
+  var sourceMap = aSourceMap;
+  if (typeof aSourceMap === 'string') {
+    sourceMap = util.parseSourceMapInput(aSourceMap);
+  }
+
+  var version = util.getArg(sourceMap, 'version');
+  var sections = util.getArg(sourceMap, 'sections');
+
+  if (version != this._version) {
+    throw new Error('Unsupported version: ' + version);
+  }
+
+  this._sources = new ArraySet();
+  this._names = new ArraySet();
+
+  var lastOffset = {
+    line: -1,
+    column: 0
+  };
+  this._sections = sections.map(function (s) {
+    if (s.url) {
+      // The url field will require support for asynchronicity.
+      // See https://github.com/mozilla/source-map/issues/16
+      throw new Error('Support for url field in sections not implemented.');
+    }
+    var offset = util.getArg(s, 'offset');
+    var offsetLine = util.getArg(offset, 'line');
+    var offsetColumn = util.getArg(offset, 'column');
+
+    if (offsetLine < lastOffset.line ||
+        (offsetLine === lastOffset.line && offsetColumn < lastOffset.column)) {
+      throw new Error('Section offsets must be ordered and non-overlapping.');
+    }
+    lastOffset = offset;
+
+    return {
+      generatedOffset: {
+        // The offset fields are 0-based, but we use 1-based indices when
+        // encoding/decoding from VLQ.
+        generatedLine: offsetLine + 1,
+        generatedColumn: offsetColumn + 1
+      },
+      consumer: new SourceMapConsumer(util.getArg(s, 'map'), aSourceMapURL)
+    }
+  });
+}
+
+IndexedSourceMapConsumer.prototype = Object.create(SourceMapConsumer.prototype);
+IndexedSourceMapConsumer.prototype.constructor = SourceMapConsumer;
+
+/**
+ * The version of the source mapping spec that we are consuming.
+ */
+IndexedSourceMapConsumer.prototype._version = 3;
+
+/**
+ * The list of original sources.
+ */
+Object.defineProperty(IndexedSourceMapConsumer.prototype, 'sources', {
+  get: function () {
+    var sources = [];
+    for (var i = 0; i < this._sections.length; i++) {
+      for (var j = 0; j < this._sections[i].consumer.sources.length; j++) {
+        sources.push(this._sections[i].consumer.sources[j]);
+      }
+    }
+    return sources;
+  }
+});
+
+/**
+ * Returns the original source, line, and column information for the generated
+ * source's line and column positions provided. The only argument is an object
+ * with the following properties:
+ *
+ *   - line: The line number in the generated source.  The line number
+ *     is 1-based.
+ *   - column: The column number in the generated source.  The column
+ *     number is 0-based.
+ *
+ * and an object is returned with the following properties:
+ *
+ *   - source: The original source file, or null.
+ *   - line: The line number in the original source, or null.  The
+ *     line number is 1-based.
+ *   - column: The column number in the original source, or null.  The
+ *     column number is 0-based.
+ *   - name: The original identifier, or null.
+ */
+IndexedSourceMapConsumer.prototype.originalPositionFor =
+  function IndexedSourceMapConsumer_originalPositionFor(aArgs) {
+    var needle = {
+      generatedLine: util.getArg(aArgs, 'line'),
+      generatedColumn: util.getArg(aArgs, 'column')
+    };
+
+    // Find the section containing the generated position we're trying to map
+    // to an original position.
+    var sectionIndex = binarySearch.search(needle, this._sections,
+      function(needle, section) {
+        var cmp = needle.generatedLine - section.generatedOffset.generatedLine;
+        if (cmp) {
+          return cmp;
+        }
+
+        return (needle.generatedColumn -
+                section.generatedOffset.generatedColumn);
+      });
+    var section = this._sections[sectionIndex];
+
+    if (!section) {
+      return {
+        source: null,
+        line: null,
+        column: null,
+        name: null
+      };
+    }
+
+    return section.consumer.originalPositionFor({
+      line: needle.generatedLine -
+        (section.generatedOffset.generatedLine - 1),
+      column: needle.generatedColumn -
+        (section.generatedOffset.generatedLine === needle.generatedLine
+         ? section.generatedOffset.generatedColumn - 1
+         : 0),
+      bias: aArgs.bias
+    });
+  };
+
+/**
+ * Return true if we have the source content for every source in the source
+ * map, false otherwise.
+ */
+IndexedSourceMapConsumer.prototype.hasContentsOfAllSources =
+  function IndexedSourceMapConsumer_hasContentsOfAllSources() {
+    return this._sections.every(function (s) {
+      return s.consumer.hasContentsOfAllSources();
+    });
+  };
+
+/**
+ * Returns the original source content. The only argument is the url of the
+ * original source file. Returns null if no original source content is
+ * available.
+ */
+IndexedSourceMapConsumer.prototype.sourceContentFor =
+  function IndexedSourceMapConsumer_sourceContentFor(aSource, nullOnMissing) {
+    for (var i = 0; i < this._sections.length; i++) {
+      var section = this._sections[i];
+
+      var content = section.consumer.sourceContentFor(aSource, true);
+      if (content) {
+        return content;
+      }
+    }
+    if (nullOnMissing) {
+      return null;
+    }
+    else {
+      throw new Error('"' + aSource + '" is not in the SourceMap.');
+    }
+  };
+
+/**
+ * Returns the generated line and column information for the original source,
+ * line, and column positions provided. The only argument is an object with
+ * the following properties:
+ *
+ *   - source: The filename of the original source.
+ *   - line: The line number in the original source.  The line number
+ *     is 1-based.
+ *   - column: The column number in the original source.  The column
+ *     number is 0-based.
+ *
+ * and an object is returned with the following properties:
+ *
+ *   - line: The line number in the generated source, or null.  The
+ *     line number is 1-based. 
+ *   - column: The column number in the generated source, or null.
+ *     The column number is 0-based.
+ */
+IndexedSourceMapConsumer.prototype.generatedPositionFor =
+  function IndexedSourceMapConsumer_generatedPositionFor(aArgs) {
+    for (var i = 0; i < this._sections.length; i++) {
+      var section = this._sections[i];
+
+      // Only consider this section if the requested source is in the list of
+      // sources of the consumer.
+      if (section.consumer._findSourceIndex(util.getArg(aArgs, 'source')) === -1) {
+        continue;
+      }
+      var generatedPosition = section.consumer.generatedPositionFor(aArgs);
+      if (generatedPosition) {
+        var ret = {
+          line: generatedPosition.line +
+            (section.generatedOffset.generatedLine - 1),
+          column: generatedPosition.column +
+            (section.generatedOffset.generatedLine === generatedPosition.line
+             ? section.generatedOffset.generatedColumn - 1
+             : 0)
+        };
+        return ret;
+      }
+    }
+
+    return {
+      line: null,
+      column: null
+    };
+  };
+
+/**
+ * Parse the mappings in a string in to a data structure which we can easily
+ * query (the ordered arrays in the `this.__generatedMappings` and
+ * `this.__originalMappings` properties).
+ */
+IndexedSourceMapConsumer.prototype._parseMappings =
+  function IndexedSourceMapConsumer_parseMappings(aStr, aSourceRoot) {
+    this.__generatedMappings = [];
+    this.__originalMappings = [];
+    for (var i = 0; i < this._sections.length; i++) {
+      var section = this._sections[i];
+      var sectionMappings = section.consumer._generatedMappings;
+      for (var j = 0; j < sectionMappings.length; j++) {
+        var mapping = sectionMappings[j];
+
+        var source = section.consumer._sources.at(mapping.source);
+        source = util.computeSourceURL(section.consumer.sourceRoot, source, this._sourceMapURL);
+        this._sources.add(source);
+        source = this._sources.indexOf(source);
+
+        var name = null;
+        if (mapping.name) {
+          name = section.consumer._names.at(mapping.name);
+          this._names.add(name);
+          name = this._names.indexOf(name);
+        }
+
+        // The mappings coming from the consumer for the section have
+        // generated positions relative to the start of the section, so we
+        // need to offset them to be relative to the start of the concatenated
+        // generated file.
+        var adjustedMapping = {
+          source: source,
+          generatedLine: mapping.generatedLine +
+            (section.generatedOffset.generatedLine - 1),
+          generatedColumn: mapping.generatedColumn +
+            (section.generatedOffset.generatedLine === mapping.generatedLine
+            ? section.generatedOffset.generatedColumn - 1
+            : 0),
+          originalLine: mapping.originalLine,
+          originalColumn: mapping.originalColumn,
+          name: name
+        };
+
+        this.__generatedMappings.push(adjustedMapping);
+        if (typeof adjustedMapping.originalLine === 'number') {
+          this.__originalMappings.push(adjustedMapping);
+        }
+      }
+    }
+
+    quickSort(this.__generatedMappings, util.compareByGeneratedPositionsDeflated);
+    quickSort(this.__originalMappings, util.compareByOriginalPositions);
+  };
+
+exports.IndexedSourceMapConsumer = IndexedSourceMapConsumer;
+
+
+/***/ }),
+
+/***/ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/source-map-generator.js":
+/*!********************************************************************************************!*\
+  !*** ../node_modules/@homebridge/ciao/node_modules/source-map/lib/source-map-generator.js ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
+var base64VLQ = __webpack_require__(/*! ./base64-vlq */ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/base64-vlq.js");
+var util = __webpack_require__(/*! ./util */ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/util.js");
+var ArraySet = __webpack_require__(/*! ./array-set */ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/array-set.js").ArraySet;
+var MappingList = __webpack_require__(/*! ./mapping-list */ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/mapping-list.js").MappingList;
+
+/**
+ * An instance of the SourceMapGenerator represents a source map which is
+ * being built incrementally. You may pass an object with the following
+ * properties:
+ *
+ *   - file: The filename of the generated source.
+ *   - sourceRoot: A root for all relative URLs in this source map.
+ */
+function SourceMapGenerator(aArgs) {
+  if (!aArgs) {
+    aArgs = {};
+  }
+  this._file = util.getArg(aArgs, 'file', null);
+  this._sourceRoot = util.getArg(aArgs, 'sourceRoot', null);
+  this._skipValidation = util.getArg(aArgs, 'skipValidation', false);
+  this._sources = new ArraySet();
+  this._names = new ArraySet();
+  this._mappings = new MappingList();
+  this._sourcesContents = null;
+}
+
+SourceMapGenerator.prototype._version = 3;
+
+/**
+ * Creates a new SourceMapGenerator based on a SourceMapConsumer
+ *
+ * @param aSourceMapConsumer The SourceMap.
+ */
+SourceMapGenerator.fromSourceMap =
+  function SourceMapGenerator_fromSourceMap(aSourceMapConsumer) {
+    var sourceRoot = aSourceMapConsumer.sourceRoot;
+    var generator = new SourceMapGenerator({
+      file: aSourceMapConsumer.file,
+      sourceRoot: sourceRoot
+    });
+    aSourceMapConsumer.eachMapping(function (mapping) {
+      var newMapping = {
+        generated: {
+          line: mapping.generatedLine,
+          column: mapping.generatedColumn
+        }
+      };
+
+      if (mapping.source != null) {
+        newMapping.source = mapping.source;
+        if (sourceRoot != null) {
+          newMapping.source = util.relative(sourceRoot, newMapping.source);
+        }
+
+        newMapping.original = {
+          line: mapping.originalLine,
+          column: mapping.originalColumn
+        };
+
+        if (mapping.name != null) {
+          newMapping.name = mapping.name;
+        }
+      }
+
+      generator.addMapping(newMapping);
+    });
+    aSourceMapConsumer.sources.forEach(function (sourceFile) {
+      var sourceRelative = sourceFile;
+      if (sourceRoot !== null) {
+        sourceRelative = util.relative(sourceRoot, sourceFile);
+      }
+
+      if (!generator._sources.has(sourceRelative)) {
+        generator._sources.add(sourceRelative);
+      }
+
+      var content = aSourceMapConsumer.sourceContentFor(sourceFile);
+      if (content != null) {
+        generator.setSourceContent(sourceFile, content);
+      }
+    });
+    return generator;
+  };
+
+/**
+ * Add a single mapping from original source line and column to the generated
+ * source's line and column for this source map being created. The mapping
+ * object should have the following properties:
+ *
+ *   - generated: An object with the generated line and column positions.
+ *   - original: An object with the original line and column positions.
+ *   - source: The original source file (relative to the sourceRoot).
+ *   - name: An optional original token name for this mapping.
+ */
+SourceMapGenerator.prototype.addMapping =
+  function SourceMapGenerator_addMapping(aArgs) {
+    var generated = util.getArg(aArgs, 'generated');
+    var original = util.getArg(aArgs, 'original', null);
+    var source = util.getArg(aArgs, 'source', null);
+    var name = util.getArg(aArgs, 'name', null);
+
+    if (!this._skipValidation) {
+      this._validateMapping(generated, original, source, name);
+    }
+
+    if (source != null) {
+      source = String(source);
+      if (!this._sources.has(source)) {
+        this._sources.add(source);
+      }
+    }
+
+    if (name != null) {
+      name = String(name);
+      if (!this._names.has(name)) {
+        this._names.add(name);
+      }
+    }
+
+    this._mappings.add({
+      generatedLine: generated.line,
+      generatedColumn: generated.column,
+      originalLine: original != null && original.line,
+      originalColumn: original != null && original.column,
+      source: source,
+      name: name
+    });
+  };
+
+/**
+ * Set the source content for a source file.
+ */
+SourceMapGenerator.prototype.setSourceContent =
+  function SourceMapGenerator_setSourceContent(aSourceFile, aSourceContent) {
+    var source = aSourceFile;
+    if (this._sourceRoot != null) {
+      source = util.relative(this._sourceRoot, source);
+    }
+
+    if (aSourceContent != null) {
+      // Add the source content to the _sourcesContents map.
+      // Create a new _sourcesContents map if the property is null.
+      if (!this._sourcesContents) {
+        this._sourcesContents = Object.create(null);
+      }
+      this._sourcesContents[util.toSetString(source)] = aSourceContent;
+    } else if (this._sourcesContents) {
+      // Remove the source file from the _sourcesContents map.
+      // If the _sourcesContents map is empty, set the property to null.
+      delete this._sourcesContents[util.toSetString(source)];
+      if (Object.keys(this._sourcesContents).length === 0) {
+        this._sourcesContents = null;
+      }
+    }
+  };
+
+/**
+ * Applies the mappings of a sub-source-map for a specific source file to the
+ * source map being generated. Each mapping to the supplied source file is
+ * rewritten using the supplied source map. Note: The resolution for the
+ * resulting mappings is the minimium of this map and the supplied map.
+ *
+ * @param aSourceMapConsumer The source map to be applied.
+ * @param aSourceFile Optional. The filename of the source file.
+ *        If omitted, SourceMapConsumer's file property will be used.
+ * @param aSourceMapPath Optional. The dirname of the path to the source map
+ *        to be applied. If relative, it is relative to the SourceMapConsumer.
+ *        This parameter is needed when the two source maps aren't in the same
+ *        directory, and the source map to be applied contains relative source
+ *        paths. If so, those relative source paths need to be rewritten
+ *        relative to the SourceMapGenerator.
+ */
+SourceMapGenerator.prototype.applySourceMap =
+  function SourceMapGenerator_applySourceMap(aSourceMapConsumer, aSourceFile, aSourceMapPath) {
+    var sourceFile = aSourceFile;
+    // If aSourceFile is omitted, we will use the file property of the SourceMap
+    if (aSourceFile == null) {
+      if (aSourceMapConsumer.file == null) {
+        throw new Error(
+          'SourceMapGenerator.prototype.applySourceMap requires either an explicit source file, ' +
+          'or the source map\'s "file" property. Both were omitted.'
+        );
+      }
+      sourceFile = aSourceMapConsumer.file;
+    }
+    var sourceRoot = this._sourceRoot;
+    // Make "sourceFile" relative if an absolute Url is passed.
+    if (sourceRoot != null) {
+      sourceFile = util.relative(sourceRoot, sourceFile);
+    }
+    // Applying the SourceMap can add and remove items from the sources and
+    // the names array.
+    var newSources = new ArraySet();
+    var newNames = new ArraySet();
+
+    // Find mappings for the "sourceFile"
+    this._mappings.unsortedForEach(function (mapping) {
+      if (mapping.source === sourceFile && mapping.originalLine != null) {
+        // Check if it can be mapped by the source map, then update the mapping.
+        var original = aSourceMapConsumer.originalPositionFor({
+          line: mapping.originalLine,
+          column: mapping.originalColumn
+        });
+        if (original.source != null) {
+          // Copy mapping
+          mapping.source = original.source;
+          if (aSourceMapPath != null) {
+            mapping.source = util.join(aSourceMapPath, mapping.source)
+          }
+          if (sourceRoot != null) {
+            mapping.source = util.relative(sourceRoot, mapping.source);
+          }
+          mapping.originalLine = original.line;
+          mapping.originalColumn = original.column;
+          if (original.name != null) {
+            mapping.name = original.name;
+          }
+        }
+      }
+
+      var source = mapping.source;
+      if (source != null && !newSources.has(source)) {
+        newSources.add(source);
+      }
+
+      var name = mapping.name;
+      if (name != null && !newNames.has(name)) {
+        newNames.add(name);
+      }
+
+    }, this);
+    this._sources = newSources;
+    this._names = newNames;
+
+    // Copy sourcesContents of applied map.
+    aSourceMapConsumer.sources.forEach(function (sourceFile) {
+      var content = aSourceMapConsumer.sourceContentFor(sourceFile);
+      if (content != null) {
+        if (aSourceMapPath != null) {
+          sourceFile = util.join(aSourceMapPath, sourceFile);
+        }
+        if (sourceRoot != null) {
+          sourceFile = util.relative(sourceRoot, sourceFile);
+        }
+        this.setSourceContent(sourceFile, content);
+      }
+    }, this);
+  };
+
+/**
+ * A mapping can have one of the three levels of data:
+ *
+ *   1. Just the generated position.
+ *   2. The Generated position, original position, and original source.
+ *   3. Generated and original position, original source, as well as a name
+ *      token.
+ *
+ * To maintain consistency, we validate that any new mapping being added falls
+ * in to one of these categories.
+ */
+SourceMapGenerator.prototype._validateMapping =
+  function SourceMapGenerator_validateMapping(aGenerated, aOriginal, aSource,
+                                              aName) {
+    // When aOriginal is truthy but has empty values for .line and .column,
+    // it is most likely a programmer error. In this case we throw a very
+    // specific error message to try to guide them the right way.
+    // For example: https://github.com/Polymer/polymer-bundler/pull/519
+    if (aOriginal && typeof aOriginal.line !== 'number' && typeof aOriginal.column !== 'number') {
+        throw new Error(
+            'original.line and original.column are not numbers -- you probably meant to omit ' +
+            'the original mapping entirely and only map the generated position. If so, pass ' +
+            'null for the original mapping instead of an object with empty or null values.'
+        );
+    }
+
+    if (aGenerated && 'line' in aGenerated && 'column' in aGenerated
+        && aGenerated.line > 0 && aGenerated.column >= 0
+        && !aOriginal && !aSource && !aName) {
+      // Case 1.
+      return;
+    }
+    else if (aGenerated && 'line' in aGenerated && 'column' in aGenerated
+             && aOriginal && 'line' in aOriginal && 'column' in aOriginal
+             && aGenerated.line > 0 && aGenerated.column >= 0
+             && aOriginal.line > 0 && aOriginal.column >= 0
+             && aSource) {
+      // Cases 2 and 3.
+      return;
+    }
+    else {
+      throw new Error('Invalid mapping: ' + JSON.stringify({
+        generated: aGenerated,
+        source: aSource,
+        original: aOriginal,
+        name: aName
+      }));
+    }
+  };
+
+/**
+ * Serialize the accumulated mappings in to the stream of base 64 VLQs
+ * specified by the source map format.
+ */
+SourceMapGenerator.prototype._serializeMappings =
+  function SourceMapGenerator_serializeMappings() {
+    var previousGeneratedColumn = 0;
+    var previousGeneratedLine = 1;
+    var previousOriginalColumn = 0;
+    var previousOriginalLine = 0;
+    var previousName = 0;
+    var previousSource = 0;
+    var result = '';
+    var next;
+    var mapping;
+    var nameIdx;
+    var sourceIdx;
+
+    var mappings = this._mappings.toArray();
+    for (var i = 0, len = mappings.length; i < len; i++) {
+      mapping = mappings[i];
+      next = ''
+
+      if (mapping.generatedLine !== previousGeneratedLine) {
+        previousGeneratedColumn = 0;
+        while (mapping.generatedLine !== previousGeneratedLine) {
+          next += ';';
+          previousGeneratedLine++;
+        }
+      }
+      else {
+        if (i > 0) {
+          if (!util.compareByGeneratedPositionsInflated(mapping, mappings[i - 1])) {
+            continue;
+          }
+          next += ',';
+        }
+      }
+
+      next += base64VLQ.encode(mapping.generatedColumn
+                                 - previousGeneratedColumn);
+      previousGeneratedColumn = mapping.generatedColumn;
+
+      if (mapping.source != null) {
+        sourceIdx = this._sources.indexOf(mapping.source);
+        next += base64VLQ.encode(sourceIdx - previousSource);
+        previousSource = sourceIdx;
+
+        // lines are stored 0-based in SourceMap spec version 3
+        next += base64VLQ.encode(mapping.originalLine - 1
+                                   - previousOriginalLine);
+        previousOriginalLine = mapping.originalLine - 1;
+
+        next += base64VLQ.encode(mapping.originalColumn
+                                   - previousOriginalColumn);
+        previousOriginalColumn = mapping.originalColumn;
+
+        if (mapping.name != null) {
+          nameIdx = this._names.indexOf(mapping.name);
+          next += base64VLQ.encode(nameIdx - previousName);
+          previousName = nameIdx;
+        }
+      }
+
+      result += next;
+    }
+
+    return result;
+  };
+
+SourceMapGenerator.prototype._generateSourcesContent =
+  function SourceMapGenerator_generateSourcesContent(aSources, aSourceRoot) {
+    return aSources.map(function (source) {
+      if (!this._sourcesContents) {
+        return null;
+      }
+      if (aSourceRoot != null) {
+        source = util.relative(aSourceRoot, source);
+      }
+      var key = util.toSetString(source);
+      return Object.prototype.hasOwnProperty.call(this._sourcesContents, key)
+        ? this._sourcesContents[key]
+        : null;
+    }, this);
+  };
+
+/**
+ * Externalize the source map.
+ */
+SourceMapGenerator.prototype.toJSON =
+  function SourceMapGenerator_toJSON() {
+    var map = {
+      version: this._version,
+      sources: this._sources.toArray(),
+      names: this._names.toArray(),
+      mappings: this._serializeMappings()
+    };
+    if (this._file != null) {
+      map.file = this._file;
+    }
+    if (this._sourceRoot != null) {
+      map.sourceRoot = this._sourceRoot;
+    }
+    if (this._sourcesContents) {
+      map.sourcesContent = this._generateSourcesContent(map.sources, map.sourceRoot);
+    }
+
+    return map;
+  };
+
+/**
+ * Render the source map being generated to a string.
+ */
+SourceMapGenerator.prototype.toString =
+  function SourceMapGenerator_toString() {
+    return JSON.stringify(this.toJSON());
+  };
+
+exports.SourceMapGenerator = SourceMapGenerator;
+
+
+/***/ }),
+
+/***/ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/source-node.js":
+/*!***********************************************************************************!*\
+  !*** ../node_modules/@homebridge/ciao/node_modules/source-map/lib/source-node.js ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
+var SourceMapGenerator = __webpack_require__(/*! ./source-map-generator */ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/source-map-generator.js").SourceMapGenerator;
+var util = __webpack_require__(/*! ./util */ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/util.js");
+
+// Matches a Windows-style `\r\n` newline or a `\n` newline used by all other
+// operating systems these days (capturing the result).
+var REGEX_NEWLINE = /(\r?\n)/;
+
+// Newline character code for charCodeAt() comparisons
+var NEWLINE_CODE = 10;
+
+// Private symbol for identifying `SourceNode`s when multiple versions of
+// the source-map library are loaded. This MUST NOT CHANGE across
+// versions!
+var isSourceNode = "$$$isSourceNode$$$";
+
+/**
+ * SourceNodes provide a way to abstract over interpolating/concatenating
+ * snippets of generated JavaScript source code while maintaining the line and
+ * column information associated with the original source code.
+ *
+ * @param aLine The original line number.
+ * @param aColumn The original column number.
+ * @param aSource The original source's filename.
+ * @param aChunks Optional. An array of strings which are snippets of
+ *        generated JS, or other SourceNodes.
+ * @param aName The original identifier.
+ */
+function SourceNode(aLine, aColumn, aSource, aChunks, aName) {
+  this.children = [];
+  this.sourceContents = {};
+  this.line = aLine == null ? null : aLine;
+  this.column = aColumn == null ? null : aColumn;
+  this.source = aSource == null ? null : aSource;
+  this.name = aName == null ? null : aName;
+  this[isSourceNode] = true;
+  if (aChunks != null) this.add(aChunks);
+}
+
+/**
+ * Creates a SourceNode from generated code and a SourceMapConsumer.
+ *
+ * @param aGeneratedCode The generated code
+ * @param aSourceMapConsumer The SourceMap for the generated code
+ * @param aRelativePath Optional. The path that relative sources in the
+ *        SourceMapConsumer should be relative to.
+ */
+SourceNode.fromStringWithSourceMap =
+  function SourceNode_fromStringWithSourceMap(aGeneratedCode, aSourceMapConsumer, aRelativePath) {
+    // The SourceNode we want to fill with the generated code
+    // and the SourceMap
+    var node = new SourceNode();
+
+    // All even indices of this array are one line of the generated code,
+    // while all odd indices are the newlines between two adjacent lines
+    // (since `REGEX_NEWLINE` captures its match).
+    // Processed fragments are accessed by calling `shiftNextLine`.
+    var remainingLines = aGeneratedCode.split(REGEX_NEWLINE);
+    var remainingLinesIndex = 0;
+    var shiftNextLine = function() {
+      var lineContents = getNextLine();
+      // The last line of a file might not have a newline.
+      var newLine = getNextLine() || "";
+      return lineContents + newLine;
+
+      function getNextLine() {
+        return remainingLinesIndex < remainingLines.length ?
+            remainingLines[remainingLinesIndex++] : undefined;
+      }
+    };
+
+    // We need to remember the position of "remainingLines"
+    var lastGeneratedLine = 1, lastGeneratedColumn = 0;
+
+    // The generate SourceNodes we need a code range.
+    // To extract it current and last mapping is used.
+    // Here we store the last mapping.
+    var lastMapping = null;
+
+    aSourceMapConsumer.eachMapping(function (mapping) {
+      if (lastMapping !== null) {
+        // We add the code from "lastMapping" to "mapping":
+        // First check if there is a new line in between.
+        if (lastGeneratedLine < mapping.generatedLine) {
+          // Associate first line with "lastMapping"
+          addMappingWithCode(lastMapping, shiftNextLine());
+          lastGeneratedLine++;
+          lastGeneratedColumn = 0;
+          // The remaining code is added without mapping
+        } else {
+          // There is no new line in between.
+          // Associate the code between "lastGeneratedColumn" and
+          // "mapping.generatedColumn" with "lastMapping"
+          var nextLine = remainingLines[remainingLinesIndex] || '';
+          var code = nextLine.substr(0, mapping.generatedColumn -
+                                        lastGeneratedColumn);
+          remainingLines[remainingLinesIndex] = nextLine.substr(mapping.generatedColumn -
+                                              lastGeneratedColumn);
+          lastGeneratedColumn = mapping.generatedColumn;
+          addMappingWithCode(lastMapping, code);
+          // No more remaining code, continue
+          lastMapping = mapping;
+          return;
+        }
+      }
+      // We add the generated code until the first mapping
+      // to the SourceNode without any mapping.
+      // Each line is added as separate string.
+      while (lastGeneratedLine < mapping.generatedLine) {
+        node.add(shiftNextLine());
+        lastGeneratedLine++;
+      }
+      if (lastGeneratedColumn < mapping.generatedColumn) {
+        var nextLine = remainingLines[remainingLinesIndex] || '';
+        node.add(nextLine.substr(0, mapping.generatedColumn));
+        remainingLines[remainingLinesIndex] = nextLine.substr(mapping.generatedColumn);
+        lastGeneratedColumn = mapping.generatedColumn;
+      }
+      lastMapping = mapping;
+    }, this);
+    // We have processed all mappings.
+    if (remainingLinesIndex < remainingLines.length) {
+      if (lastMapping) {
+        // Associate the remaining code in the current line with "lastMapping"
+        addMappingWithCode(lastMapping, shiftNextLine());
+      }
+      // and add the remaining lines without any mapping
+      node.add(remainingLines.splice(remainingLinesIndex).join(""));
+    }
+
+    // Copy sourcesContent into SourceNode
+    aSourceMapConsumer.sources.forEach(function (sourceFile) {
+      var content = aSourceMapConsumer.sourceContentFor(sourceFile);
+      if (content != null) {
+        if (aRelativePath != null) {
+          sourceFile = util.join(aRelativePath, sourceFile);
+        }
+        node.setSourceContent(sourceFile, content);
+      }
+    });
+
+    return node;
+
+    function addMappingWithCode(mapping, code) {
+      if (mapping === null || mapping.source === undefined) {
+        node.add(code);
+      } else {
+        var source = aRelativePath
+          ? util.join(aRelativePath, mapping.source)
+          : mapping.source;
+        node.add(new SourceNode(mapping.originalLine,
+                                mapping.originalColumn,
+                                source,
+                                code,
+                                mapping.name));
+      }
+    }
+  };
+
+/**
+ * Add a chunk of generated JS to this source node.
+ *
+ * @param aChunk A string snippet of generated JS code, another instance of
+ *        SourceNode, or an array where each member is one of those things.
+ */
+SourceNode.prototype.add = function SourceNode_add(aChunk) {
+  if (Array.isArray(aChunk)) {
+    aChunk.forEach(function (chunk) {
+      this.add(chunk);
+    }, this);
+  }
+  else if (aChunk[isSourceNode] || typeof aChunk === "string") {
+    if (aChunk) {
+      this.children.push(aChunk);
+    }
+  }
+  else {
+    throw new TypeError(
+      "Expected a SourceNode, string, or an array of SourceNodes and strings. Got " + aChunk
+    );
+  }
+  return this;
+};
+
+/**
+ * Add a chunk of generated JS to the beginning of this source node.
+ *
+ * @param aChunk A string snippet of generated JS code, another instance of
+ *        SourceNode, or an array where each member is one of those things.
+ */
+SourceNode.prototype.prepend = function SourceNode_prepend(aChunk) {
+  if (Array.isArray(aChunk)) {
+    for (var i = aChunk.length-1; i >= 0; i--) {
+      this.prepend(aChunk[i]);
+    }
+  }
+  else if (aChunk[isSourceNode] || typeof aChunk === "string") {
+    this.children.unshift(aChunk);
+  }
+  else {
+    throw new TypeError(
+      "Expected a SourceNode, string, or an array of SourceNodes and strings. Got " + aChunk
+    );
+  }
+  return this;
+};
+
+/**
+ * Walk over the tree of JS snippets in this node and its children. The
+ * walking function is called once for each snippet of JS and is passed that
+ * snippet and the its original associated source's line/column location.
+ *
+ * @param aFn The traversal function.
+ */
+SourceNode.prototype.walk = function SourceNode_walk(aFn) {
+  var chunk;
+  for (var i = 0, len = this.children.length; i < len; i++) {
+    chunk = this.children[i];
+    if (chunk[isSourceNode]) {
+      chunk.walk(aFn);
+    }
+    else {
+      if (chunk !== '') {
+        aFn(chunk, { source: this.source,
+                     line: this.line,
+                     column: this.column,
+                     name: this.name });
+      }
+    }
+  }
+};
+
+/**
+ * Like `String.prototype.join` except for SourceNodes. Inserts `aStr` between
+ * each of `this.children`.
+ *
+ * @param aSep The separator.
+ */
+SourceNode.prototype.join = function SourceNode_join(aSep) {
+  var newChildren;
+  var i;
+  var len = this.children.length;
+  if (len > 0) {
+    newChildren = [];
+    for (i = 0; i < len-1; i++) {
+      newChildren.push(this.children[i]);
+      newChildren.push(aSep);
+    }
+    newChildren.push(this.children[i]);
+    this.children = newChildren;
+  }
+  return this;
+};
+
+/**
+ * Call String.prototype.replace on the very right-most source snippet. Useful
+ * for trimming whitespace from the end of a source node, etc.
+ *
+ * @param aPattern The pattern to replace.
+ * @param aReplacement The thing to replace the pattern with.
+ */
+SourceNode.prototype.replaceRight = function SourceNode_replaceRight(aPattern, aReplacement) {
+  var lastChild = this.children[this.children.length - 1];
+  if (lastChild[isSourceNode]) {
+    lastChild.replaceRight(aPattern, aReplacement);
+  }
+  else if (typeof lastChild === 'string') {
+    this.children[this.children.length - 1] = lastChild.replace(aPattern, aReplacement);
+  }
+  else {
+    this.children.push(''.replace(aPattern, aReplacement));
+  }
+  return this;
+};
+
+/**
+ * Set the source content for a source file. This will be added to the SourceMapGenerator
+ * in the sourcesContent field.
+ *
+ * @param aSourceFile The filename of the source file
+ * @param aSourceContent The content of the source file
+ */
+SourceNode.prototype.setSourceContent =
+  function SourceNode_setSourceContent(aSourceFile, aSourceContent) {
+    this.sourceContents[util.toSetString(aSourceFile)] = aSourceContent;
+  };
+
+/**
+ * Walk over the tree of SourceNodes. The walking function is called for each
+ * source file content and is passed the filename and source content.
+ *
+ * @param aFn The traversal function.
+ */
+SourceNode.prototype.walkSourceContents =
+  function SourceNode_walkSourceContents(aFn) {
+    for (var i = 0, len = this.children.length; i < len; i++) {
+      if (this.children[i][isSourceNode]) {
+        this.children[i].walkSourceContents(aFn);
+      }
+    }
+
+    var sources = Object.keys(this.sourceContents);
+    for (var i = 0, len = sources.length; i < len; i++) {
+      aFn(util.fromSetString(sources[i]), this.sourceContents[sources[i]]);
+    }
+  };
+
+/**
+ * Return the string representation of this source node. Walks over the tree
+ * and concatenates all the various snippets together to one string.
+ */
+SourceNode.prototype.toString = function SourceNode_toString() {
+  var str = "";
+  this.walk(function (chunk) {
+    str += chunk;
+  });
+  return str;
+};
+
+/**
+ * Returns the string representation of this source node along with a source
+ * map.
+ */
+SourceNode.prototype.toStringWithSourceMap = function SourceNode_toStringWithSourceMap(aArgs) {
+  var generated = {
+    code: "",
+    line: 1,
+    column: 0
+  };
+  var map = new SourceMapGenerator(aArgs);
+  var sourceMappingActive = false;
+  var lastOriginalSource = null;
+  var lastOriginalLine = null;
+  var lastOriginalColumn = null;
+  var lastOriginalName = null;
+  this.walk(function (chunk, original) {
+    generated.code += chunk;
+    if (original.source !== null
+        && original.line !== null
+        && original.column !== null) {
+      if(lastOriginalSource !== original.source
+         || lastOriginalLine !== original.line
+         || lastOriginalColumn !== original.column
+         || lastOriginalName !== original.name) {
+        map.addMapping({
+          source: original.source,
+          original: {
+            line: original.line,
+            column: original.column
+          },
+          generated: {
+            line: generated.line,
+            column: generated.column
+          },
+          name: original.name
+        });
+      }
+      lastOriginalSource = original.source;
+      lastOriginalLine = original.line;
+      lastOriginalColumn = original.column;
+      lastOriginalName = original.name;
+      sourceMappingActive = true;
+    } else if (sourceMappingActive) {
+      map.addMapping({
+        generated: {
+          line: generated.line,
+          column: generated.column
+        }
+      });
+      lastOriginalSource = null;
+      sourceMappingActive = false;
+    }
+    for (var idx = 0, length = chunk.length; idx < length; idx++) {
+      if (chunk.charCodeAt(idx) === NEWLINE_CODE) {
+        generated.line++;
+        generated.column = 0;
+        // Mappings end at eol
+        if (idx + 1 === length) {
+          lastOriginalSource = null;
+          sourceMappingActive = false;
+        } else if (sourceMappingActive) {
+          map.addMapping({
+            source: original.source,
+            original: {
+              line: original.line,
+              column: original.column
+            },
+            generated: {
+              line: generated.line,
+              column: generated.column
+            },
+            name: original.name
+          });
+        }
+      } else {
+        generated.column++;
+      }
+    }
+  });
+  this.walkSourceContents(function (sourceFile, sourceContent) {
+    map.setSourceContent(sourceFile, sourceContent);
+  });
+
+  return { code: generated.code, map: map };
+};
+
+exports.SourceNode = SourceNode;
+
+
+/***/ }),
+
+/***/ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/util.js":
+/*!****************************************************************************!*\
+  !*** ../node_modules/@homebridge/ciao/node_modules/source-map/lib/util.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+
+/**
+ * This is a helper function for getting values from parameter/options
+ * objects.
+ *
+ * @param args The object we are extracting values from
+ * @param name The name of the property we are getting.
+ * @param defaultValue An optional value to return if the property is missing
+ * from the object. If this is not specified and the property is missing, an
+ * error will be thrown.
+ */
+function getArg(aArgs, aName, aDefaultValue) {
+  if (aName in aArgs) {
+    return aArgs[aName];
+  } else if (arguments.length === 3) {
+    return aDefaultValue;
+  } else {
+    throw new Error('"' + aName + '" is a required argument.');
+  }
+}
+exports.getArg = getArg;
+
+var urlRegexp = /^(?:([\w+\-.]+):)?\/\/(?:(\w+:\w+)@)?([\w.-]*)(?::(\d+))?(.*)$/;
+var dataUrlRegexp = /^data:.+\,.+$/;
+
+function urlParse(aUrl) {
+  var match = aUrl.match(urlRegexp);
+  if (!match) {
+    return null;
+  }
+  return {
+    scheme: match[1],
+    auth: match[2],
+    host: match[3],
+    port: match[4],
+    path: match[5]
+  };
+}
+exports.urlParse = urlParse;
+
+function urlGenerate(aParsedUrl) {
+  var url = '';
+  if (aParsedUrl.scheme) {
+    url += aParsedUrl.scheme + ':';
+  }
+  url += '//';
+  if (aParsedUrl.auth) {
+    url += aParsedUrl.auth + '@';
+  }
+  if (aParsedUrl.host) {
+    url += aParsedUrl.host;
+  }
+  if (aParsedUrl.port) {
+    url += ":" + aParsedUrl.port
+  }
+  if (aParsedUrl.path) {
+    url += aParsedUrl.path;
+  }
+  return url;
+}
+exports.urlGenerate = urlGenerate;
+
+/**
+ * Normalizes a path, or the path portion of a URL:
+ *
+ * - Replaces consecutive slashes with one slash.
+ * - Removes unnecessary '.' parts.
+ * - Removes unnecessary '<dir>/..' parts.
+ *
+ * Based on code in the Node.js 'path' core module.
+ *
+ * @param aPath The path or url to normalize.
+ */
+function normalize(aPath) {
+  var path = aPath;
+  var url = urlParse(aPath);
+  if (url) {
+    if (!url.path) {
+      return aPath;
+    }
+    path = url.path;
+  }
+  var isAbsolute = exports.isAbsolute(path);
+
+  var parts = path.split(/\/+/);
+  for (var part, up = 0, i = parts.length - 1; i >= 0; i--) {
+    part = parts[i];
+    if (part === '.') {
+      parts.splice(i, 1);
+    } else if (part === '..') {
+      up++;
+    } else if (up > 0) {
+      if (part === '') {
+        // The first part is blank if the path is absolute. Trying to go
+        // above the root is a no-op. Therefore we can remove all '..' parts
+        // directly after the root.
+        parts.splice(i + 1, up);
+        up = 0;
+      } else {
+        parts.splice(i, 2);
+        up--;
+      }
+    }
+  }
+  path = parts.join('/');
+
+  if (path === '') {
+    path = isAbsolute ? '/' : '.';
+  }
+
+  if (url) {
+    url.path = path;
+    return urlGenerate(url);
+  }
+  return path;
+}
+exports.normalize = normalize;
+
+/**
+ * Joins two paths/URLs.
+ *
+ * @param aRoot The root path or URL.
+ * @param aPath The path or URL to be joined with the root.
+ *
+ * - If aPath is a URL or a data URI, aPath is returned, unless aPath is a
+ *   scheme-relative URL: Then the scheme of aRoot, if any, is prepended
+ *   first.
+ * - Otherwise aPath is a path. If aRoot is a URL, then its path portion
+ *   is updated with the result and aRoot is returned. Otherwise the result
+ *   is returned.
+ *   - If aPath is absolute, the result is aPath.
+ *   - Otherwise the two paths are joined with a slash.
+ * - Joining for example 'http://' and 'www.example.com' is also supported.
+ */
+function join(aRoot, aPath) {
+  if (aRoot === "") {
+    aRoot = ".";
+  }
+  if (aPath === "") {
+    aPath = ".";
+  }
+  var aPathUrl = urlParse(aPath);
+  var aRootUrl = urlParse(aRoot);
+  if (aRootUrl) {
+    aRoot = aRootUrl.path || '/';
+  }
+
+  // `join(foo, '//www.example.org')`
+  if (aPathUrl && !aPathUrl.scheme) {
+    if (aRootUrl) {
+      aPathUrl.scheme = aRootUrl.scheme;
+    }
+    return urlGenerate(aPathUrl);
+  }
+
+  if (aPathUrl || aPath.match(dataUrlRegexp)) {
+    return aPath;
+  }
+
+  // `join('http://', 'www.example.com')`
+  if (aRootUrl && !aRootUrl.host && !aRootUrl.path) {
+    aRootUrl.host = aPath;
+    return urlGenerate(aRootUrl);
+  }
+
+  var joined = aPath.charAt(0) === '/'
+    ? aPath
+    : normalize(aRoot.replace(/\/+$/, '') + '/' + aPath);
+
+  if (aRootUrl) {
+    aRootUrl.path = joined;
+    return urlGenerate(aRootUrl);
+  }
+  return joined;
+}
+exports.join = join;
+
+exports.isAbsolute = function (aPath) {
+  return aPath.charAt(0) === '/' || urlRegexp.test(aPath);
+};
+
+/**
+ * Make a path relative to a URL or another path.
+ *
+ * @param aRoot The root path or URL.
+ * @param aPath The path or URL to be made relative to aRoot.
+ */
+function relative(aRoot, aPath) {
+  if (aRoot === "") {
+    aRoot = ".";
+  }
+
+  aRoot = aRoot.replace(/\/$/, '');
+
+  // It is possible for the path to be above the root. In this case, simply
+  // checking whether the root is a prefix of the path won't work. Instead, we
+  // need to remove components from the root one by one, until either we find
+  // a prefix that fits, or we run out of components to remove.
+  var level = 0;
+  while (aPath.indexOf(aRoot + '/') !== 0) {
+    var index = aRoot.lastIndexOf("/");
+    if (index < 0) {
+      return aPath;
+    }
+
+    // If the only part of the root that is left is the scheme (i.e. http://,
+    // file:///, etc.), one or more slashes (/), or simply nothing at all, we
+    // have exhausted all components, so the path is not relative to the root.
+    aRoot = aRoot.slice(0, index);
+    if (aRoot.match(/^([^\/]+:\/)?\/*$/)) {
+      return aPath;
+    }
+
+    ++level;
+  }
+
+  // Make sure we add a "../" for each component we removed from the root.
+  return Array(level + 1).join("../") + aPath.substr(aRoot.length + 1);
+}
+exports.relative = relative;
+
+var supportsNullProto = (function () {
+  var obj = Object.create(null);
+  return !('__proto__' in obj);
+}());
+
+function identity (s) {
+  return s;
+}
+
+/**
+ * Because behavior goes wacky when you set `__proto__` on objects, we
+ * have to prefix all the strings in our set with an arbitrary character.
+ *
+ * See https://github.com/mozilla/source-map/pull/31 and
+ * https://github.com/mozilla/source-map/issues/30
+ *
+ * @param String aStr
+ */
+function toSetString(aStr) {
+  if (isProtoString(aStr)) {
+    return '$' + aStr;
+  }
+
+  return aStr;
+}
+exports.toSetString = supportsNullProto ? identity : toSetString;
+
+function fromSetString(aStr) {
+  if (isProtoString(aStr)) {
+    return aStr.slice(1);
+  }
+
+  return aStr;
+}
+exports.fromSetString = supportsNullProto ? identity : fromSetString;
+
+function isProtoString(s) {
+  if (!s) {
+    return false;
+  }
+
+  var length = s.length;
+
+  if (length < 9 /* "__proto__".length */) {
+    return false;
+  }
+
+  if (s.charCodeAt(length - 1) !== 95  /* '_' */ ||
+      s.charCodeAt(length - 2) !== 95  /* '_' */ ||
+      s.charCodeAt(length - 3) !== 111 /* 'o' */ ||
+      s.charCodeAt(length - 4) !== 116 /* 't' */ ||
+      s.charCodeAt(length - 5) !== 111 /* 'o' */ ||
+      s.charCodeAt(length - 6) !== 114 /* 'r' */ ||
+      s.charCodeAt(length - 7) !== 112 /* 'p' */ ||
+      s.charCodeAt(length - 8) !== 95  /* '_' */ ||
+      s.charCodeAt(length - 9) !== 95  /* '_' */) {
+    return false;
+  }
+
+  for (var i = length - 10; i >= 0; i--) {
+    if (s.charCodeAt(i) !== 36 /* '$' */) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
+ * Comparator between two mappings where the original positions are compared.
+ *
+ * Optionally pass in `true` as `onlyCompareGenerated` to consider two
+ * mappings with the same original source/line/column, but different generated
+ * line and column the same. Useful when searching for a mapping with a
+ * stubbed out mapping.
+ */
+function compareByOriginalPositions(mappingA, mappingB, onlyCompareOriginal) {
+  var cmp = strcmp(mappingA.source, mappingB.source);
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = mappingA.originalLine - mappingB.originalLine;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = mappingA.originalColumn - mappingB.originalColumn;
+  if (cmp !== 0 || onlyCompareOriginal) {
+    return cmp;
+  }
+
+  cmp = mappingA.generatedColumn - mappingB.generatedColumn;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = mappingA.generatedLine - mappingB.generatedLine;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  return strcmp(mappingA.name, mappingB.name);
+}
+exports.compareByOriginalPositions = compareByOriginalPositions;
+
+/**
+ * Comparator between two mappings with deflated source and name indices where
+ * the generated positions are compared.
+ *
+ * Optionally pass in `true` as `onlyCompareGenerated` to consider two
+ * mappings with the same generated line and column, but different
+ * source/name/original line and column the same. Useful when searching for a
+ * mapping with a stubbed out mapping.
+ */
+function compareByGeneratedPositionsDeflated(mappingA, mappingB, onlyCompareGenerated) {
+  var cmp = mappingA.generatedLine - mappingB.generatedLine;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = mappingA.generatedColumn - mappingB.generatedColumn;
+  if (cmp !== 0 || onlyCompareGenerated) {
+    return cmp;
+  }
+
+  cmp = strcmp(mappingA.source, mappingB.source);
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = mappingA.originalLine - mappingB.originalLine;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = mappingA.originalColumn - mappingB.originalColumn;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  return strcmp(mappingA.name, mappingB.name);
+}
+exports.compareByGeneratedPositionsDeflated = compareByGeneratedPositionsDeflated;
+
+function strcmp(aStr1, aStr2) {
+  if (aStr1 === aStr2) {
+    return 0;
+  }
+
+  if (aStr1 === null) {
+    return 1; // aStr2 !== null
+  }
+
+  if (aStr2 === null) {
+    return -1; // aStr1 !== null
+  }
+
+  if (aStr1 > aStr2) {
+    return 1;
+  }
+
+  return -1;
+}
+
+/**
+ * Comparator between two mappings with inflated source and name strings where
+ * the generated positions are compared.
+ */
+function compareByGeneratedPositionsInflated(mappingA, mappingB) {
+  var cmp = mappingA.generatedLine - mappingB.generatedLine;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = mappingA.generatedColumn - mappingB.generatedColumn;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = strcmp(mappingA.source, mappingB.source);
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = mappingA.originalLine - mappingB.originalLine;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  cmp = mappingA.originalColumn - mappingB.originalColumn;
+  if (cmp !== 0) {
+    return cmp;
+  }
+
+  return strcmp(mappingA.name, mappingB.name);
+}
+exports.compareByGeneratedPositionsInflated = compareByGeneratedPositionsInflated;
+
+/**
+ * Strip any JSON XSSI avoidance prefix from the string (as documented
+ * in the source maps specification), and then parse the string as
+ * JSON.
+ */
+function parseSourceMapInput(str) {
+  return JSON.parse(str.replace(/^\)]}'[^\n]*\n/, ''));
+}
+exports.parseSourceMapInput = parseSourceMapInput;
+
+/**
+ * Compute the URL of a source given the the source root, the source's
+ * URL, and the source map's URL.
+ */
+function computeSourceURL(sourceRoot, sourceURL, sourceMapURL) {
+  sourceURL = sourceURL || '';
+
+  if (sourceRoot) {
+    // This follows what Chrome does.
+    if (sourceRoot[sourceRoot.length - 1] !== '/' && sourceURL[0] !== '/') {
+      sourceRoot += '/';
+    }
+    // The spec says:
+    //   Line 4: An optional source root, useful for relocating source
+    //   files on a server or removing repeated values in the
+    //   “sources” entry.  This value is prepended to the individual
+    //   entries in the “source” field.
+    sourceURL = sourceRoot + sourceURL;
+  }
+
+  // Historically, SourceMapConsumer did not take the sourceMapURL as
+  // a parameter.  This mode is still somewhat supported, which is why
+  // this code block is conditional.  However, it's preferable to pass
+  // the source map URL to SourceMapConsumer, so that this function
+  // can implement the source URL resolution algorithm as outlined in
+  // the spec.  This block is basically the equivalent of:
+  //    new URL(sourceURL, sourceMapURL).toString()
+  // ... except it avoids using URL, which wasn't available in the
+  // older releases of node still supported by this library.
+  //
+  // The spec says:
+  //   If the sources are not absolute URLs after prepending of the
+  //   “sourceRoot”, the sources are resolved relative to the
+  //   SourceMap (like resolving script src in a html document).
+  if (sourceMapURL) {
+    var parsed = urlParse(sourceMapURL);
+    if (!parsed) {
+      throw new Error("sourceMapURL could not be parsed");
+    }
+    if (parsed.path) {
+      // Strip the last path component, but keep the "/".
+      var index = parsed.path.lastIndexOf('/');
+      if (index >= 0) {
+        parsed.path = parsed.path.substring(0, index + 1);
+      }
+    }
+    sourceURL = join(urlGenerate(parsed), sourceURL);
+  }
+
+  return normalize(sourceURL);
+}
+exports.computeSourceURL = computeSourceURL;
+
+
+/***/ }),
+
+/***/ "../node_modules/@homebridge/ciao/node_modules/source-map/source-map.js":
+/*!******************************************************************************!*\
+  !*** ../node_modules/@homebridge/ciao/node_modules/source-map/source-map.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+ * Copyright 2009-2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE.txt or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+exports.SourceMapGenerator = __webpack_require__(/*! ./lib/source-map-generator */ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/source-map-generator.js").SourceMapGenerator;
+exports.SourceMapConsumer = __webpack_require__(/*! ./lib/source-map-consumer */ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/source-map-consumer.js").SourceMapConsumer;
+exports.SourceNode = __webpack_require__(/*! ./lib/source-node */ "../node_modules/@homebridge/ciao/node_modules/source-map/lib/source-node.js").SourceNode;
+
+
+/***/ }),
+
+/***/ "../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js":
+/*!************************************************************************!*\
+  !*** ../node_modules/@homebridge/ciao/node_modules/tslib/tslib.es6.js ***!
+  \************************************************************************/
+/*! exports provided: __extends, __assign, __rest, __decorate, __param, __metadata, __awaiter, __generator, __createBinding, __exportStar, __values, __read, __spread, __spreadArrays, __await, __asyncGenerator, __asyncDelegator, __asyncValues, __makeTemplateObject, __importStar, __importDefault, __classPrivateFieldGet, __classPrivateFieldSet */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__extends", function() { return __extends; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__assign", function() { return __assign; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__rest", function() { return __rest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__decorate", function() { return __decorate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__param", function() { return __param; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__metadata", function() { return __metadata; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__awaiter", function() { return __awaiter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__generator", function() { return __generator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__createBinding", function() { return __createBinding; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__exportStar", function() { return __exportStar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__values", function() { return __values; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__read", function() { return __read; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__spread", function() { return __spread; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__spreadArrays", function() { return __spreadArrays; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__await", function() { return __await; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncGenerator", function() { return __asyncGenerator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncDelegator", function() { return __asyncDelegator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncValues", function() { return __asyncValues; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__makeTemplateObject", function() { return __makeTemplateObject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__importStar", function() { return __importStar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__importDefault", function() { return __importDefault; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__classPrivateFieldGet", function() { return __classPrivateFieldGet; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__classPrivateFieldSet", function() { return __classPrivateFieldSet; });
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    }
+    return __assign.apply(this, arguments);
+}
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+function __decorate(decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+
+function __param(paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+}
+
+function __metadata(metadataKey, metadataValue) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+}
+
+var __createBinding = Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+});
+
+function __exportStar(m, o) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
+}
+
+function __values(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+
+function __read(o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+}
+
+function __spread() {
+    for (var ar = [], i = 0; i < arguments.length; i++)
+        ar = ar.concat(__read(arguments[i]));
+    return ar;
+}
+
+function __spreadArrays() {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
+
+function __await(v) {
+    return this instanceof __await ? (this.v = v, this) : new __await(v);
+}
+
+function __asyncGenerator(thisArg, _arguments, generator) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var g = generator.apply(thisArg, _arguments || []), i, q = [];
+    return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+    function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+    function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+    function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+    function fulfill(value) { resume("next", value); }
+    function reject(value) { resume("throw", value); }
+    function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+}
+
+function __asyncDelegator(o) {
+    var i, p;
+    return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+}
+
+function __asyncValues(o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+}
+
+function __makeTemplateObject(cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+var __setModuleDefault = Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+};
+
+function __importStar(mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+}
+
+function __importDefault(mod) {
+    return (mod && mod.__esModule) ? mod : { default: mod };
+}
+
+function __classPrivateFieldGet(receiver, privateMap) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to get private field on non-instance");
+    }
+    return privateMap.get(receiver);
+}
+
+function __classPrivateFieldSet(receiver, privateMap, value) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to set private field on non-instance");
+    }
+    privateMap.set(receiver, value);
+    return value;
+}
+
+
+/***/ }),
+
 /***/ "../node_modules/@homebridge/ciao/package.json":
 /*!*****************************************************!*\
   !*** ../node_modules/@homebridge/ciao/package.json ***!
@@ -6994,7 +12070,7 @@ module.exports = function equal(a, b) {
 /*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, bin, bugs, bundleDependencies, dependencies, deprecated, description, devDependencies, files, homepage, keywords, license, main, name, repository, scripts, types, version, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_from\":\"@homebridge/ciao@~1.0.5\",\"_id\":\"@homebridge/ciao@1.0.12\",\"_inBundle\":false,\"_integrity\":\"sha512-1NJ8DWErRksMdCG3P/v3i7/kw6hy+wtrbfnJ4uTKCyRA+fx3bhh6Dw8iJYf7cf/Ke8JydnfGnzcZpjiPqrVB9g==\",\"_location\":\"/@homebridge/ciao\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"@homebridge/ciao@~1.0.5\",\"name\":\"@homebridge/ciao\",\"escapedName\":\"@homebridge%2fciao\",\"scope\":\"@homebridge\",\"rawSpec\":\"~1.0.5\",\"saveSpec\":null,\"fetchSpec\":\"~1.0.5\"},\"_requiredBy\":[\"/hap-nodejs\"],\"_resolved\":\"https://registry.npmjs.org/@homebridge/ciao/-/ciao-1.0.12.tgz\",\"_shasum\":\"dfdbc11e3f2a3a64c9b955767d0dd5131fa0825e\",\"_spec\":\"@homebridge/ciao@~1.0.5\",\"_where\":\"/Users/jensweigele/Documents/projects/ioBroker.yahka/node_modules/hap-nodejs\",\"author\":{\"name\":\"Andreas Bauer\",\"email\":\"mail@anderl-bauer.de\"},\"bin\":{\"ciao-bcs\":\"lib/bonjour-conformance-testing.js\"},\"bugs\":{\"url\":\"https://github.com/homebridge/ciao/issues\"},\"bundleDependencies\":false,\"dependencies\":{\"debug\":\"^4.1.1\",\"fast-deep-equal\":\"^3.1.3\"},\"deprecated\":false,\"description\":\"ciao is a RFC 6763 compliant dns-sd library, advertising on multicast dns (RFC 6762) implemented in plain Typescript/JavaScript\",\"devDependencies\":{\"@types/debug\":\"^4.1.5\",\"@types/jest\":\"^26.0.13\",\"@types/node\":\"~10.17.21\",\"@typescript-eslint/eslint-plugin\":\"^4.1.0\",\"@typescript-eslint/parser\":\"^4.1.0\",\"eslint\":\"^7.9.0\",\"jest\":\"^26.4.2\",\"rimraf\":\"^3.0.2\",\"semver\":\"^7.3.2\",\"ts-jest\":\"^26.3.0\",\"ts-node\":\"^9.0.0\",\"typedoc\":\"0.17.0-3\",\"typescript\":\"^4.0.2\"},\"files\":[\"lib\",\"types\",\"README.md\",\"LICENSE\",\"package.json\"],\"homepage\":\"https://github.com/homebridge/ciao\",\"keywords\":[\"ciao\",\"rfc-6762\",\"rfc-6763\",\"multicast-dns\",\"dns-sd\",\"bonjour\",\"zeroconf\",\"zero-configuration\",\"mdns\",\"mdns-sd\",\"service-discovery\"],\"license\":\"MIT\",\"main\":\"lib/index.js\",\"name\":\"@homebridge/ciao\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/homebridge/ciao.git\"},\"scripts\":{\"build\":\"npm run clean && tsc\",\"clean\":\"rimraf lib && rimraf coverage\",\"docs\":\"rimraf docs && typedoc src/index.ts\",\"lint\":\"eslint 'src/**/*.{js,ts,json}'\",\"postpublish\":\"npm run clean\",\"prepublishOnly\":\"npm run build\",\"preversion\":\"npm run lint\",\"test\":\"jest\",\"test-coverage\":\"jest --coverage\",\"version\":\"npm run docs && git add docs\"},\"types\":\"lib/index.d.ts\",\"version\":\"1.0.12\"}");
+module.exports = JSON.parse("{\"_from\":\"@homebridge/ciao@~1.1.0\",\"_id\":\"@homebridge/ciao@1.1.0\",\"_inBundle\":false,\"_integrity\":\"sha512-fpFUy/1PQ5eMPiTdRewoA/gnFCLBkBlNsFJpHO8/Wk/p1fQM0YLMDdyvR956CF0QdArhz2SBB3VeGmgVkOrLFw==\",\"_location\":\"/@homebridge/ciao\",\"_phantomChildren\":{\"buffer-from\":\"1.1.1\",\"ms\":\"2.1.2\"},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"@homebridge/ciao@~1.1.0\",\"name\":\"@homebridge/ciao\",\"escapedName\":\"@homebridge%2fciao\",\"scope\":\"@homebridge\",\"rawSpec\":\"~1.1.0\",\"saveSpec\":null,\"fetchSpec\":\"~1.1.0\"},\"_requiredBy\":[\"/hap-nodejs\"],\"_resolved\":\"https://registry.npmjs.org/@homebridge/ciao/-/ciao-1.1.0.tgz\",\"_shasum\":\"a8086df1621df85600a74a5d1b53b1951d20359f\",\"_spec\":\"@homebridge/ciao@~1.1.0\",\"_where\":\"/Users/jensweigele/Documents/projects/ioBroker.yahka/node_modules/hap-nodejs\",\"author\":{\"name\":\"Andreas Bauer\",\"email\":\"mail@anderl-bauer.de\"},\"bin\":{\"ciao-bcs\":\"lib/bonjour-conformance-testing.js\"},\"bugs\":{\"url\":\"https://github.com/homebridge/ciao/issues\"},\"bundleDependencies\":false,\"dependencies\":{\"debug\":\"^4.3.1\",\"fast-deep-equal\":\"^3.1.3\",\"source-map-support\":\"^0.5.19\",\"tslib\":\"^2.0.3\"},\"deprecated\":false,\"description\":\"ciao is a RFC 6763 compliant dns-sd library, advertising on multicast dns (RFC 6762) implemented in plain Typescript/JavaScript\",\"devDependencies\":{\"@types/debug\":\"^4.1.5\",\"@types/jest\":\"^26.0.16\",\"@types/node\":\"~10.17.48\",\"@typescript-eslint/eslint-plugin\":\"^4.9.0\",\"@typescript-eslint/parser\":\"^4.9.0\",\"eslint\":\"^7.15.0\",\"jest\":\"^26.6.3\",\"rimraf\":\"^3.0.2\",\"semver\":\"^7.3.4\",\"ts-jest\":\"^26.4.4\",\"ts-node\":\"^9.1.0\",\"typedoc\":\"0.20.0-beta.24\",\"typescript\":\"^4.1.2\"},\"files\":[\"lib\",\"types\",\"README.md\",\"LICENSE\",\"package.json\"],\"homepage\":\"https://github.com/homebridge/ciao\",\"keywords\":[\"ciao\",\"rfc-6762\",\"rfc-6763\",\"multicast-dns\",\"dns-sd\",\"bonjour\",\"zeroconf\",\"zero-configuration\",\"mdns\",\"mdns-sd\",\"service-discovery\"],\"license\":\"MIT\",\"main\":\"lib/index.js\",\"name\":\"@homebridge/ciao\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/homebridge/ciao.git\"},\"scripts\":{\"build\":\"npm run clean && tsc\",\"clean\":\"rimraf lib && rimraf coverage\",\"docs\":\"rimraf docs && typedoc src/index.ts\",\"lint\":\"eslint 'src/**/*.{js,ts,json}'\",\"postpublish\":\"npm run clean\",\"prepublishOnly\":\"npm run build\",\"preversion\":\"npm run lint\",\"test\":\"jest\",\"test-coverage\":\"jest --coverage\",\"version\":\"npm run docs && git add docs\"},\"types\":\"lib/index.d.ts\",\"version\":\"1.1.0\"}");
 
 /***/ }),
 
@@ -25239,6 +30315,87 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
+
+/***/ }),
+
+/***/ "../node_modules/buffer-from/index.js":
+/*!********************************************!*\
+  !*** ../node_modules/buffer-from/index.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(Buffer) {var toString = Object.prototype.toString
+
+var isModern = (
+  typeof Buffer.alloc === 'function' &&
+  typeof Buffer.allocUnsafe === 'function' &&
+  typeof Buffer.from === 'function'
+)
+
+function isArrayBuffer (input) {
+  return toString.call(input).slice(8, -1) === 'ArrayBuffer'
+}
+
+function fromArrayBuffer (obj, byteOffset, length) {
+  byteOffset >>>= 0
+
+  var maxLength = obj.byteLength - byteOffset
+
+  if (maxLength < 0) {
+    throw new RangeError("'offset' is out of bounds")
+  }
+
+  if (length === undefined) {
+    length = maxLength
+  } else {
+    length >>>= 0
+
+    if (length > maxLength) {
+      throw new RangeError("'length' is out of bounds")
+    }
+  }
+
+  return isModern
+    ? Buffer.from(obj.slice(byteOffset, byteOffset + length))
+    : new Buffer(new Uint8Array(obj.slice(byteOffset, byteOffset + length)))
+}
+
+function fromString (string, encoding) {
+  if (typeof encoding !== 'string' || encoding === '') {
+    encoding = 'utf8'
+  }
+
+  if (!Buffer.isEncoding(encoding)) {
+    throw new TypeError('"encoding" must be a valid string encoding')
+  }
+
+  return isModern
+    ? Buffer.from(string, encoding)
+    : new Buffer(string, encoding)
+}
+
+function bufferFrom (value, encodingOrOffset, length) {
+  if (typeof value === 'number') {
+    throw new TypeError('"value" argument must not be a number')
+  }
+
+  if (isArrayBuffer(value)) {
+    return fromArrayBuffer(value, encodingOrOffset, length)
+  }
+
+  if (typeof value === 'string') {
+    return fromString(value, encodingOrOffset)
+  }
+
+  return isModern
+    ? Buffer.from(value)
+    : new Buffer(value)
+}
+
+module.exports = bufferFrom
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/node_modules/buffer/index.js */ "../node_modules/node-libs-browser/node_modules/buffer/index.js").Buffer))
 
 /***/ }),
 
@@ -46881,10 +52038,10 @@ utils.intFromLE = intFromLE;
 /*!*********************************************!*\
   !*** ../node_modules/elliptic/package.json ***!
   \*********************************************/
-/*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, bugs, bundleDependencies, dependencies, deprecated, description, devDependencies, files, homepage, keywords, license, main, name, repository, scripts, version, default */
+/*! exports provided: _args, _development, _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _spec, _where, author, bugs, dependencies, description, devDependencies, files, homepage, keywords, license, main, name, repository, scripts, version, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_from\":\"elliptic@^6.5.3\",\"_id\":\"elliptic@6.5.3\",\"_inBundle\":false,\"_integrity\":\"sha512-IMqzv5wNQf+E6aHeIqATs0tOLeOTwj1QKbRcS3jBbYkl5oLAserA8yJTT7/VyHUYG91PRmPyeQDObKLPpeS4dw==\",\"_location\":\"/elliptic\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"elliptic@^6.5.3\",\"name\":\"elliptic\",\"escapedName\":\"elliptic\",\"rawSpec\":\"^6.5.3\",\"saveSpec\":null,\"fetchSpec\":\"^6.5.3\"},\"_requiredBy\":[\"/browserify-sign\",\"/create-ecdh\"],\"_resolved\":\"https://registry.npmjs.org/elliptic/-/elliptic-6.5.3.tgz\",\"_shasum\":\"cb59eb2efdaf73a0bd78ccd7015a62ad6e0f93d6\",\"_spec\":\"elliptic@^6.5.3\",\"_where\":\"/Users/jensweigele/Documents/projects/ioBroker.yahka/node_modules/browserify-sign\",\"author\":{\"name\":\"Fedor Indutny\",\"email\":\"fedor@indutny.com\"},\"bugs\":{\"url\":\"https://github.com/indutny/elliptic/issues\"},\"bundleDependencies\":false,\"dependencies\":{\"bn.js\":\"^4.4.0\",\"brorand\":\"^1.0.1\",\"hash.js\":\"^1.0.0\",\"hmac-drbg\":\"^1.0.0\",\"inherits\":\"^2.0.1\",\"minimalistic-assert\":\"^1.0.0\",\"minimalistic-crypto-utils\":\"^1.0.0\"},\"deprecated\":false,\"description\":\"EC cryptography\",\"devDependencies\":{\"brfs\":\"^1.4.3\",\"coveralls\":\"^3.0.8\",\"grunt\":\"^1.0.4\",\"grunt-browserify\":\"^5.0.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-connect\":\"^1.0.0\",\"grunt-contrib-copy\":\"^1.0.0\",\"grunt-contrib-uglify\":\"^1.0.1\",\"grunt-mocha-istanbul\":\"^3.0.1\",\"grunt-saucelabs\":\"^9.0.1\",\"istanbul\":\"^0.4.2\",\"jscs\":\"^3.0.7\",\"jshint\":\"^2.10.3\",\"mocha\":\"^6.2.2\"},\"files\":[\"lib\"],\"homepage\":\"https://github.com/indutny/elliptic\",\"keywords\":[\"EC\",\"Elliptic\",\"curve\",\"Cryptography\"],\"license\":\"MIT\",\"main\":\"lib/elliptic.js\",\"name\":\"elliptic\",\"repository\":{\"type\":\"git\",\"url\":\"git+ssh://git@github.com/indutny/elliptic.git\"},\"scripts\":{\"jscs\":\"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js\",\"jshint\":\"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js\",\"lint\":\"npm run jscs && npm run jshint\",\"test\":\"npm run lint && npm run unit\",\"unit\":\"istanbul test _mocha --reporter=spec test/index.js\",\"version\":\"grunt dist && git add dist/\"},\"version\":\"6.5.3\"}");
+module.exports = JSON.parse("{\"_args\":[[\"elliptic@6.5.3\",\"/Users/jensweigele/Documents/projects/ioBroker.yahka\"]],\"_development\":true,\"_from\":\"elliptic@6.5.3\",\"_id\":\"elliptic@6.5.3\",\"_inBundle\":false,\"_integrity\":\"sha512-IMqzv5wNQf+E6aHeIqATs0tOLeOTwj1QKbRcS3jBbYkl5oLAserA8yJTT7/VyHUYG91PRmPyeQDObKLPpeS4dw==\",\"_location\":\"/elliptic\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"elliptic@6.5.3\",\"name\":\"elliptic\",\"escapedName\":\"elliptic\",\"rawSpec\":\"6.5.3\",\"saveSpec\":null,\"fetchSpec\":\"6.5.3\"},\"_requiredBy\":[\"/browserify-sign\",\"/create-ecdh\"],\"_resolved\":\"https://registry.npmjs.org/elliptic/-/elliptic-6.5.3.tgz\",\"_spec\":\"6.5.3\",\"_where\":\"/Users/jensweigele/Documents/projects/ioBroker.yahka\",\"author\":{\"name\":\"Fedor Indutny\",\"email\":\"fedor@indutny.com\"},\"bugs\":{\"url\":\"https://github.com/indutny/elliptic/issues\"},\"dependencies\":{\"bn.js\":\"^4.4.0\",\"brorand\":\"^1.0.1\",\"hash.js\":\"^1.0.0\",\"hmac-drbg\":\"^1.0.0\",\"inherits\":\"^2.0.1\",\"minimalistic-assert\":\"^1.0.0\",\"minimalistic-crypto-utils\":\"^1.0.0\"},\"description\":\"EC cryptography\",\"devDependencies\":{\"brfs\":\"^1.4.3\",\"coveralls\":\"^3.0.8\",\"grunt\":\"^1.0.4\",\"grunt-browserify\":\"^5.0.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-connect\":\"^1.0.0\",\"grunt-contrib-copy\":\"^1.0.0\",\"grunt-contrib-uglify\":\"^1.0.1\",\"grunt-mocha-istanbul\":\"^3.0.1\",\"grunt-saucelabs\":\"^9.0.1\",\"istanbul\":\"^0.4.2\",\"jscs\":\"^3.0.7\",\"jshint\":\"^2.10.3\",\"mocha\":\"^6.2.2\"},\"files\":[\"lib\"],\"homepage\":\"https://github.com/indutny/elliptic\",\"keywords\":[\"EC\",\"Elliptic\",\"curve\",\"Cryptography\"],\"license\":\"MIT\",\"main\":\"lib/elliptic.js\",\"name\":\"elliptic\",\"repository\":{\"type\":\"git\",\"url\":\"git+ssh://git@github.com/indutny/elliptic.git\"},\"scripts\":{\"jscs\":\"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js\",\"jshint\":\"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js\",\"lint\":\"npm run jscs && npm run jshint\",\"test\":\"npm run lint && npm run unit\",\"unit\":\"istanbul test _mocha --reporter=spec test/index.js\",\"version\":\"grunt dist && git add dist/\"},\"version\":\"6.5.3\"}");
 
 /***/ }),
 
@@ -51637,6 +56794,17 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -51718,7 +56886,7 @@ var Advertiser = /** @class */ (function (_super) {
     function Advertiser(accessoryInfo, options) {
         var _this = _super.call(this) || this;
         _this.accessoryInfo = accessoryInfo;
-        _this.responder = ciao_1.default.getResponder(options);
+        _this.responder = ciao_1.default.getResponder(__assign({ ignoreUnicastResponseFlag: true }, options));
         _this.setupHash = _this.computeSetupHash();
         return _this;
     }
@@ -51741,7 +56909,7 @@ var Advertiser = /** @class */ (function (_super) {
     };
     Advertiser.prototype.updateAdvertisement = function () {
         assert_1.default(this.advertisedService, "Cannot update advertisement when service wasn't yet advertised!");
-        return this.advertisedService.updateTxt(this.createTxt());
+        this.advertisedService.updateTxt(this.createTxt());
     };
     Advertiser.prototype.stopAdvertising = function () {
         assert_1.default(this.advertisedService, "Cannot stop advertisement when service wasn't yet advertised!");
