@@ -4,7 +4,7 @@ import { TIoBrokerInOutFunction_Const } from './iofunc.const';
 import { TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition } from './iofunc.homematic.covering';
 import { TIoBrokerConversion_Passthrough } from './conversion.passthrough';
 import { TIoBrokerConversion_HomematicControlMode_To_CoolingState, TIoBrokerConversion_HomematicDirection_To_PositionState } from './conversion.homekit.homematic';
-import { TIoBrokerConversion_Scale } from './conversion.scale';
+import { TIoBrokerConversion_Scale, TIoBrokerConversion_Scale_Rounded } from './conversion.scale';
 import { TIoBrokerConversion_Inverse } from './conversion.inverse';
 import { TIoBrokerConversion_Script } from './conversion.script';
 import { TIoBrokerInOutFunction_MultiState } from './iofunc.multi-state';
@@ -29,7 +29,7 @@ conversionFactory["level255"] = (adapter, param) => new TIoBrokerConversion_Scal
     "iobroker.min": 0,
     "iobroker.max": 255
 }, 'level255');
-conversionFactory["scaleInt"] = (adapter, param) => new TIoBrokerConversion_Scale(adapter, param, 'scaleInt');
+conversionFactory["scaleInt"] = (adapter, param) => new TIoBrokerConversion_Scale_Rounded(adapter, param, 'scaleInt');
 conversionFactory["scaleFloat"] = (adapter, param) => new TIoBrokerConversion_Scale(adapter, param, 'scaleFloat');
 conversionFactory["hue"] = (adapter, param) => new TIoBrokerConversion_Scale(adapter, {
     "homekit.min": 0,

@@ -28,7 +28,7 @@ export class TIoBrokerConversion_Scale extends TIOBrokerConversionBase implement
         }
     }
 
-    toHomeKit(value) {
+    public toHomeKit(value: any): number {
         let num: number = TIOBrokerConversionBase.castToNumber(value);
         let homeKitMax = this.parameters["homekit.max"];
         let ioBrokerMax = this.parameters["iobroker.max"];
@@ -38,7 +38,8 @@ export class TIoBrokerConversion_Scale extends TIOBrokerConversionBase implement
         this.adapter.log.debug(`${this.logName}: converting value to homekit: ${value} to ${newValue}`);
         return newValue;
     }
-    toIOBroker(value) {
+
+    public toIOBroker(value: any): number {
         let num: number = TIOBrokerConversionBase.castToNumber(value);
         let homeKitMax = this.parameters["homekit.max"];
         let ioBrokerMax = this.parameters["iobroker.max"];
@@ -47,5 +48,16 @@ export class TIoBrokerConversion_Scale extends TIOBrokerConversionBase implement
         let newValue = ((num - homeKitMin) / (homeKitMax - homeKitMin)) * (ioBrokerMax - ioBrokerMin) + ioBrokerMin;
         this.adapter.log.debug(`${this.logName}: converting value to ioBroker: ${value} to ${newValue}`);
         return newValue;
+    }
+}
+
+export class TIoBrokerConversion_Scale_Rounded extends TIoBrokerConversion_Scale {
+
+    public toHomeKit(value: any): number {
+        return Math.round(super.toHomeKit(value));
+    }
+
+    public toIOBroker(value: any): number {
+        return Math.round(super.toIOBroker(value));
     }
 }
