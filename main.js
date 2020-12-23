@@ -1834,7 +1834,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TIoBrokerConversion_Scale = void 0;
+exports.TIoBrokerConversion_Scale_Rounded = exports.TIoBrokerConversion_Scale = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 var TIoBrokerConversion_Scale = /** @class */ (function (_super) {
     __extends(TIoBrokerConversion_Scale, _super);
@@ -1882,6 +1882,20 @@ var TIoBrokerConversion_Scale = /** @class */ (function (_super) {
     return TIoBrokerConversion_Scale;
 }(conversion_base_1.TIOBrokerConversionBase));
 exports.TIoBrokerConversion_Scale = TIoBrokerConversion_Scale;
+var TIoBrokerConversion_Scale_Rounded = /** @class */ (function (_super) {
+    __extends(TIoBrokerConversion_Scale_Rounded, _super);
+    function TIoBrokerConversion_Scale_Rounded() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    TIoBrokerConversion_Scale_Rounded.prototype.toHomeKit = function (value) {
+        return Math.round(_super.prototype.toHomeKit.call(this, value));
+    };
+    TIoBrokerConversion_Scale_Rounded.prototype.toIOBroker = function (value) {
+        return Math.round(_super.prototype.toIOBroker.call(this, value));
+    };
+    return TIoBrokerConversion_Scale_Rounded;
+}(TIoBrokerConversion_Scale));
+exports.TIoBrokerConversion_Scale_Rounded = TIoBrokerConversion_Scale_Rounded;
 
 
 /***/ }),
@@ -2098,7 +2112,7 @@ functions_factory_1.conversionFactory["level255"] = function (adapter, param) { 
     "iobroker.min": 0,
     "iobroker.max": 255
 }, 'level255'); };
-functions_factory_1.conversionFactory["scaleInt"] = function (adapter, param) { return new conversion_scale_1.TIoBrokerConversion_Scale(adapter, param, 'scaleInt'); };
+functions_factory_1.conversionFactory["scaleInt"] = function (adapter, param) { return new conversion_scale_1.TIoBrokerConversion_Scale_Rounded(adapter, param, 'scaleInt'); };
 functions_factory_1.conversionFactory["scaleFloat"] = function (adapter, param) { return new conversion_scale_1.TIoBrokerConversion_Scale(adapter, param, 'scaleFloat'); };
 functions_factory_1.conversionFactory["hue"] = function (adapter, param) { return new conversion_scale_1.TIoBrokerConversion_Scale(adapter, {
     "homekit.min": 0,
