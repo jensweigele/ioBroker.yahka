@@ -1,8 +1,12 @@
 {
     "common": {
         "name": "yahka",
-        "version": "0.12.0",
+        "version": "0.13.0",
         "news": {
+            "0.13.0": {
+                "en": "Reworked State selection",
+                "de": "State Selektion überarbeitet"
+            },
             "0.12.0": {
                 "en": "Updated dependencies",
                 "de": "Aktualisierte Abhängigkeiten",

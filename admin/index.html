@@ -25,23 +25,6 @@
 
     <script type="text/javascript" src="yahka.admin.js"></script>
     <script type="text/javascript" src="words.js"></script>
-    <style>
-        .dialog-select-member-close {
-        text-align: center;
-        position: absolute;
-        z-index: 1;
-        border: 1px solid #124967;
-        border-radius: 3px;
-        top: 3px;
-        right: 3px;
-        width: 20px;
-        height: 20px;
-        background: rgb(206, 53, 44);
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
-    }
-</style>
     <script type="text/javascript">
         // Code borrowed from https://codepen.io/gapcode/pen/vEJNZN
         function detectIE() {
@@ -81,7 +64,9 @@
                 noDialog: false,
                 objects: _objects,
                 imgPath: '../../lib/css/fancytree/',
-                filter: { type: 'state' },
+                filter: {
+                    type: 'state'
+                },
                 name: 'vcard-select-state',
                 texts: {
                     select: _('Select'),
@@ -136,18 +121,8 @@
                         $sid.hide();
                         if (newId !== $textarea.val()) {
                             $textarea.val(newId)[0].dispatchEvent(new Event('input'));
-                            //if (!$select.val()) {
-                            //    $select.val('ioBroker.State')[0].dispatchEvent(new Event('input'));
-                            //}
                         }
                     }).show();
-
-                    if (!$sid.find('.dialog-select-member-close').length) {
-                        $sid.append('<div class="dialog-select-member-close">x</div>');
-                        $sid.find('.dialog-select-member-close').click(function () {
-                            $sid.hide();
-                        });
-                    }
                 });
             });
 
@@ -158,11 +133,12 @@
             yahkaAdmin.saveSettings(callback)
         }
 
-        $(function() {
+        $(function () {
             var version = detectIE();
 
             if (version !== false) {
-                document.getElementById('adapter-container').innerHTML = '<h1>Internet Explorer / EDGE are not supported by this adapter! Please use another browser like Chrome, Firefox, Opera etc.';
+                document.getElementById('adapter-container').innerHTML =
+                    '<h1>Internet Explorer / EDGE are not supported by this adapter! Please use another browser like Chrome, Firefox, Opera etc.';
             }
         });
     </script>
@@ -224,22 +200,24 @@
         </div>
     </div>
     <div class="material-dialogs m">
-        <div id="dialog-select-member" class="modal modal-fixed-footer">
-            <div class="modal-content">
-                <div class="row">
-                    <div class="col s12 title"></div>
-                </div>
-                <div class="row">
-                    <div class="col s12 dialog-content">
+        <div id="dialog-select-member" class="modal">
+            <!-- style here is necessary to overwrite rule from adminCommons.less -->
+            <div class="select-dialog" style="height: 100% !important;">
+                <div class="select-content">
+                    <div class="col s12 title" style="flex: 0 0 auto"></div>
+                    <div class="select-tree-wrapper">
+                        <div class="col s12 dialog-content">
+                        </div>
                     </div>
                 </div>
+                <div class="select-footer">
+                    <a class="modal-action modal-close waves-effect waves-green btn btn-set"><i
+                            class="large material-icons">check</i><span class="translate">Select</span></a>
+                    <a class="modal-action modal-close waves-effect waves-green btn btn-close"><i
+                            class="large material-icons">close</i><span class="translate">Cancel</span></a>
+                </div>
             </div>
-            <div class="modal-footer">
-                <a class="modal-action modal-close waves-effect waves-green btn btn-set"><i class="large material-icons">check</i><span
-                        class="translate">Select</span></a>
-                <a class="modal-action modal-close waves-effect waves-green btn btn-close"><i class="large material-icons">close</i><span
-                        class="translate">Cancel</span></a>
-            </div>
+            <div class="dialog-select-member-close modal-close">x</div>
         </div>
     </div>
 </body>
