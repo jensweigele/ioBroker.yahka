@@ -54,10 +54,7 @@
         }
 
         var yahkaAdmin = new yahkaAdmin.ioBroker_YahkaAdmin();
-        var objects = null;
         var onChange;
-
-        var $selectId;
 
         function initSelectidHelper(_objects) {
             return $('#dialog-select-member').selectId('init', {
@@ -93,20 +90,14 @@
         }
 
         function getObjects(callback) {
-            if (objects) {
-                callback && callback(objects);
-            } else {
-                socket.emit('getObjects', function (err, res) {
-                    objects = res || {};
-                    callback && callback(objects);
-                });
-            }
+            socket.emit('getObjects', function (err, res) {
+                callback && callback(res || {});
+            });
         }
 
         function initSelectId(cb) {
-            if ($selectId) return cb($selectId);
-            getObjects(function () {
-                $selectId = initSelectidHelper(objects);
+            getObjects(function (objects) {
+                const $selectId = initSelectidHelper(objects);
                 cb && cb($selectId);
             });
         }
