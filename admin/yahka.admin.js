@@ -1358,7 +1358,7 @@ class CiaoService extends events_1.EventEmitter {
         this.loweredHostname = dns_equal_1.dnsLowerCase(this.hostname);
         this.port = options.port;
         if (options.restrictedAddresses) {
-            assert_1.default(options.restrictedAddresses, "The service property 'restrictedAddresses' cannot be an empty array!");
+            assert_1.default(options.restrictedAddresses.length, "The service property 'restrictedAddresses' cannot be an empty array!");
             this.restrictedAddresses = new Map();
             for (const entry of options.restrictedAddresses) {
                 if (net_1.default.isIP(entry)) {
@@ -2251,7 +2251,7 @@ class MDNSServer {
             packets.push(base64);
         }
     }
-    checkIfPreviouslySentPacketOnLoopbackInterface(name, packet) {
+    checkIfPacketWasPreviouslySentFromUs(name, packet) {
         const base64 = packet.toString("base64");
         const packets = this.sentPackets.get(name);
         if (packets) {
@@ -2319,23 +2319,33 @@ class MDNSServer {
             debug("Received packet on non existing network interface: %s!", name);
             return;
         }
-        if (this.checkIfPreviouslySentPacketOnLoopbackInterface(networkInterface.name, buffer)) {
+        if (this.checkIfPacketWasPreviouslySentFromUs(networkInterface.name, buffer)) {
             // multicastLoopback is enabled for every interface, meaning we would receive our own response
             // packets here. Thus we silence them. We can't disable multicast loopback, as otherwise
             // queriers on the same host won't receive our packets
             return;
         }
         const ip4Netaddress = domain_formatter_1.getNetAddress(rinfo.address, networkInterface.ip4Netmask);
-        if (ip4Netaddress !== networkInterface.ipv4Netaddress) {
-            // This isn't a problem on macOS (it seems like to respect the desired interface we supply for our membership)
-            // On Linux based system such filtering seems to not happen :thinking: we just get any traffic and it's like
-            // we are just bound to 0.0.0.0
-            /* disabled debug message for now
-            if (!name.includes("lo")) { // exclude the loopback interface for this error
-              debug("Received packet on " + name + " which is not coming from the same subnet. %o",
-                {address: rinfo.address, netaddress: ip4Netaddress, interface: networkInterface.ipv4});
+        // We have the following problem on linux based platforms:
+        // When setting up a socket like above (binding on 0.0.0.0:5353) and then adding membership for 224.0.0.251 for
+        // A CERTAIN! interface, we will nonetheless receive packets from ALL other interfaces even the loopback interfaces.
+        // This is not the case on platforms like e.g. macOS. There stuff is properly filtered, and we only receive packets
+        // for the given interface we specified in our membership.
+        // This has the problem, that when receiving packets from other interfaces, that we leak out addresses which don't
+        // exists on the given interface. We can't do much about it, as in typically multiple subnet networks, it is valid
+        // that we receive a packet from a ip address which doesn't belong into the subnet of our given interface.
+        // What we can do at least, is the following two things:
+        // * if we are listening on the loopback interface, we filter out any traffic which doesn't belong to the loopback interface
+        // * if we receive a packet from the loopback interface, we filter those out as well.
+        // With that we at least ensure that the loopback address is never sent out to the network.
+        // This is what we do below:
+        if (networkInterface.loopback) {
+            if (ip4Netaddress !== networkInterface.ipv4Netaddress) {
+                return;
             }
-            */
+        }
+        else if (this.networkManager.isLoopbackNetaddressV4(ip4Netaddress)) {
+            debug("Received packet on interface '%s' which is not coming from the same subnet: %o", name, { address: rinfo.address, netaddress: ip4Netaddress, interface: networkInterface.ipv4 });
             return;
         }
         let packet;
@@ -2517,6 +2527,10 @@ class NetworkManager extends events_1.EventEmitter {
     constructor(options) {
         super();
         this.currentInterfaces = new Map();
+        /**
+         * A subset of our network interfaces, holding only loopback interfaces (or what node considers "internal").
+         */
+        this.loopbackInterfaces = new Map();
         this.setMaxListeners(100); // we got one listener for every Responder, 100 should be fine for now
         if (options && options.interface) {
             let interfaces;
@@ -2599,6 +2613,14 @@ class NetworkManager extends events_1.EventEmitter {
         }
         return this.currentInterfaces.get(name);
     }
+    isLoopbackNetaddressV4(netaddress) {
+        for (const networkInterface of this.loopbackInterfaces.values()) {
+            if (networkInterface.ipv4Netaddress === netaddress) {
+                return true;
+            }
+        }
+        return false;
+    }
     scheduleNextJob() {
         this.currentTimer = setTimeout(this.checkForNewInterfaces.bind(this), NetworkManager.POLLING_TIME);
         this.currentTimer.unref(); // this timer won't prevent shutdown
@@ -2652,11 +2674,17 @@ class NetworkManager extends events_1.EventEmitter {
                         }
                     }
                     this.currentInterfaces.set(name, networkInterface);
+                    if (networkInterface.loopback) {
+                        this.loopbackInterfaces.set(name, networkInterface);
+                    }
                     (changes !== null && changes !== void 0 ? changes : (changes = [])).push(change);
                 }
             }
             else { // new interface was added/started
                 this.currentInterfaces.set(name, networkInterface);
+                if (networkInterface.loopback) {
+                    this.currentInterfaces.set(name, networkInterface);
+                }
                 (added !== null && added !== void 0 ? added : (added = [])).push(networkInterface);
             }
         }
@@ -2667,6 +2695,7 @@ class NetworkManager extends events_1.EventEmitter {
             for (const [name, networkInterface] of this.currentInterfaces) {
                 if (!latestInterfaces.has(name)) { // interface was removed
                     this.currentInterfaces.delete(name);
+                    this.loopbackInterfaces.delete(name);
                     (removed !== null && removed !== void 0 ? removed : (removed = [])).push(networkInterface);
                 }
             }
@@ -3591,6 +3620,7 @@ class Responder {
             const truncatedQueryResult = previousQuery.appendDNSPacket(packet);
             switch (truncatedQueryResult) {
                 case 1 /* ABORT */: // returned when we detect, that continuously TC queries are sent
+                    delete this.truncatedQueries[endpointId];
                     debug("[%s] Aborting to wait for more truncated queries. Waited a total of %d ms receiving %d queries", endpointId, previousQuery.getTotalWaitTime(), previousQuery.getArrivedPacketCount());
                     return;
                 case 2 /* AGAIN_TRUNCATED */:
@@ -4591,6 +4621,9 @@ class DNSPacket {
         this.opcode = definition.opcode || 0 /* QUERY */;
         this.flags = definition.flags || {};
         this.rcode = definition.rCode || 0 /* NoError */;
+        if (this.type === 1 /* RESPONSE */) {
+            this.flags.authoritativeAnswer = true; // RFC 6763 18.4 AA is always set for responses in mdns
+        }
         if (definition.questions) {
             this.addQuestions(...definition.questions);
         }
@@ -4603,6 +4636,11 @@ class DNSPacket {
         if (definition.additionals) {
             this.addAdditionals(...definition.additionals);
         }
+    }
+    static createDNSQueryPacket(definition, udpPayloadSize = this.UDP_PAYLOAD_SIZE_IPV4) {
+        const packets = this.createDNSQueryPackets(definition, udpPayloadSize);
+        assert_1.default(packets.length === 1, "Cannot user short method createDNSQueryPacket when query packets are more than one: is " + packets.length);
+        return packets[0];
     }
     static createDNSQueryPackets(definition, udpPayloadSize = this.UDP_PAYLOAD_SIZE_IPV4) {
         const packets = [];
@@ -5207,6 +5245,7 @@ exports.ResourceRecord = ResourceRecord;
 ResourceRecord.typeToRecordDecoder = new Map();
 ResourceRecord.FLUSH_MASK = 0x8000; // 2 bytes, first bit set
 ResourceRecord.NOT_FLUSH_MASK = 0x7FFF;
+ResourceRecord.RR_DEFAULT_TTL_SHORT = 120; // 120 seconds
 ResourceRecord.RR_DEFAULT_TTL = 4500; // 75 minutes
 //# sourceMappingURL=ResourceRecord.js.map
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../node-libs-browser/node_modules/buffer/index.js */ "../node_modules/node-libs-browser/node_modules/buffer/index.js").Buffer))
@@ -5271,7 +5310,7 @@ const ResourceRecord_1 = __webpack_require__(/*! ../ResourceRecord */ "../node_m
 class AAAARecord extends ResourceRecord_1.ResourceRecord {
     constructor(name, ipAddress, flushFlag, ttl) {
         if (typeof name === "string") {
-            super(name, 28 /* AAAA */, ttl || 120, flushFlag);
+            super(name, 28 /* AAAA */, ttl || AAAARecord.RR_DEFAULT_TTL_SHORT, flushFlag);
         }
         else {
             assert_1.default(name.type === 28 /* AAAA */);
@@ -5343,7 +5382,7 @@ const ResourceRecord_1 = __webpack_require__(/*! ../ResourceRecord */ "../node_m
 class ARecord extends ResourceRecord_1.ResourceRecord {
     constructor(name, ipAddress, flushFlag, ttl) {
         if (typeof name === "string") {
-            super(name, 1 /* A */, ttl || 120, flushFlag);
+            super(name, 1 /* A */, ttl || ARecord.RR_DEFAULT_TTL_SHORT, flushFlag);
         }
         else {
             assert_1.default(name.type === 1 /* A */);
@@ -5479,7 +5518,7 @@ const ResourceRecord_1 = __webpack_require__(/*! ../ResourceRecord */ "../node_m
 class NSECRecord extends ResourceRecord_1.ResourceRecord {
     constructor(name, nextDomainName, rrtypes, ttl, flushFlag) {
         if (typeof name === "string") {
-            super(name, 47 /* NSEC */, ttl || 120, flushFlag);
+            super(name, 47 /* NSEC */, ttl || NSECRecord.RR_DEFAULT_TTL_SHORT, flushFlag);
         }
         else {
             assert_1.default(name.type === 47 /* NSEC */);
@@ -5839,7 +5878,7 @@ const ResourceRecord_1 = __webpack_require__(/*! ../ResourceRecord */ "../node_m
 class SRVRecord extends ResourceRecord_1.ResourceRecord {
     constructor(name, hostname, port, flushFlag, ttl) {
         if (typeof name === "string") {
-            super(name, 33 /* SRV */, ttl || SRVRecord.RR_DEFAULT_TTL, flushFlag);
+            super(name, 33 /* SRV */, ttl || SRVRecord.RR_DEFAULT_TTL_SHORT, flushFlag);
         }
         else {
             assert_1.default(name.type === 33 /* SRV */);
@@ -6704,6 +6743,9 @@ exports.QueryResponse = QueryResponse;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.QueuedResponse = void 0;
+/**
+ * Represents a delay response packet which is going to be sent over multicast.
+ */
 class QueuedResponse {
     constructor(packet, interfaceName) {
         this.timeOfCreation = new Date().getTime(); // epoch time millis
@@ -12070,7 +12112,7 @@ function __classPrivateFieldSet(receiver, privateMap, value) {
 /*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, bin, bugs, bundleDependencies, dependencies, deprecated, description, devDependencies, files, homepage, keywords, license, main, name, repository, scripts, types, version, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_from\":\"@homebridge/ciao@~1.1.0\",\"_id\":\"@homebridge/ciao@1.1.0\",\"_inBundle\":false,\"_integrity\":\"sha512-fpFUy/1PQ5eMPiTdRewoA/gnFCLBkBlNsFJpHO8/Wk/p1fQM0YLMDdyvR956CF0QdArhz2SBB3VeGmgVkOrLFw==\",\"_location\":\"/@homebridge/ciao\",\"_phantomChildren\":{\"buffer-from\":\"1.1.1\",\"ms\":\"2.1.2\"},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"@homebridge/ciao@~1.1.0\",\"name\":\"@homebridge/ciao\",\"escapedName\":\"@homebridge%2fciao\",\"scope\":\"@homebridge\",\"rawSpec\":\"~1.1.0\",\"saveSpec\":null,\"fetchSpec\":\"~1.1.0\"},\"_requiredBy\":[\"/hap-nodejs\"],\"_resolved\":\"https://registry.npmjs.org/@homebridge/ciao/-/ciao-1.1.0.tgz\",\"_shasum\":\"a8086df1621df85600a74a5d1b53b1951d20359f\",\"_spec\":\"@homebridge/ciao@~1.1.0\",\"_where\":\"/Users/jensweigele/Documents/projects/ioBroker.yahka/node_modules/hap-nodejs\",\"author\":{\"name\":\"Andreas Bauer\",\"email\":\"mail@anderl-bauer.de\"},\"bin\":{\"ciao-bcs\":\"lib/bonjour-conformance-testing.js\"},\"bugs\":{\"url\":\"https://github.com/homebridge/ciao/issues\"},\"bundleDependencies\":false,\"dependencies\":{\"debug\":\"^4.3.1\",\"fast-deep-equal\":\"^3.1.3\",\"source-map-support\":\"^0.5.19\",\"tslib\":\"^2.0.3\"},\"deprecated\":false,\"description\":\"ciao is a RFC 6763 compliant dns-sd library, advertising on multicast dns (RFC 6762) implemented in plain Typescript/JavaScript\",\"devDependencies\":{\"@types/debug\":\"^4.1.5\",\"@types/jest\":\"^26.0.16\",\"@types/node\":\"~10.17.48\",\"@typescript-eslint/eslint-plugin\":\"^4.9.0\",\"@typescript-eslint/parser\":\"^4.9.0\",\"eslint\":\"^7.15.0\",\"jest\":\"^26.6.3\",\"rimraf\":\"^3.0.2\",\"semver\":\"^7.3.4\",\"ts-jest\":\"^26.4.4\",\"ts-node\":\"^9.1.0\",\"typedoc\":\"0.20.0-beta.24\",\"typescript\":\"^4.1.2\"},\"files\":[\"lib\",\"types\",\"README.md\",\"LICENSE\",\"package.json\"],\"homepage\":\"https://github.com/homebridge/ciao\",\"keywords\":[\"ciao\",\"rfc-6762\",\"rfc-6763\",\"multicast-dns\",\"dns-sd\",\"bonjour\",\"zeroconf\",\"zero-configuration\",\"mdns\",\"mdns-sd\",\"service-discovery\"],\"license\":\"MIT\",\"main\":\"lib/index.js\",\"name\":\"@homebridge/ciao\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/homebridge/ciao.git\"},\"scripts\":{\"build\":\"npm run clean && tsc\",\"clean\":\"rimraf lib && rimraf coverage\",\"docs\":\"rimraf docs && typedoc src/index.ts\",\"lint\":\"eslint 'src/**/*.{js,ts,json}'\",\"postpublish\":\"npm run clean\",\"prepublishOnly\":\"npm run build\",\"preversion\":\"npm run lint\",\"test\":\"jest\",\"test-coverage\":\"jest --coverage\",\"version\":\"npm run docs && git add docs\"},\"types\":\"lib/index.d.ts\",\"version\":\"1.1.0\"}");
+module.exports = JSON.parse("{\"_from\":\"@homebridge/ciao@~1.1.2\",\"_id\":\"@homebridge/ciao@1.1.2\",\"_inBundle\":false,\"_integrity\":\"sha512-31IfDKMqxfT+uVNXj0/TmYMou57gP8CUrh0vABzsc5QMsoCQ4Oo5uYQp0oJJyzxTBkF2pFvjR3XlWAapl0VyCg==\",\"_location\":\"/@homebridge/ciao\",\"_phantomChildren\":{\"buffer-from\":\"1.1.1\",\"ms\":\"2.1.2\"},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"@homebridge/ciao@~1.1.2\",\"name\":\"@homebridge/ciao\",\"escapedName\":\"@homebridge%2fciao\",\"scope\":\"@homebridge\",\"rawSpec\":\"~1.1.2\",\"saveSpec\":null,\"fetchSpec\":\"~1.1.2\"},\"_requiredBy\":[\"/hap-nodejs\"],\"_resolved\":\"https://registry.npmjs.org/@homebridge/ciao/-/ciao-1.1.2.tgz\",\"_shasum\":\"996acbe167c7d4108462d68af9af9de745d5cf33\",\"_spec\":\"@homebridge/ciao@~1.1.2\",\"_where\":\"/Users/jensweigele/Documents/projects/ioBroker.yahka/node_modules/hap-nodejs\",\"author\":{\"name\":\"Andreas Bauer\",\"email\":\"mail@anderl-bauer.de\"},\"bin\":{\"ciao-bcs\":\"lib/bonjour-conformance-testing.js\"},\"bugs\":{\"url\":\"https://github.com/homebridge/ciao/issues\"},\"bundleDependencies\":false,\"dependencies\":{\"debug\":\"^4.3.1\",\"fast-deep-equal\":\"^3.1.3\",\"source-map-support\":\"^0.5.19\",\"tslib\":\"^2.0.3\"},\"deprecated\":false,\"description\":\"ciao is a RFC 6763 compliant dns-sd library, advertising on multicast dns (RFC 6762) implemented in plain Typescript/JavaScript\",\"devDependencies\":{\"@types/debug\":\"^4.1.5\",\"@types/jest\":\"^26.0.16\",\"@types/node\":\"~10.17.48\",\"@typescript-eslint/eslint-plugin\":\"^4.9.0\",\"@typescript-eslint/parser\":\"^4.9.0\",\"eslint\":\"^7.15.0\",\"jest\":\"^26.6.3\",\"rimraf\":\"^3.0.2\",\"semver\":\"^7.3.4\",\"ts-jest\":\"^26.4.4\",\"ts-node\":\"^9.1.0\",\"typedoc\":\"0.20.0-beta.24\",\"typescript\":\"^4.1.2\"},\"files\":[\"lib\",\"types\",\"README.md\",\"LICENSE\",\"package.json\"],\"homepage\":\"https://github.com/homebridge/ciao\",\"keywords\":[\"ciao\",\"rfc-6762\",\"rfc-6763\",\"multicast-dns\",\"dns-sd\",\"bonjour\",\"zeroconf\",\"zero-configuration\",\"mdns\",\"mdns-sd\",\"service-discovery\"],\"license\":\"MIT\",\"main\":\"lib/index.js\",\"name\":\"@homebridge/ciao\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/homebridge/ciao.git\"},\"scripts\":{\"build\":\"npm run clean && tsc\",\"clean\":\"rimraf lib && rimraf coverage\",\"docs\":\"rimraf docs && typedoc src/index.ts\",\"lint\":\"eslint 'src/**/*.{js,ts,json}'\",\"postpublish\":\"npm run clean\",\"prepublishOnly\":\"npm run build\",\"preversion\":\"npm run lint\",\"test\":\"jest\",\"test-coverage\":\"jest --coverage\",\"version\":\"npm run docs && git add docs\"},\"types\":\"lib/index.d.ts\",\"version\":\"1.1.2\"}");
 
 /***/ }),
 
@@ -56886,7 +56928,7 @@ var Advertiser = /** @class */ (function (_super) {
     function Advertiser(accessoryInfo, options) {
         var _this = _super.call(this) || this;
         _this.accessoryInfo = accessoryInfo;
-        _this.responder = ciao_1.default.getResponder(__assign({ ignoreUnicastResponseFlag: true }, options));
+        _this.responder = ciao_1.default.getResponder(__assign({}, options));
         _this.setupHash = _this.computeSetupHash();
         return _this;
     }
