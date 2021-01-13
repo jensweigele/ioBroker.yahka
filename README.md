@@ -153,6 +153,9 @@ For more information about the Configuration, the InOut Functions and Conversion
 
 
 ## Changelog
+### 0.14.0 (unreleased)
+  (jw) switched to HAP-NodeJS 0.9.0-beta.113 and added useLegacyAdvertiser option<br>
+
 ### 0.13.0
   (jw) updated dependencies<br>
   (jw) improved state selector (scrolling and refresh on open)<br>

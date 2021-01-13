@@ -23,7 +23,7 @@ export class THomeKitBridge {
     public init() {
         this.bridgeObject = this.setupBridge();
         const devicesToPublish: IPublishingMethod[] = [() => {
-            this.FLogger.info(`publishing bridge ${this.config.name} on ${this.config.interface ?? '0.0.0.0'}`);
+            this.FLogger.info(`publishing bridge ${this.config.name} on ${this.config.interface ?? '0.0.0.0'} ${this.config.useLegacyAdvertiser ? 'using hapBonjour' : 'using ciao'}`);
             this.bridgeObject.publish({
                 username: this.config.username,
                 port: this.config.port,
@@ -32,7 +32,8 @@ export class THomeKitBridge {
                 mdns: {
                     interface: this.config.interface,
                     reuseAddr: true
-                } as any
+                } as any,
+                useLegacyAdvertiser: this.config.useLegacyAdvertiser
             });
         }];
 
@@ -45,12 +46,13 @@ export class THomeKitBridge {
 
                 if (device.publishAsOwnDevice) {
                     devicesToPublish.push(() => {
-                        this.FLogger.info(`publishing device ${device.name} on ${device.interface ?? '0.0.0.0'}`);
+                        this.FLogger.info(`publishing device ${device.name} on ${device.interface ?? '0.0.0.0'} ${device.useLegacyAdvertiser ? 'using hapBonjour' : 'using ciao'}`);
                         hapDevice.publish({
                             username: device.username,
                             port: device.port,
                             pincode: device.pincode,
                             category: device.category,
+                            useLegacyAdvertiser: device.useLegacyAdvertiser,
                             mdns: {
                                 interface: device.interface,
                                 reuseAddr: true

@@ -60,6 +60,7 @@ export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base imple
         let ipList = await ioBrokerInterfaceList;
         let ipListForSelectBox = ipList.filter((a) => a.family === "ipv4").map((a) => { return { value: a.address, text: a.name }; });
         inputHelper('#interface', 'interface', ipListForSelectBox);
+        checkboxHelper('#useLegacyAdvertiser', 'useLegacyAdvertiser');
         checkboxHelper('#verboseLogging', 'verboseLogging');
 
         devicePanel.appendChild(bridgeConfigFragment);

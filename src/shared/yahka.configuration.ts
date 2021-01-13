@@ -47,6 +47,7 @@ export module Configuration {
         username?: string;
         pincode?: string;
         port?: number;
+        useLegacyAdvertiser?: boolean;
         interface?: string;
         [key: string]: any;
     }
@@ -57,6 +58,7 @@ export module Configuration {
         username: string;
         pincode: string;
         port: number;
+        useLegacyAdvertiser?: boolean;
         interface?: string;
         verboseLogging: boolean;
         devices: IDeviceConfig[];

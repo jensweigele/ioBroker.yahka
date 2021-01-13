@@ -87,6 +87,7 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
         let ipList = await ioBrokerInterfaceList;
         let ipListForSelectBox = ipList.filter((a) => a.family === "ipv4").map((a) => { return { value: a.address, text: a.name }; });
         inputHelper('#interface', 'interface', ipListForSelectBox);
+        inputHelper('#useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
 
         inputHelper('#source', 'source');
         inputHelper('#codec', 'codec');

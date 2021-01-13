@@ -103,6 +103,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         inputHelper('#firmware', 'firmware');
         inputHelper('#category', 'category', accessoryCategories);
         inputHelper('#publish_as_own_device', 'publishAsOwnDevice', undefined, undefined, false);
+        inputHelper('#useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
         inputHelper('#username', 'username');
         inputHelper('#pincode', 'pincode');
         inputHelper('#port', 'port');

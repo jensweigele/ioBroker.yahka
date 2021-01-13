@@ -73,7 +73,16 @@ let frontendConfig = {
     new webpack.NormalModuleReplacementPlugin(
       /lib\/AccessoryLoader\.js/,
       path.resolve(__dirname, 'src/AccessoryLoaderForBrowser.js')
+    ),
+    new webpack.NormalModuleReplacementPlugin(
+      /lib\/HAPServer\.js/,
+      path.resolve(__dirname, 'src/AccessoryLoaderForBrowser.js')
+    ),
+    new webpack.NormalModuleReplacementPlugin(
+      /lib\/util\/hapCrypto\.js/,
+      path.resolve(__dirname, 'src/AccessoryLoaderForBrowser.js')
     )
+
   ]
 };
 

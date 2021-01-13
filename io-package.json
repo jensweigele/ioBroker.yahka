@@ -1,8 +1,11 @@
 {
     "common": {
         "name": "yahka",
-        "version": "0.13.0",
+        "version": "0.14.0",
         "news": {
+            "0.14.0": {
+                "en": "Switched to HAP-NodeJS 0.9.0-beta 113"
+            },
             "0.13.0": {
                 "en": "Reworked State selection",
                 "de": "State Selektion überarbeitet"

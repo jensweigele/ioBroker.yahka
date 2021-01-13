@@ -1234,7 +1234,7 @@ module.exports = function(module) {
 /*! exports provided: name, version, description, author, contributors, homepage, license, keywords, repository, engines, dependencies, devDependencies, bugs, readmeFilename, main, scripts, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"iobroker.yahka\",\"version\":\"0.13.0\",\"description\":\"ioBroker HomeKit Adapter\",\"author\":{\"name\":\"Jens Weigele\",\"email\":\"iobroker.yahka@gmail.com\"},\"contributors\":[{\"name\":\"Jens Weigele\",\"email\":\"iobroker.yahka@gmail.com\"}],\"homepage\":\"https://github.com/jensweigele/ioBroker.yahka\",\"license\":\"MIT\",\"keywords\":[\"ioBroker\",\"iobroker.yahka\",\"Smart Home\",\"home automation\",\"siri\",\"homekit\"],\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/jensweigele/ioBroker.yahka\"},\"engines\":{\"node\":\">=6.0.0\"},\"dependencies\":{\"@iobroker/adapter-core\":\"^2.4.0\",\"debug\":\"^4.2.0\",\"dev-null\":\"^0.1.1\",\"hap-nodejs\":\"^0.8.5\",\"ip\":\"^1.1.5\",\"macaddress\":\"0.5.1\",\"util\":\"^0.12.3\"},\"devDependencies\":{\"@types/iobroker\":\"^3.2.4\",\"@types/jquery\":\"^3.5.4\",\"@types/node\":\"^14.14.7\",\"chai\":\"^4.2.0\",\"grunt\":\"^1.3.0\",\"grunt-contrib-clean\":\"^2.0.0\",\"grunt-contrib-compress\":\"^1.6.0\",\"grunt-contrib-copy\":\"^1.0.0\",\"grunt-contrib-jshint\":\"^2.1.0\",\"grunt-exec\":\"^3.0.0\",\"grunt-http\":\"^2.3.3\",\"grunt-jscs\":\"^3.0.1\",\"grunt-replace\":\"^1.0.1\",\"grunt-ts\":\"^6.0.0-beta.22\",\"grunt-webpack\":\"^4.0.2\",\"html-webpack-plugin\":\"^4.5.0\",\"mocha\":\"^8.1.3\",\"raw-loader\":\"^4.0.2\",\"ts-loader\":\"^8.0.4\",\"typescript\":\"^4.0.3\",\"webpack\":\"^4.44.2\",\"webpack-cli\":\"^3.3.12\",\"webpack-node-externals\":\"^2.5.2\"},\"bugs\":{\"url\":\"https://github.com/jensweigele/ioBroker.yahka/issues\"},\"readmeFilename\":\"README.md\",\"main\":\"main.js\",\"scripts\":{\"test\":\"node node_modules/mocha/bin/mocha --exit\"}}");
+module.exports = JSON.parse("{\"name\":\"iobroker.yahka\",\"version\":\"0.13.0\",\"description\":\"ioBroker HomeKit Adapter\",\"author\":{\"name\":\"Jens Weigele\",\"email\":\"iobroker.yahka@gmail.com\"},\"contributors\":[{\"name\":\"Jens Weigele\",\"email\":\"iobroker.yahka@gmail.com\"}],\"homepage\":\"https://github.com/jensweigele/ioBroker.yahka\",\"license\":\"MIT\",\"keywords\":[\"ioBroker\",\"iobroker.yahka\",\"Smart Home\",\"home automation\",\"siri\",\"homekit\"],\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/jensweigele/ioBroker.yahka\"},\"engines\":{\"node\":\">=6.0.0\"},\"dependencies\":{\"@iobroker/adapter-core\":\"^2.4.0\",\"debug\":\"^4.2.0\",\"dev-null\":\"^0.1.1\",\"hap-nodejs\":\"^0.9.0-beta.113\",\"ip\":\"^1.1.5\",\"macaddress\":\"0.5.1\",\"util\":\"^0.12.3\"},\"devDependencies\":{\"@types/iobroker\":\"^3.2.4\",\"@types/jquery\":\"^3.5.4\",\"@types/node\":\"^14.14.7\",\"chai\":\"^4.2.0\",\"grunt\":\"^1.3.0\",\"grunt-contrib-clean\":\"^2.0.0\",\"grunt-contrib-compress\":\"^1.6.0\",\"grunt-contrib-copy\":\"^1.0.0\",\"grunt-contrib-jshint\":\"^2.1.0\",\"grunt-exec\":\"^3.0.0\",\"grunt-http\":\"^2.3.3\",\"grunt-jscs\":\"^3.0.1\",\"grunt-replace\":\"^1.0.1\",\"grunt-ts\":\"^6.0.0-beta.22\",\"grunt-webpack\":\"^4.0.2\",\"html-webpack-plugin\":\"^4.5.0\",\"mocha\":\"^8.1.3\",\"raw-loader\":\"^4.0.2\",\"ts-loader\":\"^8.0.4\",\"typescript\":\"^4.0.3\",\"webpack\":\"^4.44.2\",\"webpack-cli\":\"^3.3.12\",\"webpack-node-externals\":\"^2.5.2\"},\"bugs\":{\"url\":\"https://github.com/jensweigele/ioBroker.yahka/issues\"},\"readmeFilename\":\"README.md\",\"main\":\"main.js\",\"scripts\":{\"test\":\"node node_modules/mocha/bin/mocha --exit\"}}");
 
 /***/ }),
 
@@ -2868,7 +2868,7 @@ var THomeKitBridge = /** @class */ (function () {
         this.bridgeObject = this.setupBridge();
         var devicesToPublish = [function () {
                 var _a;
-                _this.FLogger.info("publishing bridge " + _this.config.name + " on " + ((_a = _this.config.interface) !== null && _a !== void 0 ? _a : '0.0.0.0'));
+                _this.FLogger.info("publishing bridge " + _this.config.name + " on " + ((_a = _this.config.interface) !== null && _a !== void 0 ? _a : '0.0.0.0') + " " + (_this.config.useLegacyAdvertiser ? 'using hapBonjour' : 'using ciao'));
                 _this.bridgeObject.publish({
                     username: _this.config.username,
                     port: _this.config.port,
@@ -2877,7 +2877,8 @@ var THomeKitBridge = /** @class */ (function () {
                     mdns: {
                         interface: _this.config.interface,
                         reuseAddr: true
-                    }
+                    },
+                    useLegacyAdvertiser: _this.config.useLegacyAdvertiser
                 });
             }];
         if (this.config.devices) {
@@ -2889,12 +2890,13 @@ var THomeKitBridge = /** @class */ (function () {
                 if (device.publishAsOwnDevice) {
                     devicesToPublish.push(function () {
                         var _a;
-                        _this.FLogger.info("publishing device " + device.name + " on " + ((_a = device.interface) !== null && _a !== void 0 ? _a : '0.0.0.0'));
+                        _this.FLogger.info("publishing device " + device.name + " on " + ((_a = device.interface) !== null && _a !== void 0 ? _a : '0.0.0.0') + " " + (device.useLegacyAdvertiser ? 'using hapBonjour' : 'using ciao'));
                         hapDevice.publish({
                             username: device.username,
                             port: device.port,
                             pincode: device.pincode,
                             category: device.category,
+                            useLegacyAdvertiser: device.useLegacyAdvertiser,
                             mdns: {
                                 interface: device.interface,
                                 reuseAddr: true
@@ -3135,12 +3137,13 @@ var THomeKitIPCamera = /** @class */ (function () {
     };
     THomeKitIPCamera.prototype.publishCamera = function () {
         var _a;
-        this.FLogger.info("publishing camera " + this.camConfig.name + " on " + ((_a = this.camConfig.interface) !== null && _a !== void 0 ? _a : '0.0.0.0'));
+        this.FLogger.info("publishing camera " + this.camConfig.name + " on " + ((_a = this.camConfig.interface) !== null && _a !== void 0 ? _a : '0.0.0.0') + " " + (this.camConfig.useLegacyAdvertiser ? 'using hapBonjour' : 'using ciao'));
         this.camera.publish({
             username: this.camConfig.username,
             port: this.camConfig.port,
             pincode: this.camConfig.pincode,
             category: 17 /* CAMERA */,
+            useLegacyAdvertiser: this.camConfig.useLegacyAdvertiser,
             mdns: {
                 interface: this.camConfig.interface,
                 reuseAddr: true
