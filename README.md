@@ -153,8 +153,9 @@ For more information about the Configuration, the InOut Functions and Conversion
 
 
 ## Changelog
-### 0.14.0 (unreleased)
+### 0.13.1 (2020-01-14)
   (jw) switched to HAP-NodeJS 0.9.0-beta.113 and added useLegacyAdvertiser option<br>
+  (jw) fixed bug which prevented cameras from deletion and duplication<br>
 
 ### 0.13.0
   (jw) updated dependencies<br>

@@ -261,7 +261,7 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
             elem.addEventListener('click', (e) => {
                 e.preventDefault();
                 let dev = this.delegate.selectedDeviceConfig;
-                if (!hkBridge.Configuration.isDeviceConfig(dev))
+                if (!hkBridge.Configuration.isDeviceConfig(dev) && !hkBridge.Configuration.isIPCameraConfig(dev))
                     return;
 
 
@@ -282,19 +282,19 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
             elem.addEventListener('click', (e) => {
                 e.preventDefault();
                 let dev = this.delegate.selectedDeviceConfig;
-                if (hkBridge.Configuration.isDeviceConfig(dev)) {
-                    let idx = bridge.devices.indexOf(dev);
+                if (hkBridge.Configuration.isIPCameraConfig(dev)) {
+                    let idx = this.delegate.cameraConfigs.indexOf(dev);
                     if (idx > -1) {
-                        bridge.devices.splice(idx, 1);
+                        this.delegate.cameraConfigs.splice(idx, 1);
                         this.delegate.changeCallback();
                         this.delegate.setSelectedDeviceConfig(undefined, false);
                         this.deviceListHandler.buildDeviceList(bridgePane);
                         this.delegate.changeCallback();
                     }
-                } else if (hkBridge.Configuration.isIPCameraConfig(dev)) {
-                    let idx = this.delegate.cameraConfigs.indexOf(dev);
+                } else if (hkBridge.Configuration.isDeviceConfig(dev)) {
+                    let idx = bridge.devices.indexOf(dev);
                     if (idx > -1) {
-                        this.delegate.cameraConfigs.splice(idx, 1);
+                        bridge.devices.splice(idx, 1);
                         this.delegate.changeCallback();
                         this.delegate.setSelectedDeviceConfig(undefined, false);
                         this.deviceListHandler.buildDeviceList(bridgePane);
@@ -310,12 +310,12 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
                 let dev = this.delegate.selectedDeviceConfig;
                 let copyOfDevice = $.extend(true, {}, dev)
                 copyOfDevice.name = copyOfDevice.name + " copy"
-                if (hkBridge.Configuration.isDeviceConfig(copyOfDevice)) {
-                    copyOfDevice.serial = "";
-                    bridge.devices.push(copyOfDevice);
-                } else if (hkBridge.Configuration.isIPCameraConfig(copyOfDevice)) {
+                if (hkBridge.Configuration.isIPCameraConfig(copyOfDevice)) {
                     copyOfDevice.serial = "";
                     this.delegate.cameraConfigs.push(copyOfDevice);
+                } else if (hkBridge.Configuration.isDeviceConfig(copyOfDevice)) {
+                    copyOfDevice.serial = "";
+                    bridge.devices.push(copyOfDevice);
                 } else {
                     return
                 }

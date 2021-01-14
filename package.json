@@ -1,17 +1,15 @@
 {
   "name": "iobroker.yahka",
-  "version": "0.14.0",
+  "version": "0.13.1",
   "description": "ioBroker HomeKit Adapter",
   "author": {
     "name": "Jens Weigele",
     "email": "iobroker.yahka@gmail.com"
   },
-  "contributors": [
-    {
-      "name": "Jens Weigele",
-      "email": "iobroker.yahka@gmail.com"
-    }
-  ],
+  "contributors": [{
+    "name": "Jens Weigele",
+    "email": "iobroker.yahka@gmail.com"
+  }],
   "homepage": "https://github.com/jensweigele/ioBroker.yahka",
   "license": "MIT",
   "keywords": [

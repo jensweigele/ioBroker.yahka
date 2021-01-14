@@ -109651,7 +109651,7 @@ var ioBroker_ButtonHandler = /** @class */ (function (_super) {
             elem.addEventListener('click', function (e) {
                 e.preventDefault();
                 var dev = _this.delegate.selectedDeviceConfig;
-                if (!hkBridge.Configuration.isDeviceConfig(dev))
+                if (!hkBridge.Configuration.isDeviceConfig(dev) && !hkBridge.Configuration.isIPCameraConfig(dev))
                     return;
                 dev.services.push({
                     name: '',
@@ -109667,20 +109667,20 @@ var ioBroker_ButtonHandler = /** @class */ (function (_super) {
             elem.addEventListener('click', function (e) {
                 e.preventDefault();
                 var dev = _this.delegate.selectedDeviceConfig;
-                if (hkBridge.Configuration.isDeviceConfig(dev)) {
-                    var idx = bridge.devices.indexOf(dev);
+                if (hkBridge.Configuration.isIPCameraConfig(dev)) {
+                    var idx = _this.delegate.cameraConfigs.indexOf(dev);
                     if (idx > -1) {
-                        bridge.devices.splice(idx, 1);
+                        _this.delegate.cameraConfigs.splice(idx, 1);
                         _this.delegate.changeCallback();
                         _this.delegate.setSelectedDeviceConfig(undefined, false);
                         _this.deviceListHandler.buildDeviceList(bridgePane);
                         _this.delegate.changeCallback();
                     }
                 }
-                else if (hkBridge.Configuration.isIPCameraConfig(dev)) {
-                    var idx = _this.delegate.cameraConfigs.indexOf(dev);
+                else if (hkBridge.Configuration.isDeviceConfig(dev)) {
+                    var idx = bridge.devices.indexOf(dev);
                     if (idx > -1) {
-                        _this.delegate.cameraConfigs.splice(idx, 1);
+                        bridge.devices.splice(idx, 1);
                         _this.delegate.changeCallback();
                         _this.delegate.setSelectedDeviceConfig(undefined, false);
                         _this.deviceListHandler.buildDeviceList(bridgePane);
@@ -109695,13 +109695,13 @@ var ioBroker_ButtonHandler = /** @class */ (function (_super) {
                 var dev = _this.delegate.selectedDeviceConfig;
                 var copyOfDevice = $.extend(true, {}, dev);
                 copyOfDevice.name = copyOfDevice.name + " copy";
-                if (hkBridge.Configuration.isDeviceConfig(copyOfDevice)) {
-                    copyOfDevice.serial = "";
-                    bridge.devices.push(copyOfDevice);
-                }
-                else if (hkBridge.Configuration.isIPCameraConfig(copyOfDevice)) {
+                if (hkBridge.Configuration.isIPCameraConfig(copyOfDevice)) {
                     copyOfDevice.serial = "";
                     _this.delegate.cameraConfigs.push(copyOfDevice);
+                }
+                else if (hkBridge.Configuration.isDeviceConfig(copyOfDevice)) {
+                    copyOfDevice.serial = "";
+                    bridge.devices.push(copyOfDevice);
                 }
                 else {
                     return;
