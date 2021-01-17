@@ -3483,14 +3483,24 @@ var YahkaServiceInitializer = /** @class */ (function () {
             }
             var hkValue = binding.conversion.toHomeKit(plainIOValue);
             _this.FLogger.debug(logName + " forwarding value from ioBroker (" + JSON.stringify(plainIOValue) + ") to homekit as (" + JSON.stringify(hkValue) + ")");
-            hapCharacteristic.setValue(hkValue, undefined, binding);
+            try {
+                hapCharacteristic.setValue(hkValue, binding);
+            }
+            catch (e) {
+                _this.FLogger.error(logName + " error while setting value " + hkValue + " - message: " + e);
+            }
         });
         this.getValueFromIOBroker(hapCharacteristic.binding, function (error, ioValue, hkValue) {
-            _this.FLogger.debug(logName + " initializing homekit with value from ioBroker (" + JSON.stringify(ioValue) + ") to homekit as (" + JSON.stringify(hkValue) + ")");
-            hapCharacteristic.setValue(hkValue, undefined, hapCharacteristic.binding);
+            _this.FLogger.debug(logName + " initializing homekit with value from ioBroker(" + JSON.stringify(ioValue) + ") to homekit as (" + JSON.stringify(hkValue) + ")");
+            try {
+                hapCharacteristic.setValue(hkValue, hapCharacteristic.binding);
+            }
+            catch (e) {
+                _this.FLogger.error(logName + " error while setting value " + hkValue + " - message: " + e);
+            }
         });
         hapCharacteristic.on('set', function (hkValue, callback, context) {
-            _this.FLogger.debug(logName + " got a set event, hkValue: " + JSON.stringify(hkValue));
+            _this.FLogger.debug(logName + " got a set event, hkValue: " + JSON.stringify(hkValue) + " ");
             var binding = hapCharacteristic.binding;
             if (!binding) {
                 _this.FLogger.error(logName + " no binding!");
@@ -3504,15 +3514,20 @@ var YahkaServiceInitializer = /** @class */ (function () {
             }
             var ioValue = binding.conversion.toIOBroker(hkValue);
             binding.inOut.toIOBroker(ioValue, function () {
-                _this.FLogger.debug(logName + " set was accepted by ioBroker (value: " + JSON.stringify(ioValue) + ")");
+                _this.FLogger.debug(logName + " set was accepted by ioBroker(value: " + JSON.stringify(ioValue) + ")");
                 callback();
             });
         });
         hapCharacteristic.on('get', function (hkCallback) {
             _this.FLogger.debug(logName + " got a get event");
             _this.getValueFromIOBroker(hapCharacteristic.binding, function (error, ioValue, hkValue) {
-                _this.FLogger.debug(logName + " forwarding value from ioBroker (" + JSON.stringify(ioValue) + ") to homekit as (" + JSON.stringify(hkValue) + ")");
-                hkCallback(error, hkValue);
+                _this.FLogger.debug(logName + " forwarding value from ioBroker(" + JSON.stringify(ioValue) + ") to homekit as (" + JSON.stringify(hkValue) + ")");
+                try {
+                    hkCallback(error, hkValue);
+                }
+                catch (e) {
+                    _this.FLogger.error(logName + " error while setting value " + hkValue + " - message: " + e);
+                }
             });
         });
     };

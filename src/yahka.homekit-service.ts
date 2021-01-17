@@ -1,6 +1,4 @@
 /// <reference path="./typings/index.d.ts" />
-import debug = require('debug');
-import util = require('util');
 import { Configuration } from './shared/yahka.configuration';
 import { Accessory, Characteristic, Service } from 'hap-nodejs';
 import { IHasIHomeKitBridgeBinding, IHomeKitBridgeBindingFactory, ILogger, IHomeKitBridgeBinding } from './yahka.interfaces';
@@ -107,16 +105,24 @@ export class YahkaServiceInitializer {
 
             let hkValue = binding.conversion.toHomeKit(plainIOValue);
             this.FLogger.debug(`${logName} forwarding value from ioBroker (${JSON.stringify(plainIOValue)}) to homekit as (${JSON.stringify(hkValue)})`);
-            hapCharacteristic.setValue(hkValue, undefined, binding);
+            try {
+                hapCharacteristic.setValue(hkValue, binding);
+            } catch (e) {
+                this.FLogger.error(`${logName} error while setting value ${hkValue} - message: ${e}`);
+            }
         });
 
         this.getValueFromIOBroker(hapCharacteristic.binding, (error, ioValue, hkValue) => {
-            this.FLogger.debug(`${logName} initializing homekit with value from ioBroker (${JSON.stringify(ioValue)}) to homekit as (${JSON.stringify(hkValue)})`);
-            hapCharacteristic.setValue(hkValue, undefined, hapCharacteristic.binding);
+            this.FLogger.debug(`${logName} initializing homekit with value from ioBroker(${JSON.stringify(ioValue)}) to homekit as (${JSON.stringify(hkValue)})`);
+            try {
+                hapCharacteristic.setValue(hkValue, hapCharacteristic.binding);
+            } catch (e) {
+                this.FLogger.error(`${logName} error while setting value ${hkValue} - message: ${e}`);
+            }
         });
 
         hapCharacteristic.on('set', (hkValue: any, callback: () => void, context: any) => {
-            this.FLogger.debug(`${logName} got a set event, hkValue: ${JSON.stringify(hkValue)}`);
+            this.FLogger.debug(`${logName} got a set event, hkValue: ${JSON.stringify(hkValue)} `);
             let binding: IHomeKitBridgeBinding = hapCharacteristic.binding;
             if (!binding) {
                 this.FLogger.error(`${logName} no binding!`);
@@ -132,7 +138,7 @@ export class YahkaServiceInitializer {
 
             let ioValue = binding.conversion.toIOBroker(hkValue);
             binding.inOut.toIOBroker(ioValue, () => {
-                this.FLogger.debug(`${logName} set was accepted by ioBroker (value: ${JSON.stringify(ioValue)})`);
+                this.FLogger.debug(`${logName} set was accepted by ioBroker(value: ${JSON.stringify(ioValue)})`);
                 callback();
             });
         });
@@ -140,8 +146,12 @@ export class YahkaServiceInitializer {
         hapCharacteristic.on('get', (hkCallback) => {
             this.FLogger.debug(`${logName} got a get event`);
             this.getValueFromIOBroker(hapCharacteristic.binding, (error, ioValue, hkValue) => {
-                this.FLogger.debug(`${logName} forwarding value from ioBroker (${JSON.stringify(ioValue)}) to homekit as (${JSON.stringify(hkValue)})`);
-                hkCallback(error, hkValue);
+                this.FLogger.debug(`${logName} forwarding value from ioBroker(${JSON.stringify(ioValue)}) to homekit as (${JSON.stringify(hkValue)})`);
+                try {
+                    hkCallback(error, hkValue);
+                } catch (e) {
+                    this.FLogger.error(`${logName} error while setting value ${hkValue} - message: ${e}`);
+                }
             });
         });
     }

@@ -1,8 +1,11 @@
 {
     "common": {
         "name": "yahka",
-        "version": "0.13.1",
+        "version": "0.13.2",
         "news": {
+            "0.13.2": {
+                "en": "Fixed crashes due to changes in used HomeKit Library"
+            },
             "0.13.1": {
                 "en": "Added ability to switch to legacy advertiser in case devices are showing 'no response' in HomeApp"
             },
