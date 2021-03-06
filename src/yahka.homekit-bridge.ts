@@ -3,7 +3,7 @@ import debug = require('debug');
 import util = require('util');
 import { Configuration } from './shared/yahka.configuration';
 import { importHAPCommunityTypesAndFixes } from './yahka.community.types';
-import { Accessory, Bridge, uuid, Characteristic, Service, init as hapInit } from 'hap-nodejs';
+import { Accessory, Bridge, uuid, Characteristic, Service, init as hapInit, MDNSAdvertiser } from 'hap-nodejs';
 import { YahkaServiceInitializer } from './yahka.homekit-service';
 import { IHomeKitBridgeBindingFactory, ILogger } from './yahka.interfaces';
 var pjson = require('../package.json');
@@ -23,17 +23,15 @@ export class THomeKitBridge {
     public init() {
         this.bridgeObject = this.setupBridge();
         const devicesToPublish: IPublishingMethod[] = [() => {
-            this.FLogger.info(`publishing bridge ${this.config.name} on ${this.config.interface ?? '0.0.0.0'} ${this.config.useLegacyAdvertiser ? 'using hapBonjour' : 'using ciao'}`);
+            const advertiser = this.config.useLegacyAdvertiser ? MDNSAdvertiser.BONJOUR : MDNSAdvertiser.CIAO;
+            this.FLogger.info(`publishing bridge ${this.config.name} on ${this.config.interface ?? '0.0.0.0'} using ${advertiser}`);
             this.bridgeObject.publish({
                 username: this.config.username,
                 port: this.config.port,
                 pincode: this.config.pincode,
                 category: 2,
-                mdns: {
-                    interface: this.config.interface,
-                    reuseAddr: true
-                } as any,
-                useLegacyAdvertiser: this.config.useLegacyAdvertiser
+                bind: this.config.interface != '' ? this.config.interface : undefined,
+                advertiser
             });
         }];
 
@@ -46,13 +44,14 @@ export class THomeKitBridge {
 
                 if (device.publishAsOwnDevice) {
                     devicesToPublish.push(() => {
-                        this.FLogger.info(`publishing device ${device.name} on ${device.interface ?? '0.0.0.0'} ${device.useLegacyAdvertiser ? 'using hapBonjour' : 'using ciao'}`);
+                        const advertiser = device.useLegacyAdvertiser ? MDNSAdvertiser.BONJOUR : MDNSAdvertiser.CIAO;
+                        this.FLogger.info(`publishing device ${device.name} on ${device.interface ?? '0.0.0.0'} using ${advertiser}`);
                         hapDevice.publish({
                             username: device.username,
                             port: device.port,
                             pincode: device.pincode,
                             category: device.category,
-                            useLegacyAdvertiser: device.useLegacyAdvertiser,
+                            advertiser,
                             mdns: {
                                 interface: device.interface,
                                 reuseAddr: true

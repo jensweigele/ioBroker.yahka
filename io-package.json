@@ -1,8 +1,11 @@
 {
     "common": {
         "name": "yahka",
-        "version": "0.13.2",
+        "version": "0.14.0",
         "news": {
+            "0.14.0": {
+                "en": "Updated HomeKit Library"
+            },
             "0.13.2": {
                 "en": "Fixed crashes due to changes in used HomeKit Library"
             },

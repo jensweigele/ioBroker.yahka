@@ -5,7 +5,7 @@ import {
     PrepareStreamRequest, SessionIdentifier, CameraStreamingDelegate,
     CameraController, SRTPCryptoSuites, H264Profile, H264Level, SnapshotRequestCallback,
     PrepareStreamCallback, PrepareStreamResponse, StreamingRequest, StreamRequestCallback,
-    CameraStreamingOptions, StreamRequestTypes, AudioStreamingCodecType, AudioStreamingSamplerate, Categories
+    CameraStreamingOptions, StreamRequestTypes, AudioStreamingCodecType, AudioStreamingSamplerate, Categories, MDNSAdvertiser
 } from 'hap-nodejs';
 import { IHomeKitBridgeBindingFactory, ILogger } from './yahka.interfaces';
 import { Configuration } from './shared/yahka.configuration';
@@ -171,18 +171,15 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
     }
 
     private publishCamera() {
-        this.FLogger.info(`publishing camera ${this.camConfig.name} on ${this.camConfig.interface ?? '0.0.0.0'} ${this.camConfig.useLegacyAdvertiser ? 'using hapBonjour' : 'using ciao'}`);
+        const advertiser = this.camConfig.useLegacyAdvertiser ? MDNSAdvertiser.BONJOUR : MDNSAdvertiser.CIAO;
+        this.FLogger.info(`publishing camera ${this.camConfig.name} on ${this.camConfig.interface ?? '0.0.0.0'} using ${advertiser}`);
         this.camera.publish({
             username: this.camConfig.username,
             port: this.camConfig.port,
             pincode: this.camConfig.pincode,
             category: Categories.CAMERA,
-            useLegacyAdvertiser: this.camConfig.useLegacyAdvertiser,
-            mdns: {
-                interface: this.camConfig.interface,
-                reuseAddr: true
-            } as any
-
+            bind: this.camConfig.interface != '' ? this.camConfig.interface : undefined,
+            advertiser
         }, false);
     }
 

@@ -23357,7 +23357,7 @@ module.exports = function deepEqual(a, b, opts) {
 // Similarly, `isarray` can be aliased to `Array.isArray` if
 // available in all target environments.
 
-var isArguments = __webpack_require__(/*! is-arguments */ "../node_modules/is-arguments/index.js");
+var isArguments = __webpack_require__(/*! is-arguments */ "../node_modules/bonjour-hap/node_modules/es-get-iterator/node_modules/is-arguments/index.js");
 
 if (__webpack_require__(/*! has-symbols */ "../node_modules/bonjour-hap/node_modules/has-symbols/index.js")() || __webpack_require__(/*! has-symbols/shams */ "../node_modules/bonjour-hap/node_modules/has-symbols/shams.js")()) {
 	var $iterator = Symbol.iterator;
@@ -23476,8 +23476,8 @@ if (__webpack_require__(/*! has-symbols */ "../node_modules/bonjour-hap/node_mod
 		// - Edge 11
 		// - Safari v[6, 9)
 
-		var isMap = __webpack_require__(/*! is-map */ "../node_modules/is-map/index.js");
-		var isSet = __webpack_require__(/*! is-set */ "../node_modules/is-set/index.js");
+		var isMap = __webpack_require__(/*! is-map */ "../node_modules/bonjour-hap/node_modules/is-map/index.js");
+		var isSet = __webpack_require__(/*! is-set */ "../node_modules/bonjour-hap/node_modules/is-set/index.js");
 
 		// Firefox >= 27, IE 11, Safari 6.2 - 9, Edge 11, es6-shim in older envs, all have forEach
 		var $mapForEach = callBound('Map.prototype.forEach', true);
@@ -23558,6 +23558,51 @@ if (__webpack_require__(/*! has-symbols */ "../node_modules/bonjour-hap/node_mod
 
 /***/ }),
 
+/***/ "../node_modules/bonjour-hap/node_modules/es-get-iterator/node_modules/is-arguments/index.js":
+/*!***************************************************************************************************!*\
+  !*** ../node_modules/bonjour-hap/node_modules/es-get-iterator/node_modules/is-arguments/index.js ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var hasToStringTag = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
+var callBound = __webpack_require__(/*! call-bind/callBound */ "../node_modules/call-bind/callBound.js");
+
+var $toString = callBound('Object.prototype.toString');
+
+var isStandardArguments = function isArguments(value) {
+	if (hasToStringTag && value && typeof value === 'object' && Symbol.toStringTag in value) {
+		return false;
+	}
+	return $toString(value) === '[object Arguments]';
+};
+
+var isLegacyArguments = function isArguments(value) {
+	if (isStandardArguments(value)) {
+		return true;
+	}
+	return value !== null &&
+		typeof value === 'object' &&
+		typeof value.length === 'number' &&
+		value.length >= 0 &&
+		$toString(value) !== '[object Array]' &&
+		$toString(value.callee) === '[object Function]';
+};
+
+var supportsStandardArguments = (function () {
+	return isStandardArguments(arguments);
+}());
+
+isStandardArguments.isLegacyArguments = isLegacyArguments; // for tests
+
+module.exports = supportsStandardArguments ? isStandardArguments : isLegacyArguments;
+
+
+/***/ }),
+
 /***/ "../node_modules/bonjour-hap/node_modules/has-symbols/index.js":
 /*!*********************************************************************!*\
   !*** ../node_modules/bonjour-hap/node_modules/has-symbols/index.js ***!
@@ -23566,9 +23611,9 @@ if (__webpack_require__(/*! has-symbols */ "../node_modules/bonjour-hap/node_mod
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
 
-var origSymbol = global.Symbol;
+
+var origSymbol = typeof Symbol !== 'undefined' && Symbol;
 var hasSymbolSham = __webpack_require__(/*! ./shams */ "../node_modules/bonjour-hap/node_modules/has-symbols/shams.js");
 
 module.exports = function hasNativeSymbols() {
@@ -23580,7 +23625,6 @@ module.exports = function hasNativeSymbols() {
 	return hasSymbolSham();
 };
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -23617,7 +23661,7 @@ module.exports = function hasSymbols() {
 
 	var symVal = 42;
 	obj[sym] = symVal;
-	for (sym in obj) { return false; } // eslint-disable-line no-restricted-syntax
+	for (sym in obj) { return false; } // eslint-disable-line no-restricted-syntax, no-unreachable-loop
 	if (typeof Object.keys === 'function' && Object.keys(obj).length !== 0) { return false; }
 
 	if (typeof Object.getOwnPropertyNames === 'function' && Object.getOwnPropertyNames(obj).length !== 0) { return false; }
@@ -23667,6 +23711,114 @@ module.exports = function isDateObject(value) {
 		return false;
 	}
 	return hasToStringTag ? tryDateObject(value) : toStr.call(value) === dateClass;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/bonjour-hap/node_modules/is-map/index.js":
+/*!****************************************************************!*\
+  !*** ../node_modules/bonjour-hap/node_modules/is-map/index.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $Map = typeof Map === 'function' && Map.prototype ? Map : null;
+var $Set = typeof Set === 'function' && Set.prototype ? Set : null;
+
+var exported;
+
+if (!$Map) {
+	// eslint-disable-next-line no-unused-vars
+	exported = function isMap(x) {
+		// `Map` is not present in this environment.
+		return false;
+	};
+}
+
+var $mapHas = $Map ? Map.prototype.has : null;
+var $setHas = $Set ? Set.prototype.has : null;
+if (!exported && !$mapHas) {
+	// eslint-disable-next-line no-unused-vars
+	exported = function isMap(x) {
+		// `Map` does not have a `has` method
+		return false;
+	};
+}
+
+module.exports = exported || function isMap(x) {
+	if (!x || typeof x !== 'object') {
+		return false;
+	}
+	try {
+		$mapHas.call(x);
+		if ($setHas) {
+			try {
+				$setHas.call(x);
+			} catch (e) {
+				return true;
+			}
+		}
+		return x instanceof $Map; // core-js workaround, pre-v2.5.0
+	} catch (e) {}
+	return false;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/bonjour-hap/node_modules/is-set/index.js":
+/*!****************************************************************!*\
+  !*** ../node_modules/bonjour-hap/node_modules/is-set/index.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $Map = typeof Map === 'function' && Map.prototype ? Map : null;
+var $Set = typeof Set === 'function' && Set.prototype ? Set : null;
+
+var exported;
+
+if (!$Set) {
+	// eslint-disable-next-line no-unused-vars
+	exported = function isSet(x) {
+		// `Set` is not present in this environment.
+		return false;
+	};
+}
+
+var $mapHas = $Map ? Map.prototype.has : null;
+var $setHas = $Set ? Set.prototype.has : null;
+if (!exported && !$setHas) {
+	// eslint-disable-next-line no-unused-vars
+	exported = function isSet(x) {
+		// `Set` does not have a `has` method
+		return false;
+	};
+}
+
+module.exports = exported || function isSet(x) {
+	if (!x || typeof x !== 'object') {
+		return false;
+	}
+	try {
+		$setHas.call(x);
+		if ($mapHas) {
+			try {
+				$mapHas.call(x);
+			} catch (e) {
+				return true;
+			}
+		}
+		return x instanceof $Set; // core-js workaround, pre-v2.5.0
+	} catch (e) {}
+	return false;
 };
 
 
@@ -50445,369 +50597,6 @@ module.exports = JSON.parse("{\"_args\":[[\"elliptic@6.5.3\",\"/Users/jensweigel
 
 /***/ }),
 
-/***/ "../node_modules/es-abstract/GetIntrinsic.js":
-/*!***************************************************!*\
-  !*** ../node_modules/es-abstract/GetIntrinsic.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/* globals
-	Atomics,
-	SharedArrayBuffer,
-*/
-
-var undefined;
-
-var $TypeError = TypeError;
-
-var $gOPD = Object.getOwnPropertyDescriptor;
-if ($gOPD) {
-	try {
-		$gOPD({}, '');
-	} catch (e) {
-		$gOPD = null; // this is IE 8, which has a broken gOPD
-	}
-}
-
-var throwTypeError = function () { throw new $TypeError(); };
-var ThrowTypeError = $gOPD
-	? (function () {
-		try {
-			// eslint-disable-next-line no-unused-expressions, no-caller, no-restricted-properties
-			arguments.callee; // IE 8 does not throw here
-			return throwTypeError;
-		} catch (calleeThrows) {
-			try {
-				// IE 8 throws on Object.getOwnPropertyDescriptor(arguments, '')
-				return $gOPD(arguments, 'callee').get;
-			} catch (gOPDthrows) {
-				return throwTypeError;
-			}
-		}
-	}())
-	: throwTypeError;
-
-var hasSymbols = __webpack_require__(/*! has-symbols */ "../node_modules/es-abstract/node_modules/has-symbols/index.js")();
-
-var getProto = Object.getPrototypeOf || function (x) { return x.__proto__; }; // eslint-disable-line no-proto
-
-var generator; // = function * () {};
-var generatorFunction = generator ? getProto(generator) : undefined;
-var asyncFn; // async function() {};
-var asyncFunction = asyncFn ? asyncFn.constructor : undefined;
-var asyncGen; // async function * () {};
-var asyncGenFunction = asyncGen ? getProto(asyncGen) : undefined;
-var asyncGenIterator = asyncGen ? asyncGen() : undefined;
-
-var TypedArray = typeof Uint8Array === 'undefined' ? undefined : getProto(Uint8Array);
-
-var INTRINSICS = {
-	'%Array%': Array,
-	'%ArrayBuffer%': typeof ArrayBuffer === 'undefined' ? undefined : ArrayBuffer,
-	'%ArrayBufferPrototype%': typeof ArrayBuffer === 'undefined' ? undefined : ArrayBuffer.prototype,
-	'%ArrayIteratorPrototype%': hasSymbols ? getProto([][Symbol.iterator]()) : undefined,
-	'%ArrayPrototype%': Array.prototype,
-	'%ArrayProto_entries%': Array.prototype.entries,
-	'%ArrayProto_forEach%': Array.prototype.forEach,
-	'%ArrayProto_keys%': Array.prototype.keys,
-	'%ArrayProto_values%': Array.prototype.values,
-	'%AsyncFromSyncIteratorPrototype%': undefined,
-	'%AsyncFunction%': asyncFunction,
-	'%AsyncFunctionPrototype%': asyncFunction ? asyncFunction.prototype : undefined,
-	'%AsyncGenerator%': asyncGen ? getProto(asyncGenIterator) : undefined,
-	'%AsyncGeneratorFunction%': asyncGenFunction,
-	'%AsyncGeneratorPrototype%': asyncGenFunction ? asyncGenFunction.prototype : undefined,
-	'%AsyncIteratorPrototype%': asyncGenIterator && hasSymbols && Symbol.asyncIterator ? asyncGenIterator[Symbol.asyncIterator]() : undefined,
-	'%Atomics%': typeof Atomics === 'undefined' ? undefined : Atomics,
-	'%Boolean%': Boolean,
-	'%BooleanPrototype%': Boolean.prototype,
-	'%DataView%': typeof DataView === 'undefined' ? undefined : DataView,
-	'%DataViewPrototype%': typeof DataView === 'undefined' ? undefined : DataView.prototype,
-	'%Date%': Date,
-	'%DatePrototype%': Date.prototype,
-	'%decodeURI%': decodeURI,
-	'%decodeURIComponent%': decodeURIComponent,
-	'%encodeURI%': encodeURI,
-	'%encodeURIComponent%': encodeURIComponent,
-	'%Error%': Error,
-	'%ErrorPrototype%': Error.prototype,
-	'%eval%': eval, // eslint-disable-line no-eval
-	'%EvalError%': EvalError,
-	'%EvalErrorPrototype%': EvalError.prototype,
-	'%Float32Array%': typeof Float32Array === 'undefined' ? undefined : Float32Array,
-	'%Float32ArrayPrototype%': typeof Float32Array === 'undefined' ? undefined : Float32Array.prototype,
-	'%Float64Array%': typeof Float64Array === 'undefined' ? undefined : Float64Array,
-	'%Float64ArrayPrototype%': typeof Float64Array === 'undefined' ? undefined : Float64Array.prototype,
-	'%Function%': Function,
-	'%FunctionPrototype%': Function.prototype,
-	'%Generator%': generator ? getProto(generator()) : undefined,
-	'%GeneratorFunction%': generatorFunction,
-	'%GeneratorPrototype%': generatorFunction ? generatorFunction.prototype : undefined,
-	'%Int8Array%': typeof Int8Array === 'undefined' ? undefined : Int8Array,
-	'%Int8ArrayPrototype%': typeof Int8Array === 'undefined' ? undefined : Int8Array.prototype,
-	'%Int16Array%': typeof Int16Array === 'undefined' ? undefined : Int16Array,
-	'%Int16ArrayPrototype%': typeof Int16Array === 'undefined' ? undefined : Int8Array.prototype,
-	'%Int32Array%': typeof Int32Array === 'undefined' ? undefined : Int32Array,
-	'%Int32ArrayPrototype%': typeof Int32Array === 'undefined' ? undefined : Int32Array.prototype,
-	'%isFinite%': isFinite,
-	'%isNaN%': isNaN,
-	'%IteratorPrototype%': hasSymbols ? getProto(getProto([][Symbol.iterator]())) : undefined,
-	'%JSON%': typeof JSON === 'object' ? JSON : undefined,
-	'%JSONParse%': typeof JSON === 'object' ? JSON.parse : undefined,
-	'%Map%': typeof Map === 'undefined' ? undefined : Map,
-	'%MapIteratorPrototype%': typeof Map === 'undefined' || !hasSymbols ? undefined : getProto(new Map()[Symbol.iterator]()),
-	'%MapPrototype%': typeof Map === 'undefined' ? undefined : Map.prototype,
-	'%Math%': Math,
-	'%Number%': Number,
-	'%NumberPrototype%': Number.prototype,
-	'%Object%': Object,
-	'%ObjectPrototype%': Object.prototype,
-	'%ObjProto_toString%': Object.prototype.toString,
-	'%ObjProto_valueOf%': Object.prototype.valueOf,
-	'%parseFloat%': parseFloat,
-	'%parseInt%': parseInt,
-	'%Promise%': typeof Promise === 'undefined' ? undefined : Promise,
-	'%PromisePrototype%': typeof Promise === 'undefined' ? undefined : Promise.prototype,
-	'%PromiseProto_then%': typeof Promise === 'undefined' ? undefined : Promise.prototype.then,
-	'%Promise_all%': typeof Promise === 'undefined' ? undefined : Promise.all,
-	'%Promise_reject%': typeof Promise === 'undefined' ? undefined : Promise.reject,
-	'%Promise_resolve%': typeof Promise === 'undefined' ? undefined : Promise.resolve,
-	'%Proxy%': typeof Proxy === 'undefined' ? undefined : Proxy,
-	'%RangeError%': RangeError,
-	'%RangeErrorPrototype%': RangeError.prototype,
-	'%ReferenceError%': ReferenceError,
-	'%ReferenceErrorPrototype%': ReferenceError.prototype,
-	'%Reflect%': typeof Reflect === 'undefined' ? undefined : Reflect,
-	'%RegExp%': RegExp,
-	'%RegExpPrototype%': RegExp.prototype,
-	'%Set%': typeof Set === 'undefined' ? undefined : Set,
-	'%SetIteratorPrototype%': typeof Set === 'undefined' || !hasSymbols ? undefined : getProto(new Set()[Symbol.iterator]()),
-	'%SetPrototype%': typeof Set === 'undefined' ? undefined : Set.prototype,
-	'%SharedArrayBuffer%': typeof SharedArrayBuffer === 'undefined' ? undefined : SharedArrayBuffer,
-	'%SharedArrayBufferPrototype%': typeof SharedArrayBuffer === 'undefined' ? undefined : SharedArrayBuffer.prototype,
-	'%String%': String,
-	'%StringIteratorPrototype%': hasSymbols ? getProto(''[Symbol.iterator]()) : undefined,
-	'%StringPrototype%': String.prototype,
-	'%Symbol%': hasSymbols ? Symbol : undefined,
-	'%SymbolPrototype%': hasSymbols ? Symbol.prototype : undefined,
-	'%SyntaxError%': SyntaxError,
-	'%SyntaxErrorPrototype%': SyntaxError.prototype,
-	'%ThrowTypeError%': ThrowTypeError,
-	'%TypedArray%': TypedArray,
-	'%TypedArrayPrototype%': TypedArray ? TypedArray.prototype : undefined,
-	'%TypeError%': $TypeError,
-	'%TypeErrorPrototype%': $TypeError.prototype,
-	'%Uint8Array%': typeof Uint8Array === 'undefined' ? undefined : Uint8Array,
-	'%Uint8ArrayPrototype%': typeof Uint8Array === 'undefined' ? undefined : Uint8Array.prototype,
-	'%Uint8ClampedArray%': typeof Uint8ClampedArray === 'undefined' ? undefined : Uint8ClampedArray,
-	'%Uint8ClampedArrayPrototype%': typeof Uint8ClampedArray === 'undefined' ? undefined : Uint8ClampedArray.prototype,
-	'%Uint16Array%': typeof Uint16Array === 'undefined' ? undefined : Uint16Array,
-	'%Uint16ArrayPrototype%': typeof Uint16Array === 'undefined' ? undefined : Uint16Array.prototype,
-	'%Uint32Array%': typeof Uint32Array === 'undefined' ? undefined : Uint32Array,
-	'%Uint32ArrayPrototype%': typeof Uint32Array === 'undefined' ? undefined : Uint32Array.prototype,
-	'%URIError%': URIError,
-	'%URIErrorPrototype%': URIError.prototype,
-	'%WeakMap%': typeof WeakMap === 'undefined' ? undefined : WeakMap,
-	'%WeakMapPrototype%': typeof WeakMap === 'undefined' ? undefined : WeakMap.prototype,
-	'%WeakSet%': typeof WeakSet === 'undefined' ? undefined : WeakSet,
-	'%WeakSetPrototype%': typeof WeakSet === 'undefined' ? undefined : WeakSet.prototype
-};
-
-var bind = __webpack_require__(/*! function-bind */ "../node_modules/function-bind/index.js");
-var $replace = bind.call(Function.call, String.prototype.replace);
-
-/* adapted from https://github.com/lodash/lodash/blob/4.17.15/dist/lodash.js#L6735-L6744 */
-var rePropName = /[^%.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|%$))/g;
-var reEscapeChar = /\\(\\)?/g; /** Used to match backslashes in property paths. */
-var stringToPath = function stringToPath(string) {
-	var result = [];
-	$replace(string, rePropName, function (match, number, quote, subString) {
-		result[result.length] = quote ? $replace(subString, reEscapeChar, '$1') : (number || match);
-	});
-	return result;
-};
-/* end adaptation */
-
-var getBaseIntrinsic = function getBaseIntrinsic(name, allowMissing) {
-	if (!(name in INTRINSICS)) {
-		throw new SyntaxError('intrinsic ' + name + ' does not exist!');
-	}
-
-	// istanbul ignore if // hopefully this is impossible to test :-)
-	if (typeof INTRINSICS[name] === 'undefined' && !allowMissing) {
-		throw new $TypeError('intrinsic ' + name + ' exists, but is not available. Please file an issue!');
-	}
-
-	return INTRINSICS[name];
-};
-
-module.exports = function GetIntrinsic(name, allowMissing) {
-	if (typeof name !== 'string' || name.length === 0) {
-		throw new TypeError('intrinsic name must be a non-empty string');
-	}
-	if (arguments.length > 1 && typeof allowMissing !== 'boolean') {
-		throw new TypeError('"allowMissing" argument must be a boolean');
-	}
-
-	var parts = stringToPath(name);
-
-	var value = getBaseIntrinsic('%' + (parts.length > 0 ? parts[0] : '') + '%', allowMissing);
-	for (var i = 1; i < parts.length; i += 1) {
-		if (value != null) {
-			if ($gOPD && (i + 1) >= parts.length) {
-				var desc = $gOPD(value, parts[i]);
-				if (!allowMissing && !(parts[i] in value)) {
-					throw new $TypeError('base intrinsic for ' + name + ' exists, but the property is not available.');
-				}
-				// By convention, when a data property is converted to an accessor
-				// property to emulate a data property that does not suffer from
-				// the override mistake, that accessor's getter is marked with
-				// an `originalValue` property. Here, when we detect this, we
-				// uphold the illusion by pretending to see that original data
-				// property, i.e., returning the value rather than the getter
-				// itself.
-				value = desc && 'get' in desc && !('originalValue' in desc.get) ? desc.get : value[parts[i]];
-			} else {
-				value = value[parts[i]];
-			}
-		}
-	}
-	return value;
-};
-
-
-/***/ }),
-
-/***/ "../node_modules/es-abstract/helpers/callBind.js":
-/*!*******************************************************!*\
-  !*** ../node_modules/es-abstract/helpers/callBind.js ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var bind = __webpack_require__(/*! function-bind */ "../node_modules/function-bind/index.js");
-
-var GetIntrinsic = __webpack_require__(/*! ../GetIntrinsic */ "../node_modules/es-abstract/GetIntrinsic.js");
-
-var $apply = GetIntrinsic('%Function.prototype.apply%');
-var $call = GetIntrinsic('%Function.prototype.call%');
-var $reflectApply = GetIntrinsic('%Reflect.apply%', true) || bind.call($call, $apply);
-
-var $defineProperty = GetIntrinsic('%Object.defineProperty%', true);
-
-if ($defineProperty) {
-	try {
-		$defineProperty({}, 'a', { value: 1 });
-	} catch (e) {
-		// IE 8 has a broken defineProperty
-		$defineProperty = null;
-	}
-}
-
-module.exports = function callBind() {
-	return $reflectApply(bind, $call, arguments);
-};
-
-var applyBind = function applyBind() {
-	return $reflectApply(bind, $apply, arguments);
-};
-
-if ($defineProperty) {
-	$defineProperty(module.exports, 'apply', { value: applyBind });
-} else {
-	module.exports.apply = applyBind;
-}
-
-
-/***/ }),
-
-/***/ "../node_modules/es-abstract/node_modules/has-symbols/index.js":
-/*!*********************************************************************!*\
-  !*** ../node_modules/es-abstract/node_modules/has-symbols/index.js ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-
-var origSymbol = global.Symbol;
-var hasSymbolSham = __webpack_require__(/*! ./shams */ "../node_modules/es-abstract/node_modules/has-symbols/shams.js");
-
-module.exports = function hasNativeSymbols() {
-	if (typeof origSymbol !== 'function') { return false; }
-	if (typeof Symbol !== 'function') { return false; }
-	if (typeof origSymbol('foo') !== 'symbol') { return false; }
-	if (typeof Symbol('bar') !== 'symbol') { return false; }
-
-	return hasSymbolSham();
-};
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js")))
-
-/***/ }),
-
-/***/ "../node_modules/es-abstract/node_modules/has-symbols/shams.js":
-/*!*********************************************************************!*\
-  !*** ../node_modules/es-abstract/node_modules/has-symbols/shams.js ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/* eslint complexity: [2, 18], max-statements: [2, 33] */
-module.exports = function hasSymbols() {
-	if (typeof Symbol !== 'function' || typeof Object.getOwnPropertySymbols !== 'function') { return false; }
-	if (typeof Symbol.iterator === 'symbol') { return true; }
-
-	var obj = {};
-	var sym = Symbol('test');
-	var symObj = Object(sym);
-	if (typeof sym === 'string') { return false; }
-
-	if (Object.prototype.toString.call(sym) !== '[object Symbol]') { return false; }
-	if (Object.prototype.toString.call(symObj) !== '[object Symbol]') { return false; }
-
-	// temp disabled per https://github.com/ljharb/object.assign/issues/17
-	// if (sym instanceof Symbol) { return false; }
-	// temp disabled per https://github.com/WebReflection/get-own-property-symbols/issues/4
-	// if (!(symObj instanceof Symbol)) { return false; }
-
-	// if (typeof Symbol.prototype.toString !== 'function') { return false; }
-	// if (String(sym) !== Symbol.prototype.toString.call(sym)) { return false; }
-
-	var symVal = 42;
-	obj[sym] = symVal;
-	for (sym in obj) { return false; } // eslint-disable-line no-restricted-syntax
-	if (typeof Object.keys === 'function' && Object.keys(obj).length !== 0) { return false; }
-
-	if (typeof Object.getOwnPropertyNames === 'function' && Object.getOwnPropertyNames(obj).length !== 0) { return false; }
-
-	var syms = Object.getOwnPropertySymbols(obj);
-	if (syms.length !== 1 || syms[0] !== sym) { return false; }
-
-	if (!Object.prototype.propertyIsEnumerable.call(obj, sym)) { return false; }
-
-	if (typeof Object.getOwnPropertyDescriptor === 'function') {
-		var descriptor = Object.getOwnPropertyDescriptor(obj, sym);
-		if (descriptor.value !== symVal || descriptor.enumerable !== true) { return false; }
-	}
-
-	return true;
-};
-
-
-/***/ }),
-
 /***/ "../node_modules/events/events.js":
 /*!****************************************!*\
   !*** ../node_modules/events/events.js ***!
@@ -51476,14 +51265,6 @@ module.exports = Function.prototype.bind || implementation;
 "use strict";
 
 
-/* globals
-	AggregateError,
-	Atomics,
-	FinalizationRegistry,
-	SharedArrayBuffer,
-	WeakRef,
-*/
-
 var undefined;
 
 var $SyntaxError = SyntaxError;
@@ -51493,8 +51274,7 @@ var $TypeError = TypeError;
 // eslint-disable-next-line consistent-return
 var getEvalledConstructor = function (expressionSyntax) {
 	try {
-		// eslint-disable-next-line no-new-func
-		return Function('"use strict"; return (' + expressionSyntax + ').constructor;')();
+		return $Function('"use strict"; return (' + expressionSyntax + ').constructor;')();
 	} catch (e) {}
 };
 
@@ -51531,9 +51311,7 @@ var hasSymbols = __webpack_require__(/*! has-symbols */ "../node_modules/get-int
 
 var getProto = Object.getPrototypeOf || function (x) { return x.__proto__; }; // eslint-disable-line no-proto
 
-var asyncGenFunction = getEvalledConstructor('async function* () {}');
-var asyncGenFunctionPrototype = asyncGenFunction ? asyncGenFunction.prototype : undefined;
-var asyncGenPrototype = asyncGenFunctionPrototype ? asyncGenFunctionPrototype.prototype : undefined;
+var needsEval = {};
 
 var TypedArray = typeof Uint8Array === 'undefined' ? undefined : getProto(Uint8Array);
 
@@ -51543,10 +51321,10 @@ var INTRINSICS = {
 	'%ArrayBuffer%': typeof ArrayBuffer === 'undefined' ? undefined : ArrayBuffer,
 	'%ArrayIteratorPrototype%': hasSymbols ? getProto([][Symbol.iterator]()) : undefined,
 	'%AsyncFromSyncIteratorPrototype%': undefined,
-	'%AsyncFunction%': getEvalledConstructor('async function () {}'),
-	'%AsyncGenerator%': asyncGenFunctionPrototype,
-	'%AsyncGeneratorFunction%': asyncGenFunction,
-	'%AsyncIteratorPrototype%': asyncGenPrototype ? getProto(asyncGenPrototype) : undefined,
+	'%AsyncFunction%': needsEval,
+	'%AsyncGenerator%': needsEval,
+	'%AsyncGeneratorFunction%': needsEval,
+	'%AsyncIteratorPrototype%': needsEval,
 	'%Atomics%': typeof Atomics === 'undefined' ? undefined : Atomics,
 	'%BigInt%': typeof BigInt === 'undefined' ? undefined : BigInt,
 	'%Boolean%': Boolean,
@@ -51563,7 +51341,7 @@ var INTRINSICS = {
 	'%Float64Array%': typeof Float64Array === 'undefined' ? undefined : Float64Array,
 	'%FinalizationRegistry%': typeof FinalizationRegistry === 'undefined' ? undefined : FinalizationRegistry,
 	'%Function%': $Function,
-	'%GeneratorFunction%': getEvalledConstructor('function* () {}'),
+	'%GeneratorFunction%': needsEval,
 	'%Int8Array%': typeof Int8Array === 'undefined' ? undefined : Int8Array,
 	'%Int16Array%': typeof Int16Array === 'undefined' ? undefined : Int16Array,
 	'%Int32Array%': typeof Int32Array === 'undefined' ? undefined : Int32Array,
@@ -51602,6 +51380,31 @@ var INTRINSICS = {
 	'%WeakMap%': typeof WeakMap === 'undefined' ? undefined : WeakMap,
 	'%WeakRef%': typeof WeakRef === 'undefined' ? undefined : WeakRef,
 	'%WeakSet%': typeof WeakSet === 'undefined' ? undefined : WeakSet
+};
+
+var doEval = function doEval(name) {
+	var value;
+	if (name === '%AsyncFunction%') {
+		value = getEvalledConstructor('async function () {}');
+	} else if (name === '%GeneratorFunction%') {
+		value = getEvalledConstructor('function* () {}');
+	} else if (name === '%AsyncGeneratorFunction%') {
+		value = getEvalledConstructor('async function* () {}');
+	} else if (name === '%AsyncGenerator%') {
+		var fn = doEval('%AsyncGeneratorFunction%');
+		if (fn) {
+			value = fn.prototype;
+		}
+	} else if (name === '%AsyncIteratorPrototype%') {
+		var gen = doEval('%AsyncGenerator%');
+		if (gen) {
+			value = getProto(gen.prototype);
+		}
+	}
+
+	INTRINSICS[name] = value;
+
+	return value;
 };
 
 var LEGACY_ALIASES = {
@@ -51694,6 +51497,9 @@ var getBaseIntrinsic = function getBaseIntrinsic(name, allowMissing) {
 
 	if (hasOwn(INTRINSICS, intrinsicName)) {
 		var value = INTRINSICS[intrinsicName];
+		if (value === needsEval) {
+			value = doEval(intrinsicName);
+		}
 		if (typeof value === 'undefined' && !allowMissing) {
 			throw new $TypeError('intrinsic ' + name + ' exists, but is not available. Please file an issue!');
 		}
@@ -51799,9 +51605,9 @@ module.exports = function GetIntrinsic(name, allowMissing) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
 
-var origSymbol = global.Symbol;
+
+var origSymbol = typeof Symbol !== 'undefined' && Symbol;
 var hasSymbolSham = __webpack_require__(/*! ./shams */ "../node_modules/get-intrinsic/node_modules/has-symbols/shams.js");
 
 module.exports = function hasNativeSymbols() {
@@ -51813,7 +51619,6 @@ module.exports = function hasNativeSymbols() {
 	return hasSymbolSham();
 };
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -51850,7 +51655,7 @@ module.exports = function hasSymbols() {
 
 	var symVal = 42;
 	obj[sym] = symVal;
-	for (sym in obj) { return false; } // eslint-disable-line no-restricted-syntax
+	for (sym in obj) { return false; } // eslint-disable-line no-restricted-syntax, no-unreachable-loop
 	if (typeof Object.keys === 'function' && Object.keys(obj).length !== 0) { return false; }
 
 	if (typeof Object.getOwnPropertyNames === 'function' && Object.getOwnPropertyNames(obj).length !== 0) { return false; }
@@ -52043,7 +51848,7 @@ exports.init = init;
 "use strict";
 /* WEBPACK VAR INJECTION */(function(Buffer) {
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Accessory = exports.AccessoryEventTypes = exports.CharacteristicWarningType = exports.Categories = void 0;
+exports.Accessory = exports.AccessoryEventTypes = exports.MDNSAdvertiser = exports.CharacteristicWarningType = exports.Categories = void 0;
 var tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/hap-nodejs/node_modules/tslib/tslib.es6.js");
 var assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
 var crypto_1 = tslib_1.__importDefault(__webpack_require__(/*! crypto */ "../node_modules/crypto-browserify/index.js"));
@@ -52119,6 +51924,17 @@ var CharacteristicWarningType;
     CharacteristicWarningType["WARN_MESSAGE"] = "warn-message";
     CharacteristicWarningType["ERROR_MESSAGE"] = "error-message";
 })(CharacteristicWarningType = exports.CharacteristicWarningType || (exports.CharacteristicWarningType = {}));
+var MDNSAdvertiser;
+(function (MDNSAdvertiser) {
+    /**
+     * Use the `@homebridge/ciao` module as advertiser.
+     */
+    MDNSAdvertiser["CIAO"] = "ciao";
+    /**
+     * Use the `bonjour-hap` module as advertiser.
+     */
+    MDNSAdvertiser["BONJOUR"] = "bonjour-hap";
+})(MDNSAdvertiser = exports.MDNSAdvertiser || (exports.MDNSAdvertiser = {}));
 var WriteRequestState;
 (function (WriteRequestState) {
     WriteRequestState[WriteRequestState["REGULAR_REQUEST"] = 0] = "REGULAR_REQUEST";
@@ -52144,7 +51960,7 @@ var AccessoryEventTypes;
     AccessoryEventTypes["SERVICE_CHARACTERISTIC_CHANGE"] = "service-characteristic-change";
     AccessoryEventTypes["PAIRED"] = "paired";
     AccessoryEventTypes["UNPAIRED"] = "unpaired";
-    AccessoryEventTypes["CHARACTERISTIC_WARNING"] = "characteristic-warning-v2";
+    AccessoryEventTypes["CHARACTERISTIC_WARNING"] = "characteristic-warning";
 })(AccessoryEventTypes = exports.AccessoryEventTypes || (exports.AccessoryEventTypes = {}));
 /**
  * Accessory is a virtual HomeKit device. It can publish an associated HAP server for iOS devices to communicate
@@ -52237,6 +52053,7 @@ var Accessory = /** @class */ (function (_super) {
         }
     };
     Accessory.prototype.addService = function (serviceParam) {
+        var e_1, _a;
         var constructorArgs = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             constructorArgs[_i - 1] = arguments[_i];
@@ -52246,16 +52063,25 @@ var Accessory = /** @class */ (function (_super) {
         var service = typeof serviceParam === 'function'
             ? new serviceParam(constructorArgs[0], constructorArgs[1], constructorArgs[2])
             : serviceParam;
-        // check for UUID+subtype conflict
-        for (var index in this.services) {
-            var existing = this.services[index];
-            if (existing.UUID === service.UUID) {
-                // OK we have two Services with the same UUID. Check that each defines a `subtype` property and that each is unique.
-                if (!service.subtype)
-                    throw new Error("Cannot add a Service with the same UUID '" + existing.UUID + "' as another Service in this Accessory without also defining a unique 'subtype' property.");
-                if (service.subtype === existing.subtype)
-                    throw new Error("Cannot add a Service with the same UUID '" + existing.UUID + "' and subtype '" + existing.subtype + "' as another Service in this Accessory.");
+        try {
+            // check for UUID+subtype conflict
+            for (var _b = tslib_1.__values(this.services), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var existing = _c.value;
+                if (existing.UUID === service.UUID) {
+                    // OK we have two Services with the same UUID. Check that each defines a `subtype` property and that each is unique.
+                    if (!service.subtype)
+                        throw new Error("Cannot add a Service with the same UUID '" + existing.UUID + "' as another Service in this Accessory without also defining a unique 'subtype' property.");
+                    if (service.subtype === existing.subtype)
+                        throw new Error("Cannot add a Service with the same UUID '" + existing.UUID + "' and subtype '" + existing.subtype + "' as another Service in this Accessory.");
+                }
             }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_1) throw e_1.error; }
         }
         if (this.services.length >= MAX_SERVICES) {
             throw new Error("Cannot add more than " + MAX_SERVICES + " services to a single accessory!");
@@ -52300,23 +52126,23 @@ var Accessory = /** @class */ (function (_super) {
         }
     };
     Accessory.prototype.removeLinkedService = function (removed) {
-        var e_1, _a;
+        var e_2, _a;
         try {
             for (var _b = tslib_1.__values(this.services), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var service = _c.value;
                 service.removeLinkedService(removed);
             }
         }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
         finally {
             try {
                 if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
             }
-            finally { if (e_1) throw e_1.error; }
+            finally { if (e_2) throw e_2.error; }
         }
     };
     Accessory.prototype.getService = function (name) {
-        var e_2, _a;
+        var e_3, _a;
         try {
             for (var _b = tslib_1.__values(this.services), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var service = _c.value;
@@ -52328,24 +52154,34 @@ var Accessory = /** @class */ (function (_super) {
                 }
             }
         }
-        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        catch (e_3_1) { e_3 = { error: e_3_1 }; }
         finally {
             try {
                 if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
             }
-            finally { if (e_2) throw e_2.error; }
+            finally { if (e_3) throw e_3.error; }
         }
         return undefined;
     };
     Accessory.prototype.getServiceById = function (uuid, subType) {
-        for (var index in this.services) {
-            var service = this.services[index];
-            if (typeof uuid === "string" && (service.displayName === uuid || service.name === uuid) && service.subtype === subType) {
-                return service;
+        var e_4, _a;
+        try {
+            for (var _b = tslib_1.__values(this.services), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var service = _c.value;
+                if (typeof uuid === "string" && (service.displayName === uuid || service.name === uuid) && service.subtype === subType) {
+                    return service;
+                }
+                else if (typeof uuid === "function" && ((service instanceof uuid) || (uuid.UUID === service.UUID)) && service.subtype === subType) {
+                    return service;
+                }
             }
-            else if (typeof uuid === "function" && ((service instanceof uuid) || (uuid.UUID === service.UUID)) && service.subtype === subType) {
-                return service;
+        }
+        catch (e_4_1) { e_4 = { error: e_4_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
             }
+            finally { if (e_4) throw e_4.error; }
         }
         return undefined;
     };
@@ -52359,7 +52195,7 @@ var Accessory = /** @class */ (function (_super) {
         debug('Reachability update is no longer being supported.');
     };
     Accessory.prototype.addBridgedAccessory = function (accessory, deferUpdate) {
-        var e_3, _a;
+        var e_5, _a;
         var _this = this;
         if (deferUpdate === void 0) { deferUpdate = false; }
         if (accessory._isBridge) {
@@ -52374,12 +52210,12 @@ var Accessory = /** @class */ (function (_super) {
                 }
             }
         }
-        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+        catch (e_5_1) { e_5 = { error: e_5_1 }; }
         finally {
             try {
                 if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
             }
-            finally { if (e_3) throw e_3.error; }
+            finally { if (e_5) throw e_5.error; }
         }
         if (this.bridgedAccessories.length >= MAX_ACCESSORIES) {
             throw new Error("Cannot Bridge more than " + MAX_ACCESSORIES + " Accessories");
@@ -52387,7 +52223,7 @@ var Accessory = /** @class */ (function (_super) {
         // listen for changes in ANY characteristics of ANY services on this Accessory
         accessory.on("service-characteristic-change" /* SERVICE_CHARACTERISTIC_CHANGE */, function (change) { return _this.handleCharacteristicChangeEvent(accessory, change.service, change); });
         accessory.on("service-configurationChange" /* SERVICE_CONFIGURATION_CHANGE */, this.enqueueConfigurationUpdate.bind(this));
-        accessory.on("characteristic-warning-v2" /* CHARACTERISTIC_WARNING */, this.handleCharacteristicWarning.bind(this));
+        accessory.on("characteristic-warning" /* CHARACTERISTIC_WARNING */, this.handleCharacteristicWarning.bind(this));
         accessory.bridged = true;
         accessory.bridge = this;
         this.bridgedAccessories.push(accessory);
@@ -52398,36 +52234,51 @@ var Accessory = /** @class */ (function (_super) {
         return accessory;
     };
     Accessory.prototype.addBridgedAccessories = function (accessories) {
-        for (var index in accessories) {
-            var accessory = accessories[index];
-            this.addBridgedAccessory(accessory, true);
+        var e_6, _a;
+        try {
+            for (var accessories_1 = tslib_1.__values(accessories), accessories_1_1 = accessories_1.next(); !accessories_1_1.done; accessories_1_1 = accessories_1.next()) {
+                var accessory = accessories_1_1.value;
+                this.addBridgedAccessory(accessory, true);
+            }
+        }
+        catch (e_6_1) { e_6 = { error: e_6_1 }; }
+        finally {
+            try {
+                if (accessories_1_1 && !accessories_1_1.done && (_a = accessories_1.return)) _a.call(accessories_1);
+            }
+            finally { if (e_6) throw e_6.error; }
         }
         this.enqueueConfigurationUpdate();
     };
     Accessory.prototype.removeBridgedAccessory = function (accessory, deferUpdate) {
         if (accessory._isBridge)
             throw new Error("Cannot Bridge another Bridge!");
-        var foundMatchAccessory = false;
         // check for UUID conflict
-        for (var index in this.bridgedAccessories) {
-            var existing = this.bridgedAccessories[index];
-            if (existing.UUID === accessory.UUID) {
-                foundMatchAccessory = true;
-                this.bridgedAccessories.splice(Number.parseInt(index), 1);
-                break;
-            }
-        }
-        if (!foundMatchAccessory)
+        var foundMatchAccessory = this.bridgedAccessories.findIndex(function (existing) {
+            return existing.UUID === accessory.UUID;
+        });
+        if (foundMatchAccessory === -1)
             throw new Error("Cannot find the bridged Accessory to remove.");
+        this.bridgedAccessories.splice(foundMatchAccessory, 1);
         accessory.removeAllListeners();
         if (!deferUpdate) {
             this.enqueueConfigurationUpdate();
         }
     };
     Accessory.prototype.removeBridgedAccessories = function (accessories) {
-        for (var index in accessories) {
-            var accessory = accessories[index];
-            this.removeBridgedAccessory(accessory, true);
+        var e_7, _a;
+        try {
+            for (var accessories_2 = tslib_1.__values(accessories), accessories_2_1 = accessories_2.next(); !accessories_2_1.done; accessories_2_1 = accessories_2.next()) {
+                var accessory = accessories_2_1.value;
+                this.removeBridgedAccessory(accessory, true);
+            }
+        }
+        catch (e_7_1) { e_7 = { error: e_7_1 }; }
+        finally {
+            try {
+                if (accessories_2_1 && !accessories_2_1.done && (_a = accessories_2.return)) _a.call(accessories_2);
+            }
+            finally { if (e_7) throw e_7.error; }
         }
         this.enqueueConfigurationUpdate();
     };
@@ -52438,16 +52289,26 @@ var Accessory = /** @class */ (function (_super) {
         this.enqueueConfigurationUpdate();
     };
     Accessory.prototype.getCharacteristicByIID = function (iid) {
-        for (var index in this.services) {
-            var service = this.services[index];
-            var characteristic = service.getCharacteristicByIID(iid);
-            if (characteristic) {
-                return characteristic;
+        var e_8, _a;
+        try {
+            for (var _b = tslib_1.__values(this.services), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var service = _c.value;
+                var characteristic = service.getCharacteristicByIID(iid);
+                if (characteristic) {
+                    return characteristic;
+                }
             }
+        }
+        catch (e_8_1) { e_8 = { error: e_8_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_8) throw e_8.error; }
         }
     };
     Accessory.prototype.getAccessoryByAID = function (aid) {
-        var e_4, _a;
+        var e_9, _a;
         if (aid === 1) {
             return this;
         }
@@ -52459,12 +52320,12 @@ var Accessory = /** @class */ (function (_super) {
                 }
             }
         }
-        catch (e_4_1) { e_4 = { error: e_4_1 }; }
+        catch (e_9_1) { e_9 = { error: e_9_1 }; }
         finally {
             try {
                 if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
             }
-            finally { if (e_4) throw e_4.error; }
+            finally { if (e_9) throw e_9.error; }
         }
         return undefined;
     };
@@ -52604,6 +52465,9 @@ var Accessory = /** @class */ (function (_super) {
                 // this will reset the state change delegate before we call handleControllerRemoved()
                 this.controllerStorage.untrackController(controller);
             }
+            if (controller.handleFactoryReset) {
+                controller.handleFactoryReset();
+            }
             controller.handleControllerRemoved();
             delete this.controllers[id];
             if (this.activeCameraController === controller) {
@@ -52620,7 +52484,7 @@ var Accessory = /** @class */ (function (_super) {
         }
     };
     Accessory.prototype.handleAccessoryUnpairedForControllers = function () {
-        var e_5, _a;
+        var e_10, _a;
         try {
             for (var _b = tslib_1.__values(Object.values(this.controllers)), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var context = _c.value;
@@ -52633,12 +52497,12 @@ var Accessory = /** @class */ (function (_super) {
                 }
             }
         }
-        catch (e_5_1) { e_5 = { error: e_5_1 }; }
+        catch (e_10_1) { e_10 = { error: e_10_1 }; }
         finally {
             try {
                 if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
             }
-            finally { if (e_5) throw e_5.error; }
+            finally { if (e_10) throw e_10.error; }
         }
     };
     Accessory.prototype.handleUpdatedControllerServiceMap = function (originalServiceMap, updatedServiceMap) {
@@ -52733,7 +52597,7 @@ var Accessory = /** @class */ (function (_super) {
      * the provided identifierCache to keep IDs stable.
      */
     Accessory.prototype._assignIDs = function (identifierCache) {
-        var e_6, _a;
+        var e_11, _a, e_12, _b;
         // if we are responsible for our own identifierCache, start the expiration process
         // also check weather we want to have an expiration process
         if (this._identifierCache && this.shouldPurgeUnusedIDs) {
@@ -52750,8 +52614,8 @@ var Accessory = /** @class */ (function (_super) {
             this.aid = 1;
         }
         try {
-            for (var _b = tslib_1.__values(this.services), _c = _b.next(); !_c.done; _c = _b.next()) {
-                var service = _c.value;
+            for (var _c = tslib_1.__values(this.services), _d = _c.next(); !_d.done; _d = _c.next()) {
+                var service = _d.value;
                 if (this._isBridge) {
                     service._assignIDs(identifierCache, this.UUID, 2000000000);
                 }
@@ -52760,17 +52624,26 @@ var Accessory = /** @class */ (function (_super) {
                 }
             }
         }
-        catch (e_6_1) { e_6 = { error: e_6_1 }; }
+        catch (e_11_1) { e_11 = { error: e_11_1 }; }
         finally {
             try {
-                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
             }
-            finally { if (e_6) throw e_6.error; }
+            finally { if (e_11) throw e_11.error; }
         }
-        // now assign IDs for any Accessories we are bridging
-        for (var index in this.bridgedAccessories) {
-            var accessory = this.bridgedAccessories[index];
-            accessory._assignIDs(identifierCache);
+        try {
+            // now assign IDs for any Accessories we are bridging
+            for (var _e = tslib_1.__values(this.bridgedAccessories), _f = _e.next(); !_f.done; _f = _e.next()) {
+                var accessory = _f.value;
+                accessory._assignIDs(identifierCache);
+            }
+        }
+        catch (e_12_1) { e_12 = { error: e_12_1 }; }
+        finally {
+            try {
+                if (_f && !_f.done && (_b = _e.return)) _b.call(_e);
+            }
+            finally { if (e_12) throw e_12.error; }
         }
         // expire any now-unused cache keys (for Accessories, Services, or Characteristics
         // that have been removed since the last call to assignIDs())
@@ -52820,7 +52693,7 @@ var Accessory = /** @class */ (function (_super) {
      * Returns a JSON representation of this accessory without characteristic values.
      */
     Accessory.prototype.internalHAPRepresentation = function (assignIds) {
-        var e_7, _a;
+        var e_13, _a;
         if (assignIds === void 0) { assignIds = true; }
         if (assignIds) {
             this._assignIDs(this._identifierCache); // make sure our aid/iid's are all assigned
@@ -52839,12 +52712,12 @@ var Accessory = /** @class */ (function (_super) {
                     accessories.push(accessory_1.internalHAPRepresentation(false)[0]);
                 }
             }
-            catch (e_7_1) { e_7 = { error: e_7_1 }; }
+            catch (e_13_1) { e_13 = { error: e_13_1 }; }
             finally {
                 try {
                     if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
                 }
-                finally { if (e_7) throw e_7.error; }
+                finally { if (e_13) throw e_13.error; }
             }
         }
         return accessories;
@@ -52867,7 +52740,14 @@ var Accessory = /** @class */ (function (_super) {
         var _this = this;
         var _a, _b;
         // noinspection JSDeprecatedSymbols
-        if (((_a = info.mdns) === null || _a === void 0 ? void 0 : _a.interface) && info.useLegacyAdvertiser) {
+        if (!info.advertiser && info.useLegacyAdvertiser != null) {
+            // noinspection JSDeprecatedSymbols
+            info.advertiser = info.useLegacyAdvertiser ? "bonjour-hap" /* BONJOUR */ : "ciao" /* CIAO */;
+            console.warn('DEPRECATED The PublishInfo.useLegacyAdvertiser option has been removed. Please use the PublishInfo.advertiser property to enable "ciao" (useLegacyAdvertiser=false) ' +
+                'or "bonjour-hap" (useLegacyAdvertiser=true) mdns advertiser libraries!');
+        }
+        // noinspection JSDeprecatedSymbols
+        if (info.mdns && info.advertiser !== "bonjour-hap" /* BONJOUR */) {
             console.log("DEPRECATED user supplied a custom 'mdns' option. This option is deprecated and ignored. " +
                 "Please move to the new 'bind' option.");
         }
@@ -52879,7 +52759,7 @@ var Accessory = /** @class */ (function (_super) {
         if (this.lastKnownUsername && this.lastKnownUsername !== info.username) { // username changed since last publish
             Accessory.cleanupAccessoryData(this.lastKnownUsername); // delete old Accessory data
         }
-        if ((_b = info.addIdentifyingMaterial) !== null && _b !== void 0 ? _b : true) {
+        if ((_a = info.addIdentifyingMaterial) !== null && _a !== void 0 ? _a : true) {
             // adding some identifying material to our displayName
             this.displayName = this.displayName + " " + crypto_1.default.createHash('sha512')
                 .update(info.username, 'utf8')
@@ -52937,19 +52817,24 @@ var Accessory = /** @class */ (function (_super) {
         this.validateAccessory(true);
         // create our Advertiser which broadcasts our presence over mdns
         var parsed = Accessory.parseBindOption(info);
-        if (info.useLegacyAdvertiser) {
-            this._advertiser = new Advertiser_1.BonjourHAPAdvertiser(this._accessoryInfo, info.mdns, {
-                restrictedAddresses: parsed.serviceRestrictedAddress,
-                disabledIpv6: parsed.serviceDisableIpv6,
-            });
-        }
-        else {
-            this._advertiser = new Advertiser_1.CiaoAdvertiser(this._accessoryInfo, {
-                interface: parsed.advertiserAddress
-            }, {
-                restrictedAddresses: parsed.serviceRestrictedAddress,
-                disabledIpv6: parsed.serviceDisableIpv6,
-            });
+        switch ((_b = info.advertiser) !== null && _b !== void 0 ? _b : "bonjour-hap" /* BONJOUR */) {
+            case "ciao" /* CIAO */:
+                this._advertiser = new Advertiser_1.CiaoAdvertiser(this._accessoryInfo, {
+                    interface: parsed.advertiserAddress
+                }, {
+                    restrictedAddresses: parsed.serviceRestrictedAddress,
+                    disabledIpv6: parsed.serviceDisableIpv6,
+                });
+                break;
+            case "bonjour-hap" /* BONJOUR */:
+                // noinspection JSDeprecatedSymbols
+                this._advertiser = new Advertiser_1.BonjourHAPAdvertiser(this._accessoryInfo, info.mdns, {
+                    restrictedAddresses: parsed.serviceRestrictedAddress,
+                    disabledIpv6: parsed.serviceDisableIpv6,
+                });
+                break;
+            default:
+                throw new Error("Unsupported advertiser setting: '" + info.advertiser + "'");
         }
         this._advertiser.on("updated-name" /* UPDATED_NAME */, function (name) {
             _this.displayName = name;
@@ -53067,9 +52952,8 @@ var Accessory = /** @class */ (function (_super) {
         // there should be no need to update advertisement
         callback(0);
     };
-    ;
     Accessory.prototype.handleRemovePairing = function (connection, username, callback) {
-        var e_8, _a;
+        var e_14, _a;
         if (!this._accessoryInfo) {
             callback(6 /* UNAVAILABLE */);
             return;
@@ -53091,16 +52975,15 @@ var Accessory = /** @class */ (function (_super) {
                     accessory.handleAccessoryUnpairedForControllers();
                 }
             }
-            catch (e_8_1) { e_8 = { error: e_8_1 }; }
+            catch (e_14_1) { e_14 = { error: e_14_1 }; }
             finally {
                 try {
                     if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
                 }
-                finally { if (e_8) throw e_8.error; }
+                finally { if (e_14) throw e_14.error; }
             }
         }
     };
-    ;
     Accessory.prototype.handleListPairings = function (connection, callback) {
         if (!this._accessoryInfo) {
             callback(6 /* UNAVAILABLE */);
@@ -53112,12 +52995,11 @@ var Accessory = /** @class */ (function (_super) {
         }
         callback(0, this._accessoryInfo.listPairings());
     };
-    ;
     Accessory.prototype.handleAccessories = function (connection, callback) {
         var _this = this;
         this._assignIDs(this._identifierCache); // make sure our aid/iid's are all assigned
         var now = Date.now();
-        var contactGetHandlers = now - this.lastAccessoriesRequest > 40000; // we query latest value if last /accessories was more than 40s ago
+        var contactGetHandlers = now - this.lastAccessoriesRequest > 5000; // we query latest value if last /accessories was more than 5s ago
         this.lastAccessoriesRequest = now;
         this.toHAP(connection, contactGetHandlers).then(function (value) {
             callback(undefined, {
@@ -53129,7 +53011,7 @@ var Accessory = /** @class */ (function (_super) {
         });
     };
     Accessory.prototype.handleGetCharacteristics = function (connection, request, callback) {
-        var e_9, _a;
+        var e_15, _a;
         var _this = this;
         var characteristics = [];
         var response = { characteristics: characteristics };
@@ -53140,39 +53022,39 @@ var Accessory = /** @class */ (function (_super) {
             return;
         }
         var timeout = setTimeout(function () {
-            var e_10, _a;
+            var e_16, _a;
             try {
                 for (var missingCharacteristics_1 = tslib_1.__values(missingCharacteristics), missingCharacteristics_1_1 = missingCharacteristics_1.next(); !missingCharacteristics_1_1.done; missingCharacteristics_1_1 = missingCharacteristics_1.next()) {
                     var id = missingCharacteristics_1_1.value;
                     var split = id.split(".");
-                    var aid = parseInt(split[0]);
-                    var iid = parseInt(split[1]);
+                    var aid = parseInt(split[0], 10);
+                    var iid = parseInt(split[1], 10);
                     var accessory = _this.getAccessoryByAID(aid);
                     var characteristic = accessory.getCharacteristicByIID(iid);
-                    _this.handleCharacteristicWarning(characteristic, "slow-read" /* SLOW_READ */, "The read handler for the characteristic '" +
+                    _this.sendCharacteristicWarning(characteristic, "slow-read" /* SLOW_READ */, "The read handler for the characteristic '" +
                         characteristic.displayName + "' on the accessory '" + accessory.displayName + "' was slow to respond!");
                 }
             }
-            catch (e_10_1) { e_10 = { error: e_10_1 }; }
+            catch (e_16_1) { e_16 = { error: e_16_1 }; }
             finally {
                 try {
                     if (missingCharacteristics_1_1 && !missingCharacteristics_1_1.done && (_a = missingCharacteristics_1.return)) _a.call(missingCharacteristics_1);
                 }
-                finally { if (e_10) throw e_10.error; }
+                finally { if (e_16) throw e_16.error; }
             }
             // after a total of 10s we do not longer wait for a request to appear and just return status code timeout
             timeout = setTimeout(function () {
-                var e_11, _a;
+                var e_17, _a;
                 timeout = undefined;
                 try {
                     for (var missingCharacteristics_2 = tslib_1.__values(missingCharacteristics), missingCharacteristics_2_1 = missingCharacteristics_2.next(); !missingCharacteristics_2_1.done; missingCharacteristics_2_1 = missingCharacteristics_2.next()) {
                         var id = missingCharacteristics_2_1.value;
                         var split = id.split(".");
-                        var aid = parseInt(split[0]);
-                        var iid = parseInt(split[1]);
+                        var aid = parseInt(split[0], 10);
+                        var iid = parseInt(split[1], 10);
                         var accessory = _this.getAccessoryByAID(aid);
                         var characteristic = accessory.getCharacteristicByIID(iid);
-                        _this.handleCharacteristicWarning(characteristic, "timeout-read" /* TIMEOUT_READ */, "The read handler for the characteristic '" +
+                        _this.sendCharacteristicWarning(characteristic, "timeout-read" /* TIMEOUT_READ */, "The read handler for the characteristic '" +
                             characteristic.displayName + "' on the accessory '" + accessory.displayName + "' didn't respond at all!. Please check that you properly call the callback!");
                         characteristics.push({
                             aid: aid,
@@ -53181,16 +53063,16 @@ var Accessory = /** @class */ (function (_super) {
                         });
                     }
                 }
-                catch (e_11_1) { e_11 = { error: e_11_1 }; }
+                catch (e_17_1) { e_17 = { error: e_17_1 }; }
                 finally {
                     try {
                         if (missingCharacteristics_2_1 && !missingCharacteristics_2_1.done && (_a = missingCharacteristics_2.return)) _a.call(missingCharacteristics_2);
                     }
-                    finally { if (e_11) throw e_11.error; }
+                    finally { if (e_17) throw e_17.error; }
                 }
                 missingCharacteristics.clear();
                 callback(undefined, response);
-            }, 7000);
+            }, 6000);
             timeout.unref();
         }, 3000);
         timeout.unref();
@@ -53227,12 +53109,12 @@ var Accessory = /** @class */ (function (_super) {
                 _loop_1(id);
             }
         }
-        catch (e_9_1) { e_9 = { error: e_9_1 }; }
+        catch (e_15_1) { e_15 = { error: e_15_1 }; }
         finally {
             try {
                 if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
             }
-            finally { if (e_9) throw e_9.error; }
+            finally { if (e_15) throw e_15.error; }
         }
     };
     Accessory.prototype.handleCharacteristicRead = function (connection, id, request) {
@@ -53292,7 +53174,7 @@ var Accessory = /** @class */ (function (_super) {
         });
     };
     Accessory.prototype.handleSetCharacteristics = function (connection, writeRequest, callback) {
-        var e_12, _a;
+        var e_18, _a;
         var _this = this;
         debug("[%s] Processing characteristic set: %s", this.displayName, JSON.stringify(writeRequest));
         var writeState = 0 /* REGULAR_REQUEST */;
@@ -53319,39 +53201,39 @@ var Accessory = /** @class */ (function (_super) {
             return;
         }
         var timeout = setTimeout(function () {
-            var e_13, _a;
+            var e_19, _a;
             try {
                 for (var missingCharacteristics_3 = tslib_1.__values(missingCharacteristics), missingCharacteristics_3_1 = missingCharacteristics_3.next(); !missingCharacteristics_3_1.done; missingCharacteristics_3_1 = missingCharacteristics_3.next()) {
                     var id = missingCharacteristics_3_1.value;
                     var split = id.split(".");
-                    var aid = parseInt(split[0]);
-                    var iid = parseInt(split[1]);
+                    var aid = parseInt(split[0], 10);
+                    var iid = parseInt(split[1], 10);
                     var accessory = _this.getAccessoryByAID(aid);
                     var characteristic = accessory.getCharacteristicByIID(iid);
-                    _this.handleCharacteristicWarning(characteristic, "slow-write" /* SLOW_WRITE */, "The write handler for the characteristic '" +
+                    _this.sendCharacteristicWarning(characteristic, "slow-write" /* SLOW_WRITE */, "The write handler for the characteristic '" +
                         characteristic.displayName + "' on the accessory '" + accessory.displayName + "' was slow to respond!");
                 }
             }
-            catch (e_13_1) { e_13 = { error: e_13_1 }; }
+            catch (e_19_1) { e_19 = { error: e_19_1 }; }
             finally {
                 try {
                     if (missingCharacteristics_3_1 && !missingCharacteristics_3_1.done && (_a = missingCharacteristics_3.return)) _a.call(missingCharacteristics_3);
                 }
-                finally { if (e_13) throw e_13.error; }
+                finally { if (e_19) throw e_19.error; }
             }
             // after a total of 10s we do not longer wait for a request to appear and just return status code timeout
             timeout = setTimeout(function () {
-                var e_14, _a;
+                var e_20, _a;
                 timeout = undefined;
                 try {
                     for (var missingCharacteristics_4 = tslib_1.__values(missingCharacteristics), missingCharacteristics_4_1 = missingCharacteristics_4.next(); !missingCharacteristics_4_1.done; missingCharacteristics_4_1 = missingCharacteristics_4.next()) {
                         var id = missingCharacteristics_4_1.value;
                         var split = id.split(".");
-                        var aid = parseInt(split[0]);
-                        var iid = parseInt(split[1]);
+                        var aid = parseInt(split[0], 10);
+                        var iid = parseInt(split[1], 10);
                         var accessory = _this.getAccessoryByAID(aid);
                         var characteristic = accessory.getCharacteristicByIID(iid);
-                        _this.handleCharacteristicWarning(characteristic, "timeout-write" /* TIMEOUT_WRITE */, "The write handler for the characteristic '" +
+                        _this.sendCharacteristicWarning(characteristic, "timeout-write" /* TIMEOUT_WRITE */, "The write handler for the characteristic '" +
                             characteristic.displayName + "' on the accessory '" + accessory.displayName + "' didn't respond at all!. Please check that you properly call the callback!");
                         characteristics.push({
                             aid: aid,
@@ -53360,16 +53242,16 @@ var Accessory = /** @class */ (function (_super) {
                         });
                     }
                 }
-                catch (e_14_1) { e_14 = { error: e_14_1 }; }
+                catch (e_20_1) { e_20 = { error: e_20_1 }; }
                 finally {
                     try {
                         if (missingCharacteristics_4_1 && !missingCharacteristics_4_1.done && (_a = missingCharacteristics_4.return)) _a.call(missingCharacteristics_4);
                     }
-                    finally { if (e_14) throw e_14.error; }
+                    finally { if (e_20) throw e_20.error; }
                 }
                 missingCharacteristics.clear();
                 callback(undefined, response);
-            }, 7000);
+            }, 6000);
             timeout.unref();
         }, 3000);
         timeout.unref();
@@ -53406,12 +53288,12 @@ var Accessory = /** @class */ (function (_super) {
                 _loop_2(data);
             }
         }
-        catch (e_12_1) { e_12 = { error: e_12_1 }; }
+        catch (e_18_1) { e_18 = { error: e_18_1 }; }
         finally {
             try {
                 if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
             }
-            finally { if (e_12) throw e_12.error; }
+            finally { if (e_18) throw e_18.error; }
         }
     };
     Accessory.prototype.handleCharacteristicWrite = function (connection, data, writeState) {
@@ -53546,7 +53428,7 @@ var Accessory = /** @class */ (function (_super) {
         callback({ httpCode: 404 /* NOT_FOUND */, status: -70409 /* RESOURCE_DOES_NOT_EXIST */ });
     };
     Accessory.prototype.handleHAPConnectionClosed = function (connection) {
-        var e_15, _a;
+        var e_21, _a;
         if (this.activeCameraController) {
             this.activeCameraController.handleCloseConnection(connection.sessionID);
         }
@@ -53554,20 +53436,20 @@ var Accessory = /** @class */ (function (_super) {
             for (var _b = tslib_1.__values(connection.getRegisteredEvents()), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var event = _c.value;
                 var ids = event.split(".");
-                var aid = parseInt(ids[0]);
-                var iid = parseInt(ids[1]);
+                var aid = parseInt(ids[0], 10);
+                var iid = parseInt(ids[1], 10);
                 var characteristic = this.findCharacteristic(aid, iid);
                 if (characteristic) {
                     characteristic.unsubscribe();
                 }
             }
         }
-        catch (e_15_1) { e_15 = { error: e_15_1 }; }
+        catch (e_21_1) { e_21 = { error: e_21_1 }; }
         finally {
             try {
                 if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
             }
-            finally { if (e_15) throw e_15.error; }
+            finally { if (e_21) throw e_21.error; }
         }
         connection.clearRegisteredEvents();
     };
@@ -53622,18 +53504,29 @@ var Accessory = /** @class */ (function (_super) {
             this._server.sendEventNotifications(accessory.aid, change.characteristic.iid, value, change.originator, immediateDelivery);
         }
     };
-    Accessory.prototype.handleCharacteristicWarning = function (characteristic, type, message, originatorChain) {
-        if (!originatorChain) {
-            originatorChain = [characteristic.displayName]; // we are missing the service displayName, but that's okay
-        }
-        var emitted = this.emit("characteristic-warning-v2" /* CHARACTERISTIC_WARNING */, characteristic, type, message, tslib_1.__spread([this.displayName], originatorChain));
+    Accessory.prototype.sendCharacteristicWarning = function (characteristic, type, message) {
+        this.handleCharacteristicWarning({
+            characteristic: characteristic,
+            type: type,
+            message: message,
+            originatorChain: [characteristic.displayName],
+            stack: new Error().stack,
+        });
+    };
+    Accessory.prototype.handleCharacteristicWarning = function (warning) {
+        var _a;
+        warning.originatorChain = tslib_1.__spread([this.displayName], warning.originatorChain);
+        var emitted = this.emit("characteristic-warning" /* CHARACTERISTIC_WARNING */, warning);
         if (!emitted) {
-            if (type === "error-message" /* ERROR_MESSAGE */ || type === "timeout-read" /* TIMEOUT_READ */ || type === "timeout-write" /* TIMEOUT_WRITE */) {
-                console.error("[" + originatorChain.join("@") + "] " + message);
+            var message = "[" + warning.originatorChain.join("@") + "] " + warning.message;
+            if (warning.type === "error-message" /* ERROR_MESSAGE */
+                || warning.type === "timeout-read" /* TIMEOUT_READ */ || warning.type === "timeout-write" /* TIMEOUT_WRITE */) {
+                console.error(message);
             }
             else {
-                console.warn("[" + originatorChain.join("@") + "] " + message);
+                console.warn(message);
             }
+            debug("[%s] Above characteristic warning was thrown at: %s", this.displayName, (_a = warning.stack) !== null && _a !== void 0 ? _a : "unknown");
         }
     };
     Accessory.prototype.setupServiceEventHandlers = function (service) {
@@ -53642,7 +53535,7 @@ var Accessory = /** @class */ (function (_super) {
         service.on("characteristic-warning" /* CHARACTERISTIC_WARNING */, this.handleCharacteristicWarning.bind(this));
     };
     Accessory.prototype._sideloadServices = function (targetServices) {
-        var e_16, _a;
+        var e_22, _a;
         var _this = this;
         try {
             for (var targetServices_1 = tslib_1.__values(targetServices), targetServices_1_1 = targetServices_1.next(); !targetServices_1_1.done; targetServices_1_1 = targetServices_1.next()) {
@@ -53650,12 +53543,12 @@ var Accessory = /** @class */ (function (_super) {
                 this.setupServiceEventHandlers(service);
             }
         }
-        catch (e_16_1) { e_16 = { error: e_16_1 }; }
+        catch (e_22_1) { e_22 = { error: e_22_1 }; }
         finally {
             try {
                 if (targetServices_1_1 && !targetServices_1_1.done && (_a = targetServices_1.return)) _a.call(targetServices_1);
             }
-            finally { if (e_16) throw e_16.error; }
+            finally { if (e_22) throw e_22.error; }
         }
         this.services = targetServices.slice();
         // Fix Identify
@@ -53726,6 +53619,7 @@ var Accessory = /** @class */ (function (_super) {
         return json;
     };
     Accessory.deserialize = function (json) {
+        var e_23, _a;
         var accessory = new Accessory(json.displayName, json.UUID);
         accessory.lastKnownUsername = json.lastKnownUsername;
         accessory.category = json.category;
@@ -53737,9 +53631,8 @@ var Accessory = /** @class */ (function (_super) {
             servicesMap[service.getServiceId()] = service;
         });
         if (json.linkedServices) {
-            var _loop_3 = function (serviceId) {
+            var _loop_3 = function (serviceId, linkedServicesKeys) {
                 var primaryService = servicesMap[serviceId];
-                var linkedServicesKeys = json.linkedServices[serviceId];
                 if (!primaryService) {
                     return "continue";
                 }
@@ -53750,8 +53643,18 @@ var Accessory = /** @class */ (function (_super) {
                     }
                 });
             };
-            for (var serviceId in json.linkedServices) {
-                _loop_3(serviceId);
+            try {
+                for (var _b = tslib_1.__values(Object.entries(json.linkedServices)), _c = _b.next(); !_c.done; _c = _b.next()) {
+                    var _d = tslib_1.__read(_c.value, 2), serviceId = _d[0], linkedServicesKeys = _d[1];
+                    _loop_3(serviceId, linkedServicesKeys);
+                }
+            }
+            catch (e_23_1) { e_23 = { error: e_23_1 }; }
+            finally {
+                try {
+                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                }
+                finally { if (e_23) throw e_23.error; }
             }
         }
         if (json.controllers) { // just save it for later if it exists {@see configureController}
@@ -53791,7 +53694,7 @@ var Accessory = /** @class */ (function (_super) {
         return controllerServiceMap;
     };
     Accessory.parseBindOption = function (info) {
-        var e_17, _a;
+        var e_24, _a;
         var advertiserAddress = undefined;
         var disableIpv6 = false;
         var serverAddress = undefined;
@@ -53836,12 +53739,12 @@ var Accessory = /** @class */ (function (_super) {
                         }
                     }
                 }
-                catch (e_17_1) { e_17 = { error: e_17_1 }; }
+                catch (e_24_1) { e_24 = { error: e_24_1 }; }
                 finally {
                     try {
                         if (entries_1_1 && !entries_1_1.done && (_a = entries_1.return)) _a.call(entries_1);
                     }
-                    finally { if (e_17) throw e_17.error; }
+                    finally { if (e_24) throw e_24.error; }
                 }
                 if (bindUnspecifiedIpv6) {
                     serverAddress = "::";
@@ -54116,6 +54019,7 @@ var tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/hap-nodejs/node_
 var assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/assert.js"));
 var debug_1 = tslib_1.__importDefault(__webpack_require__(/*! debug */ "../node_modules/hap-nodejs/node_modules/debug/src/browser.js"));
 var events_1 = __webpack_require__(/*! events */ "../node_modules/events/events.js");
+var definitions_1 = __webpack_require__(/*! ./definitions */ "../node_modules/hap-nodejs/dist/lib/definitions/index.js");
 var HAPServer_1 = __webpack_require__(/*! ./HAPServer */ "../node_modules/hap-nodejs/dist/lib/HAPServer.js");
 var clone_1 = __webpack_require__(/*! ./util/clone */ "../node_modules/hap-nodejs/dist/lib/util/clone.js");
 var hapStatusError_1 = __webpack_require__(/*! ./util/hapStatusError */ "../node_modules/hap-nodejs/dist/lib/util/hapStatusError.js");
@@ -54171,19 +54075,6 @@ var Formats;
      */
     Formats["DICTIONARY"] = "dict";
 })(Formats = exports.Formats || (exports.Formats = {}));
-function isNumericFormat(format) {
-    switch (format) {
-        case "int" /* INT */:
-        case "float" /* FLOAT */:
-        case "uint8" /* UINT8 */:
-        case "uint16" /* UINT16 */:
-        case "uint32" /* UINT32 */:
-        case "uint64" /* UINT64 */:
-            return true;
-        default:
-            return false;
-    }
-}
 var Units;
 (function (Units) {
     /**
@@ -54278,7 +54169,7 @@ var CharacteristicEventTypes;
 })(CharacteristicEventTypes = exports.CharacteristicEventTypes || (exports.CharacteristicEventTypes = {}));
 var ValidValuesIterable = /** @class */ (function () {
     function ValidValuesIterable(props) {
-        assert_1.default(isNumericFormat(props.format), "Cannot instantiate valid values iterable when format is not numeric. Found " + props.format);
+        assert_1.default(request_util_1.isNumericFormat(props.format), "Cannot instantiate valid values iterable when format is not numeric. Found " + props.format);
         this.props = props;
     }
     ValidValuesIterable.prototype[Symbol.iterator] = function () {
@@ -54330,17 +54221,8 @@ var ValidValuesIterable = /** @class */ (function () {
                             stepValue = this.props.minStep;
                         }
                     }
-                    else if (this.props.format === "uint8" /* UINT8 */) {
-                        max = 255;
-                    }
-                    else if (this.props.format === "uint16" /* UINT16 */) {
-                        max = 65535;
-                    }
-                    else if (this.props.format === "uint32" /* UINT32 */) {
-                        max = 4294967295;
-                    }
-                    else if (this.props.format === "uint64" /* UINT64 */) {
-                        max = 18446744073709551615; // don't get fooled, javascript uses 18446744073709552000 here as number isn 64 bit integer
+                    else if (request_util_1.isUnsignedNumericFormat(this.props.format)) {
+                        max = request_util_1.numericUpperBound(this.props.format);
                     }
                     else {
                         throw new Error("Could not find valid iterator strategy for props: " + JSON.stringify(this.props));
@@ -54411,8 +54293,8 @@ var Characteristic = /** @class */ (function (_super) {
      * @param handler
      */
     Characteristic.prototype.onGet = function (handler) {
-        if (typeof handler !== 'function' || handler.length !== 0) {
-            this.characteristicWarning(".onGet handler must be a function with exactly zero input arguments.");
+        if (typeof handler !== 'function') {
+            this.characteristicWarning(".onGet handler must be a function");
             return this;
         }
         this.getHandler = handler;
@@ -54440,8 +54322,8 @@ var Characteristic = /** @class */ (function (_super) {
      * @param handler
      */
     Characteristic.prototype.onSet = function (handler) {
-        if (typeof handler !== 'function' || handler.length !== 1) {
-            this.characteristicWarning(".onSet handler must be a function with exactly one input argument.");
+        if (typeof handler !== 'function') {
+            this.characteristicWarning(".onSet handler must be a function");
             return this;
         }
         this.setHandler = handler;
@@ -54478,37 +54360,116 @@ var Characteristic = /** @class */ (function (_super) {
         if (props.description !== undefined) {
             this.props.description = props.description != null ? props.description : undefined;
         }
+        // check minValue is valid for the format type
         if (props.minValue !== undefined) {
-            this.props.minValue = props.minValue != null ? props.minValue : undefined;
+            if (props.minValue === null) {
+                props.minValue = undefined;
+            }
+            else if (!request_util_1.isNumericFormat(this.props.format)) {
+                this.characteristicWarning("Characteristic Property `minValue` can only be set for characteristics with numeric format, but not for " + this.props.format, "error-message" /* ERROR_MESSAGE */);
+                props.minValue = undefined;
+            }
+            else if (request_util_1.isUnsignedNumericFormat(this.props.format)) {
+                if (props.minValue < request_util_1.numericLowerBound(this.props.format)) {
+                    this.characteristicWarning("Characteristic Property `minValue` was set to " + props.minValue + ", but for numeric format " +
+                        this.props.format + " minimum possible is " + request_util_1.numericLowerBound(this.props.format), "error-message" /* ERROR_MESSAGE */);
+                    props.minValue = request_util_1.numericLowerBound(this.props.format);
+                }
+                else if (props.minValue > request_util_1.numericUpperBound(this.props.format)) {
+                    this.characteristicWarning("Characteristic Property `minValue` was set to " + props.minValue + ", but for numeric format " +
+                        this.props.format + " maximum possible is " + request_util_1.numericUpperBound(this.props.format), "error-message" /* ERROR_MESSAGE */);
+                    props.minValue = request_util_1.numericLowerBound(this.props.format);
+                }
+            }
+            this.props.minValue = props.minValue;
         }
+        // check maxValue is valid for the format type
         if (props.maxValue !== undefined) {
-            this.props.maxValue = props.maxValue != null ? props.maxValue : undefined;
+            if (props.maxValue === null) {
+                props.maxValue = undefined;
+            }
+            else if (!request_util_1.isNumericFormat(this.props.format)) {
+                this.characteristicWarning("Characteristic Property `maxValue` can only be set for characteristics with numeric format, but not for " + this.props.format, "error-message" /* ERROR_MESSAGE */);
+                props.maxValue = undefined;
+            }
+            else if (request_util_1.isUnsignedNumericFormat(this.props.format)) {
+                if (props.maxValue > request_util_1.numericUpperBound(this.props.format)) {
+                    this.characteristicWarning("Characteristic Property `maxValue` was set to " + props.maxValue + ", but for numeric format " +
+                        this.props.format + " maximum possible is " + request_util_1.numericUpperBound(this.props.format), "error-message" /* ERROR_MESSAGE */);
+                    props.maxValue = request_util_1.numericUpperBound(this.props.format);
+                }
+                else if (props.maxValue < request_util_1.numericLowerBound(this.props.format)) {
+                    this.characteristicWarning("Characteristic Property `maxValue` was set to " + props.maxValue + ", but for numeric format " +
+                        this.props.format + " minimum possible is " + request_util_1.numericUpperBound(this.props.format), "error-message" /* ERROR_MESSAGE */);
+                    props.maxValue = request_util_1.numericUpperBound(this.props.format);
+                }
+            }
+            this.props.maxValue = props.maxValue;
         }
         if (props.minStep !== undefined) {
-            this.props.minStep = props.minStep != null ? props.minStep : undefined;
+            if (props.minStep === null) {
+                this.props.minStep = undefined;
+            }
+            else if (!request_util_1.isNumericFormat(this.props.format)) {
+                this.characteristicWarning("Characteristic Property `minStep` can only be set for characteristics with numeric format, but not for " + this.props.format, "error-message" /* ERROR_MESSAGE */);
+            }
+            else {
+                if (props.minStep < 1 && request_util_1.isIntegerNumericFormat(this.props.format)) {
+                    this.characteristicWarning("Characteristic Property `minStep` was set to a value lower than 1, " +
+                        "this will have no effect on format `" + this.props.format);
+                }
+                this.props.minStep = props.minStep;
+            }
         }
         if (props.maxLen !== undefined) {
-            if (props.maxLen != null) {
+            if (props.maxLen === null) {
+                this.props.maxLen = undefined;
+            }
+            else if (this.props.format !== "string" /* STRING */) {
+                this.characteristicWarning("Characteristic Property `maxLen` can only be set for characteristics with format `STRING`, but not for " + this.props.format, "error-message" /* ERROR_MESSAGE */);
+            }
+            else {
                 if (props.maxLen > 256) {
-                    this.characteristicWarning("setProps: string maxLen cannot be bigger than 256!");
+                    this.characteristicWarning("Characteristic Property string `maxLen` cannot be bigger than 256");
                     props.maxLen = 256;
                 }
                 this.props.maxLen = props.maxLen;
             }
-            else {
-                this.props.maxLen = undefined;
-            }
         }
         if (props.maxDataLen !== undefined) {
-            this.props.maxDataLen = props.maxDataLen != null ? props.maxDataLen : undefined;
+            if (props.maxDataLen === null) {
+                this.props.maxDataLen = undefined;
+            }
+            else if (this.props.format !== "data" /* DATA */) {
+                this.characteristicWarning("Characteristic Property `maxDataLen` can only be set for characteristics with format `DATA`, but not for " + this.props.format, "error-message" /* ERROR_MESSAGE */);
+            }
+            else {
+                this.props.maxDataLen = props.maxDataLen;
+            }
         }
         if (props.validValues !== undefined) {
-            assert_1.default(props.validValues.length, "characteristic prop validValues cannot be empty array");
-            this.props.validValues = props.validValues != null ? props.validValues : undefined;
+            if (props.validValues === null) {
+                this.props.validValues = undefined;
+            }
+            else if (!request_util_1.isNumericFormat(this.props.format)) {
+                this.characteristicWarning("Characteristic Property `validValues` was supplied for non numeric format " + this.props.format);
+            }
+            else {
+                assert_1.default(props.validValues.length, "characteristic prop validValues cannot be empty array");
+                this.props.validValues = props.validValues;
+            }
         }
         if (props.validValueRanges !== undefined) {
-            assert_1.default(props.validValueRanges.length === 2, "characteristic prop validValueRanges must have a length of 2");
-            this.props.validValueRanges = props.validValueRanges != null ? props.validValueRanges : undefined;
+            if (props.validValueRanges === null) {
+                this.props.validValueRanges = undefined;
+            }
+            else if (!request_util_1.isNumericFormat(this.props.format)) {
+                this.characteristicWarning("Characteristic Property `validValueRanges` was supplied for non numeric format " + this.props.format);
+            }
+            else {
+                assert_1.default(props.validValueRanges.length === 2, "characteristic prop validValueRanges must have a length of 2");
+                this.props.validValueRanges = props.validValueRanges;
+            }
         }
         if (props.adminOnlyAccess !== undefined) {
             this.props.adminOnlyAccess = props.adminOnlyAccess != null ? props.adminOnlyAccess : undefined;
@@ -54614,7 +54575,7 @@ var Characteristic = /** @class */ (function (_super) {
             value = this.validateUserInput(value);
         }
         catch (error) {
-            this.characteristicWarning(error.stack + "", "error-message" /* ERROR_MESSAGE */);
+            this.characteristicWarning((error === null || error === void 0 ? void 0 : error.message) + "", "error-message" /* ERROR_MESSAGE */, error === null || error === void 0 ? void 0 : error.stack);
             if (callback) {
                 callback(error);
             }
@@ -54654,7 +54615,7 @@ var Characteristic = /** @class */ (function (_super) {
             value = this.validateUserInput(value);
         }
         catch (error) {
-            this.characteristicWarning(error.stack + "");
+            this.characteristicWarning((error === null || error === void 0 ? void 0 : error.message) + "", "error-message" /* ERROR_MESSAGE */, error === null || error === void 0 ? void 0 : error.stack);
             if (callback) {
                 callback();
             }
@@ -54713,12 +54674,12 @@ var Characteristic = /** @class */ (function (_super) {
                         }
                         if (!this.getHandler) return [3 /*break*/, 4];
                         if (this.listeners("get" /* GET */).length > 0) {
-                            this.characteristicWarning("Ignoring on('get') handler as onGet handler was defined instead.");
+                            this.characteristicWarning("Ignoring on('get') handler as onGet handler was defined instead");
                         }
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.getHandler()];
+                        return [4 /*yield*/, this.getHandler(context, connection)];
                     case 2:
                         value = _a.sent();
                         this.statusCode = 0 /* SUCCESS */;
@@ -54728,7 +54689,7 @@ var Characteristic = /** @class */ (function (_super) {
                             value = this.validateUserInput(value);
                         }
                         catch (error) {
-                            this.characteristicWarning("An illegal value was supplied by the read handler for characteristic: " + error.stack);
+                            this.characteristicWarning("An illegal value was supplied by the read handler for characteristic: " + (error === null || error === void 0 ? void 0 : error.message), "warn-message" /* WARN_MESSAGE */, error === null || error === void 0 ? void 0 : error.stack);
                             this.statusCode = -70402 /* SERVICE_COMMUNICATION_FAILURE */;
                             // noinspection JSDeprecatedSymbols
                             this.status = error;
@@ -54753,7 +54714,7 @@ var Characteristic = /** @class */ (function (_super) {
                             this.status = error_1;
                         }
                         else {
-                            this.characteristicWarning("Unhandled error thrown inside read handler for characteristic: " + error_1.stack);
+                            this.characteristicWarning("Unhandled error thrown inside read handler for characteristic: " + (error_1 === null || error_1 === void 0 ? void 0 : error_1.message), "error-message" /* ERROR_MESSAGE */, error_1 === null || error_1 === void 0 ? void 0 : error_1.stack);
                             this.statusCode = -70402 /* SERVICE_COMMUNICATION_FAILURE */;
                             // noinspection JSDeprecatedSymbols
                             this.status = error_1;
@@ -54764,8 +54725,12 @@ var Characteristic = /** @class */ (function (_super) {
                             if (this.statusCode) {
                                 throw this.statusCode;
                             }
-                            else {
-                                return [2 /*return*/, this.value];
+                            try {
+                                return [2 /*return*/, this.validateUserInput(this.value)];
+                            }
+                            catch (error) {
+                                this.characteristicWarning("An illegal value was supplied by setting `value` for characteristic: " + (error === null || error === void 0 ? void 0 : error.message), "warn-message" /* WARN_MESSAGE */, error === null || error === void 0 ? void 0 : error.stack);
+                                return [2 /*return*/, Promise.reject(-70402 /* SERVICE_COMMUNICATION_FAILURE */)];
                             }
                         }
                         return [2 /*return*/, new Promise(function (resolve, reject) {
@@ -54804,7 +54769,7 @@ var Characteristic = /** @class */ (function (_super) {
                                     }), context, connection);
                                 }
                                 catch (error) {
-                                    _this.characteristicWarning("Unhandled error thrown inside read handler for characteristic: " + error.stack);
+                                    _this.characteristicWarning("Unhandled error thrown inside read handler for characteristic: " + (error === null || error === void 0 ? void 0 : error.message), "error-message" /* ERROR_MESSAGE */, error === null || error === void 0 ? void 0 : error.stack);
                                     _this.statusCode = -70402 /* SERVICE_COMMUNICATION_FAILURE */;
                                     // noinspection JSDeprecatedSymbols
                                     _this.status = error;
@@ -54848,12 +54813,12 @@ var Characteristic = /** @class */ (function (_super) {
                         oldValue = this.value;
                         if (!this.setHandler) return [3 /*break*/, 4];
                         if (this.listeners("set" /* SET */).length > 0) {
-                            this.characteristicWarning("Ignoring on('set') handler as onSet handler was defined instead.");
+                            this.characteristicWarning("Ignoring on('set') handler as onSet handler was defined instead");
                         }
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.setHandler(value)];
+                        return [4 /*yield*/, this.setHandler(value, context, connection)];
                     case 2:
                         writeResponse = _a.sent();
                         this.statusCode = 0 /* SUCCESS */;
@@ -54865,7 +54830,7 @@ var Characteristic = /** @class */ (function (_super) {
                         }
                         else {
                             if (writeResponse != null) {
-                                this.characteristicWarning("SET handler returned write response value, though the characteristic doesn't support write response!");
+                                this.characteristicWarning("SET handler returned write response value, though the characteristic doesn't support write response");
                             }
                             this.value = value;
                             this.emit("change" /* CHANGE */, { originator: connection, oldValue: oldValue, newValue: value, reason: "write" /* WRITE */, context: context });
@@ -54885,7 +54850,7 @@ var Characteristic = /** @class */ (function (_super) {
                             this.status = error_2;
                         }
                         else {
-                            this.characteristicWarning("Unhandled error thrown inside write handler for characteristic: " + error_2.stack);
+                            this.characteristicWarning("Unhandled error thrown inside write handler for characteristic: " + (error_2 === null || error_2 === void 0 ? void 0 : error_2.message), "error-message" /* ERROR_MESSAGE */, error_2 === null || error_2 === void 0 ? void 0 : error_2.stack);
                             this.statusCode = -70402 /* SERVICE_COMMUNICATION_FAILURE */;
                             // noinspection JSDeprecatedSymbols
                             this.status = error_2;
@@ -54931,7 +54896,7 @@ var Characteristic = /** @class */ (function (_super) {
                                             }
                                             else {
                                                 if (writeResponse != null) {
-                                                    _this.characteristicWarning("SET handler returned write response value, though the characteristic doesn't support write response!");
+                                                    _this.characteristicWarning("SET handler returned write response value, though the characteristic doesn't support write response");
                                                 }
                                                 _this.value = value;
                                                 resolve();
@@ -54940,7 +54905,7 @@ var Characteristic = /** @class */ (function (_super) {
                                         }), context, connection);
                                     }
                                     catch (error) {
-                                        _this.characteristicWarning("Unhandled error thrown inside write handler for characteristic: " + error.stack);
+                                        _this.characteristicWarning("Unhandled error thrown inside write handler for characteristic: " + (error === null || error === void 0 ? void 0 : error.message), "error-message" /* ERROR_MESSAGE */, error === null || error === void 0 ? void 0 : error.stack);
                                         _this.statusCode = -70402 /* SERVICE_COMMUNICATION_FAILURE */;
                                         // noinspection JSDeprecatedSymbols
                                         _this.status = error;
@@ -55003,8 +54968,27 @@ var Characteristic = /** @class */ (function (_super) {
                 return {};
             case "array" /* ARRAY */:
                 return [];
+            case "int" /* INT */:
+            case "float" /* FLOAT */:
+            case "uint8" /* UINT8 */:
+            case "uint16" /* UINT16 */:
+            case "uint32" /* UINT32 */:
+            case "uint64" /* UINT64 */:
+                switch (this.UUID) {
+                    case Characteristic.CurrentTemperature.UUID:
+                        return 0; // some existing integrations expect this to be 0 by default
+                    default: {
+                        if (((_a = this.props.validValues) === null || _a === void 0 ? void 0 : _a.length) && typeof this.props.validValues[0] === 'number') {
+                            return this.props.validValues[0];
+                        }
+                        if (typeof this.props.minValue === 'number') {
+                            return this.props.minValue;
+                        }
+                        return 0;
+                    }
+                }
             default:
-                return (_a = this.props.minValue) !== null && _a !== void 0 ? _a : 0;
+                return 0;
         }
     };
     /**
@@ -55032,8 +55016,8 @@ var Characteristic = /** @class */ (function (_super) {
                 if (typeof value !== "number") {
                     return false;
                 }
-                numericMin = maxWithUndefined(this.props.minValue, -2147483648);
-                numericMax = minWithUndefined(this.props.maxValue, 2147483647);
+                numericMin = maxWithUndefined(this.props.minValue, request_util_1.numericLowerBound("int" /* INT */));
+                numericMax = minWithUndefined(this.props.maxValue, request_util_1.numericUpperBound("int" /* INT */));
                 break;
             case "float" /* FLOAT */:
                 if (typeof value === "boolean") {
@@ -55056,8 +55040,8 @@ var Characteristic = /** @class */ (function (_super) {
                 if (typeof value !== "number") {
                     return false;
                 }
-                numericMin = maxWithUndefined(this.props.minValue, 0);
-                numericMax = minWithUndefined(this.props.maxValue, 255);
+                numericMin = maxWithUndefined(this.props.minValue, request_util_1.numericLowerBound("uint8" /* UINT8 */));
+                numericMax = minWithUndefined(this.props.maxValue, request_util_1.numericUpperBound("uint8" /* UINT8 */));
                 break;
             case "uint16" /* UINT16 */:
                 if (typeof value === "boolean") {
@@ -55066,8 +55050,8 @@ var Characteristic = /** @class */ (function (_super) {
                 if (typeof value !== "number") {
                     return false;
                 }
-                numericMin = maxWithUndefined(this.props.minValue, 0);
-                numericMax = minWithUndefined(this.props.maxValue, 65535);
+                numericMin = maxWithUndefined(this.props.minValue, request_util_1.numericLowerBound("uint16" /* UINT16 */));
+                numericMax = minWithUndefined(this.props.maxValue, request_util_1.numericUpperBound("uint16" /* UINT16 */));
                 break;
             case "uint32" /* UINT32 */:
                 if (typeof value === "boolean") {
@@ -55076,8 +55060,8 @@ var Characteristic = /** @class */ (function (_super) {
                 if (typeof value !== "number") {
                     return false;
                 }
-                numericMin = maxWithUndefined(this.props.minValue, 0);
-                numericMax = minWithUndefined(this.props.maxValue, 4294967295);
+                numericMin = maxWithUndefined(this.props.minValue, request_util_1.numericLowerBound("uint32" /* UINT32 */));
+                numericMax = minWithUndefined(this.props.maxValue, request_util_1.numericUpperBound("uint32" /* UINT32 */));
                 break;
             case "uint64" /* UINT64 */:
                 if (typeof value === "boolean") {
@@ -55086,8 +55070,8 @@ var Characteristic = /** @class */ (function (_super) {
                 if (typeof value !== "number") {
                     return false;
                 }
-                numericMin = maxWithUndefined(this.props.minValue, 0);
-                numericMax = minWithUndefined(this.props.maxValue, 18446744073709551615); // don't get fooled, javascript uses 18446744073709552000 here
+                numericMin = maxWithUndefined(this.props.minValue, request_util_1.numericLowerBound("uint64" /* UINT64 */));
+                numericMax = minWithUndefined(this.props.maxValue, request_util_1.numericUpperBound("uint64" /* UINT64 */));
                 break;
             case "string" /* STRING */: {
                 if (typeof value !== "string") {
@@ -55146,13 +55130,9 @@ var Characteristic = /** @class */ (function (_super) {
      */
     Characteristic.prototype.validateUserInput = function (value) {
         var _a;
-        if (value === undefined) {
-            this.characteristicWarning("characteristic was supplied illegal value: undefined! This might throw errors in the future!");
-            return this.value; // don't change the value
-        }
-        else if (value === null) {
+        if (value === null) {
             if (this.UUID === Characteristic.Model.UUID || this.UUID === Characteristic.SerialNumber.UUID) { // mirrors the statement in case: Formats.STRING
-                this.characteristicWarning(new Error("characteristic must have a non null value otherwise HomeKit will reject this accessory. Ignoring new value.").stack + "", "error-message" /* ERROR_MESSAGE */);
+                this.characteristicWarning("characteristic must have a non null value otherwise HomeKit will reject this accessory, ignoring new value", "error-message" /* ERROR_MESSAGE */);
                 return this.value; // don't change the value
             }
             /**
@@ -55165,26 +55145,38 @@ var Characteristic = /** @class */ (function (_super) {
              * As an intermediate step we kept the behavior but added a warning printed to the console.
              * In a future update we will do the breaking change of return null below!
              */
-            this.characteristicWarning("characteristic was supplied illegal value: null! ");
-            return this.value;
+            if (this.UUID.endsWith(uuid_1.BASE_UUID)) { // we have a apple defined characteristic (at least assuming nobody else uses the UUID namespace)
+                if (this.UUID === definitions_1.ProgrammableSwitchEvent.UUID) {
+                    return value; // null is allowed as a value for ProgrammableSwitchEvent
+                }
+                this.characteristicWarning("characteristic was supplied illegal value: null! Home App will reject null for Apple defined characteristics");
+                // if the value has been set previously, return it now, otherwise continue with validation to have a default value set.
+                if (this.value !== null) {
+                    return this.value;
+                }
+            }
+            else {
+                // we currently allow null for any non custom defined characteristics
+                return value;
+            }
         }
         var numericMin = undefined;
         var numericMax = undefined;
         var stepValue = undefined;
         switch (this.props.format) {
             case "bool" /* BOOL */: {
-                var type = typeof value;
-                if (type === "boolean") {
+                if (typeof value === "boolean") {
                     return value;
                 }
-                else if (type === "number") {
+                else if (typeof value === "number") {
                     return value === 1;
                 }
-                else if (type === "string") {
-                    return value === "1";
+                else if (typeof value === "string") {
+                    return value === "1" || value === "true";
                 }
                 else {
-                    throw new Error("characteristic value expected boolean and received " + type);
+                    this.characteristicWarning("characteristic value expected boolean and received " + typeof value);
+                    return false;
                 }
             }
             case "int" /* INT */: {
@@ -55192,14 +55184,19 @@ var Characteristic = /** @class */ (function (_super) {
                     value = value ? 1 : 0;
                 }
                 if (typeof value === "string") {
-                    this.characteristicWarning("characteristic was supplied illegal value: string instead of number. Supplying illegal values will throw errors in the future!");
+                    // this.characteristicWarning(`characteristic was supplied illegal value: string instead of number. Supplying illegal values will throw errors in the future!`);
                     value = parseInt(value, 10);
                 }
-                else if (typeof value !== "number") {
-                    throw new Error("characteristic value expected number and received " + typeof value);
+                if (typeof value === 'number' && isNaN(value)) {
+                    this.characteristicWarning("characteristic was expected valid number and received NaN");
+                    value = typeof this.value === 'number' ? this.value : this.props.minValue || 0;
                 }
-                numericMin = maxWithUndefined(this.props.minValue, -2147483648);
-                numericMax = minWithUndefined(this.props.maxValue, 2147483647);
+                if (typeof value !== "number") {
+                    this.characteristicWarning("characteristic value expected number and received " + typeof value);
+                    value = typeof this.value === 'number' ? this.value : this.props.minValue || 0;
+                }
+                numericMin = maxWithUndefined(this.props.minValue, request_util_1.numericLowerBound("int" /* INT */));
+                numericMax = minWithUndefined(this.props.maxValue, request_util_1.numericUpperBound("int" /* INT */));
                 stepValue = maxWithUndefined(this.props.minStep, 1);
                 break;
             }
@@ -55208,11 +55205,16 @@ var Characteristic = /** @class */ (function (_super) {
                     value = value ? 1 : 0;
                 }
                 if (typeof value === "string") {
-                    this.characteristicWarning("characteristic was supplied illegal value: string instead of float. Supplying illegal values will throw errors in the future!");
+                    // this.characteristicWarning(`characteristic was supplied illegal value: string instead of float. Supplying illegal values will throw errors in the future!`);
                     value = parseFloat(value);
                 }
-                else if (typeof value !== "number") {
-                    throw new Error("characteristic value expected float and received " + typeof value);
+                if (typeof value === 'number' && isNaN(value)) {
+                    this.characteristicWarning("characteristic was expected valid number and received NaN");
+                    value = typeof this.value === 'number' ? this.value : this.props.minValue || 0;
+                }
+                if (typeof value !== "number") {
+                    this.characteristicWarning("characteristic value expected float and received " + typeof value);
+                    value = typeof this.value === 'number' ? this.value : this.props.minValue || 0;
                 }
                 if (this.props.minValue != null) {
                     numericMin = this.props.minValue;
@@ -55228,14 +55230,19 @@ var Characteristic = /** @class */ (function (_super) {
                     value = value ? 1 : 0;
                 }
                 if (typeof value === "string") {
-                    this.characteristicWarning("characteristic was supplied illegal value: string instead of number. Supplying illegal values will throw errors in the future!");
+                    // this.characteristicWarning(`characteristic was supplied illegal value: string instead of number. Supplying illegal values will throw errors in the future!`);
                     value = parseInt(value, 10);
                 }
-                else if (typeof value !== "number") {
-                    throw new Error("characteristic value expected number and received " + typeof value);
+                if (typeof value === 'number' && isNaN(value)) {
+                    this.characteristicWarning("characteristic was expected valid number and received NaN");
+                    value = typeof this.value === 'number' ? this.value : this.props.minValue || 0;
                 }
-                numericMin = maxWithUndefined(this.props.minValue, 0);
-                numericMax = minWithUndefined(this.props.maxValue, 255);
+                if (typeof value !== "number") {
+                    this.characteristicWarning("characteristic value expected number and received " + typeof value);
+                    value = typeof this.value === 'number' ? this.value : this.props.minValue || 0;
+                }
+                numericMin = maxWithUndefined(this.props.minValue, request_util_1.numericLowerBound("uint8" /* UINT8 */));
+                numericMax = minWithUndefined(this.props.maxValue, request_util_1.numericUpperBound("uint8" /* UINT8 */));
                 stepValue = maxWithUndefined(this.props.minStep, 1);
                 break;
             }
@@ -55244,14 +55251,19 @@ var Characteristic = /** @class */ (function (_super) {
                     value = value ? 1 : 0;
                 }
                 if (typeof value === "string") {
-                    this.characteristicWarning("characteristic was supplied illegal value: string instead of number. Supplying illegal values will throw errors in the future!");
+                    // this.characteristicWarning(`characteristic was supplied illegal value: string instead of number. Supplying illegal values will throw errors in the future!`);
                     value = parseInt(value, 10);
                 }
-                else if (typeof value !== "number") {
-                    throw new Error("characteristic value expected number and received " + typeof value);
+                if (typeof value === 'number' && isNaN(value)) {
+                    this.characteristicWarning("characteristic was expected valid number and received NaN");
+                    value = typeof this.value === 'number' ? this.value : this.props.minValue || 0;
                 }
-                numericMin = maxWithUndefined(this.props.minValue, 0);
-                numericMax = minWithUndefined(this.props.maxValue, 65535);
+                if (typeof value !== "number") {
+                    this.characteristicWarning("characteristic value expected number and received " + typeof value);
+                    value = typeof this.value === 'number' ? this.value : this.props.minValue || 0;
+                }
+                numericMin = maxWithUndefined(this.props.minValue, request_util_1.numericLowerBound("uint16" /* UINT16 */));
+                numericMax = minWithUndefined(this.props.maxValue, request_util_1.numericUpperBound("uint16" /* UINT16 */));
                 stepValue = maxWithUndefined(this.props.minStep, 1);
                 break;
             }
@@ -55260,14 +55272,19 @@ var Characteristic = /** @class */ (function (_super) {
                     value = value ? 1 : 0;
                 }
                 if (typeof value === "string") {
-                    this.characteristicWarning("characteristic was supplied illegal value: string instead of number. Supplying illegal values will throw errors in the future!");
+                    // this.characteristicWarning(`characteristic was supplied illegal value: string instead of number. Supplying illegal values will throw errors in the future!`);
                     value = parseInt(value, 10);
                 }
-                else if (typeof value !== "number") {
-                    throw new Error("characteristic value expected number and received " + typeof value);
+                if (typeof value === 'number' && isNaN(value)) {
+                    this.characteristicWarning("characteristic was expected valid number and received NaN");
+                    value = typeof this.value === 'number' ? this.value : this.props.minValue || 0;
                 }
-                numericMin = maxWithUndefined(this.props.minValue, 0);
-                numericMax = minWithUndefined(this.props.maxValue, 4294967295);
+                if (typeof value !== "number") {
+                    this.characteristicWarning("characteristic value expected number and received " + typeof value);
+                    value = typeof this.value === 'number' ? this.value : this.props.minValue || 0;
+                }
+                numericMin = maxWithUndefined(this.props.minValue, request_util_1.numericLowerBound("uint32" /* UINT32 */));
+                numericMax = minWithUndefined(this.props.maxValue, request_util_1.numericUpperBound("uint32" /* UINT32 */));
                 stepValue = maxWithUndefined(this.props.minStep, 1);
                 break;
             }
@@ -55276,32 +55293,38 @@ var Characteristic = /** @class */ (function (_super) {
                     value = value ? 1 : 0;
                 }
                 if (typeof value === "string") {
-                    this.characteristicWarning("characteristic was supplied illegal value: string instead of number. Supplying illegal values will throw errors in the future!");
+                    // this.characteristicWarning(`characteristic was supplied illegal value: string instead of number. Supplying illegal values will throw errors in the future!`);
                     value = parseInt(value, 10);
                 }
-                else if (typeof value !== "number") {
-                    throw new Error("characteristic value expected number and received " + typeof value);
+                if (typeof value === 'number' && isNaN(value)) {
+                    this.characteristicWarning("characteristic was expected valid number and received NaN");
+                    value = typeof this.value === 'number' ? this.value : this.props.minValue || 0;
                 }
-                numericMin = maxWithUndefined(this.props.minValue, 0);
-                numericMax = minWithUndefined(this.props.maxValue, 18446744073709551615); // don't get fooled, javascript uses 18446744073709552000 here
+                if (typeof value !== "number") {
+                    this.characteristicWarning("characteristic value expected number and received " + typeof value);
+                    value = typeof this.value === 'number' ? this.value : this.props.minValue || 0;
+                }
+                numericMin = maxWithUndefined(this.props.minValue, request_util_1.numericLowerBound("uint64" /* UINT64 */));
+                numericMax = minWithUndefined(this.props.maxValue, request_util_1.numericUpperBound("uint64" /* UINT64 */));
                 stepValue = maxWithUndefined(this.props.minStep, 1);
                 break;
             }
             case "string" /* STRING */: {
                 if (typeof value === "number") {
-                    this.characteristicWarning("characteristic was supplied illegal value: number instead of string. Supplying illegal values will throw errors in the future!");
+                    this.characteristicWarning("characteristic was supplied illegal value: number instead of string, supplying illegal values will throw errors in the future");
                     value = String(value);
                 }
-                else if (typeof value !== "string") {
-                    throw new Error("characteristic value expected string and received " + (typeof value));
+                if (typeof value !== "string") {
+                    this.characteristicWarning("characteristic value expected string and received " + (typeof value));
+                    value = typeof this.value === 'string' ? this.value : value + '';
                 }
                 if (value.length <= 1 && (this.UUID === Characteristic.Model.UUID || this.UUID === Characteristic.SerialNumber.UUID)) { // mirrors the case value = null at the beginning
-                    this.characteristicWarning(new Error("[" + this.displayName + "] characteristic must have a length of more than 1 character otherwise HomeKit will reject this accessory. Ignoring new value.").stack + "", "error-message" /* ERROR_MESSAGE */);
+                    this.characteristicWarning("[" + this.displayName + "] characteristic must have a length of more than 1 character otherwise HomeKit will reject this accessory, ignoring new value");
                     return this.value; // just return the current value
                 }
                 var maxLength = (_a = this.props.maxLen) !== null && _a !== void 0 ? _a : 64; // default is 64 (max is 256 which is set in setProps)
                 if (value.length > maxLength) {
-                    this.characteristicWarning("characteristic was supplied illegal value: string '" + value + "' exceeded max length of " + maxLength + ".");
+                    this.characteristicWarning("characteristic was supplied illegal value: string '" + value + "' exceeded max length of " + maxLength);
                     value = value.substring(0, maxLength);
                 }
                 return value;
@@ -55312,31 +55335,36 @@ var Characteristic = /** @class */ (function (_super) {
                 }
                 if (this.props.maxDataLen != null && value.length > this.props.maxDataLen) {
                     // can't cut it as we would basically yet binary rubbish afterwards
-                    throw new Error("characteristic with DATA format exceeds specified maxDataLen!");
+                    throw new Error("characteristic with DATA format exceeds specified maxDataLen");
                 }
                 return value;
             case "tlv8" /* TLV8 */:
+                if (value === undefined) {
+                    this.characteristicWarning("characteristic was supplied illegal value: undefined");
+                    return this.value;
+                }
                 return value; // we trust that this is valid tlv8
         }
         if (typeof value === "number") {
             if (numericMin != null && value < numericMin) {
-                this.characteristicWarning("characteristic was supplied illegal value: number " + value + " exceeded minimum of " + numericMin + ".");
+                this.characteristicWarning("characteristic was supplied illegal value: number " + value + " exceeded minimum of " + numericMin);
                 value = numericMin;
             }
             if (numericMax != null && value > numericMax) {
-                this.characteristicWarning("characteristic was supplied illegal value: number " + value + " exceeded maximum of " + numericMax + ".");
+                this.characteristicWarning("characteristic was supplied illegal value: number " + value + " exceeded maximum of " + numericMax);
                 value = numericMax;
             }
             if (this.props.validValues && !this.props.validValues.includes(value)) {
-                throw new Error("characteristic value " + value + " is not contained in valid values array!");
+                this.characteristicWarning("characteristic value " + value + " is not contained in valid values array");
+                return this.props.validValues.includes(this.value) ? this.value : (this.props.validValues[0] || 0);
             }
             if (this.props.validValueRanges && this.props.validValueRanges.length === 2) {
                 if (value < this.props.validValueRanges[0]) {
-                    this.characteristicWarning("characteristic was supplied illegal value: number " + value + " not contained in valid value range of " + this.props.validValueRanges + ". Supplying illegal values will throw errors in the future!");
+                    this.characteristicWarning("characteristic was supplied illegal value: number " + value + " not contained in valid value range of " + this.props.validValueRanges + ", supplying illegal values will throw errors in the future");
                     value = this.props.validValueRanges[0];
                 }
                 else if (value > this.props.validValueRanges[1]) {
-                    this.characteristicWarning("characteristic was supplied illegal value: number " + value + " not contained in valid value range of " + this.props.validValueRanges + ". Supplying illegal values will throw errors in the future!");
+                    this.characteristicWarning("characteristic was supplied illegal value: number " + value + " not contained in valid value range of " + this.props.validValueRanges + ", supplying illegal values will throw errors in the future");
                     value = this.props.validValueRanges[1];
                 }
             }
@@ -55350,6 +55378,11 @@ var Characteristic = /** @class */ (function (_super) {
                 } // for stepValue < 1 rounding is done only when formatting the response. We can't store the "perfect" .step anyways
             }
         }
+        // hopefully it shouldn't get to this point
+        if (value === undefined) {
+            this.characteristicWarning("characteristic was supplied illegal value: undefined", "error-message" /* ERROR_MESSAGE */);
+            return this.value;
+        }
         return value;
     };
     /**
@@ -55359,9 +55392,10 @@ var Characteristic = /** @class */ (function (_super) {
         // generate our IID based on our UUID
         this.iid = identifierCache.getIID(accessoryName, serviceUUID, serviceSubtype, this.UUID);
     };
-    Characteristic.prototype.characteristicWarning = function (message, type) {
+    Characteristic.prototype.characteristicWarning = function (message, type, stack) {
         if (type === void 0) { type = "warn-message" /* WARN_MESSAGE */; }
-        this.emit("characteristic-warning" /* CHARACTERISTIC_WARNING */, type, message);
+        if (stack === void 0) { stack = new Error().stack; }
+        this.emit("characteristic-warning" /* CHARACTERISTIC_WARNING */, type, message, stack);
     };
     /**
      * @param event
@@ -55429,7 +55463,7 @@ var Characteristic = /** @class */ (function (_super) {
                     case 2:
                         if (!contactGetHandlers) return [3 /*break*/, 4];
                         return [4 /*yield*/, this.handleGetRequest(connection).catch(function () {
-                                debug('[%s] Error getting value for characteristic on /accessories request', _this.displayName);
+                                debug('[%s] Error getting value for characteristic on /accessories request. Returning cached value instead: %s', _this.displayName, "" + _this.value);
                                 return _this.value; // use cached value
                             })];
                     case 3:
@@ -55491,7 +55525,6 @@ var Characteristic = /** @class */ (function (_super) {
             props: clone_1.clone({}, characteristic.props),
         };
     };
-    ;
     /**
      * Deserialize characteristic from json string.
      *
@@ -55513,7 +55546,6 @@ var Characteristic = /** @class */ (function (_super) {
         characteristic.value = json.value;
         return characteristic;
     };
-    ;
     /**
      * @deprecated Please use the Formats const enum above. Scheduled to be removed in 2021-06.
      */
@@ -55536,7 +55568,7 @@ var numberPattern = /^-?\d+$/;
 function extractHAPStatusFromError(error) {
     var errorValue = -70402 /* SERVICE_COMMUNICATION_FAILURE */;
     if (numberPattern.test(error.message)) {
-        var value = parseInt(error.message);
+        var value = parseInt(error.message, 10);
         if (HAPServer_1.IsKnownHAPStatusError(value)) {
             errorValue = value;
         }
@@ -55676,21 +55708,31 @@ var Service = /** @class */ (function (_super) {
     };
     Service.prototype.addCharacteristic = function (input) {
         // characteristic might be a constructor like `Characteristic.Brightness` instead of an instance of Characteristic. Coerce if necessary.
+        var e_1, _a;
         var constructorArgs = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             constructorArgs[_i - 1] = arguments[_i];
         }
         var characteristic = typeof input === "function" ? new (input.bind.apply(input, tslib_1.__spread([void 0], constructorArgs)))() : input;
-        // check for UUID conflict
-        for (var index in this.characteristics) {
-            var existing = this.characteristics[index];
-            if (existing.UUID === characteristic.UUID) {
-                if (characteristic.UUID === '00000052-0000-1000-8000-0026BB765291') {
-                    //This is a special workaround for the Firmware Revision characteristic.
-                    return existing;
+        try {
+            // check for UUID conflict
+            for (var _b = tslib_1.__values(this.characteristics), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var existing = _c.value;
+                if (existing.UUID === characteristic.UUID) {
+                    if (characteristic.UUID === '00000052-0000-1000-8000-0026BB765291') {
+                        //This is a special workaround for the Firmware Revision characteristic.
+                        return existing;
+                    }
+                    throw new Error("Cannot add a Characteristic with the same UUID as another Characteristic in this Service: " + existing.UUID);
                 }
-                throw new Error("Cannot add a Characteristic with the same UUID as another Characteristic in this Service: " + existing.UUID);
             }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_1) throw e_1.error; }
         }
         if (this.characteristics.length >= MAX_CHARACTERISTICS) {
             throw new Error("Cannot add more than " + MAX_CHARACTERISTICS + " characteristics to a single service!");
@@ -55713,7 +55755,6 @@ var Service = /** @class */ (function (_super) {
         this.isPrimaryService = isPrimary;
         this.emit("service-configurationChange" /* SERVICE_CONFIGURATION_CHANGE */);
     };
-    ;
     /**
      * Marks the service as hidden
      *
@@ -55762,22 +55803,41 @@ var Service = /** @class */ (function (_super) {
         // returns a characteristic object from the service
         // If  Service.prototype.getCharacteristic(Characteristic.Type)  does not find the characteristic,
         // but the type is in optionalCharacteristics, it adds the characteristic.type to the service and returns it.
+        var e_2, _a, e_3, _b;
         var index, characteristic;
-        for (index in this.characteristics) {
-            characteristic = this.characteristics[index];
-            if (typeof name === 'string' && characteristic.displayName === name) {
-                return characteristic;
-            }
-            else if (typeof name === 'function' && ((characteristic instanceof name) || (name.UUID === characteristic.UUID))) {
-                return characteristic;
+        try {
+            for (var _c = tslib_1.__values(this.characteristics), _d = _c.next(); !_d.done; _d = _c.next()) {
+                var characteristic_1 = _d.value;
+                if (typeof name === 'string' && characteristic_1.displayName === name) {
+                    return characteristic_1;
+                }
+                else if (typeof name === 'function' && ((characteristic_1 instanceof name) || (name.UUID === characteristic_1.UUID))) {
+                    return characteristic_1;
+                }
             }
         }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+            }
+            finally { if (e_2) throw e_2.error; }
+        }
         if (typeof name === 'function') {
-            for (index in this.optionalCharacteristics) {
-                characteristic = this.optionalCharacteristics[index];
-                if ((characteristic instanceof name) || (name.UUID === characteristic.UUID)) {
-                    return this.addCharacteristic(name);
+            try {
+                for (var _e = tslib_1.__values(this.optionalCharacteristics), _f = _e.next(); !_f.done; _f = _e.next()) {
+                    var characteristic_2 = _f.value;
+                    if ((characteristic_2 instanceof name) || (name.UUID === characteristic_2.UUID)) {
+                        return this.addCharacteristic(name);
+                    }
                 }
+            }
+            catch (e_3_1) { e_3 = { error: e_3_1 }; }
+            finally {
+                try {
+                    if (_f && !_f.done && (_b = _e.return)) _b.call(_e);
+                }
+                finally { if (e_3) throw e_3.error; }
             }
             var instance = this.addCharacteristic(name);
             // Not found in optional Characteristics. Adding anyway, but warning about it if it isn't the Name.
@@ -55788,16 +55848,25 @@ var Service = /** @class */ (function (_super) {
         }
     };
     Service.prototype.testCharacteristic = function (name) {
-        // checks for the existence of a characteristic object in the service
-        var index, characteristic;
-        for (index in this.characteristics) {
-            characteristic = this.characteristics[index];
-            if (typeof name === 'string' && characteristic.displayName === name) {
-                return true;
+        var e_4, _a;
+        try {
+            // checks for the existence of a characteristic object in the service
+            for (var _b = tslib_1.__values(this.characteristics), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var characteristic = _c.value;
+                if (typeof name === 'string' && characteristic.displayName === name) {
+                    return true;
+                }
+                else if (typeof name === 'function' && ((characteristic instanceof name) || (name.UUID === characteristic.UUID))) {
+                    return true;
+                }
             }
-            else if (typeof name === 'function' && ((characteristic instanceof name) || (name.UUID === characteristic.UUID))) {
-                return true;
+        }
+        catch (e_4_1) { e_4 = { error: e_4_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
             }
+            finally { if (e_4) throw e_4.error; }
         }
         return false;
     };
@@ -55854,16 +55923,27 @@ var Service = /** @class */ (function (_super) {
      * @private
      */
     Service.prototype.getCharacteristicByIID = function (iid) {
-        for (var index in this.characteristics) {
-            var characteristic = this.characteristics[index];
-            if (characteristic.iid === iid)
-                return characteristic;
+        var e_5, _a;
+        try {
+            for (var _b = tslib_1.__values(this.characteristics), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var characteristic = _c.value;
+                if (characteristic.iid === iid)
+                    return characteristic;
+            }
+        }
+        catch (e_5_1) { e_5 = { error: e_5_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_5) throw e_5.error; }
         }
     };
     /**
      * @private
      */
     Service.prototype._assignIDs = function (identifierCache, accessoryName, baseIID) {
+        var e_6, _a;
         if (baseIID === void 0) { baseIID = 0; }
         // the Accessory Information service must have a (reserved by IdentifierCache) ID of 1
         if (this.UUID === '0000003E-0000-1000-8000-0026BB765291') {
@@ -55873,10 +55953,19 @@ var Service = /** @class */ (function (_super) {
             // assign our own ID based on our UUID
             this.iid = baseIID + identifierCache.getIID(accessoryName, this.UUID, this.subtype);
         }
-        // assign IIDs to our Characteristics
-        for (var index in this.characteristics) {
-            var characteristic = this.characteristics[index];
-            characteristic._assignID(identifierCache, accessoryName, this.UUID, this.subtype);
+        try {
+            // assign IIDs to our Characteristics
+            for (var _b = tslib_1.__values(this.characteristics), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var characteristic = _c.value;
+                characteristic._assignID(identifierCache, accessoryName, this.UUID, this.subtype);
+            }
+        }
+        catch (e_6_1) { e_6 = { error: e_6_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_6) throw e_6.error; }
         }
     };
     /**
@@ -55887,7 +55976,7 @@ var Service = /** @class */ (function (_super) {
         var _this = this;
         if (contactGetHandlers === void 0) { contactGetHandlers = true; }
         return new Promise(function (resolve) {
-            var e_1, _a, e_2, _b;
+            var e_7, _a, e_8, _b;
             assert_1.default(_this.iid, "iid cannot be undefined for service '" + _this.displayName + "'");
             assert_1.default(_this.characteristics.length, "service '" + _this.displayName + "' does not have any characteristics!");
             var service = {
@@ -55914,32 +56003,32 @@ var Service = /** @class */ (function (_super) {
                         service.linked.push(linked.iid);
                     }
                 }
-                catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                catch (e_7_1) { e_7 = { error: e_7_1 }; }
                 finally {
                     try {
                         if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
                     }
-                    finally { if (e_1) throw e_1.error; }
+                    finally { if (e_7) throw e_7.error; }
                 }
             }
             var missingCharacteristics = new Set();
             var timeout = setTimeout(function () {
-                var e_3, _a;
+                var e_9, _a;
                 try {
                     for (var missingCharacteristics_1 = tslib_1.__values(missingCharacteristics), missingCharacteristics_1_1 = missingCharacteristics_1.next(); !missingCharacteristics_1_1.done; missingCharacteristics_1_1 = missingCharacteristics_1.next()) {
                         var characteristic = missingCharacteristics_1_1.value;
                         _this.emitCharacteristicWarningEvent(characteristic, "slow-read" /* SLOW_READ */, "The read handler for the characteristic '" + characteristic.displayName + "' was slow to respond!");
                     }
                 }
-                catch (e_3_1) { e_3 = { error: e_3_1 }; }
+                catch (e_9_1) { e_9 = { error: e_9_1 }; }
                 finally {
                     try {
                         if (missingCharacteristics_1_1 && !missingCharacteristics_1_1.done && (_a = missingCharacteristics_1.return)) _a.call(missingCharacteristics_1);
                     }
-                    finally { if (e_3) throw e_3.error; }
+                    finally { if (e_9) throw e_9.error; }
                 }
                 timeout = setTimeout(function () {
-                    var e_4, _a;
+                    var e_10, _a;
                     timeout = undefined;
                     try {
                         for (var missingCharacteristics_2 = tslib_1.__values(missingCharacteristics), missingCharacteristics_2_1 = missingCharacteristics_2.next(); !missingCharacteristics_2_1.done; missingCharacteristics_2_1 = missingCharacteristics_2.next()) {
@@ -55949,16 +56038,16 @@ var Service = /** @class */ (function (_super) {
                             service.characteristics.push(characteristic.internalHAPRepresentation()); // value is set to null
                         }
                     }
-                    catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                    catch (e_10_1) { e_10 = { error: e_10_1 }; }
                     finally {
                         try {
                             if (missingCharacteristics_2_1 && !missingCharacteristics_2_1.done && (_a = missingCharacteristics_2.return)) _a.call(missingCharacteristics_2);
                         }
-                        finally { if (e_4) throw e_4.error; }
+                        finally { if (e_10) throw e_10.error; }
                     }
                     missingCharacteristics.clear();
                     resolve(service);
-                }, 7000);
+                }, 6000);
             }, 3000);
             var _loop_1 = function (characteristic) {
                 missingCharacteristics.add(characteristic);
@@ -55983,12 +56072,12 @@ var Service = /** @class */ (function (_super) {
                     _loop_1(characteristic);
                 }
             }
-            catch (e_2_1) { e_2 = { error: e_2_1 }; }
+            catch (e_8_1) { e_8 = { error: e_8_1 }; }
             finally {
                 try {
                     if (_f && !_f.done && (_b = _e.return)) _b.call(_e);
                 }
-                finally { if (e_2) throw e_2.error; }
+                finally { if (e_8) throw e_8.error; }
             }
         });
     };
@@ -55997,7 +56086,7 @@ var Service = /** @class */ (function (_super) {
      * @private used to generate the config hash
      */
     Service.prototype.internalHAPRepresentation = function () {
-        var e_5, _a;
+        var e_11, _a;
         assert_1.default(this.iid, "iid cannot be undefined for service '" + this.displayName + "'");
         assert_1.default(this.characteristics.length, "service '" + this.displayName + "' does not have any characteristics!");
         var service = {
@@ -56024,12 +56113,12 @@ var Service = /** @class */ (function (_super) {
                     service.linked.push(linked.iid);
                 }
             }
-            catch (e_5_1) { e_5 = { error: e_5_1 }; }
+            catch (e_11_1) { e_11 = { error: e_11_1 }; }
             finally {
                 try {
                     if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
                 }
-                finally { if (e_5) throw e_5.error; }
+                finally { if (e_11) throw e_11.error; }
             }
         }
         return service;
@@ -56048,26 +56137,32 @@ var Service = /** @class */ (function (_super) {
     /**
      * @private
      */
-    Service.prototype.emitCharacteristicWarningEvent = function (characteristic, type, message) {
-        this.emit("characteristic-warning" /* CHARACTERISTIC_WARNING */, characteristic, type, message, [this.displayName, characteristic.displayName]);
+    Service.prototype.emitCharacteristicWarningEvent = function (characteristic, type, message, stack) {
+        this.emit("characteristic-warning" /* CHARACTERISTIC_WARNING */, {
+            characteristic: characteristic,
+            type: type,
+            message: message,
+            originatorChain: [this.displayName, characteristic.displayName],
+            stack: stack,
+        });
     };
     /**
      * @private
      */
     Service.prototype._sideloadCharacteristics = function (targetCharacteristics) {
-        var e_6, _a;
+        var e_12, _a;
         try {
             for (var targetCharacteristics_1 = tslib_1.__values(targetCharacteristics), targetCharacteristics_1_1 = targetCharacteristics_1.next(); !targetCharacteristics_1_1.done; targetCharacteristics_1_1 = targetCharacteristics_1.next()) {
                 var target = targetCharacteristics_1_1.value;
                 this.setupCharacteristicEventHandlers(target);
             }
         }
-        catch (e_6_1) { e_6 = { error: e_6_1 }; }
+        catch (e_12_1) { e_12 = { error: e_12_1 }; }
         finally {
             try {
                 if (targetCharacteristics_1_1 && !targetCharacteristics_1_1.done && (_a = targetCharacteristics_1.return)) _a.call(targetCharacteristics_1);
             }
-            finally { if (e_6) throw e_6.error; }
+            finally { if (e_12) throw e_12.error; }
         }
         this.characteristics = targetCharacteristics.slice();
     };
@@ -56090,7 +56185,6 @@ var Service = /** @class */ (function (_super) {
             optionalCharacteristics: service.optionalCharacteristics.map(function (characteristic) { return Characteristic_1.Characteristic.serialize(characteristic); }),
         };
     };
-    ;
     /**
      * @private
      */
@@ -56113,7 +56207,6 @@ var Service = /** @class */ (function (_super) {
         }
         return service;
     };
-    ;
     return Service;
 }(events_1.EventEmitter));
 exports.Service = Service;
@@ -57285,7 +57378,7 @@ var RTPStreamManagement = /** @class */ (function () {
             var audioParameters = tlv.encode(1 /* CHANNEL */, Math.max(1, codec.audioChannels || 1), 2 /* BIT_RATE */, codec.bitrate || 0 /* VARIABLE */, 3 /* SAMPLE_RATE */, providedSamplerates);
             return tlv.encode(1 /* CODEC_TYPE */, type, 2 /* CODEC_PARAMETERS */, audioParameters);
         });
-        return tlv.encode(1 /* AUDIO_CODEC_CONFIGURATION */, codecConfigurations, 2 /* COMFORT_NOISE_SUPPORT */, comfortNoise ? 1 : 1).toString("base64");
+        return tlv.encode(1 /* AUDIO_CODEC_CONFIGURATION */, codecConfigurations, 2 /* COMFORT_NOISE_SUPPORT */, comfortNoise ? 1 : 0).toString("base64");
     };
     RTPStreamManagement.initialSetupEndpointsResponse = function () {
         return tlv.encode(2 /* STATUS */, 2 /* ERROR */).toString("base64");
@@ -57580,7 +57673,7 @@ var AdaptiveLightingController = /** @class */ (function (_super) {
      * @param options - Optional options to define the operating mode (automatic vs manual).
      */
     function AdaptiveLightingController(service, options) {
-        var _a;
+        var _a, _b;
         var _this = _super.call(this) || this;
         _this.didRunFirstInitializationStep = false;
         _this.lastEventNotificationSent = 0;
@@ -57589,6 +57682,7 @@ var AdaptiveLightingController = /** @class */ (function (_super) {
         _this.lastNotifiedHueValue = 0;
         _this.lightbulb = service;
         _this.mode = (_a = options === null || options === void 0 ? void 0 : options.controllerMode) !== null && _a !== void 0 ? _a : 1 /* AUTOMATIC */;
+        _this.customTemperatureAdjustment = (_b = options === null || options === void 0 ? void 0 : options.customTemperatureAdjustment) !== null && _b !== void 0 ? _b : 0;
         assert_1.default(_this.lightbulb.testCharacteristic(Characteristic_1.Characteristic.ColorTemperature), "Lightbulb must have the ColorTemperature characteristic added!");
         assert_1.default(_this.lightbulb.testCharacteristic(Characteristic_1.Characteristic.Brightness), "Lightbulb must have the Brightness characteristic added!");
         _this.adjustmentFactorChangedListener = _this.handleAdjustmentFactorChanged.bind(_this);
@@ -57892,11 +57986,13 @@ var AdaptiveLightingController = /** @class */ (function (_super) {
         var adjustmentMultiplier = Math.max(this.activeTransition.brightnessAdjustmentRange.minBrightnessValue, Math.min(this.activeTransition.brightnessAdjustmentRange.maxBrightnessValue, this.brightnessCharacteristic.value // get handler is not called for optimal performance
         ));
         var temperature = Math.round(interpolatedTemperature + interpolatedAdjustmentFactor * adjustmentMultiplier);
+        // apply any manually applied temperature adjustments
+        temperature += this.customTemperatureAdjustment;
         var min = (_c = (_b = this.colorTemperatureCharacteristic) === null || _b === void 0 ? void 0 : _b.props.minValue) !== null && _c !== void 0 ? _c : 140;
         var max = (_e = (_d = this.colorTemperatureCharacteristic) === null || _d === void 0 ? void 0 : _d.props.maxValue) !== null && _e !== void 0 ? _e : 500;
         temperature = Math.max(min, Math.min(max, temperature));
         var color = __1.ColorUtils.colorTemperatureToHueAndSaturation(temperature);
-        debug("[%s] Next temperature value is %d (for brightness %d)", this.lightbulb.displayName, temperature, adjustmentMultiplier);
+        debug("[%s] Next temperature value is %d (for brightness %d adj: %s)", this.lightbulb.displayName, temperature, adjustmentMultiplier, this.customTemperatureAdjustment);
         var context = {
             controller: this,
             omitEventUpdate: true,
@@ -57998,7 +58094,6 @@ var AdaptiveLightingController = /** @class */ (function (_super) {
      * @private
      */
     AdaptiveLightingController.prototype.handleControllerRemoved = function () {
-        this.handleFactoryReset();
         this.lightbulb.removeCharacteristic(this.supportedTransitionConfiguration);
         this.lightbulb.removeCharacteristic(this.transitionControl);
         this.lightbulb.removeCharacteristic(this.activeTransitionCount);
@@ -58039,13 +58134,7 @@ var AdaptiveLightingController = /** @class */ (function (_super) {
         if (!this.activeTransition.timeMillisOffset) { // compatibility to data produced by early betas
             this.activeTransition.timeMillisOffset = 0;
         }
-        try {
-            this.handleActiveTransitionUpdated(true);
-        }
-        catch (error) {
-            console.log("Could not enable adaptive lighting when restoring from disk: " + error.stack);
-            this.disableAdaptiveLighting(); // ensure it's disabled
-        }
+        this.handleActiveTransitionUpdated(true);
     };
     /**
      * @private
@@ -58528,12 +58617,12 @@ var CameraController = /** @class */ (function (_super) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             var timeout = setTimeout(function () {
-                console.warn("[" + accessoryName + "] Image snapshot handler is slow to respond!");
+                console.warn("[" + accessoryName + "] The image snapshot handler for the given accessory is slow to respond! See https://git.io/JtMGR for more info.");
                 timeout = setTimeout(function () {
                     timeout = undefined;
-                    console.warn("[" + accessoryName + "] Image snapshot handler didn't respond at all!");
+                    console.warn("[" + accessoryName + "] The image snapshot handler for the given accessory didn't respond at all! See https://git.io/JtMGR for more info.");
                     reject(-70408 /* OPERATION_TIMED_OUT */);
-                }, 10000);
+                }, 17000);
                 timeout.unref();
             }, 5000);
             timeout.unref();
@@ -58896,11 +58985,11 @@ var RemoteController = /** @class */ (function (_super) {
     function RemoteController(audioProducerConstructor, producerOptions) {
         var _this = _super.call(this) || this;
         _this.buttons = {}; // internal mapping of buttonId to buttonType for supported buttons
-        _this.targetConfigurations = {};
+        _this.targetConfigurations = new Map();
         _this.targetConfigurationsString = "";
         _this.lastButtonEvent = "";
         _this.activeIdentifier = 0; // id of 0 means no device selected
-        _this.dataStreamConnections = {}; // maps targetIdentifiers to active data stream connections
+        _this.dataStreamConnections = new Map(); // maps targetIdentifiers to active data stream connections
         _this.audioSupported = audioProducerConstructor !== undefined;
         _this.audioProducerConstructor = audioProducerConstructor;
         _this.audioProducerOptions = producerOptions;
@@ -58938,7 +59027,7 @@ var RemoteController = /** @class */ (function (_super) {
         if (activeIdentifier === this.activeIdentifier) {
             return;
         }
-        if (activeIdentifier !== 0 && !this.targetConfigurations[activeIdentifier]) {
+        if (activeIdentifier !== 0 && !this.targetConfigurations.has(activeIdentifier)) {
             throw Error("Tried setting unconfigured targetIdentifier to active");
         }
         debug("%d is now the active target", activeIdentifier);
@@ -58962,7 +59051,7 @@ var RemoteController = /** @class */ (function (_super) {
      * @param targetIdentifier {number}
      */
     RemoteController.prototype.isConfigured = function (targetIdentifier) {
-        return this.targetConfigurations[targetIdentifier] !== undefined;
+        return this.targetConfigurations.has(targetIdentifier);
     };
     /**
      * Returns the targetIdentifier for a give device name
@@ -58971,11 +59060,21 @@ var RemoteController = /** @class */ (function (_super) {
      * @returns the targetIdentifier of the device or undefined if not existent
      */
     RemoteController.prototype.getTargetIdentifierByName = function (name) {
-        for (var activeIdentifier in this.targetConfigurations) {
-            var configuration = this.targetConfigurations[activeIdentifier];
-            if (configuration.targetName === name) {
-                return parseInt(activeIdentifier);
+        var e_1, _a;
+        try {
+            for (var _b = tslib_1.__values(Object.entries(this.targetConfigurations)), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var _d = tslib_1.__read(_c.value, 2), activeIdentifier = _d[0], configuration = _d[1];
+                if (configuration.targetName === name) {
+                    return parseInt(activeIdentifier, 10);
+                }
             }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_1) throw e_1.error; }
         }
         return undefined;
     };
@@ -59104,19 +59203,23 @@ var RemoteController = /** @class */ (function (_super) {
         if (!targetConfiguration) {
             return -70410 /* INVALID_VALUE_IN_REQUEST */;
         }
-        this.targetConfigurations[targetConfiguration.targetIdentifier] = targetConfiguration;
+        this.targetConfigurations.set(targetConfiguration.targetIdentifier, targetConfiguration);
         debug("Configured new target '" + targetConfiguration.targetName + "' with targetIdentifier '" + targetConfiguration.targetIdentifier + "'");
         setTimeout(function () { return _this.emit("target-add" /* TARGET_ADDED */, targetConfiguration); }, 0);
         this.updatedTargetConfiguration(); // set response
         return 0 /* SUCCESS */;
     };
     RemoteController.prototype.handleUpdateTarget = function (targetConfiguration) {
+        var e_2, _a;
         var _this = this;
         if (!targetConfiguration) {
             return -70410 /* INVALID_VALUE_IN_REQUEST */;
         }
         var updates = [];
-        var configuredTarget = this.targetConfigurations[targetConfiguration.targetIdentifier];
+        var configuredTarget = this.targetConfigurations.get(targetConfiguration.targetIdentifier);
+        if (!configuredTarget) {
+            return -70410 /* INVALID_VALUE_IN_REQUEST */;
+        }
         if (targetConfiguration.targetName) {
             debug("Target name was updated '%s' => '%s' (%d)", configuredTarget.targetName, targetConfiguration.targetName, configuredTarget.targetIdentifier);
             configuredTarget.targetName = targetConfiguration.targetName;
@@ -59129,11 +59232,20 @@ var RemoteController = /** @class */ (function (_super) {
         }
         if (targetConfiguration.buttonConfiguration) {
             debug("%d button configurations were updated for target '%s' (%d)", Object.keys(targetConfiguration.buttonConfiguration).length, configuredTarget.targetName, configuredTarget.targetIdentifier);
-            for (var key in targetConfiguration.buttonConfiguration) {
-                var configuration = targetConfiguration.buttonConfiguration[key];
-                var savedConfiguration = configuredTarget.buttonConfiguration[configuration.buttonID];
-                savedConfiguration.buttonType = configuration.buttonType;
-                savedConfiguration.buttonName = configuration.buttonName;
+            try {
+                for (var _b = tslib_1.__values(Object.values(targetConfiguration.buttonConfiguration)), _c = _b.next(); !_c.done; _c = _b.next()) {
+                    var configuration = _c.value;
+                    var savedConfiguration = configuredTarget.buttonConfiguration[configuration.buttonID];
+                    savedConfiguration.buttonType = configuration.buttonType;
+                    savedConfiguration.buttonName = configuration.buttonName;
+                }
+            }
+            catch (e_2_1) { e_2 = { error: e_2_1 }; }
+            finally {
+                try {
+                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                }
+                finally { if (e_2) throw e_2.error; }
             }
             updates.push(2 /* UPDATED_BUTTONS */);
         }
@@ -59146,23 +59258,25 @@ var RemoteController = /** @class */ (function (_super) {
         if (!targetConfiguration) {
             return -70410 /* INVALID_VALUE_IN_REQUEST */;
         }
-        var configuredTarget = this.targetConfigurations[targetConfiguration.targetIdentifier];
+        var configuredTarget = this.targetConfigurations.get(targetConfiguration.targetIdentifier);
         if (!configuredTarget) {
             return -70410 /* INVALID_VALUE_IN_REQUEST */;
         }
         if (targetConfiguration.buttonConfiguration) {
             for (var key in targetConfiguration.buttonConfiguration) {
-                delete configuredTarget.buttonConfiguration[key];
+                if (Object.prototype.hasOwnProperty.call(targetConfiguration.buttonConfiguration, key)) {
+                    delete configuredTarget.buttonConfiguration[key];
+                }
             }
             debug("Removed %d button configurations of target '%s' (%d)", Object.keys(targetConfiguration.buttonConfiguration).length, configuredTarget.targetName, configuredTarget.targetIdentifier);
             setTimeout(function () { return _this.emit("target-update" /* TARGET_UPDATED */, configuredTarget, [3 /* REMOVED_BUTTONS */]); }, 0);
         }
         else {
-            delete this.targetConfigurations[targetConfiguration.targetIdentifier];
+            this.targetConfigurations.delete(targetConfiguration.targetIdentifier);
             debug("Target '%s' (%d) was removed", configuredTarget.targetName, configuredTarget.targetIdentifier);
             setTimeout(function () { return _this.emit("target-remove" /* TARGET_REMOVED */, targetConfiguration.targetIdentifier); }, 0);
             var keys = Object.keys(this.targetConfigurations);
-            this.setActiveIdentifier(keys.length === 0 ? 0 : parseInt(keys[0])); // switch to next available remote
+            this.setActiveIdentifier(keys.length === 0 ? 0 : parseInt(keys[0], 10)); // switch to next available remote
         }
         this.updatedTargetConfiguration(); // set response
         return 0 /* SUCCESS */;
@@ -59173,7 +59287,7 @@ var RemoteController = /** @class */ (function (_super) {
             return -70410 /* INVALID_VALUE_IN_REQUEST */;
         }
         debug("Resetting all target configurations");
-        this.targetConfigurations = {};
+        this.targetConfigurations = new Map();
         this.updatedTargetConfiguration(); // set response
         setTimeout(function () { return _this.emit("targets-reset" /* TARGETS_RESET */); }, 0);
         this.setActiveIdentifier(0); // resetting active identifier (also sets active to false)
@@ -59203,8 +59317,12 @@ var RemoteController = /** @class */ (function (_super) {
             this.activeConnectionDisconnectListener = this.handleActiveSessionDisconnected.bind(this, this.activeConnection);
             this.activeConnection.on("closed" /* CLOSED */, this.activeConnectionDisconnectListener);
         }
-        var activeName = this.targetConfigurations[this.activeIdentifier].targetName;
-        debug("Remote with activeTarget '%s' (%d) was set to %s", activeName, this.activeIdentifier, value ? "ACTIVE" : "INACTIVE");
+        var activeTarget = this.targetConfigurations.get(this.activeIdentifier);
+        if (!activeTarget) {
+            callback(-70410 /* INVALID_VALUE_IN_REQUEST */);
+            return;
+        }
+        debug("Remote with activeTarget '%s' (%d) was set to %s", activeTarget.targetName, this.activeIdentifier, value ? "ACTIVE" : "INACTIVE");
         callback();
         this.emit("active-change" /* ACTIVE_CHANGE */, value);
     };
@@ -59297,31 +59415,46 @@ var RemoteController = /** @class */ (function (_super) {
         };
     };
     RemoteController.prototype.updatedTargetConfiguration = function () {
+        var e_3, _a, e_4, _b;
         var bufferList = [];
-        var _loop_1 = function (key) {
-            // noinspection JSUnfilteredForInLoop
-            var configuration = this_1.targetConfigurations[key];
-            var targetIdentifier = tlv.encode(1 /* TARGET_IDENTIFIER */, tlv.writeUInt32(configuration.targetIdentifier));
-            var targetName = tlv.encode(2 /* TARGET_NAME */, configuration.targetName);
-            var targetCategory = tlv.encode(3 /* TARGET_CATEGORY */, tlv.writeUInt16(configuration.targetCategory));
-            var buttonConfigurationBuffers = [];
-            Object.values(configuration.buttonConfiguration).forEach(function (value) {
-                var tlvBuffer = tlv.encode(1 /* BUTTON_ID */, value.buttonID, 2 /* BUTTON_TYPE */, tlv.writeUInt16(value.buttonType));
-                if (value.buttonName) {
-                    tlvBuffer = Buffer.concat([
-                        tlvBuffer,
-                        tlv.encode(3 /* BUTTON_NAME */, value.buttonName)
-                    ]);
+        try {
+            for (var _c = tslib_1.__values(Object.values(this.targetConfigurations)), _d = _c.next(); !_d.done; _d = _c.next()) {
+                var configuration = _d.value;
+                var targetIdentifier = tlv.encode(1 /* TARGET_IDENTIFIER */, tlv.writeUInt32(configuration.targetIdentifier));
+                var targetName = tlv.encode(2 /* TARGET_NAME */, configuration.targetName);
+                var targetCategory = tlv.encode(3 /* TARGET_CATEGORY */, tlv.writeUInt16(configuration.targetCategory));
+                var buttonConfigurationBuffers = [];
+                try {
+                    for (var _e = (e_4 = void 0, tslib_1.__values(configuration.buttonConfiguration.values())), _f = _e.next(); !_f.done; _f = _e.next()) {
+                        var value = _f.value;
+                        var tlvBuffer = tlv.encode(1 /* BUTTON_ID */, value.buttonID, 2 /* BUTTON_TYPE */, tlv.writeUInt16(value.buttonType));
+                        if (value.buttonName) {
+                            tlvBuffer = Buffer.concat([
+                                tlvBuffer,
+                                tlv.encode(3 /* BUTTON_NAME */, value.buttonName)
+                            ]);
+                        }
+                        buttonConfigurationBuffers.push(tlvBuffer);
+                    }
                 }
-                buttonConfigurationBuffers.push(tlvBuffer);
-            });
-            var buttonConfiguration = tlv.encode(4 /* BUTTON_CONFIGURATION */, Buffer.concat(buttonConfigurationBuffers));
-            var targetConfiguration = Buffer.concat([targetIdentifier, targetName, targetCategory, buttonConfiguration]);
-            bufferList.push(tlv.encode(2 /* TARGET_CONFIGURATION */, targetConfiguration));
-        };
-        var this_1 = this;
-        for (var key in this.targetConfigurations) {
-            _loop_1(key);
+                catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                finally {
+                    try {
+                        if (_f && !_f.done && (_b = _e.return)) _b.call(_e);
+                    }
+                    finally { if (e_4) throw e_4.error; }
+                }
+                var buttonConfiguration = tlv.encode(4 /* BUTTON_CONFIGURATION */, Buffer.concat(buttonConfigurationBuffers));
+                var targetConfiguration = Buffer.concat([targetIdentifier, targetName, targetCategory, buttonConfiguration]);
+                bufferList.push(tlv.encode(2 /* TARGET_CONFIGURATION */, targetConfiguration));
+            }
+        }
+        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+        finally {
+            try {
+                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+            }
+            finally { if (e_3) throw e_3.error; }
         }
         this.targetConfigurationsString = Buffer.concat(bufferList).toString('base64');
         this.stateChangeDelegate && this.stateChangeDelegate();
@@ -59341,7 +59474,7 @@ var RemoteController = /** @class */ (function (_super) {
     // --------------------------------- SIRI/DATA STREAM --------------------------------
     RemoteController.prototype.handleTargetControlWhoAmI = function (connection, message) {
         var targetIdentifier = message["identifier"];
-        this.dataStreamConnections[targetIdentifier] = connection;
+        this.dataStreamConnections.set(targetIdentifier, connection);
         debug("Discovered HDS connection for targetIdentifier %s", targetIdentifier);
         connection.addProtocolHandler("dataSend" /* DATA_SEND */, this);
     };
@@ -59359,7 +59492,7 @@ var RemoteController = /** @class */ (function (_super) {
             debug("Tried opening Siri audio stream, however there is already one in progress");
             return;
         }
-        var connection = this.dataStreamConnections[this.activeIdentifier]; // get connection for current target
+        var connection = this.dataStreamConnections.get(this.activeIdentifier); // get connection for current target
         if (connection === undefined) { // target seems not connected, ignore it
             debug("Tried opening Siri audio stream however target is not connected via HDS");
             return;
@@ -59425,13 +59558,23 @@ var RemoteController = /** @class */ (function (_super) {
         }
     };
     RemoteController.prototype.handleDataStreamConnectionClosed = function (connection) {
-        for (var targetIdentifier in this.dataStreamConnections) {
-            var connection0 = this.dataStreamConnections[targetIdentifier];
-            if (connection === connection0) {
-                debug("HDS connection disconnected for targetIdentifier %s", targetIdentifier);
-                delete this.dataStreamConnections[targetIdentifier];
-                break;
+        var e_5, _a;
+        try {
+            for (var _b = tslib_1.__values(this.dataStreamConnections), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var _d = tslib_1.__read(_c.value, 2), targetIdentifier = _d[0], connection0 = _d[1];
+                if (connection === connection0) {
+                    debug("HDS connection disconnected for targetIdentifier %s", targetIdentifier);
+                    this.dataStreamConnections.delete(targetIdentifier);
+                    break;
+                }
             }
+        }
+        catch (e_5_1) { e_5 = { error: e_5_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_5) throw e_5.error; }
         }
     };
     // ------------------------------- AUDIO CONFIGURATION -------------------------------
@@ -59578,7 +59721,6 @@ var RemoteController = /** @class */ (function (_super) {
      */
     RemoteController.prototype.handleControllerRemoved = function () {
         var _a;
-        this.handleFactoryReset();
         this.targetControlManagementService = undefined;
         this.targetControlService = undefined;
         this.siriService = undefined;
@@ -59596,7 +59738,7 @@ var RemoteController = /** @class */ (function (_super) {
      * @private
      */
     RemoteController.prototype.handleFactoryReset = function () {
-        debug("Accessory was unpaired. Resetting targets...");
+        debug("Running factory reset. Resetting targets...");
         this.handleResetTargets(undefined);
         this.lastButtonEvent = "";
     };
@@ -59609,7 +59751,11 @@ var RemoteController = /** @class */ (function (_super) {
         }
         return {
             activeIdentifier: this.activeIdentifier,
-            targetConfigurations: this.targetConfigurations,
+            targetConfigurations: tslib_1.__spread(this.targetConfigurations).reduce(function (obj, _a) {
+                var _b = tslib_1.__read(_a, 2), key = _b[0], value = _b[1];
+                obj[key] = value;
+                return obj;
+            }, {}),
         };
     };
     /**
@@ -59617,7 +59763,12 @@ var RemoteController = /** @class */ (function (_super) {
      */
     RemoteController.prototype.deserialize = function (serialized) {
         this.activeIdentifier = serialized.activeIdentifier;
-        this.targetConfigurations = serialized.targetConfigurations;
+        this.targetConfigurations = Object.entries(serialized.targetConfigurations).reduce(function (map, _a) {
+            var _b = tslib_1.__read(_a, 2), key = _b[0], value = _b[1];
+            var identifier = parseInt(key, 10);
+            map.set(identifier, value);
+            return map;
+        }, new Map());
         this.updatedTargetConfiguration();
     };
     /**
@@ -59759,7 +59910,7 @@ var SiriAudioSession = /** @class */ (function (_super) {
             return;
         }
         var queued;
-        var _loop_2 = function () {
+        var _loop_1 = function () {
             var packets = [];
             queued.forEach(function (frame) {
                 var packetData = {
@@ -59773,24 +59924,24 @@ var SiriAudioSession = /** @class */ (function (_super) {
             });
             var message = {
                 packets: packets,
-                streamId: new datastream_1.Int64(this_2.streamId),
-                endOfStream: this_2.endOfStream,
+                streamId: new datastream_1.Int64(this_1.streamId),
+                endOfStream: this_1.endOfStream,
             };
             try {
-                this_2.connection.sendEvent("dataSend" /* DATA_SEND */, "data" /* DATA */, message);
+                this_1.connection.sendEvent("dataSend" /* DATA_SEND */, "data" /* DATA */, message);
             }
             catch (error) {
                 debug("Error occurred when trying to send audio frame of hds connection: %s", error.message);
-                this_2.stopAudioProducer();
-                this_2.closed();
+                this_1.stopAudioProducer();
+                this_1.closed();
             }
-            if (this_2.endOfStream) {
+            if (this_1.endOfStream) {
                 return "break";
             }
         };
-        var this_2 = this;
+        var this_1 = this;
         while ((queued = this.popSome()) !== null) {
-            var state_1 = _loop_2();
+            var state_1 = _loop_1();
             if (state_1 === "break")
                 break;
         }
@@ -60235,9 +60386,10 @@ var DataFormatTags;
     DataFormatTags[DataFormatTags["DICTIONARY_LENGTH_STOP"] = 238] = "DICTIONARY_LENGTH_STOP";
     DataFormatTags[DataFormatTags["DICTIONARY_TERMINATED"] = 239] = "DICTIONARY_TERMINATED";
 })(DataFormatTags = exports.DataFormatTags || (exports.DataFormatTags = {}));
-var DataStreamParser;
-(function (DataStreamParser) {
-    function decode(buffer) {
+var DataStreamParser = /** @class */ (function () {
+    function DataStreamParser() {
+    }
+    DataStreamParser.decode = function (buffer) {
         var tag = buffer.readTag();
         if (tag === 0 /* INVALID */) {
             throw new Error("HDSDecoder: zero tag detected on index " + buffer.readerIndex);
@@ -60330,14 +60482,14 @@ var DataStreamParser;
             var length = tag - 208 /* ARRAY_LENGTH_START */;
             var array = [];
             for (var i = 0; i < length; i++) {
-                array.push(decode(buffer));
+                array.push(this.decode(buffer));
             }
             return array;
         }
         else if (tag === 223 /* ARRAY_TERMINATED */) {
             var array = [];
             var element = void 0;
-            while ((element = decode(buffer)) != Magics.TERMINATOR) {
+            while ((element = this.decode(buffer)) != Magics.TERMINATOR) {
                 array.push(element);
             }
             return array;
@@ -60346,25 +60498,25 @@ var DataStreamParser;
             var length = tag - 224 /* DICTIONARY_LENGTH_START */;
             var dictionary = {};
             for (var i = 0; i < length; i++) {
-                var key = decode(buffer);
-                dictionary[key] = decode(buffer);
+                var key = this.decode(buffer);
+                dictionary[key] = this.decode(buffer);
             }
             return dictionary;
         }
         else if (tag === 239 /* DICTIONARY_TERMINATED */) {
             var dictionary = {};
             var key = void 0;
-            while ((key = decode(buffer)) != Magics.TERMINATOR) {
-                dictionary[key] = decode(buffer); // decode value
+            while ((key = this.decode(buffer)) != Magics.TERMINATOR) {
+                dictionary[key] = this.decode(buffer); // decode value
             }
             return dictionary;
         }
         else {
             throw new Error("HDSDecoder: encountered unknown tag on index " + buffer.readerIndex + ": " + tag.toString(16));
         }
-    }
-    DataStreamParser.decode = decode;
-    function encode(data, buffer) {
+    };
+    DataStreamParser.encode = function (data, buffer) {
+        var _this = this;
         if (data === undefined) {
             throw new Error("HDSEncoder: cannot encode undefined");
         }
@@ -60402,7 +60554,7 @@ var DataStreamParser;
                         buffer.writeTag(223 /* ARRAY_TERMINATED */);
                     }
                     data.forEach(function (element) {
-                        encode(element, buffer);
+                        _this.encode(element, buffer);
                     });
                     if (length > 12) {
                         buffer.writeTag(3 /* TERMINATOR */);
@@ -60449,8 +60601,8 @@ var DataStreamParser;
                         buffer.writeTag(239 /* DICTIONARY_TERMINATED */);
                     }
                     entries.forEach(function (entry) {
-                        encode(entry[0], buffer); // encode key
-                        encode(entry[1], buffer); // encode value
+                        _this.encode(entry[0], buffer); // encode key
+                        _this.encode(entry[1], buffer); // encode value
                     });
                     if (entries.length > 14) {
                         buffer.writeTag(3 /* TERMINATOR */);
@@ -60460,9 +60612,10 @@ var DataStreamParser;
             default:
                 throw new Error("HDSEncoder: no idea how to encode value of type '" + (typeof data) + "': " + data);
         }
-    }
-    DataStreamParser.encode = encode;
-})(DataStreamParser = exports.DataStreamParser || (exports.DataStreamParser = {}));
+    };
+    return DataStreamParser;
+}());
+exports.DataStreamParser = DataStreamParser;
 var DataStreamReader = /** @class */ (function () {
     function DataStreamReader(data) {
         this.trackedCompressedData = [];
@@ -61816,7 +61969,7 @@ tslib_1.__exportStar(__webpack_require__(/*! ./DataStreamParser */ "../node_modu
 "use strict";
 
 // THIS FILE IS AUTO-GENERATED - DO NOT MODIFY
-// V=859
+// V=860
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CurrentTime = exports.CurrentTiltAngle = exports.CurrentTemperature = exports.CurrentSlatState = exports.CurrentRelativeHumidity = exports.CurrentPosition = exports.CurrentMediaState = exports.CurrentHumidifierDehumidifierState = exports.CurrentHorizontalTiltAngle = exports.CurrentHeatingCoolingState = exports.CurrentHeaterCoolerState = exports.CurrentFanState = exports.CurrentDoorState = exports.CurrentAmbientLightLevel = exports.CurrentAirPurifierState = exports.CoolingThresholdTemperature = exports.ContactSensorState = exports.ConfiguredName = exports.ConfigureBridgedAccessoryStatus = exports.ConfigureBridgedAccessory = exports.ColorTemperature = exports.ClosedCaptions = exports.ChargingState = exports.CharacteristicValueTransitionControl = exports.CharacteristicValueActiveTransitionCount = exports.CCASignalDetectThreshold = exports.CCAEnergyDetectThreshold = exports.Category = exports.CarbonMonoxidePeakLevel = exports.CarbonMonoxideLevel = exports.CarbonMonoxideDetected = exports.CarbonDioxidePeakLevel = exports.CarbonDioxideLevel = exports.CarbonDioxideDetected = exports.CameraOperatingModeIndicator = exports.ButtonEvent = exports.Brightness = exports.BatteryLevel = exports.AudioFeedback = exports.AppMatchingIdentifier = exports.AirQuality = exports.AirParticulateSize = exports.AirParticulateDensity = exports.AdministratorOnlyAccess = exports.ActivityInterval = exports.ActiveIdentifier = exports.Active = exports.AccessoryIdentifier = exports.AccessoryFlags = exports.AccessControlLevel = void 0;
 exports.Model = exports.MaximumTransmitPower = exports.Manufacturer = exports.ManuallyDisabled = exports.ManagedNetworkEnable = exports.MACTransmissionCounters = exports.MACRetransmissionMaximum = exports.Logs = exports.LockTargetState = exports.LockPhysicalControls = exports.LockManagementAutoSecurityTimeout = exports.LockLastKnownAction = exports.LockCurrentState = exports.LockControlPoint = exports.ListPairings = exports.LinkQuality = exports.LeakDetected = exports.IsConfigured = exports.InUse = exports.InputSourceType = exports.InputDeviceType = exports.ImageRotation = exports.ImageMirroring = exports.Identify = exports.Identifier = exports.Hue = exports.HomeKitCameraActive = exports.HoldPosition = exports.HeatingThresholdTemperature = exports.HeartBeat = exports.HardwareRevision = exports.FirmwareUpdateStatus = exports.FirmwareUpdateReadiness = exports.FirmwareRevision = exports.FilterLifeLevel = exports.FilterChangeIndication = exports.EventTransmissionCounters = exports.EventSnapshotsActive = exports.EventRetransmissionMaximum = exports.DisplayOrder = exports.DiscoveredBridgedAccessories = exports.DiscoverBridgedAccessories = exports.DigitalZoom = exports.DiagonalFieldOfView = exports.DayoftheWeek = exports.DataStreamHAPTransportInterrupt = exports.DataStreamHAPTransport = exports.CurrentVisibilityState = exports.CurrentVerticalTiltAngle = exports.CurrentTransport = void 0;
@@ -61916,7 +62069,6 @@ var ActiveIdentifier = /** @class */ (function (_super) {
         var _this = _super.call(this, "Active Identifier", ActiveIdentifier.UUID, {
             format: "uint32" /* UINT32 */,
             perms: ["ev" /* NOTIFY */, "pr" /* PAIRED_READ */, "pw" /* PAIRED_WRITE */],
-            minValue: 0,
         }) || this;
         _this.value = _this.getDefaultValue();
         return _this;
@@ -62126,6 +62278,7 @@ var ButtonEvent = /** @class */ (function (_super) {
         var _this = _super.call(this, "Button Event", ButtonEvent.UUID, {
             format: "tlv8" /* TLV8 */,
             perms: ["ev" /* NOTIFY */, "pr" /* PAIRED_READ */],
+            adminOnlyAccess: [2 /* NOTIFY */],
         }) || this;
         _this.value = _this.getDefaultValue();
         return _this;
@@ -62838,7 +62991,7 @@ var CurrentSlatState = /** @class */ (function (_super) {
             format: "uint8" /* UINT8 */,
             perms: ["ev" /* NOTIFY */, "pr" /* PAIRED_READ */],
             minValue: 0,
-            maxValue: 3,
+            maxValue: 2,
             minStep: 1,
             validValues: [0, 1, 2],
         }) || this;
@@ -62863,7 +63016,7 @@ var CurrentTemperature = /** @class */ (function (_super) {
             format: "float" /* FLOAT */,
             perms: ["ev" /* NOTIFY */, "pr" /* PAIRED_READ */],
             unit: "celsius" /* CELSIUS */,
-            minValue: 0,
+            minValue: -273.15,
             maxValue: 100,
             minStep: 0.1,
         }) || this;
@@ -62968,7 +63121,7 @@ var CurrentVisibilityState = /** @class */ (function (_super) {
             format: "uint8" /* UINT8 */,
             perms: ["ev" /* NOTIFY */, "pr" /* PAIRED_READ */],
             minValue: 0,
-            maxValue: 3,
+            maxValue: 1,
             minStep: 1,
             validValues: [0, 1],
         }) || this;
@@ -63131,7 +63284,7 @@ var DisplayOrder = /** @class */ (function (_super) {
     function DisplayOrder() {
         var _this = _super.call(this, "Display Order", DisplayOrder.UUID, {
             format: "tlv8" /* TLV8 */,
-            perms: ["ev" /* NOTIFY */, "pr" /* PAIRED_READ */],
+            perms: ["ev" /* NOTIFY */, "pr" /* PAIRED_READ */, "pw" /* PAIRED_WRITE */],
         }) || this;
         _this.value = _this.getDefaultValue();
         return _this;
@@ -63167,8 +63320,10 @@ var EventSnapshotsActive = /** @class */ (function (_super) {
     tslib_1.__extends(EventSnapshotsActive, _super);
     function EventSnapshotsActive() {
         var _this = _super.call(this, "Event Snapshots Active", EventSnapshotsActive.UUID, {
-            format: "bool" /* BOOL */,
-            perms: ["ev" /* NOTIFY */, "pr" /* PAIRED_READ */, "pw" /* PAIRED_WRITE */, "tw" /* TIMED_WRITE */],
+            format: "uint8" /* UINT8 */,
+            perms: ["ev" /* NOTIFY */, "pr" /* PAIRED_READ */, "pw" /* PAIRED_WRITE */],
+            minValue: 0,
+            maxValue: 1,
             validValues: [0, 1],
         }) || this;
         _this.value = _this.getDefaultValue();
@@ -63383,8 +63538,10 @@ var HomeKitCameraActive = /** @class */ (function (_super) {
     tslib_1.__extends(HomeKitCameraActive, _super);
     function HomeKitCameraActive() {
         var _this = _super.call(this, "HomeKit Camera Active", HomeKitCameraActive.UUID, {
-            format: "bool" /* BOOL */,
-            perms: ["ev" /* NOTIFY */, "pr" /* PAIRED_READ */, "pw" /* PAIRED_WRITE */, "tw" /* TIMED_WRITE */],
+            format: "uint8" /* UINT8 */,
+            perms: ["ev" /* NOTIFY */, "pr" /* PAIRED_READ */, "pw" /* PAIRED_WRITE */],
+            minValue: 0,
+            maxValue: 1,
             validValues: [0, 1],
         }) || this;
         _this.value = _this.getDefaultValue();
@@ -63428,7 +63585,6 @@ var Identifier = /** @class */ (function (_super) {
         var _this = _super.call(this, "Identifier", Identifier.UUID, {
             format: "uint32" /* UINT32 */,
             perms: ["pr" /* PAIRED_READ */],
-            minValue: 0,
         }) || this;
         _this.value = _this.getDefaultValue();
         return _this;
@@ -63508,7 +63664,7 @@ var InputDeviceType = /** @class */ (function (_super) {
             minValue: 0,
             maxValue: 6,
             minStep: 1,
-            validValues: [0, 1, 2, 3, 4, 5],
+            validValues: [0, 1, 2, 3, 4, 5, 6],
         }) || this;
         _this.value = _this.getDefaultValue();
         return _this;
@@ -63589,7 +63745,7 @@ var IsConfigured = /** @class */ (function (_super) {
     function IsConfigured() {
         var _this = _super.call(this, "Is Configured", IsConfigured.UUID, {
             format: "uint8" /* UINT8 */,
-            perms: ["ev" /* NOTIFY */, "pr" /* PAIRED_READ */],
+            perms: ["ev" /* NOTIFY */, "pr" /* PAIRED_READ */, "pw" /* PAIRED_WRITE */],
             minValue: 0,
             maxValue: 1,
             minStep: 1,
@@ -64262,7 +64418,7 @@ var PairingFeatures = /** @class */ (function (_super) {
     function PairingFeatures() {
         var _this = _super.call(this, "Pairing Features", PairingFeatures.UUID, {
             format: "uint8" /* UINT8 */,
-            perms: ["pr" /* PAIRED_READ */, "pw" /* PAIRED_WRITE */],
+            perms: ["pr" /* PAIRED_READ */],
         }) || this;
         _this.value = _this.getDefaultValue();
         return _this;
@@ -64333,8 +64489,8 @@ var PeriodicSnapshotsActive = /** @class */ (function (_super) {
     tslib_1.__extends(PeriodicSnapshotsActive, _super);
     function PeriodicSnapshotsActive() {
         var _this = _super.call(this, "Periodic Snapshots Active", PeriodicSnapshotsActive.UUID, {
-            format: "bool" /* BOOL */,
-            perms: ["ev" /* NOTIFY */, "pr" /* PAIRED_READ */, "pw" /* PAIRED_WRITE */, "tw" /* TIMED_WRITE */],
+            format: "uint8" /* UINT8 */,
+            perms: ["ev" /* NOTIFY */, "pr" /* PAIRED_READ */, "pw" /* PAIRED_WRITE */],
             validValues: [0, 1],
         }) || this;
         _this.value = _this.getDefaultValue();
@@ -64359,7 +64515,7 @@ var PictureMode = /** @class */ (function (_super) {
             minValue: 0,
             maxValue: 13,
             minStep: 1,
-            validValues: [0, 1, 2, 3, 4, 5, 6, 7],
+            validValues: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
         }) || this;
         _this.value = _this.getDefaultValue();
         return _this;
@@ -64790,7 +64946,7 @@ var RemoteKey = /** @class */ (function (_super) {
             minValue: 0,
             maxValue: 16,
             minStep: 1,
-            validValues: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 15],
+            validValues: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
         }) || this;
         _this.value = _this.getDefaultValue();
         return _this;
@@ -65103,7 +65259,7 @@ var ServiceLabelNamespace = /** @class */ (function (_super) {
             format: "uint8" /* UINT8 */,
             perms: ["pr" /* PAIRED_READ */],
             minValue: 0,
-            maxValue: 4,
+            maxValue: 1,
             minStep: 1,
             validValues: [0, 1],
         }) || this;
@@ -65223,7 +65379,7 @@ var SiriInputType = /** @class */ (function (_super) {
             format: "uint8" /* UINT8 */,
             perms: ["pr" /* PAIRED_READ */],
             minValue: 0,
-            maxValue: 1,
+            maxValue: 0,
             validValues: [0],
         }) || this;
         _this.value = _this.getDefaultValue();
@@ -65819,6 +65975,7 @@ var TargetControlList = /** @class */ (function (_super) {
         var _this = _super.call(this, "Target Control List", TargetControlList.UUID, {
             format: "tlv8" /* TLV8 */,
             perms: ["pr" /* PAIRED_READ */, "pw" /* PAIRED_WRITE */, "wr" /* WRITE_RESPONSE */],
+            adminOnlyAccess: [0 /* READ */, 1 /* WRITE */],
         }) || this;
         _this.value = _this.getDefaultValue();
         return _this;
@@ -66211,7 +66368,7 @@ var ThirdPartyCameraActive = /** @class */ (function (_super) {
     tslib_1.__extends(ThirdPartyCameraActive, _super);
     function ThirdPartyCameraActive() {
         var _this = _super.call(this, "Third Party Camera Active", ThirdPartyCameraActive.UUID, {
-            format: "bool" /* BOOL */,
+            format: "uint8" /* UINT8 */,
             perms: ["ev" /* NOTIFY */, "pr" /* PAIRED_READ */],
             validValues: [0, 1],
         }) || this;
@@ -66724,7 +66881,7 @@ Characteristic_1.Characteristic.WiFiSatelliteStatus = WiFiSatelliteStatus;
 "use strict";
 
 // THIS FILE IS AUTO-GENERATED - DO NOT MODIFY
-// V=859
+// V=860
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Speaker = exports.SmokeSensor = exports.SmartSpeaker = exports.Slats = exports.Siri = exports.ServiceLabel = exports.SecuritySystem = exports.ProtocolInformation = exports.PowerManagement = exports.Pairing = exports.Outlet = exports.OccupancySensor = exports.MotionSensor = exports.Microphone = exports.LockMechanism = exports.LockManagement = exports.LightSensor = exports.Lightbulb = exports.LeakSensor = exports.IrrigationSystem = exports.InputSource = exports.HumiditySensor = exports.HumidifierDehumidifier = exports.HeaterCooler = exports.GarageDoorOpener = exports.FilterMaintenance = exports.Faucet = exports.Fanv2 = exports.Fan = exports.Doorbell = exports.Door = exports.Diagnostics = exports.DataStreamTransportManagement = exports.ContactSensor = exports.CloudRelay = exports.CarbonMonoxideSensor = exports.CarbonDioxideSensor = exports.CameraRTPStreamManagement = exports.CameraRecordingManagement = exports.CameraOperatingMode = exports.CameraControl = exports.BridgingState = exports.BridgeConfiguration = exports.Battery = exports.AudioStreamManagement = exports.AirQualitySensor = exports.AirPurifier = exports.AccessoryRuntimeInformation = exports.AccessoryInformation = exports.AccessControl = void 0;
 exports.WindowCovering = exports.Window = exports.WiFiTransport = exports.WiFiSatellite = exports.WiFiRouter = exports.Valve = exports.Tunnel = exports.TransferTransportManagement = exports.TimeInformation = exports.ThreadTransport = exports.Thermostat = exports.TemperatureSensor = exports.TelevisionSpeaker = exports.Television = exports.TargetControlManagement = exports.TargetControl = exports.Switch = exports.StatelessProgrammableSwitch = exports.StatefulProgrammableSwitch = void 0;
@@ -68296,6 +68453,7 @@ var AccessoryInfo = /** @class */ (function () {
             return Object.keys(_this.pairedClients).length > 0; // if we have any paired clients, we're paired.
         };
         this.save = function () {
+            var e_1, _a;
             var saved = {
                 displayName: _this.displayName,
                 category: _this.category,
@@ -68312,12 +68470,21 @@ var AccessoryInfo = /** @class */ (function () {
                 setupID: _this.setupID,
                 lastFirmwareVersion: _this.lastFirmwareVersion,
             };
-            for (var username in _this.pairedClients) {
-                var pairingInformation = _this.pairedClients[username];
-                //@ts-ignore
-                saved.pairedClients[username] = pairingInformation.publicKey.toString("hex");
-                // @ts-ignore
-                saved.pairedClientsPermission[username] = pairingInformation.permission;
+            try {
+                for (var _b = tslib_1.__values(Object.entries(_this.pairedClients)), _c = _b.next(); !_c.done; _c = _b.next()) {
+                    var _d = tslib_1.__read(_c.value, 2), username = _d[0], pairingInformation = _d[1];
+                    //@ts-ignore
+                    saved.pairedClients[username] = pairingInformation.publicKey.toString("hex");
+                    // @ts-ignore
+                    saved.pairedClientsPermission[username] = pairingInformation.permission;
+                }
+            }
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+            finally {
+                try {
+                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                }
+                finally { if (e_1) throw e_1.error; }
             }
             var key = AccessoryInfo.persistKey(_this.username);
             HAPStorage_1.HAPStorage.storage().setItemSync(key, saved);
@@ -68351,7 +68518,6 @@ var AccessoryInfo = /** @class */ (function () {
             this.pairedAdminClients++;
         }
     };
-    ;
     AccessoryInfo.prototype.updatePermission = function (username, permission) {
         var pairingInformation = this.pairedClients[username];
         if (pairingInformation) {
@@ -68365,37 +68531,54 @@ var AccessoryInfo = /** @class */ (function () {
             }
         }
     };
-    ;
     AccessoryInfo.prototype.listPairings = function () {
+        var e_2, _a;
         var array = [];
-        for (var username in this.pairedClients) {
-            var pairingInformation = this.pairedClients[username];
-            array.push(pairingInformation);
+        try {
+            for (var _b = tslib_1.__values(Object.values(this.pairedClients)), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var pairingInformation = _c.value;
+                array.push(pairingInformation);
+            }
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_2) throw e_2.error; }
         }
         return array;
     };
-    ;
     /**
      * Remove a paired client from memory.
      * @param connection - the session of the connection initiated the removal of the pairing
      * @param {string} username
      */
     AccessoryInfo.prototype.removePairedClient = function (connection, username) {
+        var e_3, _a;
         this._removePairedClient0(connection, username);
         if (this.pairedAdminClients === 0) { // if we don't have any admin clients left paired it is required to kill all normal clients
-            for (var username0 in this.pairedClients) {
-                this._removePairedClient0(connection, username0);
+            try {
+                for (var _b = tslib_1.__values(Object.keys(this.pairedClients)), _c = _b.next(); !_c.done; _c = _b.next()) {
+                    var username0 = _c.value;
+                    this._removePairedClient0(connection, username0);
+                }
+            }
+            catch (e_3_1) { e_3 = { error: e_3_1 }; }
+            finally {
+                try {
+                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                }
+                finally { if (e_3) throw e_3.error; }
             }
         }
     };
-    ;
     AccessoryInfo.prototype._removePairedClient0 = function (connection, username) {
         if (this.pairedClients[username] && this.pairedClients[username].permission === 1 /* ADMIN */)
             this.pairedAdminClients--;
         delete this.pairedClients[username];
         eventedhttp_1.EventedHTTPServer.destroyExistingConnectionsAfterUnpair(connection, username);
     };
-    ;
     /**
      * Check if username is paired
      * @param username
@@ -68403,14 +68586,12 @@ var AccessoryInfo = /** @class */ (function () {
     AccessoryInfo.prototype.isPaired = function (username) {
         return !!this.pairedClients[username];
     };
-    ;
     AccessoryInfo.prototype.hasAdminPermissions = function (username) {
         if (!username)
             return false;
         var pairingInformation = this.pairedClients[username];
         return !!pairingInformation && pairingInformation.permission === 1 /* ADMIN */;
     };
-    ;
     // Gets the public key for a paired client as a Buffer, or falsy value if not paired.
     AccessoryInfo.prototype.getClientPublicKey = function (username) {
         var pairingInformation = this.pairedClients[username];
@@ -68421,7 +68602,6 @@ var AccessoryInfo = /** @class */ (function () {
             return undefined;
         }
     };
-    ;
     /**
      * Checks based on the current accessory configuration if the current configuration number needs to be incremented.
      * Additionally, if desired, it checks if the firmware version was incremented (aka the HAP-NodeJS) version did grow.
@@ -68482,6 +68662,7 @@ var AccessoryInfo = /** @class */ (function () {
         return accessoryInfo;
     };
     AccessoryInfo.load = function (username) {
+        var e_4, _a;
         AccessoryInfo.assertValidUsername(username);
         var key = AccessoryInfo.persistKey(username);
         var saved = HAPStorage_1.HAPStorage.storage().getItem(key);
@@ -68493,18 +68674,28 @@ var AccessoryInfo = /** @class */ (function () {
             info.signSk = Buffer.from(saved.signSk || '', 'hex');
             info.signPk = Buffer.from(saved.signPk || '', 'hex');
             info.pairedClients = {};
-            for (var username_1 in saved.pairedClients || {}) {
-                var publicKey = saved.pairedClients[username_1];
-                var permission = saved.pairedClientsPermission ? saved.pairedClientsPermission[username_1] : undefined;
-                if (permission === undefined)
-                    permission = 1 /* ADMIN */; // defaulting to admin permissions is the only suitable solution, there is no way to recover permissions
-                info.pairedClients[username_1] = {
-                    username: username_1,
-                    publicKey: Buffer.from(publicKey, 'hex'),
-                    permission: permission
-                };
-                if (permission === 1 /* ADMIN */)
-                    info.pairedAdminClients++;
+            try {
+                for (var _b = tslib_1.__values(Object.keys(saved.pairedClients || {})), _c = _b.next(); !_c.done; _c = _b.next()) {
+                    var username_1 = _c.value;
+                    var publicKey = saved.pairedClients[username_1];
+                    var permission = saved.pairedClientsPermission ? saved.pairedClientsPermission[username_1] : undefined;
+                    if (permission === undefined)
+                        permission = 1 /* ADMIN */; // defaulting to admin permissions is the only suitable solution, there is no way to recover permissions
+                    info.pairedClients[username_1] = {
+                        username: username_1,
+                        publicKey: Buffer.from(publicKey, 'hex'),
+                        permission: permission
+                    };
+                    if (permission === 1 /* ADMIN */)
+                        info.pairedAdminClients++;
+                }
+            }
+            catch (e_4_1) { e_4 = { error: e_4_1 }; }
+            finally {
+                try {
+                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                }
+                finally { if (e_4) throw e_4.error; }
             }
             info.configVersion = saved.configVersion || 1;
             info.configHash = saved.configHash || "";
@@ -68648,7 +68839,13 @@ var ControllerStorage = /** @class */ (function () {
         }
         var controllerData = this.controllerData[controller.controllerId()];
         if (controllerData) {
-            controller.deserialize(controllerData.data);
+            try {
+                controller.deserialize(controllerData.data);
+            }
+            catch (error) {
+                console.warn("Could not initialize controller of type '" + controller.controllerId() + "' from data stored on disk. Resetting to default: " + error.stack);
+                controller.handleFactoryReset();
+            }
             controllerData.purgeOnNextLoad = undefined;
         }
     };
@@ -69098,17 +69295,41 @@ exports.AccessControlManagement = AccessControlManagement;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.clone = void 0;
+var tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/hap-nodejs/node_modules/tslib/tslib.es6.js");
 /**
  * A simple clone function that also allows you to pass an "extend" object whose properties will be
  * added to the cloned copy of the original object passed.
  */
 function clone(object, extend) {
+    var e_1, _a, e_2, _b;
     var cloned = {};
-    for (var key in object) {
-        cloned[key] = object[key];
+    try {
+        for (var _c = tslib_1.__values(Object.entries(object)), _d = _c.next(); !_d.done; _d = _c.next()) {
+            var _e = tslib_1.__read(_d.value, 2), key = _e[0], value = _e[1];
+            cloned[key] = value;
+        }
     }
-    for (var key2 in extend) {
-        cloned[key2] = extend[key2];
+    catch (e_1_1) { e_1 = { error: e_1_1 }; }
+    finally {
+        try {
+            if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+        }
+        finally { if (e_1) throw e_1.error; }
+    }
+    if (extend) {
+        try {
+            for (var _f = tslib_1.__values(Object.entries(extend)), _g = _f.next(); !_g.done; _g = _f.next()) {
+                var _h = tslib_1.__read(_g.value, 2), key = _h[0], value = _h[1];
+                cloned[key] = value;
+            }
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (_g && !_g.done && (_b = _f.return)) _b.call(_f);
+            }
+            finally { if (e_2) throw e_2.error; }
+        }
     }
     return cloned;
 }
@@ -69828,7 +70049,6 @@ var EventedHTTPServer = /** @class */ (function (_super) {
             }
         }
     };
-    ;
     EventedHTTPServer.CONNECTION_TIMEOUT_LIMIT = 16; // if we have more (or equal) # connections we start the timeout
     EventedHTTPServer.MAX_CONNECTION_IDLE_TIME = 60 * 60 * 1000; // 1h
     return EventedHTTPServer;
@@ -69906,7 +70126,6 @@ var HAPConnection = /** @class */ (function (_super) {
         this.username = username;
         this.emit("authenticated" /* AUTHENTICATED */, username);
     };
-    ;
     HAPConnection.prototype.isAuthenticated = function () {
         return this.state === 2 /* AUTHENTICATED */;
     };
@@ -70524,7 +70743,7 @@ exports.once = once;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.formatOutgoingCharacteristicValue = void 0;
+exports.numericUpperBound = exports.numericLowerBound = exports.isIntegerNumericFormat = exports.isUnsignedNumericFormat = exports.isNumericFormat = exports.formatOutgoingCharacteristicValue = void 0;
 function formatOutgoingCharacteristicValue(value, props) {
     var _a;
     if (typeof value === "boolean") {
@@ -70534,14 +70753,83 @@ function formatOutgoingCharacteristicValue(value, props) {
         if (!props.minStep || props.minStep >= 1) {
             return value;
         }
-        var decimalLength = props.minStep.toString().split(".")[1].length;
         var base = (_a = props.minValue) !== null && _a !== void 0 ? _a : 0;
         var inverse = 1 / props.minStep;
-        return (Math.round((value - base) * inverse) / inverse) + base;
+        return Math.round(((Math.round((value - base) * inverse) / inverse) + base) * 10000) / 10000;
     }
     return value;
 }
 exports.formatOutgoingCharacteristicValue = formatOutgoingCharacteristicValue;
+function isNumericFormat(format) {
+    switch (format) {
+        case "int" /* INT */:
+        case "float" /* FLOAT */:
+        case "uint8" /* UINT8 */:
+        case "uint16" /* UINT16 */:
+        case "uint32" /* UINT32 */:
+        case "uint64" /* UINT64 */:
+            return true;
+        default:
+            return false;
+    }
+}
+exports.isNumericFormat = isNumericFormat;
+function isUnsignedNumericFormat(format) {
+    switch (format) {
+        case "uint8" /* UINT8 */:
+        case "uint16" /* UINT16 */:
+        case "uint32" /* UINT32 */:
+        case "uint64" /* UINT64 */:
+            return true;
+        default:
+            return false;
+    }
+}
+exports.isUnsignedNumericFormat = isUnsignedNumericFormat;
+function isIntegerNumericFormat(format) {
+    switch (format) {
+        case "int" /* INT */:
+        case "uint8" /* UINT8 */:
+        case "uint16" /* UINT16 */:
+        case "uint32" /* UINT32 */:
+        case "uint64" /* UINT64 */:
+            return true;
+        default:
+            return false;
+    }
+}
+exports.isIntegerNumericFormat = isIntegerNumericFormat;
+function numericLowerBound(format) {
+    switch (format) {
+        case "int" /* INT */:
+            return -2147483648;
+        case "uint8" /* UINT8 */:
+        case "uint16" /* UINT16 */:
+        case "uint32" /* UINT32 */:
+        case "uint64" /* UINT64 */:
+            return 0;
+        default:
+            throw new Error("Unable to determine numeric lower bound for " + format);
+    }
+}
+exports.numericLowerBound = numericLowerBound;
+function numericUpperBound(format) {
+    switch (format) {
+        case "int" /* INT */:
+            return 2147483647;
+        case "uint8" /* UINT8 */:
+            return 255;
+        case "uint16" /* UINT16 */:
+            return 65535;
+        case "uint32" /* UINT32 */:
+            return 4294967295;
+        case "uint64" /* UINT64 */:
+            return 18446744073709551615; // don't get fooled, javascript uses 18446744073709552000 here
+        default:
+            throw new Error("Unable to determine numeric lower bound for " + format);
+    }
+}
+exports.numericUpperBound = numericUpperBound;
 //# sourceMappingURL=request-util.js.map
 
 /***/ }),
@@ -78079,10 +78367,10 @@ nacl.setPRNG = function(fn) {
 /*!***********************************************!*\
   !*** ../node_modules/hap-nodejs/package.json ***!
   \***********************************************/
-/*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, betaVersion, bugs, bundleDependencies, dependencies, deprecated, description, devDependencies, engines, files, homepage, keywords, license, main, maintainers, name, repository, scripts, types, version, default */
+/*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, bugs, bundleDependencies, dependencies, deprecated, description, devDependencies, engines, files, homepage, keywords, license, main, maintainers, name, repository, scripts, types, version, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_from\":\"hap-nodejs@^0.9.0-beta.113\",\"_id\":\"hap-nodejs@0.9.0-beta.113\",\"_inBundle\":false,\"_integrity\":\"sha512-aZb/MN6hOVIiqiUQ9RJzj8M0/53dOzxRN10Gj3RibSlmDAna0mQxgq494PB/5OMccRpsCDxuoIGS9NATsm41DA==\",\"_location\":\"/hap-nodejs\",\"_phantomChildren\":{\"buffer-from\":\"1.1.1\",\"ms\":\"2.1.2\"},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"hap-nodejs@^0.9.0-beta.113\",\"name\":\"hap-nodejs\",\"escapedName\":\"hap-nodejs\",\"rawSpec\":\"^0.9.0-beta.113\",\"saveSpec\":null,\"fetchSpec\":\"^0.9.0-beta.113\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/hap-nodejs/-/hap-nodejs-0.9.0-beta.113.tgz\",\"_shasum\":\"f5b5dfe41805b11fe3221fcbb60f1f8ddd492d3d\",\"_spec\":\"hap-nodejs@^0.9.0-beta.113\",\"_where\":\"/Users/jensweigele/Documents/projects/ioBroker.yahka\",\"author\":{\"name\":\"Khaos Tian\",\"email\":\"khaos.tian@gmail.com\",\"url\":\"https://tz.is/\"},\"betaVersion\":\"0.9.0\",\"bugs\":{\"url\":\"https://github.com/homebridge/HAP-NodeJS/issues\"},\"bundleDependencies\":false,\"dependencies\":{\"@homebridge/ciao\":\"~1.1.2\",\"bonjour-hap\":\"~3.6.2\",\"debug\":\"^4.3.1\",\"fast-srp-hap\":\"2.0.2\",\"futoin-hkdf\":\"~1.3.2\",\"ip\":\"^1.1.3\",\"node-persist\":\"^0.0.11\",\"source-map-support\":\"^0.5.19\",\"tslib\":\"^2.1.0\",\"tweetnacl\":\"^1.0.3\"},\"deprecated\":false,\"description\":\"HAP-NodeJS is a Node.js implementation of HomeKit Accessory Server.\",\"devDependencies\":{\"@types/debug\":\"^4.1.5\",\"@types/escape-html\":\"^1.0.0\",\"@types/jest\":\"^26.0.20\",\"@types/node\":\"^10.17.50\",\"commander\":\"^6.2.1\",\"escape-html\":\"^1.0.3\",\"jest\":\"^26.6.3\",\"rimraf\":\"^3.0.2\",\"semver\":\"^7.3.4\",\"simple-plist\":\"^1.1.1\",\"ts-jest\":\"^26.4.4\",\"ts-node\":\"^9.1.1\",\"typedoc\":\"0.20.14\",\"typescript\":\"^4.1.3\"},\"engines\":{\"node\":\">=10.17.0\"},\"files\":[\"README.md\",\"LICENSE\",\"dist\",\"@types\"],\"homepage\":\"https://github.com/homebridge/HAP-NodeJS\",\"keywords\":[\"hap-nodejs\",\"hap\",\"homekit\",\"homekit-accessory-protocol\",\"homekit-server\",\"homekit-protocol\",\"homekit-device\",\"homekit-accessory\",\"hap-server\",\"homekit-support\",\"siri\"],\"license\":\"Apache-2.0\",\"main\":\"dist/index.js\",\"maintainers\":[{\"name\":\"Andreas Bauer\",\"email\":\"mail@anderl-bauer.de\"}],\"name\":\"hap-nodejs\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/homebridge/HAP-NodeJS.git\"},\"scripts\":{\"build\":\"rimraf dist && tsc && node .github/workflows/node-persist-ignore.js\",\"clean\":\"rimraf dist && rimraf coverage\",\"docs\":\"typedoc src/index.ts\",\"postpublish\":\"npm run clean\",\"prepublishOnly\":\"npm run build\",\"start\":\"node dist/BridgedCore.js\",\"test\":\"jest\",\"test-coverage\":\"jest --coverage\"},\"types\":\"dist/index.d.ts\",\"version\":\"0.9.0-beta.113\"}");
+module.exports = JSON.parse("{\"_from\":\"hap-nodejs@^0.9.2\",\"_id\":\"hap-nodejs@0.9.2\",\"_inBundle\":false,\"_integrity\":\"sha512-Dm+jM8Fb0R0esDJ508NqluY/9J1azcP5vp2Y9jAGKs72X0HasyMvkMgMQoa/pqd6Psf22J3ohQYZ8rlE0RNspw==\",\"_location\":\"/hap-nodejs\",\"_phantomChildren\":{\"buffer-from\":\"1.1.1\",\"ms\":\"2.1.2\"},\"_requested\":{\"type\":\"range\",\"registry\":true,\"raw\":\"hap-nodejs@^0.9.2\",\"name\":\"hap-nodejs\",\"escapedName\":\"hap-nodejs\",\"rawSpec\":\"^0.9.2\",\"saveSpec\":null,\"fetchSpec\":\"^0.9.2\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/hap-nodejs/-/hap-nodejs-0.9.2.tgz\",\"_shasum\":\"c34c6da4db193a4522f08eb94b5f033473f8f286\",\"_spec\":\"hap-nodejs@^0.9.2\",\"_where\":\"/Users/jensweigele/Documents/projects/ioBroker.yahka\",\"author\":{\"name\":\"Khaos Tian\",\"email\":\"khaos.tian@gmail.com\",\"url\":\"https://tz.is/\"},\"bugs\":{\"url\":\"https://github.com/homebridge/HAP-NodeJS/issues\"},\"bundleDependencies\":false,\"dependencies\":{\"@homebridge/ciao\":\"~1.1.2\",\"bonjour-hap\":\"~3.6.2\",\"debug\":\"^4.3.1\",\"fast-srp-hap\":\"2.0.3\",\"futoin-hkdf\":\"~1.3.2\",\"ip\":\"^1.1.3\",\"node-persist\":\"^0.0.11\",\"source-map-support\":\"^0.5.19\",\"tslib\":\"^2.1.0\",\"tweetnacl\":\"^1.0.3\"},\"deprecated\":false,\"description\":\"HAP-NodeJS is a Node.js implementation of HomeKit Accessory Server.\",\"devDependencies\":{\"@types/debug\":\"^4.1.5\",\"@types/escape-html\":\"^1.0.0\",\"@types/jest\":\"^26.0.20\",\"@types/node\":\"^10.17.50\",\"commander\":\"^6.2.1\",\"escape-html\":\"^1.0.3\",\"jest\":\"^26.6.3\",\"rimraf\":\"^3.0.2\",\"semver\":\"^7.3.4\",\"simple-plist\":\"^1.1.1\",\"ts-jest\":\"^26.4.4\",\"ts-node\":\"^9.1.1\",\"typedoc\":\"0.20.25\",\"typescript\":\"^4.1.3\"},\"engines\":{\"node\":\">=10.17.0\"},\"files\":[\"README.md\",\"LICENSE\",\"dist\",\"@types\"],\"homepage\":\"https://github.com/homebridge/HAP-NodeJS\",\"keywords\":[\"hap-nodejs\",\"hap\",\"homekit\",\"homekit-accessory-protocol\",\"homekit-server\",\"homekit-protocol\",\"homekit-device\",\"homekit-accessory\",\"hap-server\",\"homekit-support\",\"siri\"],\"license\":\"Apache-2.0\",\"main\":\"dist/index.js\",\"maintainers\":[{\"name\":\"Andreas Bauer\",\"email\":\"mail@anderl-bauer.de\"}],\"name\":\"hap-nodejs\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/homebridge/HAP-NodeJS.git\"},\"scripts\":{\"build\":\"rimraf dist && tsc && node .github/workflows/node-persist-ignore.js\",\"clean\":\"rimraf dist && rimraf coverage\",\"docs\":\"typedoc src/index.ts\",\"postpublish\":\"npm run clean\",\"prepublishOnly\":\"npm run build\",\"start\":\"node dist/BridgedCore.js\",\"test\":\"jest\",\"test-coverage\":\"jest --coverage\"},\"types\":\"dist/index.d.ts\",\"version\":\"0.9.2\"}");
 
 /***/ }),
 
@@ -103304,7 +103592,7 @@ module.exports = function flags() {
 
 
 var define = __webpack_require__(/*! define-properties */ "../node_modules/define-properties/index.js");
-var callBind = __webpack_require__(/*! es-abstract/helpers/callBind */ "../node_modules/es-abstract/helpers/callBind.js");
+var callBind = __webpack_require__(/*! call-bind */ "../node_modules/call-bind/index.js");
 
 var implementation = __webpack_require__(/*! ./implementation */ "../node_modules/regexp.prototype.flags/implementation.js");
 var getPolyfill = __webpack_require__(/*! ./polyfill */ "../node_modules/regexp.prototype.flags/polyfill.js");
@@ -107704,9 +107992,9 @@ module.exports = function whichBoxedPrimitive(value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
 
-var origSymbol = global.Symbol;
+
+var origSymbol = typeof Symbol !== 'undefined' && Symbol;
 var hasSymbolSham = __webpack_require__(/*! ./shams */ "../node_modules/which-boxed-primitive/node_modules/has-symbols/shams.js");
 
 module.exports = function hasNativeSymbols() {
@@ -107718,7 +108006,6 @@ module.exports = function hasNativeSymbols() {
 	return hasSymbolSham();
 };
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -107755,7 +108042,7 @@ module.exports = function hasSymbols() {
 
 	var symVal = 42;
 	obj[sym] = symVal;
-	for (sym in obj) { return false; } // eslint-disable-line no-restricted-syntax
+	for (sym in obj) { return false; } // eslint-disable-line no-restricted-syntax, no-unreachable-loop
 	if (typeof Object.keys === 'function' && Object.keys(obj).length !== 0) { return false; }
 
 	if (typeof Object.getOwnPropertyNames === 'function' && Object.getOwnPropertyNames(obj).length !== 0) { return false; }
@@ -111455,45 +111742,14 @@ exports.propertyExists = propertyExists;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.importHAPCommunityTypesAndFixes = exports.CurrentTemperatureWithNegativeValues = void 0;
+exports.importHAPCommunityTypesAndFixes = void 0;
 var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "../node_modules/hap-nodejs/dist/index.js");
 var HapCommunity = __webpack_require__(/*! ../hap-nodejs-community-types */ "../hap-nodejs-community-types/types.js");
-var CurrentTemperatureWithNegativeValues = /** @class */ (function (_super) {
-    __extends(CurrentTemperatureWithNegativeValues, _super);
-    function CurrentTemperatureWithNegativeValues() {
-        var _this = _super.call(this) || this;
-        _this.setProps({
-            format: "float" /* FLOAT */,
-            unit: "celsius" /* CELSIUS */,
-            maxValue: 100,
-            minValue: -99,
-            minStep: 0.1,
-            perms: ["pr" /* READ */, "ev" /* NOTIFY */]
-        });
-        return _this;
-    }
-    return CurrentTemperatureWithNegativeValues;
-}(hap_nodejs_1.Characteristic.CurrentTemperature));
-exports.CurrentTemperatureWithNegativeValues = CurrentTemperatureWithNegativeValues;
 var hapTypesImported = false;
 function importHAPCommunityTypesAndFixes() {
     if (hapTypesImported)
         return;
-    hap_nodejs_1.Characteristic.CurrentTemperature = CurrentTemperatureWithNegativeValues;
     var fakeBridge = {
         hap: {
             Service: hap_nodejs_1.Service,
