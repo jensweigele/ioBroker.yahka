@@ -1,97 +1,11 @@
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./main.ts");
-/******/ })
-/************************************************************************/
-/******/ ({
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
 
 /***/ "../hap-nodejs-community-types/types.js":
 /*!**********************************************!*\
   !*** ../hap-nodejs-community-types/types.js ***!
   \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var inherits = __webpack_require__(/*! util */ "util").inherits;
 var Service, Characteristic;
@@ -1194,59 +1108,15 @@ module.exports = function(homebridge, options) {
 
 /***/ }),
 
-/***/ "../node_modules/webpack/buildin/module.js":
-/*!*************************************************!*\
-  !*** ../node_modules/webpack/buildin/module.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if (!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-
-/***/ "../package.json":
-/*!***********************!*\
-  !*** ../package.json ***!
-  \***********************/
-/*! exports provided: name, version, description, author, contributors, homepage, license, keywords, repository, engines, dependencies, devDependencies, bugs, readmeFilename, main, scripts, default */
-/***/ (function(module) {
-
-module.exports = JSON.parse("{\"name\":\"iobroker.yahka\",\"version\":\"0.14.0\",\"description\":\"ioBroker HomeKit Adapter\",\"author\":{\"name\":\"Jens Weigele\",\"email\":\"iobroker.yahka@gmail.com\"},\"contributors\":[{\"name\":\"Jens Weigele\",\"email\":\"iobroker.yahka@gmail.com\"}],\"homepage\":\"https://github.com/jensweigele/ioBroker.yahka\",\"license\":\"MIT\",\"keywords\":[\"ioBroker\",\"iobroker.yahka\",\"Smart Home\",\"home automation\",\"siri\",\"homekit\"],\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/jensweigele/ioBroker.yahka\"},\"engines\":{\"node\":\">=6.0.0\"},\"dependencies\":{\"@iobroker/adapter-core\":\"^2.4.0\",\"debug\":\"^4.2.0\",\"dev-null\":\"^0.1.1\",\"hap-nodejs\":\"^0.9.2\",\"ip\":\"^1.1.5\",\"macaddress\":\"0.5.1\",\"util\":\"^0.12.3\"},\"devDependencies\":{\"@types/iobroker\":\"^3.2.4\",\"@types/jquery\":\"^3.5.4\",\"@types/node\":\"^14.14.7\",\"chai\":\"^4.2.0\",\"grunt\":\"^1.3.0\",\"grunt-contrib-clean\":\"^2.0.0\",\"grunt-contrib-compress\":\"^1.6.0\",\"grunt-contrib-copy\":\"^1.0.0\",\"grunt-contrib-jshint\":\"^2.1.0\",\"grunt-exec\":\"^3.0.0\",\"grunt-http\":\"^2.3.3\",\"grunt-jscs\":\"^3.0.1\",\"grunt-replace\":\"^1.0.1\",\"grunt-ts\":\"^6.0.0-beta.22\",\"grunt-webpack\":\"^4.0.2\",\"html-webpack-plugin\":\"^4.5.0\",\"mocha\":\"^8.1.3\",\"raw-loader\":\"^4.0.2\",\"ts-loader\":\"^8.0.4\",\"typescript\":\"^4.0.3\",\"webpack\":\"^4.44.2\",\"webpack-cli\":\"^3.3.12\",\"webpack-node-externals\":\"^2.5.2\"},\"bugs\":{\"url\":\"https://github.com/jensweigele/ioBroker.yahka/issues\"},\"readmeFilename\":\"README.md\",\"main\":\"main.js\",\"scripts\":{\"test\":\"node node_modules/mocha/bin/mocha --exit\"}}");
-
-/***/ }),
-
 /***/ "./main.ts":
 /*!*****************!*\
   !*** ./main.ts ***!
   \*****************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((module, exports, __webpack_require__) => {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(module) {/**
+/* module decorator */ module = __webpack_require__.nmd(module);
+/**
  *
  * iobroker.yahka adapter
  *
@@ -1277,7 +1147,7 @@ module.exports = JSON.parse("{\"name\":\"iobroker.yahka\",\"version\":\"0.14.0\"
 /* jshint -W097 */ // jshint strict:false
 /*jslint node: true */
 
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var debug = __webpack_require__(/*! debug */ "debug");
 debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 // you have to require the utils module and call adapter function
@@ -1301,7 +1171,6 @@ else {
     startAdapter();
 }
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/module.js */ "../node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
 
@@ -1309,12 +1178,11 @@ else {
 /*!********************************!*\
   !*** ./shared/yahka.logger.ts ***!
   \********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.YahkaLogger = void 0;
 var YahkaLogger = /** @class */ (function () {
     function YahkaLogger(adapter, logIdentifier) {
@@ -1344,12 +1212,11 @@ exports.YahkaLogger = YahkaLogger;
 /*!*******************************!*\
   !*** ./shared/yahka.utils.ts ***!
   \*******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.propertyExists = void 0;
 function propertyExists(object, property) {
     return property in object;
@@ -1363,12 +1230,11 @@ exports.propertyExists = propertyExists;
 /*!**********************************!*\
   !*** ./yahka.community.types.ts ***!
   \**********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.importHAPCommunityTypesAndFixes = void 0;
 var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
 var HapCommunity = __webpack_require__(/*! ../hap-nodejs-community-types */ "../hap-nodejs-community-types/types.js");
@@ -1405,8 +1271,7 @@ exports.importHAPCommunityTypesAndFixes = importHAPCommunityTypesAndFixes;
 /*!********************************************!*\
   !*** ./yahka.functions/conversion.base.ts ***!
   \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -1418,12 +1283,14 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIOBrokerConversionBase = void 0;
 var functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
 var TIOBrokerConversionBase = /** @class */ (function (_super) {
@@ -1463,8 +1330,7 @@ exports.TIOBrokerConversionBase = TIOBrokerConversionBase;
 /*!*********************************************************!*\
   !*** ./yahka.functions/conversion.homekit.homematic.ts ***!
   \*********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -1476,12 +1342,14 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_HomematicControlMode_To_CoolingState = exports.TIoBrokerConversion_HomematicDirection_To_PositionState = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
@@ -1595,8 +1463,7 @@ exports.TIoBrokerConversion_HomematicControlMode_To_CoolingState = TIoBrokerConv
 /*!***********************************************!*\
   !*** ./yahka.functions/conversion.inverse.ts ***!
   \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -1608,12 +1475,14 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Inverse = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 var TIoBrokerConversion_Inverse = /** @class */ (function (_super) {
@@ -1650,8 +1519,7 @@ exports.TIoBrokerConversion_Inverse = TIoBrokerConversion_Inverse;
 /*!*******************************************!*\
   !*** ./yahka.functions/conversion.map.ts ***!
   \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -1663,6 +1531,8 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -1679,7 +1549,7 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Map = exports.isMultiStateParameter = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 function isMultiStateParameter(params) {
@@ -1741,8 +1611,7 @@ exports.TIoBrokerConversion_Map = TIoBrokerConversion_Map;
 /*!***************************************************!*\
   !*** ./yahka.functions/conversion.passthrough.ts ***!
   \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -1754,12 +1623,14 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Passthrough = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 var TIoBrokerConversion_Passthrough = /** @class */ (function (_super) {
@@ -1784,8 +1655,7 @@ exports.TIoBrokerConversion_Passthrough = TIoBrokerConversion_Passthrough;
 /*!*********************************************!*\
   !*** ./yahka.functions/conversion.scale.ts ***!
   \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -1797,12 +1667,14 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Scale_Rounded = exports.TIoBrokerConversion_Scale = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 var TIoBrokerConversion_Scale = /** @class */ (function (_super) {
@@ -1873,8 +1745,7 @@ exports.TIoBrokerConversion_Scale_Rounded = TIoBrokerConversion_Scale_Rounded;
 /*!**********************************************!*\
   !*** ./yahka.functions/conversion.script.ts ***!
   \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -1886,12 +1757,14 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Script = void 0;
 var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 var TIoBrokerConversion_Script = /** @class */ (function (_super) {
@@ -1942,12 +1815,11 @@ exports.TIoBrokerConversion_Script = TIoBrokerConversion_Script;
 /*!*******************************************!*\
   !*** ./yahka.functions/functions.base.ts ***!
   \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TYahkaFunctionBase = void 0;
 var yahka_logger_1 = __webpack_require__(/*! ../shared/yahka.logger */ "./shared/yahka.logger.ts");
 var TYahkaFunctionBase = /** @class */ (function () {
@@ -2017,12 +1889,11 @@ exports.TYahkaFunctionBase = TYahkaFunctionBase;
 /*!**********************************************!*\
   !*** ./yahka.functions/functions.factory.ts ***!
   \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.functionFactory = exports.conversionFactory = exports.inOutFactory = void 0;
 exports.inOutFactory = {};
 exports.conversionFactory = {};
@@ -2046,12 +1917,11 @@ exports.functionFactory = {
 /*!*********************************************!*\
   !*** ./yahka.functions/functions.import.ts ***!
   \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var functions_factory_1 = __webpack_require__(/*! ./functions.factory */ "./yahka.functions/functions.factory.ts");
 var iofunc_state_1 = __webpack_require__(/*! ./iofunc.state */ "./yahka.functions/iofunc.state.ts");
 var iofunc_const_1 = __webpack_require__(/*! ./iofunc.const */ "./yahka.functions/iofunc.const.ts");
@@ -2102,8 +1972,7 @@ functions_factory_1.conversionFactory["map"] = conversion_map_1.TIoBrokerConvers
 /*!****************************************!*\
   !*** ./yahka.functions/iofunc.base.ts ***!
   \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -2115,12 +1984,14 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_StateBase = exports.TIoBrokerInOutFunctionBase = void 0;
 var functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
 var TIoBrokerInOutFunctionBase = /** @class */ (function (_super) {
@@ -2250,12 +2121,11 @@ exports.TIoBrokerInOutFunction_StateBase = TIoBrokerInOutFunction_StateBase;
 /*!*****************************************!*\
   !*** ./yahka.functions/iofunc.const.ts ***!
   \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_Const = void 0;
 var TIoBrokerInOutFunction_Const = /** @class */ (function () {
     function TIoBrokerInOutFunction_Const(adapter, parameters) {
@@ -2282,8 +2152,7 @@ exports.TIoBrokerInOutFunction_Const = TIoBrokerInOutFunction_Const;
 /*!******************************************************!*\
   !*** ./yahka.functions/iofunc.homematic.covering.ts ***!
   \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -2295,12 +2164,14 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = void 0;
 var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
 var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = /** @class */ (function (_super) {
@@ -2387,8 +2258,7 @@ exports.TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = TIoBroke
 /*!****************************************************!*\
   !*** ./yahka.functions/iofunc.homematic.dimmer.ts ***!
   \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -2400,12 +2270,14 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = exports.isHomematic_Dimmer_Parameter = void 0;
 var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
 var util_1 = __webpack_require__(/*! util */ "util");
@@ -2413,9 +2285,9 @@ var yahka_utils_1 = __webpack_require__(/*! ../shared/yahka.utils */ "./shared/y
 function isHomematic_Dimmer_Parameter(value) {
     if (value === undefined)
         return false;
-    if (!util_1.isObject(value))
+    if (!(0, util_1.isObject)(value))
         return false;
-    return yahka_utils_1.propertyExists(value, "levelState");
+    return (0, yahka_utils_1.propertyExists)(value, "levelState");
 }
 exports.isHomematic_Dimmer_Parameter = isHomematic_Dimmer_Parameter;
 var TIoBrokerInOutFunction_Homematic_Dimmer_Base = /** @class */ (function (_super) {
@@ -2562,8 +2434,7 @@ exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = TIoBrokerInOutFunct
 /*!***********************************************!*\
   !*** ./yahka.functions/iofunc.multi-state.ts ***!
   \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -2575,6 +2446,8 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -2591,14 +2464,14 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_MultiState = exports.isMultiStateParameter = void 0;
 var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
 var util_1 = __webpack_require__(/*! util */ "util");
 function isMultiStateParameter(value) {
     if (value === undefined)
         return false;
-    if (!util_1.isObject(value))
+    if (!(0, util_1.isObject)(value))
         return false;
     var propName = "readState";
     return (propName in value);
@@ -2701,8 +2574,7 @@ exports.TIoBrokerInOutFunction_MultiState = TIoBrokerInOutFunction_MultiState;
 /*!*****************************************!*\
   !*** ./yahka.functions/iofunc.state.ts ***!
   \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -2714,12 +2586,14 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_State_OnlyACK = exports.TIoBrokerInOutFunction_StateDeferred = exports.TIoBrokerInOutFunction_State = void 0;
 var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
 var TIoBrokerInOutFunction_State = /** @class */ (function (_super) {
@@ -2798,8 +2672,7 @@ exports.TIoBrokerInOutFunction_State_OnlyACK = TIoBrokerInOutFunction_State_Only
 /*!*********************************!*\
   !*** ./yahka.homekit-bridge.ts ***!
   \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -2814,7 +2687,7 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.deinitHAP = exports.initHAP = exports.THomeKitBridge = void 0;
 /// <reference path="./typings/index.d.ts" />
 var debug = __webpack_require__(/*! debug */ "debug");
@@ -2823,7 +2696,7 @@ var yahka_community_types_1 = __webpack_require__(/*! ./yahka.community.types */
 var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
 var yahka_homekit_service_1 = __webpack_require__(/*! ./yahka.homekit-service */ "./yahka.homekit-service.ts");
 var pjson = __webpack_require__(/*! ../package.json */ "../package.json");
-yahka_community_types_1.importHAPCommunityTypesAndFixes();
+(0, yahka_community_types_1.importHAPCommunityTypesAndFixes)();
 var THomeKitBridge = /** @class */ (function () {
     function THomeKitBridge(config, FBridgeFactory, FLogger) {
         this.config = config;
@@ -2953,7 +2826,7 @@ function initHAP(storagePath, HAPdebugLogMethod) {
     if (hapInited) {
         return;
     }
-    hap_nodejs_1.init(storagePath);
+    (0, hap_nodejs_1.init)(storagePath);
     debug.log = function () {
         HAPdebugLogMethod(util.format.apply(this, arguments));
     };
@@ -2976,12 +2849,11 @@ exports.deinitHAP = deinitHAP;
 /*!***********************************!*\
   !*** ./yahka.homekit-ipcamera.ts ***!
   \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.THomeKitIPCamera = void 0;
 /// <reference path="./typings/index.d.ts" />
 var child_process_1 = __webpack_require__(/*! child_process */ "child_process");
@@ -3126,7 +2998,7 @@ var THomeKitIPCamera = /** @class */ (function () {
             return params[word];
         }); });
         this.FLogger.debug("Snapshot run: ffmpeg " + ffmpegCommand.join(' '));
-        var ffmpeg = child_process_1.spawn('ffmpeg', ffmpegCommand, { env: process.env });
+        var ffmpeg = (0, child_process_1.spawn)('ffmpeg', ffmpegCommand, { env: process.env });
         var imageBuffer = Buffer.alloc(0);
         ffmpeg.stdout.on('data', function (data) {
             imageBuffer = Buffer.concat([imageBuffer, data]);
@@ -3245,7 +3117,7 @@ var THomeKitIPCamera = /** @class */ (function () {
                         ffmpegCommand = ffmpegCommand.concat(this.camConfig.ffmpegCommandLine.streamAudio.map(function (s) { return s.replace(/\$\{(.*?)\}/g, function (_, word) { return params_2[word]; }); }));
                     }
                     // this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
-                    var ffmpeg = child_process_1.spawn('ffmpeg', ffmpegCommand, { env: process.env });
+                    var ffmpeg = (0, child_process_1.spawn)('ffmpeg', ffmpegCommand, { env: process.env });
                     var started_1 = false;
                     ffmpeg.stderr.on('data', function (data) {
                         if (!started_1) {
@@ -3314,8 +3186,7 @@ exports.THomeKitIPCamera = THomeKitIPCamera;
 /*!**********************************!*\
   !*** ./yahka.homekit-service.ts ***!
   \**********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -3330,7 +3201,7 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.YahkaServiceInitializer = void 0;
 var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
 var YahkaServiceInitializer = /** @class */ (function () {
@@ -3525,8 +3396,7 @@ exports.YahkaServiceInitializer = YahkaServiceInitializer;
 /*!***********************************!*\
   !*** ./yahka.ioBroker-adapter.ts ***!
   \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -3541,7 +3411,7 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIOBrokerAdapter = void 0;
 /// <reference path="./typings/index.d.ts" />
 var yahka_homekit_ipcamera_1 = __webpack_require__(/*! ./yahka.homekit-ipcamera */ "./yahka.homekit-ipcamera.ts");
@@ -3571,7 +3441,7 @@ var TIOBrokerAdapter = /** @class */ (function () {
         adapter.on('unload', this.handleUnload.bind(this));
     }
     TIOBrokerAdapter.prototype.adapterReady = function () {
-        yahka_homekit_bridge_1.initHAP(this.controllerPath + '/' + this.adapter.systemConfig.dataDir + this.adapter.name + '.' + this.adapter.instance + '.hapdata', this.handleHAPLogEvent.bind(this));
+        (0, yahka_homekit_bridge_1.initHAP)(this.controllerPath + '/' + this.adapter.systemConfig.dataDir + this.adapter.name + '.' + this.adapter.instance + '.hapdata', this.handleHAPLogEvent.bind(this));
         this.adapter.log.info('adapter ready, checking config');
         var config = this.adapter.config;
         this.createHomeKitBridges(config);
@@ -3662,7 +3532,7 @@ var TIOBrokerAdapter = /** @class */ (function () {
     TIOBrokerAdapter.prototype.handleUnload = function (callback) {
         try {
             this.adapter.log.info('cleaning up ...');
-            yahka_homekit_bridge_1.deinitHAP();
+            (0, yahka_homekit_bridge_1.deinitHAP)();
             this.adapter.log.info('cleaned up ...');
             callback();
         }
@@ -3751,21 +3621,10 @@ function convertStateValueToNumber(state) {
 /*!*****************************************!*\
   !*** external "@iobroker/adapter-core" ***!
   \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ ((module) => {
 
+"use strict";
 module.exports = require("@iobroker/adapter-core");
-
-/***/ }),
-
-/***/ "child_process":
-/*!********************************!*\
-  !*** external "child_process" ***!
-  \********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("child_process");
 
 /***/ }),
 
@@ -3773,9 +3632,9 @@ module.exports = require("child_process");
 /*!************************!*\
   !*** external "debug" ***!
   \************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ ((module) => {
 
+"use strict";
 module.exports = require("debug");
 
 /***/ }),
@@ -3784,9 +3643,9 @@ module.exports = require("debug");
 /*!*****************************!*\
   !*** external "hap-nodejs" ***!
   \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ ((module) => {
 
+"use strict";
 module.exports = require("hap-nodejs");
 
 /***/ }),
@@ -3795,12 +3654,81 @@ module.exports = require("hap-nodejs");
 /*!***********************!*\
   !*** external "util" ***!
   \***********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ ((module) => {
 
+"use strict";
 module.exports = require("util");
+
+/***/ }),
+
+/***/ "child_process":
+/*!********************************!*\
+  !*** external "child_process" ***!
+  \********************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("child_process");
+
+/***/ }),
+
+/***/ "../package.json":
+/*!***********************!*\
+  !*** ../package.json ***!
+  \***********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse('{"name":"iobroker.yahka","version":"0.14.0","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"engines":{"node":">=12.0.0"},"dependencies":{"@iobroker/adapter-core":"^2.5.1","debug":"^4.3.2","dev-null":"^0.1.1","hap-nodejs":"^0.9.5","ip":"^1.1.5","macaddress":"0.5.2","util":"^0.12.4"},"devDependencies":{"@types/iobroker":"^3.3.4","@types/jquery":"^3.5.6","@types/node":"^16.9.1","assert":"^2.0.0","chai":"^4.3.4","crypto-browserify":"^3.12.0","grunt":"^1.4.1","grunt-contrib-clean":"^2.0.0","grunt-contrib-compress":"^2.0.0","grunt-contrib-copy":"^1.0.0","grunt-contrib-jshint":"^3.0.0","grunt-exec":"^3.0.0","grunt-http":"^2.3.3","grunt-jscs":"^3.0.1","grunt-replace":"^2.0.2","grunt-ts":"^6.0.0-beta.22","grunt-webpack":"^4.0.3","html-webpack-plugin":"^5.3.2","mocha":"^9.1.1","path-browserify":"^1.0.1","process":"^0.11.10","raw-loader":"^4.0.2","stream-browserify":"^3.0.0","ts-loader":"^9.2.5","typescript":"^4.4.3","webpack":"^5.53.0","webpack-cli":"^4.8.0","webpack-node-externals":"^3.0.0"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","scripts":{"test":"node node_modules/mocha/bin/mocha --exit"}}');
 
 /***/ })
 
-/******/ });
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			id: moduleId,
+/******/ 			loaded: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/node module decorator */
+/******/ 	(() => {
+/******/ 		__webpack_require__.nmd = (module) => {
+/******/ 			module.paths = [];
+/******/ 			if (!module.children) module.children = [];
+/******/ 			return module;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__("./main.ts");
+/******/ 	
+/******/ })()
+;
 //# sourceMappingURL=main.js.map
