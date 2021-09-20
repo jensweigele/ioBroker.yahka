@@ -52,7 +52,19 @@ let frontendConfig = {
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js']
+    extensions: ['.tsx', '.ts', '.js'],
+    fallback: {
+      "assert": false,
+      "os": false,
+      "dgram": false,
+      "child_process": false,
+      "fs": false,
+      "net": false,
+      "http": false,
+      "path": require.resolve("path-browserify"),
+      "crypto": require.resolve("crypto-browserify"),
+      "stream": require.resolve("stream-browserify")
+    }
   },
   devtool: "source-map",
   externals: {
@@ -63,13 +75,13 @@ let frontendConfig = {
     libraryTarget: "var",
     path: path.resolve(__dirname, "admin/")
   },
-  node: {
-    dgram: 'empty',
-    child_process: 'empty',
-    fs: 'empty',
-    net: 'empty'
-  },
   plugins: [
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+    }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
     new webpack.NormalModuleReplacementPlugin(
       /lib\/AccessoryLoader\.js/,
       path.resolve(__dirname, 'src/AccessoryLoaderForBrowser.js')
