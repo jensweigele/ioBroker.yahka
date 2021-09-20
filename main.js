@@ -1302,10 +1302,13 @@ var TIOBrokerConversionBase = /** @class */ (function (_super) {
     TIOBrokerConversionBase.castToNumber = function (value) {
         if (value === undefined)
             return undefined;
-        if (typeof value !== 'number')
+        else if (typeof value !== 'number')
             return Number(value);
         else
             return value;
+    };
+    TIOBrokerConversionBase.castToBool = function (value) {
+        return !!value;
     };
     TIOBrokerConversionBase.parameterValueByName = function (parameters, name) {
         var paramArray = undefined;
@@ -1511,6 +1514,50 @@ var TIoBrokerConversion_Inverse = /** @class */ (function (_super) {
     return TIoBrokerConversion_Inverse;
 }(conversion_base_1.TIOBrokerConversionBase));
 exports.TIoBrokerConversion_Inverse = TIoBrokerConversion_Inverse;
+
+
+/***/ }),
+
+/***/ "./yahka.functions/conversion.invert.ts":
+/*!**********************************************!*\
+  !*** ./yahka.functions/conversion.invert.ts ***!
+  \**********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.TIoBrokerConversion_Invert = void 0;
+var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
+var TIoBrokerConversion_Invert = /** @class */ (function (_super) {
+    __extends(TIoBrokerConversion_Invert, _super);
+    function TIoBrokerConversion_Invert() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    TIoBrokerConversion_Invert.prototype.toHomeKit = function (value) {
+        return !conversion_base_1.TIOBrokerConversionBase.castToBool(value);
+    };
+    TIoBrokerConversion_Invert.prototype.toIOBroker = function (value) {
+        return !conversion_base_1.TIOBrokerConversionBase.castToBool(value);
+    };
+    return TIoBrokerConversion_Invert;
+}(conversion_base_1.TIOBrokerConversionBase));
+exports.TIoBrokerConversion_Invert = TIoBrokerConversion_Invert;
 
 
 /***/ }),
@@ -1981,6 +2028,7 @@ var iofunc_multi_state_1 = __webpack_require__(/*! ./iofunc.multi-state */ "./ya
 var conversion_map_1 = __webpack_require__(/*! ./conversion.map */ "./yahka.functions/conversion.map.ts");
 var iofunc_homematic_dimmer_1 = __webpack_require__(/*! ./iofunc.homematic.dimmer */ "./yahka.functions/iofunc.homematic.dimmer.ts");
 var conversion_round_1 = __webpack_require__(/*! ./conversion.round */ "./yahka.functions/conversion.round.ts");
+var conversion_invert_1 = __webpack_require__(/*! ./conversion.invert */ "./yahka.functions/conversion.invert.ts");
 functions_factory_1.inOutFactory["ioBroker.State"] = iofunc_state_1.TIoBrokerInOutFunction_State.create;
 functions_factory_1.inOutFactory["ioBroker.MultiState"] = iofunc_multi_state_1.TIoBrokerInOutFunction_MultiState.create;
 functions_factory_1.inOutFactory["ioBroker.State.Defered"] = iofunc_state_1.TIoBrokerInOutFunction_StateDeferred.create;
@@ -2010,6 +2058,7 @@ functions_factory_1.conversionFactory["inverse"] = conversion_inverse_1.TIoBroke
 functions_factory_1.conversionFactory["script"] = function (adapter, param) { return new conversion_script_1.TIoBrokerConversion_Script(adapter, param); };
 functions_factory_1.conversionFactory["map"] = conversion_map_1.TIoBrokerConversion_Map.create;
 functions_factory_1.conversionFactory["round"] = function (adapter, _param) { return new conversion_round_1.TIoBrokerConversion_Round(adapter); };
+functions_factory_1.conversionFactory["invert"] = function (adapter, _param) { return new conversion_invert_1.TIoBrokerConversion_Invert(adapter); };
 
 
 /***/ }),

@@ -8,10 +8,14 @@ export abstract class TIOBrokerConversionBase extends TYahkaFunctionBase {
     protected static castToNumber(value: any): number {
         if (value === undefined)
             return undefined;
-        if (typeof value !== 'number')
+        else if (typeof value !== 'number')
             return Number(value);
         else
             return value;
+    }
+
+    protected static castToBool(value: any): boolean {
+        return !!value;
     }
 
     protected static parameterValueByName(parameters: any, name: string): any {

@@ -11,6 +11,7 @@ import { TIoBrokerInOutFunction_MultiState } from './iofunc.multi-state';
 import { TIoBrokerConversion_Map } from './conversion.map';
 import { TIoBrokerInOutFunction_Homematic_Dimmer_On, TIoBrokerInOutFunction_Homematic_Dimmer_Brightness } from './iofunc.homematic.dimmer';
 import { TIoBrokerConversion_Round } from './conversion.round';
+import { TIoBrokerConversion_Invert } from './conversion.invert';
 
 inOutFactory["ioBroker.State"] = TIoBrokerInOutFunction_State.create;
 inOutFactory["ioBroker.MultiState"] = TIoBrokerInOutFunction_MultiState.create;
@@ -43,3 +44,4 @@ conversionFactory["script"] = (adapter, param) => new TIoBrokerConversion_Script
 
 conversionFactory["map"] = TIoBrokerConversion_Map.create;
 conversionFactory["round"] = (adapter, _param) => new TIoBrokerConversion_Round(adapter);
+conversionFactory["invert"] = (adapter, _param) => new TIoBrokerConversion_Invert(adapter);

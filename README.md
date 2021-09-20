@@ -156,7 +156,7 @@ For more information about the Configuration, the InOut Functions and Conversion
 
 ### 0.14.0 (unreleased)
   (jw) added support to mark services as "primary" and as "hidden"<br>
-  (jw) added ioFunction "round"<br>
+  (jw) added ioFunctions "round" and "invert"<br>
   (jw) updated dependencies<br>
   (jw) Updated to HAP-NodeJS 0.9.2<br>
   (jw) Fixed crashes due to changes in used HomeKit Library<br>
