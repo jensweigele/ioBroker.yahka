@@ -3308,6 +3308,12 @@ var YahkaServiceInitializer = /** @class */ (function () {
             hapService = new hap_nodejs_1.Service[serviceConfig.type](serviceConfig.name, serviceConfig.subType);
             isNew = true;
         }
+        if (serviceConfig.isHidden != null) {
+            hapService.setHiddenService(serviceConfig.isHidden);
+        }
+        if (serviceConfig.isPrimary != null) {
+            hapService.setPrimaryService(serviceConfig.isPrimary);
+        }
         try {
             for (var _b = __values(serviceConfig.characteristics), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var charactConfig = _c.value;

@@ -49,6 +49,14 @@ export class YahkaServiceInitializer {
             isNew = true;
         }
 
+        if (serviceConfig.isHidden != null) {
+            hapService.setHiddenService(serviceConfig.isHidden);
+        }
+
+        if (serviceConfig.isPrimary != null) {
+            hapService.setPrimaryService(serviceConfig.isPrimary);
+        }
+
         for (let charactConfig of serviceConfig.characteristics) {
             this.initCharacteristic(hapService, charactConfig);
         }

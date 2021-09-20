@@ -23,6 +23,8 @@ export module Configuration {
         type: string;
         subType: string;
         linkTo?: string;
+        isHidden?: boolean;
+        isPrimary?: boolean;
         characteristics: (ICharacteristicConfig)[];
         [key: string]: any;
     }

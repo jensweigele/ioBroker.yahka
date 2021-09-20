@@ -23,11 +23,24 @@
             <div class="input control flex-grow  margin10">
                 <input class="full-size" type="text" id="service_subtype" />
             </div>
-            <div><label class="translate" for="service_type">Link to:</label></div>
+        </div>
+        <div class="flex-container-row flex-grow flex-align-baseline">
+            <div><label class="translate" for="service_link_to">Link to:</label></div>
             <div class="input control select flex-grow  margin10">
                 <select class="full-size" id="service_link_to"></select>
             </div>
-
+            <div style="padding-right: 6px">
+                <label class=" checkbox small-check">
+                    <input type="checkbox" id="service_isPrimary">
+                    Primary Service
+                </label>
+            </div>
+            <div>
+                <label class=" checkbox small-check">
+                    <input type="checkbox" id="service_isHidden">
+                    Hidden Service
+                </label>
+            </div>
         </div>
         <div><span class="translate">Characteristics Table</span></div>
         <table class="characteristic-table" id="yahka_characteristic_table">
