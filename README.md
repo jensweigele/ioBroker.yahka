@@ -155,6 +155,8 @@ For more information about the Configuration, the InOut Functions and Conversion
 ## Changelog
 
 ### 0.14.0 (unreleased)
+  (jw) added ioFunction "round"<br>
+  (jw) updated dependencies<br>
   (jw) Updated to HAP-NodeJS 0.9.2<br>
   (jw) Fixed crashes due to changes in used HomeKit Library<br>
   (nh) improved changelog in readme<br>

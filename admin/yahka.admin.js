@@ -104509,6 +104509,7 @@ exports.convFunctions = new Map([
     ["inverse", function (callback) { return new parameterEditor_const_1.ParameterEditor_Const(callback); }],
     ["scaleInt", function (callback) { return new parameterEditor_scaleConversion_1.ParameterEditor_ScaleConversionEditor(callback); }],
     ["scaleFloat", function (callback) { return new parameterEditor_scaleConversion_1.ParameterEditor_ScaleConversionEditor(callback); }],
+    ["round", function (callback) { return new parameterEditor_null_1.ParameterEditor_Null(callback); }],
     ["HomematicDirectionToHomekitPositionState", function (callback) { return new parameterEditor_singleState_1.ParameterEditor_SingleState(callback); }],
     ["HomematicControlModeToHomekitHeathingCoolingState", function (callback) { return new parameterEditor_singleState_1.ParameterEditor_SingleState(callback); }],
     ["script", function (callback) { return new parameterEditor_conversionScript_1.ParameterEditor_ConversionScript(callback); }],

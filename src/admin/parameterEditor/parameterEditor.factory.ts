@@ -31,6 +31,7 @@ export let convFunctions = new Map<string, ParameterEditorFactory>([
     ["inverse", (callback) => new ParameterEditor_Const(callback)],
     ["scaleInt", (callback) => new ParameterEditor_ScaleConversionEditor(callback)],
     ["scaleFloat", (callback) => new ParameterEditor_ScaleConversionEditor(callback)],
+    ["round", (callback) => new ParameterEditor_Null(callback)],
     ["HomematicDirectionToHomekitPositionState", (callback) => new ParameterEditor_SingleState(callback)],
     ["HomematicControlModeToHomekitHeathingCoolingState", (callback) => new ParameterEditor_SingleState(callback)],
     ["script", (callback) => new ParameterEditor_ConversionScript(callback)],

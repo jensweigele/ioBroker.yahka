@@ -1651,6 +1651,52 @@ exports.TIoBrokerConversion_Passthrough = TIoBrokerConversion_Passthrough;
 
 /***/ }),
 
+/***/ "./yahka.functions/conversion.round.ts":
+/*!*********************************************!*\
+  !*** ./yahka.functions/conversion.round.ts ***!
+  \*********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.TIoBrokerConversion_Round = void 0;
+var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
+var TIoBrokerConversion_Round = /** @class */ (function (_super) {
+    __extends(TIoBrokerConversion_Round, _super);
+    function TIoBrokerConversion_Round() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    TIoBrokerConversion_Round.prototype.toHomeKit = function (value) {
+        var num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
+        return Math.round(num);
+    };
+    TIoBrokerConversion_Round.prototype.toIOBroker = function (value) {
+        var num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
+        return Math.round(num);
+    };
+    return TIoBrokerConversion_Round;
+}(conversion_base_1.TIOBrokerConversionBase));
+exports.TIoBrokerConversion_Round = TIoBrokerConversion_Round;
+
+
+/***/ }),
+
 /***/ "./yahka.functions/conversion.scale.ts":
 /*!*********************************************!*\
   !*** ./yahka.functions/conversion.scale.ts ***!
@@ -1934,6 +1980,7 @@ var conversion_script_1 = __webpack_require__(/*! ./conversion.script */ "./yahk
 var iofunc_multi_state_1 = __webpack_require__(/*! ./iofunc.multi-state */ "./yahka.functions/iofunc.multi-state.ts");
 var conversion_map_1 = __webpack_require__(/*! ./conversion.map */ "./yahka.functions/conversion.map.ts");
 var iofunc_homematic_dimmer_1 = __webpack_require__(/*! ./iofunc.homematic.dimmer */ "./yahka.functions/iofunc.homematic.dimmer.ts");
+var conversion_round_1 = __webpack_require__(/*! ./conversion.round */ "./yahka.functions/conversion.round.ts");
 functions_factory_1.inOutFactory["ioBroker.State"] = iofunc_state_1.TIoBrokerInOutFunction_State.create;
 functions_factory_1.inOutFactory["ioBroker.MultiState"] = iofunc_multi_state_1.TIoBrokerInOutFunction_MultiState.create;
 functions_factory_1.inOutFactory["ioBroker.State.Defered"] = iofunc_state_1.TIoBrokerInOutFunction_StateDeferred.create;
@@ -1961,9 +2008,8 @@ functions_factory_1.conversionFactory["hue"] = function (adapter, param) { retur
 }, 'hue'); };
 functions_factory_1.conversionFactory["inverse"] = conversion_inverse_1.TIoBrokerConversion_Inverse.create;
 functions_factory_1.conversionFactory["script"] = function (adapter, param) { return new conversion_script_1.TIoBrokerConversion_Script(adapter, param); };
-// 255 -> 65535.0
-// 100 - 360
 functions_factory_1.conversionFactory["map"] = conversion_map_1.TIoBrokerConversion_Map.create;
+functions_factory_1.conversionFactory["round"] = function (adapter, _param) { return new conversion_round_1.TIoBrokerConversion_Round(adapter); };
 
 
 /***/ }),
