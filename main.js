@@ -1148,16 +1148,15 @@ module.exports = function(homebridge, options) {
 /*jslint node: true */
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var debug = __webpack_require__(/*! debug */ "debug");
+const debug = __webpack_require__(/*! debug */ "debug");
 debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 // you have to require the utils module and call adapter function
-var utils = __webpack_require__(/*! @iobroker/adapter-core */ "@iobroker/adapter-core");
-var hkAdapter = __webpack_require__(/*! ./yahka.ioBroker-adapter */ "./yahka.ioBroker-adapter.ts");
+const utils = __webpack_require__(/*! @iobroker/adapter-core */ "@iobroker/adapter-core");
+const hkAdapter = __webpack_require__(/*! ./yahka.ioBroker-adapter */ "./yahka.ioBroker-adapter.ts");
 __webpack_require__(/*! ./yahka.functions/functions.import */ "./yahka.functions/functions.import.ts");
-var yahkaAdapter;
-function startAdapter(options) {
-    if (options === void 0) { options = {}; }
-    var ioAdapter = utils.Adapter({ name: 'yahka', systemConfig: true });
+let yahkaAdapter;
+function startAdapter(options = {}) {
+    const ioAdapter = utils.Adapter({ name: 'yahka', systemConfig: true });
     yahkaAdapter = new hkAdapter.TIOBrokerAdapter(ioAdapter, utils.controllerDir);
     return ioAdapter;
 }
@@ -1184,25 +1183,24 @@ else {
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.YahkaLogger = void 0;
-var YahkaLogger = /** @class */ (function () {
-    function YahkaLogger(adapter, logIdentifier) {
+class YahkaLogger {
+    constructor(adapter, logIdentifier) {
         this.adapter = adapter;
         this.logIdentifier = logIdentifier;
     }
-    YahkaLogger.prototype.debug = function (message) {
+    debug(message) {
         return this.adapter.log.debug("[" + this.logIdentifier + "] " + message);
-    };
-    YahkaLogger.prototype.info = function (message) {
+    }
+    info(message) {
         return this.adapter.log.info("[" + this.logIdentifier + "] " + message);
-    };
-    YahkaLogger.prototype.warn = function (message) {
+    }
+    warn(message) {
         return this.adapter.log.warn("[" + this.logIdentifier + "] " + message);
-    };
-    YahkaLogger.prototype.error = function (message) {
+    }
+    error(message) {
         return this.adapter.log.error("[" + this.logIdentifier + "] " + message);
-    };
-    return YahkaLogger;
-}());
+    }
+}
 exports.YahkaLogger = YahkaLogger;
 
 
@@ -1236,23 +1234,23 @@ exports.propertyExists = propertyExists;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.importHAPCommunityTypesAndFixes = void 0;
-var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
-var HapCommunity = __webpack_require__(/*! ../hap-nodejs-community-types */ "../hap-nodejs-community-types/types.js");
-var hapTypesImported = false;
+const hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
+const HapCommunity = __webpack_require__(/*! ../hap-nodejs-community-types */ "../hap-nodejs-community-types/types.js");
+let hapTypesImported = false;
 function importHAPCommunityTypesAndFixes() {
     if (hapTypesImported)
         return;
-    var fakeBridge = {
+    let fakeBridge = {
         hap: {
             Service: hap_nodejs_1.Service,
             Characteristic: hap_nodejs_1.Characteristic,
             uuid: hap_nodejs_1.uuid
         }
     };
-    var fakeOptions = {};
-    var communityTypes = HapCommunity(fakeBridge, fakeOptions);
-    for (var type in communityTypes) {
-        var typeFct = communityTypes[type];
+    let fakeOptions = {};
+    let communityTypes = HapCommunity(fakeBridge, fakeOptions);
+    for (let type in communityTypes) {
+        let typeFct = communityTypes[type];
         if (typeFct.length == 0) { // characteristic
             hap_nodejs_1.Characteristic["Community: " + type] = typeFct;
         }
@@ -1271,47 +1269,30 @@ exports.importHAPCommunityTypesAndFixes = importHAPCommunityTypesAndFixes;
 /*!********************************************!*\
   !*** ./yahka.functions/conversion.base.ts ***!
   \********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIOBrokerConversionBase = void 0;
-var functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
-var TIOBrokerConversionBase = /** @class */ (function (_super) {
-    __extends(TIOBrokerConversionBase, _super);
-    function TIOBrokerConversionBase(adapter, logIdentifier) {
-        if (logIdentifier === void 0) { logIdentifier = ""; }
-        return _super.call(this, adapter, logIdentifier) || this;
+const functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
+class TIOBrokerConversionBase extends functions_base_1.TYahkaFunctionBase {
+    constructor(adapter, logIdentifier = "") {
+        super(adapter, logIdentifier);
     }
-    TIOBrokerConversionBase.castToNumber = function (value) {
+    static castToNumber(value) {
         if (value === undefined)
             return undefined;
         else if (typeof value !== 'number')
             return Number(value);
         else
             return value;
-    };
-    TIOBrokerConversionBase.castToBool = function (value) {
+    }
+    static castToBool(value) {
         return !!value;
-    };
-    TIOBrokerConversionBase.parameterValueByName = function (parameters, name) {
-        var paramArray = undefined;
+    }
+    static parameterValueByName(parameters, name) {
+        let paramArray = undefined;
         if (typeof parameters === 'object') {
             paramArray = parameters;
         }
@@ -1321,9 +1302,8 @@ var TIOBrokerConversionBase = /** @class */ (function (_super) {
         if (paramArray === undefined)
             return undefined;
         return paramArray[name];
-    };
-    return TIOBrokerConversionBase;
-}(functions_base_1.TYahkaFunctionBase));
+    }
+}
 exports.TIOBrokerConversionBase = TIOBrokerConversionBase;
 
 
@@ -1333,37 +1313,18 @@ exports.TIOBrokerConversionBase = TIOBrokerConversionBase;
 /*!*********************************************************!*\
   !*** ./yahka.functions/conversion.homekit.homematic.ts ***!
   \*********************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_HomematicControlMode_To_CoolingState = exports.TIoBrokerConversion_HomematicDirection_To_PositionState = void 0;
-var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
-var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
-var TIoBrokerConversion_HomematicDirection_To_PositionState = /** @class */ (function (_super) {
-    __extends(TIoBrokerConversion_HomematicDirection_To_PositionState, _super);
-    function TIoBrokerConversion_HomematicDirection_To_PositionState() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    TIoBrokerConversion_HomematicDirection_To_PositionState.prototype.toHomeKit = function (value) {
-        var num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
-        var result = undefined;
+const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
+const hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
+class TIoBrokerConversion_HomematicDirection_To_PositionState extends conversion_base_1.TIOBrokerConversionBase {
+    toHomeKit(value) {
+        let num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
+        let result = undefined;
         switch (num) {
             case 0:
                 result = hap_nodejs_1.Characteristic.PositionState.STOPPED;
@@ -1380,10 +1341,10 @@ var TIoBrokerConversion_HomematicDirection_To_PositionState = /** @class */ (fun
         }
         this.adapter.log.debug('HomematicDirectionToHomekitPositionState.toHomeKit, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
         return result;
-    };
-    TIoBrokerConversion_HomematicDirection_To_PositionState.prototype.toIOBroker = function (value) {
-        var num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
-        var result = undefined;
+    }
+    toIOBroker(value) {
+        let num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
+        let result = undefined;
         switch (num) {
             case hap_nodejs_1.Characteristic.PositionState.STOPPED:
                 result = 0;
@@ -1400,18 +1361,13 @@ var TIoBrokerConversion_HomematicDirection_To_PositionState = /** @class */ (fun
         }
         this.adapter.log.debug('HomematicDirectionToHomekitPositionState.toIOBroker, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
         return result;
-    };
-    return TIoBrokerConversion_HomematicDirection_To_PositionState;
-}(conversion_base_1.TIOBrokerConversionBase));
-exports.TIoBrokerConversion_HomematicDirection_To_PositionState = TIoBrokerConversion_HomematicDirection_To_PositionState;
-var TIoBrokerConversion_HomematicControlMode_To_CoolingState = /** @class */ (function (_super) {
-    __extends(TIoBrokerConversion_HomematicControlMode_To_CoolingState, _super);
-    function TIoBrokerConversion_HomematicControlMode_To_CoolingState() {
-        return _super !== null && _super.apply(this, arguments) || this;
     }
-    TIoBrokerConversion_HomematicControlMode_To_CoolingState.prototype.toHomeKit = function (value) {
-        var num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
-        var result = undefined;
+}
+exports.TIoBrokerConversion_HomematicDirection_To_PositionState = TIoBrokerConversion_HomematicDirection_To_PositionState;
+class TIoBrokerConversion_HomematicControlMode_To_CoolingState extends conversion_base_1.TIOBrokerConversionBase {
+    toHomeKit(value) {
+        let num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
+        let result = undefined;
         switch (num) {
             case 0:
                 result = hap_nodejs_1.Characteristic.TargetHeatingCoolingState.AUTO;
@@ -1431,10 +1387,10 @@ var TIoBrokerConversion_HomematicControlMode_To_CoolingState = /** @class */ (fu
         }
         this.adapter.log.debug('HomematicDirectionToHomekitHeatingCoolingState.toHomeKit, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
         return result;
-    };
-    TIoBrokerConversion_HomematicControlMode_To_CoolingState.prototype.toIOBroker = function (value) {
-        var num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
-        var result = undefined;
+    }
+    toIOBroker(value) {
+        let num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
+        let result = undefined;
         switch (num) {
             case hap_nodejs_1.Characteristic.TargetHeatingCoolingState.OFF:
                 result = 0;
@@ -1454,9 +1410,8 @@ var TIoBrokerConversion_HomematicControlMode_To_CoolingState = /** @class */ (fu
         }
         this.adapter.log.debug('HomematicDirectionToHomekitHeatingCoolingState.toIOBroker, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
         return result;
-    };
-    return TIoBrokerConversion_HomematicControlMode_To_CoolingState;
-}(conversion_base_1.TIOBrokerConversionBase));
+    }
+}
 exports.TIoBrokerConversion_HomematicControlMode_To_CoolingState = TIoBrokerConversion_HomematicControlMode_To_CoolingState;
 
 
@@ -1466,53 +1421,35 @@ exports.TIoBrokerConversion_HomematicControlMode_To_CoolingState = TIoBrokerConv
 /*!***********************************************!*\
   !*** ./yahka.functions/conversion.inverse.ts ***!
   \***********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Inverse = void 0;
-var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
-var TIoBrokerConversion_Inverse = /** @class */ (function (_super) {
-    __extends(TIoBrokerConversion_Inverse, _super);
-    function TIoBrokerConversion_Inverse(adapter, maxValue) {
-        var _this = _super.call(this, adapter) || this;
-        _this.maxValue = maxValue;
-        return _this;
+const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
+class TIoBrokerConversion_Inverse extends conversion_base_1.TIOBrokerConversionBase {
+    constructor(adapter, maxValue) {
+        super(adapter);
+        this.maxValue = maxValue;
     }
-    TIoBrokerConversion_Inverse.create = function (adapter, parameters) {
-        var maxValue = conversion_base_1.TIOBrokerConversionBase.castToNumber(parameters);
+    static create(adapter, parameters) {
+        let maxValue = conversion_base_1.TIOBrokerConversionBase.castToNumber(parameters);
         return new TIoBrokerConversion_Inverse(adapter, maxValue);
-    };
-    TIoBrokerConversion_Inverse.prototype.toHomeKit = function (value) {
-        var num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
-        var newValue = this.maxValue - num;
+    }
+    toHomeKit(value) {
+        let num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
+        let newValue = this.maxValue - num;
         this.adapter.log.debug('inverse: converting value to homekit: ' + value + ' to ' + newValue);
         return newValue;
-    };
-    TIoBrokerConversion_Inverse.prototype.toIOBroker = function (value) {
-        var num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
-        var newValue = this.maxValue - num;
+    }
+    toIOBroker(value) {
+        let num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
+        let newValue = this.maxValue - num;
         this.adapter.log.debug('inverse: converting value to ioBroker: ' + value + ' to ' + newValue);
         return newValue;
-    };
-    return TIoBrokerConversion_Inverse;
-}(conversion_base_1.TIOBrokerConversionBase));
+    }
+}
 exports.TIoBrokerConversion_Inverse = TIoBrokerConversion_Inverse;
 
 
@@ -1522,41 +1459,21 @@ exports.TIoBrokerConversion_Inverse = TIoBrokerConversion_Inverse;
 /*!**********************************************!*\
   !*** ./yahka.functions/conversion.invert.ts ***!
   \**********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Invert = void 0;
-var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
-var TIoBrokerConversion_Invert = /** @class */ (function (_super) {
-    __extends(TIoBrokerConversion_Invert, _super);
-    function TIoBrokerConversion_Invert() {
-        return _super !== null && _super.apply(this, arguments) || this;
+const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
+class TIoBrokerConversion_Invert extends conversion_base_1.TIOBrokerConversionBase {
+    toHomeKit(value) {
+        return !conversion_base_1.TIOBrokerConversionBase.castToBool(value);
     }
-    TIoBrokerConversion_Invert.prototype.toHomeKit = function (value) {
+    toIOBroker(value) {
         return !conversion_base_1.TIOBrokerConversionBase.castToBool(value);
-    };
-    TIoBrokerConversion_Invert.prototype.toIOBroker = function (value) {
-        return !conversion_base_1.TIOBrokerConversionBase.castToBool(value);
-    };
-    return TIoBrokerConversion_Invert;
-}(conversion_base_1.TIOBrokerConversionBase));
+    }
+}
 exports.TIoBrokerConversion_Invert = TIoBrokerConversion_Invert;
 
 
@@ -1566,89 +1483,49 @@ exports.TIoBrokerConversion_Invert = TIoBrokerConversion_Invert;
 /*!*******************************************!*\
   !*** ./yahka.functions/conversion.map.ts ***!
   \*******************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Map = exports.isMultiStateParameter = void 0;
-var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
+const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 function isMultiStateParameter(params) {
     return "mappings" in params;
 }
 exports.isMultiStateParameter = isMultiStateParameter;
-var TIoBrokerConversion_Map = /** @class */ (function (_super) {
-    __extends(TIoBrokerConversion_Map, _super);
-    function TIoBrokerConversion_Map(adapter, parameters) {
-        var _this = _super.call(this, adapter, "TIoBrokerConversion_Map") || this;
-        _this.parameters = parameters;
-        _this.mappingArrayToHomeKit = new Map();
-        _this.mappingArrayToIOBroker = new Map();
-        _this.jsonReplacer = function (key, value) { return String(value); };
-        _this.buildMappingArray();
-        return _this;
+class TIoBrokerConversion_Map extends conversion_base_1.TIOBrokerConversionBase {
+    constructor(adapter, parameters) {
+        super(adapter, "TIoBrokerConversion_Map");
+        this.parameters = parameters;
+        this.mappingArrayToHomeKit = new Map();
+        this.mappingArrayToIOBroker = new Map();
+        this.jsonReplacer = (key, value) => String(value);
+        this.buildMappingArray();
     }
-    TIoBrokerConversion_Map.create = function (adapter, parameters) {
+    static create(adapter, parameters) {
         if (!isMultiStateParameter(parameters)) {
             return undefined;
         }
         return new TIoBrokerConversion_Map(adapter, parameters);
-    };
-    TIoBrokerConversion_Map.prototype.buildMappingArray = function () {
-        var e_1, _a;
-        try {
-            for (var _b = __values(this.parameters.mappings), _c = _b.next(); !_c.done; _c = _b.next()) {
-                var mapDef = _c.value;
-                var leftStr = JSON.stringify(mapDef.left, this.jsonReplacer);
-                var rightStr = JSON.stringify(mapDef.right, this.jsonReplacer);
-                this.mappingArrayToHomeKit.set(leftStr, mapDef.right);
-                this.mappingArrayToIOBroker.set(rightStr, mapDef.left);
-            }
+    }
+    buildMappingArray() {
+        for (let mapDef of this.parameters.mappings) {
+            let leftStr = JSON.stringify(mapDef.left, this.jsonReplacer);
+            let rightStr = JSON.stringify(mapDef.right, this.jsonReplacer);
+            this.mappingArrayToHomeKit.set(leftStr, mapDef.right);
+            this.mappingArrayToIOBroker.set(rightStr, mapDef.left);
         }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-            }
-            finally { if (e_1) throw e_1.error; }
-        }
-    };
-    TIoBrokerConversion_Map.prototype.toHomeKit = function (value) {
-        var ioValueStr = JSON.stringify(value, this.jsonReplacer);
+    }
+    toHomeKit(value) {
+        let ioValueStr = JSON.stringify(value, this.jsonReplacer);
         return this.mappingArrayToHomeKit.get(ioValueStr);
-    };
-    TIoBrokerConversion_Map.prototype.toIOBroker = function (value) {
-        var hkValueStr = JSON.stringify(value, this.jsonReplacer);
+    }
+    toIOBroker(value) {
+        let hkValueStr = JSON.stringify(value, this.jsonReplacer);
         return this.mappingArrayToIOBroker.get(hkValueStr);
-    };
-    return TIoBrokerConversion_Map;
-}(conversion_base_1.TIOBrokerConversionBase));
+    }
+}
 exports.TIoBrokerConversion_Map = TIoBrokerConversion_Map;
 
 
@@ -1658,41 +1535,21 @@ exports.TIoBrokerConversion_Map = TIoBrokerConversion_Map;
 /*!***************************************************!*\
   !*** ./yahka.functions/conversion.passthrough.ts ***!
   \***************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Passthrough = void 0;
-var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
-var TIoBrokerConversion_Passthrough = /** @class */ (function (_super) {
-    __extends(TIoBrokerConversion_Passthrough, _super);
-    function TIoBrokerConversion_Passthrough() {
-        return _super !== null && _super.apply(this, arguments) || this;
+const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
+class TIoBrokerConversion_Passthrough extends conversion_base_1.TIOBrokerConversionBase {
+    toHomeKit(value) {
+        return value;
     }
-    TIoBrokerConversion_Passthrough.prototype.toHomeKit = function (value) {
+    toIOBroker(value) {
         return value;
-    };
-    TIoBrokerConversion_Passthrough.prototype.toIOBroker = function (value) {
-        return value;
-    };
-    return TIoBrokerConversion_Passthrough;
-}(conversion_base_1.TIOBrokerConversionBase));
+    }
+}
 exports.TIoBrokerConversion_Passthrough = TIoBrokerConversion_Passthrough;
 
 
@@ -1702,43 +1559,23 @@ exports.TIoBrokerConversion_Passthrough = TIoBrokerConversion_Passthrough;
 /*!*********************************************!*\
   !*** ./yahka.functions/conversion.round.ts ***!
   \*********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Round = void 0;
-var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
-var TIoBrokerConversion_Round = /** @class */ (function (_super) {
-    __extends(TIoBrokerConversion_Round, _super);
-    function TIoBrokerConversion_Round() {
-        return _super !== null && _super.apply(this, arguments) || this;
+const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
+class TIoBrokerConversion_Round extends conversion_base_1.TIOBrokerConversionBase {
+    toHomeKit(value) {
+        let num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
+        return Math.round(num);
     }
-    TIoBrokerConversion_Round.prototype.toHomeKit = function (value) {
-        var num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
+    toIOBroker(value) {
+        let num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
         return Math.round(num);
-    };
-    TIoBrokerConversion_Round.prototype.toIOBroker = function (value) {
-        var num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
-        return Math.round(num);
-    };
-    return TIoBrokerConversion_Round;
-}(conversion_base_1.TIOBrokerConversionBase));
+    }
+}
 exports.TIoBrokerConversion_Round = TIoBrokerConversion_Round;
 
 
@@ -1748,87 +1585,64 @@ exports.TIoBrokerConversion_Round = TIoBrokerConversion_Round;
 /*!*********************************************!*\
   !*** ./yahka.functions/conversion.scale.ts ***!
   \*********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Scale_Rounded = exports.TIoBrokerConversion_Scale = void 0;
-var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
-var TIoBrokerConversion_Scale = /** @class */ (function (_super) {
-    __extends(TIoBrokerConversion_Scale, _super);
-    function TIoBrokerConversion_Scale(adapter, parameters, logName) {
-        var _this = _super.call(this, adapter) || this;
-        _this.parameters = parameters;
-        _this.logName = logName;
+const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
+class TIoBrokerConversion_Scale extends conversion_base_1.TIOBrokerConversionBase {
+    constructor(adapter, parameters, logName) {
+        super(adapter);
+        this.parameters = parameters;
+        this.logName = logName;
         if (!TIoBrokerConversion_Scale.isScaleParameter(parameters)) {
-            _this.parameters = {
+            this.parameters = {
                 "homekit.min": 0,
                 "homekit.max": 1,
                 "iobroker.min": 0,
                 "iobroker.max": 1
             };
         }
-        return _this;
     }
-    TIoBrokerConversion_Scale.isScaleParameter = function (parameters) {
-        var castedParam = parameters;
+    static isScaleParameter(parameters) {
+        const castedParam = parameters;
         return castedParam["homekit.min"] !== undefined &&
             castedParam["homekit.max"] !== undefined &&
             castedParam["iobroker.min"] !== undefined &&
             castedParam["iobroker.max"] !== undefined;
-    };
-    TIoBrokerConversion_Scale.prototype.toHomeKit = function (value) {
-        var num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
-        var homeKitMax = this.parameters["homekit.max"];
-        var ioBrokerMax = this.parameters["iobroker.max"];
-        var homeKitMin = this.parameters["homekit.min"];
-        var ioBrokerMin = this.parameters["iobroker.min"];
-        var newValue = ((num - ioBrokerMin) / (ioBrokerMax - ioBrokerMin)) * (homeKitMax - homeKitMin) + homeKitMin;
-        this.adapter.log.debug(this.logName + ": converting value to homekit: " + value + " to " + newValue);
-        return newValue;
-    };
-    TIoBrokerConversion_Scale.prototype.toIOBroker = function (value) {
-        var num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
-        var homeKitMax = this.parameters["homekit.max"];
-        var ioBrokerMax = this.parameters["iobroker.max"];
-        var homeKitMin = this.parameters["homekit.min"];
-        var ioBrokerMin = this.parameters["iobroker.min"];
-        var newValue = ((num - homeKitMin) / (homeKitMax - homeKitMin)) * (ioBrokerMax - ioBrokerMin) + ioBrokerMin;
-        this.adapter.log.debug(this.logName + ": converting value to ioBroker: " + value + " to " + newValue);
-        return newValue;
-    };
-    return TIoBrokerConversion_Scale;
-}(conversion_base_1.TIOBrokerConversionBase));
-exports.TIoBrokerConversion_Scale = TIoBrokerConversion_Scale;
-var TIoBrokerConversion_Scale_Rounded = /** @class */ (function (_super) {
-    __extends(TIoBrokerConversion_Scale_Rounded, _super);
-    function TIoBrokerConversion_Scale_Rounded() {
-        return _super !== null && _super.apply(this, arguments) || this;
     }
-    TIoBrokerConversion_Scale_Rounded.prototype.toHomeKit = function (value) {
-        return Math.round(_super.prototype.toHomeKit.call(this, value));
-    };
-    TIoBrokerConversion_Scale_Rounded.prototype.toIOBroker = function (value) {
-        return Math.round(_super.prototype.toIOBroker.call(this, value));
-    };
-    return TIoBrokerConversion_Scale_Rounded;
-}(TIoBrokerConversion_Scale));
+    toHomeKit(value) {
+        let num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
+        let homeKitMax = this.parameters["homekit.max"];
+        let ioBrokerMax = this.parameters["iobroker.max"];
+        let homeKitMin = this.parameters["homekit.min"];
+        let ioBrokerMin = this.parameters["iobroker.min"];
+        let newValue = ((num - ioBrokerMin) / (ioBrokerMax - ioBrokerMin)) * (homeKitMax - homeKitMin) + homeKitMin;
+        this.adapter.log.debug(`${this.logName}: converting value to homekit: ${value} to ${newValue}`);
+        return newValue;
+    }
+    toIOBroker(value) {
+        let num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
+        let homeKitMax = this.parameters["homekit.max"];
+        let ioBrokerMax = this.parameters["iobroker.max"];
+        let homeKitMin = this.parameters["homekit.min"];
+        let ioBrokerMin = this.parameters["iobroker.min"];
+        let newValue = ((num - homeKitMin) / (homeKitMax - homeKitMin)) * (ioBrokerMax - ioBrokerMin) + ioBrokerMin;
+        this.adapter.log.debug(`${this.logName}: converting value to ioBroker: ${value} to ${newValue}`);
+        return newValue;
+    }
+}
+exports.TIoBrokerConversion_Scale = TIoBrokerConversion_Scale;
+class TIoBrokerConversion_Scale_Rounded extends TIoBrokerConversion_Scale {
+    toHomeKit(value) {
+        return Math.round(super.toHomeKit(value));
+    }
+    toIOBroker(value) {
+        return Math.round(super.toIOBroker(value));
+    }
+}
 exports.TIoBrokerConversion_Scale_Rounded = TIoBrokerConversion_Scale_Rounded;
 
 
@@ -1838,44 +1652,27 @@ exports.TIoBrokerConversion_Scale_Rounded = TIoBrokerConversion_Scale_Rounded;
 /*!**********************************************!*\
   !*** ./yahka.functions/conversion.script.ts ***!
   \**********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Script = void 0;
-var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
-var TIoBrokerConversion_Script = /** @class */ (function (_super) {
-    __extends(TIoBrokerConversion_Script, _super);
-    function TIoBrokerConversion_Script(adapter, parameters) {
-        var _this = _super.call(this, adapter) || this;
-        _this.parameters = parameters;
-        _this.toHKFunction = new Function("value", _this.parameters.toHomeKit);
-        _this.toIOFunction = new Function("value", _this.parameters.toIOBroker);
-        return _this;
+const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
+class TIoBrokerConversion_Script extends conversion_base_1.TIOBrokerConversionBase {
+    constructor(adapter, parameters) {
+        super(adapter);
+        this.parameters = parameters;
+        this.toHKFunction = new Function("value", this.parameters.toHomeKit);
+        this.toIOFunction = new Function("value", this.parameters.toIOBroker);
     }
-    TIoBrokerConversion_Script.isScriptParameter = function (parameters) {
-        var castedParam = parameters;
+    static isScriptParameter(parameters) {
+        const castedParam = parameters;
         return castedParam["toHomeKit"] !== undefined &&
             castedParam["toIOBroker"] !== undefined;
-    };
-    TIoBrokerConversion_Script.create = function (adapter, parameters) {
-        var params;
+    }
+    static create(adapter, parameters) {
+        let params;
         if (TIoBrokerConversion_Script.isScriptParameter(parameters)) {
             params = parameters;
         }
@@ -1886,19 +1683,18 @@ var TIoBrokerConversion_Script = /** @class */ (function (_super) {
             };
         }
         return new TIoBrokerConversion_Script(adapter, params);
-    };
-    TIoBrokerConversion_Script.prototype.toHomeKit = function (value) {
-        var newValue = this.toHKFunction(value);
+    }
+    toHomeKit(value) {
+        let newValue = this.toHKFunction(value);
         this.adapter.log.debug('script: converting value to homekit: ' + value + ' to ' + newValue);
         return newValue;
-    };
-    TIoBrokerConversion_Script.prototype.toIOBroker = function (value) {
-        var newValue = this.toIOFunction(value);
+    }
+    toIOBroker(value) {
+        let newValue = this.toIOFunction(value);
         this.adapter.log.debug('script: converting value to ioBroker: ' + value + ' to ' + newValue);
         return newValue;
-    };
-    return TIoBrokerConversion_Script;
-}(conversion_base_1.TIOBrokerConversionBase));
+    }
+}
 exports.TIoBrokerConversion_Script = TIoBrokerConversion_Script;
 
 
@@ -1914,39 +1710,38 @@ exports.TIoBrokerConversion_Script = TIoBrokerConversion_Script;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TYahkaFunctionBase = void 0;
-var yahka_logger_1 = __webpack_require__(/*! ../shared/yahka.logger */ "./shared/yahka.logger.ts");
-var TYahkaFunctionBase = /** @class */ (function () {
-    function TYahkaFunctionBase(adapter, logIdentifier) {
-        if (logIdentifier === void 0) { logIdentifier = ""; }
+const yahka_logger_1 = __webpack_require__(/*! ../shared/yahka.logger */ "./shared/yahka.logger.ts");
+class TYahkaFunctionBase {
+    constructor(adapter, logIdentifier = "") {
         this.adapter = adapter;
         this.logIdentifier = logIdentifier;
         this.subscriptionRequests = [];
         this.stateCache = new Map();
         this.log = new yahka_logger_1.YahkaLogger(this.adapter, this.logIdentifier);
     }
-    TYahkaFunctionBase.prototype.addSubscriptionRequest = function (stateName) {
-        var subscriptionEvent = this.subscriptionEvent.bind(this, stateName);
+    addSubscriptionRequest(stateName) {
+        let subscriptionEvent = this.subscriptionEvent.bind(this, stateName);
         this.subscriptionRequests.push({
             subscriptionType: 'state',
             subscriptionIdentifier: stateName,
             subscriptionEvent: subscriptionEvent
         });
-    };
-    TYahkaFunctionBase.prototype.shouldStateBeFiltered = function (stateName, ioState) {
+    }
+    shouldStateBeFiltered(stateName, ioState) {
         return false;
-    };
-    TYahkaFunctionBase.prototype.readValueFromCache = function (stateName) {
+    }
+    readValueFromCache(stateName) {
         if (this.stateCache.has(stateName)) {
             return this.stateCache.get(stateName);
         }
         else {
             return undefined;
         }
-    };
-    TYahkaFunctionBase.prototype.updateCache = function (stateName, ioState) {
-        var needUpdate = false;
+    }
+    updateCache(stateName, ioState) {
+        let needUpdate = false;
         if (this.stateCache.has(stateName)) {
-            var curVal = this.stateCache.get(stateName);
+            let curVal = this.stateCache.get(stateName);
             needUpdate = (curVal === null || curVal === void 0 ? void 0 : curVal.val) !== (ioState === null || ioState === void 0 ? void 0 : ioState.val);
         }
         else {
@@ -1955,24 +1750,23 @@ var TYahkaFunctionBase = /** @class */ (function () {
         if (needUpdate)
             this.stateCache.set(stateName, ioState);
         return needUpdate;
-    };
-    TYahkaFunctionBase.prototype.subscriptionEvent = function (stateName, ioState, callback) {
+    }
+    subscriptionEvent(stateName, ioState, callback) {
         this.log.debug('change event from ioBroker via [' + stateName + ']' + JSON.stringify(ioState));
         if (this.shouldStateBeFiltered(stateName, ioState)) {
             this.log.debug('state was filtered - notification is canceled');
             return;
         }
-        var cacheChange = this.updateCache(stateName, ioState);
+        let cacheChange = this.updateCache(stateName, ioState);
         if (!cacheChange) {
             this.log.debug('state value already in cache - notification is canceled');
             return;
         }
         this.cacheChanged(stateName, callback);
-    };
-    TYahkaFunctionBase.prototype.cacheChanged = function (stateName, callback) {
-    };
-    return TYahkaFunctionBase;
-}());
+    }
+    cacheChanged(stateName, callback) {
+    }
+}
 exports.TYahkaFunctionBase = TYahkaFunctionBase;
 
 
@@ -2015,20 +1809,20 @@ exports.functionFactory = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var functions_factory_1 = __webpack_require__(/*! ./functions.factory */ "./yahka.functions/functions.factory.ts");
-var iofunc_state_1 = __webpack_require__(/*! ./iofunc.state */ "./yahka.functions/iofunc.state.ts");
-var iofunc_const_1 = __webpack_require__(/*! ./iofunc.const */ "./yahka.functions/iofunc.const.ts");
-var iofunc_homematic_covering_1 = __webpack_require__(/*! ./iofunc.homematic.covering */ "./yahka.functions/iofunc.homematic.covering.ts");
-var conversion_passthrough_1 = __webpack_require__(/*! ./conversion.passthrough */ "./yahka.functions/conversion.passthrough.ts");
-var conversion_homekit_homematic_1 = __webpack_require__(/*! ./conversion.homekit.homematic */ "./yahka.functions/conversion.homekit.homematic.ts");
-var conversion_scale_1 = __webpack_require__(/*! ./conversion.scale */ "./yahka.functions/conversion.scale.ts");
-var conversion_inverse_1 = __webpack_require__(/*! ./conversion.inverse */ "./yahka.functions/conversion.inverse.ts");
-var conversion_script_1 = __webpack_require__(/*! ./conversion.script */ "./yahka.functions/conversion.script.ts");
-var iofunc_multi_state_1 = __webpack_require__(/*! ./iofunc.multi-state */ "./yahka.functions/iofunc.multi-state.ts");
-var conversion_map_1 = __webpack_require__(/*! ./conversion.map */ "./yahka.functions/conversion.map.ts");
-var iofunc_homematic_dimmer_1 = __webpack_require__(/*! ./iofunc.homematic.dimmer */ "./yahka.functions/iofunc.homematic.dimmer.ts");
-var conversion_round_1 = __webpack_require__(/*! ./conversion.round */ "./yahka.functions/conversion.round.ts");
-var conversion_invert_1 = __webpack_require__(/*! ./conversion.invert */ "./yahka.functions/conversion.invert.ts");
+const functions_factory_1 = __webpack_require__(/*! ./functions.factory */ "./yahka.functions/functions.factory.ts");
+const iofunc_state_1 = __webpack_require__(/*! ./iofunc.state */ "./yahka.functions/iofunc.state.ts");
+const iofunc_const_1 = __webpack_require__(/*! ./iofunc.const */ "./yahka.functions/iofunc.const.ts");
+const iofunc_homematic_covering_1 = __webpack_require__(/*! ./iofunc.homematic.covering */ "./yahka.functions/iofunc.homematic.covering.ts");
+const conversion_passthrough_1 = __webpack_require__(/*! ./conversion.passthrough */ "./yahka.functions/conversion.passthrough.ts");
+const conversion_homekit_homematic_1 = __webpack_require__(/*! ./conversion.homekit.homematic */ "./yahka.functions/conversion.homekit.homematic.ts");
+const conversion_scale_1 = __webpack_require__(/*! ./conversion.scale */ "./yahka.functions/conversion.scale.ts");
+const conversion_inverse_1 = __webpack_require__(/*! ./conversion.inverse */ "./yahka.functions/conversion.inverse.ts");
+const conversion_script_1 = __webpack_require__(/*! ./conversion.script */ "./yahka.functions/conversion.script.ts");
+const iofunc_multi_state_1 = __webpack_require__(/*! ./iofunc.multi-state */ "./yahka.functions/iofunc.multi-state.ts");
+const conversion_map_1 = __webpack_require__(/*! ./conversion.map */ "./yahka.functions/conversion.map.ts");
+const iofunc_homematic_dimmer_1 = __webpack_require__(/*! ./iofunc.homematic.dimmer */ "./yahka.functions/iofunc.homematic.dimmer.ts");
+const conversion_round_1 = __webpack_require__(/*! ./conversion.round */ "./yahka.functions/conversion.round.ts");
+const conversion_invert_1 = __webpack_require__(/*! ./conversion.invert */ "./yahka.functions/conversion.invert.ts");
 functions_factory_1.inOutFactory["ioBroker.State"] = iofunc_state_1.TIoBrokerInOutFunction_State.create;
 functions_factory_1.inOutFactory["ioBroker.MultiState"] = iofunc_multi_state_1.TIoBrokerInOutFunction_MultiState.create;
 functions_factory_1.inOutFactory["ioBroker.State.Defered"] = iofunc_state_1.TIoBrokerInOutFunction_StateDeferred.create;
@@ -2037,28 +1831,28 @@ functions_factory_1.inOutFactory["const"] = iofunc_const_1.TIoBrokerInOutFunctio
 functions_factory_1.inOutFactory["ioBroker.homematic.WindowCovering.TargetPosition"] = iofunc_homematic_covering_1.TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.create;
 functions_factory_1.inOutFactory["ioBroker.homematic.Dimmer.On"] = iofunc_homematic_dimmer_1.TIoBrokerInOutFunction_Homematic_Dimmer_On.create;
 functions_factory_1.inOutFactory["ioBroker.homematic.Dimmer.Brightness"] = iofunc_homematic_dimmer_1.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.create;
-functions_factory_1.conversionFactory["passthrough"] = function (adapter, param) { return new conversion_passthrough_1.TIoBrokerConversion_Passthrough(adapter); };
-functions_factory_1.conversionFactory["HomematicDirectionToHomekitPositionState"] = function (adapter, param) { return new conversion_homekit_homematic_1.TIoBrokerConversion_HomematicDirection_To_PositionState(adapter); };
-functions_factory_1.conversionFactory["HomematicControlModeToHomekitHeathingCoolingState"] = function (adapter, param) { return new conversion_homekit_homematic_1.TIoBrokerConversion_HomematicControlMode_To_CoolingState(adapter); };
-functions_factory_1.conversionFactory["level255"] = function (adapter, param) { return new conversion_scale_1.TIoBrokerConversion_Scale(adapter, {
+functions_factory_1.conversionFactory["passthrough"] = (adapter, param) => new conversion_passthrough_1.TIoBrokerConversion_Passthrough(adapter);
+functions_factory_1.conversionFactory["HomematicDirectionToHomekitPositionState"] = (adapter, param) => new conversion_homekit_homematic_1.TIoBrokerConversion_HomematicDirection_To_PositionState(adapter);
+functions_factory_1.conversionFactory["HomematicControlModeToHomekitHeathingCoolingState"] = (adapter, param) => new conversion_homekit_homematic_1.TIoBrokerConversion_HomematicControlMode_To_CoolingState(adapter);
+functions_factory_1.conversionFactory["level255"] = (adapter, param) => new conversion_scale_1.TIoBrokerConversion_Scale(adapter, {
     "homekit.min": 0,
     "homekit.max": 100,
     "iobroker.min": 0,
     "iobroker.max": 255
-}, 'level255'); };
-functions_factory_1.conversionFactory["scaleInt"] = function (adapter, param) { return new conversion_scale_1.TIoBrokerConversion_Scale_Rounded(adapter, param, 'scaleInt'); };
-functions_factory_1.conversionFactory["scaleFloat"] = function (adapter, param) { return new conversion_scale_1.TIoBrokerConversion_Scale(adapter, param, 'scaleFloat'); };
-functions_factory_1.conversionFactory["hue"] = function (adapter, param) { return new conversion_scale_1.TIoBrokerConversion_Scale(adapter, {
+}, 'level255');
+functions_factory_1.conversionFactory["scaleInt"] = (adapter, param) => new conversion_scale_1.TIoBrokerConversion_Scale_Rounded(adapter, param, 'scaleInt');
+functions_factory_1.conversionFactory["scaleFloat"] = (adapter, param) => new conversion_scale_1.TIoBrokerConversion_Scale(adapter, param, 'scaleFloat');
+functions_factory_1.conversionFactory["hue"] = (adapter, param) => new conversion_scale_1.TIoBrokerConversion_Scale(adapter, {
     "homekit.min": 0,
     "homekit.max": 360,
     "iobroker.min": 0,
     "iobroker.max": 65535
-}, 'hue'); };
+}, 'hue');
 functions_factory_1.conversionFactory["inverse"] = conversion_inverse_1.TIoBrokerConversion_Inverse.create;
-functions_factory_1.conversionFactory["script"] = function (adapter, param) { return new conversion_script_1.TIoBrokerConversion_Script(adapter, param); };
+functions_factory_1.conversionFactory["script"] = (adapter, param) => new conversion_script_1.TIoBrokerConversion_Script(adapter, param);
 functions_factory_1.conversionFactory["map"] = conversion_map_1.TIoBrokerConversion_Map.create;
-functions_factory_1.conversionFactory["round"] = function (adapter, _param) { return new conversion_round_1.TIoBrokerConversion_Round(adapter); };
-functions_factory_1.conversionFactory["invert"] = function (adapter, _param) { return new conversion_invert_1.TIoBrokerConversion_Invert(adapter); };
+functions_factory_1.conversionFactory["round"] = (adapter, _param) => new conversion_round_1.TIoBrokerConversion_Round(adapter);
+functions_factory_1.conversionFactory["invert"] = (adapter, _param) => new conversion_invert_1.TIoBrokerConversion_Invert(adapter);
 
 
 /***/ }),
@@ -2067,45 +1861,28 @@ functions_factory_1.conversionFactory["invert"] = function (adapter, _param) { r
 /*!****************************************!*\
   !*** ./yahka.functions/iofunc.base.ts ***!
   \****************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_StateBase = exports.TIoBrokerInOutFunctionBase = void 0;
-var functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
-var TIoBrokerInOutFunctionBase = /** @class */ (function (_super) {
-    __extends(TIoBrokerInOutFunctionBase, _super);
-    function TIoBrokerInOutFunctionBase() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.valueForHomeKit = undefined;
-        _this.errorForHomeKit = null;
-        return _this;
+const functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
+class TIoBrokerInOutFunctionBase extends functions_base_1.TYahkaFunctionBase {
+    constructor() {
+        super(...arguments);
+        this.valueForHomeKit = undefined;
+        this.errorForHomeKit = null;
     }
-    TIoBrokerInOutFunctionBase.prototype.fromIOBroker = function (callback) {
+    fromIOBroker(callback) {
         this.log.debug('fromIOBroker event - delivering cached value (' + JSON.stringify(this.valueForHomeKit) + ")");
         callback(null, this.valueForHomeKit);
-    };
-    TIoBrokerInOutFunctionBase.prototype.toIOBroker = function (plainIoValue, callback) {
+    }
+    toIOBroker(plainIoValue, callback) {
         this.log.debug('writing state to ioBroker: ' + JSON.stringify(plainIoValue));
         this.updateIOBrokerValue(plainIoValue, callback);
-    };
-    TIoBrokerInOutFunctionBase.prototype.cacheChanged = function (stateName, callback) {
+    }
+    cacheChanged(stateName, callback) {
         try {
             this.valueForHomeKit = this.recalculateHomekitValues(stateName);
             this.errorForHomeKit = null;
@@ -2115,19 +1892,17 @@ var TIoBrokerInOutFunctionBase = /** @class */ (function (_super) {
         }
         if (this.valueForHomeKit != null)
             callback(this.valueForHomeKit);
-    };
-    TIoBrokerInOutFunctionBase.prototype.recalculateHomekitValues = function (stateName) {
+    }
+    recalculateHomekitValues(stateName) {
         // noop
-    };
-    TIoBrokerInOutFunctionBase.prototype.updateIOBrokerValue = function (plainIoValue, callback) {
+    }
+    updateIOBrokerValue(plainIoValue, callback) {
         // to be filled in derived class
-    };
-    return TIoBrokerInOutFunctionBase;
-}(functions_base_1.TYahkaFunctionBase));
+    }
+}
 exports.TIoBrokerInOutFunctionBase = TIoBrokerInOutFunctionBase;
-var TIoBrokerInOutFunction_StateBase = /** @class */ (function () {
-    function TIoBrokerInOutFunction_StateBase(adapter, stateName, deferredTime) {
-        if (deferredTime === void 0) { deferredTime = 0; }
+class TIoBrokerInOutFunction_StateBase {
+    constructor(adapter, stateName, deferredTime = 0) {
         this.adapter = adapter;
         this.stateName = stateName;
         this.deferredTime = deferredTime;
@@ -2135,31 +1910,30 @@ var TIoBrokerInOutFunction_StateBase = /** @class */ (function () {
         this.subscriptionRequests = [];
         this.addSubscriptionRequest(stateName);
     }
-    TIoBrokerInOutFunction_StateBase.prototype.addSubscriptionRequest = function (stateName) {
-        var subscriptionEvent = this.subscriptionEvent.bind(this, stateName);
+    addSubscriptionRequest(stateName) {
+        let subscriptionEvent = this.subscriptionEvent.bind(this, stateName);
         this.subscriptionRequests.push({
             subscriptionType: 'state',
             subscriptionIdentifier: stateName,
             subscriptionEvent: subscriptionEvent
         });
-    };
-    TIoBrokerInOutFunction_StateBase.prototype.getValueOnRead = function (ioState) {
+    }
+    getValueOnRead(ioState) {
         return ioState === null || ioState === void 0 ? void 0 : ioState.val;
-    };
-    TIoBrokerInOutFunction_StateBase.prototype.getValueOnNotify = function (ioState) {
+    }
+    getValueOnNotify(ioState) {
         return ioState === null || ioState === void 0 ? void 0 : ioState.val;
-    };
-    TIoBrokerInOutFunction_StateBase.prototype.toIOBroker = function (plainIoValue, callback) {
-        var _this = this;
+    }
+    toIOBroker(plainIoValue, callback) {
         this.adapter.log.debug('writing state to ioBroker [' + this.stateName + ']: ' + JSON.stringify(plainIoValue));
-        this.adapter.getForeignState(this.stateName, function (error, ioState) {
-            var value = _this.getValueOnRead(ioState);
-            var valueChanged = value !== plainIoValue;
-            _this.adapter.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(plainIoValue) + ' = ' + valueChanged);
+        this.adapter.getForeignState(this.stateName, (error, ioState) => {
+            let value = this.getValueOnRead(ioState);
+            let valueChanged = value !== plainIoValue;
+            this.adapter.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(plainIoValue) + ' = ' + valueChanged);
             if (valueChanged) {
-                _this.adapter.setForeignState(_this.stateName, plainIoValue, false, function (error) {
+                this.adapter.setForeignState(this.stateName, plainIoValue, false, (error) => {
                     if (error)
-                        _this.adapter.log.error('setForeignState error [' + _this.stateName + '] to [' + JSON.stringify(plainIoValue) + ']: ' + error);
+                        this.adapter.log.error('setForeignState error [' + this.stateName + '] to [' + JSON.stringify(plainIoValue) + ']: ' + error);
                     callback();
                 });
             }
@@ -2167,46 +1941,44 @@ var TIoBrokerInOutFunction_StateBase = /** @class */ (function () {
                 callback();
             }
         });
-    };
-    TIoBrokerInOutFunction_StateBase.prototype.fromIOBroker = function (callback) {
-        var _this = this;
+    }
+    fromIOBroker(callback) {
         this.adapter.log.debug('reading state from ioBroker [' + this.stateName + ']');
-        this.adapter.getForeignState(this.stateName, function (error, ioState) {
-            _this.adapter.log.debug('read state from ioBroker [' + _this.stateName + ']: ' + JSON.stringify(ioState));
+        this.adapter.getForeignState(this.stateName, (error, ioState) => {
+            this.adapter.log.debug('read state from ioBroker [' + this.stateName + ']: ' + JSON.stringify(ioState));
             if (error)
-                _this.adapter.log.error('... with error: ' + error);
-            var value = _this.getValueOnRead(ioState);
+                this.adapter.log.error('... with error: ' + error);
+            let value = this.getValueOnRead(ioState);
             callback(error, value);
         });
-    };
-    TIoBrokerInOutFunction_StateBase.prototype.subscriptionEvent = function (stateName, ioState, callback) {
+    }
+    subscriptionEvent(stateName, ioState, callback) {
         this.adapter.log.debug('change event from ioBroker via [' + this.stateName + ']' + JSON.stringify(ioState));
-        var newValue = this.getValueOnNotify(ioState);
+        let newValue = this.getValueOnNotify(ioState);
         if (newValue != null)
             this.executeCallback(callback, newValue);
         else
             this.adapter.log.debug('state was filtered - notification is canceled');
-    };
-    TIoBrokerInOutFunction_StateBase.prototype.executeCallback = function (callback, plainIOValue) {
+    }
+    executeCallback(callback, plainIOValue) {
         if (this.deferredTime > 0)
             this.setupDeferredChangeEvent(callback, plainIOValue);
         else
             callback(plainIOValue);
-    };
-    TIoBrokerInOutFunction_StateBase.prototype.setupDeferredChangeEvent = function (callback, plainIOValue) {
+    }
+    setupDeferredChangeEvent(callback, plainIOValue) {
         this.cancelDeferredChangeEvent();
         this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback, plainIOValue), 150);
-    };
-    TIoBrokerInOutFunction_StateBase.prototype.cancelDeferredChangeEvent = function () {
+    }
+    cancelDeferredChangeEvent() {
         clearTimeout(this.debounceTimer);
         this.debounceTimer = null;
-    };
-    TIoBrokerInOutFunction_StateBase.prototype.deferredChangeEvent = function (callback, plainIOValue) {
+    }
+    deferredChangeEvent(callback, plainIOValue) {
         this.adapter.log.debug('[' + this.stateName + '] firing deferred change event:' + JSON.stringify(plainIOValue));
         callback(plainIOValue);
-    };
-    return TIoBrokerInOutFunction_StateBase;
-}());
+    }
+}
 exports.TIoBrokerInOutFunction_StateBase = TIoBrokerInOutFunction_StateBase;
 
 
@@ -2222,22 +1994,21 @@ exports.TIoBrokerInOutFunction_StateBase = TIoBrokerInOutFunction_StateBase;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_Const = void 0;
-var TIoBrokerInOutFunction_Const = /** @class */ (function () {
-    function TIoBrokerInOutFunction_Const(adapter, parameters) {
+class TIoBrokerInOutFunction_Const {
+    constructor(adapter, parameters) {
         this.adapter = adapter;
         this.parameters = parameters;
     }
-    TIoBrokerInOutFunction_Const.create = function (adapter, parameters) {
+    static create(adapter, parameters) {
         return new TIoBrokerInOutFunction_Const(adapter, parameters);
-    };
-    TIoBrokerInOutFunction_Const.prototype.toIOBroker = function (ioValue, callback) {
+    }
+    toIOBroker(ioValue, callback) {
         callback();
-    };
-    TIoBrokerInOutFunction_Const.prototype.fromIOBroker = function (callback) {
+    }
+    fromIOBroker(callback) {
         callback(null, this.parameters);
-    };
-    return TIoBrokerInOutFunction_Const;
-}());
+    }
+}
 exports.TIoBrokerInOutFunction_Const = TIoBrokerInOutFunction_Const;
 
 
@@ -2247,49 +2018,32 @@ exports.TIoBrokerInOutFunction_Const = TIoBrokerInOutFunction_Const;
 /*!******************************************************!*\
   !*** ./yahka.functions/iofunc.homematic.covering.ts ***!
   \******************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = void 0;
-var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
-var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = /** @class */ (function (_super) {
-    __extends(TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition, _super);
-    function TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition(adapter, stateName, workingItem) {
-        var _this = _super.call(this, adapter, stateName, 0) || this;
-        _this.adapter = adapter;
-        _this.stateName = stateName;
-        _this.workingItem = workingItem;
-        _this.lastWorkingState = false;
-        _this.lastAcknowledgedValue = undefined;
-        _this.debounceTimer = null;
-        _this.addSubscriptionRequest(workingItem);
-        adapter.getForeignState(workingItem, function (error, ioState) {
+const iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
+class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition extends iofunc_base_1.TIoBrokerInOutFunction_StateBase {
+    constructor(adapter, stateName, workingItem) {
+        super(adapter, stateName, 0);
+        this.adapter = adapter;
+        this.stateName = stateName;
+        this.workingItem = workingItem;
+        this.lastWorkingState = false;
+        this.lastAcknowledgedValue = undefined;
+        this.debounceTimer = null;
+        this.addSubscriptionRequest(workingItem);
+        adapter.getForeignState(workingItem, (error, ioState) => {
             if (ioState)
-                _this.lastWorkingState = Boolean(ioState === null || ioState === void 0 ? void 0 : ioState.val);
+                this.lastWorkingState = Boolean(ioState === null || ioState === void 0 ? void 0 : ioState.val);
             else
-                _this.lastWorkingState = undefined;
+                this.lastWorkingState = undefined;
         });
-        return _this;
     }
-    TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.create = function (adapter, parameters) {
-        var p;
+    static create(adapter, parameters) {
+        let p;
         if (typeof parameters === 'string')
             p = [parameters];
         else if (parameters instanceof Array)
@@ -2298,18 +2052,18 @@ var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = /** @class *
             p = [];
         if (p.length == 0)
             return undefined;
-        var stateName = p[0];
-        var workingItemName;
+        let stateName = p[0];
+        let workingItemName;
         if (p.length >= 2)
             workingItemName = p[1];
         else {
-            var pathNames = stateName.split('.');
+            let pathNames = stateName.split('.');
             pathNames[pathNames.length - 1] = 'WORKING';
             workingItemName = pathNames.join('.');
         }
         return new TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition(adapter, stateName, workingItemName);
-    };
-    TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.subscriptionEvent = function (stateName, ioState, callback) {
+    }
+    subscriptionEvent(stateName, ioState, callback) {
         if (!ioState)
             return;
         if (stateName == this.workingItem) {
@@ -2324,16 +2078,16 @@ var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = /** @class *
                 this.setupDeferredChangeEvent(callback);
             }
         }
-    };
-    TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.setupDeferredChangeEvent = function (callback) {
+    }
+    setupDeferredChangeEvent(callback) {
         this.cancelDeferredChangeEvent();
         this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback), 150);
-    };
-    TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.cancelDeferredChangeEvent = function () {
+    }
+    cancelDeferredChangeEvent() {
         clearTimeout(this.debounceTimer);
         this.debounceTimer = null;
-    };
-    TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.prototype.deferredChangeEvent = function (callback) {
+    }
+    deferredChangeEvent(callback) {
         if (!this.lastWorkingState) { // only fire callback if the covering does not move
             this.adapter.log.debug('[' + this.stateName + '] firing target state change event:' + JSON.stringify(this.lastAcknowledgedValue));
             callback(this.lastAcknowledgedValue);
@@ -2341,9 +2095,8 @@ var TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = /** @class *
         else {
             this.adapter.log.debug('[' + this.stateName + '] canceling target state change event - covering is working');
         }
-    };
-    return TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition;
-}(iofunc_base_1.TIoBrokerInOutFunction_StateBase));
+    }
+}
 exports.TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition;
 
 
@@ -2353,30 +2106,15 @@ exports.TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = TIoBroke
 /*!****************************************************!*\
   !*** ./yahka.functions/iofunc.homematic.dimmer.ts ***!
   \****************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = exports.isHomematic_Dimmer_Parameter = void 0;
-var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
-var util_1 = __webpack_require__(/*! util */ "util");
-var yahka_utils_1 = __webpack_require__(/*! ../shared/yahka.utils */ "./shared/yahka.utils.ts");
+const iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
+const util_1 = __webpack_require__(/*! util */ "util");
+const yahka_utils_1 = __webpack_require__(/*! ../shared/yahka.utils */ "./shared/yahka.utils.ts");
 function isHomematic_Dimmer_Parameter(value) {
     if (value === undefined)
         return false;
@@ -2385,83 +2123,76 @@ function isHomematic_Dimmer_Parameter(value) {
     return (0, yahka_utils_1.propertyExists)(value, "levelState");
 }
 exports.isHomematic_Dimmer_Parameter = isHomematic_Dimmer_Parameter;
-var TIoBrokerInOutFunction_Homematic_Dimmer_Base = /** @class */ (function (_super) {
-    __extends(TIoBrokerInOutFunction_Homematic_Dimmer_Base, _super);
-    function TIoBrokerInOutFunction_Homematic_Dimmer_Base(adapter, functionName, parameters) {
-        var _this = _super.call(this, adapter, functionName + "[" + parameters.levelState + "]") || this;
-        _this.parameters = parameters;
-        _this.lastOnLevel = { val: undefined, ack: false, ts: undefined, lc: undefined, from: undefined };
-        _this.addSubscriptionRequest(parameters.levelState);
-        return _this;
+class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends iofunc_base_1.TIoBrokerInOutFunctionBase {
+    constructor(adapter, functionName, parameters) {
+        super(adapter, functionName + "[" + parameters.levelState + "]");
+        this.parameters = parameters;
+        this.lastOnLevel = { val: undefined, ack: false, ts: undefined, lc: undefined, from: undefined };
+        this.addSubscriptionRequest(parameters.levelState);
     }
-    TIoBrokerInOutFunction_Homematic_Dimmer_Base.parseParameters = function (parameters) {
+    static parseParameters(parameters) {
         if (!isHomematic_Dimmer_Parameter(parameters)) {
             return undefined;
         }
         ;
         return parameters;
-    };
-    TIoBrokerInOutFunction_Homematic_Dimmer_Base.prototype.cacheChanged = function (stateName, callback) {
+    }
+    cacheChanged(stateName, callback) {
         // save level if we are switching off
         if (stateName === this.parameters.levelState) {
-            var cacheValue = this.readValueFromCache(stateName);
+            const cacheValue = this.readValueFromCache(stateName);
             if (cacheValue.val > 0) {
                 this.lastOnLevel = cacheValue;
             }
         }
-        _super.prototype.cacheChanged.call(this, stateName, callback);
-    };
-    return TIoBrokerInOutFunction_Homematic_Dimmer_Base;
-}(iofunc_base_1.TIoBrokerInOutFunctionBase));
-exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = TIoBrokerInOutFunction_Homematic_Dimmer_Base;
-var TIoBrokerInOutFunction_Homematic_Dimmer_On = /** @class */ (function (_super) {
-    __extends(TIoBrokerInOutFunction_Homematic_Dimmer_On, _super);
-    function TIoBrokerInOutFunction_Homematic_Dimmer_On(adapter, parameters) {
-        var _this = _super.call(this, adapter, "Homematic.Dimmer.On", parameters) || this;
-        _this.adapter = adapter;
-        _this.parameters = parameters;
-        return _this;
+        super.cacheChanged(stateName, callback);
     }
-    TIoBrokerInOutFunction_Homematic_Dimmer_On.create = function (adapter, parameters) {
-        var params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
+}
+exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = TIoBrokerInOutFunction_Homematic_Dimmer_Base;
+class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFunction_Homematic_Dimmer_Base {
+    constructor(adapter, parameters) {
+        super(adapter, "Homematic.Dimmer.On", parameters);
+        this.adapter = adapter;
+        this.parameters = parameters;
+    }
+    static create(adapter, parameters) {
+        let params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
         if (params === undefined) {
             return undefined;
         }
         return new TIoBrokerInOutFunction_Homematic_Dimmer_On(adapter, params);
-    };
-    TIoBrokerInOutFunction_Homematic_Dimmer_On.prototype.recalculateHomekitValues = function (stateName) {
-        var hkValue = this.stateCache.get(this.parameters.levelState);
+    }
+    recalculateHomekitValues(stateName) {
+        let hkValue = this.stateCache.get(this.parameters.levelState);
         return Boolean((hkValue === null || hkValue === void 0 ? void 0 : hkValue.val) > 0);
-    };
-    TIoBrokerInOutFunction_Homematic_Dimmer_On.prototype.updateIOBrokerValue = function (plainIoValue, callback) {
-        var _this = this;
-        setTimeout(function () { return _this.executeIOBrokerValue(plainIoValue, callback); }, 50);
-    };
-    TIoBrokerInOutFunction_Homematic_Dimmer_On.prototype.executeIOBrokerValue = function (plainIoValue, callback) {
-        var _this = this;
+    }
+    updateIOBrokerValue(plainIoValue, callback) {
+        setTimeout(() => this.executeIOBrokerValue(plainIoValue, callback), 50);
+    }
+    executeIOBrokerValue(plainIoValue, callback) {
         var _a, _b;
-        var isSwitchingOn = Boolean(plainIoValue);
-        var stateName = this.parameters.levelState;
-        var newOnValue = (this.parameters.restoreToPreviousLevel ? (_a = this.lastOnLevel) === null || _a === void 0 ? void 0 : _a.val : this.parameters.defaultSwitchOnLevel) || this.parameters.defaultSwitchOnLevel || 100;
-        var newOffValue = 0;
-        var newValue = isSwitchingOn ? newOnValue : newOffValue;
+        const isSwitchingOn = Boolean(plainIoValue);
+        const stateName = this.parameters.levelState;
+        const newOnValue = (this.parameters.restoreToPreviousLevel ? (_a = this.lastOnLevel) === null || _a === void 0 ? void 0 : _a.val : this.parameters.defaultSwitchOnLevel) || this.parameters.defaultSwitchOnLevel || 100;
+        const newOffValue = 0;
+        const newValue = isSwitchingOn ? newOnValue : newOffValue;
         if (isSwitchingOn && this.parameters.restoreToPreviousLevel) {
             this.log.debug('using previous level for switching on: ' + JSON.stringify((_b = this.lastOnLevel) === null || _b === void 0 ? void 0 : _b.val));
         }
         this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
-        this.adapter.getForeignState(stateName, function (error, ioState) {
-            var value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
+        this.adapter.getForeignState(stateName, (error, ioState) => {
+            let value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
             if (isSwitchingOn && value > 0) {
-                _this.log.debug('function should switch on but level is already not equal to 0: ' + JSON.stringify(value));
+                this.log.debug('function should switch on but level is already not equal to 0: ' + JSON.stringify(value));
                 callback();
                 return;
             }
-            var valueChanged = value !== newValue;
-            _this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
+            let valueChanged = value !== newValue;
+            this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
             if (valueChanged) {
-                _this.adapter.setForeignState(stateName, newValue, false, function (error) {
+                this.adapter.setForeignState(stateName, newValue, false, (error) => {
                     if (error) {
-                        _this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
+                        this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
                         callback();
                     }
                     callback();
@@ -2471,43 +2202,39 @@ var TIoBrokerInOutFunction_Homematic_Dimmer_On = /** @class */ (function (_super
                 callback();
             }
         });
-    };
-    return TIoBrokerInOutFunction_Homematic_Dimmer_On;
-}(TIoBrokerInOutFunction_Homematic_Dimmer_Base));
-exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = TIoBrokerInOutFunction_Homematic_Dimmer_On;
-var TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = /** @class */ (function (_super) {
-    __extends(TIoBrokerInOutFunction_Homematic_Dimmer_Brightness, _super);
-    function TIoBrokerInOutFunction_Homematic_Dimmer_Brightness(adapter, parameters) {
-        var _this = _super.call(this, adapter, "Homematic.Dimmer.Brightness", parameters) || this;
-        _this.adapter = adapter;
-        _this.parameters = parameters;
-        return _this;
     }
-    TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.create = function (adapter, parameters) {
-        var params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
+}
+exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = TIoBrokerInOutFunction_Homematic_Dimmer_On;
+class TIoBrokerInOutFunction_Homematic_Dimmer_Brightness extends TIoBrokerInOutFunction_Homematic_Dimmer_Base {
+    constructor(adapter, parameters) {
+        super(adapter, "Homematic.Dimmer.Brightness", parameters);
+        this.adapter = adapter;
+        this.parameters = parameters;
+    }
+    static create(adapter, parameters) {
+        let params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
         if (params === undefined) {
             return undefined;
         }
         return new TIoBrokerInOutFunction_Homematic_Dimmer_Brightness(adapter, params);
-    };
-    TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.prototype.recalculateHomekitValues = function (stateName) {
+    }
+    recalculateHomekitValues(stateName) {
         var _a;
-        var hkValue = this.stateCache.get(this.parameters.levelState);
+        let hkValue = this.stateCache.get(this.parameters.levelState);
         return (hkValue === null || hkValue === void 0 ? void 0 : hkValue.val) == 0 ? (_a = this.lastOnLevel) === null || _a === void 0 ? void 0 : _a.val : hkValue === null || hkValue === void 0 ? void 0 : hkValue.val;
-    };
-    TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.prototype.updateIOBrokerValue = function (plainIoValue, callback) {
-        var _this = this;
-        var newValue = plainIoValue;
-        var stateName = this.parameters.levelState;
+    }
+    updateIOBrokerValue(plainIoValue, callback) {
+        const newValue = plainIoValue;
+        const stateName = this.parameters.levelState;
         this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
-        this.adapter.getForeignState(stateName, function (error, ioState) {
-            var value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
-            var valueChanged = value !== newValue;
-            _this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
+        this.adapter.getForeignState(stateName, (error, ioState) => {
+            let value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
+            let valueChanged = value !== newValue;
+            this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
             if (valueChanged) {
-                _this.adapter.setForeignState(stateName, newValue, false, function (error) {
+                this.adapter.setForeignState(stateName, newValue, false, (error) => {
                     if (error) {
-                        _this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
+                        this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
                         callback();
                     }
                     callback();
@@ -2517,9 +2244,8 @@ var TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = /** @class */ (function
                 callback();
             }
         });
-    };
-    return TIoBrokerInOutFunction_Homematic_Dimmer_Brightness;
-}(TIoBrokerInOutFunction_Homematic_Dimmer_Base));
+    }
+}
 exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = TIoBrokerInOutFunction_Homematic_Dimmer_Brightness;
 
 
@@ -2529,72 +2255,33 @@ exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = TIoBrokerInOutFunct
 /*!***********************************************!*\
   !*** ./yahka.functions/iofunc.multi-state.ts ***!
   \***********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_MultiState = exports.isMultiStateParameter = void 0;
-var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
-var util_1 = __webpack_require__(/*! util */ "util");
+const iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
+const util_1 = __webpack_require__(/*! util */ "util");
 function isMultiStateParameter(value) {
     if (value === undefined)
         return false;
     if (!(0, util_1.isObject)(value))
         return false;
-    var propName = "readState";
+    let propName = "readState";
     return (propName in value);
 }
 exports.isMultiStateParameter = isMultiStateParameter;
-var TIoBrokerInOutFunction_MultiState = /** @class */ (function (_super) {
-    __extends(TIoBrokerInOutFunction_MultiState, _super);
-    function TIoBrokerInOutFunction_MultiState(adapter, stateProperties) {
-        var e_1, _a;
-        var _this = _super.call(this, adapter, "TIoBrokerInOutFunctionMultiState") || this;
-        _this.adapter = adapter;
-        _this.stateProperties = stateProperties;
-        try {
-            for (var stateProperties_1 = __values(stateProperties), stateProperties_1_1 = stateProperties_1.next(); !stateProperties_1_1.done; stateProperties_1_1 = stateProperties_1.next()) {
-                var state = stateProperties_1_1.value;
-                _this.addSubscriptionRequest(state.readState);
-            }
+class TIoBrokerInOutFunction_MultiState extends iofunc_base_1.TIoBrokerInOutFunctionBase {
+    constructor(adapter, stateProperties) {
+        super(adapter, "TIoBrokerInOutFunctionMultiState");
+        this.adapter = adapter;
+        this.stateProperties = stateProperties;
+        for (let state of stateProperties) {
+            this.addSubscriptionRequest(state.readState);
         }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (stateProperties_1_1 && !stateProperties_1_1.done && (_a = stateProperties_1.return)) _a.call(stateProperties_1);
-            }
-            finally { if (e_1) throw e_1.error; }
-        }
-        return _this;
     }
-    TIoBrokerInOutFunction_MultiState.parseParameters = function (parameters) {
+    static parseParameters(parameters) {
         if (Array.isArray(parameters)) {
             return parameters.filter(isMultiStateParameter);
         }
@@ -2604,34 +2291,32 @@ var TIoBrokerInOutFunction_MultiState = /** @class */ (function (_super) {
         else {
             return undefined;
         }
-    };
-    TIoBrokerInOutFunction_MultiState.create = function (adapter, parameters) {
-        var stateNames = TIoBrokerInOutFunction_MultiState.parseParameters(parameters);
+    }
+    static create(adapter, parameters) {
+        let stateNames = TIoBrokerInOutFunction_MultiState.parseParameters(parameters);
         if (stateNames === undefined) {
             return undefined;
         }
         return new TIoBrokerInOutFunction_MultiState(adapter, stateNames);
-    };
-    TIoBrokerInOutFunction_MultiState.prototype.recalculateHomekitValues = function (stateName) {
-        var _this = this;
-        var hkValues = this.stateProperties.map(function (state) { var _a; return (_a = _this.stateCache.get(state.readState)) === null || _a === void 0 ? void 0 : _a.val; });
+    }
+    recalculateHomekitValues(stateName) {
+        let hkValues = this.stateProperties.map((state) => { var _a; return (_a = this.stateCache.get(state.readState)) === null || _a === void 0 ? void 0 : _a.val; });
         return hkValues.length === 1 ? hkValues[0] : hkValues;
-    };
-    TIoBrokerInOutFunction_MultiState.prototype.updateSingleIOBrokerValue = function (state, newValue) {
-        var _this = this;
+    }
+    updateSingleIOBrokerValue(state, newValue) {
         if (newValue === undefined)
             return Promise.resolve();
-        return new Promise(function (resolve, reject) {
-            var stateName = state.writeState || state.readState;
-            _this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
-            _this.adapter.getForeignState(stateName, function (error, ioState) {
-                var value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
-                var valueChanged = value !== newValue;
-                _this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
+        return new Promise((resolve, reject) => {
+            let stateName = state.writeState || state.readState;
+            this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
+            this.adapter.getForeignState(stateName, (error, ioState) => {
+                let value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
+                let valueChanged = value !== newValue;
+                this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
                 if (valueChanged) {
-                    _this.adapter.setForeignState(stateName, newValue, false, function (error) {
+                    this.adapter.setForeignState(stateName, newValue, false, (error) => {
                         if (error) {
-                            _this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
+                            this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
                             reject(error);
                         }
                         resolve();
@@ -2642,24 +2327,22 @@ var TIoBrokerInOutFunction_MultiState = /** @class */ (function (_super) {
                 }
             });
         });
-    };
-    TIoBrokerInOutFunction_MultiState.prototype.updateIOBrokerValue = function (plainIoValue, callback) {
-        var _this = this;
-        var ioValueArray = Array.isArray(plainIoValue) ? plainIoValue : [plainIoValue];
-        var promiseArray = this.stateProperties.map(function (state, index) {
-            var newValueForThisState = ioValueArray[index];
-            return _this.updateSingleIOBrokerValue(state, newValueForThisState);
+    }
+    updateIOBrokerValue(plainIoValue, callback) {
+        let ioValueArray = Array.isArray(plainIoValue) ? plainIoValue : [plainIoValue];
+        let promiseArray = this.stateProperties.map((state, index) => {
+            let newValueForThisState = ioValueArray[index];
+            return this.updateSingleIOBrokerValue(state, newValueForThisState);
         });
-        Promise.all(promiseArray).then(function () {
-            _this.log.debug('wrote all states sucessfully to ioBroker');
+        Promise.all(promiseArray).then(() => {
+            this.log.debug('wrote all states sucessfully to ioBroker');
             callback();
-        }).catch(function (e) {
-            _this.log.error('could not write all states to ioBroker: ' + JSON.stringify(e));
+        }).catch((e) => {
+            this.log.error('could not write all states to ioBroker: ' + JSON.stringify(e));
             callback();
         });
-    };
-    return TIoBrokerInOutFunction_MultiState;
-}(iofunc_base_1.TIoBrokerInOutFunctionBase));
+    }
+}
 exports.TIoBrokerInOutFunction_MultiState = TIoBrokerInOutFunction_MultiState;
 
 
@@ -2669,68 +2352,39 @@ exports.TIoBrokerInOutFunction_MultiState = TIoBrokerInOutFunction_MultiState;
 /*!*****************************************!*\
   !*** ./yahka.functions/iofunc.state.ts ***!
   \*****************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_State_OnlyACK = exports.TIoBrokerInOutFunction_StateDeferred = exports.TIoBrokerInOutFunction_State = void 0;
-var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
-var TIoBrokerInOutFunction_State = /** @class */ (function (_super) {
-    __extends(TIoBrokerInOutFunction_State, _super);
-    function TIoBrokerInOutFunction_State() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    TIoBrokerInOutFunction_State.create = function (adapter, parameters) {
+const iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
+class TIoBrokerInOutFunction_State extends iofunc_base_1.TIoBrokerInOutFunction_StateBase {
+    static create(adapter, parameters) {
         if (typeof parameters !== "string")
             return undefined;
-        var stateName = parameters;
+        let stateName = parameters;
         return new TIoBrokerInOutFunction_State(adapter, stateName);
-    };
-    return TIoBrokerInOutFunction_State;
-}(iofunc_base_1.TIoBrokerInOutFunction_StateBase));
+    }
+}
 exports.TIoBrokerInOutFunction_State = TIoBrokerInOutFunction_State;
-var TIoBrokerInOutFunction_StateDeferred = /** @class */ (function (_super) {
-    __extends(TIoBrokerInOutFunction_StateDeferred, _super);
-    function TIoBrokerInOutFunction_StateDeferred() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    TIoBrokerInOutFunction_StateDeferred.create = function (adapter, parameters) {
+class TIoBrokerInOutFunction_StateDeferred extends iofunc_base_1.TIoBrokerInOutFunction_StateBase {
+    static create(adapter, parameters) {
         if (typeof parameters !== "string")
             return undefined;
-        var stateName = parameters;
+        let stateName = parameters;
         return new TIoBrokerInOutFunction_StateDeferred(adapter, stateName, 250);
-    };
-    return TIoBrokerInOutFunction_StateDeferred;
-}(iofunc_base_1.TIoBrokerInOutFunction_StateBase));
-exports.TIoBrokerInOutFunction_StateDeferred = TIoBrokerInOutFunction_StateDeferred;
-var TIoBrokerInOutFunction_State_OnlyACK = /** @class */ (function (_super) {
-    __extends(TIoBrokerInOutFunction_State_OnlyACK, _super);
-    function TIoBrokerInOutFunction_State_OnlyACK() {
-        return _super !== null && _super.apply(this, arguments) || this;
     }
-    TIoBrokerInOutFunction_State_OnlyACK.create = function (adapter, parameters) {
+}
+exports.TIoBrokerInOutFunction_StateDeferred = TIoBrokerInOutFunction_StateDeferred;
+class TIoBrokerInOutFunction_State_OnlyACK extends iofunc_base_1.TIoBrokerInOutFunction_StateBase {
+    static create(adapter, parameters) {
         if (typeof parameters !== "string")
             return undefined;
-        var stateName = parameters;
+        let stateName = parameters;
         return new TIoBrokerInOutFunction_State_OnlyACK(adapter, stateName);
-    };
-    TIoBrokerInOutFunction_State_OnlyACK.prototype.getValueOnRead = function (ioState) {
+    }
+    getValueOnRead(ioState) {
         if (ioState)
             if (ioState.ack) {
                 this.lastAcknowledgedValue = ioState === null || ioState === void 0 ? void 0 : ioState.val;
@@ -2742,8 +2396,8 @@ var TIoBrokerInOutFunction_State_OnlyACK = /** @class */ (function (_super) {
             }
         else
             return null;
-    };
-    TIoBrokerInOutFunction_State_OnlyACK.prototype.getValueOnNotify = function (ioState) {
+    }
+    getValueOnNotify(ioState) {
         if (ioState)
             if (ioState.ack) {
                 this.lastAcknowledgedValue = ioState === null || ioState === void 0 ? void 0 : ioState.val;
@@ -2755,9 +2409,8 @@ var TIoBrokerInOutFunction_State_OnlyACK = /** @class */ (function (_super) {
             }
         else
             return null;
-    };
-    return TIoBrokerInOutFunction_State_OnlyACK;
-}(iofunc_base_1.TIoBrokerInOutFunction_StateBase));
+    }
+}
 exports.TIoBrokerInOutFunction_State_OnlyACK = TIoBrokerInOutFunction_State_OnlyACK;
 
 
@@ -2767,72 +2420,59 @@ exports.TIoBrokerInOutFunction_State_OnlyACK = TIoBrokerInOutFunction_State_Only
 /*!*********************************!*\
   !*** ./yahka.homekit-bridge.ts ***!
   \*********************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.deinitHAP = exports.initHAP = exports.THomeKitBridge = void 0;
 /// <reference path="./typings/index.d.ts" />
-var debug = __webpack_require__(/*! debug */ "debug");
-var util = __webpack_require__(/*! util */ "util");
-var yahka_community_types_1 = __webpack_require__(/*! ./yahka.community.types */ "./yahka.community.types.ts");
-var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
-var yahka_homekit_service_1 = __webpack_require__(/*! ./yahka.homekit-service */ "./yahka.homekit-service.ts");
+const debug = __webpack_require__(/*! debug */ "debug");
+const util = __webpack_require__(/*! util */ "util");
+const yahka_community_types_1 = __webpack_require__(/*! ./yahka.community.types */ "./yahka.community.types.ts");
+const hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
+const yahka_homekit_service_1 = __webpack_require__(/*! ./yahka.homekit-service */ "./yahka.homekit-service.ts");
 var pjson = __webpack_require__(/*! ../package.json */ "../package.json");
 (0, yahka_community_types_1.importHAPCommunityTypesAndFixes)();
-var THomeKitBridge = /** @class */ (function () {
-    function THomeKitBridge(config, FBridgeFactory, FLogger) {
+class THomeKitBridge {
+    constructor(config, FBridgeFactory, FLogger) {
         this.config = config;
         this.FLogger = FLogger;
         this.serviceInitializer = new yahka_homekit_service_1.YahkaServiceInitializer(FBridgeFactory, FLogger);
         this.init();
     }
-    THomeKitBridge.prototype.init = function () {
-        var e_1, _a;
-        var _this = this;
+    init() {
         this.bridgeObject = this.setupBridge();
-        var devicesToPublish = [function () {
+        const devicesToPublish = [() => {
                 var _a;
-                var advertiser = _this.config.useLegacyAdvertiser ? "bonjour-hap" /* BONJOUR */ : "ciao" /* CIAO */;
-                _this.FLogger.info("publishing bridge " + _this.config.name + " on " + ((_a = _this.config.interface) !== null && _a !== void 0 ? _a : '0.0.0.0') + " using " + advertiser);
-                _this.bridgeObject.publish({
-                    username: _this.config.username,
-                    port: _this.config.port,
-                    pincode: _this.config.pincode,
+                const advertiser = this.config.useLegacyAdvertiser ? "bonjour-hap" /* BONJOUR */ : "ciao" /* CIAO */;
+                this.FLogger.info(`publishing bridge ${this.config.name} on ${(_a = this.config.interface) !== null && _a !== void 0 ? _a : '0.0.0.0'} using ${advertiser}`);
+                this.bridgeObject.publish({
+                    username: this.config.username,
+                    port: this.config.port,
+                    pincode: this.config.pincode,
                     category: 2,
-                    bind: _this.config.interface != '' ? _this.config.interface : undefined,
-                    advertiser: advertiser
+                    bind: this.config.interface != '' ? this.config.interface : undefined,
+                    advertiser
                 });
             }];
         if (this.config.devices) {
-            var _loop_1 = function (device) {
+            for (let device of this.config.devices) {
                 if (device.enabled === false) {
-                    return "continue";
+                    continue;
                 }
-                var hapDevice = this_1.createDevice(device);
+                const hapDevice = this.createDevice(device);
                 if (device.publishAsOwnDevice) {
-                    devicesToPublish.push(function () {
+                    devicesToPublish.push(() => {
                         var _a;
-                        var advertiser = device.useLegacyAdvertiser ? "bonjour-hap" /* BONJOUR */ : "ciao" /* CIAO */;
-                        _this.FLogger.info("publishing device " + device.name + " on " + ((_a = device.interface) !== null && _a !== void 0 ? _a : '0.0.0.0') + " using " + advertiser);
+                        const advertiser = device.useLegacyAdvertiser ? "bonjour-hap" /* BONJOUR */ : "ciao" /* CIAO */;
+                        this.FLogger.info(`publishing device ${device.name} on ${(_a = device.interface) !== null && _a !== void 0 ? _a : '0.0.0.0'} using ${advertiser}`);
                         hapDevice.publish({
                             username: device.username,
                             port: device.port,
                             pincode: device.pincode,
                             category: device.category,
-                            advertiser: advertiser,
+                            advertiser,
                             mdns: {
                                 interface: device.interface,
                                 reuseAddr: true
@@ -2842,35 +2482,20 @@ var THomeKitBridge = /** @class */ (function () {
                 }
                 else {
                     try {
-                        this_1.bridgeObject.addBridgedAccessory(hapDevice);
+                        this.bridgeObject.addBridgedAccessory(hapDevice);
                     }
                     catch (e) {
-                        this_1.FLogger.warn(e);
-                        this_1.FLogger.warn('Error by adding: ' + JSON.stringify(device));
+                        this.FLogger.warn(e);
+                        this.FLogger.warn('Error by adding: ' + JSON.stringify(device));
                     }
                 }
-            };
-            var this_1 = this;
-            try {
-                for (var _b = __values(this.config.devices), _c = _b.next(); !_c.done; _c = _b.next()) {
-                    var device = _c.value;
-                    _loop_1(device);
-                }
-            }
-            catch (e_1_1) { e_1 = { error: e_1_1 }; }
-            finally {
-                try {
-                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-                }
-                finally { if (e_1) throw e_1.error; }
             }
         }
-        devicesToPublish.forEach(function (m) { return m(); });
-    };
-    THomeKitBridge.prototype.setupBridge = function () {
-        var _this = this;
-        var hapBridge = new hap_nodejs_1.Bridge(this.config.name, hap_nodejs_1.uuid.generate(this.config.ident));
-        var infoService = hapBridge.getService(hap_nodejs_1.Service.AccessoryInformation);
+        devicesToPublish.forEach((m) => m());
+    }
+    setupBridge() {
+        let hapBridge = new hap_nodejs_1.Bridge(this.config.name, hap_nodejs_1.uuid.generate(this.config.ident));
+        let infoService = hapBridge.getService(hap_nodejs_1.Service.AccessoryInformation);
         infoService.setCharacteristic(hap_nodejs_1.Characteristic.Manufacturer, this.config.manufacturer || 'not configured');
         infoService.setCharacteristic(hap_nodejs_1.Characteristic.Model, this.config.model || 'not configured');
         infoService.setCharacteristic(hap_nodejs_1.Characteristic.SerialNumber, this.config.serial || 'not configured');
@@ -2881,42 +2506,40 @@ var THomeKitBridge = /** @class */ (function () {
             infoService.setCharacteristic(hap_nodejs_1.Characteristic.FirmwareRevision, pjson.version);
         }
         // Listen for bridge identification event
-        hapBridge.on('identify', function (paired, callback) {
-            _this.FLogger.debug('Node Bridge identify:' + paired);
+        hapBridge.on('identify', (paired, callback) => {
+            this.FLogger.debug('Node Bridge identify:' + paired);
             callback(); // success
         });
         return hapBridge;
-    };
-    THomeKitBridge.prototype.createDevice = function (device) {
-        var _this = this;
-        var devName = device.name;
-        var deviceID = hap_nodejs_1.uuid.generate(this.config.ident + ':' + devName);
-        var i = 0;
-        while (this.bridgeObject.bridgedAccessories.some(function (a) { return a.UUID == deviceID; })) {
+    }
+    createDevice(device) {
+        let devName = device.name;
+        let deviceID = hap_nodejs_1.uuid.generate(this.config.ident + ':' + devName);
+        let i = 0;
+        while (this.bridgeObject.bridgedAccessories.some((a) => a.UUID == deviceID)) {
             devName = device.name + '_' + ++i;
             deviceID = hap_nodejs_1.uuid.generate(this.config.ident + ':' + devName);
         }
         this.FLogger.info('adding ' + devName + ' with UUID: ' + deviceID);
-        var hapDevice = new hap_nodejs_1.Accessory(devName, deviceID);
-        var infoService = hapDevice.getService(hap_nodejs_1.Service.AccessoryInformation);
+        let hapDevice = new hap_nodejs_1.Accessory(devName, deviceID);
+        let infoService = hapDevice.getService(hap_nodejs_1.Service.AccessoryInformation);
         infoService.setCharacteristic(hap_nodejs_1.Characteristic.Manufacturer, device.manufacturer || 'not configured');
         infoService.setCharacteristic(hap_nodejs_1.Characteristic.Model, device.model || 'not configured');
         infoService.setCharacteristic(hap_nodejs_1.Characteristic.SerialNumber, device.serial || 'not configured');
         if ((device.firmware !== undefined) && (device.firmware !== "")) {
             infoService.setCharacteristic(hap_nodejs_1.Characteristic.FirmwareRevision, device.firmware);
         }
-        hapDevice.on('identify', function (paired, callback) {
-            _this.FLogger.debug("[" + device.name + "] device identify");
+        hapDevice.on('identify', (paired, callback) => {
+            this.FLogger.debug(`[${device.name}] device identify`);
             callback(); // success
         });
         this.serviceInitializer.initServices(hapDevice, device.services);
         return hapDevice;
-    };
-    return THomeKitBridge;
-}());
+    }
+}
 exports.THomeKitBridge = THomeKitBridge;
-var hapInited = false;
-var originalLogMethod = debug.log;
+let hapInited = false;
+let originalLogMethod = debug.log;
 function initHAP(storagePath, HAPdebugLogMethod) {
     if (hapInited) {
         return;
@@ -2951,11 +2574,11 @@ exports.deinitHAP = deinitHAP;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.THomeKitIPCamera = void 0;
 /// <reference path="./typings/index.d.ts" />
-var child_process_1 = __webpack_require__(/*! child_process */ "child_process");
-var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
-var yahka_homekit_service_1 = __webpack_require__(/*! ./yahka.homekit-service */ "./yahka.homekit-service.ts");
-var THomeKitIPCamera = /** @class */ (function () {
-    function THomeKitIPCamera(camConfig, FBridgeFactory, FLogger) {
+const child_process_1 = __webpack_require__(/*! child_process */ "child_process");
+const hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
+const yahka_homekit_service_1 = __webpack_require__(/*! ./yahka.homekit-service */ "./yahka.homekit-service.ts");
+class THomeKitIPCamera {
+    constructor(camConfig, FBridgeFactory, FLogger) {
         this.camConfig = camConfig;
         this.FLogger = FLogger;
         this.pendingSessions = {};
@@ -2963,7 +2586,7 @@ var THomeKitIPCamera = /** @class */ (function () {
         this.serviceInitializer = new yahka_homekit_service_1.YahkaServiceInitializer(FBridgeFactory, FLogger);
         this.init();
     }
-    THomeKitIPCamera.prototype.init = function () {
+    init() {
         if (!this.camConfig.enabled) {
             return;
         }
@@ -2971,8 +2594,8 @@ var THomeKitIPCamera = /** @class */ (function () {
         this.createCameraController();
         this.createAdditionalServices();
         this.publishCamera();
-    };
-    THomeKitIPCamera.prototype.createOptionsDictionary = function () {
+    }
+    createOptionsDictionary() {
         var videoResolutions = [];
         var maxFPS = (this.camConfig.maxFPS > 30) ? 30 : this.camConfig.maxFPS;
         if (this.camConfig.maxWidth >= 320) {
@@ -3018,7 +2641,7 @@ var THomeKitIPCamera = /** @class */ (function () {
                 videoResolutions.push([1920, 1080, maxFPS]);
             }
         }
-        var options = {
+        let options = {
             proxy: false,
             disable_audio_proxy: false,
             srtp: true,
@@ -3041,59 +2664,58 @@ var THomeKitIPCamera = /** @class */ (function () {
             }
         };
         return options;
-    };
-    THomeKitIPCamera.prototype.createCameraDevice = function () {
-        var _this = this;
-        var deviceID = hap_nodejs_1.uuid.generate(this.camConfig.ident + ':' + this.camConfig.name);
-        var hapDevice = new hap_nodejs_1.Accessory(this.camConfig.name, deviceID);
-        var infoService = hapDevice.getService(hap_nodejs_1.Service.AccessoryInformation);
+    }
+    createCameraDevice() {
+        let deviceID = hap_nodejs_1.uuid.generate(this.camConfig.ident + ':' + this.camConfig.name);
+        let hapDevice = new hap_nodejs_1.Accessory(this.camConfig.name, deviceID);
+        let infoService = hapDevice.getService(hap_nodejs_1.Service.AccessoryInformation);
         infoService.setCharacteristic(hap_nodejs_1.Characteristic.Manufacturer, this.camConfig.manufacturer || 'not configured');
         infoService.setCharacteristic(hap_nodejs_1.Characteristic.Model, this.camConfig.model || 'not configured');
         infoService.setCharacteristic(hap_nodejs_1.Characteristic.SerialNumber, this.camConfig.serial || 'not configured');
         if ((this.camConfig.firmware !== undefined) && (this.camConfig.firmware !== "")) {
             infoService.setCharacteristic(hap_nodejs_1.Characteristic.FirmwareRevision, this.camConfig.firmware);
         }
-        hapDevice.on('identify', function (paired, callback) {
-            _this.FLogger.debug('camera identify');
+        hapDevice.on('identify', (paired, callback) => {
+            this.FLogger.debug('camera identify');
             callback(); // success
         });
         this.camera = hapDevice;
-    };
-    THomeKitIPCamera.prototype.createCameraController = function () {
+    }
+    createCameraController() {
         this.cameraController = new hap_nodejs_1.CameraController({
             cameraStreamCount: 2,
             delegate: this,
             streamingOptions: this.createOptionsDictionary()
         });
         this.camera.configureController(this.cameraController);
-    };
-    THomeKitIPCamera.prototype.createAdditionalServices = function () {
+    }
+    createAdditionalServices() {
         this.serviceInitializer.initServices(this.camera, this.camConfig.services);
-    };
-    THomeKitIPCamera.prototype.publishCamera = function () {
+    }
+    publishCamera() {
         var _a;
-        var advertiser = this.camConfig.useLegacyAdvertiser ? "bonjour-hap" /* BONJOUR */ : "ciao" /* CIAO */;
-        this.FLogger.info("publishing camera " + this.camConfig.name + " on " + ((_a = this.camConfig.interface) !== null && _a !== void 0 ? _a : '0.0.0.0') + " using " + advertiser);
+        const advertiser = this.camConfig.useLegacyAdvertiser ? "bonjour-hap" /* BONJOUR */ : "ciao" /* CIAO */;
+        this.FLogger.info(`publishing camera ${this.camConfig.name} on ${(_a = this.camConfig.interface) !== null && _a !== void 0 ? _a : '0.0.0.0'} using ${advertiser}`);
         this.camera.publish({
             username: this.camConfig.username,
             port: this.camConfig.port,
             pincode: this.camConfig.pincode,
             category: 17 /* CAMERA */,
             bind: this.camConfig.interface != '' ? this.camConfig.interface : undefined,
-            advertiser: advertiser
+            advertiser
         }, false);
-    };
-    THomeKitIPCamera.prototype.handleSnapshotRequest = function (request, callback) {
-        var params = {
+    }
+    handleSnapshotRequest(request, callback) {
+        let params = {
             source: this.camConfig.source,
             width: request.width,
             height: request.height,
         };
-        var ffmpegCommand = this.camConfig.ffmpegCommandLine.snapshot.map(function (s) { return s.replace(/\$\{(.*?)\}/g, function (_, word) {
+        let ffmpegCommand = this.camConfig.ffmpegCommandLine.snapshot.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => {
             return params[word];
-        }); });
+        }));
         this.FLogger.debug("Snapshot run: ffmpeg " + ffmpegCommand.join(' '));
-        var ffmpeg = (0, child_process_1.spawn)('ffmpeg', ffmpegCommand, { env: process.env });
+        let ffmpeg = (0, child_process_1.spawn)('ffmpeg', ffmpegCommand, { env: process.env });
         var imageBuffer = Buffer.alloc(0);
         ffmpeg.stdout.on('data', function (data) {
             imageBuffer = Buffer.concat([imageBuffer, data]);
@@ -3101,20 +2723,20 @@ var THomeKitIPCamera = /** @class */ (function () {
         ffmpeg.on('close', function (code) {
             callback(undefined, imageBuffer);
         });
-    };
-    THomeKitIPCamera.prototype.prepareStream = function (request, callback) {
-        var sessionInfo = {};
-        var sessionID = request.sessionID;
-        var targetAddress = request.targetAddress;
+    }
+    prepareStream(request, callback) {
+        let sessionInfo = {};
+        const sessionID = request.sessionID;
+        const targetAddress = request.targetAddress;
         sessionInfo.address = targetAddress;
-        var response = {};
-        var videoInfo = request.video;
+        let response = {};
+        let videoInfo = request.video;
         if (videoInfo) {
-            var targetPort = videoInfo.port;
-            var videoCryptoSuite = videoInfo.srtpCryptoSuite; // could be used to support multiple crypto suite (or support no suite for debugging)
-            var videoSrtpKey = videoInfo.srtp_key;
-            var videoSrtpSalt = videoInfo.srtp_salt;
-            var videoSSRC = hap_nodejs_1.CameraController.generateSynchronisationSource();
+            const targetPort = videoInfo.port;
+            const videoCryptoSuite = videoInfo.srtpCryptoSuite; // could be used to support multiple crypto suite (or support no suite for debugging)
+            const videoSrtpKey = videoInfo.srtp_key;
+            const videoSrtpSalt = videoInfo.srtp_salt;
+            const videoSSRC = hap_nodejs_1.CameraController.generateSynchronisationSource();
             response.video = {
                 port: targetPort,
                 ssrc: videoSSRC,
@@ -3126,13 +2748,13 @@ var THomeKitIPCamera = /** @class */ (function () {
             sessionInfo.videoSSRC = videoSSRC;
             sessionInfo.videoCryptoSuite = videoCryptoSuite;
         }
-        var audioInfo = request.audio;
+        const audioInfo = request.audio;
         if (audioInfo) {
-            var targetPort = audioInfo.port;
-            var audioCryptoSuite = audioInfo.srtpCryptoSuite; // could be used to support multiple crypto suite (or support no suite for debugging)
-            var audioSrtpKey = audioInfo.srtp_key;
-            var audioSrtpSalt = audioInfo.srtp_salt;
-            var audioSSRC = hap_nodejs_1.CameraController.generateSynchronisationSource();
+            const targetPort = audioInfo.port;
+            const audioCryptoSuite = audioInfo.srtpCryptoSuite; // could be used to support multiple crypto suite (or support no suite for debugging)
+            const audioSrtpKey = audioInfo.srtp_key;
+            const audioSrtpSalt = audioInfo.srtp_salt;
+            const audioSSRC = hap_nodejs_1.CameraController.generateSynchronisationSource();
             response.audio = {
                 port: targetPort,
                 ssrc: audioSSRC,
@@ -3156,9 +2778,8 @@ var THomeKitIPCamera = /** @class */ (function () {
         // response.address = addressResp as Address;
         this.pendingSessions[sessionID] = sessionInfo;
         callback(undefined, response);
-    };
-    THomeKitIPCamera.prototype.handleStreamRequest = function (request, callback) {
-        var _this = this;
+    }
+    handleStreamRequest(request, callback) {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
         var sessionId = request.sessionID;
         switch (request.type) {
@@ -3166,23 +2787,23 @@ var THomeKitIPCamera = /** @class */ (function () {
                 var sessionInfo = this.pendingSessions[sessionId];
                 this.FLogger.debug('Session Request:' + JSON.stringify(request, undefined, 2));
                 if (sessionInfo) {
-                    var width = 1280;
-                    var height = 720;
-                    var fps = 30;
-                    var bitrate = 300;
-                    var codec = (_a = this.camConfig.codec) !== null && _a !== void 0 ? _a : 'libx264';
-                    var mtu = (_c = (_b = request.video) === null || _b === void 0 ? void 0 : _b.mtu) !== null && _c !== void 0 ? _c : 1316;
-                    var videoInfo = request.video;
+                    let width = 1280;
+                    let height = 720;
+                    let fps = 30;
+                    let bitrate = 300;
+                    let codec = (_a = this.camConfig.codec) !== null && _a !== void 0 ? _a : 'libx264';
+                    const mtu = (_c = (_b = request.video) === null || _b === void 0 ? void 0 : _b.mtu) !== null && _c !== void 0 ? _c : 1316;
+                    let videoInfo = request.video;
                     if (videoInfo) {
                         width = videoInfo.width;
                         height = videoInfo.height;
-                        var expectedFPS = videoInfo.fps;
+                        let expectedFPS = videoInfo.fps;
                         if (expectedFPS < fps) {
                             fps = expectedFPS;
                         }
                         bitrate = videoInfo.max_bit_rate;
                     }
-                    var params_1 = {
+                    let params = {
                         source: this.camConfig.source,
                         codec: codec,
                         fps: fps,
@@ -3194,11 +2815,11 @@ var THomeKitIPCamera = /** @class */ (function () {
                         targetAddress: sessionInfo.address,
                         targetVideoPort: sessionInfo.videoPort,
                         targetVideoSsrc: sessionInfo.videoSSRC,
-                        mtu: mtu
+                        mtu
                     };
-                    var ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map(function (s) { return s.replace(/\$\{(.*?)\}/g, function (_, word) { return params_1[word]; }); });
+                    let ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => params[word]));
                     if (this.camConfig.enableAudio && request.audio != null) {
-                        var params_2 = {
+                        let params = {
                             source: this.camConfig.source,
                             bitrate: (_f = request.audio.max_bit_rate) !== null && _f !== void 0 ? _f : 16,
                             samplerate: (_g = request.audio.sample_rate) !== null && _g !== void 0 ? _g : 16,
@@ -3209,35 +2830,35 @@ var THomeKitIPCamera = /** @class */ (function () {
                             targetAudioSsrc: sessionInfo.audioSSRC,
                             audiokey: (_k = sessionInfo.audioSRTP) === null || _k === void 0 ? void 0 : _k.toString('base64'),
                         };
-                        ffmpegCommand = ffmpegCommand.concat(this.camConfig.ffmpegCommandLine.streamAudio.map(function (s) { return s.replace(/\$\{(.*?)\}/g, function (_, word) { return params_2[word]; }); }));
+                        ffmpegCommand = ffmpegCommand.concat(this.camConfig.ffmpegCommandLine.streamAudio.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => params[word])));
                     }
                     // this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
-                    var ffmpeg = (0, child_process_1.spawn)('ffmpeg', ffmpegCommand, { env: process.env });
-                    var started_1 = false;
-                    ffmpeg.stderr.on('data', function (data) {
-                        if (!started_1) {
-                            started_1 = true;
-                            _this.FLogger.debug("FFMPEG: received first frame");
+                    let ffmpeg = (0, child_process_1.spawn)('ffmpeg', ffmpegCommand, { env: process.env });
+                    let started = false;
+                    ffmpeg.stderr.on('data', (data) => {
+                        if (!started) {
+                            started = true;
+                            this.FLogger.debug("FFMPEG: received first frame");
                             callback(); // do not forget to execute callback once set up
                         }
                         //this.FLogger.debug("FFMPEG:" + data.toString('utf8'));
                     });
-                    ffmpeg.on('error', function (error) {
-                        _this.FLogger.error("[Video] Failed to start video stream: " + error.message);
+                    ffmpeg.on('error', error => {
+                        this.FLogger.error("[Video] Failed to start video stream: " + error.message);
                         callback(new Error("ffmpeg process creation failed!"));
                     });
-                    ffmpeg.on('exit', function (code, signal) {
-                        var message = "[Video] ffmpeg exited with code: " + code + " and signal: " + signal;
+                    ffmpeg.on('exit', (code, signal) => {
+                        const message = "[Video] ffmpeg exited with code: " + code + " and signal: " + signal;
                         if (code == null || code === 255) {
-                            _this.FLogger.debug(message + " (Video stream stopped!)");
+                            this.FLogger.debug(message + " (Video stream stopped!)");
                         }
                         else {
-                            _this.FLogger.error(message + " (error)");
-                            if (!started_1) {
+                            this.FLogger.error(message + " (error)");
+                            if (!started) {
                                 callback(new Error(message));
                             }
                             else {
-                                _this.cameraController.forceStopStreamingSession(sessionId);
+                                this.cameraController.forceStopStreamingSession(sessionId);
                             }
                         }
                     });
@@ -3257,9 +2878,9 @@ var THomeKitIPCamera = /** @class */ (function () {
                 callback();
                 break;
         }
-    };
-    THomeKitIPCamera.prototype.stopStreaming = function (sessionId) {
-        var ongoingSession = this.ongoingSessions[sessionId];
+    }
+    stopStreaming(sessionId) {
+        const ongoingSession = this.ongoingSessions[sessionId];
         try {
             ongoingSession.process.kill('SIGKILL');
         }
@@ -3269,9 +2890,8 @@ var THomeKitIPCamera = /** @class */ (function () {
         }
         delete this.ongoingSessions[sessionId];
         this.FLogger.debug("Stopped streaming session!");
-    };
-    return THomeKitIPCamera;
-}());
+    }
+}
 exports.THomeKitIPCamera = THomeKitIPCamera;
 
 
@@ -3281,75 +2901,42 @@ exports.THomeKitIPCamera = THomeKitIPCamera;
 /*!**********************************!*\
   !*** ./yahka.homekit-service.ts ***!
   \**********************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.YahkaServiceInitializer = void 0;
-var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
-var YahkaServiceInitializer = /** @class */ (function () {
-    function YahkaServiceInitializer(FBridgeFactory, FLogger) {
+const hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
+class YahkaServiceInitializer {
+    constructor(FBridgeFactory, FLogger) {
         this.FBridgeFactory = FBridgeFactory;
         this.FLogger = FLogger;
     }
-    YahkaServiceInitializer.prototype.initServices = function (hapDevice, serviceConfigs) {
-        var e_1, _a, e_2, _b;
+    initServices(hapDevice, serviceConfigs) {
         if (serviceConfigs == null) {
             return;
         }
-        try {
-            for (var serviceConfigs_1 = __values(serviceConfigs), serviceConfigs_1_1 = serviceConfigs_1.next(); !serviceConfigs_1_1.done; serviceConfigs_1_1 = serviceConfigs_1.next()) {
-                var service = serviceConfigs_1_1.value;
-                this.initService(hapDevice, service);
-            }
+        for (const service of serviceConfigs) {
+            this.initService(hapDevice, service);
         }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (serviceConfigs_1_1 && !serviceConfigs_1_1.done && (_a = serviceConfigs_1.return)) _a.call(serviceConfigs_1);
-            }
-            finally { if (e_1) throw e_1.error; }
+        for (const service of serviceConfigs) {
+            this.establishServiceLinks(hapDevice, service);
         }
-        try {
-            for (var serviceConfigs_2 = __values(serviceConfigs), serviceConfigs_2_1 = serviceConfigs_2.next(); !serviceConfigs_2_1.done; serviceConfigs_2_1 = serviceConfigs_2.next()) {
-                var service = serviceConfigs_2_1.value;
-                this.establishServiceLinks(hapDevice, service);
-            }
-        }
-        catch (e_2_1) { e_2 = { error: e_2_1 }; }
-        finally {
-            try {
-                if (serviceConfigs_2_1 && !serviceConfigs_2_1.done && (_b = serviceConfigs_2.return)) _b.call(serviceConfigs_2);
-            }
-            finally { if (e_2) throw e_2.error; }
-        }
-    };
-    YahkaServiceInitializer.prototype.initService = function (hapDevice, serviceConfig) {
-        var e_3, _a;
+    }
+    initService(hapDevice, serviceConfig) {
         if (serviceConfig.enabled === false) {
-            this.FLogger.debug("[" + hapDevice.displayName + "] service " + serviceConfig.name + " is disabled");
+            this.FLogger.debug(`[${hapDevice.displayName}] service ${serviceConfig.name} is disabled`);
             return;
         }
         if (!(serviceConfig.type in hap_nodejs_1.Service)) {
-            throw Error("[" + hapDevice.displayName + "] unknown service type: " + serviceConfig.type);
+            throw Error(`[${hapDevice.displayName}] unknown service type: ${serviceConfig.type}`);
         }
-        this.FLogger.debug("[" + hapDevice.displayName + "] adding Service " + serviceConfig.name);
-        var isNew = false;
-        var hapService = hapDevice.getService(hap_nodejs_1.Service[serviceConfig.type]);
+        this.FLogger.debug(`[${hapDevice.displayName}] adding Service ${serviceConfig.name}`);
+        let isNew = false;
+        let hapService = hapDevice.getService(hap_nodejs_1.Service[serviceConfig.type]);
         if (hapService !== undefined) {
-            var existingSubType = hapService.subtype ? hapService.subtype : "";
+            const existingSubType = hapService.subtype ? hapService.subtype : "";
             if (existingSubType != serviceConfig.subType)
                 hapService = undefined;
         }
@@ -3363,24 +2950,14 @@ var YahkaServiceInitializer = /** @class */ (function () {
         if (serviceConfig.isPrimary != null) {
             hapService.setPrimaryService(serviceConfig.isPrimary);
         }
-        try {
-            for (var _b = __values(serviceConfig.characteristics), _c = _b.next(); !_c.done; _c = _b.next()) {
-                var charactConfig = _c.value;
-                this.initCharacteristic(hapService, charactConfig);
-            }
-        }
-        catch (e_3_1) { e_3 = { error: e_3_1 }; }
-        finally {
-            try {
-                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-            }
-            finally { if (e_3) throw e_3.error; }
+        for (let charactConfig of serviceConfig.characteristics) {
+            this.initCharacteristic(hapService, charactConfig);
         }
         if (isNew) {
             hapDevice.addService(hapService);
         }
-    };
-    YahkaServiceInitializer.prototype.establishServiceLinks = function (hapDevice, serviceConfig) {
+    }
+    establishServiceLinks(hapDevice, serviceConfig) {
         if (serviceConfig.enabled == false) {
             return;
         }
@@ -3390,104 +2967,102 @@ var YahkaServiceInitializer = /** @class */ (function () {
         if (serviceConfig.linkTo == '') {
             return;
         }
-        var existingService = hapDevice.getService(serviceConfig.name);
-        var linkToService = hapDevice.getService(serviceConfig.linkTo);
+        const existingService = hapDevice.getService(serviceConfig.name);
+        const linkToService = hapDevice.getService(serviceConfig.linkTo);
         if (existingService == null || linkToService == null) {
-            this.FLogger.error("[" + serviceConfig.name + "] unable to establish link between " + serviceConfig.linkTo + " and " + serviceConfig.name + " - one of the services was not found or is disabled");
+            this.FLogger.error(`[${serviceConfig.name}] unable to establish link between ${serviceConfig.linkTo} and ${serviceConfig.name} - one of the services was not found or is disabled`);
             return;
         }
         linkToService.addLinkedService(existingService);
-        this.FLogger.debug("[" + serviceConfig.name + "] established link from " + existingService.displayName + " to " + linkToService.displayName);
-    };
-    YahkaServiceInitializer.prototype.initCharacteristic = function (hapService, characteristicConfig) {
-        var _this = this;
-        var logName = "[" + hapService.displayName + "." + characteristicConfig.name + "]";
+        this.FLogger.debug(`[${serviceConfig.name}] established link from ${existingService.displayName} to ${linkToService.displayName}`);
+    }
+    initCharacteristic(hapService, characteristicConfig) {
+        const logName = `[${hapService.displayName}.${characteristicConfig.name}]`;
         if (!characteristicConfig.enabled) {
             return;
         }
-        var hapCharacteristic = hapService.getCharacteristic(hap_nodejs_1.Characteristic[characteristicConfig.name]);
+        let hapCharacteristic = hapService.getCharacteristic(hap_nodejs_1.Characteristic[characteristicConfig.name]);
         if (!hapCharacteristic) {
-            this.FLogger.warn(logName + " unknown characteristic: " + characteristicConfig.name);
+            this.FLogger.warn(`${logName} unknown characteristic: ${characteristicConfig.name}`);
             return;
         }
         if (characteristicConfig.properties !== undefined)
             hapCharacteristic.setProps(characteristicConfig.properties);
-        hapCharacteristic.binding = this.FBridgeFactory.CreateBinding(characteristicConfig, function (plainIOValue) {
-            _this.FLogger.debug(logName + " got a change notify event, ioValue: " + JSON.stringify(plainIOValue));
-            var binding = hapCharacteristic.binding;
+        hapCharacteristic.binding = this.FBridgeFactory.CreateBinding(characteristicConfig, (plainIOValue) => {
+            this.FLogger.debug(`${logName} got a change notify event, ioValue: ${JSON.stringify(plainIOValue)}`);
+            let binding = hapCharacteristic.binding;
             if (!binding) {
-                _this.FLogger.error(logName + " no binding!");
+                this.FLogger.error(`${logName} no binding!`);
                 return;
             }
-            var hkValue = binding.conversion.toHomeKit(plainIOValue);
-            _this.FLogger.debug(logName + " forwarding value from ioBroker (" + JSON.stringify(plainIOValue) + ") to homekit as (" + JSON.stringify(hkValue) + ")");
+            let hkValue = binding.conversion.toHomeKit(plainIOValue);
+            this.FLogger.debug(`${logName} forwarding value from ioBroker (${JSON.stringify(plainIOValue)}) to homekit as (${JSON.stringify(hkValue)})`);
             try {
                 hapCharacteristic.setValue(hkValue, binding);
             }
             catch (e) {
-                _this.FLogger.error(logName + " error while setting value " + hkValue + " - message: " + e);
+                this.FLogger.error(`${logName} error while setting value ${hkValue} - message: ${e}`);
             }
         });
-        this.getValueFromIOBroker(hapCharacteristic.binding, function (error, ioValue, hkValue) {
-            _this.FLogger.debug(logName + " initializing homekit with value from ioBroker(" + JSON.stringify(ioValue) + ") to homekit as (" + JSON.stringify(hkValue) + ")");
+        this.getValueFromIOBroker(hapCharacteristic.binding, (error, ioValue, hkValue) => {
+            this.FLogger.debug(`${logName} initializing homekit with value from ioBroker(${JSON.stringify(ioValue)}) to homekit as (${JSON.stringify(hkValue)})`);
             try {
                 hapCharacteristic.setValue(hkValue, hapCharacteristic.binding);
             }
             catch (e) {
-                _this.FLogger.error(logName + " error while setting value " + hkValue + " - message: " + e);
+                this.FLogger.error(`${logName} error while setting value ${hkValue} - message: ${e}`);
             }
         });
-        hapCharacteristic.on('set', function (hkValue, callback, context) {
-            _this.FLogger.debug(logName + " got a set event, hkValue: " + JSON.stringify(hkValue) + " ");
-            var binding = hapCharacteristic.binding;
+        hapCharacteristic.on('set', (hkValue, callback, context) => {
+            this.FLogger.debug(`${logName} got a set event, hkValue: ${JSON.stringify(hkValue)} `);
+            let binding = hapCharacteristic.binding;
             if (!binding) {
-                _this.FLogger.error(logName + " no binding!");
+                this.FLogger.error(`${logName} no binding!`);
                 callback();
                 return;
             }
             if (context === binding) {
-                _this.FLogger.debug(logName + " set was initiated from ioBroker - exiting here");
+                this.FLogger.debug(`${logName} set was initiated from ioBroker - exiting here`);
                 callback();
                 return;
             }
-            var ioValue = binding.conversion.toIOBroker(hkValue);
-            binding.inOut.toIOBroker(ioValue, function () {
-                _this.FLogger.debug(logName + " set was accepted by ioBroker(value: " + JSON.stringify(ioValue) + ")");
+            let ioValue = binding.conversion.toIOBroker(hkValue);
+            binding.inOut.toIOBroker(ioValue, () => {
+                this.FLogger.debug(`${logName} set was accepted by ioBroker(value: ${JSON.stringify(ioValue)})`);
                 callback();
             });
         });
-        hapCharacteristic.on('get', function (hkCallback) {
-            _this.FLogger.debug(logName + " got a get event");
-            _this.getValueFromIOBroker(hapCharacteristic.binding, function (error, ioValue, hkValue) {
-                _this.FLogger.debug(logName + " forwarding value from ioBroker(" + JSON.stringify(ioValue) + ") to homekit as (" + JSON.stringify(hkValue) + ")");
+        hapCharacteristic.on('get', (hkCallback) => {
+            this.FLogger.debug(`${logName} got a get event`);
+            this.getValueFromIOBroker(hapCharacteristic.binding, (error, ioValue, hkValue) => {
+                this.FLogger.debug(`${logName} forwarding value from ioBroker(${JSON.stringify(ioValue)}) to homekit as (${JSON.stringify(hkValue)})`);
                 try {
                     hkCallback(error, hkValue);
                 }
                 catch (e) {
-                    _this.FLogger.error(logName + " error while setting value " + hkValue + " - message: " + e);
+                    this.FLogger.error(`${logName} error while setting value ${hkValue} - message: ${e}`);
                 }
             });
         });
-    };
-    YahkaServiceInitializer.prototype.getValueFromIOBroker = function (binding, callback) {
+    }
+    getValueFromIOBroker(binding, callback) {
         if (!binding) {
             callback('no binding', null, null);
             return;
         }
-        binding.inOut.fromIOBroker(function (ioBrokerError, ioValue) {
-            var hkValue = binding.conversion.toHomeKit(ioValue);
+        binding.inOut.fromIOBroker((ioBrokerError, ioValue) => {
+            let hkValue = binding.conversion.toHomeKit(ioValue);
             // check if the value can be converetd to a number
             if ((hkValue !== undefined) && (hkValue !== "")) {
-                var numValue = Number(hkValue);
+                let numValue = Number(hkValue);
                 if (!isNaN(numValue)) {
                     hkValue = numValue;
                 }
             }
             callback(ioBrokerError, ioValue, hkValue);
         });
-    };
-    return YahkaServiceInitializer;
-}());
+    }
+}
 exports.YahkaServiceInitializer = YahkaServiceInitializer;
 
 
@@ -3497,27 +3072,16 @@ exports.YahkaServiceInitializer = YahkaServiceInitializer;
 /*!***********************************!*\
   !*** ./yahka.ioBroker-adapter.ts ***!
   \***********************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIOBrokerAdapter = void 0;
 /// <reference path="./typings/index.d.ts" />
-var yahka_homekit_ipcamera_1 = __webpack_require__(/*! ./yahka.homekit-ipcamera */ "./yahka.homekit-ipcamera.ts");
-var functions_factory_1 = __webpack_require__(/*! ./yahka.functions/functions.factory */ "./yahka.functions/functions.factory.ts");
-var yahka_homekit_bridge_1 = __webpack_require__(/*! ./yahka.homekit-bridge */ "./yahka.homekit-bridge.ts");
+const yahka_homekit_ipcamera_1 = __webpack_require__(/*! ./yahka.homekit-ipcamera */ "./yahka.homekit-ipcamera.ts");
+const functions_factory_1 = __webpack_require__(/*! ./yahka.functions/functions.factory */ "./yahka.functions/functions.factory.ts");
+const yahka_homekit_bridge_1 = __webpack_require__(/*! ./yahka.homekit-bridge */ "./yahka.homekit-bridge.ts");
 function isSubscriptionRequestor(param) {
     return param["subscriptionRequests"] !== undefined &&
         param["subscriptionRequests"] instanceof Array;
@@ -3525,11 +3089,11 @@ function isSubscriptionRequestor(param) {
 function isCustomCharacteristicConfig(config) {
     if (!config)
         return false;
-    var myConfig = config;
+    let myConfig = config;
     return (myConfig.inOutFunction !== undefined) || (myConfig.conversionFunction !== undefined) || (myConfig.inOutParameters !== undefined);
 }
-var TIOBrokerAdapter = /** @class */ (function () {
-    function TIOBrokerAdapter(adapter, controllerPath) {
+class TIOBrokerAdapter {
+    constructor(adapter, controllerPath) {
         this.adapter = adapter;
         this.controllerPath = controllerPath;
         this.stateToEventMap = new Map();
@@ -3541,23 +3105,23 @@ var TIOBrokerAdapter = /** @class */ (function () {
         adapter.on('message', this.handleMessage.bind(this));
         adapter.on('unload', this.handleUnload.bind(this));
     }
-    TIOBrokerAdapter.prototype.adapterReady = function () {
+    adapterReady() {
         (0, yahka_homekit_bridge_1.initHAP)(this.controllerPath + '/' + this.adapter.systemConfig.dataDir + this.adapter.name + '.' + this.adapter.instance + '.hapdata', this.handleHAPLogEvent.bind(this));
         this.adapter.log.info('adapter ready, checking config');
-        var config = this.adapter.config;
+        let config = this.adapter.config;
         this.createHomeKitBridges(config);
         this.createCameraDevices(config);
-    };
-    TIOBrokerAdapter.prototype.createHomeKitBridges = function (config) {
-        var bridgeConfig = config.bridge;
+    }
+    createHomeKitBridges(config) {
+        let bridgeConfig = config.bridge;
         if (!config.firstTimeInitialized) {
             this.adapter.log.info('first time initialization');
             this.adapter.log.debug('system config:' + JSON.stringify(this.adapter.systemConfig));
             bridgeConfig.ident = "Yahka-" + this.adapter.instance;
             bridgeConfig.name = bridgeConfig.ident;
             bridgeConfig.serial = bridgeConfig.ident;
-            var usr = [];
-            for (var i = 0; i < 6; i++)
+            let usr = [];
+            for (let i = 0; i < 6; i++)
                 usr[i] = ('00' + (Math.floor((Math.random() * 256)).toString(16))).substr(-2);
             bridgeConfig.username = usr.join(':');
             bridgeConfig.pincode = '123-45-678';
@@ -3569,37 +3133,25 @@ var TIOBrokerAdapter = /** @class */ (function () {
         this.verboseHAPLogging = bridgeConfig.verboseLogging == true;
         this.adapter.log.debug('creating bridge');
         this.devices.push(new yahka_homekit_bridge_1.THomeKitBridge(config.bridge, this, this.adapter.log));
-    };
-    TIOBrokerAdapter.prototype.createCameraDevices = function (config) {
-        var e_1, _a;
-        var cameraArray = config.cameras;
+    }
+    createCameraDevices(config) {
+        let cameraArray = config.cameras;
         if (cameraArray === undefined)
             return;
-        try {
-            for (var cameraArray_1 = __values(cameraArray), cameraArray_1_1 = cameraArray_1.next(); !cameraArray_1_1.done; cameraArray_1_1 = cameraArray_1.next()) {
-                var cameraConfig = cameraArray_1_1.value;
-                this.adapter.log.debug('creating camera');
-                this.devices.push(new yahka_homekit_ipcamera_1.THomeKitIPCamera(cameraConfig, this, this.adapter.log));
-            }
+        for (let cameraConfig of cameraArray) {
+            this.adapter.log.debug('creating camera');
+            this.devices.push(new yahka_homekit_ipcamera_1.THomeKitIPCamera(cameraConfig, this, this.adapter.log));
         }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (cameraArray_1_1 && !cameraArray_1_1.done && (_a = cameraArray_1.return)) _a.call(cameraArray_1);
-            }
-            finally { if (e_1) throw e_1.error; }
-        }
-    };
-    TIOBrokerAdapter.prototype.handleHAPLogEvent = function (message) {
+    }
+    handleHAPLogEvent(message) {
         if (this.verboseHAPLogging) {
             console.log("HAP debug message", message);
             this.adapter.log.debug("HAP debug message: " + message);
         }
-    };
-    TIOBrokerAdapter.prototype.handleState = function (id, state) {
-        var e_2, _a;
+    }
+    handleState(id, state) {
         // Warning, state can be null if it was deleted
-        var notifyArray = this.stateToEventMap.get(id);
+        let notifyArray = this.stateToEventMap.get(id);
         if (!notifyArray) {
             //this.adapter.log.debug('nobody subscribed for this state');
             return;
@@ -3607,21 +3159,10 @@ var TIOBrokerAdapter = /** @class */ (function () {
         this.adapter.log.debug('got a stateChange for [' + id + ']');
         // try to convert it to a number
         convertStateValueToNumber(state);
-        try {
-            for (var notifyArray_1 = __values(notifyArray), notifyArray_1_1 = notifyArray_1.next(); !notifyArray_1_1.done; notifyArray_1_1 = notifyArray_1.next()) {
-                var method = notifyArray_1_1.value;
-                method(state);
-            }
-        }
-        catch (e_2_1) { e_2 = { error: e_2_1 }; }
-        finally {
-            try {
-                if (notifyArray_1_1 && !notifyArray_1_1.done && (_a = notifyArray_1.return)) _a.call(notifyArray_1);
-            }
-            finally { if (e_2) throw e_2.error; }
-        }
-    };
-    TIOBrokerAdapter.prototype.handleMessage = function (obj) {
+        for (let method of notifyArray)
+            method(state);
+    }
+    handleMessage(obj) {
         if (typeof obj === 'object' && obj.message) {
             if (obj.command === 'send') {
                 // Send response in callback if required
@@ -3629,8 +3170,8 @@ var TIOBrokerAdapter = /** @class */ (function () {
                     this.adapter.sendTo(obj.from, obj.command, 'Message received', obj.callback);
             }
         }
-    };
-    TIOBrokerAdapter.prototype.handleUnload = function (callback) {
+    }
+    handleUnload(callback) {
         try {
             this.adapter.log.info('cleaning up ...');
             (0, yahka_homekit_bridge_1.deinitHAP)();
@@ -3640,55 +3181,40 @@ var TIOBrokerAdapter = /** @class */ (function () {
         catch (e) {
             callback();
         }
-    };
-    TIOBrokerAdapter.prototype.handleInOutSubscriptionRequest = function (requestor, changeNotify) {
-        var e_3, _a;
+    }
+    handleInOutSubscriptionRequest(requestor, changeNotify) {
         if (requestor.subscriptionRequests.length == 0)
             return;
-        var _loop_1 = function (subscriptionRequest) {
-            var changeInterceptor = function (ioValue) { return subscriptionRequest.subscriptionEvent(ioValue, changeNotify); };
+        for (let subscriptionRequest of requestor.subscriptionRequests) {
+            let changeInterceptor = (ioValue) => subscriptionRequest.subscriptionEvent(ioValue, changeNotify);
             if (subscriptionRequest.subscriptionType === 'state') {
-                var existingArray = this_1.stateToEventMap.get(subscriptionRequest.subscriptionIdentifier);
+                let existingArray = this.stateToEventMap.get(subscriptionRequest.subscriptionIdentifier);
                 if (!existingArray) {
                     existingArray = [changeInterceptor];
-                    this_1.stateToEventMap.set(subscriptionRequest.subscriptionIdentifier, existingArray);
+                    this.stateToEventMap.set(subscriptionRequest.subscriptionIdentifier, existingArray);
                 }
                 else
                     existingArray.push(changeInterceptor);
-                this_1.adapter.subscribeForeignStates(subscriptionRequest.subscriptionIdentifier);
-                this_1.adapter.log.debug('added subscription for: [' + subscriptionRequest.subscriptionType + ']' + subscriptionRequest.subscriptionIdentifier);
-                this_1.adapter.getForeignState(subscriptionRequest.subscriptionIdentifier, function (_, value) {
+                this.adapter.subscribeForeignStates(subscriptionRequest.subscriptionIdentifier);
+                this.adapter.log.debug('added subscription for: [' + subscriptionRequest.subscriptionType + ']' + subscriptionRequest.subscriptionIdentifier);
+                this.adapter.getForeignState(subscriptionRequest.subscriptionIdentifier, (_, value) => {
                     convertStateValueToNumber(value);
                     changeInterceptor(value);
                 });
             }
             else {
-                this_1.adapter.log.warn('unknown subscription type: ' + subscriptionRequest.subscriptionType);
-            }
-        };
-        var this_1 = this;
-        try {
-            for (var _b = __values(requestor.subscriptionRequests), _c = _b.next(); !_c.done; _c = _b.next()) {
-                var subscriptionRequest = _c.value;
-                _loop_1(subscriptionRequest);
+                this.adapter.log.warn('unknown subscription type: ' + subscriptionRequest.subscriptionType);
             }
         }
-        catch (e_3_1) { e_3 = { error: e_3_1 }; }
-        finally {
-            try {
-                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-            }
-            finally { if (e_3) throw e_3.error; }
-        }
-    };
-    TIOBrokerAdapter.prototype.CreateBinding = function (characteristicConfig, changeNotify) {
+    }
+    CreateBinding(characteristicConfig, changeNotify) {
         if (isCustomCharacteristicConfig(characteristicConfig)) {
-            var inoutFunc = functions_factory_1.functionFactory.createInOutFunction(this.adapter, characteristicConfig.inOutFunction, characteristicConfig.inOutParameters);
+            let inoutFunc = functions_factory_1.functionFactory.createInOutFunction(this.adapter, characteristicConfig.inOutFunction, characteristicConfig.inOutParameters);
             if (inoutFunc === undefined) {
                 this.adapter.log.error('[' + characteristicConfig.name + '] could not create inout-function: ' + characteristicConfig.inOutFunction + ' with params: ' + JSON.stringify(characteristicConfig.inOutParameters));
                 return undefined;
             }
-            var convFunc = functions_factory_1.functionFactory.createConversionFunction(this.adapter, characteristicConfig.conversionFunction, characteristicConfig.conversionParameters);
+            let convFunc = functions_factory_1.functionFactory.createConversionFunction(this.adapter, characteristicConfig.conversionFunction, characteristicConfig.conversionParameters);
             if (convFunc === undefined) {
                 this.adapter.log.error('[' + characteristicConfig.name + '] could not create conversion-function: ' + characteristicConfig.conversionFunction + ' with params: ' + JSON.stringify(characteristicConfig.conversionParameters));
                 return undefined;
@@ -3702,13 +3228,12 @@ var TIOBrokerAdapter = /** @class */ (function () {
             };
         }
         return null;
-    };
-    return TIOBrokerAdapter;
-}());
+    }
+}
 exports.TIOBrokerAdapter = TIOBrokerAdapter;
 function convertStateValueToNumber(state) {
     if (((state === null || state === void 0 ? void 0 : state.val) != null)) {
-        var numValue = Number(state.val);
+        let numValue = Number(state.val);
         if (!isNaN(numValue)) {
             state.val = numValue;
         }
@@ -3804,7 +3329,7 @@ module.exports = JSON.parse('{"name":"iobroker.yahka","version":"0.14.0","descri
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;

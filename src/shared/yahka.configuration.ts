@@ -33,6 +33,7 @@ export module Configuration {
     export interface IBaseConfigNode {
         configType: TConfigNodeType;
         name: string;
+        groupString?: string;
     }
 
     export interface IBaseHomeKitDeviceConfig extends IBaseConfigNode {

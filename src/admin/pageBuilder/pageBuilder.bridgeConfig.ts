@@ -50,6 +50,7 @@ export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base imple
         };
 
         inputHelper('#name', 'name', undefined, () => !this.delegate.deviceIsUnique(config));
+        inputHelper('#group', 'groupString');
         inputHelper('#manufacturer', 'manufacturer');
         inputHelper('#model', 'model');
         inputHelper('#serial', 'serial');

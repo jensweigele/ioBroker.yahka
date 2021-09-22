@@ -96,6 +96,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         };
 
         inputHelper('#name', 'name', undefined, () => !this.delegate.deviceIsUnique(deviceConfig));
+        inputHelper('#group', 'groupString');
         inputHelper('#enabled', 'enabled');
         inputHelper('#manufacturer', 'manufacturer');
         inputHelper('#model', 'model');

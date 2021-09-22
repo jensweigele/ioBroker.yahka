@@ -155,6 +155,7 @@ For more information about the Configuration, the InOut Functions and Conversion
 ## Changelog
 
 ### 0.14.0 (unreleased)
+  (jw) added support to group devices in Admin Interface<br>
   (jw) added support to mark services as "primary" and as "hidden"<br>
   (jw) added ioFunctions "round" and "invert"<br>
   (jw) updated dependencies<br>

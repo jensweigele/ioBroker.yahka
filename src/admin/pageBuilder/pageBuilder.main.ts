@@ -8,7 +8,6 @@ import { ConfigPageBuilder_BridgeConfig } from './pageBuilder.bridgeConfig';
 import { ConfigPageBuilder_IPCamera } from './pageBuilder.ipCam';
 import { createTemplateElement } from '../admin.pageLoader';
 
-
 function generateRandomUsername(): string {
     let usr = [];
     for (let i = 0; i < 6; i++)
@@ -45,6 +44,13 @@ export class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
         this.buttonHandler.refreshBridgeButtons(bridgeFrame);
 
         return bridgeFrame;
+    }
+
+    public rebuildDeviceList() {
+        let bridgeFrame = <HTMLElement>document.querySelector('#yahka_bridge_frame');
+
+        this.deviceListHandler.buildDeviceList(bridgeFrame);
+        this.buttonHandler.refreshBridgeButtons(bridgeFrame);
     }
 
     public deviceIsUnique(deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean {
@@ -100,7 +106,7 @@ export class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
     }
 
 
-    public refreshDeviceListEntry(deviceConfig: hkBridge.Configuration.IBaseConfigNode) {
+    public refreshDeviceListEntry(deviceConfig?: hkBridge.Configuration.IBaseConfigNode) {
         this.deviceListHandler.refreshDeviceList();
     }
 
@@ -114,11 +120,14 @@ export class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
 
 class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
     deviceListEntryTemplate: HTMLTemplateElement;
+    deviceListEntryGroupTemplate: HTMLTemplateElement;
     listEntryToConfigMap = new Map<HTMLElement, hkBridge.Configuration.IBaseConfigNode>();
+    entryGroupMap = new Map<string, HTMLElement>();
 
     constructor(delegate: IConfigPageBuilderDelegate) {
         super(delegate);
         this.deviceListEntryTemplate = createTemplateElement(require('./pageBuilder.main.deviceListEntry.inc.html'));
+        this.deviceListEntryGroupTemplate = createTemplateElement(require('./pageBuilder.main.deviceListEntryGroup.inc.html'));
     }
 
 
@@ -143,17 +152,40 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
     buildDeviceList(bridgeFrame: HTMLElement) {
         let bridge = this.delegate.bridgeSettings;
         let deviceList = bridgeFrame.querySelector('#yahka_deviceList');
-        deviceList.innerHTML = "";
+        deviceList.innerHTML = '';
         this.listEntryToConfigMap.clear();
-        for (let deviceConfig of this.getDeviceList()) {
+        this.entryGroupMap.clear();
+        for (let deviceConfig of this.getDeviceList().sort((a, b) => a.name?.localeCompare(b.name))) {
+            const groupNode = this.getDeviceGroupNode(deviceList, deviceConfig);
             let fragment = this.createDeviceListEntry(deviceConfig);
             let node = (<HTMLElement>fragment.querySelector('.list'));
             this.listEntryToConfigMap.set(node, deviceConfig);
-            deviceList.appendChild(fragment);
+            groupNode.appendChild(fragment);
         }
-
+        [...deviceList.children]
+            .sort((a: HTMLElement, b: HTMLElement) => a.innerText?.localeCompare(b.innerText))
+            .forEach(node => {
+                return deviceList.appendChild(node);
+            });
 
         (<any>$(deviceList)).listview({ onListClick: this.handleDeviceListClick.bind(this) });
+    }
+
+    private getDeviceGroupNode(deviceList: Element, deviceConfig: hkBridge.Configuration.IBaseConfigNode): HTMLElement {
+        const groupName = deviceConfig.groupString ? deviceConfig.groupString : '<no group>';
+        const dictIdentifier = groupName.toLocaleLowerCase();
+        const existingNode = this.entryGroupMap.get(dictIdentifier);
+        if (existingNode != null) {
+            return existingNode;
+        }
+        const fragment = <DocumentFragment>document.importNode(this.deviceListEntryGroupTemplate.content, true);
+        const listGroupNode = (<HTMLElement>fragment.querySelector('.list-group'));
+        const listGroupName = (<HTMLElement>fragment.querySelector('.list-group-toggle'));
+        const listGroupContent = (<HTMLElement>fragment.querySelector('.list-group-content'));
+        listGroupName.innerHTML = groupName;
+        this.entryGroupMap.set(dictIdentifier, listGroupNode);
+        deviceList.appendChild(listGroupNode);
+        return listGroupContent;
     }
 
     public refreshDeviceList() {

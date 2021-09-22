@@ -77,6 +77,7 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
 
         inputHelper('#enabled', 'enabled');
         inputHelper('#name', 'name', undefined, () => !this.delegate.deviceIsUnique(config));
+        inputHelper('#group', 'groupString');
         inputHelper('#manufacturer', 'manufacturer');
         inputHelper('#model', 'model');
         inputHelper('#serial', 'serial');

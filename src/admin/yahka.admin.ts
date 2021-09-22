@@ -27,6 +27,7 @@ export const ioBrokerInterfaceList = new Promise<IIPInformation[]>(async (resolv
 
 export class ioBroker_YahkaAdmin {
     settings: any;
+    pageBuilder: ioBroker_YahkaPageBuilder;
 
     loadSettings(settingsObject: any, onChangeCallback: TIOBrokerAdminChangeCallback) {
         this.settings = settingsObject;
@@ -38,13 +39,14 @@ export class ioBroker_YahkaAdmin {
             resolveMethodForSettingsLoader();
         resolveMethodForSettingsLoader = undefined;
 
-        new ioBroker_YahkaPageBuilder(this.settings.bridge, this.settings.cameras, onChangeCallback);
+        this.pageBuilder = new ioBroker_YahkaPageBuilder(this.settings.bridge, this.settings.cameras, onChangeCallback);
 
         onChangeCallback(false);
     }
 
 
     saveSettings(callback: TIOBrokerAdminSaveCallback) {
+        this.pageBuilder.rebuildDeviceList()
         callback(this.settings);
     }
 }

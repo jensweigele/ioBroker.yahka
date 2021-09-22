@@ -97086,7 +97086,7 @@ function randomFillSync (buf, offset, size) {
   \******************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div>\n    <div><label class=\"translate\" for=\"name\">Name:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in homekit apps. Changes are only recognized after readding the bridge in the\n            app.</span></div>\n    <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists. Please change\n        the name!</div>\n    <div class=\"input control flex-grow margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"name\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input control flex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"model\">Model:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"model\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"serial\">Serial:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"serial\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"firmware\">Firmware:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input control flex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"firmware\" placeholder=\"leave empty to use Yahka Version\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"username\">Username:</label><span class=\"edit-hint translate\">needs\n            to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the\n                bridge needs to be reconfigured in the HomeKit database</b></span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"username\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"pincode\">Pincode:</label><span class=\"edit-hint translate\">needs to\n            be in the form of 123-45-678</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"pincode\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"port\">IP/Port:</label><span class=\"edit-hint translate\">Port 0 =\n            random free port assigned by the operation system (default)</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <select id=\"interface\">\n        </select>\n        <input min=\"0\" max=\"65535\" type=\"number\" id=\"port\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"useLegacyAdvertiser\">Use Legacy Advertiser:</label><span\n            class=\"edit-hint translate\">true\n            = use bonjour-hap instead of ciao</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"\" type=\"checkbox\" id=\"useLegacyAdvertiser\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"verboseLogging\">Verbose Logging:</label><span class=\"edit-hint translate\">true\n            = redirect hap-node logging to adapter logging</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"\" type=\"checkbox\" id=\"verboseLogging\" />\n    </div>\n</div>";
+module.exports = "<div>\n    <div><label class=\"translate\" for=\"name\">Name:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in homekit apps. Changes are only recognized after readding the bridge in the\n            app.</span></div>\n    <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists. Please change\n        the name!</div>\n    <div class=\"input control flex-grow margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"name\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"group\">Group:</label><span class=\"edit-hint translate\">string to be used to group\n            devices within Yahka. Has no effect to HomeKit!</span></div>\n    <div class=\"input control flex-grow margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"group\" />\n    </div>\n</div>\n\n<div>\n    <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input control flex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"model\">Model:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"model\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"serial\">Serial:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"serial\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"firmware\">Firmware:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input control flex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"firmware\" placeholder=\"leave empty to use Yahka Version\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"username\">Username:</label><span class=\"edit-hint translate\">needs\n            to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the\n                bridge needs to be reconfigured in the HomeKit database</b></span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"username\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"pincode\">Pincode:</label><span class=\"edit-hint translate\">needs to\n            be in the form of 123-45-678</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"pincode\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"port\">IP/Port:</label><span class=\"edit-hint translate\">Port 0 =\n            random free port assigned by the operation system (default)</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <select id=\"interface\">\n        </select>\n        <input min=\"0\" max=\"65535\" type=\"number\" id=\"port\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"useLegacyAdvertiser\">Use Legacy Advertiser:</label><span\n            class=\"edit-hint translate\">true\n            = use bonjour-hap instead of ciao</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"\" type=\"checkbox\" id=\"useLegacyAdvertiser\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"verboseLogging\">Verbose Logging:</label><span class=\"edit-hint translate\">true\n            = redirect hap-node logging to adapter logging</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"\" type=\"checkbox\" id=\"verboseLogging\" />\n    </div>\n</div>";
 
 /***/ }),
 
@@ -97096,7 +97096,7 @@ module.exports = "<div>\n    <div><label class=\"translate\" for=\"name\">Name:<
   \***********************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"frame\" id=\"yahka_device_info_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Device Properties</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"enabled\">Enabled:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enabled\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"name\">Name:</label></div>\n            <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists.\n                Please change the name!</div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"name\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"model\">Model:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"model\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"serial\">Serial:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"serial\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"firmware\">Firmware:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"firmware\" />\n            </div>\n        </div>\n\n        <div>\n            <div><label class=\"translate\" for=\"category\">Categeory:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select class=\"full-size\" id=\"category\"></select>\n            </div>\n        </div>\n        <div>\n            <label class=\"input-control checkbox small-check\">\n                <input type=\"checkbox\" id=\"publish_as_own_device\">\n                <span class=\"check\"></span>\n            </label>\n            <span>Publish as own device</span>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"username\">Username:</label><span class=\"edit-hint translate\">needs\n                    to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the\n                        bridge needs to be reconfigured in the HomeKit database</b></span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"username\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"pincode\">Pincode:</label><span class=\"edit-hint translate\">needs to\n                    be in the form of 123-45-678</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"pincode\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"port\">IP/Port:</label><span class=\"edit-hint translate\">Port 0 =\n                    random free port assigned by the operation system (default)</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select id=\"interface\">\n                </select>\n                <input min=\"0\" max=\"65535\" type=\"number\" id=\"port\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"useLegacyAdvertiser\">Use Legacy Advertiser:</label><span\n                    class=\"edit-hint translate\">true\n                    = use bonjour-hap instead of ciao</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"\" type=\"checkbox\" id=\"useLegacyAdvertiser\" />\n            </div>\n        </div>\n    </div>\n\n</div>";
+module.exports = "<div class=\"frame\" id=\"yahka_device_info_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Device Properties</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"enabled\">Enabled:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enabled\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"name\">Name:</label></div>\n            <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists.\n                Please change the name!</div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"name\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"group\">Group:</label><span class=\"edit-hint translate\">string to be used\n                    to group\n                    devices within Yahka. Has no effect to HomeKit!</span></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"group\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"model\">Model:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"model\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"serial\">Serial:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"serial\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"firmware\">Firmware:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"firmware\" />\n            </div>\n        </div>\n\n        <div>\n            <div><label class=\"translate\" for=\"category\">Categeory:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select class=\"full-size\" id=\"category\"></select>\n            </div>\n        </div>\n        <div>\n            <label class=\"input-control checkbox small-check\">\n                <input type=\"checkbox\" id=\"publish_as_own_device\">\n                <span class=\"check\"></span>\n            </label>\n            <span>Publish as own device</span>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"username\">Username:</label><span class=\"edit-hint translate\">needs\n                    to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the\n                        bridge needs to be reconfigured in the HomeKit database</b></span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"username\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"pincode\">Pincode:</label><span class=\"edit-hint translate\">needs to\n                    be in the form of 123-45-678</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"pincode\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"port\">IP/Port:</label><span class=\"edit-hint translate\">Port 0 =\n                    random free port assigned by the operation system (default)</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select id=\"interface\">\n                </select>\n                <input min=\"0\" max=\"65535\" type=\"number\" id=\"port\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"useLegacyAdvertiser\">Use Legacy Advertiser:</label><span\n                    class=\"edit-hint translate\">true\n                    = use bonjour-hap instead of ciao</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"\" type=\"checkbox\" id=\"useLegacyAdvertiser\" />\n            </div>\n        </div>\n    </div>\n\n</div>";
 
 /***/ }),
 
@@ -97106,7 +97106,7 @@ module.exports = "<div class=\"frame\" id=\"yahka_device_info_panel\">\n    <div
   \***********************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Basic Properties</span>\n    </div>\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"enabled\">Enabled:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enabled\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"name\">Device name:</label></div>\n            <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists.\n                Please change the name!</div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"name\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"model\">Model:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"model\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"serial\">Serial:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"serial\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"firmware\">Firmware:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"firmware\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"username\">Username:</label><span class=\"edit-hint translate\">needs\n                    to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field,\n                        the camera needs to be reconfigured in the HomeKit database</b></span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"username\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"pincode\">Pincode:</label><span class=\"edit-hint translate\">needs\n                    to be in the form of 123-45-678</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"pincode\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"port\">IP/Port:</label><span class=\"edit-hint translate\">Port 0 =\n                    random free port assigned by the operation system (default)</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select id=\"interface\"></select>\n                <input min=\"0\" max=\"65535\" type=\"number\" id=\"port\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"useLegacyAdvertiser\">Use Legacy Advertiser:</label><span\n                    class=\"edit-hint translate\">true\n                    = use bonjour-hap instead of ciao</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"\" type=\"checkbox\" id=\"useLegacyAdvertiser\" />\n            </div>\n        </div>\n\n    </div>\n</div>\n\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Stream Properties</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"source\">Source:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"source\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"codec\">Codec:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"codec\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"numberOfStreams\">Number of Streams:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"numberOfStreams\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxWidth\">maxWidth:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxWidth\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxHeight\">maxHeight:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxHeight\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxFPS\">maxFPS:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxFPS\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"enableAudio\">Enable Audio:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enableAudio\" />\n            </div>\n        </div>\n    </div>\n</div>\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Advanced Settings</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div style=\"display: flex; justify-content: space-between;\">\n                <label class=\"translate\" for=\"ffmpeg_snapshot\">FFMPEG Command Line - Snapshot:</label>\n                <a id=\"ffmpeg_snapshot_reset\" href=\"#\"><span class=\"icon mif-sync-problem translate\">Reset to\n                        default</span></a>\n            </div>\n            <div class=\"errorpanel\" id=\"ffmpeg_snapshot_error\"></div>\n            <div class=\"input control flex-grow margin10 flex-container-row\">\n                <textarea rows=8 class=\"flex-grow\" id=\"ffmpeg_snapshot\"></textarea>\n                <div class=\"margin10\"><span class=\"translate\">Available replacers:</span> <br>\n                    <ul class=\"simple-list blue-bullet replace-list\">\n                        <li>${source}</li>\n                        <li>${width}</li>\n                        <li>${height}</li>\n                    </ul>\n                </div>\n            </div>\n        </div>\n        <div>\n            <div style=\"display: flex; justify-content: space-between;\">\n                <label class=\"translate\" for=\"ffmpeg_stream\">FFMPEG Command Line - Stream:</label>\n                <a id=\"ffmpeg_stream_reset\" href=\"#\"><span class=\"icon mif-sync-problem translate\">Reset to\n                        default</span></a>\n            </div>\n            <div class=\"errorpanel\" id=\"ffmpeg_stream_error\"></div>\n            <div class=\"input control flex-grow margin10 flex-container-row\">\n                <textarea rows=8 class=\"flex-grow\" id=\"ffmpeg_stream\"></textarea>\n                <div class=\"margin10\"><span class=\"translate\">Available replacers:</span> <br>\n                    <ul class=\"simple-list blue-bullet replace-list\">\n                        <li>${source}</li>\n                        <li>${codec}</li>\n                        <li>${fps}</li>\n                        <li>${width}</li>\n                        <li>${height}</li>\n                        <li>${bitrate}</li>\n                        <li>${payloadtype}</li>\n                        <li>${targetVideoSsrc}</li>\n                        <li>${videokey}</li>\n                        <li>${targetAddress}</li>\n                        <li>${targetVideoPort}</li>\n                        <li>${mtu}</li>\n                    </ul>\n                </div>\n            </div>\n\n        </div>\n        <div>\n            <div style=\"display: flex; justify-content: space-between;\">\n                <label class=\"translate\" for=\"ffmpeg_streamAudio\">FFMPEG Command Line - Audio Stream:</label>\n                <a id=\"ffmpeg_streamAudio_reset\" href=\"#\"><span class=\"icon mif-sync-problem translate\">Reset to\n                        default</span></a>\n            </div>\n            <div class=\"errorpanel\" id=\"ffmpeg_streamAudio_error\"></div>\n            <div class=\"input control flex-grow margin10 flex-container-row\">\n                <textarea rows=8 class=\"flex-grow\" id=\"ffmpeg_streamAudio\"></textarea>\n                <div class=\"margin10\"><span class=\"translate\">Available replacers:</span> <br>\n                    <ul class=\"simple-list blue-bullet replace-list\">\n                        <li>${source}</li>\n                        <li>${bitrate}</li>\n                        <li>${samplerate}</li>\n                        <li>${channel}</li>\n                        <li>${payloadtype}</li>\n                        <li>${targetAddress}</li>\n                        <li>${targetAudioPort}</li>\n                        <li>${targetAudioSsrc}</li>\n                        <li>${audiokey}</li>\n                    </ul>\n                </div>\n            </div>\n\n        </div>\n\n    </div>\n</div>";
+module.exports = "<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Basic Properties</span>\n    </div>\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"enabled\">Enabled:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enabled\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"name\">Device name:</label></div>\n            <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists.\n                Please change the name!</div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"name\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"group\">Group:</label><span class=\"edit-hint translate\">string to be used\n                    to group\n                    devices within Yahka. Has no effect to HomeKit!</span></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"group\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"model\">Model:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"model\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"serial\">Serial:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"serial\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"firmware\">Firmware:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"firmware\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"username\">Username:</label><span class=\"edit-hint translate\">needs\n                    to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field,\n                        the camera needs to be reconfigured in the HomeKit database</b></span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"username\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"pincode\">Pincode:</label><span class=\"edit-hint translate\">needs\n                    to be in the form of 123-45-678</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"pincode\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"port\">IP/Port:</label><span class=\"edit-hint translate\">Port 0 =\n                    random free port assigned by the operation system (default)</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select id=\"interface\"></select>\n                <input min=\"0\" max=\"65535\" type=\"number\" id=\"port\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"useLegacyAdvertiser\">Use Legacy Advertiser:</label><span\n                    class=\"edit-hint translate\">true\n                    = use bonjour-hap instead of ciao</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"\" type=\"checkbox\" id=\"useLegacyAdvertiser\" />\n            </div>\n        </div>\n\n    </div>\n</div>\n\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Stream Properties</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"source\">Source:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"source\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"codec\">Codec:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"codec\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"numberOfStreams\">Number of Streams:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"numberOfStreams\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxWidth\">maxWidth:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxWidth\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxHeight\">maxHeight:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxHeight\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxFPS\">maxFPS:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxFPS\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"enableAudio\">Enable Audio:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enableAudio\" />\n            </div>\n        </div>\n    </div>\n</div>\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Advanced Settings</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div style=\"display: flex; justify-content: space-between;\">\n                <label class=\"translate\" for=\"ffmpeg_snapshot\">FFMPEG Command Line - Snapshot:</label>\n                <a id=\"ffmpeg_snapshot_reset\" href=\"#\"><span class=\"icon mif-sync-problem translate\">Reset to\n                        default</span></a>\n            </div>\n            <div class=\"errorpanel\" id=\"ffmpeg_snapshot_error\"></div>\n            <div class=\"input control flex-grow margin10 flex-container-row\">\n                <textarea rows=8 class=\"flex-grow\" id=\"ffmpeg_snapshot\"></textarea>\n                <div class=\"margin10\"><span class=\"translate\">Available replacers:</span> <br>\n                    <ul class=\"simple-list blue-bullet replace-list\">\n                        <li>${source}</li>\n                        <li>${width}</li>\n                        <li>${height}</li>\n                    </ul>\n                </div>\n            </div>\n        </div>\n        <div>\n            <div style=\"display: flex; justify-content: space-between;\">\n                <label class=\"translate\" for=\"ffmpeg_stream\">FFMPEG Command Line - Stream:</label>\n                <a id=\"ffmpeg_stream_reset\" href=\"#\"><span class=\"icon mif-sync-problem translate\">Reset to\n                        default</span></a>\n            </div>\n            <div class=\"errorpanel\" id=\"ffmpeg_stream_error\"></div>\n            <div class=\"input control flex-grow margin10 flex-container-row\">\n                <textarea rows=8 class=\"flex-grow\" id=\"ffmpeg_stream\"></textarea>\n                <div class=\"margin10\"><span class=\"translate\">Available replacers:</span> <br>\n                    <ul class=\"simple-list blue-bullet replace-list\">\n                        <li>${source}</li>\n                        <li>${codec}</li>\n                        <li>${fps}</li>\n                        <li>${width}</li>\n                        <li>${height}</li>\n                        <li>${bitrate}</li>\n                        <li>${payloadtype}</li>\n                        <li>${targetVideoSsrc}</li>\n                        <li>${videokey}</li>\n                        <li>${targetAddress}</li>\n                        <li>${targetVideoPort}</li>\n                        <li>${mtu}</li>\n                    </ul>\n                </div>\n            </div>\n\n        </div>\n        <div>\n            <div style=\"display: flex; justify-content: space-between;\">\n                <label class=\"translate\" for=\"ffmpeg_streamAudio\">FFMPEG Command Line - Audio Stream:</label>\n                <a id=\"ffmpeg_streamAudio_reset\" href=\"#\"><span class=\"icon mif-sync-problem translate\">Reset to\n                        default</span></a>\n            </div>\n            <div class=\"errorpanel\" id=\"ffmpeg_streamAudio_error\"></div>\n            <div class=\"input control flex-grow margin10 flex-container-row\">\n                <textarea rows=8 class=\"flex-grow\" id=\"ffmpeg_streamAudio\"></textarea>\n                <div class=\"margin10\"><span class=\"translate\">Available replacers:</span> <br>\n                    <ul class=\"simple-list blue-bullet replace-list\">\n                        <li>${source}</li>\n                        <li>${bitrate}</li>\n                        <li>${samplerate}</li>\n                        <li>${channel}</li>\n                        <li>${payloadtype}</li>\n                        <li>${targetAddress}</li>\n                        <li>${targetAudioPort}</li>\n                        <li>${targetAudioSsrc}</li>\n                        <li>${audiokey}</li>\n                    </ul>\n                </div>\n            </div>\n\n        </div>\n\n    </div>\n</div>";
 
 /***/ }),
 
@@ -97117,6 +97117,16 @@ module.exports = "<div class=\"frame\">\n    <div class=\"heading\">\n        <s
 /***/ ((module) => {
 
 module.exports = "<div class=\"list device-entry\">\n    <span class=\"icon list-icon\"></span>\n    <span class=\"list-title\"> </span>\n</div>";
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.main.deviceListEntryGroup.inc.html":
+/*!**************************************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.main.deviceListEntryGroup.inc.html ***!
+  \**************************************************************************/
+/***/ ((module) => {
+
+module.exports = "<div class=\"list-group\">\n    <span class=\"list-group-toggle\">..list group title...</span>\n    <div class=\"list-group-content\">\n\n    </div>\n</div>";
 
 /***/ }),
 
@@ -102615,13 +102625,13 @@ var Defaults;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.createAndCloneTemplateElement = exports.createTemplateElement = void 0;
 function createTemplateElement(html) {
-    var template = document.createElement('template');
+    let template = document.createElement('template');
     template.innerHTML = html;
     return template;
 }
 exports.createTemplateElement = createTemplateElement;
 function createAndCloneTemplateElement(html) {
-    var node = createTemplateElement(html);
+    let node = createTemplateElement(html);
     return document.importNode(node.content, true);
 }
 exports.createAndCloneTemplateElement = createAndCloneTemplateElement;
@@ -102639,7 +102649,7 @@ exports.createAndCloneTemplateElement = createAndCloneTemplateElement;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.translateFragment = void 0;
-var $ = __webpack_require__(/*! jquery */ "jquery");
+const $ = __webpack_require__(/*! jquery */ "jquery");
 function translateFragment(fragment) {
     var elements = fragment.querySelectorAll('.translate');
     if (elements) {
@@ -102673,43 +102683,41 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Utils = void 0;
 var Utils;
 (function (Utils) {
-    function getInputValue(input, emptyStringAsUndefined) {
-        if (emptyStringAsUndefined === void 0) { emptyStringAsUndefined = true; }
+    function getInputValue(input, emptyStringAsUndefined = true) {
         if (input == null)
             return undefined;
         if ((input.type == "checkbox") && ("checked" in input)) {
             return input.checked;
         }
         if ("valueAsDate" in input) {
-            var dateValue = input.valueAsDate;
+            let dateValue = input.valueAsDate;
             if (dateValue)
                 return dateValue;
         }
         if ("valueAsNumber" in input) {
-            var numValue = input.valueAsNumber;
+            let numValue = input.valueAsNumber;
             if (!isNaN(numValue))
                 return numValue;
         }
-        var stringValue = input.value;
+        let stringValue = input.value;
         if ((stringValue === "") && emptyStringAsUndefined)
             return undefined;
         if (stringValue !== "") {
-            var strAsNumber = Number(stringValue);
+            let strAsNumber = Number(stringValue);
             if (!isNaN(strAsNumber))
                 return strAsNumber;
         }
         return stringValue;
     }
     Utils.getInputValue = getInputValue;
-    function getSelectInputValue(input, emptyStringAsUndefined) {
-        if (emptyStringAsUndefined === void 0) { emptyStringAsUndefined = true; }
+    function getSelectInputValue(input, emptyStringAsUndefined = true) {
         if (input == null)
             return undefined;
-        var stringValue = input.value;
+        let stringValue = input.value;
         if ((stringValue === "") && emptyStringAsUndefined)
             return undefined;
         if (stringValue !== "") {
-            var strAsNumber = Number(stringValue);
+            let strAsNumber = Number(stringValue);
             if (!isNaN(strAsNumber))
                 return strAsNumber;
         }
@@ -102736,62 +102744,40 @@ var Utils;
 /*!***********************************************!*\
   !*** ./admin/pageBuilder/pageBuilder.base.ts ***!
   \***********************************************/
-/***/ (function(__unused_webpack_module, exports) {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ConfigPageBuilder_Base = void 0;
-var ConfigPageBuilder_Base = /** @class */ (function () {
-    function ConfigPageBuilder_Base(delegate) {
+class ConfigPageBuilder_Base {
+    constructor(delegate) {
         this.delegate = delegate;
     }
-    ConfigPageBuilder_Base.prototype.refreshSimpleErrorElement = function (errorElement, validator) {
-        var errorVisible = false;
+    refreshSimpleErrorElement(errorElement, validator) {
+        let errorVisible = false;
         if (validator)
             errorVisible = validator();
         if (errorElement)
             errorElement.classList.toggle('validationError', errorVisible);
-    };
-    ConfigPageBuilder_Base.prototype.fillSelectByEntryList = function (selectElement, selectListArray) {
-        var e_1, _a;
-        try {
-            for (var selectListArray_1 = __values(selectListArray), selectListArray_1_1 = selectListArray_1.next(); !selectListArray_1_1.done; selectListArray_1_1 = selectListArray_1.next()) {
-                var item = selectListArray_1_1.value;
-                var optElem = document.createElement('option');
-                optElem.value = item.value;
-                optElem.text = item.text;
-                selectElement.add(optElem);
-            }
+    }
+    fillSelectByEntryList(selectElement, selectListArray) {
+        for (let item of selectListArray) {
+            let optElem = document.createElement('option');
+            optElem.value = item.value;
+            optElem.text = item.text;
+            selectElement.add(optElem);
         }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (selectListArray_1_1 && !selectListArray_1_1.done && (_a = selectListArray_1.return)) _a.call(selectListArray_1);
-            }
-            finally { if (e_1) throw e_1.error; }
-        }
-    };
-    ConfigPageBuilder_Base.prototype.fillSelectByDict = function (selectElement, dictionary) {
-        for (var key in dictionary) {
-            var optElem = document.createElement('option');
+    }
+    fillSelectByDict(selectElement, dictionary) {
+        for (let key in dictionary) {
+            let optElem = document.createElement('option');
             optElem.value = key;
             optElem.text = dictionary[key].text;
             selectElement.add(optElem);
         }
-    };
-    ConfigPageBuilder_Base.prototype.fillSelectByListEntries = function (selectElement, entries) {
+    }
+    fillSelectByListEntries(selectElement, entries) {
         if (!(selectElement instanceof HTMLSelectElement)) {
             return;
         }
@@ -102801,28 +102787,16 @@ var ConfigPageBuilder_Base = /** @class */ (function () {
             this.fillSelectByEntryList(selectElement, entries);
         else
             this.fillSelectByDict(selectElement, entries);
-    };
-    ConfigPageBuilder_Base.prototype.fillSelectByArray = function (selectElement, stringlist) {
-        var e_2, _a;
-        try {
-            for (var stringlist_1 = __values(stringlist), stringlist_1_1 = stringlist_1.next(); !stringlist_1_1.done; stringlist_1_1 = stringlist_1.next()) {
-                var itemName = stringlist_1_1.value;
-                var optElem = document.createElement('option');
-                optElem.value = itemName;
-                optElem.text = itemName;
-                selectElement.add(optElem);
-            }
+    }
+    fillSelectByArray(selectElement, stringlist) {
+        for (let itemName of stringlist) {
+            let optElem = document.createElement('option');
+            optElem.value = itemName;
+            optElem.text = itemName;
+            selectElement.add(optElem);
         }
-        catch (e_2_1) { e_2 = { error: e_2_1 }; }
-        finally {
-            try {
-                if (stringlist_1_1 && !stringlist_1_1.done && (_a = stringlist_1.return)) _a.call(stringlist_1);
-            }
-            finally { if (e_2) throw e_2.error; }
-        }
-    };
-    return ConfigPageBuilder_Base;
-}());
+    }
+}
 exports.ConfigPageBuilder_Base = ConfigPageBuilder_Base;
 
 
@@ -102836,21 +102810,6 @@ exports.ConfigPageBuilder_Base = ConfigPageBuilder_Base;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -102860,117 +102819,77 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ConfigPageBuilder_BridgeConfig = void 0;
 /// <reference path="../../typings/index.d.ts" />
-var hkBridge = __webpack_require__(/*! ../../shared/yahka.configuration */ "./shared/yahka.configuration.ts");
-var pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
-var admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
-var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-var yahka_admin_1 = __webpack_require__(/*! ../yahka.admin */ "./admin/yahka.admin.ts");
-var ConfigPageBuilder_BridgeConfig = /** @class */ (function (_super) {
-    __extends(ConfigPageBuilder_BridgeConfig, _super);
-    function ConfigPageBuilder_BridgeConfig(delegate) {
-        var _this = _super.call(this, delegate) || this;
-        _this.delegate = delegate;
-        _this.addServiceAvailable = false;
-        _this.removeDeviceAvailable = false;
-        _this.dupliacteDeviceAvailable = false;
-        _this.bridgeConfigPanelTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.bridgeConfig.main.inc.html */ "./admin/pageBuilder/pageBuilder.bridgeConfig.main.inc.html"));
-        return _this;
+const hkBridge = __webpack_require__(/*! ../../shared/yahka.configuration */ "./shared/yahka.configuration.ts");
+const pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
+const admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const yahka_admin_1 = __webpack_require__(/*! ../yahka.admin */ "./admin/yahka.admin.ts");
+class ConfigPageBuilder_BridgeConfig extends pageBuilder_base_1.ConfigPageBuilder_Base {
+    constructor(delegate) {
+        super(delegate);
+        this.delegate = delegate;
+        this.addServiceAvailable = false;
+        this.removeDeviceAvailable = false;
+        this.dupliacteDeviceAvailable = false;
+        this.bridgeConfigPanelTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.bridgeConfig.main.inc.html */ "./admin/pageBuilder/pageBuilder.bridgeConfig.main.inc.html"));
     }
-    ConfigPageBuilder_BridgeConfig.prototype.refresh = function (config, AFocusLastPanel, devicePanel) {
-        return __awaiter(this, void 0, void 0, function () {
-            var bridgeConfigFragment, inputHelper, checkboxHelper, ipList, ipListForSelectBox;
-            var _this = this;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!hkBridge.Configuration.isBridgeConfig(config)) {
-                            return [2 /*return*/];
-                        }
-                        bridgeConfigFragment = document.importNode(this.bridgeConfigPanelTemplate.content, true);
-                        (0, admin_translation_1.translateFragment)(bridgeConfigFragment);
-                        inputHelper = function (selector, propertyName, selectList, validator) {
-                            if (validator === void 0) { validator = undefined; }
-                            var input = bridgeConfigFragment.querySelector(selector);
-                            var errorElement = bridgeConfigFragment.querySelector(selector + '_error');
-                            _this.fillSelectByListEntries(input, selectList);
-                            var value = config[propertyName];
-                            if (value !== undefined) {
-                                input.value = value;
-                            }
-                            else {
-                                input.value = '';
-                            }
-                            input.addEventListener("input", _this.handleBridgeMetaDataChange.bind(_this, config, propertyName, errorElement, validator));
-                            _this.refreshSimpleErrorElement(errorElement, validator);
-                        };
-                        checkboxHelper = function (selector, propertyName, validator) {
-                            if (validator === void 0) { validator = undefined; }
-                            var input = bridgeConfigFragment.querySelector(selector);
-                            var errorElement = bridgeConfigFragment.querySelector(selector + '_error');
-                            var value = config[propertyName];
-                            input.checked = value;
-                            input.addEventListener("click", _this.handleBridgeMetaDataChange.bind(_this, config, propertyName, errorElement, validator));
-                            _this.refreshSimpleErrorElement(errorElement, validator);
-                        };
-                        inputHelper('#name', 'name', undefined, function () { return !_this.delegate.deviceIsUnique(config); });
-                        inputHelper('#manufacturer', 'manufacturer');
-                        inputHelper('#model', 'model');
-                        inputHelper('#serial', 'serial');
-                        inputHelper('#firmware', 'firmware');
-                        inputHelper('#username', 'username');
-                        inputHelper('#pincode', 'pincode');
-                        inputHelper('#port', 'port');
-                        return [4 /*yield*/, yahka_admin_1.ioBrokerInterfaceList];
-                    case 1:
-                        ipList = _a.sent();
-                        ipListForSelectBox = ipList.filter(function (a) { return a.family === "ipv4"; }).map(function (a) { return { value: a.address, text: a.name }; });
-                        inputHelper('#interface', 'interface', ipListForSelectBox);
-                        checkboxHelper('#useLegacyAdvertiser', 'useLegacyAdvertiser');
-                        checkboxHelper('#verboseLogging', 'verboseLogging');
-                        devicePanel.appendChild(bridgeConfigFragment);
-                        return [2 /*return*/];
+    refresh(config, AFocusLastPanel, devicePanel) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!hkBridge.Configuration.isBridgeConfig(config)) {
+                return;
+            }
+            let bridgeConfigFragment = document.importNode(this.bridgeConfigPanelTemplate.content, true);
+            (0, admin_translation_1.translateFragment)(bridgeConfigFragment);
+            let inputHelper = (selector, propertyName, selectList, validator = undefined) => {
+                let input = bridgeConfigFragment.querySelector(selector);
+                let errorElement = bridgeConfigFragment.querySelector(selector + '_error');
+                this.fillSelectByListEntries(input, selectList);
+                let value = config[propertyName];
+                if (value !== undefined) {
+                    input.value = value;
                 }
-            });
+                else {
+                    input.value = '';
+                }
+                input.addEventListener("input", this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
+                this.refreshSimpleErrorElement(errorElement, validator);
+            };
+            let checkboxHelper = (selector, propertyName, validator = undefined) => {
+                let input = bridgeConfigFragment.querySelector(selector);
+                let errorElement = bridgeConfigFragment.querySelector(selector + '_error');
+                let value = config[propertyName];
+                input.checked = value;
+                input.addEventListener("click", this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
+                this.refreshSimpleErrorElement(errorElement, validator);
+            };
+            inputHelper('#name', 'name', undefined, () => !this.delegate.deviceIsUnique(config));
+            inputHelper('#group', 'groupString');
+            inputHelper('#manufacturer', 'manufacturer');
+            inputHelper('#model', 'model');
+            inputHelper('#serial', 'serial');
+            inputHelper('#firmware', 'firmware');
+            inputHelper('#username', 'username');
+            inputHelper('#pincode', 'pincode');
+            inputHelper('#port', 'port');
+            let ipList = yield yahka_admin_1.ioBrokerInterfaceList;
+            let ipListForSelectBox = ipList.filter((a) => a.family === "ipv4").map((a) => { return { value: a.address, text: a.name }; });
+            inputHelper('#interface', 'interface', ipListForSelectBox);
+            checkboxHelper('#useLegacyAdvertiser', 'useLegacyAdvertiser');
+            checkboxHelper('#verboseLogging', 'verboseLogging');
+            devicePanel.appendChild(bridgeConfigFragment);
         });
-    };
-    ConfigPageBuilder_BridgeConfig.prototype.styleListItem = function (listItem, deviceConfig) {
-        var listIcon = listItem.querySelector('.list-icon');
+    }
+    styleListItem(listItem, deviceConfig) {
+        let listIcon = listItem.querySelector('.list-icon');
         listIcon.className = 'list-icon icon mif-tree';
         listItem.classList.add('fg-grayDark');
         return true;
-    };
-    ConfigPageBuilder_BridgeConfig.prototype.handleBridgeMetaDataChange = function (bridgeConfig, propertyName, errorElement, validator, ev) {
-        var inputTarget = ev.currentTarget;
+    }
+    handleBridgeMetaDataChange(bridgeConfig, propertyName, errorElement, validator, ev) {
+        let inputTarget = ev.currentTarget;
         if (inputTarget.type == "checkbox") {
             bridgeConfig[propertyName] = inputTarget.checked;
         }
@@ -102980,9 +102899,8 @@ var ConfigPageBuilder_BridgeConfig = /** @class */ (function (_super) {
         this.refreshSimpleErrorElement(errorElement, validator);
         this.delegate.refreshDeviceListEntry(bridgeConfig);
         this.delegate.changeCallback();
-    };
-    return ConfigPageBuilder_BridgeConfig;
-}(pageBuilder_base_1.ConfigPageBuilder_Base));
+    }
+}
 exports.ConfigPageBuilder_BridgeConfig = ConfigPageBuilder_BridgeConfig;
 
 
@@ -102996,21 +102914,6 @@ exports.ConfigPageBuilder_BridgeConfig = ConfigPageBuilder_BridgeConfig;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -103020,188 +102923,117 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ConfigPageBuilder_CustomDevice = void 0;
 /// <reference path="../../typings/index.d.ts" />
-var hkBridge = __webpack_require__(/*! ../../shared/yahka.configuration */ "./shared/yahka.configuration.ts");
-var pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
-var admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
-var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-var admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-var pageBuilder_servicePanel_1 = __webpack_require__(/*! ./pageBuilder.servicePanel */ "./admin/pageBuilder/pageBuilder.servicePanel.ts");
-var yahka_admin_1 = __webpack_require__(/*! ../yahka.admin */ "./admin/yahka.admin.ts");
-var accessoryCategories = {};
-getObject('yahka.meta._accessoryCategories', function (_, object) {
+const hkBridge = __webpack_require__(/*! ../../shared/yahka.configuration */ "./shared/yahka.configuration.ts");
+const pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
+const admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+const pageBuilder_servicePanel_1 = __webpack_require__(/*! ./pageBuilder.servicePanel */ "./admin/pageBuilder/pageBuilder.servicePanel.ts");
+const yahka_admin_1 = __webpack_require__(/*! ../yahka.admin */ "./admin/yahka.admin.ts");
+let accessoryCategories = {};
+getObject('yahka.meta._accessoryCategories', (_, object) => {
     accessoryCategories = object.native;
 });
-var ConfigPageBuilder_CustomDevice = /** @class */ (function (_super) {
-    __extends(ConfigPageBuilder_CustomDevice, _super);
-    function ConfigPageBuilder_CustomDevice(delegate) {
-        var _this = _super.call(this, delegate) || this;
-        _this.delegate = delegate;
-        _this.addServiceAvailable = true;
-        _this.removeDeviceAvailable = true;
-        _this.dupliacteDeviceAvailable = true;
-        _this.servicePanelBuilder = new pageBuilder_servicePanel_1.ConfigPageBuilder_ServicePanel(delegate);
-        _this.deviceInfoPanelTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.customDevice.infoPanel.inc.html */ "./admin/pageBuilder/pageBuilder.customDevice.infoPanel.inc.html"));
-        return _this;
+class ConfigPageBuilder_CustomDevice extends pageBuilder_base_1.ConfigPageBuilder_Base {
+    constructor(delegate) {
+        super(delegate);
+        this.delegate = delegate;
+        this.addServiceAvailable = true;
+        this.removeDeviceAvailable = true;
+        this.dupliacteDeviceAvailable = true;
+        this.servicePanelBuilder = new pageBuilder_servicePanel_1.ConfigPageBuilder_ServicePanel(delegate);
+        this.deviceInfoPanelTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.customDevice.infoPanel.inc.html */ "./admin/pageBuilder/pageBuilder.customDevice.infoPanel.inc.html"));
     }
-    ConfigPageBuilder_CustomDevice.prototype.refresh = function (config, AFocusLastPanel, devicePanel) {
-        return __awaiter(this, void 0, void 0, function () {
-            var lastPane, _a, _b, serviceConfig, servicePanel, heading;
-            var e_1, _c;
-            return __generator(this, function (_d) {
-                switch (_d.label) {
-                    case 0:
-                        if (!hkBridge.Configuration.isDeviceConfig(config)) {
-                            return [2 /*return*/];
-                        }
-                        return [4 /*yield*/, this.buildDeviceInformationPanel(config, devicePanel)];
-                    case 1:
-                        lastPane = _d.sent();
-                        try {
-                            for (_a = __values(config.services), _b = _a.next(); !_b.done; _b = _a.next()) {
-                                serviceConfig = _b.value;
-                                servicePanel = this.servicePanelBuilder.createServicePanel(config.services, serviceConfig);
-                                devicePanel.appendChild(servicePanel);
-                                lastPane = servicePanel;
-                            }
-                        }
-                        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-                        finally {
-                            try {
-                                if (_b && !_b.done && (_c = _a.return)) _c.call(_a);
-                            }
-                            finally { if (e_1) throw e_1.error; }
-                        }
-                        if (AFocusLastPanel && lastPane) {
-                            lastPane.scrollIntoView();
-                            if (!lastPane.classList.contains('active')) {
-                                heading = lastPane.querySelector('.heading');
-                                if (heading)
-                                    heading.click();
-                            }
-                        }
-                        return [2 /*return*/];
+    refresh(config, AFocusLastPanel, devicePanel) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!hkBridge.Configuration.isDeviceConfig(config)) {
+                return;
+            }
+            let lastPane = yield this.buildDeviceInformationPanel(config, devicePanel);
+            for (let serviceConfig of config.services) {
+                let servicePanel = this.servicePanelBuilder.createServicePanel(config.services, serviceConfig);
+                devicePanel.appendChild(servicePanel);
+                lastPane = servicePanel;
+            }
+            if (AFocusLastPanel && lastPane) {
+                lastPane.scrollIntoView();
+                if (!lastPane.classList.contains('active')) {
+                    let heading = lastPane.querySelector('.heading');
+                    if (heading)
+                        heading.click();
                 }
-            });
+            }
         });
-    };
-    ConfigPageBuilder_CustomDevice.prototype.styleListItem = function (listItem, deviceConfig) {
+    }
+    styleListItem(listItem, deviceConfig) {
         if (!hkBridge.Configuration.isDeviceConfig(deviceConfig)) {
             return false;
         }
-        var iconClass = "mif-question";
-        var cat;
+        let iconClass = "mif-question";
+        let cat;
         if (accessoryCategories !== undefined) {
             if (cat = accessoryCategories[deviceConfig.category])
                 iconClass = cat['icon'];
         }
-        var listIcon = listItem.querySelector('.list-icon');
+        let listIcon = listItem.querySelector('.list-icon');
         listIcon.className = "";
         listIcon.classList.add('list-icon', 'icon', iconClass);
         listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
         listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
         return true;
-    };
-    ConfigPageBuilder_CustomDevice.prototype.buildDeviceInformationPanel = function (deviceConfig, devicePane) {
-        return __awaiter(this, void 0, void 0, function () {
-            var devInfoFragment, devInfoPanel, inputHelper, ipList, ipListForSelectBox;
-            var _this = this;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        devInfoFragment = document.importNode(this.deviceInfoPanelTemplate.content, true);
-                        devInfoPanel = devInfoFragment.querySelector('#yahka_device_info_panel');
-                        (0, admin_translation_1.translateFragment)(devInfoFragment);
-                        inputHelper = function (selector, propertyName, selectList, validator, checkDefault) {
-                            if (validator === void 0) { validator = undefined; }
-                            if (checkDefault === void 0) { checkDefault = true; }
-                            var input = devInfoPanel.querySelector(selector);
-                            var errorElement = devInfoPanel.querySelector(selector + '_error');
-                            _this.fillSelectByListEntries(input, selectList);
-                            var value = deviceConfig[propertyName];
-                            if (input.type === 'checkbox') {
-                                input.checked = value === undefined ? checkDefault : value;
-                                input.addEventListener('change', _this.handleDeviceMetaDataChange.bind(_this, deviceConfig, propertyName, errorElement, validator));
-                            }
-                            else {
-                                admin_utils_1.Utils.setInputValue(input, value);
-                                input.addEventListener('input', _this.handleDeviceMetaDataChange.bind(_this, deviceConfig, propertyName, errorElement, validator));
-                            }
-                            _this.refreshSimpleErrorElement(errorElement, validator);
-                        };
-                        inputHelper('#name', 'name', undefined, function () { return !_this.delegate.deviceIsUnique(deviceConfig); });
-                        inputHelper('#enabled', 'enabled');
-                        inputHelper('#manufacturer', 'manufacturer');
-                        inputHelper('#model', 'model');
-                        inputHelper('#serial', 'serial');
-                        inputHelper('#firmware', 'firmware');
-                        inputHelper('#category', 'category', accessoryCategories);
-                        inputHelper('#publish_as_own_device', 'publishAsOwnDevice', undefined, undefined, false);
-                        inputHelper('#useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
-                        inputHelper('#username', 'username');
-                        inputHelper('#pincode', 'pincode');
-                        inputHelper('#port', 'port');
-                        return [4 /*yield*/, yahka_admin_1.ioBrokerInterfaceList];
-                    case 1:
-                        ipList = _a.sent();
-                        ipListForSelectBox = ipList.filter(function (a) { return a.family === "ipv4"; }).map(function (a) { return { value: a.address, text: a.name }; });
-                        inputHelper('#interface', 'interface', ipListForSelectBox);
-                        devicePane.appendChild(devInfoFragment);
-                        return [2 /*return*/, devInfoPanel];
+    }
+    buildDeviceInformationPanel(deviceConfig, devicePane) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let devInfoFragment = document.importNode(this.deviceInfoPanelTemplate.content, true);
+            let devInfoPanel = devInfoFragment.querySelector('#yahka_device_info_panel');
+            (0, admin_translation_1.translateFragment)(devInfoFragment);
+            let inputHelper = (selector, propertyName, selectList, validator = undefined, checkDefault = true) => {
+                let input = devInfoPanel.querySelector(selector);
+                let errorElement = devInfoPanel.querySelector(selector + '_error');
+                this.fillSelectByListEntries(input, selectList);
+                let value = deviceConfig[propertyName];
+                if (input.type === 'checkbox') {
+                    input.checked = value === undefined ? checkDefault : value;
+                    input.addEventListener('change', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator));
                 }
-            });
+                else {
+                    admin_utils_1.Utils.setInputValue(input, value);
+                    input.addEventListener('input', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator));
+                }
+                this.refreshSimpleErrorElement(errorElement, validator);
+            };
+            inputHelper('#name', 'name', undefined, () => !this.delegate.deviceIsUnique(deviceConfig));
+            inputHelper('#group', 'groupString');
+            inputHelper('#enabled', 'enabled');
+            inputHelper('#manufacturer', 'manufacturer');
+            inputHelper('#model', 'model');
+            inputHelper('#serial', 'serial');
+            inputHelper('#firmware', 'firmware');
+            inputHelper('#category', 'category', accessoryCategories);
+            inputHelper('#publish_as_own_device', 'publishAsOwnDevice', undefined, undefined, false);
+            inputHelper('#useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
+            inputHelper('#username', 'username');
+            inputHelper('#pincode', 'pincode');
+            inputHelper('#port', 'port');
+            let ipList = yield yahka_admin_1.ioBrokerInterfaceList;
+            const ipListForSelectBox = ipList.filter((a) => a.family === "ipv4").map((a) => { return { value: a.address, text: a.name }; });
+            inputHelper('#interface', 'interface', ipListForSelectBox);
+            devicePane.appendChild(devInfoFragment);
+            return devInfoPanel;
         });
-    };
-    ConfigPageBuilder_CustomDevice.prototype.handleDeviceMetaDataChange = function (deviceConfig, propertyName, errorElement, validator, ev) {
-        var inputTarget = ev.currentTarget;
-        var inputValue = (inputTarget.type === 'checkbox') ? inputTarget.checked : inputTarget.value;
+    }
+    handleDeviceMetaDataChange(deviceConfig, propertyName, errorElement, validator, ev) {
+        let inputTarget = ev.currentTarget;
+        let inputValue = (inputTarget.type === 'checkbox') ? inputTarget.checked : inputTarget.value;
         deviceConfig[propertyName] = inputValue;
         this.refreshSimpleErrorElement(errorElement, validator);
         this.delegate.refreshDeviceListEntry(deviceConfig);
         this.delegate.changeCallback();
-    };
-    return ConfigPageBuilder_CustomDevice;
-}(pageBuilder_base_1.ConfigPageBuilder_Base));
+    }
+}
 exports.ConfigPageBuilder_CustomDevice = ConfigPageBuilder_CustomDevice;
 
 
@@ -103215,21 +103047,6 @@ exports.ConfigPageBuilder_CustomDevice = ConfigPageBuilder_CustomDevice;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -103239,198 +103056,133 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ConfigPageBuilder_IPCamera = void 0;
 /// <reference path="../../typings/index.d.ts" />
-var hkBridge = __webpack_require__(/*! ../../shared/yahka.configuration */ "./shared/yahka.configuration.ts");
-var pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
-var admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
-var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-var yahka_admin_1 = __webpack_require__(/*! ../yahka.admin */ "./admin/yahka.admin.ts");
-var admin_defaults_1 = __webpack_require__(/*! ../admin.defaults */ "./admin/admin.defaults.ts");
-var pageBuilder_servicePanel_1 = __webpack_require__(/*! ./pageBuilder.servicePanel */ "./admin/pageBuilder/pageBuilder.servicePanel.ts");
-var ConfigPageBuilder_IPCamera = /** @class */ (function (_super) {
-    __extends(ConfigPageBuilder_IPCamera, _super);
-    function ConfigPageBuilder_IPCamera(delegate) {
-        var _this = _super.call(this, delegate) || this;
-        _this.delegate = delegate;
-        _this.addServiceAvailable = true;
-        _this.removeDeviceAvailable = true;
-        _this.dupliacteDeviceAvailable = true;
-        _this.servicePanelBuilder = new pageBuilder_servicePanel_1.ConfigPageBuilder_ServicePanel(delegate);
-        _this.configPanelTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.ipCam.main.inc.html */ "./admin/pageBuilder/pageBuilder.ipCam.main.inc.html"));
-        return _this;
+const hkBridge = __webpack_require__(/*! ../../shared/yahka.configuration */ "./shared/yahka.configuration.ts");
+const pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
+const admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const yahka_admin_1 = __webpack_require__(/*! ../yahka.admin */ "./admin/yahka.admin.ts");
+const admin_defaults_1 = __webpack_require__(/*! ../admin.defaults */ "./admin/admin.defaults.ts");
+const pageBuilder_servicePanel_1 = __webpack_require__(/*! ./pageBuilder.servicePanel */ "./admin/pageBuilder/pageBuilder.servicePanel.ts");
+class ConfigPageBuilder_IPCamera extends pageBuilder_base_1.ConfigPageBuilder_Base {
+    constructor(delegate) {
+        super(delegate);
+        this.delegate = delegate;
+        this.addServiceAvailable = true;
+        this.removeDeviceAvailable = true;
+        this.dupliacteDeviceAvailable = true;
+        this.servicePanelBuilder = new pageBuilder_servicePanel_1.ConfigPageBuilder_ServicePanel(delegate);
+        this.configPanelTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.ipCam.main.inc.html */ "./admin/pageBuilder/pageBuilder.ipCam.main.inc.html"));
     }
-    ConfigPageBuilder_IPCamera.prototype.refresh = function (config, AFocusLastPanel, devicePanel) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                if (!hkBridge.Configuration.isIPCameraConfig(config)) {
-                    return [2 /*return*/];
-                }
-                this.refreshCameraPanels(config, AFocusLastPanel, devicePanel);
-                this.refreshServicePanels(config, AFocusLastPanel, devicePanel);
-                return [2 /*return*/];
-            });
-        });
-    };
-    ConfigPageBuilder_IPCamera.prototype.refreshCameraPanels = function (config, AFocusLastPanel, devicePanel) {
-        return __awaiter(this, void 0, void 0, function () {
-            var configFragment, inputHelper, ffmpegHelper, ipList, ipListForSelectBox;
-            var _this = this;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        configFragment = document.importNode(this.configPanelTemplate.content, true);
-                        (0, admin_translation_1.translateFragment)(configFragment);
-                        inputHelper = function (selector, propertyName, selectList, validator, checkDefault) {
-                            if (validator === void 0) { validator = undefined; }
-                            if (checkDefault === void 0) { checkDefault = true; }
-                            var input = configFragment.querySelector(selector);
-                            var errorElement = configFragment.querySelector(selector + '_error');
-                            _this.fillSelectByListEntries(input, selectList);
-                            var value = config[propertyName];
-                            if (input.type === 'checkbox') {
-                                input.checked = value === undefined ? checkDefault : Boolean(value);
-                                input.addEventListener('change', _this.handlePropertyChange.bind(_this, config, propertyName, errorElement, validator));
-                            }
-                            else {
-                                if (value !== undefined) {
-                                    input.value = value.toString();
-                                }
-                                else {
-                                    input.value = '';
-                                }
-                                input.addEventListener('input', _this.handlePropertyChange.bind(_this, config, propertyName, errorElement, validator));
-                            }
-                            _this.refreshSimpleErrorElement(errorElement, validator);
-                        };
-                        ffmpegHelper = function (selector, propertyName) {
-                            var input = configFragment.querySelector(selector);
-                            var inputErrorMsg = configFragment.querySelector(selector + '_error');
-                            var value = config.ffmpegCommandLine[propertyName];
-                            if (value !== undefined) {
-                                input.value = JSON.stringify(value, null, 2);
-                            }
-                            else {
-                                input.value = '';
-                            }
-                            input.addEventListener('input', _this.handleffMpegPropertyChange.bind(_this, config, propertyName, inputErrorMsg));
-                            configFragment.querySelector(selector + '_reset').addEventListener('click', function () {
-                                input.value = JSON.stringify(admin_defaults_1.Defaults.ffmpegCommandLines.default[propertyName], null, 2);
-                                input.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
-                                return true;
-                            });
-                        };
-                        inputHelper('#enabled', 'enabled');
-                        inputHelper('#name', 'name', undefined, function () { return !_this.delegate.deviceIsUnique(config); });
-                        inputHelper('#manufacturer', 'manufacturer');
-                        inputHelper('#model', 'model');
-                        inputHelper('#serial', 'serial');
-                        inputHelper('#firmware', 'firmware');
-                        inputHelper('#username', 'username');
-                        inputHelper('#pincode', 'pincode');
-                        inputHelper('#port', 'port');
-                        return [4 /*yield*/, yahka_admin_1.ioBrokerInterfaceList];
-                    case 1:
-                        ipList = _a.sent();
-                        ipListForSelectBox = ipList.filter(function (a) { return a.family === "ipv4"; }).map(function (a) { return { value: a.address, text: a.name }; });
-                        inputHelper('#interface', 'interface', ipListForSelectBox);
-                        inputHelper('#useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
-                        inputHelper('#source', 'source');
-                        inputHelper('#codec', 'codec');
-                        inputHelper('#enableAudio', 'enableAudio', undefined, undefined, false);
-                        inputHelper('#numberOfStreams', 'numberOfStreams');
-                        inputHelper('#maxWidth', 'maxWidth');
-                        inputHelper('#maxHeight', 'maxHeight');
-                        inputHelper('#maxFPS', 'maxFPS');
-                        ffmpegHelper('#ffmpeg_snapshot', 'snapshot');
-                        ffmpegHelper('#ffmpeg_stream', 'stream');
-                        ffmpegHelper('#ffmpeg_streamAudio', 'streamAudio');
-                        devicePanel.appendChild(configFragment);
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    ConfigPageBuilder_IPCamera.prototype.refreshServicePanels = function (config, AFocusLastPanel, devicePanel) {
-        var e_1, _a;
-        var _b;
-        var lastPane;
-        config.services = (_b = config.services) !== null && _b !== void 0 ? _b : [];
-        try {
-            for (var _c = __values(config.services), _d = _c.next(); !_d.done; _d = _c.next()) {
-                var serviceConfig = _d.value;
-                var servicePanel = this.servicePanelBuilder.createServicePanel(config.services, serviceConfig);
-                devicePanel.appendChild(servicePanel);
-                lastPane = servicePanel;
+    refresh(config, AFocusLastPanel, devicePanel) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!hkBridge.Configuration.isIPCameraConfig(config)) {
+                return;
             }
-        }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
-            }
-            finally { if (e_1) throw e_1.error; }
+            this.refreshCameraPanels(config, AFocusLastPanel, devicePanel);
+            this.refreshServicePanels(config, AFocusLastPanel, devicePanel);
+        });
+    }
+    refreshCameraPanels(config, AFocusLastPanel, devicePanel) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let configFragment = document.importNode(this.configPanelTemplate.content, true);
+            (0, admin_translation_1.translateFragment)(configFragment);
+            let inputHelper = (selector, propertyName, selectList, validator = undefined, checkDefault = true) => {
+                let input = configFragment.querySelector(selector);
+                let errorElement = configFragment.querySelector(selector + '_error');
+                this.fillSelectByListEntries(input, selectList);
+                let value = config[propertyName];
+                if (input.type === 'checkbox') {
+                    input.checked = value === undefined ? checkDefault : Boolean(value);
+                    input.addEventListener('change', this.handlePropertyChange.bind(this, config, propertyName, errorElement, validator));
+                }
+                else {
+                    if (value !== undefined) {
+                        input.value = value.toString();
+                    }
+                    else {
+                        input.value = '';
+                    }
+                    input.addEventListener('input', this.handlePropertyChange.bind(this, config, propertyName, errorElement, validator));
+                }
+                this.refreshSimpleErrorElement(errorElement, validator);
+            };
+            let ffmpegHelper = (selector, propertyName) => {
+                let input = configFragment.querySelector(selector);
+                let inputErrorMsg = configFragment.querySelector(selector + '_error');
+                let value = config.ffmpegCommandLine[propertyName];
+                if (value !== undefined) {
+                    input.value = JSON.stringify(value, null, 2);
+                }
+                else {
+                    input.value = '';
+                }
+                input.addEventListener('input', this.handleffMpegPropertyChange.bind(this, config, propertyName, inputErrorMsg));
+                configFragment.querySelector(selector + '_reset').addEventListener('click', () => {
+                    input.value = JSON.stringify(admin_defaults_1.Defaults.ffmpegCommandLines.default[propertyName], null, 2);
+                    input.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+                    return true;
+                });
+            };
+            inputHelper('#enabled', 'enabled');
+            inputHelper('#name', 'name', undefined, () => !this.delegate.deviceIsUnique(config));
+            inputHelper('#group', 'groupString');
+            inputHelper('#manufacturer', 'manufacturer');
+            inputHelper('#model', 'model');
+            inputHelper('#serial', 'serial');
+            inputHelper('#firmware', 'firmware');
+            inputHelper('#username', 'username');
+            inputHelper('#pincode', 'pincode');
+            inputHelper('#port', 'port');
+            let ipList = yield yahka_admin_1.ioBrokerInterfaceList;
+            let ipListForSelectBox = ipList.filter((a) => a.family === "ipv4").map((a) => { return { value: a.address, text: a.name }; });
+            inputHelper('#interface', 'interface', ipListForSelectBox);
+            inputHelper('#useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
+            inputHelper('#source', 'source');
+            inputHelper('#codec', 'codec');
+            inputHelper('#enableAudio', 'enableAudio', undefined, undefined, false);
+            inputHelper('#numberOfStreams', 'numberOfStreams');
+            inputHelper('#maxWidth', 'maxWidth');
+            inputHelper('#maxHeight', 'maxHeight');
+            inputHelper('#maxFPS', 'maxFPS');
+            ffmpegHelper('#ffmpeg_snapshot', 'snapshot');
+            ffmpegHelper('#ffmpeg_stream', 'stream');
+            ffmpegHelper('#ffmpeg_streamAudio', 'streamAudio');
+            devicePanel.appendChild(configFragment);
+        });
+    }
+    refreshServicePanels(config, AFocusLastPanel, devicePanel) {
+        var _a;
+        let lastPane;
+        config.services = (_a = config.services) !== null && _a !== void 0 ? _a : [];
+        for (let serviceConfig of config.services) {
+            let servicePanel = this.servicePanelBuilder.createServicePanel(config.services, serviceConfig);
+            devicePanel.appendChild(servicePanel);
+            lastPane = servicePanel;
         }
         if (AFocusLastPanel && lastPane) {
             lastPane.scrollIntoView();
             if (!lastPane.classList.contains('active')) {
-                var heading = lastPane.querySelector('.heading');
+                let heading = lastPane.querySelector('.heading');
                 if (heading)
                     heading.click();
             }
         }
-    };
-    ConfigPageBuilder_IPCamera.prototype.styleListItem = function (listItem, deviceConfig) {
+    }
+    styleListItem(listItem, deviceConfig) {
         if (!hkBridge.Configuration.isIPCameraConfig(deviceConfig)) {
             return false;
         }
-        var listIcon = listItem.querySelector('.list-icon');
+        let listIcon = listItem.querySelector('.list-icon');
         listIcon.className = 'list-icon icon mif-camera';
         listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
         listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
         return true;
-    };
-    ConfigPageBuilder_IPCamera.prototype.handlePropertyChange = function (config, propertyName, errorElement, validator, ev) {
-        var inputTarget = ev.currentTarget;
+    }
+    handlePropertyChange(config, propertyName, errorElement, validator, ev) {
+        let inputTarget = ev.currentTarget;
         if (inputTarget.type == "checkbox") {
             config[propertyName] = inputTarget.checked;
         }
@@ -103440,14 +103192,14 @@ var ConfigPageBuilder_IPCamera = /** @class */ (function (_super) {
         this.refreshSimpleErrorElement(errorElement, validator);
         this.delegate.refreshDeviceListEntry(config);
         this.delegate.changeCallback();
-    };
-    ConfigPageBuilder_IPCamera.prototype.displayExceptionHint = function (textArea, msgPanel, message) {
+    }
+    displayExceptionHint(textArea, msgPanel, message) {
         textArea.classList.toggle('validationError', message !== undefined);
         msgPanel.classList.toggle('validationError', message !== undefined);
         msgPanel.innerText = message;
-    };
-    ConfigPageBuilder_IPCamera.prototype.handleffMpegPropertyChange = function (config, propertyName, inputErrorMsgPanel, ev) {
-        var inputTarget = ev.currentTarget;
+    }
+    handleffMpegPropertyChange(config, propertyName, inputErrorMsgPanel, ev) {
+        let inputTarget = ev.currentTarget;
         try {
             config.ffmpegCommandLine[propertyName] = JSON.parse(inputTarget.value);
             this.displayExceptionHint(inputTarget, inputErrorMsgPanel, undefined);
@@ -103457,9 +103209,8 @@ var ConfigPageBuilder_IPCamera = /** @class */ (function (_super) {
         }
         this.delegate.refreshDeviceListEntry(config);
         this.delegate.changeCallback();
-    };
-    return ConfigPageBuilder_IPCamera;
-}(pageBuilder_base_1.ConfigPageBuilder_Base));
+    }
+}
 exports.ConfigPageBuilder_IPCamera = ConfigPageBuilder_IPCamera;
 
 
@@ -103469,55 +103220,29 @@ exports.ConfigPageBuilder_IPCamera = ConfigPageBuilder_IPCamera;
 /*!***********************************************!*\
   !*** ./admin/pageBuilder/pageBuilder.main.ts ***!
   \***********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ioBroker_YahkaPageBuilder = void 0;
 /// <reference path="../../typings/index.d.ts" />
-var hkBridge = __webpack_require__(/*! ../../shared/yahka.configuration */ "./shared/yahka.configuration.ts");
-var $ = __webpack_require__(/*! jquery */ "jquery");
-var admin_defaults_1 = __webpack_require__(/*! ../admin.defaults */ "./admin/admin.defaults.ts");
-var pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
-var pageBuilder_customDevice_1 = __webpack_require__(/*! ./pageBuilder.customDevice */ "./admin/pageBuilder/pageBuilder.customDevice.ts");
-var pageBuilder_bridgeConfig_1 = __webpack_require__(/*! ./pageBuilder.bridgeConfig */ "./admin/pageBuilder/pageBuilder.bridgeConfig.ts");
-var pageBuilder_ipCam_1 = __webpack_require__(/*! ./pageBuilder.ipCam */ "./admin/pageBuilder/pageBuilder.ipCam.ts");
-var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const hkBridge = __webpack_require__(/*! ../../shared/yahka.configuration */ "./shared/yahka.configuration.ts");
+const $ = __webpack_require__(/*! jquery */ "jquery");
+const admin_defaults_1 = __webpack_require__(/*! ../admin.defaults */ "./admin/admin.defaults.ts");
+const pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
+const pageBuilder_customDevice_1 = __webpack_require__(/*! ./pageBuilder.customDevice */ "./admin/pageBuilder/pageBuilder.customDevice.ts");
+const pageBuilder_bridgeConfig_1 = __webpack_require__(/*! ./pageBuilder.bridgeConfig */ "./admin/pageBuilder/pageBuilder.bridgeConfig.ts");
+const pageBuilder_ipCam_1 = __webpack_require__(/*! ./pageBuilder.ipCam */ "./admin/pageBuilder/pageBuilder.ipCam.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
 function generateRandomUsername() {
-    var usr = [];
-    for (var i = 0; i < 6; i++)
+    let usr = [];
+    for (let i = 0; i < 6; i++)
         usr[i] = ('00' + (Math.floor((Math.random() * 256)).toString(16))).substr(-2);
     return usr.join(':');
 }
-var ioBroker_YahkaPageBuilder = /** @class */ (function () {
-    function ioBroker_YahkaPageBuilder(_bridgeSettings, cameraConfigs, _changeCallback) {
+class ioBroker_YahkaPageBuilder {
+    constructor(_bridgeSettings, cameraConfigs, _changeCallback) {
         this._bridgeSettings = _bridgeSettings;
         this.cameraConfigs = cameraConfigs;
         this._changeCallback = _changeCallback;
@@ -103533,22 +103258,27 @@ var ioBroker_YahkaPageBuilder = /** @class */ (function () {
         this.pageBuilders.set('ipcamera', new pageBuilder_ipCam_1.ConfigPageBuilder_IPCamera(this));
         this.bootstrap();
     }
-    ioBroker_YahkaPageBuilder.prototype.bootstrap = function () {
-        var bridgeFrame = document.querySelector('#yahka_bridge_frame');
+    bootstrap() {
+        let bridgeFrame = document.querySelector('#yahka_bridge_frame');
         this.deviceListHandler.buildDeviceList(bridgeFrame);
         this.buttonHandler.bindBridgeButtons(bridgeFrame);
         this.buttonHandler.refreshBridgeButtons(bridgeFrame);
         return bridgeFrame;
-    };
-    ioBroker_YahkaPageBuilder.prototype.deviceIsUnique = function (deviceConfig) {
-        var devList = this.deviceListHandler.getDeviceList();
-        return !devList.some(function (a) { return (a.name == deviceConfig.name) && (a !== deviceConfig); });
-    };
-    ioBroker_YahkaPageBuilder.prototype.getPageBuilderByConfig = function (deviceConfig) {
+    }
+    rebuildDeviceList() {
+        let bridgeFrame = document.querySelector('#yahka_bridge_frame');
+        this.deviceListHandler.buildDeviceList(bridgeFrame);
+        this.buttonHandler.refreshBridgeButtons(bridgeFrame);
+    }
+    deviceIsUnique(deviceConfig) {
+        let devList = this.deviceListHandler.getDeviceList();
+        return !devList.some((a) => (a.name == deviceConfig.name) && (a !== deviceConfig));
+    }
+    getPageBuilderByConfig(deviceConfig) {
         if (deviceConfig === undefined) {
             return undefined;
         }
-        var configType = deviceConfig.configType;
+        let configType = deviceConfig.configType;
         if (configType === undefined) {
             if (hkBridge.Configuration.isBridgeConfig(deviceConfig)) {
                 configType = 'bridge';
@@ -103558,142 +103288,140 @@ var ioBroker_YahkaPageBuilder = /** @class */ (function () {
             }
         }
         return this.pageBuilders.get(configType);
-    };
-    Object.defineProperty(ioBroker_YahkaPageBuilder.prototype, "bridgeSettings", {
-        get: function () {
-            return this._bridgeSettings;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(ioBroker_YahkaPageBuilder.prototype, "selectedDeviceConfig", {
-        get: function () {
-            return this._selectedDeviceConfig;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    ioBroker_YahkaPageBuilder.prototype.refreshDevicePanel = function (deviceConfig, AFocusLastPanel) {
-        var pageBuilder = this.getPageBuilderByConfig(deviceConfig);
-        var devicePanel = document.querySelector('#yahka_device_details');
+    }
+    get bridgeSettings() {
+        return this._bridgeSettings;
+    }
+    get selectedDeviceConfig() {
+        return this._selectedDeviceConfig;
+    }
+    refreshDevicePanel(deviceConfig, AFocusLastPanel) {
+        let pageBuilder = this.getPageBuilderByConfig(deviceConfig);
+        let devicePanel = document.querySelector('#yahka_device_details');
         if (devicePanel) {
             devicePanel.innerHTML = '';
         }
         if (pageBuilder) {
             pageBuilder.refresh(deviceConfig, AFocusLastPanel, devicePanel);
         }
-    };
-    ioBroker_YahkaPageBuilder.prototype.setSelectedDeviceConfig = function (deviceConfig, AFocusLastPanel) {
+    }
+    setSelectedDeviceConfig(deviceConfig, AFocusLastPanel) {
         this._selectedDeviceConfig = deviceConfig;
         this.refreshDevicePanel(deviceConfig, AFocusLastPanel);
         this.buttonHandler.refreshBridgeButtons(document.body);
-    };
-    ioBroker_YahkaPageBuilder.prototype.refreshSelectedDeviceConfig = function () {
-        this.setSelectedDeviceConfig(this._selectedDeviceConfig, false);
-    };
-    ioBroker_YahkaPageBuilder.prototype.refreshDeviceListEntry = function (deviceConfig) {
-        this.deviceListHandler.refreshDeviceList();
-    };
-    ioBroker_YahkaPageBuilder.prototype.changeCallback = function () {
-        return this._changeCallback();
-    };
-    return ioBroker_YahkaPageBuilder;
-}());
-exports.ioBroker_YahkaPageBuilder = ioBroker_YahkaPageBuilder;
-var ioBroker_DeviceListHandler = /** @class */ (function (_super) {
-    __extends(ioBroker_DeviceListHandler, _super);
-    function ioBroker_DeviceListHandler(delegate) {
-        var _this = _super.call(this, delegate) || this;
-        _this.listEntryToConfigMap = new Map();
-        _this.deviceListEntryTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.main.deviceListEntry.inc.html */ "./admin/pageBuilder/pageBuilder.main.deviceListEntry.inc.html"));
-        return _this;
     }
-    ioBroker_DeviceListHandler.prototype.getDeviceList = function () {
-        var result = [this.delegate.bridgeSettings];
-        var devices = [];
+    refreshSelectedDeviceConfig() {
+        this.setSelectedDeviceConfig(this._selectedDeviceConfig, false);
+    }
+    refreshDeviceListEntry(deviceConfig) {
+        this.deviceListHandler.refreshDeviceList();
+    }
+    changeCallback() {
+        return this._changeCallback();
+    }
+}
+exports.ioBroker_YahkaPageBuilder = ioBroker_YahkaPageBuilder;
+class ioBroker_DeviceListHandler extends pageBuilder_base_1.ConfigPageBuilder_Base {
+    constructor(delegate) {
+        super(delegate);
+        this.listEntryToConfigMap = new Map();
+        this.entryGroupMap = new Map();
+        this.deviceListEntryTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.main.deviceListEntry.inc.html */ "./admin/pageBuilder/pageBuilder.main.deviceListEntry.inc.html"));
+        this.deviceListEntryGroupTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.main.deviceListEntryGroup.inc.html */ "./admin/pageBuilder/pageBuilder.main.deviceListEntryGroup.inc.html"));
+    }
+    getDeviceList() {
+        let result = [this.delegate.bridgeSettings];
+        let devices = [];
         if (this.delegate.bridgeSettings.devices)
             devices = devices.concat(this.delegate.bridgeSettings.devices);
         if (this.delegate.cameraConfigs)
             devices = devices.concat(this.delegate.cameraConfigs);
-        return result.concat(devices.sort(function (a, b) { return a.name.localeCompare(b.name); }));
-    };
-    ioBroker_DeviceListHandler.prototype.createDeviceListEntry = function (deviceConfig) {
-        var deviceEntry = document.importNode(this.deviceListEntryTemplate.content, true);
-        var listItem = deviceEntry.querySelector('.list');
+        return result.concat(devices.sort((a, b) => a.name.localeCompare(b.name)));
+    }
+    createDeviceListEntry(deviceConfig) {
+        let deviceEntry = document.importNode(this.deviceListEntryTemplate.content, true);
+        let listItem = deviceEntry.querySelector('.list');
         this.refreshDeviceListEntry(deviceConfig, listItem);
         return deviceEntry;
-    };
-    ioBroker_DeviceListHandler.prototype.buildDeviceList = function (bridgeFrame) {
-        var e_1, _a;
-        var bridge = this.delegate.bridgeSettings;
-        var deviceList = bridgeFrame.querySelector('#yahka_deviceList');
-        deviceList.innerHTML = "";
+    }
+    buildDeviceList(bridgeFrame) {
+        let bridge = this.delegate.bridgeSettings;
+        let deviceList = bridgeFrame.querySelector('#yahka_deviceList');
+        deviceList.innerHTML = '';
         this.listEntryToConfigMap.clear();
-        try {
-            for (var _b = __values(this.getDeviceList()), _c = _b.next(); !_c.done; _c = _b.next()) {
-                var deviceConfig = _c.value;
-                var fragment = this.createDeviceListEntry(deviceConfig);
-                var node = fragment.querySelector('.list');
-                this.listEntryToConfigMap.set(node, deviceConfig);
-                deviceList.appendChild(fragment);
-            }
+        this.entryGroupMap.clear();
+        for (let deviceConfig of this.getDeviceList().sort((a, b) => { var _a; return (_a = a.name) === null || _a === void 0 ? void 0 : _a.localeCompare(b.name); })) {
+            const groupNode = this.getDeviceGroupNode(deviceList, deviceConfig);
+            let fragment = this.createDeviceListEntry(deviceConfig);
+            let node = fragment.querySelector('.list');
+            this.listEntryToConfigMap.set(node, deviceConfig);
+            groupNode.appendChild(fragment);
         }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-            }
-            finally { if (e_1) throw e_1.error; }
-        }
+        [...deviceList.children]
+            .sort((a, b) => { var _a; return (_a = a.innerText) === null || _a === void 0 ? void 0 : _a.localeCompare(b.innerText); })
+            .forEach(node => {
+            return deviceList.appendChild(node);
+        });
         $(deviceList).listview({ onListClick: this.handleDeviceListClick.bind(this) });
-    };
-    ioBroker_DeviceListHandler.prototype.refreshDeviceList = function () {
-        var _this = this;
-        this.listEntryToConfigMap.forEach(function (node, element) { return _this.refreshDeviceListEntry(node, element); });
-    };
-    ioBroker_DeviceListHandler.prototype.refreshDeviceListEntry = function (deviceConfig, listItem) {
+    }
+    getDeviceGroupNode(deviceList, deviceConfig) {
+        const groupName = deviceConfig.groupString ? deviceConfig.groupString : '<no group>';
+        const dictIdentifier = groupName.toLocaleLowerCase();
+        const existingNode = this.entryGroupMap.get(dictIdentifier);
+        if (existingNode != null) {
+            return existingNode;
+        }
+        const fragment = document.importNode(this.deviceListEntryGroupTemplate.content, true);
+        const listGroupNode = fragment.querySelector('.list-group');
+        const listGroupName = fragment.querySelector('.list-group-toggle');
+        const listGroupContent = fragment.querySelector('.list-group-content');
+        listGroupName.innerHTML = groupName;
+        this.entryGroupMap.set(dictIdentifier, listGroupNode);
+        deviceList.appendChild(listGroupNode);
+        return listGroupContent;
+    }
+    refreshDeviceList() {
+        this.listEntryToConfigMap.forEach((node, element) => this.refreshDeviceListEntry(node, element));
+    }
+    refreshDeviceListEntry(deviceConfig, listItem) {
         if (!listItem)
             return;
-        var pageBuilder = this.delegate.getPageBuilderByConfig(deviceConfig);
+        let pageBuilder = this.delegate.getPageBuilderByConfig(deviceConfig);
         listItem.querySelector('.list-title').textContent = deviceConfig.name;
         listItem.classList.toggle('active', (deviceConfig === this.delegate.selectedDeviceConfig));
-        var stylingDone = false;
+        let stylingDone = false;
         if (pageBuilder !== undefined) {
             stylingDone = pageBuilder.styleListItem(listItem, deviceConfig);
         }
         listItem.classList.toggle('error', !this.delegate.deviceIsUnique(deviceConfig));
         if (!stylingDone) {
-            var listIcon = listItem.querySelector('.list-icon');
+            let listIcon = listItem.querySelector('.list-icon');
             listIcon.className = 'list-icon icon mif-question';
         }
-    };
-    ioBroker_DeviceListHandler.prototype.handleDeviceListClick = function (deviceNode) {
+    }
+    handleDeviceListClick(deviceNode) {
         if (!deviceNode)
             return;
-        var deviceConfig = this.listEntryToConfigMap.get(deviceNode[0]);
+        let deviceConfig = this.listEntryToConfigMap.get(deviceNode[0]);
         this.delegate.setSelectedDeviceConfig(deviceConfig, false);
-    };
-    return ioBroker_DeviceListHandler;
-}(pageBuilder_base_1.ConfigPageBuilder_Base));
-var ioBroker_ButtonHandler = /** @class */ (function (_super) {
-    __extends(ioBroker_ButtonHandler, _super);
-    function ioBroker_ButtonHandler(delegate, deviceListHandler) {
-        var _this = _super.call(this, delegate) || this;
-        _this.deviceListHandler = deviceListHandler;
-        return _this;
     }
-    ioBroker_ButtonHandler.prototype.bindBridgeButtons = function (bridgePane) {
-        var _this = this;
-        var bridge = this.delegate.bridgeSettings;
-        var elem;
+}
+class ioBroker_ButtonHandler extends pageBuilder_base_1.ConfigPageBuilder_Base {
+    constructor(delegate, deviceListHandler) {
+        super(delegate);
+        this.deviceListHandler = deviceListHandler;
+    }
+    bindBridgeButtons(bridgePane) {
+        let bridge = this.delegate.bridgeSettings;
+        let elem;
         if (elem = bridgePane.querySelector('#yahka_add_device')) {
-            elem.addEventListener('click', function (e) {
+            elem.addEventListener('click', (e) => {
                 e.preventDefault();
-                var newCustomDevice = {
+                let newCustomDevice = {
                     configType: "customdevice",
                     manufacturer: "",
                     model: "",
-                    name: "<new device " + _this.deviceListHandler.getDeviceList().length + ">",
+                    name: "<new device " + this.deviceListHandler.getDeviceList().length + ">",
                     serial: "",
                     firmware: "",
                     enabled: true,
@@ -103701,20 +103429,20 @@ var ioBroker_ButtonHandler = /** @class */ (function (_super) {
                     services: []
                 };
                 bridge.devices.push(newCustomDevice);
-                _this.delegate.setSelectedDeviceConfig(newCustomDevice, true);
-                _this.deviceListHandler.buildDeviceList(bridgePane);
-                _this.delegate.changeCallback();
+                this.delegate.setSelectedDeviceConfig(newCustomDevice, true);
+                this.deviceListHandler.buildDeviceList(bridgePane);
+                this.delegate.changeCallback();
             });
         }
         if (elem = bridgePane.querySelector('#yahka_add_camera')) {
-            elem.addEventListener('click', function (e) {
+            elem.addEventListener('click', (e) => {
                 e.preventDefault();
-                var newIPCamera = {
+                let newIPCamera = {
                     configType: "ipcamera",
                     ident: "",
                     manufacturer: "",
                     model: "",
-                    name: "<new camera " + _this.deviceListHandler.getDeviceList().length + ">",
+                    name: "<new camera " + this.deviceListHandler.getDeviceList().length + ">",
                     serial: "",
                     firmware: "",
                     port: 0,
@@ -103733,16 +103461,16 @@ var ioBroker_ButtonHandler = /** @class */ (function (_super) {
                     devices: [],
                     services: []
                 };
-                _this.delegate.cameraConfigs.push(newIPCamera);
-                _this.delegate.setSelectedDeviceConfig(newIPCamera, true);
-                _this.deviceListHandler.buildDeviceList(bridgePane);
-                _this.delegate.changeCallback();
+                this.delegate.cameraConfigs.push(newIPCamera);
+                this.delegate.setSelectedDeviceConfig(newIPCamera, true);
+                this.deviceListHandler.buildDeviceList(bridgePane);
+                this.delegate.changeCallback();
             });
         }
         if (elem = bridgePane.querySelector('#yahka_add_service')) {
-            elem.addEventListener('click', function (e) {
+            elem.addEventListener('click', (e) => {
                 e.preventDefault();
-                var dev = _this.delegate.selectedDeviceConfig;
+                let dev = this.delegate.selectedDeviceConfig;
                 if (!hkBridge.Configuration.isDeviceConfig(dev) && !hkBridge.Configuration.isIPCameraConfig(dev))
                     return;
                 dev.services.push({
@@ -103751,45 +103479,45 @@ var ioBroker_ButtonHandler = /** @class */ (function (_super) {
                     type: '',
                     characteristics: []
                 });
-                _this.delegate.refreshDevicePanel(dev, true);
-                _this.delegate.changeCallback();
+                this.delegate.refreshDevicePanel(dev, true);
+                this.delegate.changeCallback();
             });
         }
         if (elem = bridgePane.querySelector('#yahka_remove_device')) {
-            elem.addEventListener('click', function (e) {
+            elem.addEventListener('click', (e) => {
                 e.preventDefault();
-                var dev = _this.delegate.selectedDeviceConfig;
+                let dev = this.delegate.selectedDeviceConfig;
                 if (hkBridge.Configuration.isIPCameraConfig(dev)) {
-                    var idx = _this.delegate.cameraConfigs.indexOf(dev);
+                    let idx = this.delegate.cameraConfigs.indexOf(dev);
                     if (idx > -1) {
-                        _this.delegate.cameraConfigs.splice(idx, 1);
-                        _this.delegate.changeCallback();
-                        _this.delegate.setSelectedDeviceConfig(undefined, false);
-                        _this.deviceListHandler.buildDeviceList(bridgePane);
-                        _this.delegate.changeCallback();
+                        this.delegate.cameraConfigs.splice(idx, 1);
+                        this.delegate.changeCallback();
+                        this.delegate.setSelectedDeviceConfig(undefined, false);
+                        this.deviceListHandler.buildDeviceList(bridgePane);
+                        this.delegate.changeCallback();
                     }
                 }
                 else if (hkBridge.Configuration.isDeviceConfig(dev)) {
-                    var idx = bridge.devices.indexOf(dev);
+                    let idx = bridge.devices.indexOf(dev);
                     if (idx > -1) {
                         bridge.devices.splice(idx, 1);
-                        _this.delegate.changeCallback();
-                        _this.delegate.setSelectedDeviceConfig(undefined, false);
-                        _this.deviceListHandler.buildDeviceList(bridgePane);
-                        _this.delegate.changeCallback();
+                        this.delegate.changeCallback();
+                        this.delegate.setSelectedDeviceConfig(undefined, false);
+                        this.deviceListHandler.buildDeviceList(bridgePane);
+                        this.delegate.changeCallback();
                     }
                 }
             });
         }
         if (elem = bridgePane.querySelector('#yahka_duplicate_device')) {
-            elem.addEventListener('click', function (e) {
+            elem.addEventListener('click', (e) => {
                 e.preventDefault();
-                var dev = _this.delegate.selectedDeviceConfig;
-                var copyOfDevice = $.extend(true, {}, dev);
+                let dev = this.delegate.selectedDeviceConfig;
+                let copyOfDevice = $.extend(true, {}, dev);
                 copyOfDevice.name = copyOfDevice.name + " copy";
                 if (hkBridge.Configuration.isIPCameraConfig(copyOfDevice)) {
                     copyOfDevice.serial = "";
-                    _this.delegate.cameraConfigs.push(copyOfDevice);
+                    this.delegate.cameraConfigs.push(copyOfDevice);
                 }
                 else if (hkBridge.Configuration.isDeviceConfig(copyOfDevice)) {
                     copyOfDevice.serial = "";
@@ -103798,21 +103526,21 @@ var ioBroker_ButtonHandler = /** @class */ (function (_super) {
                 else {
                     return;
                 }
-                _this.delegate.setSelectedDeviceConfig(copyOfDevice, true);
-                _this.deviceListHandler.buildDeviceList(bridgePane);
-                _this.delegate.changeCallback();
+                this.delegate.setSelectedDeviceConfig(copyOfDevice, true);
+                this.deviceListHandler.buildDeviceList(bridgePane);
+                this.delegate.changeCallback();
             });
         }
-    };
-    ioBroker_ButtonHandler.prototype.refreshBridgeButtons = function (parent) {
+    }
+    refreshBridgeButtons(parent) {
         // let addDeviceButton    = <HTMLElement>document.querySelector('#yahka_add_device');
-        var addServiceButton = parent.querySelector('#yahka_add_service');
-        var removeDeviceButton = parent.querySelector('#yahka_remove_device');
-        var duplicateDeviceButton = parent.querySelector('#yahka_duplicate_device');
-        var pageBuilder = this.delegate.getPageBuilderByConfig(this.delegate.selectedDeviceConfig);
-        var addServiceEnabled = pageBuilder ? pageBuilder.addServiceAvailable : false;
-        var removeDevEnabled = pageBuilder ? pageBuilder.removeDeviceAvailable : false;
-        var duplicateDeviceEnabled = pageBuilder ? pageBuilder.dupliacteDeviceAvailable : false;
+        let addServiceButton = parent.querySelector('#yahka_add_service');
+        let removeDeviceButton = parent.querySelector('#yahka_remove_device');
+        let duplicateDeviceButton = parent.querySelector('#yahka_duplicate_device');
+        let pageBuilder = this.delegate.getPageBuilderByConfig(this.delegate.selectedDeviceConfig);
+        let addServiceEnabled = pageBuilder ? pageBuilder.addServiceAvailable : false;
+        let removeDevEnabled = pageBuilder ? pageBuilder.removeDeviceAvailable : false;
+        let duplicateDeviceEnabled = pageBuilder ? pageBuilder.dupliacteDeviceAvailable : false;
         if (addServiceEnabled)
             addServiceButton.removeAttribute('disabled');
         else
@@ -103825,9 +103553,8 @@ var ioBroker_ButtonHandler = /** @class */ (function (_super) {
             duplicateDeviceButton.removeAttribute('disabled');
         else
             duplicateDeviceButton.setAttribute('disabled', '');
-    };
-    return ioBroker_ButtonHandler;
-}(pageBuilder_base_1.ConfigPageBuilder_Base));
+    }
+}
 
 
 /***/ }),
@@ -103836,105 +103563,50 @@ var ioBroker_ButtonHandler = /** @class */ (function (_super) {
 /*!*******************************************************!*\
   !*** ./admin/pageBuilder/pageBuilder.servicePanel.ts ***!
   \*******************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __read = (this && this.__read) || function (o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
-};
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ConfigPageBuilder_ServicePanel = void 0;
-var yahka_meta_generator_1 = __webpack_require__(/*! ../yahka.meta-generator */ "./admin/yahka.meta-generator.ts");
-var pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
-var parameterEditor_factory_1 = __webpack_require__(/*! ../parameterEditor/parameterEditor.factory */ "./admin/parameterEditor/parameterEditor.factory.ts");
-var parameterEditor_null_1 = __webpack_require__(/*! ../parameterEditor/parameterEditor.null */ "./admin/parameterEditor/parameterEditor.null.ts");
-var admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
-var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-var admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-var HAPServiceDictionary = (0, yahka_meta_generator_1.generateMetaDataDictionary)();
-var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
-    __extends(ConfigPageBuilder_ServicePanel, _super);
-    function ConfigPageBuilder_ServicePanel(delegate) {
-        var _this = _super.call(this, delegate) || this;
-        _this.delegate = delegate;
-        _this.deviceServicePanelTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.servicePanel.servicePanel.inc.html */ "./admin/pageBuilder/pageBuilder.servicePanel.servicePanel.inc.html"));
-        _this.characteristicRow = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.servicePanel.characteristicRow.inc.html */ "./admin/pageBuilder/pageBuilder.servicePanel.characteristicRow.inc.html"));
-        _this.characteristicPropRow = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.servicePanel.characteristic.propRow.inc.html */ "./admin/pageBuilder/pageBuilder.servicePanel.characteristic.propRow.inc.html"));
-        return _this;
+const yahka_meta_generator_1 = __webpack_require__(/*! ../yahka.meta-generator */ "./admin/yahka.meta-generator.ts");
+const pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
+const parameterEditor_factory_1 = __webpack_require__(/*! ../parameterEditor/parameterEditor.factory */ "./admin/parameterEditor/parameterEditor.factory.ts");
+const parameterEditor_null_1 = __webpack_require__(/*! ../parameterEditor/parameterEditor.null */ "./admin/parameterEditor/parameterEditor.null.ts");
+const admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+let HAPServiceDictionary = (0, yahka_meta_generator_1.generateMetaDataDictionary)();
+class ConfigPageBuilder_ServicePanel extends pageBuilder_base_1.ConfigPageBuilder_Base {
+    constructor(delegate) {
+        super(delegate);
+        this.delegate = delegate;
+        this.deviceServicePanelTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.servicePanel.servicePanel.inc.html */ "./admin/pageBuilder/pageBuilder.servicePanel.servicePanel.inc.html"));
+        this.characteristicRow = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.servicePanel.characteristicRow.inc.html */ "./admin/pageBuilder/pageBuilder.servicePanel.characteristicRow.inc.html"));
+        this.characteristicPropRow = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.servicePanel.characteristic.propRow.inc.html */ "./admin/pageBuilder/pageBuilder.servicePanel.characteristic.propRow.inc.html"));
     }
-    ConfigPageBuilder_ServicePanel.prototype.createServicePanel = function (services, serviceConfig) {
-        var _this = this;
-        var servicePanel = document.importNode(this.deviceServicePanelTemplate.content, true);
-        var frameNode = servicePanel.querySelector('#yahka_service_panel');
+    createServicePanel(services, serviceConfig) {
+        let servicePanel = document.importNode(this.deviceServicePanelTemplate.content, true);
+        let frameNode = servicePanel.querySelector('#yahka_service_panel');
         (0, admin_translation_1.translateFragment)(servicePanel);
-        var inputHelper = function (selector, configName, selectList, eventHandler, defaultForCheckbox) {
+        let inputHelper = (selector, configName, selectList, eventHandler, defaultForCheckbox = true) => {
             var _a;
-            if (defaultForCheckbox === void 0) { defaultForCheckbox = true; }
-            var input = frameNode.querySelector(selector);
+            let input = frameNode.querySelector(selector);
             if (selectList != null) {
-                _this.fillSelectByListEntries(input, selectList);
+                this.fillSelectByListEntries(input, selectList);
             }
             if (serviceConfig) {
                 admin_utils_1.Utils.setInputValue(input, serviceConfig[configName]);
             }
             if (input.type === 'checkbox') {
                 input.checked = (_a = serviceConfig[configName]) !== null && _a !== void 0 ? _a : defaultForCheckbox;
-                input.addEventListener('change', _this.handleServiceMetaDataChange.bind(_this, serviceConfig, frameNode, configName));
+                input.addEventListener('change', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
             }
             else if (eventHandler !== undefined) {
                 input.addEventListener('input', eventHandler);
             }
             else {
-                input.addEventListener('input', _this.handleServiceMetaDataChange.bind(_this, serviceConfig, frameNode, configName));
+                input.addEventListener('input', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
             }
         };
         this.refreshServicePanelCaption(serviceConfig, frameNode);
@@ -103942,75 +103614,61 @@ var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
         inputHelper('#service_isPrimary', 'isPrimary', undefined, undefined, false);
         inputHelper('#service_isHidden', 'isHidden', undefined, undefined, false);
         inputHelper('#service_name', 'name');
-        inputHelper('#service_type', 'type', Object.keys(HAPServiceDictionary.services).map(function (s) { return ({
+        inputHelper('#service_type', 'type', Object.keys(HAPServiceDictionary.services).map(s => ({
             text: s,
             value: s
-        }); }), this.handleServiceTypeChange.bind(this, serviceConfig, frameNode));
+        })), this.handleServiceTypeChange.bind(this, serviceConfig, frameNode));
         inputHelper('#service_subtype', 'subType');
         inputHelper('#service_link_to', 'linkTo', [{
                 text: '',
                 value: '',
-            }].concat(services.map(function (s) { return ({
+            }].concat(services.map((s) => ({
             text: s.name,
             value: s.name
-        }); })));
+        }))));
         inputHelper('#new_custom_characteristic', '', Object.entries(HAPServiceDictionary.characteristics)
-            .map(function (_a) {
-            var _b = __read(_a, 2), key = _b[0], c = _b[1];
-            return ({
-                text: c.name,
-                value: key
-            });
-        })
-            .sort(function (a, b) { var _a, _b; return ((_a = a.text) !== null && _a !== void 0 ? _a : a.value).localeCompare((_b = b.text) !== null && _b !== void 0 ? _b : b.value); }), function () { });
+            .map(([key, c]) => ({
+            text: c.name,
+            value: key
+        }))
+            .sort((a, b) => { var _a, _b; return ((_a = a.text) !== null && _a !== void 0 ? _a : a.value).localeCompare((_b = b.text) !== null && _b !== void 0 ? _b : b.value); }), () => { });
         this.buildCharacteristicTable(serviceConfig, frameNode);
         // bind delete buttton
-        frameNode.querySelector('#yakha_delete_service').addEventListener('click', function () {
-            var idx = services.indexOf(serviceConfig);
+        frameNode.querySelector('#yakha_delete_service').addEventListener('click', () => {
+            let idx = services.indexOf(serviceConfig);
             if (idx > -1) {
                 services.splice(idx, 1);
-                _this.delegate.changeCallback();
+                this.delegate.changeCallback();
                 frameNode.parentNode.removeChild(frameNode);
             }
-            _this.delegate.refreshSelectedDeviceConfig();
+            this.delegate.refreshSelectedDeviceConfig();
         });
         frameNode.querySelector('#yahka_add_characteristic').addEventListener('click', this.addCustomCharacteristic.bind(this, serviceConfig, frameNode));
         return frameNode;
-    };
-    ConfigPageBuilder_ServicePanel.prototype.refreshServicePanelCaption = function (serviceConfig, servicePanel) {
-        servicePanel.querySelector('#yahka_service_caption').textContent = (serviceConfig.enabled === false ? '[## disabled ##]' : '') + " " + serviceConfig.name + "[" + serviceConfig.type + "]";
-    };
-    ConfigPageBuilder_ServicePanel.prototype.findHAPCharacteristic = function (serviceDef, characteristicName) {
+    }
+    refreshServicePanelCaption(serviceConfig, servicePanel) {
+        servicePanel.querySelector('#yahka_service_caption').textContent = `${serviceConfig.enabled === false ? '[## disabled ##]' : ''} ${serviceConfig.name}[${serviceConfig.type}]`;
+    }
+    findHAPCharacteristic(serviceDef, characteristicName) {
         if (!serviceDef)
             return undefined;
-        var serviceChar = serviceDef.characteristics[characteristicName];
+        const serviceChar = serviceDef.characteristics[characteristicName];
         if (serviceChar != null)
             return serviceChar;
         return undefined;
-    };
-    ConfigPageBuilder_ServicePanel.prototype.findConfigCharacteristic = function (service, characteristicName) {
-        var e_1, _a;
+    }
+    findConfigCharacteristic(service, characteristicName) {
         if (!service) {
             return undefined;
         }
-        try {
-            for (var _b = __values(service.characteristics), _c = _b.next(); !_c.done; _c = _b.next()) {
-                var cfg = _c.value;
-                if (cfg.name == characteristicName) {
-                    return cfg;
-                }
+        for (let cfg of service.characteristics) {
+            if (cfg.name == characteristicName) {
+                return cfg;
             }
-        }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-            }
-            finally { if (e_1) throw e_1.error; }
         }
         return undefined;
-    };
-    ConfigPageBuilder_ServicePanel.prototype.isEmptyCharacteristic = function (charConfig) {
+    }
+    isEmptyCharacteristic(charConfig) {
         if (charConfig.customCharacteristic) {
             return false;
         }
@@ -104021,150 +103679,128 @@ var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
         if ((charConfig['inOutFunction'] === '') || (charConfig['inOutFunction'] === undefined))
             return true;
         return false;
-    };
-    ConfigPageBuilder_ServicePanel.prototype.removeCharacteristic = function (serviceConfig, charConfig) {
+    }
+    removeCharacteristic(serviceConfig, charConfig) {
         if (serviceConfig === undefined) {
             return;
         }
-        var idx = serviceConfig.characteristics.indexOf(charConfig);
+        let idx = serviceConfig.characteristics.indexOf(charConfig);
         if (idx > -1) {
             serviceConfig.characteristics.splice(idx, 1);
             this.delegate.changeCallback();
         }
-    };
-    ConfigPageBuilder_ServicePanel.prototype.buildCharacteristicTable = function (serviceConfig, servicePanel) {
-        var e_2, _a, e_3, _b;
-        var serviceDef = HAPServiceDictionary.services[serviceConfig.type];
-        var createdCharacteristics = {};
-        try {
-            for (var _c = __values(serviceConfig.characteristics), _d = _c.next(); !_d.done; _d = _c.next()) {
-                var charConfig = _d.value;
-                var charDef = this.findHAPCharacteristic(serviceDef, charConfig.name);
-                if ((charDef === undefined) && (this.isEmptyCharacteristic(charConfig))) {
-                    this.removeCharacteristic(serviceConfig, charConfig);
-                    continue;
-                }
-                if (charDef == null) {
-                    charDef = HAPServiceDictionary.characteristics[charConfig.name];
-                }
-                var charRow = this.createCharacteristicRow(charDef, serviceConfig, charConfig, servicePanel);
-                createdCharacteristics[charConfig.name] = [charConfig.name, charDef ? charDef.optional : false, charRow];
+    }
+    buildCharacteristicTable(serviceConfig, servicePanel) {
+        let serviceDef = HAPServiceDictionary.services[serviceConfig.type];
+        let createdCharacteristics = {};
+        for (let charConfig of serviceConfig.characteristics) {
+            let charDef = this.findHAPCharacteristic(serviceDef, charConfig.name);
+            if ((charDef === undefined) && (this.isEmptyCharacteristic(charConfig))) {
+                this.removeCharacteristic(serviceConfig, charConfig);
+                continue;
             }
-        }
-        catch (e_2_1) { e_2 = { error: e_2_1 }; }
-        finally {
-            try {
-                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+            if (charDef == null) {
+                charDef = HAPServiceDictionary.characteristics[charConfig.name];
             }
-            finally { if (e_2) throw e_2.error; }
+            let charRow = this.createCharacteristicRow(charDef, serviceConfig, charConfig, servicePanel);
+            createdCharacteristics[charConfig.name] = [charConfig.name, charDef ? charDef.optional : false, charRow];
         }
         // add undefined characteristics
         if (serviceDef) {
-            for (var charName in serviceDef.characteristics) {
+            for (let charName in serviceDef.characteristics) {
                 if (createdCharacteristics[charName] === undefined) {
-                    var charDef = serviceDef.characteristics[charName];
-                    var charRow = this.createCharacteristicRow(charDef, serviceConfig, undefined, servicePanel);
+                    let charDef = serviceDef.characteristics[charName];
+                    let charRow = this.createCharacteristicRow(charDef, serviceConfig, undefined, servicePanel);
                     createdCharacteristics[charName] = [charName, charDef.optional, charRow];
                 }
             }
         }
-        var charRows = [];
-        for (var charRow in createdCharacteristics)
+        let charRows = [];
+        for (let charRow in createdCharacteristics)
             charRows.push(createdCharacteristics[charRow]);
-        charRows.sort(function (a, b) {
+        charRows.sort((a, b) => {
             if (a[1] != b[1])
                 return a[1] ? -1 : 1;
             return a[0].localeCompare(b[0]);
         });
-        var table = servicePanel.querySelector('#yahka_characteristic_table');
+        let table = servicePanel.querySelector('#yahka_characteristic_table');
         while (table.childElementCount > 1) { // first row is the header row
             table.removeChild(table.lastElementChild);
         }
-        try {
-            for (var charRows_1 = __values(charRows), charRows_1_1 = charRows_1.next(); !charRows_1_1.done; charRows_1_1 = charRows_1.next()) {
-                var row = charRows_1_1.value;
-                table.appendChild(row[2]);
-            }
+        for (let row of charRows) {
+            table.appendChild(row[2]);
         }
-        catch (e_3_1) { e_3 = { error: e_3_1 }; }
-        finally {
-            try {
-                if (charRows_1_1 && !charRows_1_1.done && (_b = charRows_1.return)) _b.call(charRows_1);
-            }
-            finally { if (e_3) throw e_3.error; }
-        }
-    };
-    ConfigPageBuilder_ServicePanel.prototype.getParameterEditor = function (functionName, valueChangeCallback, functionMap) {
+    }
+    getParameterEditor(functionName, valueChangeCallback, functionMap) {
         if (!functionMap.has(functionName)) {
             return new parameterEditor_null_1.ParameterEditor_Null(valueChangeCallback);
         }
-        var factory = functionMap.get(functionName);
+        let factory = functionMap.get(functionName);
         return factory(valueChangeCallback);
-    };
-    ConfigPageBuilder_ServicePanel.prototype.updateParameterEditor = function (functionName, parameterContainer, parameterValue, parameterChangeCallback, functionMap) {
-        var editor = this.getParameterEditor(functionName, parameterChangeCallback, functionMap);
+    }
+    updateParameterEditor(functionName, parameterContainer, parameterValue, parameterChangeCallback, functionMap) {
+        let editor = this.getParameterEditor(functionName, parameterChangeCallback, functionMap);
         if (editor == undefined)
             return;
         editor.refreshAndShow(parameterContainer, parameterValue);
-    };
-    ConfigPageBuilder_ServicePanel.prototype.createCharacteristicRow = function (charDef, serviceConfig, charConfig, servicePanel) {
-        var _this = this;
+    }
+    createCharacteristicRow(charDef, serviceConfig, charConfig, servicePanel) {
         var _a, _b;
-        var name = charConfig ? charConfig.name : charDef.name;
-        var enabled = charConfig ? charConfig.enabled : false;
-        var rowElement = document.importNode(this.characteristicRow.content, true);
+        let name = charConfig ? charConfig.name : charDef.name;
+        let enabled = charConfig ? charConfig.enabled : false;
+        let rowElement = document.importNode(this.characteristicRow.content, true);
         (0, admin_translation_1.translateFragment)(rowElement);
-        var anchor = rowElement.querySelector('#anchor');
+        let anchor = rowElement.querySelector('#anchor');
         if (anchor != null) {
-            var anchorAttribute = document.createAttribute('x-yahka-anchor');
+            const anchorAttribute = document.createAttribute('x-yahka-anchor');
             anchorAttribute.value = name;
             anchor.attributes.setNamedItem(anchorAttribute);
         }
-        var bracketElement = rowElement.querySelector('#characteristic');
-        var checkBox = rowElement.querySelector('#characteristic_enabled');
+        let bracketElement = rowElement.querySelector('#characteristic');
+        let checkBox = rowElement.querySelector('#characteristic_enabled');
         checkBox.checked = enabled;
         checkBox.addEventListener('click', this.handleCharacteristicEnabledChange.bind(this, serviceConfig, name, bracketElement));
-        var delButton = rowElement.querySelector('#yakha_delete_characteristic');
-        delButton.addEventListener('click', function () {
-            var charConfig = _this.findConfigCharacteristic(serviceConfig, name);
+        let delButton = rowElement.querySelector('#yakha_delete_characteristic');
+        delButton.addEventListener('click', () => {
+            const charConfig = this.findConfigCharacteristic(serviceConfig, name);
             if (charConfig != null) {
                 charConfig.customCharacteristic = false;
-                _this.removeCharacteristic(serviceConfig, charConfig);
-                _this.buildCharacteristicTable(serviceConfig, servicePanel);
+                this.removeCharacteristic(serviceConfig, charConfig);
+                this.buildCharacteristicTable(serviceConfig, servicePanel);
             }
         });
         this.refreshEnabledClass(bracketElement, enabled);
         this.refreshOptionalClass(bracketElement, (_a = charDef === null || charDef === void 0 ? void 0 : charDef.optional) !== null && _a !== void 0 ? _a : true);
         this.refershCustomClass(bracketElement, (_b = charConfig === null || charConfig === void 0 ? void 0 : charConfig.customCharacteristic) !== null && _b !== void 0 ? _b : false);
         rowElement.querySelector('#characteristic_name').textContent = name;
-        var functionSelector = function (selector, containerSelector, configName, parameterName, functionMap) {
+        let functionSelector = (selector, containerSelector, configName, parameterName, functionMap) => {
             var _a;
-            var input = rowElement.querySelector(selector);
-            var container = rowElement.querySelector(containerSelector);
+            let input = rowElement.querySelector(selector);
+            let container = rowElement.querySelector(containerSelector);
             if (functionMap !== undefined) {
-                var mapKeys = __spreadArray([], __read(functionMap.keys()), false);
-                _this.fillSelectByArray(input, mapKeys);
+                let mapKeys = [...functionMap.keys()];
+                this.fillSelectByArray(input, mapKeys);
             }
-            var parameterValue = undefined;
+            let parameterValue = undefined;
             if (charConfig) {
                 admin_utils_1.Utils.setInputValue(input, charConfig[configName]);
                 parameterValue = charConfig[parameterName];
             }
-            var paramUpdateMethod = function (newValue) {
-                var charConfig = _this.findConfigCharacteristic(serviceConfig, name);
+            let paramUpdateMethod = (newValue) => {
+                let charConfig = this.findConfigCharacteristic(serviceConfig, name);
                 if (charConfig === undefined) {
                     charConfig = { name: name, enabled: false };
                     serviceConfig.characteristics.push(charConfig);
                 }
                 charConfig[parameterName] = newValue;
-                _this.delegate.changeCallback();
+                this.delegate.changeCallback();
             };
-            _this.updateParameterEditor((_a = admin_utils_1.Utils.getSelectInputValue(input)) === null || _a === void 0 ? void 0 : _a.toString(), container, parameterValue, paramUpdateMethod, functionMap);
-            input.addEventListener('input', function (e) {
+            this.updateParameterEditor((_a = admin_utils_1.Utils.getSelectInputValue(input)) === null || _a === void 0 ? void 0 : _a.toString(), container, parameterValue, paramUpdateMethod, functionMap);
+            input.addEventListener('input', (e) => {
                 var _a;
-                _this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
-                var charConfig = _this.findConfigCharacteristic(serviceConfig, name);
-                _this.updateParameterEditor((_a = admin_utils_1.Utils.getSelectInputValue(input)) === null || _a === void 0 ? void 0 : _a.toString(), container, charConfig[parameterName], paramUpdateMethod, functionMap);
+                this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
+                let charConfig = this.findConfigCharacteristic(serviceConfig, name);
+                this.updateParameterEditor((_a = admin_utils_1.Utils.getSelectInputValue(input)) === null || _a === void 0 ? void 0 : _a.toString(), container, charConfig[parameterName], paramUpdateMethod, functionMap);
                 return false;
             });
         };
@@ -104172,42 +103808,42 @@ var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
         functionSelector('#characteristic_conversionfunction', '#characteristic_conversionparams_container', 'conversionFunction', 'conversionParameters', parameterEditor_factory_1.convFunctions);
         this.updateCharacteristicProperties(rowElement, serviceConfig, charDef, charConfig);
         return rowElement;
-    };
-    ConfigPageBuilder_ServicePanel.prototype.updateCharacteristicProperties = function (rowElement, serviceConfig, charDef, charConfig) {
-        var charName = charConfig ? charConfig.name : charDef.name;
-        var toggleLink = rowElement.querySelector('#toggleProperties');
-        var propContainer = rowElement.querySelector('#characteristic_propertyTable_container');
-        var hasCustomProperties = charConfig ? (charConfig.properties !== undefined) && (Object.keys(charConfig.properties).length > 0) : false;
+    }
+    updateCharacteristicProperties(rowElement, serviceConfig, charDef, charConfig) {
+        let charName = charConfig ? charConfig.name : charDef.name;
+        let toggleLink = rowElement.querySelector('#toggleProperties');
+        let propContainer = rowElement.querySelector('#characteristic_propertyTable_container');
+        let hasCustomProperties = charConfig ? (charConfig.properties !== undefined) && (Object.keys(charConfig.properties).length > 0) : false;
         if (toggleLink) {
-            toggleLink.addEventListener('click', function () {
+            toggleLink.addEventListener('click', () => {
                 propContainer.classList.toggle('no-display');
             });
             propContainer.classList.toggle('no-display', !hasCustomProperties);
             toggleLink.classList.toggle('properties-defined', hasCustomProperties);
         }
-        var propTable = rowElement.querySelector('#characteristic_propertyTable');
+        let propTable = rowElement.querySelector('#characteristic_propertyTable');
         function transformValue(value) {
-            var result = value;
-            var isObject = false;
+            let result = value;
+            let isObject = false;
             if (typeof result === 'object') {
                 result = JSON.stringify(result);
                 isObject = true;
             }
             return { asString: result, isObject: isObject };
         }
-        for (var propertyName in charDef.properties) {
-            var propertyDefaultValue = transformValue(charDef.properties[propertyName]);
-            var propElement = document.importNode(this.characteristicPropRow.content, true);
-            var nameSpan = propElement.querySelector('#propName');
+        for (let propertyName in charDef.properties) {
+            let propertyDefaultValue = transformValue(charDef.properties[propertyName]);
+            let propElement = document.importNode(this.characteristicPropRow.content, true);
+            let nameSpan = propElement.querySelector('#propName');
             nameSpan.id = "";
             nameSpan.textContent = propertyName;
-            var propInput = propElement.querySelector('#propValue');
+            let propInput = propElement.querySelector('#propValue');
             propInput.id = propertyName;
             propInput.placeholder = propertyDefaultValue.asString;
             if (charConfig !== undefined) {
                 if (charConfig.properties !== undefined) {
                     if (charConfig.properties[propertyName] !== undefined) {
-                        var charValue = transformValue(charConfig.properties[propertyName]);
+                        let charValue = transformValue(charConfig.properties[propertyName]);
                         admin_utils_1.Utils.setInputValue(propInput, charValue.asString);
                     }
                 }
@@ -104216,46 +103852,46 @@ var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
             propInput.addEventListener('input', this.handleCharacteristicPropertyChange.bind(this, serviceConfig, charName, propertyName, propertyDefaultValue.isObject));
             propTable.appendChild(propElement);
         }
-    };
-    ConfigPageBuilder_ServicePanel.prototype.refreshEnabledClass = function (row, enabled) {
+    }
+    refreshEnabledClass(row, enabled) {
         row.classList.toggle('disabled', !enabled);
-    };
-    ConfigPageBuilder_ServicePanel.prototype.refreshOptionalClass = function (row, optional) {
+    }
+    refreshOptionalClass(row, optional) {
         row.classList.toggle('optional-characteristic', optional);
-    };
-    ConfigPageBuilder_ServicePanel.prototype.refershCustomClass = function (row, custom) {
+    }
+    refershCustomClass(row, custom) {
         row.classList.toggle('custom-characteristic', custom);
-    };
-    ConfigPageBuilder_ServicePanel.prototype.handleCharacteristicEnabledChange = function (serviceConfig, charName, charRow, ev) {
-        var charConfig = this.findConfigCharacteristic(serviceConfig, charName);
+    }
+    handleCharacteristicEnabledChange(serviceConfig, charName, charRow, ev) {
+        let charConfig = this.findConfigCharacteristic(serviceConfig, charName);
         if (charConfig === undefined) {
             charConfig = { name: charName, enabled: false };
             serviceConfig.characteristics.push(charConfig);
         }
-        var inputTarget = ev.currentTarget;
+        let inputTarget = ev.currentTarget;
         charConfig.enabled = inputTarget.checked;
         this.refreshEnabledClass(charRow, charConfig.enabled);
         this.delegate.changeCallback();
-    };
-    ConfigPageBuilder_ServicePanel.prototype.handleCharacteristicInputChange = function (serviceConfig, charName, attribute, ev) {
-        var charConfig = this.findConfigCharacteristic(serviceConfig, charName);
+    }
+    handleCharacteristicInputChange(serviceConfig, charName, attribute, ev) {
+        let charConfig = this.findConfigCharacteristic(serviceConfig, charName);
         if (charConfig === undefined) {
             charConfig = { name: charName, enabled: false };
             serviceConfig.characteristics.push(charConfig);
         }
-        var inputTarget = ev.currentTarget;
-        var inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
+        let inputTarget = ev.currentTarget;
+        let inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
         charConfig[attribute] = inputValue;
         this.delegate.changeCallback();
-    };
-    ConfigPageBuilder_ServicePanel.prototype.handleCharacteristicPropertyChange = function (serviceConfig, charName, property, isObjectProperty, ev) {
-        var charConfig = this.findConfigCharacteristic(serviceConfig, charName);
+    }
+    handleCharacteristicPropertyChange(serviceConfig, charName, property, isObjectProperty, ev) {
+        let charConfig = this.findConfigCharacteristic(serviceConfig, charName);
         if (charConfig === undefined) {
             charConfig = { name: charName, enabled: false };
             serviceConfig.characteristics.push(charConfig);
         }
-        var inputTarget = ev.currentTarget;
-        var inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
+        let inputTarget = ev.currentTarget;
+        let inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
         if (charConfig.properties === undefined)
             charConfig.properties = {};
         if (inputValue !== undefined) {
@@ -104275,27 +103911,27 @@ var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
             delete charConfig.properties[property];
         }
         this.delegate.changeCallback();
-    };
-    ConfigPageBuilder_ServicePanel.prototype.handleServiceMetaDataChange = function (serviceConfig, servicePanel, attribute, ev) {
-        var inputTarget = ev.currentTarget;
-        var inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
+    }
+    handleServiceMetaDataChange(serviceConfig, servicePanel, attribute, ev) {
+        let inputTarget = ev.currentTarget;
+        let inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
         serviceConfig[attribute] = inputValue;
         this.refreshServicePanelCaption(serviceConfig, servicePanel);
         this.delegate.changeCallback();
-    };
-    ConfigPageBuilder_ServicePanel.prototype.handleServiceTypeChange = function (serviceConfig, servicePanel, ev) {
-        var inputTarget = ev.currentTarget;
-        var inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
+    }
+    handleServiceTypeChange(serviceConfig, servicePanel, ev) {
+        let inputTarget = ev.currentTarget;
+        let inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
         serviceConfig.type = inputValue; //?.toString();
         this.refreshServicePanelCaption(serviceConfig, servicePanel);
         this.buildCharacteristicTable(serviceConfig, servicePanel);
         this.delegate.changeCallback();
-    };
-    ConfigPageBuilder_ServicePanel.prototype.addCustomCharacteristic = function (serviceConfig, servicePanel) {
+    }
+    addCustomCharacteristic(serviceConfig, servicePanel) {
         var _a;
-        var select = servicePanel.querySelector('#new_custom_characteristic');
-        var charName = (_a = admin_utils_1.Utils.getSelectInputValue(select)) === null || _a === void 0 ? void 0 : _a.toString();
-        var existingChar = serviceConfig.characteristics.find(function (c) { return c.name === charName; });
+        const select = servicePanel.querySelector('#new_custom_characteristic');
+        const charName = (_a = admin_utils_1.Utils.getSelectInputValue(select)) === null || _a === void 0 ? void 0 : _a.toString();
+        const existingChar = serviceConfig.characteristics.find((c) => c.name === charName);
         if (existingChar != null) {
             this.setFocusToCharacteristic(servicePanel, charName);
             return;
@@ -104309,16 +103945,15 @@ var ConfigPageBuilder_ServicePanel = /** @class */ (function (_super) {
         this.buildCharacteristicTable(serviceConfig, servicePanel);
         this.delegate.changeCallback();
         this.setFocusToCharacteristic(servicePanel, charName);
-    };
-    ConfigPageBuilder_ServicePanel.prototype.setFocusToCharacteristic = function (servicePanel, name) {
-        var element = servicePanel.querySelector("[x-yahka-anchor='" + name + "']");
+    }
+    setFocusToCharacteristic(servicePanel, name) {
+        const element = servicePanel.querySelector(`[x-yahka-anchor='${name}']`);
         if (element == null) {
             return;
         }
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    };
-    return ConfigPageBuilder_ServicePanel;
-}(pageBuilder_base_1.ConfigPageBuilder_Base));
+    }
+}
 exports.ConfigPageBuilder_ServicePanel = ConfigPageBuilder_ServicePanel;
 
 
@@ -104334,25 +103969,24 @@ exports.ConfigPageBuilder_ServicePanel = ConfigPageBuilder_ServicePanel;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ParameterEditor = void 0;
-var ParameterEditor = /** @class */ (function () {
-    function ParameterEditor(valueChangeCallback) {
+class ParameterEditor {
+    constructor(valueChangeCallback) {
         this.valueChangeCallback = valueChangeCallback;
     }
-    ParameterEditor.prototype.refreshAndShow = function (containerElement, withValue) {
-    };
-    ParameterEditor.prototype.removeChildren = function (parentNode) {
+    refreshAndShow(containerElement, withValue) {
+    }
+    removeChildren(parentNode) {
         while (parentNode.firstChild) {
             parentNode.removeChild(parentNode.firstChild);
         }
-    };
-    ParameterEditor.prototype.buildNewParameterValue = function () {
+    }
+    buildNewParameterValue() {
         return undefined;
-    };
-    ParameterEditor.prototype.valueChanged = function () {
+    }
+    valueChanged() {
         this.valueChangeCallback(this.buildNewParameterValue());
-    };
-    return ParameterEditor;
-}());
+    }
+}
 exports.ParameterEditor = ParameterEditor;
 
 
@@ -104362,49 +103996,31 @@ exports.ParameterEditor = ParameterEditor;
 /*!********************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.const.ts ***!
   \********************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ParameterEditor_Const = void 0;
-var parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
-var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-var admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-var ParameterEditor_Const = /** @class */ (function (_super) {
-    __extends(ParameterEditor_Const, _super);
-    function ParameterEditor_Const(valueChangeCallback) {
-        var _this = _super.call(this, valueChangeCallback) || this;
-        _this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.const.inc.html */ "./admin/parameterEditor/parameterEditor.const.inc.html"));
-        _this.textField = _this.templateNode.querySelector("#textfield");
-        _this.textField.addEventListener('input', function (ev) { return _this.valueChanged(); });
-        return _this;
+const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+class ParameterEditor_Const extends parameterEditor_base_1.ParameterEditor {
+    constructor(valueChangeCallback) {
+        super(valueChangeCallback);
+        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.const.inc.html */ "./admin/parameterEditor/parameterEditor.const.inc.html"));
+        this.textField = this.templateNode.querySelector("#textfield");
+        this.textField.addEventListener('input', (ev) => this.valueChanged());
     }
-    ParameterEditor_Const.prototype.refreshAndShow = function (containerElement, parameterValue) {
+    refreshAndShow(containerElement, parameterValue) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
         admin_utils_1.Utils.setInputValue(this.textField, parameterValue);
-    };
-    ParameterEditor_Const.prototype.buildNewParameterValue = function () {
+    }
+    buildNewParameterValue() {
         return admin_utils_1.Utils.getInputValue(this.textField);
-    };
-    return ParameterEditor_Const;
-}(parameterEditor_base_1.ParameterEditor));
+    }
+}
 exports.ParameterEditor_Const = ParameterEditor_Const;
 
 
@@ -104414,42 +104030,25 @@ exports.ParameterEditor_Const = ParameterEditor_Const;
 /*!*******************************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.conversionScript.ts ***!
   \*******************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ParameterEditor_ConversionScript = void 0;
-var parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
-var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-var admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-var ParameterEditor_ConversionScript = /** @class */ (function (_super) {
-    __extends(ParameterEditor_ConversionScript, _super);
-    function ParameterEditor_ConversionScript(valueChangeCallback) {
-        var _this = _super.call(this, valueChangeCallback) || this;
-        _this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.conversionScript.inc.html */ "./admin/parameterEditor/parameterEditor.conversionScript.inc.html"));
-        _this.txtToHomeKit = _this.templateNode.querySelector("#toHomeKit");
-        _this.txtToHomeKit.addEventListener('input', function (ev) { return _this.valueChanged(); });
-        _this.txtToIOBroker = _this.templateNode.querySelector("#toIOBroker");
-        _this.txtToIOBroker.addEventListener('input', function (ev) { return _this.valueChanged(); });
-        return _this;
+const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+class ParameterEditor_ConversionScript extends parameterEditor_base_1.ParameterEditor {
+    constructor(valueChangeCallback) {
+        super(valueChangeCallback);
+        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.conversionScript.inc.html */ "./admin/parameterEditor/parameterEditor.conversionScript.inc.html"));
+        this.txtToHomeKit = this.templateNode.querySelector("#toHomeKit");
+        this.txtToHomeKit.addEventListener('input', (ev) => this.valueChanged());
+        this.txtToIOBroker = this.templateNode.querySelector("#toIOBroker");
+        this.txtToIOBroker.addEventListener('input', (ev) => this.valueChanged());
     }
-    ParameterEditor_ConversionScript.prototype.refreshAndShow = function (containerElement, parameterValue) {
+    refreshAndShow(containerElement, parameterValue) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
         if (parameterValue) {
@@ -104460,15 +104059,14 @@ var ParameterEditor_ConversionScript = /** @class */ (function (_super) {
             this.txtToHomeKit.value = "";
             this.txtToIOBroker.value = "";
         }
-    };
-    ParameterEditor_ConversionScript.prototype.buildNewParameterValue = function () {
+    }
+    buildNewParameterValue() {
         return {
             "toHomeKit": admin_utils_1.Utils.getInputValue(this.txtToHomeKit),
             "toIOBroker": admin_utils_1.Utils.getInputValue(this.txtToIOBroker)
         };
-    };
-    return ParameterEditor_ConversionScript;
-}(parameterEditor_base_1.ParameterEditor));
+    }
+}
 exports.ParameterEditor_ConversionScript = ParameterEditor_ConversionScript;
 
 
@@ -104484,40 +104082,40 @@ exports.ParameterEditor_ConversionScript = ParameterEditor_ConversionScript;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.convFunctions = exports.inoutFunctions = void 0;
-var parameterEditor_null_1 = __webpack_require__(/*! ./parameterEditor.null */ "./admin/parameterEditor/parameterEditor.null.ts");
-var parameterEditor_const_1 = __webpack_require__(/*! ./parameterEditor.const */ "./admin/parameterEditor/parameterEditor.const.ts");
-var parameterEditor_singleState_1 = __webpack_require__(/*! ./parameterEditor.singleState */ "./admin/parameterEditor/parameterEditor.singleState.ts");
-var parameterEditor_multiState_1 = __webpack_require__(/*! ./parameterEditor.multiState */ "./admin/parameterEditor/parameterEditor.multiState.ts");
-var parameterEditor_homematic_WindowCovering_TargetPosition_1 = __webpack_require__(/*! ./parameterEditor.homematic.WindowCovering.TargetPosition */ "./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.ts");
-var parameterEditor_scaleConversion_1 = __webpack_require__(/*! ./parameterEditor.scaleConversion */ "./admin/parameterEditor/parameterEditor.scaleConversion.ts");
-var parameterEditor_conversionScript_1 = __webpack_require__(/*! ./parameterEditor.conversionScript */ "./admin/parameterEditor/parameterEditor.conversionScript.ts");
-var parameterEditor_map_1 = __webpack_require__(/*! ./parameterEditor.map */ "./admin/parameterEditor/parameterEditor.map.ts");
-var parameterEditor_homematic_dimmer_1 = __webpack_require__(/*! ./parameterEditor.homematic.dimmer */ "./admin/parameterEditor/parameterEditor.homematic.dimmer.ts");
+const parameterEditor_null_1 = __webpack_require__(/*! ./parameterEditor.null */ "./admin/parameterEditor/parameterEditor.null.ts");
+const parameterEditor_const_1 = __webpack_require__(/*! ./parameterEditor.const */ "./admin/parameterEditor/parameterEditor.const.ts");
+const parameterEditor_singleState_1 = __webpack_require__(/*! ./parameterEditor.singleState */ "./admin/parameterEditor/parameterEditor.singleState.ts");
+const parameterEditor_multiState_1 = __webpack_require__(/*! ./parameterEditor.multiState */ "./admin/parameterEditor/parameterEditor.multiState.ts");
+const parameterEditor_homematic_WindowCovering_TargetPosition_1 = __webpack_require__(/*! ./parameterEditor.homematic.WindowCovering.TargetPosition */ "./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.ts");
+const parameterEditor_scaleConversion_1 = __webpack_require__(/*! ./parameterEditor.scaleConversion */ "./admin/parameterEditor/parameterEditor.scaleConversion.ts");
+const parameterEditor_conversionScript_1 = __webpack_require__(/*! ./parameterEditor.conversionScript */ "./admin/parameterEditor/parameterEditor.conversionScript.ts");
+const parameterEditor_map_1 = __webpack_require__(/*! ./parameterEditor.map */ "./admin/parameterEditor/parameterEditor.map.ts");
+const parameterEditor_homematic_dimmer_1 = __webpack_require__(/*! ./parameterEditor.homematic.dimmer */ "./admin/parameterEditor/parameterEditor.homematic.dimmer.ts");
 exports.inoutFunctions = new Map([
-    ["", function (callback) { return new parameterEditor_null_1.ParameterEditor_Null(callback); }],
-    ["const", function (callback) { return new parameterEditor_const_1.ParameterEditor_Const(callback); }],
-    ["ioBroker.State", function (callback) { return new parameterEditor_singleState_1.ParameterEditor_SingleState(callback); }],
-    ["ioBroker.MultiState", function (callback) { return new parameterEditor_multiState_1.ParameterEditor_MultiState(callback); }],
-    ["ioBroker.State.Defered", function (callback) { return new parameterEditor_singleState_1.ParameterEditor_SingleState(callback); }],
-    ["ioBroker.State.OnlyACK", function (callback) { return new parameterEditor_singleState_1.ParameterEditor_SingleState(callback); }],
-    ["ioBroker.homematic.WindowCovering.TargetPosition", function (callback) { return new parameterEditor_homematic_WindowCovering_TargetPosition_1.ParameterEditor_HomeMaticWindowCoveringTargetPosition(callback); }],
-    ["ioBroker.homematic.Dimmer.On", function (callback) { return new parameterEditor_homematic_dimmer_1.ParameterEditor_HomeMatic_Dimmer(callback, true); }],
-    ["ioBroker.homematic.Dimmer.Brightness", function (callback) { return new parameterEditor_homematic_dimmer_1.ParameterEditor_HomeMatic_Dimmer(callback, false); }]
+    ["", (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
+    ["const", (callback) => new parameterEditor_const_1.ParameterEditor_Const(callback)],
+    ["ioBroker.State", (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
+    ["ioBroker.MultiState", (callback) => new parameterEditor_multiState_1.ParameterEditor_MultiState(callback)],
+    ["ioBroker.State.Defered", (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
+    ["ioBroker.State.OnlyACK", (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
+    ["ioBroker.homematic.WindowCovering.TargetPosition", (callback) => new parameterEditor_homematic_WindowCovering_TargetPosition_1.ParameterEditor_HomeMaticWindowCoveringTargetPosition(callback)],
+    ["ioBroker.homematic.Dimmer.On", (callback) => new parameterEditor_homematic_dimmer_1.ParameterEditor_HomeMatic_Dimmer(callback, true)],
+    ["ioBroker.homematic.Dimmer.Brightness", (callback) => new parameterEditor_homematic_dimmer_1.ParameterEditor_HomeMatic_Dimmer(callback, false)]
 ]);
 exports.convFunctions = new Map([
-    ["", function (callback) { return new parameterEditor_null_1.ParameterEditor_Null(callback); }],
-    ["map", function (callback) { return new parameterEditor_map_1.ParameterEditor_Map(callback); }],
-    ["hue", function (callback) { return new parameterEditor_null_1.ParameterEditor_Null(callback); }],
-    ["level255", function (callback) { return new parameterEditor_null_1.ParameterEditor_Null(callback); }],
-    ["passthrough", function (callback) { return new parameterEditor_null_1.ParameterEditor_Null(callback); }],
-    ["inverse", function (callback) { return new parameterEditor_const_1.ParameterEditor_Const(callback); }],
-    ["scaleInt", function (callback) { return new parameterEditor_scaleConversion_1.ParameterEditor_ScaleConversionEditor(callback); }],
-    ["scaleFloat", function (callback) { return new parameterEditor_scaleConversion_1.ParameterEditor_ScaleConversionEditor(callback); }],
-    ["round", function (callback) { return new parameterEditor_null_1.ParameterEditor_Null(callback); }],
-    ["invert", function (callback) { return new parameterEditor_null_1.ParameterEditor_Null(callback); }],
-    ["HomematicDirectionToHomekitPositionState", function (callback) { return new parameterEditor_singleState_1.ParameterEditor_SingleState(callback); }],
-    ["HomematicControlModeToHomekitHeathingCoolingState", function (callback) { return new parameterEditor_singleState_1.ParameterEditor_SingleState(callback); }],
-    ["script", function (callback) { return new parameterEditor_conversionScript_1.ParameterEditor_ConversionScript(callback); }],
+    ["", (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
+    ["map", (callback) => new parameterEditor_map_1.ParameterEditor_Map(callback)],
+    ["hue", (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
+    ["level255", (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
+    ["passthrough", (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
+    ["inverse", (callback) => new parameterEditor_const_1.ParameterEditor_Const(callback)],
+    ["scaleInt", (callback) => new parameterEditor_scaleConversion_1.ParameterEditor_ScaleConversionEditor(callback)],
+    ["scaleFloat", (callback) => new parameterEditor_scaleConversion_1.ParameterEditor_ScaleConversionEditor(callback)],
+    ["round", (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
+    ["invert", (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
+    ["HomematicDirectionToHomekitPositionState", (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
+    ["HomematicControlModeToHomekitHeathingCoolingState", (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
+    ["script", (callback) => new parameterEditor_conversionScript_1.ParameterEditor_ConversionScript(callback)],
 ]);
 
 
@@ -104527,46 +104125,29 @@ exports.convFunctions = new Map([
 /*!******************************************************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.ts ***!
   \******************************************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ParameterEditor_HomeMaticWindowCoveringTargetPosition = void 0;
-var parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
-var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-var admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-var ParameterEditor_HomeMaticWindowCoveringTargetPosition = /** @class */ (function (_super) {
-    __extends(ParameterEditor_HomeMaticWindowCoveringTargetPosition, _super);
-    function ParameterEditor_HomeMaticWindowCoveringTargetPosition(valueChangeCallback) {
-        var _this = _super.call(this, valueChangeCallback) || this;
-        _this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.homematic.WindowCovering.TargetPosition.inc.html */ "./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.inc.html"));
-        _this.txtLevel = _this.templateNode.querySelector("#level");
-        _this.txtLevel.addEventListener('input', function (ev) { return _this.valueChanged(); });
-        _this.txtWorking = _this.templateNode.querySelector("#working");
-        _this.txtWorking.addEventListener('input', function (ev) { return _this.valueChanged(); });
-        return _this;
+const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+class ParameterEditor_HomeMaticWindowCoveringTargetPosition extends parameterEditor_base_1.ParameterEditor {
+    constructor(valueChangeCallback) {
+        super(valueChangeCallback);
+        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.homematic.WindowCovering.TargetPosition.inc.html */ "./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.inc.html"));
+        this.txtLevel = this.templateNode.querySelector("#level");
+        this.txtLevel.addEventListener('input', (ev) => this.valueChanged());
+        this.txtWorking = this.templateNode.querySelector("#working");
+        this.txtWorking.addEventListener('input', (ev) => this.valueChanged());
     }
-    ParameterEditor_HomeMaticWindowCoveringTargetPosition.prototype.refreshAndShow = function (containerElement, parameterValue) {
+    refreshAndShow(containerElement, parameterValue) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
         try {
-            var p = void 0;
+            let p;
             if (typeof parameterValue === 'string')
                 p = [parameterValue];
             else if (parameterValue instanceof Array)
@@ -104580,16 +104161,15 @@ var ParameterEditor_HomeMaticWindowCoveringTargetPosition = /** @class */ (funct
             this.txtLevel.value = parameterValue;
             this.txtWorking.value = "";
         }
-    };
-    ParameterEditor_HomeMaticWindowCoveringTargetPosition.prototype.buildNewParameterValue = function () {
+    }
+    buildNewParameterValue() {
         var _a;
         var resultArray = [admin_utils_1.Utils.getInputValue(this.txtLevel).toString()];
         if (this.txtWorking.value)
             resultArray.push((_a = admin_utils_1.Utils.getInputValue(this.txtWorking)) === null || _a === void 0 ? void 0 : _a.toString());
         return resultArray;
-    };
-    return ParameterEditor_HomeMaticWindowCoveringTargetPosition;
-}(parameterEditor_base_1.ParameterEditor));
+    }
+}
 exports.ParameterEditor_HomeMaticWindowCoveringTargetPosition = ParameterEditor_HomeMaticWindowCoveringTargetPosition;
 
 
@@ -104599,49 +104179,32 @@ exports.ParameterEditor_HomeMaticWindowCoveringTargetPosition = ParameterEditor_
 /*!*******************************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.homematic.dimmer.ts ***!
   \*******************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ParameterEditor_HomeMatic_Dimmer = void 0;
-var parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
-var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-var admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-var iofunc_homematic_dimmer_1 = __webpack_require__(/*! ../../yahka.functions/iofunc.homematic.dimmer */ "./yahka.functions/iofunc.homematic.dimmer.ts");
-var ParameterEditor_HomeMatic_Dimmer = /** @class */ (function (_super) {
-    __extends(ParameterEditor_HomeMatic_Dimmer, _super);
-    function ParameterEditor_HomeMatic_Dimmer(valueChangeCallback, showExtendedDimmerProps) {
-        var _this = _super.call(this, valueChangeCallback) || this;
-        _this.showExtendedDimmerProps = showExtendedDimmerProps;
-        _this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.homematic.dimmer.inc.html */ "./admin/parameterEditor/parameterEditor.homematic.dimmer.inc.html"));
-        _this.txtLevel = _this.templateNode.querySelector("#level");
-        _this.txtLevel.addEventListener('input', function (ev) { return _this.valueChanged(); });
-        _this.chkRestoreToPrevious = _this.templateNode.querySelector("#restoreToPreviousLevel");
-        _this.chkRestoreToPrevious.addEventListener('click', function (ev) { return _this.valueChanged(); });
-        _this.txtDefaultLevel = _this.templateNode.querySelector("#defaultLevel");
-        _this.txtDefaultLevel.addEventListener('input', function (ev) { return _this.valueChanged(); });
+const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+const iofunc_homematic_dimmer_1 = __webpack_require__(/*! ../../yahka.functions/iofunc.homematic.dimmer */ "./yahka.functions/iofunc.homematic.dimmer.ts");
+class ParameterEditor_HomeMatic_Dimmer extends parameterEditor_base_1.ParameterEditor {
+    constructor(valueChangeCallback, showExtendedDimmerProps) {
+        super(valueChangeCallback);
+        this.showExtendedDimmerProps = showExtendedDimmerProps;
+        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.homematic.dimmer.inc.html */ "./admin/parameterEditor/parameterEditor.homematic.dimmer.inc.html"));
+        this.txtLevel = this.templateNode.querySelector("#level");
+        this.txtLevel.addEventListener('input', (ev) => this.valueChanged());
+        this.chkRestoreToPrevious = this.templateNode.querySelector("#restoreToPreviousLevel");
+        this.chkRestoreToPrevious.addEventListener('click', (ev) => this.valueChanged());
+        this.txtDefaultLevel = this.templateNode.querySelector("#defaultLevel");
+        this.txtDefaultLevel.addEventListener('input', (ev) => this.valueChanged());
         if (!showExtendedDimmerProps) {
-            $(_this.templateNode).find('.extended-dimmer-properties').hide();
+            $(this.templateNode).find('.extended-dimmer-properties').hide();
         }
-        return _this;
     }
-    ParameterEditor_HomeMatic_Dimmer.prototype.refreshAndShow = function (containerElement, parameterValue) {
+    refreshAndShow(containerElement, parameterValue) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
         if (parameterValue === undefined) {
@@ -104654,8 +104217,8 @@ var ParameterEditor_HomeMatic_Dimmer = /** @class */ (function (_super) {
         admin_utils_1.Utils.setInputValue(this.txtLevel, params.levelState);
         admin_utils_1.Utils.setInputValue(this.chkRestoreToPrevious, params.restoreToPreviousLevel);
         admin_utils_1.Utils.setInputValue(this.txtDefaultLevel, params.defaultSwitchOnLevel);
-    };
-    ParameterEditor_HomeMatic_Dimmer.prototype.buildNewParameterValue = function () {
+    }
+    buildNewParameterValue() {
         var _a;
         var result = {
             levelState: (_a = admin_utils_1.Utils.getInputValue(this.txtLevel)) === null || _a === void 0 ? void 0 : _a.toString()
@@ -104665,9 +104228,8 @@ var ParameterEditor_HomeMatic_Dimmer = /** @class */ (function (_super) {
             result.defaultSwitchOnLevel = admin_utils_1.Utils.getInputValue(this.txtDefaultLevel);
         }
         return result;
-    };
-    return ParameterEditor_HomeMatic_Dimmer;
-}(parameterEditor_base_1.ParameterEditor));
+    }
+}
 exports.ParameterEditor_HomeMatic_Dimmer = ParameterEditor_HomeMatic_Dimmer;
 
 
@@ -104677,83 +104239,65 @@ exports.ParameterEditor_HomeMatic_Dimmer = ParameterEditor_HomeMatic_Dimmer;
 /*!******************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.map.ts ***!
   \******************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ParameterEditor_Map = void 0;
-var parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
-var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-var admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-var conversion_map_1 = __webpack_require__(/*! ../../yahka.functions/conversion.map */ "./yahka.functions/conversion.map.ts");
-var util_1 = __webpack_require__(/*! util */ "../node_modules/util/util.js");
-var ParameterEditor_Map = /** @class */ (function (_super) {
-    __extends(ParameterEditor_Map, _super);
-    function ParameterEditor_Map(valueChangeCallback) {
-        var _this = _super.call(this, valueChangeCallback) || this;
-        _this.stateRows = [];
-        _this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.Map.inc.html */ "./admin/parameterEditor/parameterEditor.Map.inc.html"));
-        _this.stateTemplate = _this.templateNode.querySelector('#mappingRow');
-        _this.lastRow = _this.templateNode.querySelector('#lastRow');
-        var addRow = _this.templateNode.querySelector("#addRow");
-        addRow.addEventListener('click', _this.addRowClicked.bind(_this));
-        return _this;
+const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+const conversion_map_1 = __webpack_require__(/*! ../../yahka.functions/conversion.map */ "./yahka.functions/conversion.map.ts");
+const util_1 = __webpack_require__(/*! util */ "../node_modules/util/util.js");
+class ParameterEditor_Map extends parameterEditor_base_1.ParameterEditor {
+    constructor(valueChangeCallback) {
+        super(valueChangeCallback);
+        this.stateRows = [];
+        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.Map.inc.html */ "./admin/parameterEditor/parameterEditor.Map.inc.html"));
+        this.stateTemplate = this.templateNode.querySelector('#mappingRow');
+        this.lastRow = this.templateNode.querySelector('#lastRow');
+        let addRow = this.templateNode.querySelector("#addRow");
+        addRow.addEventListener('click', this.addRowClicked.bind(this));
     }
-    ParameterEditor_Map.prototype.createRow = function (item) {
-        var _this = this;
-        var importedRow = document.importNode(this.stateTemplate.content, true);
-        var myRow = this.lastRow.parentElement.insertBefore(importedRow.firstElementChild, this.lastRow);
+    createRow(item) {
+        let importedRow = document.importNode(this.stateTemplate.content, true);
+        let myRow = this.lastRow.parentElement.insertBefore(importedRow.firstElementChild, this.lastRow);
         this.stateRows.push(myRow);
-        var leftField = myRow.querySelector('#ioBrokerValue');
-        leftField.addEventListener('input', function (ev) { return _this.valueChanged(); });
-        var leftCheck = myRow.querySelector('#isSimpleValue');
-        leftCheck.addEventListener('input', function (ev) { return _this.valueChanged(); });
-        var rightField = myRow.querySelector('#homekitValue');
-        rightField.addEventListener('input', function (ev) { return _this.valueChanged(); });
-        myRow.querySelector('#delRow').addEventListener('click', function () {
+        let leftField = myRow.querySelector('#ioBrokerValue');
+        leftField.addEventListener('input', (ev) => this.valueChanged());
+        let leftCheck = myRow.querySelector('#isSimpleValue');
+        leftCheck.addEventListener('input', (ev) => this.valueChanged());
+        let rightField = myRow.querySelector('#homekitValue');
+        rightField.addEventListener('input', (ev) => this.valueChanged());
+        myRow.querySelector('#delRow').addEventListener('click', () => {
             myRow.remove();
-            _this.stateRows = _this.stateRows.filter(function (row) { return row != myRow; });
-            _this.valueChanged();
+            this.stateRows = this.stateRows.filter(row => row != myRow);
+            this.valueChanged();
         });
-        myRow.querySelector('#moveUp').addEventListener('click', function () {
-            var myIndex = _this.stateRows.indexOf(myRow);
-            var prevIndex = myIndex - 1;
+        myRow.querySelector('#moveUp').addEventListener('click', () => {
+            let myIndex = this.stateRows.indexOf(myRow);
+            let prevIndex = myIndex - 1;
             if (prevIndex < 0) {
                 return;
             }
-            var prevRow = _this.stateRows[prevIndex];
-            _this.stateRows[prevIndex] = myRow;
-            _this.stateRows[myIndex] = prevRow;
-            _this.lastRow.parentElement.insertBefore(myRow, prevRow);
-            _this.valueChanged();
+            let prevRow = this.stateRows[prevIndex];
+            this.stateRows[prevIndex] = myRow;
+            this.stateRows[myIndex] = prevRow;
+            this.lastRow.parentElement.insertBefore(myRow, prevRow);
+            this.valueChanged();
         });
-        myRow.querySelector('#moveDown').addEventListener('click', function () {
-            var myIndex = _this.stateRows.indexOf(myRow);
-            var nextIndex = myIndex + 1;
-            if ((myIndex < 0) || (nextIndex >= _this.stateRows.length)) {
+        myRow.querySelector('#moveDown').addEventListener('click', () => {
+            let myIndex = this.stateRows.indexOf(myRow);
+            let nextIndex = myIndex + 1;
+            if ((myIndex < 0) || (nextIndex >= this.stateRows.length)) {
                 return;
             }
-            var nextRow = _this.stateRows[nextIndex];
-            _this.stateRows[nextIndex] = myRow;
-            _this.stateRows[myIndex] = nextRow;
-            _this.lastRow.parentElement.insertBefore(nextRow, myRow);
-            _this.valueChanged();
+            let nextRow = this.stateRows[nextIndex];
+            this.stateRows[nextIndex] = myRow;
+            this.stateRows[myIndex] = nextRow;
+            this.lastRow.parentElement.insertBefore(nextRow, myRow);
+            this.valueChanged();
         });
         if (item === undefined)
             return myRow;
@@ -104766,13 +104310,12 @@ var ParameterEditor_Map = /** @class */ (function (_super) {
             leftCheck.checked = true;
         }
         admin_utils_1.Utils.setInputValue(rightField, item.right);
-    };
-    ParameterEditor_Map.prototype.addRowClicked = function () {
+    }
+    addRowClicked() {
         this.createRow(undefined);
         return false;
-    };
-    ParameterEditor_Map.prototype.refreshAndShow = function (containerElement, parameterValue) {
-        var _this = this;
+    }
+    refreshAndShow(containerElement, parameterValue) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
         if (parameterValue === undefined) {
@@ -104781,24 +104324,23 @@ var ParameterEditor_Map = /** @class */ (function (_super) {
         if (!(0, conversion_map_1.isMultiStateParameter)(parameterValue)) {
             return;
         }
-        parameterValue.mappings.forEach(function (item) { return _this.createRow(item); });
-    };
-    ParameterEditor_Map.prototype.buildNewParameterValue = function () {
+        parameterValue.mappings.forEach(item => this.createRow(item));
+    }
+    buildNewParameterValue() {
         return {
-            mappings: this.stateRows.map(function (row) {
-                var ioValue = row.querySelector('#ioBrokerValue');
-                var isSimpleValue = row.querySelector('#isSimpleValue');
-                var leftValue = admin_utils_1.Utils.getInputValue(ioValue);
-                var hkValue = row.querySelector('#homekitValue');
+            mappings: this.stateRows.map((row) => {
+                let ioValue = row.querySelector('#ioBrokerValue');
+                let isSimpleValue = row.querySelector('#isSimpleValue');
+                let leftValue = admin_utils_1.Utils.getInputValue(ioValue);
+                let hkValue = row.querySelector('#homekitValue');
                 return {
                     left: isSimpleValue.checked ? leftValue === null || leftValue === void 0 ? void 0 : leftValue.toString() : JSON.parse(leftValue === null || leftValue === void 0 ? void 0 : leftValue.toString()),
                     right: admin_utils_1.Utils.getInputValue(hkValue),
                 };
             })
         };
-    };
-    return ParameterEditor_Map;
-}(parameterEditor_base_1.ParameterEditor));
+    }
+}
 exports.ParameterEditor_Map = ParameterEditor_Map;
 
 
@@ -104808,92 +104350,73 @@ exports.ParameterEditor_Map = ParameterEditor_Map;
 /*!*************************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.multiState.ts ***!
   \*************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ParameterEditor_MultiState = void 0;
-var parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
-var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-var admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-var iofunc_multi_state_1 = __webpack_require__(/*! ../../yahka.functions/iofunc.multi-state */ "./yahka.functions/iofunc.multi-state.ts");
-var ParameterEditor_MultiState = /** @class */ (function (_super) {
-    __extends(ParameterEditor_MultiState, _super);
-    function ParameterEditor_MultiState(valueChangeCallback) {
-        var _this = _super.call(this, valueChangeCallback) || this;
-        _this.stateRows = [];
-        _this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.multiState.inc.html */ "./admin/parameterEditor/parameterEditor.multiState.inc.html"));
-        _this.stateTemplate = _this.templateNode.querySelector('#stateRow');
-        _this.lastRow = _this.templateNode.querySelector('#lastRow');
-        var addRow = _this.templateNode.querySelector("#addRow");
-        addRow.addEventListener('click', _this.addRowClicked.bind(_this));
-        return _this;
+const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+const iofunc_multi_state_1 = __webpack_require__(/*! ../../yahka.functions/iofunc.multi-state */ "./yahka.functions/iofunc.multi-state.ts");
+class ParameterEditor_MultiState extends parameterEditor_base_1.ParameterEditor {
+    constructor(valueChangeCallback) {
+        super(valueChangeCallback);
+        this.stateRows = [];
+        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.multiState.inc.html */ "./admin/parameterEditor/parameterEditor.multiState.inc.html"));
+        this.stateTemplate = this.templateNode.querySelector('#stateRow');
+        this.lastRow = this.templateNode.querySelector('#lastRow');
+        let addRow = this.templateNode.querySelector("#addRow");
+        addRow.addEventListener('click', this.addRowClicked.bind(this));
     }
-    ParameterEditor_MultiState.prototype.createRow = function (item) {
-        var _this = this;
-        var importedRow = document.importNode(this.stateTemplate.content, true);
-        var myRow = this.lastRow.parentElement.insertBefore(importedRow.firstElementChild, this.lastRow);
+    createRow(item) {
+        let importedRow = document.importNode(this.stateTemplate.content, true);
+        let myRow = this.lastRow.parentElement.insertBefore(importedRow.firstElementChild, this.lastRow);
         this.stateRows.push(myRow);
-        var readField = myRow.querySelector('#readState');
-        readField.addEventListener('input', function (ev) { return _this.valueChanged(); });
-        var writeField = myRow.querySelector('#writeState');
-        writeField.addEventListener('input', function (ev) { return _this.valueChanged(); });
-        myRow.querySelector('#delRow').addEventListener('click', function () {
+        let readField = myRow.querySelector('#readState');
+        readField.addEventListener('input', (ev) => this.valueChanged());
+        let writeField = myRow.querySelector('#writeState');
+        writeField.addEventListener('input', (ev) => this.valueChanged());
+        myRow.querySelector('#delRow').addEventListener('click', () => {
             myRow.remove();
-            _this.stateRows = _this.stateRows.filter(function (row) { return row != myRow; });
-            _this.valueChanged();
+            this.stateRows = this.stateRows.filter(row => row != myRow);
+            this.valueChanged();
         });
-        myRow.querySelector('#moveUp').addEventListener('click', function () {
-            var myIndex = _this.stateRows.indexOf(myRow);
-            var prevIndex = myIndex - 1;
+        myRow.querySelector('#moveUp').addEventListener('click', () => {
+            let myIndex = this.stateRows.indexOf(myRow);
+            let prevIndex = myIndex - 1;
             if (prevIndex < 0) {
                 return;
             }
-            var prevRow = _this.stateRows[prevIndex];
-            _this.stateRows[prevIndex] = myRow;
-            _this.stateRows[myIndex] = prevRow;
-            _this.lastRow.parentElement.insertBefore(myRow, prevRow);
-            _this.valueChanged();
+            let prevRow = this.stateRows[prevIndex];
+            this.stateRows[prevIndex] = myRow;
+            this.stateRows[myIndex] = prevRow;
+            this.lastRow.parentElement.insertBefore(myRow, prevRow);
+            this.valueChanged();
         });
-        myRow.querySelector('#moveDown').addEventListener('click', function () {
-            var myIndex = _this.stateRows.indexOf(myRow);
-            var nextIndex = myIndex + 1;
-            if ((myIndex < 0) || (nextIndex >= _this.stateRows.length)) {
+        myRow.querySelector('#moveDown').addEventListener('click', () => {
+            let myIndex = this.stateRows.indexOf(myRow);
+            let nextIndex = myIndex + 1;
+            if ((myIndex < 0) || (nextIndex >= this.stateRows.length)) {
                 return;
             }
-            var nextRow = _this.stateRows[nextIndex];
-            _this.stateRows[nextIndex] = myRow;
-            _this.stateRows[myIndex] = nextRow;
-            _this.lastRow.parentElement.insertBefore(nextRow, myRow);
-            _this.valueChanged();
+            let nextRow = this.stateRows[nextIndex];
+            this.stateRows[nextIndex] = myRow;
+            this.stateRows[myIndex] = nextRow;
+            this.lastRow.parentElement.insertBefore(nextRow, myRow);
+            this.valueChanged();
         });
         if (item === undefined)
             return myRow;
         admin_utils_1.Utils.setInputValue(readField, item.readState);
         admin_utils_1.Utils.setInputValue(writeField, item.writeState);
-    };
-    ParameterEditor_MultiState.prototype.addRowClicked = function () {
+    }
+    addRowClicked() {
         this.createRow(undefined);
         return false;
-    };
-    ParameterEditor_MultiState.prototype.refreshAndShow = function (containerElement, parameterValue) {
-        var _this = this;
+    }
+    refreshAndShow(containerElement, parameterValue) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
         if (parameterValue === undefined) {
@@ -104903,21 +104426,20 @@ var ParameterEditor_MultiState = /** @class */ (function (_super) {
         if (params === undefined) {
             return;
         }
-        params.forEach(function (item) { return _this.createRow(item); });
-    };
-    ParameterEditor_MultiState.prototype.buildNewParameterValue = function () {
-        return this.stateRows.map(function (row) {
+        params.forEach(item => this.createRow(item));
+    }
+    buildNewParameterValue() {
+        return this.stateRows.map((row) => {
             var _a, _b;
-            var readField = row.querySelector('#readState');
-            var writeField = row.querySelector('#writeState');
+            let readField = row.querySelector('#readState');
+            let writeField = row.querySelector('#writeState');
             return {
                 readState: (_a = admin_utils_1.Utils.getInputValue(readField)) === null || _a === void 0 ? void 0 : _a.toString(),
                 writeState: (_b = admin_utils_1.Utils.getInputValue(writeField)) === null || _b === void 0 ? void 0 : _b.toString(),
             };
         });
-    };
-    return ParameterEditor_MultiState;
-}(parameterEditor_base_1.ParameterEditor));
+    }
+}
 exports.ParameterEditor_MultiState = ParameterEditor_MultiState;
 
 
@@ -104927,42 +104449,22 @@ exports.ParameterEditor_MultiState = ParameterEditor_MultiState;
 /*!*******************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.null.ts ***!
   \*******************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ParameterEditor_Null = void 0;
-var parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
-var ParameterEditor_Null = /** @class */ (function (_super) {
-    __extends(ParameterEditor_Null, _super);
-    function ParameterEditor_Null() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ParameterEditor_Null.prototype.refreshAndShow = function (containerElement, parameterValue) {
+const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+class ParameterEditor_Null extends parameterEditor_base_1.ParameterEditor {
+    refreshAndShow(containerElement, parameterValue) {
         this.removeChildren(containerElement);
         this.lastParamValue = parameterValue;
-    };
-    ParameterEditor_Null.prototype.buildNewParameterValue = function () {
+    }
+    buildNewParameterValue() {
         return this.lastParamValue;
-    };
-    return ParameterEditor_Null;
-}(parameterEditor_base_1.ParameterEditor));
+    }
+}
 exports.ParameterEditor_Null = ParameterEditor_Null;
 
 
@@ -104972,49 +104474,32 @@ exports.ParameterEditor_Null = ParameterEditor_Null;
 /*!******************************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.scaleConversion.ts ***!
   \******************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ParameterEditor_ScaleConversionEditor = void 0;
-var parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
-var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-var admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-var ParameterEditor_ScaleConversionEditor = /** @class */ (function (_super) {
-    __extends(ParameterEditor_ScaleConversionEditor, _super);
-    function ParameterEditor_ScaleConversionEditor(valueChangeCallback) {
-        var _this = _super.call(this, valueChangeCallback) || this;
-        _this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.scaleConversion.inc.html */ "./admin/parameterEditor/parameterEditor.scaleConversion.inc.html"));
-        _this.txtHKMin = _this.templateNode.querySelector("#hkMin");
-        _this.txtHKMin.addEventListener('input', function (ev) { return _this.valueChanged(); });
-        _this.txtHKMax = _this.templateNode.querySelector("#hkMax");
-        _this.txtHKMax.addEventListener('input', function (ev) { return _this.valueChanged(); });
-        _this.txtIOBrokerMin = _this.templateNode.querySelector("#ioMin");
-        _this.txtIOBrokerMin.addEventListener('input', function (ev) { return _this.valueChanged(); });
-        _this.txtIOBrokerMax = _this.templateNode.querySelector("#ioMax");
-        _this.txtIOBrokerMax.addEventListener('input', function (ev) { return _this.valueChanged(); });
-        return _this;
+const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+class ParameterEditor_ScaleConversionEditor extends parameterEditor_base_1.ParameterEditor {
+    constructor(valueChangeCallback) {
+        super(valueChangeCallback);
+        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.scaleConversion.inc.html */ "./admin/parameterEditor/parameterEditor.scaleConversion.inc.html"));
+        this.txtHKMin = this.templateNode.querySelector("#hkMin");
+        this.txtHKMin.addEventListener('input', (ev) => this.valueChanged());
+        this.txtHKMax = this.templateNode.querySelector("#hkMax");
+        this.txtHKMax.addEventListener('input', (ev) => this.valueChanged());
+        this.txtIOBrokerMin = this.templateNode.querySelector("#ioMin");
+        this.txtIOBrokerMin.addEventListener('input', (ev) => this.valueChanged());
+        this.txtIOBrokerMax = this.templateNode.querySelector("#ioMax");
+        this.txtIOBrokerMax.addEventListener('input', (ev) => this.valueChanged());
     }
-    ParameterEditor_ScaleConversionEditor.prototype.refreshAndShow = function (containerElement, parameterValue) {
+    refreshAndShow(containerElement, parameterValue) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
-        var parameterArray = undefined;
+        let parameterArray = undefined;
         if (typeof parameterValue === 'object') {
             parameterArray = parameterValue;
         }
@@ -105031,17 +104516,16 @@ var ParameterEditor_ScaleConversionEditor = /** @class */ (function (_super) {
         admin_utils_1.Utils.setInputValue(this.txtHKMax, parameterArray["homekit.max"]);
         admin_utils_1.Utils.setInputValue(this.txtIOBrokerMin, parameterArray["iobroker.min"]);
         admin_utils_1.Utils.setInputValue(this.txtIOBrokerMax, parameterArray["iobroker.max"]);
-    };
-    ParameterEditor_ScaleConversionEditor.prototype.buildNewParameterValue = function () {
+    }
+    buildNewParameterValue() {
         return {
             "homekit.min": admin_utils_1.Utils.getInputValue(this.txtHKMin),
             "homekit.max": admin_utils_1.Utils.getInputValue(this.txtHKMax),
             "iobroker.min": admin_utils_1.Utils.getInputValue(this.txtIOBrokerMin),
             "iobroker.max": admin_utils_1.Utils.getInputValue(this.txtIOBrokerMax)
         };
-    };
-    return ParameterEditor_ScaleConversionEditor;
-}(parameterEditor_base_1.ParameterEditor));
+    }
+}
 exports.ParameterEditor_ScaleConversionEditor = ParameterEditor_ScaleConversionEditor;
 
 
@@ -105051,49 +104535,31 @@ exports.ParameterEditor_ScaleConversionEditor = ParameterEditor_ScaleConversionE
 /*!**************************************************************!*\
   !*** ./admin/parameterEditor/parameterEditor.singleState.ts ***!
   \**************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ParameterEditor_SingleState = void 0;
-var parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
-var admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-var admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-var ParameterEditor_SingleState = /** @class */ (function (_super) {
-    __extends(ParameterEditor_SingleState, _super);
-    function ParameterEditor_SingleState(valueChangeCallback) {
-        var _this = _super.call(this, valueChangeCallback) || this;
-        _this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.singleState.inc.html */ "./admin/parameterEditor/parameterEditor.singleState.inc.html"));
-        _this.textField = _this.templateNode.querySelector("#textfield");
-        _this.textField.addEventListener('input', function (ev) { return _this.valueChanged(); });
-        return _this;
+const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+class ParameterEditor_SingleState extends parameterEditor_base_1.ParameterEditor {
+    constructor(valueChangeCallback) {
+        super(valueChangeCallback);
+        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.singleState.inc.html */ "./admin/parameterEditor/parameterEditor.singleState.inc.html"));
+        this.textField = this.templateNode.querySelector("#textfield");
+        this.textField.addEventListener('input', (ev) => this.valueChanged());
     }
-    ParameterEditor_SingleState.prototype.refreshAndShow = function (containerElement, parameterValue) {
+    refreshAndShow(containerElement, parameterValue) {
         this.removeChildren(containerElement);
         containerElement.appendChild(this.templateNode);
         admin_utils_1.Utils.setInputValue(this.textField, parameterValue);
-    };
-    ParameterEditor_SingleState.prototype.buildNewParameterValue = function () {
+    }
+    buildNewParameterValue() {
         return admin_utils_1.Utils.getInputValue(this.textField);
-    };
-    return ParameterEditor_SingleState;
-}(parameterEditor_base_1.ParameterEditor));
+    }
+}
 exports.ParameterEditor_SingleState = ParameterEditor_SingleState;
 
 
@@ -105116,58 +104582,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ioBroker_YahkaAdmin = exports.ioBrokerInterfaceList = void 0;
 /// <reference path="../typings/index.d.ts" />
-var pageBuilder_main_1 = __webpack_require__(/*! ./pageBuilder/pageBuilder.main */ "./admin/pageBuilder/pageBuilder.main.ts");
+const pageBuilder_main_1 = __webpack_require__(/*! ./pageBuilder/pageBuilder.main */ "./admin/pageBuilder/pageBuilder.main.ts");
 var resolveMethodForSettingsLoader;
-var ioBrokerSettingsLoaded = new Promise(function (resolve, reject) {
+const ioBrokerSettingsLoaded = new Promise((resolve, reject) => {
     resolveMethodForSettingsLoader = resolve;
 });
-exports.ioBrokerInterfaceList = new Promise(function (resolve, reject) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, ioBrokerSettingsLoaded];
-            case 1:
-                _a.sent();
-                getIPs(function (ipList) {
-                    resolve(ipList);
-                });
-                return [2 /*return*/];
-        }
+exports.ioBrokerInterfaceList = new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
+    yield ioBrokerSettingsLoaded;
+    getIPs((ipList) => {
+        resolve(ipList);
     });
-}); });
-var ioBroker_YahkaAdmin = /** @class */ (function () {
-    function ioBroker_YahkaAdmin() {
-    }
-    ioBroker_YahkaAdmin.prototype.loadSettings = function (settingsObject, onChangeCallback) {
+}));
+class ioBroker_YahkaAdmin {
+    loadSettings(settingsObject, onChangeCallback) {
         this.settings = settingsObject;
         if (settingsObject.cameras === undefined) {
             settingsObject.cameras = [];
@@ -105175,14 +104605,14 @@ var ioBroker_YahkaAdmin = /** @class */ (function () {
         if (resolveMethodForSettingsLoader !== undefined)
             resolveMethodForSettingsLoader();
         resolveMethodForSettingsLoader = undefined;
-        new pageBuilder_main_1.ioBroker_YahkaPageBuilder(this.settings.bridge, this.settings.cameras, onChangeCallback);
+        this.pageBuilder = new pageBuilder_main_1.ioBroker_YahkaPageBuilder(this.settings.bridge, this.settings.cameras, onChangeCallback);
         onChangeCallback(false);
-    };
-    ioBroker_YahkaAdmin.prototype.saveSettings = function (callback) {
+    }
+    saveSettings(callback) {
+        this.pageBuilder.rebuildDeviceList();
         callback(this.settings);
-    };
-    return ioBroker_YahkaAdmin;
-}());
+    }
+}
 exports.ioBroker_YahkaAdmin = ioBroker_YahkaAdmin;
 
 
@@ -105192,34 +104622,23 @@ exports.ioBroker_YahkaAdmin = ioBroker_YahkaAdmin;
 /*!***************************************!*\
   !*** ./admin/yahka.meta-generator.ts ***!
   \***************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.generateMetaDataDictionary = void 0;
-var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "../node_modules/hap-nodejs/dist/index.js");
-var yahka_community_types_1 = __webpack_require__(/*! ../yahka.community.types */ "./yahka.community.types.ts");
+const hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "../node_modules/hap-nodejs/dist/index.js");
+const yahka_community_types_1 = __webpack_require__(/*! ../yahka.community.types */ "./yahka.community.types.ts");
 (0, yahka_community_types_1.importHAPCommunityTypesAndFixes)();
 function generateMetaDataDictionary() {
-    var availableServices = Object.keys(hap_nodejs_1.Service);
-    var availableCharacteristics = Object.keys(hap_nodejs_1.Characteristic);
-    var services = buildServiceDictionary(availableServices, availableCharacteristics);
-    var characteristics = buildCharacteristicDictionary(availableCharacteristics);
+    let availableServices = Object.keys(hap_nodejs_1.Service);
+    let availableCharacteristics = Object.keys(hap_nodejs_1.Characteristic);
+    const services = buildServiceDictionary(availableServices, availableCharacteristics);
+    const characteristics = buildCharacteristicDictionary(availableCharacteristics);
     return {
-        services: services,
-        characteristics: characteristics
+        services,
+        characteristics
     };
 }
 exports.generateMetaDataDictionary = generateMetaDataDictionary;
@@ -105233,86 +104652,44 @@ function createCharacteristicDescriper(name, optional, char) {
     };
 }
 function buildServiceDictionary(availableServices, availableCharacteristics) {
-    var e_1, _a, e_2, _b, e_3, _c, e_4, _d;
-    var serviceDictionary = {};
-    var serviceExclusionList = ['super_', 'serialize', 'deserialize'];
-    var charDictionary = {};
-    try {
-        for (var availableCharacteristics_1 = __values(availableCharacteristics), availableCharacteristics_1_1 = availableCharacteristics_1.next(); !availableCharacteristics_1_1.done; availableCharacteristics_1_1 = availableCharacteristics_1.next()) {
-            var charName = availableCharacteristics_1_1.value;
-            if (charName === 'super_') {
+    const serviceDictionary = {};
+    const serviceExclusionList = ['super_', 'serialize', 'deserialize'];
+    let charDictionary = {};
+    for (let charName of availableCharacteristics) {
+        if (charName === 'super_') {
+            continue;
+        }
+        charDictionary[hap_nodejs_1.Characteristic[charName].UUID] = charName;
+    }
+    for (let serviceName of availableServices) {
+        if (serviceExclusionList.includes(serviceName)) {
+            continue;
+        }
+        let serviceDescriptor = {
+            type: serviceName,
+            characteristics: {}
+        };
+        let serviceInstance = new hap_nodejs_1.Service[serviceName]('', '');
+        for (let char of serviceInstance.characteristics) {
+            let charName = charDictionary[char.UUID];
+            if (charName === undefined) {
                 continue;
             }
-            charDictionary[hap_nodejs_1.Characteristic[charName].UUID] = charName;
+            serviceDescriptor.characteristics[charName] = createCharacteristicDescriper(charName, false, char);
         }
-    }
-    catch (e_1_1) { e_1 = { error: e_1_1 }; }
-    finally {
-        try {
-            if (availableCharacteristics_1_1 && !availableCharacteristics_1_1.done && (_a = availableCharacteristics_1.return)) _a.call(availableCharacteristics_1);
-        }
-        finally { if (e_1) throw e_1.error; }
-    }
-    try {
-        for (var availableServices_1 = __values(availableServices), availableServices_1_1 = availableServices_1.next(); !availableServices_1_1.done; availableServices_1_1 = availableServices_1.next()) {
-            var serviceName = availableServices_1_1.value;
-            if (serviceExclusionList.includes(serviceName)) {
+        for (let char of serviceInstance.optionalCharacteristics) {
+            let charName = charDictionary[char.UUID];
+            if (charName === undefined) {
                 continue;
             }
-            var serviceDescriptor = {
-                type: serviceName,
-                characteristics: {}
-            };
-            var serviceInstance = new hap_nodejs_1.Service[serviceName]('', '');
-            try {
-                for (var _e = (e_3 = void 0, __values(serviceInstance.characteristics)), _f = _e.next(); !_f.done; _f = _e.next()) {
-                    var char = _f.value;
-                    var charName = charDictionary[char.UUID];
-                    if (charName === undefined) {
-                        continue;
-                    }
-                    serviceDescriptor.characteristics[charName] = createCharacteristicDescriper(charName, false, char);
-                }
-            }
-            catch (e_3_1) { e_3 = { error: e_3_1 }; }
-            finally {
-                try {
-                    if (_f && !_f.done && (_c = _e.return)) _c.call(_e);
-                }
-                finally { if (e_3) throw e_3.error; }
-            }
-            try {
-                for (var _g = (e_4 = void 0, __values(serviceInstance.optionalCharacteristics)), _h = _g.next(); !_h.done; _h = _g.next()) {
-                    var char = _h.value;
-                    var charName = charDictionary[char.UUID];
-                    if (charName === undefined) {
-                        continue;
-                    }
-                    serviceDescriptor.characteristics[charName] = createCharacteristicDescriper(charName, true, char);
-                }
-            }
-            catch (e_4_1) { e_4 = { error: e_4_1 }; }
-            finally {
-                try {
-                    if (_h && !_h.done && (_d = _g.return)) _d.call(_g);
-                }
-                finally { if (e_4) throw e_4.error; }
-            }
-            serviceDictionary[serviceName] = serviceDescriptor;
+            serviceDescriptor.characteristics[charName] = createCharacteristicDescriper(charName, true, char);
         }
-    }
-    catch (e_2_1) { e_2 = { error: e_2_1 }; }
-    finally {
-        try {
-            if (availableServices_1_1 && !availableServices_1_1.done && (_b = availableServices_1.return)) _b.call(availableServices_1);
-        }
-        finally { if (e_2) throw e_2.error; }
+        serviceDictionary[serviceName] = serviceDescriptor;
     }
     return serviceDictionary;
 }
 function buildCharacteristicDictionary(availableCharacteristics) {
-    var e_5, _a;
-    var characteristicExclusionList = [
+    const characteristicExclusionList = [
         'super_',
         'Formats',
         'Units',
@@ -105320,23 +104697,13 @@ function buildCharacteristicDictionary(availableCharacteristics) {
         'serialize',
         'deserialize'
     ];
-    var characteristicDictionary = {};
-    try {
-        for (var availableCharacteristics_2 = __values(availableCharacteristics), availableCharacteristics_2_1 = availableCharacteristics_2.next(); !availableCharacteristics_2_1.done; availableCharacteristics_2_1 = availableCharacteristics_2.next()) {
-            var charName = availableCharacteristics_2_1.value;
-            if (characteristicExclusionList.includes(charName)) {
-                continue;
-            }
-            var charInstance = new hap_nodejs_1.Characteristic[charName]();
-            characteristicDictionary[charName] = createCharacteristicDescriper(charName, true, charInstance);
+    const characteristicDictionary = {};
+    for (let charName of availableCharacteristics) {
+        if (characteristicExclusionList.includes(charName)) {
+            continue;
         }
-    }
-    catch (e_5_1) { e_5 = { error: e_5_1 }; }
-    finally {
-        try {
-            if (availableCharacteristics_2_1 && !availableCharacteristics_2_1.done && (_a = availableCharacteristics_2.return)) _a.call(availableCharacteristics_2);
-        }
-        finally { if (e_5) throw e_5.error; }
+        let charInstance = new hap_nodejs_1.Characteristic[charName]();
+        characteristicDictionary[charName] = createCharacteristicDescriper(charName, true, charInstance);
     }
     return characteristicDictionary;
 }
@@ -105389,25 +104756,24 @@ var Configuration;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.YahkaLogger = void 0;
-var YahkaLogger = /** @class */ (function () {
-    function YahkaLogger(adapter, logIdentifier) {
+class YahkaLogger {
+    constructor(adapter, logIdentifier) {
         this.adapter = adapter;
         this.logIdentifier = logIdentifier;
     }
-    YahkaLogger.prototype.debug = function (message) {
+    debug(message) {
         return this.adapter.log.debug("[" + this.logIdentifier + "] " + message);
-    };
-    YahkaLogger.prototype.info = function (message) {
+    }
+    info(message) {
         return this.adapter.log.info("[" + this.logIdentifier + "] " + message);
-    };
-    YahkaLogger.prototype.warn = function (message) {
+    }
+    warn(message) {
         return this.adapter.log.warn("[" + this.logIdentifier + "] " + message);
-    };
-    YahkaLogger.prototype.error = function (message) {
+    }
+    error(message) {
         return this.adapter.log.error("[" + this.logIdentifier + "] " + message);
-    };
-    return YahkaLogger;
-}());
+    }
+}
 exports.YahkaLogger = YahkaLogger;
 
 
@@ -105441,23 +104807,23 @@ exports.propertyExists = propertyExists;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.importHAPCommunityTypesAndFixes = void 0;
-var hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "../node_modules/hap-nodejs/dist/index.js");
-var HapCommunity = __webpack_require__(/*! ../hap-nodejs-community-types */ "../hap-nodejs-community-types/types.js");
-var hapTypesImported = false;
+const hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "../node_modules/hap-nodejs/dist/index.js");
+const HapCommunity = __webpack_require__(/*! ../hap-nodejs-community-types */ "../hap-nodejs-community-types/types.js");
+let hapTypesImported = false;
 function importHAPCommunityTypesAndFixes() {
     if (hapTypesImported)
         return;
-    var fakeBridge = {
+    let fakeBridge = {
         hap: {
             Service: hap_nodejs_1.Service,
             Characteristic: hap_nodejs_1.Characteristic,
             uuid: hap_nodejs_1.uuid
         }
     };
-    var fakeOptions = {};
-    var communityTypes = HapCommunity(fakeBridge, fakeOptions);
-    for (var type in communityTypes) {
-        var typeFct = communityTypes[type];
+    let fakeOptions = {};
+    let communityTypes = HapCommunity(fakeBridge, fakeOptions);
+    for (let type in communityTypes) {
+        let typeFct = communityTypes[type];
         if (typeFct.length == 0) { // characteristic
             hap_nodejs_1.Characteristic["Community: " + type] = typeFct;
         }
@@ -105476,47 +104842,30 @@ exports.importHAPCommunityTypesAndFixes = importHAPCommunityTypesAndFixes;
 /*!********************************************!*\
   !*** ./yahka.functions/conversion.base.ts ***!
   \********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIOBrokerConversionBase = void 0;
-var functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
-var TIOBrokerConversionBase = /** @class */ (function (_super) {
-    __extends(TIOBrokerConversionBase, _super);
-    function TIOBrokerConversionBase(adapter, logIdentifier) {
-        if (logIdentifier === void 0) { logIdentifier = ""; }
-        return _super.call(this, adapter, logIdentifier) || this;
+const functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
+class TIOBrokerConversionBase extends functions_base_1.TYahkaFunctionBase {
+    constructor(adapter, logIdentifier = "") {
+        super(adapter, logIdentifier);
     }
-    TIOBrokerConversionBase.castToNumber = function (value) {
+    static castToNumber(value) {
         if (value === undefined)
             return undefined;
         else if (typeof value !== 'number')
             return Number(value);
         else
             return value;
-    };
-    TIOBrokerConversionBase.castToBool = function (value) {
+    }
+    static castToBool(value) {
         return !!value;
-    };
-    TIOBrokerConversionBase.parameterValueByName = function (parameters, name) {
-        var paramArray = undefined;
+    }
+    static parameterValueByName(parameters, name) {
+        let paramArray = undefined;
         if (typeof parameters === 'object') {
             paramArray = parameters;
         }
@@ -105526,9 +104875,8 @@ var TIOBrokerConversionBase = /** @class */ (function (_super) {
         if (paramArray === undefined)
             return undefined;
         return paramArray[name];
-    };
-    return TIOBrokerConversionBase;
-}(functions_base_1.TYahkaFunctionBase));
+    }
+}
 exports.TIOBrokerConversionBase = TIOBrokerConversionBase;
 
 
@@ -105538,89 +104886,49 @@ exports.TIOBrokerConversionBase = TIOBrokerConversionBase;
 /*!*******************************************!*\
   !*** ./yahka.functions/conversion.map.ts ***!
   \*******************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Map = exports.isMultiStateParameter = void 0;
-var conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
+const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 function isMultiStateParameter(params) {
     return "mappings" in params;
 }
 exports.isMultiStateParameter = isMultiStateParameter;
-var TIoBrokerConversion_Map = /** @class */ (function (_super) {
-    __extends(TIoBrokerConversion_Map, _super);
-    function TIoBrokerConversion_Map(adapter, parameters) {
-        var _this = _super.call(this, adapter, "TIoBrokerConversion_Map") || this;
-        _this.parameters = parameters;
-        _this.mappingArrayToHomeKit = new Map();
-        _this.mappingArrayToIOBroker = new Map();
-        _this.jsonReplacer = function (key, value) { return String(value); };
-        _this.buildMappingArray();
-        return _this;
+class TIoBrokerConversion_Map extends conversion_base_1.TIOBrokerConversionBase {
+    constructor(adapter, parameters) {
+        super(adapter, "TIoBrokerConversion_Map");
+        this.parameters = parameters;
+        this.mappingArrayToHomeKit = new Map();
+        this.mappingArrayToIOBroker = new Map();
+        this.jsonReplacer = (key, value) => String(value);
+        this.buildMappingArray();
     }
-    TIoBrokerConversion_Map.create = function (adapter, parameters) {
+    static create(adapter, parameters) {
         if (!isMultiStateParameter(parameters)) {
             return undefined;
         }
         return new TIoBrokerConversion_Map(adapter, parameters);
-    };
-    TIoBrokerConversion_Map.prototype.buildMappingArray = function () {
-        var e_1, _a;
-        try {
-            for (var _b = __values(this.parameters.mappings), _c = _b.next(); !_c.done; _c = _b.next()) {
-                var mapDef = _c.value;
-                var leftStr = JSON.stringify(mapDef.left, this.jsonReplacer);
-                var rightStr = JSON.stringify(mapDef.right, this.jsonReplacer);
-                this.mappingArrayToHomeKit.set(leftStr, mapDef.right);
-                this.mappingArrayToIOBroker.set(rightStr, mapDef.left);
-            }
+    }
+    buildMappingArray() {
+        for (let mapDef of this.parameters.mappings) {
+            let leftStr = JSON.stringify(mapDef.left, this.jsonReplacer);
+            let rightStr = JSON.stringify(mapDef.right, this.jsonReplacer);
+            this.mappingArrayToHomeKit.set(leftStr, mapDef.right);
+            this.mappingArrayToIOBroker.set(rightStr, mapDef.left);
         }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-            }
-            finally { if (e_1) throw e_1.error; }
-        }
-    };
-    TIoBrokerConversion_Map.prototype.toHomeKit = function (value) {
-        var ioValueStr = JSON.stringify(value, this.jsonReplacer);
+    }
+    toHomeKit(value) {
+        let ioValueStr = JSON.stringify(value, this.jsonReplacer);
         return this.mappingArrayToHomeKit.get(ioValueStr);
-    };
-    TIoBrokerConversion_Map.prototype.toIOBroker = function (value) {
-        var hkValueStr = JSON.stringify(value, this.jsonReplacer);
+    }
+    toIOBroker(value) {
+        let hkValueStr = JSON.stringify(value, this.jsonReplacer);
         return this.mappingArrayToIOBroker.get(hkValueStr);
-    };
-    return TIoBrokerConversion_Map;
-}(conversion_base_1.TIOBrokerConversionBase));
+    }
+}
 exports.TIoBrokerConversion_Map = TIoBrokerConversion_Map;
 
 
@@ -105636,39 +104944,38 @@ exports.TIoBrokerConversion_Map = TIoBrokerConversion_Map;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TYahkaFunctionBase = void 0;
-var yahka_logger_1 = __webpack_require__(/*! ../shared/yahka.logger */ "./shared/yahka.logger.ts");
-var TYahkaFunctionBase = /** @class */ (function () {
-    function TYahkaFunctionBase(adapter, logIdentifier) {
-        if (logIdentifier === void 0) { logIdentifier = ""; }
+const yahka_logger_1 = __webpack_require__(/*! ../shared/yahka.logger */ "./shared/yahka.logger.ts");
+class TYahkaFunctionBase {
+    constructor(adapter, logIdentifier = "") {
         this.adapter = adapter;
         this.logIdentifier = logIdentifier;
         this.subscriptionRequests = [];
         this.stateCache = new Map();
         this.log = new yahka_logger_1.YahkaLogger(this.adapter, this.logIdentifier);
     }
-    TYahkaFunctionBase.prototype.addSubscriptionRequest = function (stateName) {
-        var subscriptionEvent = this.subscriptionEvent.bind(this, stateName);
+    addSubscriptionRequest(stateName) {
+        let subscriptionEvent = this.subscriptionEvent.bind(this, stateName);
         this.subscriptionRequests.push({
             subscriptionType: 'state',
             subscriptionIdentifier: stateName,
             subscriptionEvent: subscriptionEvent
         });
-    };
-    TYahkaFunctionBase.prototype.shouldStateBeFiltered = function (stateName, ioState) {
+    }
+    shouldStateBeFiltered(stateName, ioState) {
         return false;
-    };
-    TYahkaFunctionBase.prototype.readValueFromCache = function (stateName) {
+    }
+    readValueFromCache(stateName) {
         if (this.stateCache.has(stateName)) {
             return this.stateCache.get(stateName);
         }
         else {
             return undefined;
         }
-    };
-    TYahkaFunctionBase.prototype.updateCache = function (stateName, ioState) {
-        var needUpdate = false;
+    }
+    updateCache(stateName, ioState) {
+        let needUpdate = false;
         if (this.stateCache.has(stateName)) {
-            var curVal = this.stateCache.get(stateName);
+            let curVal = this.stateCache.get(stateName);
             needUpdate = (curVal === null || curVal === void 0 ? void 0 : curVal.val) !== (ioState === null || ioState === void 0 ? void 0 : ioState.val);
         }
         else {
@@ -105677,24 +104984,23 @@ var TYahkaFunctionBase = /** @class */ (function () {
         if (needUpdate)
             this.stateCache.set(stateName, ioState);
         return needUpdate;
-    };
-    TYahkaFunctionBase.prototype.subscriptionEvent = function (stateName, ioState, callback) {
+    }
+    subscriptionEvent(stateName, ioState, callback) {
         this.log.debug('change event from ioBroker via [' + stateName + ']' + JSON.stringify(ioState));
         if (this.shouldStateBeFiltered(stateName, ioState)) {
             this.log.debug('state was filtered - notification is canceled');
             return;
         }
-        var cacheChange = this.updateCache(stateName, ioState);
+        let cacheChange = this.updateCache(stateName, ioState);
         if (!cacheChange) {
             this.log.debug('state value already in cache - notification is canceled');
             return;
         }
         this.cacheChanged(stateName, callback);
-    };
-    TYahkaFunctionBase.prototype.cacheChanged = function (stateName, callback) {
-    };
-    return TYahkaFunctionBase;
-}());
+    }
+    cacheChanged(stateName, callback) {
+    }
+}
 exports.TYahkaFunctionBase = TYahkaFunctionBase;
 
 
@@ -105704,45 +105010,28 @@ exports.TYahkaFunctionBase = TYahkaFunctionBase;
 /*!****************************************!*\
   !*** ./yahka.functions/iofunc.base.ts ***!
   \****************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_StateBase = exports.TIoBrokerInOutFunctionBase = void 0;
-var functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
-var TIoBrokerInOutFunctionBase = /** @class */ (function (_super) {
-    __extends(TIoBrokerInOutFunctionBase, _super);
-    function TIoBrokerInOutFunctionBase() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.valueForHomeKit = undefined;
-        _this.errorForHomeKit = null;
-        return _this;
+const functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
+class TIoBrokerInOutFunctionBase extends functions_base_1.TYahkaFunctionBase {
+    constructor() {
+        super(...arguments);
+        this.valueForHomeKit = undefined;
+        this.errorForHomeKit = null;
     }
-    TIoBrokerInOutFunctionBase.prototype.fromIOBroker = function (callback) {
+    fromIOBroker(callback) {
         this.log.debug('fromIOBroker event - delivering cached value (' + JSON.stringify(this.valueForHomeKit) + ")");
         callback(null, this.valueForHomeKit);
-    };
-    TIoBrokerInOutFunctionBase.prototype.toIOBroker = function (plainIoValue, callback) {
+    }
+    toIOBroker(plainIoValue, callback) {
         this.log.debug('writing state to ioBroker: ' + JSON.stringify(plainIoValue));
         this.updateIOBrokerValue(plainIoValue, callback);
-    };
-    TIoBrokerInOutFunctionBase.prototype.cacheChanged = function (stateName, callback) {
+    }
+    cacheChanged(stateName, callback) {
         try {
             this.valueForHomeKit = this.recalculateHomekitValues(stateName);
             this.errorForHomeKit = null;
@@ -105752,19 +105041,17 @@ var TIoBrokerInOutFunctionBase = /** @class */ (function (_super) {
         }
         if (this.valueForHomeKit != null)
             callback(this.valueForHomeKit);
-    };
-    TIoBrokerInOutFunctionBase.prototype.recalculateHomekitValues = function (stateName) {
+    }
+    recalculateHomekitValues(stateName) {
         // noop
-    };
-    TIoBrokerInOutFunctionBase.prototype.updateIOBrokerValue = function (plainIoValue, callback) {
+    }
+    updateIOBrokerValue(plainIoValue, callback) {
         // to be filled in derived class
-    };
-    return TIoBrokerInOutFunctionBase;
-}(functions_base_1.TYahkaFunctionBase));
+    }
+}
 exports.TIoBrokerInOutFunctionBase = TIoBrokerInOutFunctionBase;
-var TIoBrokerInOutFunction_StateBase = /** @class */ (function () {
-    function TIoBrokerInOutFunction_StateBase(adapter, stateName, deferredTime) {
-        if (deferredTime === void 0) { deferredTime = 0; }
+class TIoBrokerInOutFunction_StateBase {
+    constructor(adapter, stateName, deferredTime = 0) {
         this.adapter = adapter;
         this.stateName = stateName;
         this.deferredTime = deferredTime;
@@ -105772,31 +105059,30 @@ var TIoBrokerInOutFunction_StateBase = /** @class */ (function () {
         this.subscriptionRequests = [];
         this.addSubscriptionRequest(stateName);
     }
-    TIoBrokerInOutFunction_StateBase.prototype.addSubscriptionRequest = function (stateName) {
-        var subscriptionEvent = this.subscriptionEvent.bind(this, stateName);
+    addSubscriptionRequest(stateName) {
+        let subscriptionEvent = this.subscriptionEvent.bind(this, stateName);
         this.subscriptionRequests.push({
             subscriptionType: 'state',
             subscriptionIdentifier: stateName,
             subscriptionEvent: subscriptionEvent
         });
-    };
-    TIoBrokerInOutFunction_StateBase.prototype.getValueOnRead = function (ioState) {
+    }
+    getValueOnRead(ioState) {
         return ioState === null || ioState === void 0 ? void 0 : ioState.val;
-    };
-    TIoBrokerInOutFunction_StateBase.prototype.getValueOnNotify = function (ioState) {
+    }
+    getValueOnNotify(ioState) {
         return ioState === null || ioState === void 0 ? void 0 : ioState.val;
-    };
-    TIoBrokerInOutFunction_StateBase.prototype.toIOBroker = function (plainIoValue, callback) {
-        var _this = this;
+    }
+    toIOBroker(plainIoValue, callback) {
         this.adapter.log.debug('writing state to ioBroker [' + this.stateName + ']: ' + JSON.stringify(plainIoValue));
-        this.adapter.getForeignState(this.stateName, function (error, ioState) {
-            var value = _this.getValueOnRead(ioState);
-            var valueChanged = value !== plainIoValue;
-            _this.adapter.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(plainIoValue) + ' = ' + valueChanged);
+        this.adapter.getForeignState(this.stateName, (error, ioState) => {
+            let value = this.getValueOnRead(ioState);
+            let valueChanged = value !== plainIoValue;
+            this.adapter.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(plainIoValue) + ' = ' + valueChanged);
             if (valueChanged) {
-                _this.adapter.setForeignState(_this.stateName, plainIoValue, false, function (error) {
+                this.adapter.setForeignState(this.stateName, plainIoValue, false, (error) => {
                     if (error)
-                        _this.adapter.log.error('setForeignState error [' + _this.stateName + '] to [' + JSON.stringify(plainIoValue) + ']: ' + error);
+                        this.adapter.log.error('setForeignState error [' + this.stateName + '] to [' + JSON.stringify(plainIoValue) + ']: ' + error);
                     callback();
                 });
             }
@@ -105804,46 +105090,44 @@ var TIoBrokerInOutFunction_StateBase = /** @class */ (function () {
                 callback();
             }
         });
-    };
-    TIoBrokerInOutFunction_StateBase.prototype.fromIOBroker = function (callback) {
-        var _this = this;
+    }
+    fromIOBroker(callback) {
         this.adapter.log.debug('reading state from ioBroker [' + this.stateName + ']');
-        this.adapter.getForeignState(this.stateName, function (error, ioState) {
-            _this.adapter.log.debug('read state from ioBroker [' + _this.stateName + ']: ' + JSON.stringify(ioState));
+        this.adapter.getForeignState(this.stateName, (error, ioState) => {
+            this.adapter.log.debug('read state from ioBroker [' + this.stateName + ']: ' + JSON.stringify(ioState));
             if (error)
-                _this.adapter.log.error('... with error: ' + error);
-            var value = _this.getValueOnRead(ioState);
+                this.adapter.log.error('... with error: ' + error);
+            let value = this.getValueOnRead(ioState);
             callback(error, value);
         });
-    };
-    TIoBrokerInOutFunction_StateBase.prototype.subscriptionEvent = function (stateName, ioState, callback) {
+    }
+    subscriptionEvent(stateName, ioState, callback) {
         this.adapter.log.debug('change event from ioBroker via [' + this.stateName + ']' + JSON.stringify(ioState));
-        var newValue = this.getValueOnNotify(ioState);
+        let newValue = this.getValueOnNotify(ioState);
         if (newValue != null)
             this.executeCallback(callback, newValue);
         else
             this.adapter.log.debug('state was filtered - notification is canceled');
-    };
-    TIoBrokerInOutFunction_StateBase.prototype.executeCallback = function (callback, plainIOValue) {
+    }
+    executeCallback(callback, plainIOValue) {
         if (this.deferredTime > 0)
             this.setupDeferredChangeEvent(callback, plainIOValue);
         else
             callback(plainIOValue);
-    };
-    TIoBrokerInOutFunction_StateBase.prototype.setupDeferredChangeEvent = function (callback, plainIOValue) {
+    }
+    setupDeferredChangeEvent(callback, plainIOValue) {
         this.cancelDeferredChangeEvent();
         this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback, plainIOValue), 150);
-    };
-    TIoBrokerInOutFunction_StateBase.prototype.cancelDeferredChangeEvent = function () {
+    }
+    cancelDeferredChangeEvent() {
         clearTimeout(this.debounceTimer);
         this.debounceTimer = null;
-    };
-    TIoBrokerInOutFunction_StateBase.prototype.deferredChangeEvent = function (callback, plainIOValue) {
+    }
+    deferredChangeEvent(callback, plainIOValue) {
         this.adapter.log.debug('[' + this.stateName + '] firing deferred change event:' + JSON.stringify(plainIOValue));
         callback(plainIOValue);
-    };
-    return TIoBrokerInOutFunction_StateBase;
-}());
+    }
+}
 exports.TIoBrokerInOutFunction_StateBase = TIoBrokerInOutFunction_StateBase;
 
 
@@ -105853,30 +105137,15 @@ exports.TIoBrokerInOutFunction_StateBase = TIoBrokerInOutFunction_StateBase;
 /*!****************************************************!*\
   !*** ./yahka.functions/iofunc.homematic.dimmer.ts ***!
   \****************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = exports.isHomematic_Dimmer_Parameter = void 0;
-var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
-var util_1 = __webpack_require__(/*! util */ "../node_modules/util/util.js");
-var yahka_utils_1 = __webpack_require__(/*! ../shared/yahka.utils */ "./shared/yahka.utils.ts");
+const iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
+const util_1 = __webpack_require__(/*! util */ "../node_modules/util/util.js");
+const yahka_utils_1 = __webpack_require__(/*! ../shared/yahka.utils */ "./shared/yahka.utils.ts");
 function isHomematic_Dimmer_Parameter(value) {
     if (value === undefined)
         return false;
@@ -105885,83 +105154,76 @@ function isHomematic_Dimmer_Parameter(value) {
     return (0, yahka_utils_1.propertyExists)(value, "levelState");
 }
 exports.isHomematic_Dimmer_Parameter = isHomematic_Dimmer_Parameter;
-var TIoBrokerInOutFunction_Homematic_Dimmer_Base = /** @class */ (function (_super) {
-    __extends(TIoBrokerInOutFunction_Homematic_Dimmer_Base, _super);
-    function TIoBrokerInOutFunction_Homematic_Dimmer_Base(adapter, functionName, parameters) {
-        var _this = _super.call(this, adapter, functionName + "[" + parameters.levelState + "]") || this;
-        _this.parameters = parameters;
-        _this.lastOnLevel = { val: undefined, ack: false, ts: undefined, lc: undefined, from: undefined };
-        _this.addSubscriptionRequest(parameters.levelState);
-        return _this;
+class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends iofunc_base_1.TIoBrokerInOutFunctionBase {
+    constructor(adapter, functionName, parameters) {
+        super(adapter, functionName + "[" + parameters.levelState + "]");
+        this.parameters = parameters;
+        this.lastOnLevel = { val: undefined, ack: false, ts: undefined, lc: undefined, from: undefined };
+        this.addSubscriptionRequest(parameters.levelState);
     }
-    TIoBrokerInOutFunction_Homematic_Dimmer_Base.parseParameters = function (parameters) {
+    static parseParameters(parameters) {
         if (!isHomematic_Dimmer_Parameter(parameters)) {
             return undefined;
         }
         ;
         return parameters;
-    };
-    TIoBrokerInOutFunction_Homematic_Dimmer_Base.prototype.cacheChanged = function (stateName, callback) {
+    }
+    cacheChanged(stateName, callback) {
         // save level if we are switching off
         if (stateName === this.parameters.levelState) {
-            var cacheValue = this.readValueFromCache(stateName);
+            const cacheValue = this.readValueFromCache(stateName);
             if (cacheValue.val > 0) {
                 this.lastOnLevel = cacheValue;
             }
         }
-        _super.prototype.cacheChanged.call(this, stateName, callback);
-    };
-    return TIoBrokerInOutFunction_Homematic_Dimmer_Base;
-}(iofunc_base_1.TIoBrokerInOutFunctionBase));
-exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = TIoBrokerInOutFunction_Homematic_Dimmer_Base;
-var TIoBrokerInOutFunction_Homematic_Dimmer_On = /** @class */ (function (_super) {
-    __extends(TIoBrokerInOutFunction_Homematic_Dimmer_On, _super);
-    function TIoBrokerInOutFunction_Homematic_Dimmer_On(adapter, parameters) {
-        var _this = _super.call(this, adapter, "Homematic.Dimmer.On", parameters) || this;
-        _this.adapter = adapter;
-        _this.parameters = parameters;
-        return _this;
+        super.cacheChanged(stateName, callback);
     }
-    TIoBrokerInOutFunction_Homematic_Dimmer_On.create = function (adapter, parameters) {
-        var params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
+}
+exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = TIoBrokerInOutFunction_Homematic_Dimmer_Base;
+class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFunction_Homematic_Dimmer_Base {
+    constructor(adapter, parameters) {
+        super(adapter, "Homematic.Dimmer.On", parameters);
+        this.adapter = adapter;
+        this.parameters = parameters;
+    }
+    static create(adapter, parameters) {
+        let params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
         if (params === undefined) {
             return undefined;
         }
         return new TIoBrokerInOutFunction_Homematic_Dimmer_On(adapter, params);
-    };
-    TIoBrokerInOutFunction_Homematic_Dimmer_On.prototype.recalculateHomekitValues = function (stateName) {
-        var hkValue = this.stateCache.get(this.parameters.levelState);
+    }
+    recalculateHomekitValues(stateName) {
+        let hkValue = this.stateCache.get(this.parameters.levelState);
         return Boolean((hkValue === null || hkValue === void 0 ? void 0 : hkValue.val) > 0);
-    };
-    TIoBrokerInOutFunction_Homematic_Dimmer_On.prototype.updateIOBrokerValue = function (plainIoValue, callback) {
-        var _this = this;
-        setTimeout(function () { return _this.executeIOBrokerValue(plainIoValue, callback); }, 50);
-    };
-    TIoBrokerInOutFunction_Homematic_Dimmer_On.prototype.executeIOBrokerValue = function (plainIoValue, callback) {
-        var _this = this;
+    }
+    updateIOBrokerValue(plainIoValue, callback) {
+        setTimeout(() => this.executeIOBrokerValue(plainIoValue, callback), 50);
+    }
+    executeIOBrokerValue(plainIoValue, callback) {
         var _a, _b;
-        var isSwitchingOn = Boolean(plainIoValue);
-        var stateName = this.parameters.levelState;
-        var newOnValue = (this.parameters.restoreToPreviousLevel ? (_a = this.lastOnLevel) === null || _a === void 0 ? void 0 : _a.val : this.parameters.defaultSwitchOnLevel) || this.parameters.defaultSwitchOnLevel || 100;
-        var newOffValue = 0;
-        var newValue = isSwitchingOn ? newOnValue : newOffValue;
+        const isSwitchingOn = Boolean(plainIoValue);
+        const stateName = this.parameters.levelState;
+        const newOnValue = (this.parameters.restoreToPreviousLevel ? (_a = this.lastOnLevel) === null || _a === void 0 ? void 0 : _a.val : this.parameters.defaultSwitchOnLevel) || this.parameters.defaultSwitchOnLevel || 100;
+        const newOffValue = 0;
+        const newValue = isSwitchingOn ? newOnValue : newOffValue;
         if (isSwitchingOn && this.parameters.restoreToPreviousLevel) {
             this.log.debug('using previous level for switching on: ' + JSON.stringify((_b = this.lastOnLevel) === null || _b === void 0 ? void 0 : _b.val));
         }
         this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
-        this.adapter.getForeignState(stateName, function (error, ioState) {
-            var value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
+        this.adapter.getForeignState(stateName, (error, ioState) => {
+            let value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
             if (isSwitchingOn && value > 0) {
-                _this.log.debug('function should switch on but level is already not equal to 0: ' + JSON.stringify(value));
+                this.log.debug('function should switch on but level is already not equal to 0: ' + JSON.stringify(value));
                 callback();
                 return;
             }
-            var valueChanged = value !== newValue;
-            _this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
+            let valueChanged = value !== newValue;
+            this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
             if (valueChanged) {
-                _this.adapter.setForeignState(stateName, newValue, false, function (error) {
+                this.adapter.setForeignState(stateName, newValue, false, (error) => {
                     if (error) {
-                        _this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
+                        this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
                         callback();
                     }
                     callback();
@@ -105971,43 +105233,39 @@ var TIoBrokerInOutFunction_Homematic_Dimmer_On = /** @class */ (function (_super
                 callback();
             }
         });
-    };
-    return TIoBrokerInOutFunction_Homematic_Dimmer_On;
-}(TIoBrokerInOutFunction_Homematic_Dimmer_Base));
-exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = TIoBrokerInOutFunction_Homematic_Dimmer_On;
-var TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = /** @class */ (function (_super) {
-    __extends(TIoBrokerInOutFunction_Homematic_Dimmer_Brightness, _super);
-    function TIoBrokerInOutFunction_Homematic_Dimmer_Brightness(adapter, parameters) {
-        var _this = _super.call(this, adapter, "Homematic.Dimmer.Brightness", parameters) || this;
-        _this.adapter = adapter;
-        _this.parameters = parameters;
-        return _this;
     }
-    TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.create = function (adapter, parameters) {
-        var params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
+}
+exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = TIoBrokerInOutFunction_Homematic_Dimmer_On;
+class TIoBrokerInOutFunction_Homematic_Dimmer_Brightness extends TIoBrokerInOutFunction_Homematic_Dimmer_Base {
+    constructor(adapter, parameters) {
+        super(adapter, "Homematic.Dimmer.Brightness", parameters);
+        this.adapter = adapter;
+        this.parameters = parameters;
+    }
+    static create(adapter, parameters) {
+        let params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
         if (params === undefined) {
             return undefined;
         }
         return new TIoBrokerInOutFunction_Homematic_Dimmer_Brightness(adapter, params);
-    };
-    TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.prototype.recalculateHomekitValues = function (stateName) {
+    }
+    recalculateHomekitValues(stateName) {
         var _a;
-        var hkValue = this.stateCache.get(this.parameters.levelState);
+        let hkValue = this.stateCache.get(this.parameters.levelState);
         return (hkValue === null || hkValue === void 0 ? void 0 : hkValue.val) == 0 ? (_a = this.lastOnLevel) === null || _a === void 0 ? void 0 : _a.val : hkValue === null || hkValue === void 0 ? void 0 : hkValue.val;
-    };
-    TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.prototype.updateIOBrokerValue = function (plainIoValue, callback) {
-        var _this = this;
-        var newValue = plainIoValue;
-        var stateName = this.parameters.levelState;
+    }
+    updateIOBrokerValue(plainIoValue, callback) {
+        const newValue = plainIoValue;
+        const stateName = this.parameters.levelState;
         this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
-        this.adapter.getForeignState(stateName, function (error, ioState) {
-            var value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
-            var valueChanged = value !== newValue;
-            _this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
+        this.adapter.getForeignState(stateName, (error, ioState) => {
+            let value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
+            let valueChanged = value !== newValue;
+            this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
             if (valueChanged) {
-                _this.adapter.setForeignState(stateName, newValue, false, function (error) {
+                this.adapter.setForeignState(stateName, newValue, false, (error) => {
                     if (error) {
-                        _this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
+                        this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
                         callback();
                     }
                     callback();
@@ -106017,9 +105275,8 @@ var TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = /** @class */ (function
                 callback();
             }
         });
-    };
-    return TIoBrokerInOutFunction_Homematic_Dimmer_Brightness;
-}(TIoBrokerInOutFunction_Homematic_Dimmer_Base));
+    }
+}
 exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = TIoBrokerInOutFunction_Homematic_Dimmer_Brightness;
 
 
@@ -106029,72 +105286,33 @@ exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = TIoBrokerInOutFunct
 /*!***********************************************!*\
   !*** ./yahka.functions/iofunc.multi-state.ts ***!
   \***********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_MultiState = exports.isMultiStateParameter = void 0;
-var iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
-var util_1 = __webpack_require__(/*! util */ "../node_modules/util/util.js");
+const iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
+const util_1 = __webpack_require__(/*! util */ "../node_modules/util/util.js");
 function isMultiStateParameter(value) {
     if (value === undefined)
         return false;
     if (!(0, util_1.isObject)(value))
         return false;
-    var propName = "readState";
+    let propName = "readState";
     return (propName in value);
 }
 exports.isMultiStateParameter = isMultiStateParameter;
-var TIoBrokerInOutFunction_MultiState = /** @class */ (function (_super) {
-    __extends(TIoBrokerInOutFunction_MultiState, _super);
-    function TIoBrokerInOutFunction_MultiState(adapter, stateProperties) {
-        var e_1, _a;
-        var _this = _super.call(this, adapter, "TIoBrokerInOutFunctionMultiState") || this;
-        _this.adapter = adapter;
-        _this.stateProperties = stateProperties;
-        try {
-            for (var stateProperties_1 = __values(stateProperties), stateProperties_1_1 = stateProperties_1.next(); !stateProperties_1_1.done; stateProperties_1_1 = stateProperties_1.next()) {
-                var state = stateProperties_1_1.value;
-                _this.addSubscriptionRequest(state.readState);
-            }
+class TIoBrokerInOutFunction_MultiState extends iofunc_base_1.TIoBrokerInOutFunctionBase {
+    constructor(adapter, stateProperties) {
+        super(adapter, "TIoBrokerInOutFunctionMultiState");
+        this.adapter = adapter;
+        this.stateProperties = stateProperties;
+        for (let state of stateProperties) {
+            this.addSubscriptionRequest(state.readState);
         }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (stateProperties_1_1 && !stateProperties_1_1.done && (_a = stateProperties_1.return)) _a.call(stateProperties_1);
-            }
-            finally { if (e_1) throw e_1.error; }
-        }
-        return _this;
     }
-    TIoBrokerInOutFunction_MultiState.parseParameters = function (parameters) {
+    static parseParameters(parameters) {
         if (Array.isArray(parameters)) {
             return parameters.filter(isMultiStateParameter);
         }
@@ -106104,34 +105322,32 @@ var TIoBrokerInOutFunction_MultiState = /** @class */ (function (_super) {
         else {
             return undefined;
         }
-    };
-    TIoBrokerInOutFunction_MultiState.create = function (adapter, parameters) {
-        var stateNames = TIoBrokerInOutFunction_MultiState.parseParameters(parameters);
+    }
+    static create(adapter, parameters) {
+        let stateNames = TIoBrokerInOutFunction_MultiState.parseParameters(parameters);
         if (stateNames === undefined) {
             return undefined;
         }
         return new TIoBrokerInOutFunction_MultiState(adapter, stateNames);
-    };
-    TIoBrokerInOutFunction_MultiState.prototype.recalculateHomekitValues = function (stateName) {
-        var _this = this;
-        var hkValues = this.stateProperties.map(function (state) { var _a; return (_a = _this.stateCache.get(state.readState)) === null || _a === void 0 ? void 0 : _a.val; });
+    }
+    recalculateHomekitValues(stateName) {
+        let hkValues = this.stateProperties.map((state) => { var _a; return (_a = this.stateCache.get(state.readState)) === null || _a === void 0 ? void 0 : _a.val; });
         return hkValues.length === 1 ? hkValues[0] : hkValues;
-    };
-    TIoBrokerInOutFunction_MultiState.prototype.updateSingleIOBrokerValue = function (state, newValue) {
-        var _this = this;
+    }
+    updateSingleIOBrokerValue(state, newValue) {
         if (newValue === undefined)
             return Promise.resolve();
-        return new Promise(function (resolve, reject) {
-            var stateName = state.writeState || state.readState;
-            _this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
-            _this.adapter.getForeignState(stateName, function (error, ioState) {
-                var value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
-                var valueChanged = value !== newValue;
-                _this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
+        return new Promise((resolve, reject) => {
+            let stateName = state.writeState || state.readState;
+            this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
+            this.adapter.getForeignState(stateName, (error, ioState) => {
+                let value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
+                let valueChanged = value !== newValue;
+                this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
                 if (valueChanged) {
-                    _this.adapter.setForeignState(stateName, newValue, false, function (error) {
+                    this.adapter.setForeignState(stateName, newValue, false, (error) => {
                         if (error) {
-                            _this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
+                            this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
                             reject(error);
                         }
                         resolve();
@@ -106142,24 +105358,22 @@ var TIoBrokerInOutFunction_MultiState = /** @class */ (function (_super) {
                 }
             });
         });
-    };
-    TIoBrokerInOutFunction_MultiState.prototype.updateIOBrokerValue = function (plainIoValue, callback) {
-        var _this = this;
-        var ioValueArray = Array.isArray(plainIoValue) ? plainIoValue : [plainIoValue];
-        var promiseArray = this.stateProperties.map(function (state, index) {
-            var newValueForThisState = ioValueArray[index];
-            return _this.updateSingleIOBrokerValue(state, newValueForThisState);
+    }
+    updateIOBrokerValue(plainIoValue, callback) {
+        let ioValueArray = Array.isArray(plainIoValue) ? plainIoValue : [plainIoValue];
+        let promiseArray = this.stateProperties.map((state, index) => {
+            let newValueForThisState = ioValueArray[index];
+            return this.updateSingleIOBrokerValue(state, newValueForThisState);
         });
-        Promise.all(promiseArray).then(function () {
-            _this.log.debug('wrote all states sucessfully to ioBroker');
+        Promise.all(promiseArray).then(() => {
+            this.log.debug('wrote all states sucessfully to ioBroker');
             callback();
-        }).catch(function (e) {
-            _this.log.error('could not write all states to ioBroker: ' + JSON.stringify(e));
+        }).catch((e) => {
+            this.log.error('could not write all states to ioBroker: ' + JSON.stringify(e));
             callback();
         });
-    };
-    return TIoBrokerInOutFunction_MultiState;
-}(iofunc_base_1.TIoBrokerInOutFunctionBase));
+    }
+}
 exports.TIoBrokerInOutFunction_MultiState = TIoBrokerInOutFunction_MultiState;
 
 
