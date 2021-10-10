@@ -183,7 +183,7 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
         const listGroupName = (<HTMLElement>fragment.querySelector('.list-group-toggle'));
         const listGroupContent = (<HTMLElement>fragment.querySelector('.list-group-content'));
         listGroupName.innerHTML = groupName;
-        this.entryGroupMap.set(dictIdentifier, listGroupNode);
+        this.entryGroupMap.set(dictIdentifier, listGroupContent);
         deviceList.appendChild(listGroupNode);
         return listGroupContent;
     }
