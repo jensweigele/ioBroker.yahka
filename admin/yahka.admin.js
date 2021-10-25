@@ -97126,7 +97126,7 @@ module.exports = "<div class=\"list device-entry\">\n    <span class=\"icon list
   \**************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"list-group\">\n    <span class=\"list-group-toggle\">..list group title...</span>\n    <div class=\"list-group-content\">\n\n    </div>\n</div>";
+module.exports = "<div class=\"list-group collapsed\">\n    <span class=\"list-group-toggle\">..list group title...</span>\n    <div class=\"list-group-content\">\n\n    </div>\n</div>";
 
 /***/ }),
 
@@ -103375,7 +103375,7 @@ class ioBroker_DeviceListHandler extends pageBuilder_base_1.ConfigPageBuilder_Ba
         const listGroupNode = fragment.querySelector('.list-group');
         const listGroupName = fragment.querySelector('.list-group-toggle');
         const listGroupContent = fragment.querySelector('.list-group-content');
-        listGroupName.innerHTML = groupName;
+        listGroupName.innerText = groupName;
         this.entryGroupMap.set(dictIdentifier, listGroupContent);
         deviceList.appendChild(listGroupNode);
         return listGroupContent;
