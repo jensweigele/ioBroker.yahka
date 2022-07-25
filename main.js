@@ -2446,8 +2446,8 @@ class THomeKitBridge {
         const devicesToPublish = [
             () => {
                 var _a;
-                let advertiser = this.config.useLegacyAdvertiser ? "bonjour-hap" /* MDNSAdvertiser.BONJOUR */ : "ciao" /* MDNSAdvertiser.CIAO */;
-                advertiser = this.config.useAvahiAdvertiser ? "avahi" /* MDNSAdvertiser.AVAHI */ : advertiser;
+                let advertiser = this.config.useLegacyAdvertiser ? "bonjour-hap" /* MDNSAdvertiser.BONJOUR */ : "avahi" /* MDNSAdvertiser.AVAHI */;
+                advertiser = this.config.useCiaoAdvertiser ? "ciao" /* MDNSAdvertiser.CIAO */ : advertiser;
                 this.FLogger.info(`publishing bridge ${this.config.name} on ${(_a = this.config.interface) !== null && _a !== void 0 ? _a : '0.0.0.0'} using ${advertiser}`);
                 this.bridgeObject.publish({
                     username: this.config.username,
@@ -2468,8 +2468,8 @@ class THomeKitBridge {
                 if (device.publishAsOwnDevice) {
                     devicesToPublish.push(() => {
                         var _a;
-                        let advertiser = device.useLegacyAdvertiser ? "bonjour-hap" /* MDNSAdvertiser.BONJOUR */ : "ciao" /* MDNSAdvertiser.CIAO */;
-                        advertiser = device.useAvahiAdvertiser ? "avahi" /* MDNSAdvertiser.AVAHI */ : advertiser;
+                        let advertiser = device.useLegacyAdvertiser ? "bonjour-hap" /* MDNSAdvertiser.BONJOUR */ : "avahi" /* MDNSAdvertiser.AVAHI */;
+                        advertiser = device.useCiaoAdvertiser ? "ciao" /* MDNSAdvertiser.CIAO */ : advertiser;
                         this.FLogger.info(`publishing device ${device.name} on ${(_a = device.interface) !== null && _a !== void 0 ? _a : '0.0.0.0'} using ${advertiser}`);
                         hapDevice.publish({
                             username: device.username,
@@ -2698,8 +2698,8 @@ class THomeKitIPCamera {
     }
     publishCamera() {
         var _a;
-        let advertiser = this.camConfig.useLegacyAdvertiser ? "bonjour-hap" /* MDNSAdvertiser.BONJOUR */ : "ciao" /* MDNSAdvertiser.CIAO */;
-        advertiser = this.camConfig.useAvahiAdvertiser ? "avahi" /* MDNSAdvertiser.AVAHI */ : advertiser;
+        let advertiser = this.camConfig.useLegacyAdvertiser ? "bonjour-hap" /* MDNSAdvertiser.BONJOUR */ : "avahi" /* MDNSAdvertiser.AVAHI */;
+        advertiser = this.camConfig.useCiaoAdvertiser ? "ciao" /* MDNSAdvertiser.CIAO */ : advertiser;
         this.FLogger.info(`publishing camera ${this.camConfig.name} on ${(_a = this.camConfig.interface) !== null && _a !== void 0 ? _a : '0.0.0.0'} using ${advertiser}`);
         this.camera.publish({
             username: this.camConfig.username,

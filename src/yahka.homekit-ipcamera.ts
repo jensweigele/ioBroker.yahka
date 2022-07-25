@@ -186,8 +186,8 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
     }
 
     private publishCamera() {
-        let advertiser = this.camConfig.useLegacyAdvertiser ? MDNSAdvertiser.BONJOUR : MDNSAdvertiser.CIAO;
-        advertiser = this.camConfig.useAvahiAdvertiser ? MDNSAdvertiser.AVAHI : advertiser;
+        let advertiser = this.camConfig.useLegacyAdvertiser ? MDNSAdvertiser.BONJOUR : MDNSAdvertiser.AVAHI;
+        advertiser = this.camConfig.useCiaoAdvertiser ? MDNSAdvertiser.CIAO : advertiser;
         this.FLogger.info(`publishing camera ${this.camConfig.name} on ${this.camConfig.interface ?? '0.0.0.0'} using ${advertiser}`);
         this.camera.publish(
             {

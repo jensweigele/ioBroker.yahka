@@ -97,7 +97,7 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
             });
         inputHelper('#interface', 'interface', ipListForSelectBox);
         inputHelper('#useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
-        inputHelper('#useAvahiAdvertiser', 'useAvahiAdvertiser', undefined, undefined, false);
+        inputHelper('#useCiaoAdvertiser', 'useCiaoAdvertiser', undefined, undefined, false);
 
         inputHelper('#source', 'source');
         inputHelper('#codec', 'codec');
