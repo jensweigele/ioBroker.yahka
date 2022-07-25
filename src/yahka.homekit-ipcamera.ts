@@ -1,36 +1,53 @@
 /// <reference path="./typings/index.d.ts" />
 import { spawn, ChildProcess } from 'child_process';
 import {
-    uuid, Accessory, Service, Characteristic, SnapshotRequest,
-    PrepareStreamRequest, SessionIdentifier, CameraStreamingDelegate,
-    CameraController, SRTPCryptoSuites, H264Profile, H264Level, SnapshotRequestCallback,
-    PrepareStreamCallback, PrepareStreamResponse, StreamingRequest, StreamRequestCallback,
-    CameraStreamingOptions, StreamRequestTypes, AudioStreamingCodecType, AudioStreamingSamplerate, Categories, MDNSAdvertiser
+    uuid,
+    Accessory,
+    Service,
+    Characteristic,
+    SnapshotRequest,
+    PrepareStreamRequest,
+    SessionIdentifier,
+    CameraStreamingDelegate,
+    CameraController,
+    SRTPCryptoSuites,
+    H264Profile,
+    H264Level,
+    SnapshotRequestCallback,
+    PrepareStreamCallback,
+    PrepareStreamResponse,
+    StreamingRequest,
+    StreamRequestCallback,
+    CameraStreamingOptions,
+    StreamRequestTypes,
+    AudioStreamingCodecType,
+    AudioStreamingSamplerate,
+    Categories,
+    MDNSAdvertiser,
 } from 'hap-nodejs';
 import { IHomeKitBridgeBindingFactory, ILogger } from './yahka.interfaces';
 import { Configuration } from './shared/yahka.configuration';
 import { YahkaServiceInitializer } from './yahka.homekit-service';
 
 type SessionInfo = {
-    address: string, // address of the HAP controller
+    address: string; // address of the HAP controller
 
-    videoPort: number, // port of the controller
-    localVideoPort: number,
-    videoCryptoSuite: SRTPCryptoSuites, // should be saved if multiple suites are supported
-    videoSRTP: Buffer, // key and salt concatenated
-    videoSSRC: number, // rtp synchronisation source
+    videoPort: number; // port of the controller
+    localVideoPort: number;
+    videoCryptoSuite: SRTPCryptoSuites; // should be saved if multiple suites are supported
+    videoSRTP: Buffer; // key and salt concatenated
+    videoSSRC: number; // rtp synchronisation source
 
-    audioPort: number,
-    audioCryptoSuite: SRTPCryptoSuites,
-    audioSRTP: Buffer,
-    audioSSRC: number,
-
-}
+    audioPort: number;
+    audioCryptoSuite: SRTPCryptoSuites;
+    audioSRTP: Buffer;
+    audioSSRC: number;
+};
 
 type OngoingSession = {
-    localVideoPort: number,
-    process: ChildProcess,
-}
+    localVideoPort: number;
+    process: ChildProcess;
+};
 
 export class THomeKitIPCamera implements CameraStreamingDelegate {
     private cameraController: CameraController;
@@ -45,9 +62,9 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
 
     init() {
         if (!this.camConfig.enabled) {
-            return
+            return;
         }
-        this.createCameraDevice()
+        this.createCameraDevice();
         this.createCameraController();
         this.createAdditionalServices();
         this.publishCamera();
@@ -55,7 +72,7 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
 
     private createOptionsDictionary(): CameraStreamingOptions {
         var videoResolutions = [];
-        var maxFPS = (this.camConfig.maxFPS > 30) ? 30 : this.camConfig.maxFPS;
+        var maxFPS = this.camConfig.maxFPS > 30 ? 30 : this.camConfig.maxFPS;
 
         if (this.camConfig.maxWidth >= 320) {
             if (this.camConfig.maxHeight >= 240) {
@@ -119,7 +136,6 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                 codec: {
                     profiles: [H264Profile.BASELINE, H264Profile.MAIN, H264Profile.HIGH],
                     levels: [H264Level.LEVEL3_1, H264Level.LEVEL3_2, H264Level.LEVEL4_0],
-
                 },
             },
             audio: {
@@ -127,12 +143,12 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                 codecs: [
                     {
                         type: AudioStreamingCodecType.AAC_ELD,
-                        samplerate: AudioStreamingSamplerate.KHZ_16
-                    }
-                ]
-            }
-        }
-        return options
+                        samplerate: AudioStreamingSamplerate.KHZ_16,
+                    },
+                ],
+            },
+        };
+        return options;
     }
 
     private createCameraDevice() {
@@ -143,7 +159,7 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
         infoService.setCharacteristic(Characteristic.Manufacturer, this.camConfig.manufacturer || 'not configured');
         infoService.setCharacteristic(Characteristic.Model, this.camConfig.model || 'not configured');
         infoService.setCharacteristic(Characteristic.SerialNumber, this.camConfig.serial || 'not configured');
-        if ((this.camConfig.firmware !== undefined) && (this.camConfig.firmware !== "")) {
+        if (this.camConfig.firmware !== undefined && this.camConfig.firmware !== '') {
             infoService.setCharacteristic(Characteristic.FirmwareRevision, this.camConfig.firmware);
         }
 
@@ -156,11 +172,10 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
     }
 
     public createCameraController() {
-
         this.cameraController = new CameraController({
             cameraStreamCount: 2, // HomeKit requires at least 2 streams, but 1 is also just fine
             delegate: this,
-            streamingOptions: this.createOptionsDictionary()
+            streamingOptions: this.createOptionsDictionary(),
         });
 
         this.camera.configureController(this.cameraController);
@@ -173,14 +188,17 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
     private publishCamera() {
         const advertiser = this.camConfig.useLegacyAdvertiser ? MDNSAdvertiser.BONJOUR : MDNSAdvertiser.CIAO;
         this.FLogger.info(`publishing camera ${this.camConfig.name} on ${this.camConfig.interface ?? '0.0.0.0'} using ${advertiser}`);
-        this.camera.publish({
-            username: this.camConfig.username,
-            port: this.camConfig.port,
-            pincode: this.camConfig.pincode,
-            category: Categories.CAMERA,
-            bind: this.camConfig.interface != '' ? this.camConfig.interface : undefined,
-            advertiser
-        }, false);
+        this.camera.publish(
+            {
+                username: this.camConfig.username,
+                port: this.camConfig.port,
+                pincode: this.camConfig.pincode,
+                category: Categories.CAMERA,
+                bind: this.camConfig.interface != '' ? this.camConfig.interface : undefined,
+                advertiser,
+            },
+            false
+        );
     }
 
     public handleSnapshotRequest(request: SnapshotRequest, callback: SnapshotRequestCallback): void {
@@ -188,18 +206,20 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
             source: this.camConfig.source,
             width: request.width,
             height: request.height,
-        }
-        let ffmpegCommand = this.camConfig.ffmpegCommandLine.snapshot.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => {
-            return params[word];
-        }));
+        };
+        let ffmpegCommand = this.camConfig.ffmpegCommandLine.snapshot.map((s) =>
+            s.replace(/\$\{(.*?)\}/g, (_, word) => {
+                return params[word];
+            })
+        );
 
-        this.FLogger.debug("Snapshot run: ffmpeg " + ffmpegCommand.join(' '));
+        this.FLogger.debug('Snapshot run: ffmpeg ' + ffmpegCommand.join(' '));
         let ffmpeg = spawn('ffmpeg', ffmpegCommand, { env: process.env });
 
         var imageBuffer = Buffer.alloc(0);
 
         ffmpeg.stdout.on('data', function (data) {
-            imageBuffer = Buffer.concat([imageBuffer, (<Buffer>data)]);
+            imageBuffer = Buffer.concat([imageBuffer, <Buffer>data]);
         });
         ffmpeg.on('close', function (code) {
             callback(undefined, imageBuffer);
@@ -228,7 +248,7 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                 port: targetPort,
                 ssrc: videoSSRC,
                 srtp_key: videoSrtpKey,
-                srtp_salt: videoSrtpSalt
+                srtp_salt: videoSrtpSalt,
             };
 
             sessionInfo.videoPort = targetPort;
@@ -249,7 +269,7 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                 port: targetPort,
                 ssrc: audioSSRC,
                 srtp_key: audioSrtpKey,
-                srtp_salt: audioSrtpSalt
+                srtp_salt: audioSrtpSalt,
             };
 
             sessionInfo.audioPort = targetPort;
@@ -301,7 +321,6 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                         bitrate = videoInfo.max_bit_rate;
                     }
 
-
                     let params = {
                         source: this.camConfig.source,
                         codec: codec,
@@ -314,8 +333,8 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                         targetAddress: sessionInfo.address,
                         targetVideoPort: sessionInfo.videoPort,
                         targetVideoSsrc: sessionInfo.videoSSRC,
-                        mtu
-                    }
+                        mtu,
+                    };
 
                     let ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => params[word]));
 
@@ -330,11 +349,9 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                             targetAudioPort: sessionInfo.audioPort,
                             targetAudioSsrc: sessionInfo.audioSSRC,
                             audiokey: sessionInfo.audioSRTP?.toString('base64'),
-                        }
+                        };
 
-                        ffmpegCommand = ffmpegCommand.concat(
-                            this.camConfig.ffmpegCommandLine.streamAudio.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => params[word]))
-                        )
+                        ffmpegCommand = ffmpegCommand.concat(this.camConfig.ffmpegCommandLine.streamAudio.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => params[word])));
                     }
 
                     // this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
@@ -344,22 +361,22 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                     ffmpeg.stderr.on('data', (data: Buffer) => {
                         if (!started) {
                             started = true;
-                            this.FLogger.debug("FFMPEG: received first frame");
+                            this.FLogger.debug('FFMPEG: received first frame');
                             callback(); // do not forget to execute callback once set up
                         }
                         //this.FLogger.debug("FFMPEG:" + data.toString('utf8'));
                     });
-                    ffmpeg.on('error', error => {
-                        this.FLogger.error("[Video] Failed to start video stream: " + error.message);
-                        callback(new Error("ffmpeg process creation failed!"));
+                    ffmpeg.on('error', (error) => {
+                        this.FLogger.error('[Video] Failed to start video stream: ' + error.message);
+                        callback(new Error('ffmpeg process creation failed!'));
                     });
                     ffmpeg.on('exit', (code, signal) => {
-                        const message = "[Video] ffmpeg exited with code: " + code + " and signal: " + signal;
+                        const message = '[Video] ffmpeg exited with code: ' + code + ' and signal: ' + signal;
 
                         if (code == null || code === 255) {
-                            this.FLogger.debug(message + " (Video stream stopped!)");
+                            this.FLogger.debug(message + ' (Video stream stopped!)');
                         } else {
-                            this.FLogger.error(message + " (error)");
+                            this.FLogger.error(message + ' (error)');
 
                             if (!started) {
                                 callback(new Error(message));
@@ -394,14 +411,12 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
         try {
             ongoingSession.process.kill('SIGKILL');
         } catch (e) {
-            this.FLogger.error("Error occurred terminating the video process!");
+            this.FLogger.error('Error occurred terminating the video process!');
             this.FLogger.error(e);
         }
 
         delete this.ongoingSessions[sessionId];
 
-        this.FLogger.debug("Stopped streaming session!");
+        this.FLogger.debug('Stopped streaming session!');
     }
 }
-
-

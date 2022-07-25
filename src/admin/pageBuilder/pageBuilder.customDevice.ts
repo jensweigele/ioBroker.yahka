@@ -1,4 +1,3 @@
-
 /// <reference path="../../typings/index.d.ts" />
 import * as hkBridge from '../../shared/yahka.configuration';
 import { IDictionary } from '../../shared/yahka.configuration';
@@ -10,9 +9,7 @@ import { Utils } from '../admin.utils';
 import { ConfigPageBuilder_ServicePanel } from './pageBuilder.servicePanel';
 import { ioBrokerInterfaceList } from '../yahka.admin';
 
-
 declare function getObject(id: string, callback: (error: any, object: any) => void);
-
 
 let accessoryCategories: IDictionary<ISelectListEntry> = {};
 getObject('yahka.meta._accessoryCategories', (_, object) => {
@@ -33,7 +30,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
 
     public async refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
         if (!hkBridge.Configuration.isDeviceConfig(config)) {
-            return
+            return;
         }
 
         let lastPane: HTMLElement = await this.buildDeviceInformationPanel(config, devicePanel);
@@ -46,31 +43,28 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         if (AFocusLastPanel && lastPane) {
             lastPane.scrollIntoView();
             if (!lastPane.classList.contains('active')) {
-                let heading = (<HTMLElement>lastPane.querySelector('.heading'));
-                if (heading)
-                    heading.click();
+                let heading = <HTMLElement>lastPane.querySelector('.heading');
+                if (heading) heading.click();
             }
         }
     }
 
     public styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean {
         if (!hkBridge.Configuration.isDeviceConfig(deviceConfig)) {
-            return false
+            return false;
         }
-        let iconClass = "mif-question";
+        let iconClass = 'mif-question';
         let cat: ISelectListEntry;
         if (accessoryCategories !== undefined) {
-            if (cat = accessoryCategories[deviceConfig.category])
-                iconClass = cat['icon'];
+            if ((cat = accessoryCategories[deviceConfig.category])) iconClass = cat['icon'];
         }
         let listIcon = listItem.querySelector('.list-icon');
-        listIcon.className = "";
+        listIcon.className = '';
         listIcon.classList.add('list-icon', 'icon', iconClass);
 
         listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
         listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
         return true;
-
     }
 
     private async buildDeviceInformationPanel(deviceConfig: hkBridge.Configuration.IDeviceConfig, devicePane: HTMLElement): Promise<HTMLElement> {
@@ -78,7 +72,13 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         let devInfoPanel = <HTMLElement>devInfoFragment.querySelector('#yahka_device_info_panel');
         translateFragment(devInfoFragment);
 
-        let inputHelper = (selector: string, propertyName: keyof hkBridge.Configuration.IDeviceConfig, selectList?: IDictionary<ISelectListEntry> | ISelectListEntry[], validator: TValidatorFunction = undefined, checkDefault = true) => {
+        let inputHelper = (
+            selector: string,
+            propertyName: keyof hkBridge.Configuration.IDeviceConfig,
+            selectList?: IDictionary<ISelectListEntry> | ISelectListEntry[],
+            validator: TValidatorFunction = undefined,
+            checkDefault = true
+        ) => {
             let input = <HTMLInputElement>devInfoPanel.querySelector(selector);
             let errorElement = <HTMLElement>devInfoPanel.querySelector(selector + '_error');
 
@@ -87,7 +87,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
             let value = deviceConfig[propertyName];
             if (input.type === 'checkbox') {
                 input.checked = value === undefined ? checkDefault : value;
-                input.addEventListener('change', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator))
+                input.addEventListener('change', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator));
             } else {
                 Utils.setInputValue(input, value);
                 input.addEventListener('input', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator));
@@ -109,16 +109,26 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         inputHelper('#pincode', 'pincode');
         inputHelper('#port', 'port');
         let ipList = await ioBrokerInterfaceList;
-        const ipListForSelectBox = ipList.filter((a) => a.family === "ipv4").map((a) => { return { value: a.address, text: a.name }; });
+        const ipListForSelectBox = ipList
+            .filter((a) => a.family === 'ipv4')
+            .map((a) => {
+                return { value: a.address, text: a.name };
+            });
         inputHelper('#interface', 'interface', ipListForSelectBox);
 
         devicePane.appendChild(devInfoFragment);
         return devInfoPanel;
     }
 
-    private handleDeviceMetaDataChange(deviceConfig: hkBridge.Configuration.IDeviceConfig, propertyName: string, errorElement: HTMLElement, validator: TValidatorFunction, ev: Event) {
+    private handleDeviceMetaDataChange(
+        deviceConfig: hkBridge.Configuration.IDeviceConfig,
+        propertyName: string,
+        errorElement: HTMLElement,
+        validator: TValidatorFunction,
+        ev: Event
+    ) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
-        let inputValue = (inputTarget.type === 'checkbox') ? inputTarget.checked : inputTarget.value;
+        let inputValue = inputTarget.type === 'checkbox' ? inputTarget.checked : inputTarget.value;
         deviceConfig[propertyName] = inputValue;
         this.refreshSimpleErrorElement(errorElement, validator);
         this.delegate.refreshDeviceListEntry(deviceConfig);

@@ -1,4 +1,3 @@
-
 /// <reference path="../../typings/index.d.ts" />
 import * as hkBridge from '../../shared/yahka.configuration';
 import { ConfigPageBuilder_Base, IConfigPageBuilder, IConfigPageBuilderDelegate, TValidatorFunction } from './pageBuilder.base';
@@ -20,7 +19,7 @@ export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base imple
 
     public async refresh(config: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
         if (!hkBridge.Configuration.isBridgeConfig(config)) {
-            return
+            return;
         }
         let bridgeConfigFragment = <DocumentFragment>document.importNode(this.bridgeConfigPanelTemplate.content, true);
         translateFragment(bridgeConfigFragment);
@@ -35,7 +34,7 @@ export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base imple
             } else {
                 input.value = '';
             }
-            input.addEventListener("input", this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
+            input.addEventListener('input', this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
             this.refreshSimpleErrorElement(errorElement, validator);
         };
 
@@ -45,7 +44,7 @@ export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base imple
 
             let value = config[propertyName];
             input.checked = value;
-            input.addEventListener("click", this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
+            input.addEventListener('click', this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
             this.refreshSimpleErrorElement(errorElement, validator);
         };
 
@@ -59,7 +58,11 @@ export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base imple
         inputHelper('#pincode', 'pincode');
         inputHelper('#port', 'port');
         let ipList = await ioBrokerInterfaceList;
-        let ipListForSelectBox = ipList.filter((a) => a.family === "ipv4").map((a) => { return { value: a.address, text: a.name }; });
+        let ipListForSelectBox = ipList
+            .filter((a) => a.family === 'ipv4')
+            .map((a) => {
+                return { value: a.address, text: a.name };
+            });
         inputHelper('#interface', 'interface', ipListForSelectBox);
         checkboxHelper('#useLegacyAdvertiser', 'useLegacyAdvertiser');
         checkboxHelper('#verboseLogging', 'verboseLogging');
@@ -76,7 +79,7 @@ export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base imple
 
     handleBridgeMetaDataChange(bridgeConfig: hkBridge.Configuration.IBridgeConfig, propertyName: string, errorElement: HTMLElement, validator: TValidatorFunction, ev: Event) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
-        if (inputTarget.type == "checkbox") {
+        if (inputTarget.type == 'checkbox') {
             bridgeConfig[propertyName] = inputTarget.checked;
         } else {
             bridgeConfig[propertyName] = inputTarget.value;
@@ -85,5 +88,4 @@ export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base imple
         this.delegate.refreshDeviceListEntry(bridgeConfig);
         this.delegate.changeCallback();
     }
-
 }

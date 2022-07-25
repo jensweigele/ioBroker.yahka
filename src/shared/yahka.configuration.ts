@@ -1,10 +1,8 @@
-
 export interface IDictionary<T> {
     [key: string]: T;
 }
 
 export module Configuration {
-
     export type TConfigNodeType = 'bridge' | 'customdevice' | 'ipcamera' | undefined;
     export interface ICharacteristicProperties {
         [key: string]: any;
@@ -25,10 +23,9 @@ export module Configuration {
         linkTo?: string;
         isHidden?: boolean;
         isPrimary?: boolean;
-        characteristics: (ICharacteristicConfig)[];
+        characteristics: ICharacteristicConfig[];
         [key: string]: any;
     }
-
 
     export interface IBaseConfigNode {
         configType: TConfigNodeType;
@@ -68,9 +65,9 @@ export module Configuration {
     }
 
     export interface ICameraFfmpegCommandLine {
-        stream: String[],
-        streamAudio: String[],
-        snapshot: String[]
+        stream: String[];
+        streamAudio: String[];
+        snapshot: String[];
     }
 
     export interface ICameraConfig extends IBridgeConfig {
@@ -86,23 +83,18 @@ export module Configuration {
         services?: IServiceConfig[];
     }
 
-
     export function isBridgeConfig(config: IBaseConfigNode): config is IBridgeConfig {
-        if (config === undefined)
-            return false;
-        return config.configType === "bridge";
+        if (config === undefined) return false;
+        return config.configType === 'bridge';
     }
 
     export function isDeviceConfig(config: IBaseConfigNode): config is IDeviceConfig {
-        if (config === undefined)
-            return false;
-        return config.configType === "customdevice" || (<IDeviceConfig>config).services !== undefined;
+        if (config === undefined) return false;
+        return config.configType === 'customdevice' || (<IDeviceConfig>config).services !== undefined;
     }
 
     export function isIPCameraConfig(config: IBaseConfigNode): config is ICameraConfig {
-        if (config === undefined)
-            return false;
-        return config.configType === "ipcamera";
+        if (config === undefined) return false;
+        return config.configType === 'ipcamera';
     }
-
 }
