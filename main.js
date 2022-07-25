@@ -7,7 +7,7 @@
   \**********************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var inherits = __webpack_require__(/*! util */ "util").inherits;
+var inherits = (__webpack_require__(/*! util */ "util").inherits);
 var Service, Characteristic;
 
 module.exports = function(homebridge, options) {
@@ -2443,9 +2443,11 @@ class THomeKitBridge {
     }
     init() {
         this.bridgeObject = this.setupBridge();
-        const devicesToPublish = [() => {
+        const devicesToPublish = [
+            () => {
                 var _a;
-                const advertiser = this.config.useLegacyAdvertiser ? "bonjour-hap" /* BONJOUR */ : "ciao" /* CIAO */;
+                let advertiser = this.config.useLegacyAdvertiser ? "bonjour-hap" /* MDNSAdvertiser.BONJOUR */ : "ciao" /* MDNSAdvertiser.CIAO */;
+                advertiser = this.config.useAvahiAdvertiser ? "avahi" /* MDNSAdvertiser.AVAHI */ : advertiser;
                 this.FLogger.info(`publishing bridge ${this.config.name} on ${(_a = this.config.interface) !== null && _a !== void 0 ? _a : '0.0.0.0'} using ${advertiser}`);
                 this.bridgeObject.publish({
                     username: this.config.username,
@@ -2453,9 +2455,10 @@ class THomeKitBridge {
                     pincode: this.config.pincode,
                     category: 2,
                     bind: this.config.interface != '' ? this.config.interface : undefined,
-                    advertiser
+                    advertiser,
                 });
-            }];
+            },
+        ];
         if (this.config.devices) {
             for (let device of this.config.devices) {
                 if (device.enabled === false) {
@@ -2465,7 +2468,8 @@ class THomeKitBridge {
                 if (device.publishAsOwnDevice) {
                     devicesToPublish.push(() => {
                         var _a;
-                        const advertiser = device.useLegacyAdvertiser ? "bonjour-hap" /* BONJOUR */ : "ciao" /* CIAO */;
+                        let advertiser = device.useLegacyAdvertiser ? "bonjour-hap" /* MDNSAdvertiser.BONJOUR */ : "ciao" /* MDNSAdvertiser.CIAO */;
+                        advertiser = device.useAvahiAdvertiser ? "avahi" /* MDNSAdvertiser.AVAHI */ : advertiser;
                         this.FLogger.info(`publishing device ${device.name} on ${(_a = device.interface) !== null && _a !== void 0 ? _a : '0.0.0.0'} using ${advertiser}`);
                         hapDevice.publish({
                             username: device.username,
@@ -2475,8 +2479,8 @@ class THomeKitBridge {
                             advertiser,
                             mdns: {
                                 interface: device.interface,
-                                reuseAddr: true
-                            }
+                                reuseAddr: true,
+                            },
                         });
                     });
                 }
@@ -2499,7 +2503,7 @@ class THomeKitBridge {
         infoService.setCharacteristic(hap_nodejs_1.Characteristic.Manufacturer, this.config.manufacturer || 'not configured');
         infoService.setCharacteristic(hap_nodejs_1.Characteristic.Model, this.config.model || 'not configured');
         infoService.setCharacteristic(hap_nodejs_1.Characteristic.SerialNumber, this.config.serial || 'not configured');
-        if ((this.config.firmware !== undefined) && (this.config.firmware !== "")) {
+        if (this.config.firmware !== undefined && this.config.firmware !== '') {
             infoService.setCharacteristic(hap_nodejs_1.Characteristic.FirmwareRevision, this.config.firmware);
         }
         else {
@@ -2526,7 +2530,7 @@ class THomeKitBridge {
         infoService.setCharacteristic(hap_nodejs_1.Characteristic.Manufacturer, device.manufacturer || 'not configured');
         infoService.setCharacteristic(hap_nodejs_1.Characteristic.Model, device.model || 'not configured');
         infoService.setCharacteristic(hap_nodejs_1.Characteristic.SerialNumber, device.serial || 'not configured');
-        if ((device.firmware !== undefined) && (device.firmware !== "")) {
+        if (device.firmware !== undefined && device.firmware !== '') {
             infoService.setCharacteristic(hap_nodejs_1.Characteristic.FirmwareRevision, device.firmware);
         }
         hapDevice.on('identify', (paired, callback) => {
@@ -2597,7 +2601,7 @@ class THomeKitIPCamera {
     }
     createOptionsDictionary() {
         var videoResolutions = [];
-        var maxFPS = (this.camConfig.maxFPS > 30) ? 30 : this.camConfig.maxFPS;
+        var maxFPS = this.camConfig.maxFPS > 30 ? 30 : this.camConfig.maxFPS;
         if (this.camConfig.maxWidth >= 320) {
             if (this.camConfig.maxHeight >= 240) {
                 videoResolutions.push([320, 240, maxFPS]);
@@ -2645,23 +2649,23 @@ class THomeKitIPCamera {
             proxy: false,
             disable_audio_proxy: false,
             srtp: true,
-            supportedCryptoSuites: [0 /* AES_CM_128_HMAC_SHA1_80 */],
+            supportedCryptoSuites: [0 /* SRTPCryptoSuites.AES_CM_128_HMAC_SHA1_80 */],
             video: {
                 resolutions: videoResolutions,
                 codec: {
-                    profiles: [0 /* BASELINE */, 1 /* MAIN */, 2 /* HIGH */],
-                    levels: [0 /* LEVEL3_1 */, 1 /* LEVEL3_2 */, 2 /* LEVEL4_0 */],
+                    profiles: [0 /* H264Profile.BASELINE */, 1 /* H264Profile.MAIN */, 2 /* H264Profile.HIGH */],
+                    levels: [0 /* H264Level.LEVEL3_1 */, 1 /* H264Level.LEVEL3_2 */, 2 /* H264Level.LEVEL4_0 */],
                 },
             },
             audio: {
                 comfort_noise: false,
                 codecs: [
                     {
-                        type: "AAC-eld" /* AAC_ELD */,
-                        samplerate: 16 /* KHZ_16 */
-                    }
-                ]
-            }
+                        type: "AAC-eld" /* AudioStreamingCodecType.AAC_ELD */,
+                        samplerate: 16 /* AudioStreamingSamplerate.KHZ_16 */,
+                    },
+                ],
+            },
         };
         return options;
     }
@@ -2672,7 +2676,7 @@ class THomeKitIPCamera {
         infoService.setCharacteristic(hap_nodejs_1.Characteristic.Manufacturer, this.camConfig.manufacturer || 'not configured');
         infoService.setCharacteristic(hap_nodejs_1.Characteristic.Model, this.camConfig.model || 'not configured');
         infoService.setCharacteristic(hap_nodejs_1.Characteristic.SerialNumber, this.camConfig.serial || 'not configured');
-        if ((this.camConfig.firmware !== undefined) && (this.camConfig.firmware !== "")) {
+        if (this.camConfig.firmware !== undefined && this.camConfig.firmware !== '') {
             infoService.setCharacteristic(hap_nodejs_1.Characteristic.FirmwareRevision, this.camConfig.firmware);
         }
         hapDevice.on('identify', (paired, callback) => {
@@ -2685,7 +2689,7 @@ class THomeKitIPCamera {
         this.cameraController = new hap_nodejs_1.CameraController({
             cameraStreamCount: 2,
             delegate: this,
-            streamingOptions: this.createOptionsDictionary()
+            streamingOptions: this.createOptionsDictionary(),
         });
         this.camera.configureController(this.cameraController);
     }
@@ -2694,15 +2698,16 @@ class THomeKitIPCamera {
     }
     publishCamera() {
         var _a;
-        const advertiser = this.camConfig.useLegacyAdvertiser ? "bonjour-hap" /* BONJOUR */ : "ciao" /* CIAO */;
+        let advertiser = this.camConfig.useLegacyAdvertiser ? "bonjour-hap" /* MDNSAdvertiser.BONJOUR */ : "ciao" /* MDNSAdvertiser.CIAO */;
+        advertiser = this.camConfig.useAvahiAdvertiser ? "avahi" /* MDNSAdvertiser.AVAHI */ : advertiser;
         this.FLogger.info(`publishing camera ${this.camConfig.name} on ${(_a = this.camConfig.interface) !== null && _a !== void 0 ? _a : '0.0.0.0'} using ${advertiser}`);
         this.camera.publish({
             username: this.camConfig.username,
             port: this.camConfig.port,
             pincode: this.camConfig.pincode,
-            category: 17 /* CAMERA */,
+            category: 17 /* Categories.CAMERA */,
             bind: this.camConfig.interface != '' ? this.camConfig.interface : undefined,
-            advertiser
+            advertiser,
         }, false);
     }
     handleSnapshotRequest(request, callback) {
@@ -2714,7 +2719,7 @@ class THomeKitIPCamera {
         let ffmpegCommand = this.camConfig.ffmpegCommandLine.snapshot.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => {
             return params[word];
         }));
-        this.FLogger.debug("Snapshot run: ffmpeg " + ffmpegCommand.join(' '));
+        this.FLogger.debug('Snapshot run: ffmpeg ' + ffmpegCommand.join(' '));
         let ffmpeg = (0, child_process_1.spawn)('ffmpeg', ffmpegCommand, { env: process.env });
         var imageBuffer = Buffer.alloc(0);
         ffmpeg.stdout.on('data', function (data) {
@@ -2741,7 +2746,7 @@ class THomeKitIPCamera {
                 port: targetPort,
                 ssrc: videoSSRC,
                 srtp_key: videoSrtpKey,
-                srtp_salt: videoSrtpSalt
+                srtp_salt: videoSrtpSalt,
             };
             sessionInfo.videoPort = targetPort;
             sessionInfo.videoSRTP = Buffer.concat([videoSrtpKey, videoSrtpSalt]);
@@ -2759,7 +2764,7 @@ class THomeKitIPCamera {
                 port: targetPort,
                 ssrc: audioSSRC,
                 srtp_key: audioSrtpKey,
-                srtp_salt: audioSrtpSalt
+                srtp_salt: audioSrtpSalt,
             };
             sessionInfo.audioPort = targetPort;
             sessionInfo.audioSRTP = Buffer.concat([audioSrtpKey, audioSrtpSalt]);
@@ -2783,7 +2788,7 @@ class THomeKitIPCamera {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
         var sessionId = request.sessionID;
         switch (request.type) {
-            case "start" /* START */: {
+            case "start" /* StreamRequestTypes.START */: {
                 var sessionInfo = this.pendingSessions[sessionId];
                 this.FLogger.debug('Session Request:' + JSON.stringify(request, undefined, 2));
                 if (sessionInfo) {
@@ -2815,7 +2820,7 @@ class THomeKitIPCamera {
                         targetAddress: sessionInfo.address,
                         targetVideoPort: sessionInfo.videoPort,
                         targetVideoSsrc: sessionInfo.videoSSRC,
-                        mtu
+                        mtu,
                     };
                     let ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => params[word]));
                     if (this.camConfig.enableAudio && request.audio != null) {
@@ -2838,22 +2843,22 @@ class THomeKitIPCamera {
                     ffmpeg.stderr.on('data', (data) => {
                         if (!started) {
                             started = true;
-                            this.FLogger.debug("FFMPEG: received first frame");
+                            this.FLogger.debug('FFMPEG: received first frame');
                             callback(); // do not forget to execute callback once set up
                         }
                         //this.FLogger.debug("FFMPEG:" + data.toString('utf8'));
                     });
-                    ffmpeg.on('error', error => {
-                        this.FLogger.error("[Video] Failed to start video stream: " + error.message);
-                        callback(new Error("ffmpeg process creation failed!"));
+                    ffmpeg.on('error', (error) => {
+                        this.FLogger.error('[Video] Failed to start video stream: ' + error.message);
+                        callback(new Error('ffmpeg process creation failed!'));
                     });
                     ffmpeg.on('exit', (code, signal) => {
-                        const message = "[Video] ffmpeg exited with code: " + code + " and signal: " + signal;
+                        const message = '[Video] ffmpeg exited with code: ' + code + ' and signal: ' + signal;
                         if (code == null || code === 255) {
-                            this.FLogger.debug(message + " (Video stream stopped!)");
+                            this.FLogger.debug(message + ' (Video stream stopped!)');
                         }
                         else {
-                            this.FLogger.error(message + " (error)");
+                            this.FLogger.error(message + ' (error)');
                             if (!started) {
                                 callback(new Error(message));
                             }
@@ -2870,10 +2875,10 @@ class THomeKitIPCamera {
                     break;
                 }
             }
-            case "reconfigure" /* RECONFIGURE */:
+            case "reconfigure" /* StreamRequestTypes.RECONFIGURE */:
                 callback();
                 break;
-            case "stop" /* STOP */:
+            case "stop" /* StreamRequestTypes.STOP */:
                 this.stopStreaming(sessionId);
                 callback();
                 break;
@@ -2885,11 +2890,11 @@ class THomeKitIPCamera {
             ongoingSession.process.kill('SIGKILL');
         }
         catch (e) {
-            this.FLogger.error("Error occurred terminating the video process!");
+            this.FLogger.error('Error occurred terminating the video process!');
             this.FLogger.error(e);
         }
         delete this.ongoingSessions[sessionId];
-        this.FLogger.debug("Stopped streaming session!");
+        this.FLogger.debug('Stopped streaming session!');
     }
 }
 exports.THomeKitIPCamera = THomeKitIPCamera;
@@ -3305,7 +3310,7 @@ module.exports = require("child_process");
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"iobroker.yahka","version":"0.14.0","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"engines":{"node":">=12.0.0"},"dependencies":{"@iobroker/adapter-core":"^2.5.1","debug":"^4.3.2","dev-null":"^0.1.1","hap-nodejs":"^0.9.5","ip":"^1.1.5","macaddress":"0.5.2","util":"^0.12.4"},"devDependencies":{"@types/iobroker":"^3.3.4","@types/jquery":"^3.5.6","@types/node":"^16.9.1","assert":"^2.0.0","chai":"^4.3.4","crypto-browserify":"^3.12.0","grunt":"^1.4.1","grunt-contrib-clean":"^2.0.0","grunt-contrib-compress":"^2.0.0","grunt-contrib-copy":"^1.0.0","grunt-contrib-jshint":"^3.0.0","grunt-exec":"^3.0.0","grunt-http":"^2.3.3","grunt-jscs":"^3.0.1","grunt-replace":"^2.0.2","grunt-ts":"^6.0.0-beta.22","grunt-webpack":"^4.0.3","html-webpack-plugin":"^5.3.2","mocha":"^9.1.1","path-browserify":"^1.0.1","process":"^0.11.10","raw-loader":"^4.0.2","stream-browserify":"^3.0.0","ts-loader":"^9.2.5","typescript":"^4.4.3","webpack":"^5.53.0","webpack-cli":"^4.8.0","webpack-node-externals":"^3.0.0"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","scripts":{"test":"node node_modules/mocha/bin/mocha --exit"}}');
+module.exports = JSON.parse('{"name":"iobroker.yahka","version":"0.14.0","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"engines":{"node":">=12.0.0"},"dependencies":{"@iobroker/adapter-core":"^2.6.0","debug":"^4.3.4","dev-null":"^0.1.1","hap-nodejs":"^0.10.2","ip":"^1.1.8","macaddress":"0.5.3","util":"^0.12.4"},"devDependencies":{"@types/iobroker":"^3.3.4","@types/jquery":"^3.5.14","@types/node":"^16.11.45","assert":"^2.0.0","chai":"^4.3.6","crypto-browserify":"^3.12.0","grunt":"^1.5.3","grunt-contrib-clean":"^2.0.1","grunt-contrib-compress":"^2.0.0","grunt-contrib-copy":"^1.0.0","grunt-contrib-jshint":"^3.2.0","grunt-exec":"^3.0.0","grunt-http":"^2.3.3","grunt-jscs":"^3.0.1","grunt-replace":"^2.0.2","grunt-ts":"^6.0.0-beta.22","grunt-webpack":"^4.0.3","html-webpack-plugin":"^5.5.0","mocha":"^9.2.2","path-browserify":"^1.0.1","process":"^0.11.10","raw-loader":"^4.0.2","stream-browserify":"^3.0.0","timers":"^0.1.1","ts-loader":"^9.3.1","typescript":"^4.7.4","webpack":"^5.73.0","webpack-cli":"^4.10.0","webpack-node-externals":"^3.0.0","xml2js":"^0.4.23"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","scripts":{"test":"node node_modules/mocha/bin/mocha --exit"}}');
 
 /***/ })
 
