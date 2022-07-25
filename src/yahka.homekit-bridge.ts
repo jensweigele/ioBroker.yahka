@@ -24,7 +24,8 @@ export class THomeKitBridge {
         this.bridgeObject = this.setupBridge();
         const devicesToPublish: IPublishingMethod[] = [
             () => {
-                const advertiser = this.config.useLegacyAdvertiser ? MDNSAdvertiser.BONJOUR : MDNSAdvertiser.CIAO;
+                let advertiser = this.config.useLegacyAdvertiser ? MDNSAdvertiser.BONJOUR : MDNSAdvertiser.CIAO;
+                advertiser = this.config.useAvahiAdvertiser ? MDNSAdvertiser.AVAHI : advertiser;
                 this.FLogger.info(`publishing bridge ${this.config.name} on ${this.config.interface ?? '0.0.0.0'} using ${advertiser}`);
                 this.bridgeObject.publish({
                     username: this.config.username,
@@ -46,7 +47,8 @@ export class THomeKitBridge {
 
                 if (device.publishAsOwnDevice) {
                     devicesToPublish.push(() => {
-                        const advertiser = device.useLegacyAdvertiser ? MDNSAdvertiser.BONJOUR : MDNSAdvertiser.CIAO;
+                        let advertiser = device.useLegacyAdvertiser ? MDNSAdvertiser.BONJOUR : MDNSAdvertiser.CIAO;
+                        advertiser = device.useAvahiAdvertiser ? MDNSAdvertiser.AVAHI : advertiser;
                         this.FLogger.info(`publishing device ${device.name} on ${device.interface ?? '0.0.0.0'} using ${advertiser}`);
                         hapDevice.publish({
                             username: device.username,

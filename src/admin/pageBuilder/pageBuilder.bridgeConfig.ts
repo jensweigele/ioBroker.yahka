@@ -65,6 +65,7 @@ export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base imple
             });
         inputHelper('#interface', 'interface', ipListForSelectBox);
         checkboxHelper('#useLegacyAdvertiser', 'useLegacyAdvertiser');
+        checkboxHelper('#useAvahiAdvertiser', 'useAvahiAdvertiser');
         checkboxHelper('#verboseLogging', 'verboseLogging');
 
         devicePanel.appendChild(bridgeConfigFragment);

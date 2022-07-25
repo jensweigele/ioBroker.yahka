@@ -48,6 +48,7 @@ export module Configuration {
         pincode?: string;
         port?: number;
         useLegacyAdvertiser?: boolean;
+        useAvahiAdvertiser?: boolean;
         interface?: string;
         [key: string]: any;
     }
@@ -59,6 +60,7 @@ export module Configuration {
         pincode: string;
         port: number;
         useLegacyAdvertiser?: boolean;
+        useAvahiAdvertiser?: boolean;
         interface?: string;
         verboseLogging: boolean;
         devices: IDeviceConfig[];
