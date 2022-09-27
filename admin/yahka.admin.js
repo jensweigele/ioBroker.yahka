@@ -11363,7 +11363,7 @@ module.exports.createServer = server.createServer;
 const Buffer = (__webpack_require__(/*! safe-buffer */ "../node_modules/safe-buffer/index.js").Buffer);
 
 function align(ps, n) {
-  var pad = n - ps._offset % n;
+  var pad = n - (ps._offset % n);
   if (pad === 0 || pad === n) return;
   // TODO: write8(0) in a loop (3 to 7 times here) could be more efficient
   var padBuff = Buffer.alloc(pad);
@@ -11542,9 +11542,7 @@ module.exports = function bus(conn, opts) {
             self.sendError(
               msg,
               'org.freedesktop.DBus.Error.UnknownMethod',
-              `Method "${msg.member}" on interface "${
-                msg.interface
-              }" doesn't exist`
+              `Method "${msg.member}" on interface "${msg.interface}" doesn't exist`
             );
             return;
           }
@@ -12067,6 +12065,7 @@ function getCookie(context, id, cb) {
           'User keyrings directory is writeable by other users. Aborting authentication'
         )
       );
+    // eslint-disable-next-line no-prototype-builtins
     if (process.hasOwnProperty('getuid') && stat.uid !== process.getuid())
       return cb(
         new Error(
@@ -12107,6 +12106,7 @@ function tryAuth(stream, methods, cb) {
   }
 
   var authMethod = methods.shift();
+  // eslint-disable-next-line no-prototype-builtins
   var uid = process.hasOwnProperty('getuid') ? process.getuid() : 0;
   var id = hexlify(uid);
 
@@ -12191,7 +12191,9 @@ module.exports.introspectBus = function(obj, callback) {
       interface: 'org.freedesktop.DBus.Introspectable',
       member: 'Introspect'
     },
-    function(err, xml) { module.exports.processXML(err, xml, obj, callback); }
+    function(err, xml) {
+      module.exports.processXML(err, xml, obj, callback);
+    }
   );
 };
 
@@ -12241,17 +12243,19 @@ module.exports.processXML = function(err, xml, obj, callback) {
       }
       for (var p = 0; iface.property && p < iface.property.length; ++p) {
         property = iface.property[p];
-        currentIface.$createProp(property['$'].name, property['$'].type, property['$'].access)
+        currentIface.$createProp(
+          property['$'].name,
+          property['$'].type,
+          property['$'].access
+        );
       }
       // TODO: introspect signals
     }
     callback(null, proxy, nodes);
   });
-}
+};
 
-
-function DBusInterface(parent_obj, ifname)
-{
+function DBusInterface(parent_obj, ifname) {
   // Since methods and props presently get added directly to the object, to avoid collision with existing names we must use $ naming convention as $ is invalid for dbus member names
   // https://dbus.freedesktop.org/doc/dbus-specification.html#message-protocol-names
   this.$parent = parent_obj; // parent DbusObject
@@ -12271,8 +12275,11 @@ DBusInterface.prototype.$getSigHandler = function(callback) {
     };
   }
   return this.$sigHandlers[index];
-}
-DBusInterface.prototype.addListener = DBusInterface.prototype.on = function(signame, callback) {
+};
+DBusInterface.prototype.addListener = DBusInterface.prototype.on = function(
+  signame,
+  callback
+) {
   // http://dbus.freedesktop.org/doc/api/html/group__DBusBus.html#ga4eb6401ba014da3dbe3dc4e2a8e5b3ef
   // An example is "type='signal',sender='org.freedesktop.DBus', interface='org.freedesktop.DBus',member='Foo', path='/bar/foo',destination=':452345.34'" ...
   var bus = this.$parent.service.bus;
@@ -12280,43 +12287,50 @@ DBusInterface.prototype.addListener = DBusInterface.prototype.on = function(sign
   if (!bus.signals.listeners(signalFullName).length) {
     // This is the first time, so call addMatch
     var match = getMatchRule(this.$parent.name, this.$name, signame);
-    bus.addMatch(match, function(err) {
-      if (err) throw new Error(err);
-      bus.signals.on(signalFullName, this.$getSigHandler(callback));
-    }.bind(this));
+    bus.addMatch(
+      match,
+      function(err) {
+        if (err) throw new Error(err);
+        bus.signals.on(signalFullName, this.$getSigHandler(callback));
+      }.bind(this)
+    );
   } else {
     // The match is already there, just add event listener
     bus.signals.on(signalFullName, this.$getSigHandler(callback));
   }
-}
-DBusInterface.prototype.removeListener = DBusInterface.prototype.off = function(signame, callback) {
+};
+DBusInterface.prototype.removeListener = DBusInterface.prototype.off = function(
+  signame,
+  callback
+) {
   var bus = this.$parent.service.bus;
   var signalFullName = bus.mangle(this.$parent.name, this.$name, signame);
-  bus.signals.removeListener( signalFullName, this.$getSigHandler(callback) );
+  bus.signals.removeListener(signalFullName, this.$getSigHandler(callback));
   if (!bus.signals.listeners(signalFullName).length) {
     // There is no event handlers for this match
     var match = getMatchRule(this.$parent.name, this.$name, signame);
-    bus.removeMatch(match, function(err) {
-      if (err) throw new Error(err);
-      // Now it is safe to empty these arrays
-      this.$callbacks.length = 0;
-      this.$sigHandlers.length = 0;
-    }.bind(this));
+    bus.removeMatch(
+      match,
+      function(err) {
+        if (err) throw new Error(err);
+        // Now it is safe to empty these arrays
+        this.$callbacks.length = 0;
+        this.$sigHandlers.length = 0;
+      }.bind(this)
+    );
   }
-}
-DBusInterface.prototype.$createMethod = function(mName, signature)
-{
+};
+DBusInterface.prototype.$createMethod = function(mName, signature) {
   this.$methods[mName] = signature;
-  this[mName] = function() { this.$callMethod(mName, arguments); }
-}
-DBusInterface.prototype.$callMethod = function(mName, args)
-{
+  this[mName] = function() {
+    this.$callMethod(mName, arguments);
+  };
+};
+DBusInterface.prototype.$callMethod = function(mName, args) {
   var bus = this.$parent.service.bus;
   if (!Array.isArray(args)) args = Array.from(args); // Array.prototype.slice.apply(args)
   var callback =
-    typeof args[args.length - 1] === 'function'
-      ? args.pop()
-      : function() {};
+    typeof args[args.length - 1] === 'function' ? args.pop() : function() {};
   var msg = {
     destination: this.$parent.service.name,
     path: this.$parent.name,
@@ -12328,18 +12342,18 @@ DBusInterface.prototype.$callMethod = function(mName, args)
     msg.body = args;
   }
   bus.invoke(msg, callback);
-}
-DBusInterface.prototype.$createProp = function(propName, propType, propAccess)
-{
+};
+DBusInterface.prototype.$createProp = function(propName, propType, propAccess) {
   this.$properties[propName] = { type: propType, access: propAccess };
   Object.defineProperty(this, propName, {
     enumerable: true,
     get: () => callback => this.$readProp(propName, callback),
-    set: function(val) { this.$writeProp(propName, val) }
+    set: function(val) {
+      this.$writeProp(propName, val);
+    }
   });
-}
-DBusInterface.prototype.$readProp = function(propName, callback)
-{
+};
+DBusInterface.prototype.$readProp = function(propName, callback) {
   var bus = this.$parent.service.bus;
   bus.invoke(
     {
@@ -12363,9 +12377,8 @@ DBusInterface.prototype.$readProp = function(propName, callback)
       }
     }
   );
-}
-DBusInterface.prototype.$writeProp = function(propName, val)
-{
+};
+DBusInterface.prototype.$writeProp = function(propName, val) {
   var bus = this.$parent.service.bus;
   bus.invoke({
     destination: this.$parent.service.name,
@@ -12375,8 +12388,7 @@ DBusInterface.prototype.$writeProp = function(propName, val)
     signature: 'ssv',
     body: [this.$name, propName, [this.$properties[propName].type, val]]
   });
-}
-
+};
 
 function getMatchRule(objName, ifName, signame) {
   return `type='signal',path='${objName}',interface='${ifName}',member='${signame}'`;
@@ -12395,7 +12407,7 @@ function getMatchRule(objName, ifName, signame) {
 const assert = __webpack_require__(/*! assert */ "../node_modules/assert/build/assert.js");
 
 const parseSignature = __webpack_require__(/*! ./signature */ "../node_modules/@homebridge/dbus-native/lib/signature.js");
-const put = __webpack_require__(/*! put */ "../node_modules/put/index.js");
+const put = __webpack_require__(/*! @homebridge/put */ "../node_modules/@homebridge/put/index.js");
 const Marshallers = __webpack_require__(/*! ./marshallers */ "../node_modules/@homebridge/dbus-native/lib/marshallers.js");
 const align = (__webpack_require__(/*! ./align */ "../node_modules/@homebridge/dbus-native/lib/align.js").align);
 
@@ -13315,9 +13327,9 @@ function interfaceToXML(iface) {
       var argName = argsNames ? argsNames[num] : direction + num;
       var dirStr = direction === 'signal' ? '' : `" direction="${direction}`;
       result.push(
-        `      <arg type="${dumpSignature([arg])}" name="${argName}${
-          dirStr
-        }" />`
+        `      <arg type="${dumpSignature([
+          arg
+        ])}" name="${argName}${dirStr}" />`
       );
     });
   };
@@ -13343,9 +13355,7 @@ function interfaceToXML(iface) {
     for (const propertyName in iface.properties) {
       // TODO: decide how to encode access
       result.push(
-        `    <property name="${propertyName}" type="${
-          iface.properties[propertyName]
-        }" access="readwrite"/>`
+        `    <property name="${propertyName}" type="${iface.properties[propertyName]}" access="readwrite"/>`
       );
     }
   }
@@ -13364,6 +13374,120 @@ function dumpSignature(s) {
 }
 stdIfaces =
   '  <interface name="org.freedesktop.DBus.Properties">\n    <method name="Get">\n      <arg type="s" name="interface_name" direction="in"/>\n      <arg type="s" name="property_name" direction="in"/>\n      <arg type="v" name="value" direction="out"/>\n    </method>\n    <method name="GetAll">\n      <arg type="s" name="interface_name" direction="in"/>\n      <arg type="a{sv}" name="properties" direction="out"/>\n    </method>\n    <method name="Set">\n      <arg type="s" name="interface_name" direction="in"/>\n      <arg type="s" name="property_name" direction="in"/>\n      <arg type="v" name="value" direction="in"/>\n    </method>\n    <signal name="PropertiesChanged">\n      <arg type="s" name="interface_name"/>\n      <arg type="a{sv}" name="changed_properties"/>\n      <arg type="as" name="invalidated_properties"/>\n    </signal>\n  </interface>\n  <interface name="org.freedesktop.DBus.Introspectable">\n    <method name="Introspect">\n      <arg type="s" name="xml_data" direction="out"/>\n    </method>\n  </interface>\n  <interface name="org.freedesktop.DBus.Peer">\n    <method name="Ping"/>\n    <method name="GetMachineId">\n      <arg type="s" name="machine_uuid" direction="out"/>\n    </method>\n  </interface>';
+
+
+/***/ }),
+
+/***/ "../node_modules/@homebridge/put/index.js":
+/*!************************************************!*\
+  !*** ../node_modules/@homebridge/put/index.js ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/* provided dependency */ var Buffer = __webpack_require__(/*! buffer */ "../node_modules/buffer/index.js")["Buffer"];
+const assert = __webpack_require__(/*! assert */ "../node_modules/assert/build/assert.js");
+
+module.exports = Put;
+function Put () {
+    if (!(this instanceof Put)) return new Put;
+
+    var words = [];
+    var len = 0;
+
+    this.put = function (buf) {
+        words.push({ buffer : buf });
+        len += buf.length;
+        return this;
+    };
+
+    this.word8 = function (x) {
+        words.push({ bytes : 1, value : x });
+        len += 1;
+        return this;
+    };
+
+    this.floatle = function (x) {
+        words.push({ bytes : 'float', endian : 'little', value : x });
+        len += 4;
+        return this;
+    };
+
+    [ 8, 16, 24, 32, 64 ].forEach((function (bits) {
+        this['word' + bits + 'be'] = function (x) {
+            words.push({ endian : 'big', bytes : bits / 8, value : x });
+            len += bits / 8;
+            return this;
+        };
+
+        this['word' + bits + 'le'] = function (x) {
+            words.push({ endian : 'little', bytes : bits / 8, value : x });
+            len += bits / 8;
+            return this;
+        };
+    }).bind(this));
+
+    this.pad = function (bytes) {
+        assert(Number.isInteger(bytes), "pad(bytes) must be supplied with an integer!");
+        words.push({ endian : 'big', bytes : bytes, value : 0 });
+        len += bytes;
+        return this;
+    };
+
+    this.length = function () {
+        return len;
+    };
+
+    this.buffer = function () {
+        var buf = Buffer.alloc(len);
+        var offset = 0;
+        words.forEach(function (word) {
+            if (word.buffer) {
+                word.buffer.copy(buf, offset, 0);
+                offset += word.buffer.length;
+            }
+            else if (word.bytes === 'float') {
+                // s * f * 2^e
+                var v = Math.abs(word.value);
+                var s = (word.value >= 0) * 1;
+                var e = Math.ceil(Math.log(v) / Math.LN2);
+                var f = v / (1 << e);
+                console.dir([s,e,f]);
+
+                console.log(word.value);
+
+                // s:1, e:7, f:23
+                // [seeeeeee][efffffff][ffffffff][ffffffff]
+                buf[offset++] = (s << 7) & ~~(e / 2);
+                buf[offset++] = ((e & 1) << 7) & ~~(f / (1 << 16));
+                buf[offset++] = 0;
+                buf[offset++] = 0;
+                offset += 4;
+            }
+            else {
+                var big = word.endian === 'big';
+                var ix = big ? [ (word.bytes - 1) * 8, -8 ] : [ 0, 8 ];
+
+                for (
+                    var i = ix[0];
+                    big ? i >= 0 : i < word.bytes * 8;
+                    i += ix[1]
+                ) {
+                    if (i >= 32) {
+                        buf[offset++] = Math.floor(word.value / Math.pow(2, i)) & 0xff;
+                    }
+                    else {
+                        buf[offset++] = (word.value >> i) & 0xff;
+                    }
+                }
+            }
+        });
+        return buf;
+    };
+
+    this.write = function (stream) {
+        stream.write(this.buffer());
+    };
+}
 
 
 /***/ }),
@@ -54757,8 +54881,8 @@ var Accessory = /** @class */ (function (_super) {
                         _d.label = 2;
                     case 2:
                         if (_c) {
-                            console.error("[${this.displayName}] Selected \"" + "avahi" /* AVAHI */ + "\" advertiser though it isn't available on the platform. " +
-                                "Reverting to \"" + "bonjour-hap" /* BONJOUR */ + "\"");
+                            console.error("[".concat(this.displayName, "] The selected advertiser, \"").concat("avahi" /* AVAHI */, "\", isn't available on this platform. ") +
+                                "Reverting to \"".concat("bonjour-hap" /* BONJOUR */, "\""));
                             selectedAdvertiser = "bonjour-hap" /* BONJOUR */;
                         }
                         switch (selectedAdvertiser) {
@@ -56436,10 +56560,10 @@ function extractHAPStatusFromError(error) {
     return errorValue;
 }
 function maxWithUndefined(a, b) {
-    if (a === undefined) {
+    if (a == null) {
         return b;
     }
-    else if (b === undefined) {
+    else if (b == null) {
         return a;
     }
     else {
@@ -56447,10 +56571,10 @@ function maxWithUndefined(a, b) {
     }
 }
 function minWithUndefined(a, b) {
-    if (a === undefined) {
+    if (a == null) {
         return b;
     }
-    else if (b === undefined) {
+    else if (b == null) {
         return a;
     }
     else {
@@ -57381,6 +57505,10 @@ var Characteristic = /** @class */ (function (_super) {
                 else {
                     stepValue = maxWithUndefined(this.props.minStep, 1);
                 }
+                if (stepValue != null && stepValue > 0) {
+                    var minValue = this.props.minValue != null ? this.props.minValue : 0;
+                    value = stepValue * Math.round((value - minValue) / stepValue) + minValue;
+                }
                 if (numericMin != null && value < numericMin) {
                     this.characteristicWarning("characteristic was supplied illegal value: number ".concat(value, " exceeded minimum of ").concat(numericMin));
                     value = numericMin;
@@ -57402,15 +57530,6 @@ var Characteristic = /** @class */ (function (_super) {
                         this.characteristicWarning("characteristic was supplied illegal value: number ".concat(value, " not contained in valid value range of           ").concat(this.props.validValueRanges, ", supplying illegal values will throw errors in the future"));
                         value = this.props.validValueRanges[1];
                     }
-                }
-                if (stepValue != null) {
-                    if (stepValue === 1) {
-                        value = Math.round(value);
-                    }
-                    else if (stepValue > 1) {
-                        value = Math.round(value);
-                        value = value - (value % stepValue);
-                    } // for stepValue < 1 rounding is done only when formatting the response. We can't store the "perfect" .step anyways
                 }
                 return value;
             }
@@ -58853,6 +58972,7 @@ var RTPStreamManagement = /** @class */ (function () {
         this.supportedRTPConfiguration = RTPStreamManagement._supportedRTPConfiguration(this.supportedCryptoSuites);
         this.supportedVideoStreamConfiguration = RTPStreamManagement._supportedVideoStreamConfiguration(options.video);
         this.supportedAudioStreamConfiguration = this._supportedAudioStreamConfiguration(options.audio);
+        this.activeConnectionClosedListener = this._handleStopStream.bind(this);
         this.service = service || this.constructService(id);
         this.setupServiceHandlers();
         this.resetSetupEndpointsResponse();
@@ -58937,13 +59057,12 @@ var RTPStreamManagement = /** @class */ (function () {
     RTPStreamManagement.prototype.handleSessionClosed = function () {
         this.resetSelectedStreamConfiguration();
         this.resetSetupEndpointsResponse();
-        if (this.activeConnectionClosedListener && this.activeConnection) {
+        if (this.activeConnection) {
             this.activeConnection.removeListener("closed" /* CLOSED */, this.activeConnectionClosedListener);
-            this.activeConnectionClosedListener = undefined;
+            this.activeConnection = undefined;
         }
         this._updateStreamStatus(0 /* AVAILABLE */);
         this.sessionIdentifier = undefined;
-        this.activeConnection = undefined;
         // noinspection JSDeprecatedSymbols
         this.connectionID = undefined;
         this.ipVersion = undefined;
@@ -58959,12 +59078,10 @@ var RTPStreamManagement = /** @class */ (function () {
     RTPStreamManagement.prototype.streamingIsDisabled = function (callback) {
         var _a;
         if (!this.service.getCharacteristic(Characteristic_1.Characteristic.Active).value) {
-            console.log("STREAMING DISABLED ACTIVE");
             callback && callback(new index_1.HapStatusError(-70412 /* NOT_ALLOWED_IN_CURRENT_STATE */));
             return true;
         }
         if ((_a = this.disabledThroughOperatingMode) === null || _a === void 0 ? void 0 : _a.call(this)) {
-            console.log("STREAMING DISABLED OPERATION MODE!");
             callback && callback(new index_1.HapStatusError(-70412 /* NOT_ALLOWED_IN_CURRENT_STATE */));
             return true;
         }
@@ -59197,8 +59314,9 @@ var RTPStreamManagement = /** @class */ (function () {
             callback();
             return;
         }
+        (0, assert_1.default)(this.activeConnection == null, "Found non-nil `activeConnection` when trying to setup streaming endpoints, even though streamStatus is reported to be AVAILABLE!");
         this.activeConnection = connection;
-        this.activeConnection.on("closed" /* CLOSED */, (this.activeConnectionClosedListener = this._handleStopStream.bind(this)));
+        this.activeConnection.on("closed" /* CLOSED */, this.activeConnectionClosedListener);
         // noinspection JSDeprecatedSymbols
         this.connectionID = connection.sessionID;
         this.sessionIdentifier = sessionIdentifier;
@@ -73695,6 +73813,7 @@ var net_utils_1 = __webpack_require__(/*! ./net-utils */ "../node_modules/hap-no
 var uuid = (0, tslib_1.__importStar)(__webpack_require__(/*! ./uuid */ "../node_modules/hap-nodejs/dist/lib/util/uuid.js"));
 var debug = (0, debug_1.default)("HAP-NodeJS:EventedHTTPServer");
 var debugCon = (0, debug_1.default)("HAP-NodeJS:EventedHTTPServer:Connection");
+var debugEvents = (0, debug_1.default)("HAP-NodeJS:EventEmitter");
 /**
  * Simple struct to hold vars needed to support HAP encryption.
  */
@@ -73996,6 +74115,42 @@ var HAPConnection = /** @class */ (function (_super) {
         _this.internalHttpServer.listen(0, _this.internalHttpServerAddress = (0, net_utils_1.getOSLoopbackAddressIfAvailable)());
         return _this;
     }
+    HAPConnection.prototype.debugListenerRegistration = function (event, registration, beforeCount) {
+        if (registration === void 0) { registration = true; }
+        if (beforeCount === void 0) { beforeCount = -1; }
+        var stackTrace = new Error().stack.split("\n")[3];
+        var eventCount = this.listeners(event).length;
+        var tabs1 = event === "authenticated" /* AUTHENTICATED */ ? "\t" : "\t\t";
+        var tabs2 = !registration ? "\t" : "\t\t";
+        // eslint-disable-next-line max-len
+        debugEvents("[".concat(this.remoteAddress, "] ").concat(registration ? "Registered" : "Unregistered", " event '").concat(String(event).toUpperCase(), "' ").concat(tabs1, "(total: ").concat(eventCount).concat(!registration ? " Before: " + beforeCount : "", ") ").concat(tabs2).concat(stackTrace));
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    HAPConnection.prototype.on = function (event, listener) {
+        var result = _super.prototype.on.call(this, event, listener);
+        this.debugListenerRegistration(event);
+        return result;
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    HAPConnection.prototype.addListener = function (event, listener) {
+        var result = _super.prototype.addListener.call(this, event, listener);
+        this.debugListenerRegistration(event);
+        return result;
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    HAPConnection.prototype.removeListener = function (event, listener) {
+        var beforeCount = this.listeners(event).length;
+        var result = _super.prototype.removeListener.call(this, event, listener);
+        this.debugListenerRegistration(event, false, beforeCount);
+        return result;
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    HAPConnection.prototype.off = function (event, listener) {
+        var result = _super.prototype.off.call(this, event, listener);
+        var beforeCount = this.listeners(event).length;
+        this.debugListenerRegistration(event, false, beforeCount);
+        return result;
+    };
     /**
      * This method is called once the connection has gone through pair-verify.
      * As any HomeKit controller will initiate a pair-verify after the pair-setup procedure, this method gets
@@ -74133,6 +74288,9 @@ var HAPConnection = /** @class */ (function (_super) {
      */
     HAPConnection.prototype.writeEventNotification = function (notification) {
         debugCon("[%s] Sending HAP event notifications %o", this.remoteAddress, notification.characteristics);
+        // Apple backend processes events in reverse order, so we need to reverse the array
+        // so that events are processed in chronological order.
+        notification.characteristics.reverse();
         var dataBuffer = Buffer.from(JSON.stringify(notification), "utf8");
         var header = Buffer.from("EVENT/1.0 200 OK\r\n" +
             "Content-Type: application/hap+json\r\n" +
@@ -74243,9 +74401,8 @@ var HAPConnection = /** @class */ (function (_super) {
             // don't accept data of a connection which is about to be closed or already closed
             return;
         }
-        request.socket.setNoDelay(true);
-        response.connection.setNoDelay(true); // deprecated since 13.0.0
         debugCon("[%s] HTTP request: %s", this.remoteAddress, request.url);
+        request.socket.setNoDelay(true);
         this.emit("request" /* REQUEST */, request, response);
     };
     /**
@@ -99054,117 +99211,6 @@ module.exports = function xor (a, b) {
 
 /***/ }),
 
-/***/ "../node_modules/put/index.js":
-/*!************************************!*\
-  !*** ../node_modules/put/index.js ***!
-  \************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-/* provided dependency */ var Buffer = __webpack_require__(/*! buffer */ "../node_modules/buffer/index.js")["Buffer"];
-module.exports = Put;
-function Put () {
-    if (!(this instanceof Put)) return new Put;
-    
-    var words = [];
-    var len = 0;
-    
-    this.put = function (buf) {
-        words.push({ buffer : buf });
-        len += buf.length;
-        return this;
-    };
-    
-    this.word8 = function (x) {
-        words.push({ bytes : 1, value : x });
-        len += 1;
-        return this;
-    };
-    
-    this.floatle = function (x) {
-        words.push({ bytes : 'float', endian : 'little', value : x });
-        len += 4;
-        return this;
-    };
-    
-    [ 8, 16, 24, 32, 64 ].forEach((function (bits) {
-        this['word' + bits + 'be'] = function (x) {
-            words.push({ endian : 'big', bytes : bits / 8, value : x });
-            len += bits / 8;
-            return this;
-        };
-        
-        this['word' + bits + 'le'] = function (x) {
-            words.push({ endian : 'little', bytes : bits / 8, value : x });
-            len += bits / 8;
-            return this;
-        };
-    }).bind(this));
-    
-    this.pad = function (bytes) {
-        words.push({ endian : 'big', bytes : bytes, value : 0 });
-        len += bytes;
-        return this;
-    };
-    
-    this.length = function () {
-        return len;
-    };
-    
-    this.buffer = function () {
-        var buf = new Buffer(len);
-        var offset = 0;
-        words.forEach(function (word) {
-            if (word.buffer) {
-                word.buffer.copy(buf, offset, 0);
-                offset += word.buffer.length;
-            }
-            else if (word.bytes == 'float') {
-                // s * f * 2^e
-                var v = Math.abs(word.value);
-                var s = (word.value >= 0) * 1;
-                var e = Math.ceil(Math.log(v) / Math.LN2);
-                var f = v / (1 << e);
-                console.dir([s,e,f]);
-                
-                console.log(word.value);
-                
-                // s:1, e:7, f:23
-                // [seeeeeee][efffffff][ffffffff][ffffffff]
-                buf[offset++] = (s << 7) & ~~(e / 2);
-                buf[offset++] = ((e & 1) << 7) & ~~(f / (1 << 16));
-                buf[offset++] = 0;
-                buf[offset++] = 0;
-                offset += 4;
-            }
-            else {
-                var big = word.endian === 'big';
-                var ix = big ? [ (word.bytes - 1) * 8, -8 ] : [ 0, 8 ];
-                
-                for (
-                    var i = ix[0];
-                    big ? i >= 0 : i < word.bytes * 8;
-                    i += ix[1]
-                ) {
-                    if (i >= 32) {
-                        buf[offset++] = Math.floor(word.value / Math.pow(2, i)) & 0xff;
-                    }
-                    else {
-                        buf[offset++] = (word.value >> i) & 0xff;
-                    }
-                }
-            }
-        });
-        return buf;
-    };
-    
-    this.write = function (stream) {
-        stream.write(this.buffer());
-    };
-}
-
-
-/***/ }),
-
 /***/ "../node_modules/q/q.js":
 /*!******************************!*\
   !*** ../node_modules/q/q.js ***!
@@ -120498,7 +120544,7 @@ module.exports = JSON.parse('{"name":"elliptic","version":"6.5.4","description":
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"hap-nodejs","version":"0.10.2","description":"HAP-NodeJS is a Node.js implementation of HomeKit Accessory Server.","main":"dist/index.js","types":"dist/index.d.ts","maintainers":["Andreas Bauer <mail@anderl-bauer.de>"],"author":"Khaos Tian <khaos.tian@gmail.com> (https://tz.is/)","homepage":"https://github.com/homebridge/HAP-NodeJS","license":"Apache-2.0","scripts":{"clean":"rimraf dist && rimraf coverage","lint":"eslint \'src/**/*.{js,ts,json}\'","build":"rimraf dist && tsc && node .github/node-persist-ignore.js","prepublishOnly":"npm run build","postpublish":"npm run clean","test":"jest","test-coverage":"jest --coverage","start":"node dist/BridgedCore.js","docs":"typedoc src/index.ts"},"keywords":["hap-nodejs","hap","homekit","homekit-accessory-protocol","homekit-server","homekit-protocol","homekit-device","homekit-accessory","hap-server","homekit-support","siri"],"repository":{"type":"git","url":"https://github.com/homebridge/HAP-NodeJS.git"},"bugs":{"url":"https://github.com/homebridge/HAP-NodeJS/issues"},"engines":{"node":">=10.17.0"},"files":["README.md","LICENSE","dist","@types"],"dependencies":{"@homebridge/ciao":"^1.1.4","@homebridge/dbus-native":"^0.4.1","bonjour-hap":"~3.6.3","debug":"^4.3.4","fast-srp-hap":"2.0.4","futoin-hkdf":"~1.4.3","node-persist":"^0.0.11","source-map-support":"^0.5.21","tslib":"^2.4.0","tweetnacl":"^1.0.3"},"devDependencies":{"@types/debug":"^4.1.7","@types/escape-html":"^1.0.2","@types/jest":"^27.4.1","@types/node":"^10.17.60","@typescript-eslint/eslint-plugin":"^5.21.0","@typescript-eslint/parser":"^5.21.0","commander":"^6.2.1","escape-html":"^1.0.3","eslint":"^8.14.0","jest":"^27.5.1","rimraf":"^3.0.2","semver":"^7.3.7","simple-plist":"1.1.1","ts-jest":"^27.1.4","ts-node":"^10.7.0","typedoc":"^0.22.15","typescript":"~4.5.4"}}');
+module.exports = JSON.parse('{"name":"hap-nodejs","version":"0.10.4","description":"HAP-NodeJS is a Node.js implementation of HomeKit Accessory Server.","main":"dist/index.js","types":"dist/index.d.ts","maintainers":["Andreas Bauer <mail@anderl-bauer.de>"],"author":"Khaos Tian <khaos.tian@gmail.com> (https://tz.is/)","homepage":"https://github.com/homebridge/HAP-NodeJS","license":"Apache-2.0","scripts":{"clean":"rimraf dist && rimraf coverage","lint":"eslint \'src/**/*.{js,ts,json}\'","build":"rimraf dist && tsc && node .github/node-persist-ignore.js","prepublishOnly":"npm run build","postpublish":"npm run clean","test":"jest","test-coverage":"jest --coverage","start":"node dist/BridgedCore.js","docs":"typedoc src/index.ts"},"keywords":["hap-nodejs","hap","homekit","homekit-accessory-protocol","homekit-server","homekit-protocol","homekit-device","homekit-accessory","hap-server","homekit-support","siri"],"repository":{"type":"git","url":"https://github.com/homebridge/HAP-NodeJS.git"},"bugs":{"url":"https://github.com/homebridge/HAP-NodeJS/issues"},"engines":{"node":">=10.17.0"},"files":["README.md","LICENSE","dist","@types"],"dependencies":{"@homebridge/ciao":"^1.1.5","@homebridge/dbus-native":"^0.4.2","bonjour-hap":"~3.6.3","debug":"^4.3.4","fast-srp-hap":"2.0.4","futoin-hkdf":"~1.4.3","node-persist":"^0.0.11","source-map-support":"^0.5.21","tslib":"^2.4.0","tweetnacl":"^1.0.3"},"devDependencies":{"@types/debug":"^4.1.7","@types/escape-html":"^1.0.2","@types/jest":"^27.4.1","@types/node":"^10.17.60","@typescript-eslint/eslint-plugin":"^5.21.0","@typescript-eslint/parser":"^5.21.0","commander":"^6.2.1","escape-html":"^1.0.3","eslint":"^8.14.0","jest":"^27.5.1","rimraf":"^3.0.2","semver":"^7.3.7","simple-plist":"1.1.1","ts-jest":"^27.1.4","ts-node":"^10.7.0","typedoc":"^0.22.15","typescript":"~4.5.4"}}');
 
 /***/ }),
 
