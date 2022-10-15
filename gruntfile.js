@@ -1,16 +1,14 @@
 'use strict';
 
 module.exports = function (grunt) {
-
-    var srcDir = __dirname + '/';
-    var destinationDir = '/usr/local/iobroker/'
-    var pkg = grunt.file.readJSON('package.json');
+    const destinationDir = '/usr/local/iobroker/';
+    const pkg = grunt.file.readJSON('package.json');
     const webpackConfig = require('./webpack.config.js');
 
     // check arguments
     // Project configuration.
     grunt.initConfig({
-        pkg: pkg,
+        pkg,
         copy: {
             deployTestInstance: {
                 files: [

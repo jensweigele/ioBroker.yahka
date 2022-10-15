@@ -12,27 +12,27 @@ For details on how to install and configure this adapter, please see the [Wiki](
 
 ## Prerequisites
 Before you can install the Adapter, you have to some packages (for Linux):
-```sudo apt-get install libavahi-compat-libdnssd-dev```
+`sudo apt-get install libavahi-compat-libdnssd-dev`
 
 ## Install the latest **Release**
-Just hit the "+" button behind "Homekit yahka adapter" in the ioBroker Admin Panel on the "Adapter" page
+Just hit the "+" button behind "Homekit yahka adapter" in the ioBroker Admin Panel on the "Adapter" page.
 
 ## Install the latest **Beta**
-If you want to be on the edge and test the latest beta, you could install the adapter via a github url.<br>
-(Sometimes an additional upload [f.e. iobroker upload yahka] and adapter restart is needed)
-<br>
+If you want to be on the edge and test the latest beta, you could install the adapter via a GitHub url.
+
+(Sometimes an additional upload (e.g. `iobroker upload yahka`) and adapter restart is needed)
 
 ## Backup & Restore
-Attention: To be able to restore ioBroker.yahka on another system, in addition to the usual `iobroker backup` and `iobroker restore`, the `yahka.X.hapdata` folder under `/opt/iobroker/iobroker-data` must also be backuped and, if necessary, restored. [Wiki](https://github.com/jensweigele/ioBroker.yahka/wiki/ioBroker.yahka-auf-ein-anderes-System-umziehen) / [Issue](https://github.com/jensweigele/ioBroker.yahka/issues/176)
+Attention: To be able to restore `ioBroker.yahka` on another system, in addition to the usual `iobroker backup` and `iobroker restore`, the `yahka.X.hapdata` folder under `/opt/iobroker/iobroker-data` must also be backuped and, if necessary, restored. [Wiki](https://github.com/jensweigele/ioBroker.yahka/wiki/ioBroker.yahka-auf-ein-anderes-System-umziehen) / [Issue](https://github.com/jensweigele/ioBroker.yahka/issues/176)
 
 ## Troubleshooting
 
 ### Not all new features are available:
-If not all new feature are available after a yahka update, try a upload (f.e. iobrober yahka upload) and restart the adapter. 
-
+If not all new feature are available after a yahka update, try a upload (f.e. `iob upload yahka`) and restart the adapter. 
 
 ### Missing Avahi daemon (linux)
-If you are having the following error in the log:<br>
+If you are having the following error in the log:
+
 ```
 Error:	2016-07-26 18:57:17.989	error	at Error (native)
 Error:	2016-07-26 18:57:17.989	error	dns service error: unknown
@@ -41,11 +41,14 @@ uncaught	2016-07-26 18:57:17.985	error	exception: dns service error: unknown
 
 You have to do some additional steps:
 * install avahi daemon:
-```sudo apt-get install avahi-daemon -y```
+`sudo apt-get install avahi-daemon -y`
+
 * Edit avahi-daemon.conf
-```sudo nano avahi-daemon.conf ```<br>
+`sudo nano avahi-daemon.conf `
+
 change the following variables:
-```host-name=\<put in your hostname\>
+```
+host-name=\<put in your hostname\>
 domain-name=local
 use-ipv4=yes
 use-ipv6=yes
@@ -53,23 +56,26 @@ enable-dbus=yes
 ```
 
 ### Missing pam-devel Package (linux)
-If you are having the following error in the log:<br>
+If you are having the following error in the log:
+
 ```
 ../authenticate_pam.cc:30:31: fatal error: security/pam_appl.h: Datei oder Verzeichnis nicht gefunden
 #include <security/pam_appl.h>
 ```
+
 You have to install the pam-devel package:
+
 * install avahi daemon:
-```sudo apt-get install pam-devel -y```
+`sudo apt-get install pam-devel -y`
 
 ### Missing bonjour (windows) 
-- Download: ```https://www.samuelattard.com/files/bonjourcore2.msi```
-- Execute: ```msiexec /i bonjourcore2.msi /qn```
-- remove: ```del bonjourcore2.msi```
-- Download: ```https://www.samuelattard.com/files/bonjoursdksetup.exe```
-- Execute: ```bonjoursdksetup.exe /quiet```
-- Remove: ```del bonjoursdksetup.exe```
-- Set: ```set BONJOUR_SDK_HOME=C:\Program Files\Bonjour SDK```
+- Download: `https://www.samuelattard.com/files/bonjourcore2.msi`
+- Execute: `msiexec /i bonjourcore2.msi /qn`
+- remove: `del bonjourcore2.msi`
+- Download: `https://www.samuelattard.com/files/bonjoursdksetup.exe`
+- Execute: `bonjoursdksetup.exe /quiet`
+- Remove: `del bonjoursdksetup.exe`
+- Set: `set BONJOUR_SDK_HOME=C:\Program Files\Bonjour SDK`
 
 And after that install yahka adapter.
 
@@ -85,23 +91,28 @@ A Garage Door opener is a device which could have two services: <br>
 2. Light
 
 The Garage Door Opener Service itself could have different characteristic like: CurrentDoorState, TargetDoorState and many more. <br>
-Also the Light Service could have different characteristics, like: On (and many others for chaning the light color etc.)
+Also the Light Service could have different characteristics, like: On (and many others for changing the light color etc.)
 
 ## What Yahka does
 With Yahka it is possible to map an ioBroker Datapoint to an HomeKit Characteristic. <br>
-Since sometimes mappings are necessary (e.g. the "State" values of a garage door is different between HomeKit and other systems), there is also the possibility to specify Functions to convert the values. This is described below.<br>
-To avoid too much administration work, all Devices you create in Yahka are behind a so called "Bridge". With this bridge, you only need to pair the Bridge with your iOS device to get access to all devices. Otherwise you would need to pair every Yahka device with Homekit.
+Since sometimes mappings are necessary (e.g. the "State" values of a garage door is different between HomeKit and other systems), there is also the possibility to specify Functions to convert the values. This is described below.
 
-## Setup the Bridge and create devices and services 
-Each device which needs to be paired with Homekit needs a "username" which has the form of a mac-address. Yahka automatically generates a random username for each yahka instance. <br>
-**Important: if you change the username after pairing Yahka with HomeKit, you need to reconfigure all devices in iOS (room assignment, position etc.). Changing the username means to iOS, that it is a complety new device!**<br>
+To avoid too much administration work, all Devices you create in Yahka are behind a so-called "Bridge". With this bridge, you only need to pair the Bridge with your iOS device to get access to all devices. Otherwise, you would need to pair every Yahka device with Homekit.
+
+## Set up the Bridge and create devices and services 
+Each device which needs to be paired with Homekit needs a "username" which has the form of a mac-address. Yahka automatically generates a random username for each yahka instance.
+
+**Important: if you change the username after pairing Yahka with HomeKit, you need to reconfigure all devices in iOS (room assignment, position etc.). Changing the username means to iOS, that it is a completely new device!**
+
 Beside the username, you need to specify a PIN code which needs to be entered on the iOS device.
 This could all be specified by clicking on ":yahka.0" in the admin panel of Yahka. (Expand the Panel on the right side after clicking on the list entry). The name of the bridge could also be changed there.
 
 After setting up the bridge, you could add the devices you like with the "Add Device" Button on the top.
-Once a device is added/selected, you could add services to this device.<br>
-It is necessary to specify a service name and a service type.<br>
-Depending on the service type, the list of available characteristic changes<br>
+Once a device is added/selected, you could add services to this device.
+
+It is necessary to specify a service name and a service type.
+
+Depending on the service type, the list of available characteristic changes.
 
 ## Setting up Characteristics
 If you want to support a characteristic, you have to tick the "enabled" checkbox on the left side of the characteristic.
@@ -129,9 +140,9 @@ For each characteristic you could specify the following properties:
 |HomematicDirectionTo<br>HomekitPositionState|\<none\>|This function maps the direction enum of Homematic window covering to the PositionState enum of HomeKit (and back)|
 |HomematicControlModeTo<br>HomekitHeathingCoolingState|\<none\>|This function maps the ControlMode enum of Homematic to the HeathingCoolingState enum of HomeKit (and back) |
 |level255|\<none\>|This function scales an ioBroker value with a value range from 0 to 255 to a HomeKit value with a value range from 0 to 100 (and back). <br>**Example:** 255 in ioBroker is transformed to 100 for HomeKit.|
-|scaleInt<br>scaleFloat|```{ "homekit.min": <number>, "homekit.max": <number>, "iobroker.min": <number>, "iobroker.max": <number> }```|This function is similiar to "level255" but it's more generic. It transforms an ioBroker value with an range from "iobroker.min" (0 if omitted) to "iobroker.max" to a HomeKit value with a value range from "homekit.min" (0 if omitted) to "homekit.max" (and back).<br> **Example:** If the parameter field is: ```{ "homekit.max": 500, "iobroker.max": 250}``` <br> the value of ioBroker is in fact multiplied by 2 before sending it to HomeKit.<br>**The min-Parameters are only available in version 0.8.0 and higher**|
-|inverse|number|This function is used to "inverse" a value from ioBroker. The parameter specified the maximum of the value in ioBroker. The formula is: ```Parameter - value```<br>**Example:** If the parameter field is ```100```, the value 100 from ioBroker is send as 0 to HomeKit, the value 80 is send as 20 to HomeKit etc.|
-|hue|\<none\>|This function is specialized version of scaleInt with the parameters ```iobroker.max=65535``` and ```homekit.max=360```.|
+|scaleInt<br>scaleFloat|`{ "homekit.min": <number>, "homekit.max": <number>, "iobroker.min": <number>, "iobroker.max": <number> }`|This function is similiar to "level255" but it's more generic. It transforms an ioBroker value with an range from "iobroker.min" (0 if omitted) to "iobroker.max" to a HomeKit value with a value range from "homekit.min" (0 if omitted) to "homekit.max" (and back).<br> **Example:** If the parameter field is: `{ "homekit.max": 500, "iobroker.max": 250}` <br> the value of ioBroker is in fact multiplied by 2 before sending it to HomeKit.<br>**The min-Parameters are only available in version 0.8.0 and higher**|
+|inverse|number|This function is used to "inverse" a value from ioBroker. The parameter specified the maximum of the value in ioBroker. The formula is: `Parameter - value`<br>**Example:** If the parameter field is `100`, the value 100 from ioBroker is send as 0 to HomeKit, the value 80 is send as 20 to HomeKit etc.|
+|hue|\<none\>|This function is specialized version of scaleInt with the parameters `iobroker.max=65535` and `homekit.max=360`.|
 
 ## Homematic Blind Actuator \ Window Covering
 To integrate the Homematic Blind Actuators (like HM-LC-Bl1PBU-FM), the following settings are needed:
@@ -146,12 +157,15 @@ To integrate the Homematic Blind Actuators (like HM-LC-Bl1PBU-FM), the following
 |PositionState  | 1: ioBroker.State.OnlyACK<br>2: HomematicDirectionToHomekitPositionState| 1: _\<path to homematic object\>_.1.DIRECTION<br> 2: \<empty\>|
 |TargetPosition | 1: ioBroker.homematic.WindowCovering.TargetPosition<br>2: passthrough| 1: _\<path to homematic object\>_.1.LEVEL<br> 2: \<empty\>|
 
-The value _\<path to homematic object\>_ needs to be replaced with the actual path to the device (e.g. hm-rpc.0.NEQ0012345)
+The value _\<path to Homematic object\>_ needs to be replaced with the actual path to the device (e.g. hm-rpc.0.NEQ0012345)
 
 For general Information about the Configuration Mask, see: TODO<br>
 For more information about the Configuration, the InOut Functions and Conversion Functions, see: [Wiki](https://github.com/jensweigele/ioBroker.yahka/wiki/Configuration,-InOut-Functions-and-Conversion-Functions)
 
-
+<!--
+	Placeholder for the next version (at the beginning of the line):
+	### **WORK IN PROGRESS**
+-->
 ## Changelog
 
 ### 0.14.0 (unreleased)
@@ -271,7 +285,7 @@ For more information about the Configuration, the InOut Functions and Conversion
 ## License
 The MIT License (MIT)
 
-Copyright (c) 2016-2020 Jens Weigele (iobroker.yahka@gmail.com)
+Copyright (c) 2016-2022 Jens Weigele (iobroker.yahka@gmail.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
