@@ -39,9 +39,12 @@
     "util": "^0.12.4"
   },
   "devDependencies": {
+    "@alcalzone/release-script": "^3.5.9",
+    "@alcalzone/release-script-plugin-iobroker": "^3.5.9",
+    "@alcalzone/release-script-plugin-license": "^3.5.9",
     "@types/iobroker": "^4.0.5",
     "@types/jquery": "^3.5.14",
-    "@types/node": "^16.11.65",
+    "@types/node": "^18.11.0",
     "assert": "^2.0.0",
     "chai": "^4.3.6",
     "crypto-browserify": "^3.12.0",
@@ -75,7 +78,19 @@
   },
   "readmeFilename": "README.md",
   "main": "main.js",
+  "files": [
+    "admin/",
+    "main.js",
+    "LICENSE",
+    "README.md",
+    "io-package.json",
+    "hap-nodejs-community-types/"
+  ],
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha --exit"
+    "test": "node node_modules/mocha/bin/mocha --exit",
+    "release": "release-script",
+    "release-patch": "release-script patch --yes",
+    "release-minor": "release-script minor --yes",
+    "release-major": "release-script major --yes"
   }
 }
