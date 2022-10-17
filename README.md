@@ -168,6 +168,10 @@ For more information about the Configuration, the InOut Functions and Conversion
 -->
 ## Changelog
 
+### 0.17.0 (2022-10-17)
+  Added AVAHI advertiser as default and updated HomeKit Library to improve performance and stability
+  Update release and test scripts
+
 ### 0.14.0 (unreleased)
   (jw) added support to group devices in Admin Interface<br>
   (jw) added support to mark services as "primary" and as "hidden"<br>

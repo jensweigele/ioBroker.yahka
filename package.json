@@ -1,6 +1,6 @@
 {
   "name": "iobroker.yahka",
-  "version": "0.15.0",
+  "version": "0.17.0",
   "description": "ioBroker HomeKit Adapter",
   "author": {
     "name": "Jens Weigele",
@@ -36,7 +36,7 @@
     "hap-nodejs": "^0.10.4",
     "ip": "^1.1.8",
     "macaddress": "0.5.3",
-    "util": "^0.12.4"
+    "util": "^0.12.5"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^3.5.9",
@@ -60,7 +60,7 @@
     "grunt-ts": "^6.0.0-beta.22",
     "grunt-webpack": "^5.0.0",
     "html-webpack-plugin": "^5.5.0",
-    "mocha": "^10.0.0",
+    "mocha": "^10.1.0",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
     "raw-loader": "^4.0.2",

@@ -1,10 +1,10 @@
 {
     "common": {
         "name": "yahka",
-        "version": "0.15.0",
+        "version": "0.17.0",
         "news": {
-            "0.15.0": {
-                "en": "Added AVAHI advertiser as default and updated HomeKit Library"
+            "0.17.0": {
+                "en": "Added AVAHI advertiser as default and updated HomeKit Library to improve performance and stability"
             },
             "0.14.0": {
                 "en": "Updated HomeKit Library"
