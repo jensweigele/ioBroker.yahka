@@ -1,8 +1,11 @@
 {
     "common": {
         "name": "yahka",
-        "version": "0.14.0",
+        "version": "0.17.0",
         "news": {
+            "0.17.0": {
+                "en": "Added AVAHI advertiser as default and updated HomeKit Library to improve performance and stability"
+            },
             "0.14.0": {
                 "en": "Updated HomeKit Library"
             },
@@ -88,10 +91,7 @@
         "icon": "yahka.png",
         "enabled": true,
         "extIcon": "https://raw.githubusercontent.com/jensweigele/ioBroker.yahka/master/admin/yahka.png",
-        "keywords": [
-            "homekit",
-            "siri"
-        ],
+        "keywords": ["homekit", "siri"],
         "readme": "https://github.com/jensweigele/ioBroker.yahka/blob/master/README.md",
         "loglevel": "info",
         "type": "iot-systems",
@@ -106,10 +106,12 @@
             "minHeight": 600,
             "height ": 860
         },
-        "authors": [{
-            "name": "Jens Weigele",
-            "email": "iobroker.yahka@gmail.com"
-        }]
+        "authors": [
+            {
+                "name": "Jens Weigele",
+                "email": "iobroker.yahka@gmail.com"
+            }
+        ]
     },
     "native": {
         "firstTimeInitialized": false,
@@ -117,156 +119,157 @@
             "devices": []
         }
     },
-    "objects": [{
-        "_id": "yahka.meta._accessoryCategories",
-        "type": "meta",
-        "common": {},
-        "native": {
-            "1": {
-                "text": "Other",
-                "icon": "mif-question"
-            },
-            "2": {
-                "text": "Bridge",
-                "icon": "mif-tree"
-            },
-            "3": {
-                "text": "Fan",
-                "icon": "mif-spinner4"
-            },
-            "4": {
-                "text": "Garage door opener",
-                "icon": "mif-drive-eta"
-            },
-            "5": {
-                "text": "Lightbulb",
-                "icon": "mif-lamp"
-            },
-            "6": {
-                "text": "Door lock",
-                "icon": "mif-lock"
-            },
-            "7": {
-                "text": "Outlet",
-                "icon": "mif-power-cord"
-            },
-            "8": {
-                "text": "Switch",
-                "icon": "mif-switch"
-            },
-            "9": {
-                "text": "Thermostat",
-                "icon": "mif-thermometer"
-            },
-            "10": {
-                "text": "Sensor",
-                "icon": "mif-filter"
-            },
-            "11": {
-                "text": "Alarm system",
-                "icon": "mif-security"
-            },
-            "12": {
-                "text": "Door",
-                "icon": "mif-enter"
-            },
-            "13": {
-                "text": "Window",
-                "icon": "mif-enter"
-            },
-            "14": {
-                "text": "Window covering",
-                "icon": "mif-hotel"
-            },
-            "15": {
-                "text": "Programmable switch",
-                "icon": "mif-switch"
-            },
-            "16": {
-                "text": "Range extender",
-                "icon": "mif-share"
-            },
-            "17": {
-                "text": "Camera",
-                "icon": "mif-video-camera"
-            },
-            "18": {
-                "text": "VIDEO_DOORBELL",
-                "icon": "mif-bell"
-            },
-            "19": {
-                "text": "AIR_PURIFIER",
-                "icon": "mif-air"
-            },
-            "20": {
-                "text": "AIR_HEATER",
-                "icon": "mif-air"
-            },
-            "21": {
-                "text": "AIR_CONDITIONER",
-                "icon": "mif-air"
-            },
-            "22": {
-                "text": "AIR_HUMIDIFIER",
-                "icon": "mif-air"
-            },
-            "23": {
-                "text": "AIR_DEHUMIDIFIER",
-                "icon": "mif-air"
-            },
-            "24": {
-                "text": "APPLE_TV",
-                "icon": "mif-display"
-            },
-            "25": {
-                "text": "HOMEPOD",
-                "icon": "mif-music"
-            },
-            "26": {
-                "text": "SPEAKER",
-                "icon": "mif-volume-high"
-            },
-            "27": {
-                "text": "AIRPORT",
-                "icon": "mif-wifi-full"
-            },
-            "28": {
-                "text": "SPRINKLER",
-                "icon": "mif-water"
-            },
-            "29": {
-                "text": "FAUCET",
-                "icon": "mif-water"
-            },
-            "30": {
-                "text": "SHOWER_HEAD",
-                "icon": "mif-water"
-            },
-            "31": {
-                "text": "TELEVISION",
-                "icon": "mif-display"
-            },
-            "32": {
-                "text": "TARGET_CONTROLLER",
-                "icon": "mif-gamepad"
-            },
-            "33": {
-                "text": "ROUTER",
-                "icon": "mif-vpn-publ"
-            },
-            "34": {
-                "text": "AUDIO_RECEIVER",
-                "icon": "mif-volume-high"
-            },
-            "35": {
-                "text": "TV_SET_TOP_BOX",
-                "icon": "mif-display"
-            },
-            "36": {
-                "text": "TV_STREAMING_STIC",
-                "icon": "mif-display"
+    "objects": [
+        {
+            "_id": "yahka.meta._accessoryCategories",
+            "type": "meta",
+            "common": {},
+            "native": {
+                "1": {
+                    "text": "Other",
+                    "icon": "mif-question"
+                },
+                "2": {
+                    "text": "Bridge",
+                    "icon": "mif-tree"
+                },
+                "3": {
+                    "text": "Fan",
+                    "icon": "mif-spinner4"
+                },
+                "4": {
+                    "text": "Garage door opener",
+                    "icon": "mif-drive-eta"
+                },
+                "5": {
+                    "text": "Lightbulb",
+                    "icon": "mif-lamp"
+                },
+                "6": {
+                    "text": "Door lock",
+                    "icon": "mif-lock"
+                },
+                "7": {
+                    "text": "Outlet",
+                    "icon": "mif-power-cord"
+                },
+                "8": {
+                    "text": "Switch",
+                    "icon": "mif-switch"
+                },
+                "9": {
+                    "text": "Thermostat",
+                    "icon": "mif-thermometer"
+                },
+                "10": {
+                    "text": "Sensor",
+                    "icon": "mif-filter"
+                },
+                "11": {
+                    "text": "Alarm system",
+                    "icon": "mif-security"
+                },
+                "12": {
+                    "text": "Door",
+                    "icon": "mif-enter"
+                },
+                "13": {
+                    "text": "Window",
+                    "icon": "mif-enter"
+                },
+                "14": {
+                    "text": "Window covering",
+                    "icon": "mif-hotel"
+                },
+                "15": {
+                    "text": "Programmable switch",
+                    "icon": "mif-switch"
+                },
+                "16": {
+                    "text": "Range extender",
+                    "icon": "mif-share"
+                },
+                "17": {
+                    "text": "Camera",
+                    "icon": "mif-video-camera"
+                },
+                "18": {
+                    "text": "VIDEO_DOORBELL",
+                    "icon": "mif-bell"
+                },
+                "19": {
+                    "text": "AIR_PURIFIER",
+                    "icon": "mif-air"
+                },
+                "20": {
+                    "text": "AIR_HEATER",
+                    "icon": "mif-air"
+                },
+                "21": {
+                    "text": "AIR_CONDITIONER",
+                    "icon": "mif-air"
+                },
+                "22": {
+                    "text": "AIR_HUMIDIFIER",
+                    "icon": "mif-air"
+                },
+                "23": {
+                    "text": "AIR_DEHUMIDIFIER",
+                    "icon": "mif-air"
+                },
+                "24": {
+                    "text": "APPLE_TV",
+                    "icon": "mif-display"
+                },
+                "25": {
+                    "text": "HOMEPOD",
+                    "icon": "mif-music"
+                },
+                "26": {
+                    "text": "SPEAKER",
+                    "icon": "mif-volume-high"
+                },
+                "27": {
+                    "text": "AIRPORT",
+                    "icon": "mif-wifi-full"
+                },
+                "28": {
+                    "text": "SPRINKLER",
+                    "icon": "mif-water"
+                },
+                "29": {
+                    "text": "FAUCET",
+                    "icon": "mif-water"
+                },
+                "30": {
+                    "text": "SHOWER_HEAD",
+                    "icon": "mif-water"
+                },
+                "31": {
+                    "text": "TELEVISION",
+                    "icon": "mif-display"
+                },
+                "32": {
+                    "text": "TARGET_CONTROLLER",
+                    "icon": "mif-gamepad"
+                },
+                "33": {
+                    "text": "ROUTER",
+                    "icon": "mif-vpn-publ"
+                },
+                "34": {
+                    "text": "AUDIO_RECEIVER",
+                    "icon": "mif-volume-high"
+                },
+                "35": {
+                    "text": "TV_SET_TOP_BOX",
+                    "icon": "mif-display"
+                },
+                "36": {
+                    "text": "TV_STREAMING_STIC",
+                    "icon": "mif-display"
+                }
             }
-
         }
-    }]
+    ]
 }

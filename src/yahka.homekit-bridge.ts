@@ -22,18 +22,21 @@ export class THomeKitBridge {
 
     public init() {
         this.bridgeObject = this.setupBridge();
-        const devicesToPublish: IPublishingMethod[] = [() => {
-            const advertiser = this.config.useLegacyAdvertiser ? MDNSAdvertiser.BONJOUR : MDNSAdvertiser.CIAO;
-            this.FLogger.info(`publishing bridge ${this.config.name} on ${this.config.interface ?? '0.0.0.0'} using ${advertiser}`);
-            this.bridgeObject.publish({
-                username: this.config.username,
-                port: this.config.port,
-                pincode: this.config.pincode,
-                category: 2,
-                bind: this.config.interface != '' ? this.config.interface : undefined,
-                advertiser
-            });
-        }];
+        const devicesToPublish: IPublishingMethod[] = [
+            () => {
+                let advertiser = this.config.useLegacyAdvertiser ? MDNSAdvertiser.BONJOUR : MDNSAdvertiser.AVAHI;
+                advertiser = this.config.useCiaoAdvertiser ? MDNSAdvertiser.CIAO : advertiser;
+                this.FLogger.info(`publishing bridge ${this.config.name} on ${this.config.interface ?? '0.0.0.0'} using ${advertiser}`);
+                this.bridgeObject.publish({
+                    username: this.config.username,
+                    port: this.config.port,
+                    pincode: this.config.pincode,
+                    category: 2,
+                    bind: this.config.interface != '' ? this.config.interface : undefined,
+                    advertiser,
+                });
+            },
+        ];
 
         if (this.config.devices) {
             for (let device of this.config.devices) {
@@ -44,7 +47,8 @@ export class THomeKitBridge {
 
                 if (device.publishAsOwnDevice) {
                     devicesToPublish.push(() => {
-                        const advertiser = device.useLegacyAdvertiser ? MDNSAdvertiser.BONJOUR : MDNSAdvertiser.CIAO;
+                        let advertiser = device.useLegacyAdvertiser ? MDNSAdvertiser.BONJOUR : MDNSAdvertiser.AVAHI;
+                        advertiser = device.useCiaoAdvertiser ? MDNSAdvertiser.CIAO : advertiser;
                         this.FLogger.info(`publishing device ${device.name} on ${device.interface ?? '0.0.0.0'} using ${advertiser}`);
                         hapDevice.publish({
                             username: device.username,
@@ -54,8 +58,8 @@ export class THomeKitBridge {
                             advertiser,
                             mdns: {
                                 interface: device.interface,
-                                reuseAddr: true
-                            } as any
+                                reuseAddr: true,
+                            } as any,
                         });
                     });
                 } else {
@@ -79,7 +83,7 @@ export class THomeKitBridge {
         infoService.setCharacteristic(Characteristic.Manufacturer, this.config.manufacturer || 'not configured');
         infoService.setCharacteristic(Characteristic.Model, this.config.model || 'not configured');
         infoService.setCharacteristic(Characteristic.SerialNumber, this.config.serial || 'not configured');
-        if ((this.config.firmware !== undefined) && (this.config.firmware !== "")) {
+        if (this.config.firmware !== undefined && this.config.firmware !== '') {
             infoService.setCharacteristic(Characteristic.FirmwareRevision, this.config.firmware);
         } else {
             infoService.setCharacteristic(Characteristic.FirmwareRevision, pjson.version);
@@ -109,7 +113,7 @@ export class THomeKitBridge {
         infoService.setCharacteristic(Characteristic.Manufacturer, device.manufacturer || 'not configured');
         infoService.setCharacteristic(Characteristic.Model, device.model || 'not configured');
         infoService.setCharacteristic(Characteristic.SerialNumber, device.serial || 'not configured');
-        if ((device.firmware !== undefined) && (device.firmware !== "")) {
+        if (device.firmware !== undefined && device.firmware !== '') {
             infoService.setCharacteristic(Characteristic.FirmwareRevision, device.firmware);
         }
 
@@ -140,7 +144,7 @@ export function deinitHAP() {
     if (!hapInited) {
         return;
     }
-    debug.disable()
+    debug.disable();
     debug.log = originalLogMethod;
     hapInited = false;
 }
