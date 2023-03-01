@@ -44,7 +44,7 @@
     "@alcalzone/release-script-plugin-license": "^3.5.9",
     "@types/iobroker": "^4.0.5",
     "@types/jquery": "^3.5.14",
-    "@types/node": "^18.11.0",
+    "@types/node": "^18.14.2",
     "assert": "^2.0.0",
     "chai": "^4.3.6",
     "crypto-browserify": "^3.12.0",
