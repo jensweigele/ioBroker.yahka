@@ -4,7 +4,7 @@ import { Configuration } from './shared/yahka.configuration';
 import { functionFactory } from './yahka.functions/functions.factory';
 import { IHomeKitBridgeBinding, IHomeKitBridgeBindingFactory, IInOutChangeNotify } from './yahka.interfaces';
 import { THomeKitBridge, initHAP, deinitHAP } from './yahka.homekit-bridge';
-
+import { join } from 'path';
 
 export type TSubscriptionType = 'state' | 'object';
 
@@ -41,7 +41,7 @@ export class TIOBrokerAdapter implements IHomeKitBridgeBindingFactory {
     devices: Array<THomeKitBridge | THomeKitIPCamera> = [];
     verboseHAPLogging: boolean = false;
 
-    constructor(private adapter: ioBroker.Adapter, private controllerPath) {
+    constructor(private adapter: ioBroker.Adapter, private dataDir) {
         adapter.on('ready', this.adapterReady.bind(this));
         adapter.on('stateChange', this.handleState.bind(this));
         adapter.on('message', this.handleMessage.bind(this));
@@ -49,7 +49,7 @@ export class TIOBrokerAdapter implements IHomeKitBridgeBindingFactory {
     }
 
     private adapterReady() {
-        initHAP(this.controllerPath + '/' + this.adapter.systemConfig.dataDir + this.adapter.name + '.' + this.adapter.instance + '.hapdata', this.handleHAPLogEvent.bind(this));
+        initHAP(join(this.dataDir, `${this.adapter.name}.${this.adapter.instance}.hapdata`), this.handleHAPLogEvent.bind(this));
 
         this.adapter.log.info('adapter ready, checking config');
         let config = this.adapter.config;
