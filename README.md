@@ -168,6 +168,9 @@ For more information about the Configuration, the InOut Functions and Conversion
 -->
 ## Changelog
 
+### **WORK IN PROGRESS**
+* (foxriver76) we ensured controller 5 compatibility
+
 ### 0.17.0 (2022-10-17)
   Added AVAHI advertiser as default and updated HomeKit Library to improve performance and stability
   Update release and test scripts

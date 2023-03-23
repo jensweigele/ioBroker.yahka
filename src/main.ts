@@ -41,7 +41,7 @@ require("./yahka.functions/functions.import");
 let yahkaAdapter: hkAdapter.TIOBrokerAdapter;
 function startAdapter(options: any = {}) {
 	const ioAdapter = utils.Adapter({name: 'yahka', systemConfig: true});
-    yahkaAdapter = new hkAdapter.TIOBrokerAdapter(ioAdapter, utils.controllerDir);
+    yahkaAdapter = new hkAdapter.TIOBrokerAdapter(ioAdapter, utils.getAbsoluteDefaultDataDir());
     return ioAdapter;
 }
 
