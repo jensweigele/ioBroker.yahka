@@ -3,3 +3,4 @@
 /src/typings/globals
 /.tscache
 .DS_Store
+package-lock.json

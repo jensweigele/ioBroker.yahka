@@ -2796,11 +2796,11 @@ class THomeKitIPCamera {
                     }
                     let params = {
                         source: this.camConfig.source,
-                        codec: codec,
-                        fps: fps,
-                        width: width,
-                        height: height,
-                        bitrate: bitrate,
+                        codec,
+                        fps,
+                        width,
+                        height,
+                        bitrate,
                         payloadtype: (_d = request.video.pt) !== null && _d !== void 0 ? _d : 99,
                         videokey: (_e = sessionInfo.videoSRTP) === null || _e === void 0 ? void 0 : _e.toString('base64'),
                         targetAddress: sessionInfo.address,
