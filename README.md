@@ -174,7 +174,7 @@ For more information about the Configuration, the InOut Functions and Conversion
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
-### **WORK IN PROGRESS**
+### 1.0.0 (2023-03-24)
 * (foxriver76) we ensured controller 5 compatibility
 * (bluefox) Formatting
 
@@ -206,8 +206,8 @@ For more information about the Configuration, the InOut Functions and Conversion
 * (jw) added support for audio stream in camera 
 * (jw) added support for custom characteristics on the services (e.g. to add Wattage characteristic to plugs) 
 * (jw) added support for additional services to camera (to enable usage of doorbell service)> 
-  (many20) fixed scaleInt conversion - results are now rounded 
-  
+  (many20) fixed scaleInt conversion - results are now rounded
+
 ### 0.11.0 (2020-02-19)
 * Intermediate release
 
@@ -244,7 +244,7 @@ For more information about the Configuration, the InOut Functions and Conversion
 * (jw) added support for new compact mode ([#95](https://github.com/jensweigele/ioBroker.yahka/issues/95))
 * (jw) added support for specifying device information via data points ([#91](https://github.com/jensweigele/ioBroker.yahka/issues/91))
 * (SchumyHao) added Chinese support
-  
+
 ### 0.8.2 (2018-12-09)
 * (jw) Removed a bug which flooded logging when starting/stopping the adapter which led to excessive memory consumption
 

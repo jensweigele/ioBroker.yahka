@@ -1,275 +1,253 @@
 {
-    "common": {
-        "name": "yahka",
-        "version": "0.17.0",
-        "news": {
-            "0.17.0": {
-                "en": "Added AVAHI advertiser as default and updated HomeKit Library to improve performance and stability"
-            },
-            "0.14.0": {
-                "en": "Updated HomeKit Library"
-            },
-            "0.13.2": {
-                "en": "Fixed crashes due to changes in used HomeKit Library"
-            },
-            "0.13.1": {
-                "en": "Added ability to switch to legacy advertiser in case devices are showing 'no response' in HomeApp"
-            },
-            "0.13.0": {
-                "en": "Reworked State selection",
-                "de": "State Selektion überarbeitet"
-            },
-            "0.12.0": {
-                "en": "Updated dependencies",
-                "de": "Aktualisierte Abhängigkeiten",
-                "ru": "Обновлены зависимости",
-                "pt": "Dependências atualizadas",
-                "nl": "Bijgewerkte afhankelijkheden",
-                "fr": "Dépendances mises à jour",
-                "it": "Dipendenze aggiornate",
-                "es": "Dependencias actualizadas",
-                "pl": "Zaktualizowano zależności"
-            },
-            "0.11.0": {
-                "en": "Updated dependencies, support nodejs 12",
-                "de": "Aktualisierte Abhängigkeiten, Unterstützung NodeJS 12",
-                "ru": "Обновлены зависимости, поддержка nodejs 12",
-                "pt": "Dependências atualizadas, suporte nodejs 12",
-                "nl": "Bijgewerkte afhankelijkheden, ondersteuning van nodejs 12",
-                "fr": "Dépendances mises à jour, prise en charge de nodejs 12",
-                "it": "Dipendenze aggiornate, supporto nodejs 12",
-                "es": "Dependencias actualizadas, soporte nodejs 12",
-                "pl": "Zaktualizowano zależności, wspieraj nodejs 12",
-                "zh-cn": "更新了依赖项，支持nodejs 12"
-            },
-            "0.10.0": {
-                "en": "Updated dependencies",
-                "de": "Bibliotheken aktualisiert"
-            },
-            "0.9.2": {
-                "en": "Fixed a bug where the adapter didn't start anymore",
-                "de": "Fehler behoben, bei dem der Adapter nichtmehr startete"
-            },
-            "0.9.1": {
-                "en": "Minor bug fixes - for details see: https://github.com/jensweigele/ioBroker.yahka/blob/master/README.md",
-                "de": "Fehlerbehebungen - mehr details unter: https://github.com/jensweigele/ioBroker.yahka/blob/master/README.md"
-            },
-            "0.9.0": {
-                "en": "Various improvements and new features - for more details see: https://github.com/jensweigele/ioBroker.yahka/blob/master/README.md",
-                "de": "Verschiedene Verbesserungen und neue Features - mehr details unter: https://github.com/jensweigele/ioBroker.yahka/blob/master/README.md",
-                "zh-cn": "添加中文支持"
-            },
-            "0.8.2": {
-                "en": "Removed a bug which flooded logging when starting/stopping the adapter which led to excessive memory consumption",
-                "de": "Fehler behoben durch den extrem viele Log ausgaben beim starten/beenden des Adapters geschrieben wurden - dies hat zu extremem RAM Verbrauch geführt."
-            },
-            "0.8.1": {
-                "en": "ScaleInt and ScaleFloat now support a min-parameter to improve mapping of values. Added 'Duplicate Device' to Admin interface.",
-                "de": "ScaleInt und ScaleFloat untersützen nun die Angabe eines Min-Parameters. 'Gerät duplizieren' zu Admin Oberfläche hinzugefügt."
-            },
-            "0.7.1": {
-                "en": "Fixed the ID select dialog in Admin 2.0.9. restructured repo to allow install via git-url",
-                "de": "Der ID-Auswahldialog in Admin 2.0.9 wurde korrigiert. Repository umstrukturiert um Installation via git-url zu ermöglichen"
-            }
-        },
-        "title": "Homekit",
-        "desc": {
-            "en": "yet another Homekit adapter",
-            "de": "noch ein weiterer Homekit-Adapter",
-            "ru": "Homekit драйвер",
-            "pt": "ainda outro adaptador Homekit",
-            "nl": "nog een andere Homekit-adapter",
-            "fr": "encore un autre adaptateur Homekit",
-            "it": "ancora un altro adattatore Homekit",
-            "es": "otro adaptador para el Homekit",
-            "pl": "kolejny adapter Homekit",
-            "zh-cn": "另一款Homekit适配器"
-        },
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "mode": "daemon",
-        "icon": "yahka.png",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/jensweigele/ioBroker.yahka/master/admin/yahka.png",
-        "keywords": ["homekit", "siri"],
-        "readme": "https://github.com/jensweigele/ioBroker.yahka/blob/master/README.md",
-        "loglevel": "info",
-        "type": "iot-systems",
-        "materialize": true,
-        "compact": true,
-        "osDependencies": {
-            "linux": ["libavahi-compat-libdnssd-dev", "pam-devel"]
-        },
-        "config": {
-            "minWidth": 800,
-            "width ": 1440,
-            "minHeight": 600,
-            "height ": 860
-        },
-        "authors": [
-            {
-                "name": "Jens Weigele",
-                "email": "iobroker.yahka@gmail.com"
-            }
-        ]
+  "common": {
+    "name": "yahka",
+    "version": "1.0.0",
+    "news": {
+      "1.0.0": {
+        "en": "we ensured controller 5 compatibility\nFormatting",
+        "de": "wir sorgten für controller 5 kompatibilität\nFormatierung",
+        "ru": "мы обеспечили совместимость контроллера 5\nФорматирование",
+        "pt": "nós asseguramos a compatibilidade do controlador 5\nFormatação",
+        "nl": "we verzekeren controleur 5 compatibiliteit\nVernietiging",
+        "fr": "nous assurons la compatibilité du contrôleur 5\nFormatage",
+        "it": "abbiamo garantito il controllore 5 compatibilità\nFormattazione",
+        "es": "garantizamos la compatibilidad del controlador 5\nFormato",
+        "pl": "umożliwiamy kompatybilność kontrolną 5\nFormacja",
+        "uk": "ми забезпечуємо сумісність контролера 5\nФорматування",
+        "zh-cn": "我们确保控制的7兼容性\n表格"
+      },
+      "0.17.0": {
+        "en": "Added AVAHI advertiser as default and updated HomeKit Library to improve performance and stability"
+      },
+      "0.14.0": {
+        "en": "Updated HomeKit Library"
+      },
+      "0.13.2": {
+        "en": "Fixed crashes due to changes in used HomeKit Library"
+      },
+      "0.13.1": {
+        "en": "Added ability to switch to legacy advertiser in case devices are showing 'no response' in HomeApp"
+      },
+      "0.13.0": {
+        "en": "Reworked State selection",
+        "de": "State Selektion überarbeitet"
+      },
+      "0.12.0": {
+        "en": "Updated dependencies",
+        "de": "Aktualisierte Abhängigkeiten",
+        "ru": "Обновлены зависимости",
+        "pt": "Dependências atualizadas",
+        "nl": "Bijgewerkte afhankelijkheden",
+        "fr": "Dépendances mises à jour",
+        "it": "Dipendenze aggiornate",
+        "es": "Dependencias actualizadas",
+        "pl": "Zaktualizowano zależności"
+      }
     },
-    "native": {
-        "firstTimeInitialized": false,
-        "bridge": {
-            "devices": []
-        }
+    "title": "Homekit",
+    "desc": {
+      "en": "yet another Homekit adapter",
+      "de": "noch ein weiterer Homekit-Adapter",
+      "ru": "Homekit драйвер",
+      "pt": "ainda outro adaptador Homekit",
+      "nl": "nog een andere Homekit-adapter",
+      "fr": "encore un autre adaptateur Homekit",
+      "it": "ancora un altro adattatore Homekit",
+      "es": "otro adaptador para el Homekit",
+      "pl": "kolejny adapter Homekit",
+      "zh-cn": "另一款Homekit适配器"
     },
-    "objects": [
-        {
-            "_id": "yahka.meta._accessoryCategories",
-            "type": "meta",
-            "common": {},
-            "native": {
-                "1": {
-                    "text": "Other",
-                    "icon": "mif-question"
-                },
-                "2": {
-                    "text": "Bridge",
-                    "icon": "mif-tree"
-                },
-                "3": {
-                    "text": "Fan",
-                    "icon": "mif-spinner4"
-                },
-                "4": {
-                    "text": "Garage door opener",
-                    "icon": "mif-drive-eta"
-                },
-                "5": {
-                    "text": "Lightbulb",
-                    "icon": "mif-lamp"
-                },
-                "6": {
-                    "text": "Door lock",
-                    "icon": "mif-lock"
-                },
-                "7": {
-                    "text": "Outlet",
-                    "icon": "mif-power-cord"
-                },
-                "8": {
-                    "text": "Switch",
-                    "icon": "mif-switch"
-                },
-                "9": {
-                    "text": "Thermostat",
-                    "icon": "mif-thermometer"
-                },
-                "10": {
-                    "text": "Sensor",
-                    "icon": "mif-filter"
-                },
-                "11": {
-                    "text": "Alarm system",
-                    "icon": "mif-security"
-                },
-                "12": {
-                    "text": "Door",
-                    "icon": "mif-enter"
-                },
-                "13": {
-                    "text": "Window",
-                    "icon": "mif-enter"
-                },
-                "14": {
-                    "text": "Window covering",
-                    "icon": "mif-hotel"
-                },
-                "15": {
-                    "text": "Programmable switch",
-                    "icon": "mif-switch"
-                },
-                "16": {
-                    "text": "Range extender",
-                    "icon": "mif-share"
-                },
-                "17": {
-                    "text": "Camera",
-                    "icon": "mif-video-camera"
-                },
-                "18": {
-                    "text": "VIDEO_DOORBELL",
-                    "icon": "mif-bell"
-                },
-                "19": {
-                    "text": "AIR_PURIFIER",
-                    "icon": "mif-air"
-                },
-                "20": {
-                    "text": "AIR_HEATER",
-                    "icon": "mif-air"
-                },
-                "21": {
-                    "text": "AIR_CONDITIONER",
-                    "icon": "mif-air"
-                },
-                "22": {
-                    "text": "AIR_HUMIDIFIER",
-                    "icon": "mif-air"
-                },
-                "23": {
-                    "text": "AIR_DEHUMIDIFIER",
-                    "icon": "mif-air"
-                },
-                "24": {
-                    "text": "APPLE_TV",
-                    "icon": "mif-display"
-                },
-                "25": {
-                    "text": "HOMEPOD",
-                    "icon": "mif-music"
-                },
-                "26": {
-                    "text": "SPEAKER",
-                    "icon": "mif-volume-high"
-                },
-                "27": {
-                    "text": "AIRPORT",
-                    "icon": "mif-wifi-full"
-                },
-                "28": {
-                    "text": "SPRINKLER",
-                    "icon": "mif-water"
-                },
-                "29": {
-                    "text": "FAUCET",
-                    "icon": "mif-water"
-                },
-                "30": {
-                    "text": "SHOWER_HEAD",
-                    "icon": "mif-water"
-                },
-                "31": {
-                    "text": "TELEVISION",
-                    "icon": "mif-display"
-                },
-                "32": {
-                    "text": "TARGET_CONTROLLER",
-                    "icon": "mif-gamepad"
-                },
-                "33": {
-                    "text": "ROUTER",
-                    "icon": "mif-vpn-publ"
-                },
-                "34": {
-                    "text": "AUDIO_RECEIVER",
-                    "icon": "mif-volume-high"
-                },
-                "35": {
-                    "text": "TV_SET_TOP_BOX",
-                    "icon": "mif-display"
-                },
-                "36": {
-                    "text": "TV_STREAMING_STIC",
-                    "icon": "mif-display"
-                }
-            }
-        }
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "mode": "daemon",
+    "icon": "yahka.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/jensweigele/ioBroker.yahka/master/admin/yahka.png",
+    "keywords": [
+      "homekit",
+      "siri"
+    ],
+    "readme": "https://github.com/jensweigele/ioBroker.yahka/blob/master/README.md",
+    "loglevel": "info",
+    "type": "iot-systems",
+    "materialize": true,
+    "compact": true,
+    "osDependencies": {
+      "linux": [
+        "libavahi-compat-libdnssd-dev",
+        "pam-devel"
+      ]
+    },
+    "config": {
+      "minWidth": 800,
+      "width ": 1440,
+      "minHeight": 600,
+      "height ": 860
+    },
+    "authors": [
+      {
+        "name": "Jens Weigele",
+        "email": "iobroker.yahka@gmail.com"
+      }
     ]
+  },
+  "native": {
+    "firstTimeInitialized": false,
+    "bridge": {
+      "devices": []
+    }
+  },
+  "objects": [
+    {
+      "_id": "yahka.meta._accessoryCategories",
+      "type": "meta",
+      "common": {},
+      "native": {
+        "1": {
+          "text": "Other",
+          "icon": "mif-question"
+        },
+        "2": {
+          "text": "Bridge",
+          "icon": "mif-tree"
+        },
+        "3": {
+          "text": "Fan",
+          "icon": "mif-spinner4"
+        },
+        "4": {
+          "text": "Garage door opener",
+          "icon": "mif-drive-eta"
+        },
+        "5": {
+          "text": "Lightbulb",
+          "icon": "mif-lamp"
+        },
+        "6": {
+          "text": "Door lock",
+          "icon": "mif-lock"
+        },
+        "7": {
+          "text": "Outlet",
+          "icon": "mif-power-cord"
+        },
+        "8": {
+          "text": "Switch",
+          "icon": "mif-switch"
+        },
+        "9": {
+          "text": "Thermostat",
+          "icon": "mif-thermometer"
+        },
+        "10": {
+          "text": "Sensor",
+          "icon": "mif-filter"
+        },
+        "11": {
+          "text": "Alarm system",
+          "icon": "mif-security"
+        },
+        "12": {
+          "text": "Door",
+          "icon": "mif-enter"
+        },
+        "13": {
+          "text": "Window",
+          "icon": "mif-enter"
+        },
+        "14": {
+          "text": "Window covering",
+          "icon": "mif-hotel"
+        },
+        "15": {
+          "text": "Programmable switch",
+          "icon": "mif-switch"
+        },
+        "16": {
+          "text": "Range extender",
+          "icon": "mif-share"
+        },
+        "17": {
+          "text": "Camera",
+          "icon": "mif-video-camera"
+        },
+        "18": {
+          "text": "VIDEO_DOORBELL",
+          "icon": "mif-bell"
+        },
+        "19": {
+          "text": "AIR_PURIFIER",
+          "icon": "mif-air"
+        },
+        "20": {
+          "text": "AIR_HEATER",
+          "icon": "mif-air"
+        },
+        "21": {
+          "text": "AIR_CONDITIONER",
+          "icon": "mif-air"
+        },
+        "22": {
+          "text": "AIR_HUMIDIFIER",
+          "icon": "mif-air"
+        },
+        "23": {
+          "text": "AIR_DEHUMIDIFIER",
+          "icon": "mif-air"
+        },
+        "24": {
+          "text": "APPLE_TV",
+          "icon": "mif-display"
+        },
+        "25": {
+          "text": "HOMEPOD",
+          "icon": "mif-music"
+        },
+        "26": {
+          "text": "SPEAKER",
+          "icon": "mif-volume-high"
+        },
+        "27": {
+          "text": "AIRPORT",
+          "icon": "mif-wifi-full"
+        },
+        "28": {
+          "text": "SPRINKLER",
+          "icon": "mif-water"
+        },
+        "29": {
+          "text": "FAUCET",
+          "icon": "mif-water"
+        },
+        "30": {
+          "text": "SHOWER_HEAD",
+          "icon": "mif-water"
+        },
+        "31": {
+          "text": "TELEVISION",
+          "icon": "mif-display"
+        },
+        "32": {
+          "text": "TARGET_CONTROLLER",
+          "icon": "mif-gamepad"
+        },
+        "33": {
+          "text": "ROUTER",
+          "icon": "mif-vpn-publ"
+        },
+        "34": {
+          "text": "AUDIO_RECEIVER",
+          "icon": "mif-volume-high"
+        },
+        "35": {
+          "text": "TV_SET_TOP_BOX",
+          "icon": "mif-display"
+        },
+        "36": {
+          "text": "TV_STREAMING_STIC",
+          "icon": "mif-display"
+        }
+      }
+    }
+  ]
 }
