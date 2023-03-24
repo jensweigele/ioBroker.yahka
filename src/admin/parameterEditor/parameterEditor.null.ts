@@ -1,5 +1,5 @@
 
-import { ParameterEditor, IParameterEditorDelegate } from "./parameterEditor.base";
+import { ParameterEditor } from './parameterEditor.base';
 
 export class ParameterEditor_Null extends ParameterEditor {
     private lastParamValue: string;

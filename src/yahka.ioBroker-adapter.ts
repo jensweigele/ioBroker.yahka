@@ -187,7 +187,7 @@ export class TIOBrokerAdapter implements IHomeKitBridgeBindingFactory {
             return {
                 conversion: convFunc,
                 inOut: inoutFunc
-            }
+            };
         }
         return null;
     }

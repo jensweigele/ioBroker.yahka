@@ -13,7 +13,7 @@ import { ConfigPageBuilder_ServicePanel } from './pageBuilder.servicePanel';
 export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implements IConfigPageBuilder {
     public addServiceAvailable: boolean = true;
     public removeDeviceAvailable: boolean = true;
-    public dupliacteDeviceAvailable: boolean = true;
+    public duplicateDeviceAvailable: boolean = true;
     private configPanelTemplate: HTMLTemplateElement;
     private servicePanelBuilder: ConfigPageBuilder_ServicePanel;
     constructor(protected delegate: IConfigPageBuilderDelegate) {
@@ -72,7 +72,7 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
             }
             input.addEventListener('input', this.handleffMpegPropertyChange.bind(this, config, propertyName, inputErrorMsg));
 
-            configFragment.querySelector(selector + '_reset').addEventListener('click', () => {
+            configFragment.querySelector(`${selector}_reset`).addEventListener('click', () => {
                 input.value = JSON.stringify(Defaults.ffmpegCommandLines.default[propertyName], null, 2);
                 input.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
                 return true;

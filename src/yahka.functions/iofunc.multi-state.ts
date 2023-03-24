@@ -49,15 +49,16 @@ export class TIoBrokerInOutFunction_MultiState extends TIoBrokerInOutFunctionBas
     }
 
     private updateSingleIOBrokerValue(state: TIoBrokerInOutFunction_MultiStateParameter, newValue: any): Promise<void> {
-        if (newValue === undefined)
+        if (newValue === undefined) {
             return Promise.resolve();
+        }
 
         return new Promise<void>((resolve, reject) => {
             let stateName = state.writeState || state.readState;
-            this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
+            this.log.debug(`writing state to ioBroker [${stateName}]: ${JSON.stringify(newValue)}`);
             this.adapter.setForeignState(stateName, newValue, false, (error) => {
                 if (error) {
-                    this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
+                    this.log.error(`setForeignState error [${stateName}] to [${JSON.stringify(newValue)}]: ${error}`);
                     reject(error);
                 }
                 resolve();

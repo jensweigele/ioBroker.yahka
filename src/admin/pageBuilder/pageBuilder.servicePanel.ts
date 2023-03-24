@@ -4,7 +4,7 @@ import * as hkBridge from '../../shared/yahka.configuration';
 import { generateMetaDataDictionary } from '../yahka.meta-generator';
 import { IDictionary } from '../../shared/yahka.configuration';
 import { IHAPServiceDefinition, IHAPCharacteristicDefintion, ISelectListEntry } from '../admin.config';
-import { ConfigPageBuilder_Base, IConfigPageBuilderDelegate, TValidatorFunction } from './pageBuilder.base';
+import { ConfigPageBuilder_Base, IConfigPageBuilderDelegate } from './pageBuilder.base';
 import { IParameterEditorDelegate, IParameterEditor } from '../parameterEditor/parameterEditor.base';
 import { ParameterEditorFactory, inoutFunctions, convFunctions } from '../parameterEditor/parameterEditor.factory';
 import { ParameterEditor_Null } from '../parameterEditor/parameterEditor.null';
@@ -139,14 +139,16 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
         if (charConfig.customCharacteristic) {
             return false;
         }
-        if (charConfig === undefined)
+        if (charConfig === undefined) {
             return true;
-        if (charConfig.name === '')
+        }
+        if (charConfig.name === '') {
             return true;
+        }
 
-
-        if ((charConfig['inOutFunction'] === '') || (charConfig['inOutFunction'] === undefined))
+        if ((charConfig['inOutFunction'] === '') || (charConfig['inOutFunction'] === undefined)) {
             return true;
+        }
 
         return false;
     }
@@ -331,7 +333,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
             let propertyDefaultValue = transformValue(charDef.properties[propertyName]);
             let propElement = <DocumentFragment>document.importNode(this.characteristicPropRow.content, true);
             let nameSpan = propElement.querySelector('#propName');
-            nameSpan.id = "";
+            nameSpan.id = '';
             nameSpan.textContent = propertyName;
 
             let propInput = <HTMLInputElement>propElement.querySelector('#propValue')
@@ -345,7 +347,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
                     }
                 }
             }
-            nameSpan.classList.toggle('properties-defined', propInput.value != "");
+            nameSpan.classList.toggle('properties-defined', propInput.value != '');
             propInput.addEventListener('input', this.handleCharacteristicPropertyChange.bind(this, serviceConfig, charName, propertyName, propertyDefaultValue.isObject))
             propTable.appendChild(propElement);
         }
@@ -409,7 +411,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
                 try {
                     charConfig.properties[property] = JSON.parse(inputValue as any);
                 } catch (e) {
-                    console.log("parsing of", inputValue, " failed with: ", e);
+                    console.log('parsing of', inputValue, ' failed with: ', e);
                 }
             } else {
                 charConfig.properties[property] = inputValue;

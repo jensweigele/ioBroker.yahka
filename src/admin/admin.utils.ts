@@ -3,31 +3,33 @@ export module Utils {
         if (input == null)
             return undefined;
 
-        if ((input.type == "checkbox") && ("checked" in input)) {
+        if ((input.type == 'checkbox') && ('checked' in input)) {
             return input.checked;
         }
 
 
-        if ("valueAsDate" in input) {
+        if ('valueAsDate' in input) {
             let dateValue = input.valueAsDate;
             if (dateValue)
                 return dateValue;
         }
 
-        if ("valueAsNumber" in input) {
+        if ('valueAsNumber' in input) {
             let numValue = input.valueAsNumber;
             if (!isNaN(numValue))
                 return numValue;
         }
 
         let stringValue = input.value;
-        if ((stringValue === "") && emptyStringAsUndefined)
+        if ((stringValue === '') && emptyStringAsUndefined) {
             return undefined;
+        }
 
-        if (stringValue !== "") {
+        if (stringValue !== '') {
             let strAsNumber = Number(stringValue);
-            if (!isNaN(strAsNumber))
+            if (!isNaN(strAsNumber)) {
                 return strAsNumber;
+            }
         }
 
         return stringValue;
@@ -38,10 +40,10 @@ export module Utils {
             return undefined;
 
         let stringValue = input.value;
-        if ((stringValue === "") && emptyStringAsUndefined)
+        if ((stringValue === '') && emptyStringAsUndefined)
             return undefined;
 
-        if (stringValue !== "") {
+        if (stringValue !== '') {
             let strAsNumber = Number(stringValue);
             if (!isNaN(strAsNumber))
                 return strAsNumber;
@@ -54,10 +56,10 @@ export module Utils {
         if (input === undefined || input === null)
             return;
 
-        if (input.type == "checkbox") {
+        if (input.type == 'checkbox') {
             (<HTMLInputElement>input).checked = Boolean(value);
         } else {
-            input.value = ((value !== undefined) && (value !== null)) ? value : "";
+            input.value = ((value !== undefined) && (value !== null)) ? value : '';
         }
     }
 

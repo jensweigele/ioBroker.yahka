@@ -10,7 +10,7 @@ import { ioBrokerInterfaceList } from '../yahka.admin';
 export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base implements IConfigPageBuilder {
     public addServiceAvailable: boolean = false;
     public removeDeviceAvailable: boolean = false;
-    public dupliacteDeviceAvailable: boolean = false;
+    public duplicateDeviceAvailable: boolean = false;
     bridgeConfigPanelTemplate: HTMLTemplateElement;
     constructor(protected delegate: IConfigPageBuilderDelegate) {
         super(delegate);
@@ -40,9 +40,9 @@ export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base imple
 
         let checkboxHelper = (selector: string, propertyName: string, validator: TValidatorFunction = undefined) => {
             let input = <HTMLInputElement>bridgeConfigFragment.querySelector(selector);
-            let errorElement = <HTMLElement>bridgeConfigFragment.querySelector(selector + '_error');
+            let errorElement = <HTMLElement>bridgeConfigFragment.querySelector(`${selector}_error`);
 
-            let value = config[propertyName];
+            const value = config[propertyName];
             input.checked = value;
             input.addEventListener('click', this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
             this.refreshSimpleErrorElement(errorElement, validator);

@@ -1,8 +1,8 @@
-import { ParameterEditor, IParameterEditorDelegate } from "./parameterEditor.base";
-import { createAndCloneTemplateElement } from "../admin.pageLoader";
-import { Utils } from "../admin.utils";
-import { TIoBrokerInOutFunction_MultiStateParameter, isMultiStateParameter, TIoBrokerInOutFunction_MultiState } from "../../yahka.functions/iofunc.multi-state";
-import { write } from "fs";
+import { ParameterEditor, IParameterEditorDelegate } from './parameterEditor.base';
+import { createAndCloneTemplateElement } from '../admin.pageLoader';
+import { Utils } from '../admin.utils';
+import { TIoBrokerInOutFunction_MultiStateParameter, isMultiStateParameter, TIoBrokerInOutFunction_MultiState } from '../../yahka.functions/iofunc.multi-state';
+import { write } from 'fs';
 
 export class ParameterEditor_MultiState extends ParameterEditor {
     private templateNode: DocumentFragment;
@@ -15,7 +15,7 @@ export class ParameterEditor_MultiState extends ParameterEditor {
 
         this.stateTemplate = this.templateNode.querySelector('#stateRow');
         this.lastRow = this.templateNode.querySelector('#lastRow')
-        let addRow = this.templateNode.querySelector("#addRow");
+        let addRow = this.templateNode.querySelector('#addRow');
         addRow.addEventListener('click', this.addRowClicked.bind(this));
     }
 
@@ -81,12 +81,12 @@ export class ParameterEditor_MultiState extends ParameterEditor {
         containerElement.appendChild(this.templateNode);
 
         if (parameterValue === undefined) {
-            return
+            return;
         }
 
-        var params = TIoBrokerInOutFunction_MultiState.parseParameters(parameterValue);
+        const params = TIoBrokerInOutFunction_MultiState.parseParameters(parameterValue);
         if (params === undefined) {
-            return
+            return;
         }
 
         params.forEach(item => this.createRow(item));
@@ -94,12 +94,12 @@ export class ParameterEditor_MultiState extends ParameterEditor {
 
     protected buildNewParameterValue(): any {
         return this.stateRows.map((row): TIoBrokerInOutFunction_MultiStateParameter => {
-            let readField = <HTMLInputElement>row.querySelector('#readState');
-            let writeField = <HTMLInputElement>row.querySelector('#writeState');
+            const readField = <HTMLInputElement>row.querySelector('#readState');
+            const writeField = <HTMLInputElement>row.querySelector('#writeState');
             return {
                 readState: Utils.getInputValue(readField)?.toString(),
                 writeState: Utils.getInputValue(writeField)?.toString(),
-            }
+            };
         });
     }
 }

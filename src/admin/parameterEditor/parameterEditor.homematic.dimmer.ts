@@ -1,7 +1,7 @@
-import { ParameterEditor, IParameterEditorDelegate } from "./parameterEditor.base";
-import { createAndCloneTemplateElement } from "../admin.pageLoader";
-import { Utils } from "../admin.utils";
-import { TIoBrokerInOutFunction_Homematic_Dimmer_Base, TIoBrokerInOutFunction_Homematic_Dimmer_Parameter } from "../../yahka.functions/iofunc.homematic.dimmer";
+import { ParameterEditor, IParameterEditorDelegate } from './parameterEditor.base';
+import { createAndCloneTemplateElement } from '../admin.pageLoader';
+import { Utils } from '../admin.utils';
+import { TIoBrokerInOutFunction_Homematic_Dimmer_Base, TIoBrokerInOutFunction_Homematic_Dimmer_Parameter } from '../../yahka.functions/iofunc.homematic.dimmer';
 
 export class ParameterEditor_HomeMatic_Dimmer extends ParameterEditor {
     private templateNode: DocumentFragment;
@@ -11,11 +11,11 @@ export class ParameterEditor_HomeMatic_Dimmer extends ParameterEditor {
     constructor(valueChangeCallback: IParameterEditorDelegate, private showExtendedDimmerProps: boolean) {
         super(valueChangeCallback);
         this.templateNode = createAndCloneTemplateElement(require('./parameterEditor.homematic.dimmer.inc.html'));
-        this.txtLevel = this.templateNode.querySelector("#level");
+        this.txtLevel = this.templateNode.querySelector('#level');
         this.txtLevel.addEventListener('input', (ev) => this.valueChanged());
-        this.chkRestoreToPrevious = this.templateNode.querySelector("#restoreToPreviousLevel");
+        this.chkRestoreToPrevious = this.templateNode.querySelector('#restoreToPreviousLevel');
         this.chkRestoreToPrevious.addEventListener('click', (ev) => this.valueChanged());
-        this.txtDefaultLevel = this.templateNode.querySelector("#defaultLevel");
+        this.txtDefaultLevel = this.templateNode.querySelector('#defaultLevel');
         this.txtDefaultLevel.addEventListener('input', (ev) => this.valueChanged());
         if (!showExtendedDimmerProps) {
             $(this.templateNode).find('.extended-dimmer-properties').hide();
@@ -27,12 +27,12 @@ export class ParameterEditor_HomeMatic_Dimmer extends ParameterEditor {
         containerElement.appendChild(this.templateNode);
 
         if (parameterValue === undefined) {
-            return
+            return;
         }
 
-        var params = TIoBrokerInOutFunction_Homematic_Dimmer_Base.parseParameters(parameterValue);
+        const params = TIoBrokerInOutFunction_Homematic_Dimmer_Base.parseParameters(parameterValue);
         if (params === undefined) {
-            return
+            return;
         }
 
         Utils.setInputValue(this.txtLevel, params.levelState);
@@ -41,9 +41,9 @@ export class ParameterEditor_HomeMatic_Dimmer extends ParameterEditor {
     }
 
     protected buildNewParameterValue(): any {
-        var result: TIoBrokerInOutFunction_Homematic_Dimmer_Parameter = {
+        const result: TIoBrokerInOutFunction_Homematic_Dimmer_Parameter = {
             levelState: Utils.getInputValue(this.txtLevel)?.toString()
-        }
+        };
 
         if (this.showExtendedDimmerProps) {
             result.restoreToPreviousLevel = Utils.getInputValue(this.chkRestoreToPrevious) as boolean;

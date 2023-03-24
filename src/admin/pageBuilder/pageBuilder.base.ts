@@ -8,7 +8,7 @@ export interface IConfigPageBuilder {
     styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean;
     readonly addServiceAvailable: boolean;
     readonly removeDeviceAvailable: boolean;
-    readonly dupliacteDeviceAvailable: boolean;
+    readonly duplicateDeviceAvailable: boolean;
 
 }
 

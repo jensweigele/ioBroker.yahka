@@ -27,9 +27,10 @@
  *
  */
 
-/* jshint -W097 */// jshint strict:false
-/*jslint node: true */
-"use strict";
+/* jshint -W097 */
+/* jshint strict: false */
+/* jslint node: true */
+'use strict';
 import debug = require('debug');
 debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 

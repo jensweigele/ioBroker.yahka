@@ -6,10 +6,10 @@ interface IObjectDictionary<T> {
 
 type FactoryFunction<T> = (adapter: ioBroker.Adapter, parameters: any) => T;
 
-export var inOutFactory: IObjectDictionary<FactoryFunction<IInOutFunction>> = {};
-export var conversionFactory: IObjectDictionary<FactoryFunction<IConversionFunction>> = {};
+export const inOutFactory: IObjectDictionary<FactoryFunction<IInOutFunction>> = {};
+export const conversionFactory: IObjectDictionary<FactoryFunction<IConversionFunction>> = {};
 
-export var functionFactory = {
+export const functionFactory = {
     createInOutFunction: function (adapter: ioBroker.Adapter, inOutFunction: string, inOutParameters?: any): IInOutFunction {
         if (!(inOutFunction in inOutFactory))
             return inOutFactory['const'](adapter, inOutParameters);

@@ -19,7 +19,7 @@ getObject('yahka.meta._accessoryCategories', (_, object) => {
 export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements IConfigPageBuilder {
     public addServiceAvailable: boolean = true;
     public removeDeviceAvailable: boolean = true;
-    public dupliacteDeviceAvailable: boolean = true;
+    public duplicateDeviceAvailable: boolean = true;
     private deviceInfoPanelTemplate: HTMLTemplateElement;
     private servicePanelBuilder: ConfigPageBuilder_ServicePanel;
     constructor(protected delegate: IConfigPageBuilderDelegate) {
@@ -80,7 +80,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
             checkDefault = true
         ) => {
             let input = <HTMLInputElement>devInfoPanel.querySelector(selector);
-            let errorElement = <HTMLElement>devInfoPanel.querySelector(selector + '_error');
+            let errorElement = <HTMLElement>devInfoPanel.querySelector(`${selector}_error`);
 
             this.fillSelectByListEntries(input, selectList);
 
@@ -129,7 +129,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         ev: Event
     ) {
         let inputTarget = <HTMLInputElement>ev.currentTarget;
-        let inputValue = inputTarget.type === 'checkbox' ? inputTarget.checked : inputTarget.value;
+        const inputValue = inputTarget.type === 'checkbox' ? inputTarget.checked : inputTarget.value;
         deviceConfig[propertyName] = inputValue;
         this.refreshSimpleErrorElement(errorElement, validator);
         this.delegate.refreshDeviceListEntry(deviceConfig);

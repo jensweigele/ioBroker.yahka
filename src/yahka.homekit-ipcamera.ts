@@ -217,7 +217,7 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
         this.FLogger.debug(`Snapshot run: ffmpeg ${ffmpegCommand.join(' ')}`);
         let ffmpeg = spawn('ffmpeg', ffmpegCommand, { env: process.env });
 
-        var imageBuffer = Buffer.alloc(0);
+        let imageBuffer = Buffer.alloc(0);
 
         ffmpeg.stdout.on('data', data => imageBuffer = Buffer.concat([imageBuffer, <Buffer>data]));
         ffmpeg.on('close', code => callback(undefined, imageBuffer));
@@ -275,14 +275,14 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
         }
 
         // let currentAddress = ip.address();
-        // var addressResp: Partial<Address> = {
+        // const addressResp: Partial<Address> = {
         //     address: currentAddress
         // };
 
         // if (ip.isV4Format(currentAddress)) {
-        //     addressResp.type = "v4";
+        //     addressResp.type = 'v4';
         // } else {
-        //     addressResp.type = "v6";
+        //     addressResp.type = 'v6';
         // }
 
         // response.address = addressResp as Address;
@@ -319,11 +319,11 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
 
                     let params = {
                         source: this.camConfig.source,
-                        codec: codec,
-                        fps: fps,
-                        width: width,
-                        height: height,
-                        bitrate: bitrate,
+                        codec,
+                        fps,
+                        width,
+                        height,
+                        bitrate,
                         payloadtype: request.video.pt ?? 99,
                         videokey: sessionInfo.videoSRTP?.toString('base64'),
                         targetAddress: sessionInfo.address,

@@ -1,5 +1,5 @@
 
-import { IDictionary } from "../shared/yahka.configuration";
+import { IDictionary } from '../shared/yahka.configuration';
 
 
 

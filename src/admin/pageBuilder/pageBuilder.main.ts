@@ -1,8 +1,8 @@
 /// <reference path="../../typings/index.d.ts" />
 import * as hkBridge from '../../shared/yahka.configuration';
-import * as $ from "jquery";
+import * as $ from 'jquery';
 import { Defaults } from '../admin.defaults';
-import { ConfigPageBuilder_Base, IConfigPageBuilder, IConfigPageBuilderDelegate, TValidatorFunction } from './pageBuilder.base';
+import { ConfigPageBuilder_Base, IConfigPageBuilder, IConfigPageBuilderDelegate } from './pageBuilder.base';
 import { ConfigPageBuilder_CustomDevice } from './pageBuilder.customDevice';
 import { ConfigPageBuilder_BridgeConfig } from './pageBuilder.bridgeConfig';
 import { ConfigPageBuilder_IPCamera } from './pageBuilder.ipCam';
@@ -11,7 +11,7 @@ import { createTemplateElement } from '../admin.pageLoader';
 function generateRandomUsername(): string {
     let usr = [];
     for (let i = 0; i < 6; i++)
-        usr[i] = ('00' + (Math.floor((Math.random() * 256)).toString(16))).substr(-2);
+        usr[i] = (`00${Math.floor((Math.random() * 256)).toString(16)}`).substr(-2);
     return usr.join(':');
 }
 
@@ -22,8 +22,9 @@ export class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
     protected _selectedDeviceConfig: hkBridge.Configuration.IBaseConfigNode = undefined;
 
     constructor(private _bridgeSettings: hkBridge.Configuration.IBridgeConfig, public cameraConfigs: [hkBridge.Configuration.ICameraConfig], private _changeCallback) {
-        if (!_bridgeSettings.devices)
+        if (!_bridgeSettings.devices) {
             _bridgeSettings.devices = [];
+        }
         _bridgeSettings.configType = 'bridge';
 
         this.deviceListHandler = new ioBroker_DeviceListHandler(this);
@@ -113,9 +114,6 @@ export class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
     public changeCallback() {
         return this._changeCallback()
     }
-
-
-
 }
 
 class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
@@ -224,10 +222,7 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
 
     constructor(delegate: IConfigPageBuilderDelegate, protected deviceListHandler: ioBroker_DeviceListHandler) {
         super(delegate);
-
     }
-
-
 
     bindBridgeButtons(bridgePane: HTMLElement) {
         let bridge = this.delegate.bridgeSettings;
@@ -236,12 +231,12 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
             elem.addEventListener('click', (e) => {
                 e.preventDefault();
                 let newCustomDevice: hkBridge.Configuration.IDeviceConfig = {
-                    configType: "customdevice",
-                    manufacturer: "",
-                    model: "",
-                    name: "<new device " + this.deviceListHandler.getDeviceList().length + ">",
-                    serial: "",
-                    firmware: "",
+                    configType: 'customdevice',
+                    manufacturer: '',
+                    model: '',
+                    name: `<new device ${this.deviceListHandler.getDeviceList().length}>`,
+                    serial: '',
+                    firmware: '',
                     enabled: true,
                     category: 1,
                     services: []
@@ -257,19 +252,19 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
             elem.addEventListener('click', (e) => {
                 e.preventDefault();
                 let newIPCamera: hkBridge.Configuration.ICameraConfig = {
-                    configType: "ipcamera",
-                    ident: "",
-                    manufacturer: "",
-                    model: "",
-                    name: "<new camera " + this.deviceListHandler.getDeviceList().length + ">",
-                    serial: "",
-                    firmware: "",
+                    configType: 'ipcamera',
+                    ident: '',
+                    manufacturer: '',
+                    model: '',
+                    name: `<new camera ${this.deviceListHandler.getDeviceList().length}>`,
+                    serial: '',
+                    firmware: '',
                     port: 0,
                     username: generateRandomUsername(),
-                    pincode: "123-45-678",
+                    pincode: '123-45-678',
                     enabled: true,
-                    source: "",
-                    codec: "libx264",
+                    source: '',
+                    codec: 'libx264',
                     maxWidth: 1920,
                     maxHeight: 1080,
                     maxFPS: 60,
@@ -341,12 +336,12 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
                 e.preventDefault();
                 let dev = this.delegate.selectedDeviceConfig;
                 let copyOfDevice = $.extend(true, {}, dev)
-                copyOfDevice.name = copyOfDevice.name + " copy"
+                copyOfDevice.name = `${copyOfDevice.name} copy`
                 if (hkBridge.Configuration.isIPCameraConfig(copyOfDevice)) {
-                    copyOfDevice.serial = "";
+                    copyOfDevice.serial = '';
                     this.delegate.cameraConfigs.push(copyOfDevice);
                 } else if (hkBridge.Configuration.isDeviceConfig(copyOfDevice)) {
-                    copyOfDevice.serial = "";
+                    copyOfDevice.serial = '';
                     bridge.devices.push(copyOfDevice);
                 } else {
                     return
@@ -370,7 +365,7 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
         let pageBuilder = this.delegate.getPageBuilderByConfig(this.delegate.selectedDeviceConfig);
         let addServiceEnabled = pageBuilder ? pageBuilder.addServiceAvailable : false;
         let removeDevEnabled = pageBuilder ? pageBuilder.removeDeviceAvailable : false;
-        let duplicateDeviceEnabled = pageBuilder ? pageBuilder.dupliacteDeviceAvailable : false;
+        let duplicateDeviceEnabled = pageBuilder ? pageBuilder.duplicateDeviceAvailable : false;
 
         if (addServiceEnabled)
             addServiceButton.removeAttribute('disabled');

@@ -1,6 +1,6 @@
-import { ParameterEditor, IParameterEditorDelegate } from "./parameterEditor.base";
-import { createAndCloneTemplateElement } from "../admin.pageLoader";
-import { Utils } from "../admin.utils";
+import { ParameterEditor, IParameterEditorDelegate } from './parameterEditor.base';
+import { createAndCloneTemplateElement } from '../admin.pageLoader';
+import { Utils } from '../admin.utils';
 
 export class ParameterEditor_Const extends ParameterEditor {
     private templateNode: DocumentFragment;
@@ -8,7 +8,7 @@ export class ParameterEditor_Const extends ParameterEditor {
     constructor(valueChangeCallback: IParameterEditorDelegate) {
         super(valueChangeCallback);
         this.templateNode = createAndCloneTemplateElement(require('./parameterEditor.const.inc.html'));
-        this.textField = this.templateNode.querySelector("#textfield");
+        this.textField = this.templateNode.querySelector('#textfield');
         this.textField.addEventListener('input', (ev) => this.valueChanged());
     }
 

@@ -1143,8 +1143,9 @@ module.exports = function(homebridge, options) {
  *  }
  *
  */
-/* jshint -W097 */ // jshint strict:false
-/*jslint node: true */
+/* jshint -W097 */
+/* jshint strict: false */
+/* jslint node: true */
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const debug = __webpack_require__(/*! debug */ "debug");
@@ -1156,7 +1157,7 @@ __webpack_require__(/*! ./yahka.functions/functions.import */ "./yahka.functions
 let yahkaAdapter;
 function startAdapter(options = {}) {
     const ioAdapter = utils.Adapter({ name: 'yahka', systemConfig: true });
-    yahkaAdapter = new hkAdapter.TIOBrokerAdapter(ioAdapter, utils.controllerDir);
+    yahkaAdapter = new hkAdapter.TIOBrokerAdapter(ioAdapter, utils.getAbsoluteDefaultDataDir());
     return ioAdapter;
 }
 // ...
@@ -2303,27 +2304,18 @@ class TIoBrokerInOutFunction_MultiState extends iofunc_base_1.TIoBrokerInOutFunc
         return hkValues.length === 1 ? hkValues[0] : hkValues;
     }
     updateSingleIOBrokerValue(state, newValue) {
-        if (newValue === undefined)
+        if (newValue === undefined) {
             return Promise.resolve();
+        }
         return new Promise((resolve, reject) => {
             let stateName = state.writeState || state.readState;
             this.log.debug(`writing state to ioBroker [${stateName}]: ${JSON.stringify(newValue)}`);
-            this.adapter.getForeignState(stateName, (error, ioState) => {
-                let value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
-                let valueChanged = value !== newValue;
-                this.log.debug(`checking value change: ${JSON.stringify(value)} != ${JSON.stringify(newValue)} = ${valueChanged}`);
-                if (valueChanged) {
-                    this.adapter.setForeignState(stateName, newValue, false, (error) => {
-                        if (error) {
-                            this.log.error(`setForeignState error [${stateName}] to [${JSON.stringify(newValue)}]: ${error}`);
-                            reject(error);
-                        }
-                        resolve();
-                    });
+            this.adapter.setForeignState(stateName, newValue, false, (error) => {
+                if (error) {
+                    this.log.error(`setForeignState error [${stateName}] to [${JSON.stringify(newValue)}]: ${error}`);
+                    reject(error);
                 }
-                else {
-                    resolve();
-                }
+                resolve();
             });
         });
     }
@@ -2720,7 +2712,7 @@ class THomeKitIPCamera {
         }));
         this.FLogger.debug(`Snapshot run: ffmpeg ${ffmpegCommand.join(' ')}`);
         let ffmpeg = (0, child_process_1.spawn)('ffmpeg', ffmpegCommand, { env: process.env });
-        var imageBuffer = Buffer.alloc(0);
+        let imageBuffer = Buffer.alloc(0);
         ffmpeg.stdout.on('data', data => imageBuffer = Buffer.concat([imageBuffer, data]));
         ffmpeg.on('close', code => callback(undefined, imageBuffer));
     }
@@ -2766,13 +2758,13 @@ class THomeKitIPCamera {
             sessionInfo.audioCryptoSuite = audioCryptoSuite;
         }
         // let currentAddress = ip.address();
-        // var addressResp: Partial<Address> = {
+        // const addressResp: Partial<Address> = {
         //     address: currentAddress
         // };
         // if (ip.isV4Format(currentAddress)) {
-        //     addressResp.type = "v4";
+        //     addressResp.type = 'v4';
         // } else {
-        //     addressResp.type = "v6";
+        //     addressResp.type = 'v6';
         // }
         // response.address = addressResp as Address;
         this.pendingSessions[sessionID] = sessionInfo;
@@ -3082,6 +3074,7 @@ exports.TIOBrokerAdapter = void 0;
 const yahka_homekit_ipcamera_1 = __webpack_require__(/*! ./yahka.homekit-ipcamera */ "./yahka.homekit-ipcamera.ts");
 const functions_factory_1 = __webpack_require__(/*! ./yahka.functions/functions.factory */ "./yahka.functions/functions.factory.ts");
 const yahka_homekit_bridge_1 = __webpack_require__(/*! ./yahka.homekit-bridge */ "./yahka.homekit-bridge.ts");
+const path_1 = __webpack_require__(/*! path */ "path");
 function isSubscriptionRequestor(param) {
     return param['subscriptionRequests'] !== undefined &&
         param['subscriptionRequests'] instanceof Array;
@@ -3093,9 +3086,9 @@ function isCustomCharacteristicConfig(config) {
     return (myConfig.inOutFunction !== undefined) || (myConfig.conversionFunction !== undefined) || (myConfig.inOutParameters !== undefined);
 }
 class TIOBrokerAdapter {
-    constructor(adapter, controllerPath) {
+    constructor(adapter, dataDir) {
         this.adapter = adapter;
-        this.controllerPath = controllerPath;
+        this.dataDir = dataDir;
         this.stateToEventMap = new Map();
         this.objectToEventMap = new Map();
         this.devices = [];
@@ -3106,7 +3099,7 @@ class TIOBrokerAdapter {
         adapter.on('unload', this.handleUnload.bind(this));
     }
     adapterReady() {
-        (0, yahka_homekit_bridge_1.initHAP)(`${this.controllerPath}/${this.adapter.systemConfig.dataDir}${this.adapter.name}.${this.adapter.instance}.hapdata`, this.handleHAPLogEvent.bind(this));
+        (0, yahka_homekit_bridge_1.initHAP)((0, path_1.join)(this.dataDir, `${this.adapter.name}.${this.adapter.instance}.hapdata`), this.handleHAPLogEvent.bind(this));
         this.adapter.log.info('adapter ready, checking config');
         let config = this.adapter.config;
         this.createHomeKitBridges(config);
@@ -3295,6 +3288,17 @@ module.exports = require("util");
 
 "use strict";
 module.exports = require("child_process");
+
+/***/ }),
+
+/***/ "path":
+/*!***********************!*\
+  !*** external "path" ***!
+  \***********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("path");
 
 /***/ }),
 

@@ -1,8 +1,8 @@
-import { ParameterEditor, IParameterEditorDelegate } from "./parameterEditor.base";
-import { createAndCloneTemplateElement } from "../admin.pageLoader";
-import { Utils } from "../admin.utils";
-import { IIoBrokerConversion_MapEntry, isMultiStateParameter, IIoBrokerConversion_Map_Parameters } from "../../yahka.functions/conversion.map";
-import { isObject } from "util";
+import { ParameterEditor, IParameterEditorDelegate } from './parameterEditor.base';
+import { createAndCloneTemplateElement } from '../admin.pageLoader';
+import { Utils } from '../admin.utils';
+import { IIoBrokerConversion_MapEntry, isMultiStateParameter, IIoBrokerConversion_Map_Parameters } from '../../yahka.functions/conversion.map';
+import { isObject } from 'util';
 
 export class ParameterEditor_Map extends ParameterEditor {
     private templateNode: DocumentFragment;
@@ -15,7 +15,7 @@ export class ParameterEditor_Map extends ParameterEditor {
 
         this.stateTemplate = this.templateNode.querySelector('#mappingRow');
         this.lastRow = this.templateNode.querySelector('#lastRow')
-        let addRow = this.templateNode.querySelector("#addRow");
+        let addRow = this.templateNode.querySelector('#addRow');
         addRow.addEventListener('click', this.addRowClicked.bind(this));
     }
 
