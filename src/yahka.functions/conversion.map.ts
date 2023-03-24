@@ -1,4 +1,4 @@
-import { TIOBrokerConversionBase, IConversionFunction } from "./conversion.base";
+import { TIOBrokerConversionBase, IConversionFunction } from './conversion.base';
 
 export interface IIoBrokerConversion_MapEntry {
     left: any;
@@ -8,7 +8,7 @@ export interface IIoBrokerConversion_Map_Parameters {
     mappings: IIoBrokerConversion_MapEntry[];
 }
 export function isMultiStateParameter(params: any): params is IIoBrokerConversion_Map_Parameters {
-    return "mappings" in params;
+    return 'mappings' in params;
 }
 
 export class TIoBrokerConversion_Map extends TIOBrokerConversionBase implements IConversionFunction {
@@ -25,7 +25,7 @@ export class TIoBrokerConversion_Map extends TIOBrokerConversionBase implements 
     }
 
     constructor(adapter: ioBroker.Adapter, protected parameters: IIoBrokerConversion_Map_Parameters) {
-        super(adapter, "TIoBrokerConversion_Map");
+        super(adapter, 'TIoBrokerConversion_Map');
         this.buildMappingArray();
     }
 
@@ -33,7 +33,7 @@ export class TIoBrokerConversion_Map extends TIOBrokerConversionBase implements 
         for(let mapDef of this.parameters.mappings) {
             let leftStr = JSON.stringify(mapDef.left, this.jsonReplacer);
             let rightStr = JSON.stringify(mapDef.right, this.jsonReplacer);
-            
+
             this.mappingArrayToHomeKit.set(leftStr, mapDef.right);
             this.mappingArrayToIOBroker.set(rightStr, mapDef.left);
         }

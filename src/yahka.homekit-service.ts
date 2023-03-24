@@ -39,7 +39,7 @@ export class YahkaServiceInitializer {
         let isNew = false;
         let hapService = hapDevice.getService(Service[serviceConfig.type]);
         if (hapService !== undefined) {
-            const existingSubType = hapService.subtype ? hapService.subtype : ""
+            const existingSubType = hapService.subtype ? hapService.subtype : '';
             if (existingSubType != serviceConfig.subType)
                 hapService = undefined;
         }
@@ -172,7 +172,7 @@ export class YahkaServiceInitializer {
 
         binding.inOut.fromIOBroker((ioBrokerError, ioValue) => {
             let hkValue = binding.conversion.toHomeKit(ioValue);
-            // check if the value can be converetd to a number
+            // check if the value can be converted to a number
             if ((hkValue !== undefined) && (hkValue !== "")) {
                 let numValue = Number(hkValue);
                 if (!isNaN(numValue)) {

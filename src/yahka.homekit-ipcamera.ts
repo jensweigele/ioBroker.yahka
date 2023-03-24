@@ -71,8 +71,8 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
     }
 
     private createOptionsDictionary(): CameraStreamingOptions {
-        var videoResolutions = [];
-        var maxFPS = this.camConfig.maxFPS > 30 ? 30 : this.camConfig.maxFPS;
+        const videoResolutions = [];
+        const maxFPS = this.camConfig.maxFPS > 30 ? 30 : this.camConfig.maxFPS;
 
         if (this.camConfig.maxWidth >= 320) {
             if (this.camConfig.maxHeight >= 240) {
@@ -126,7 +126,7 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
             }
         }
 
-        let options: CameraStreamingOptions = {
+        const options: CameraStreamingOptions = {
             proxy: false, // Requires RTP/RTCP MUX Proxy
             disable_audio_proxy: false, // If proxy = true, you can opt out audio proxy via this
             srtp: true, // Supports SRTP AES_CM_128_HMAC_SHA1_80 encryption
@@ -209,31 +209,26 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
             height: request.height,
         };
         let ffmpegCommand = this.camConfig.ffmpegCommandLine.snapshot.map((s) =>
-            s.replace(/\$\{(.*?)\}/g, (_, word) => {
+            s.replace(/\$\{(.*?)}/g, (_, word) => {
                 return params[word];
             })
         );
 
-        this.FLogger.debug('Snapshot run: ffmpeg ' + ffmpegCommand.join(' '));
+        this.FLogger.debug(`Snapshot run: ffmpeg ${ffmpegCommand.join(' ')}`);
         let ffmpeg = spawn('ffmpeg', ffmpegCommand, { env: process.env });
 
         var imageBuffer = Buffer.alloc(0);
 
-        ffmpeg.stdout.on('data', function (data) {
-            imageBuffer = Buffer.concat([imageBuffer, <Buffer>data]);
-        });
-        ffmpeg.on('close', function (code) {
-            callback(undefined, imageBuffer);
-        });
+        ffmpeg.stdout.on('data', data => imageBuffer = Buffer.concat([imageBuffer, <Buffer>data]));
+        ffmpeg.on('close', code => callback(undefined, imageBuffer));
     }
 
     public prepareStream(request: PrepareStreamRequest, callback: PrepareStreamCallback): void {
         let sessionInfo: Partial<SessionInfo> = {};
 
         const sessionID: SessionIdentifier = request.sessionID;
-        const targetAddress = request.targetAddress;
 
-        sessionInfo.address = targetAddress;
+        sessionInfo.address = request.targetAddress;
         let response: Partial<PrepareStreamResponse> = {};
 
         let videoInfo = request.video;
@@ -297,11 +292,11 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
     }
 
     public handleStreamRequest(request: StreamingRequest, callback: StreamRequestCallback): void {
-        var sessionId = request.sessionID;
+        const sessionId = request.sessionID;
         switch (request.type) {
             case StreamRequestTypes.START: {
-                var sessionInfo = this.pendingSessions[sessionId];
-                this.FLogger.debug('Session Request:' + JSON.stringify(request, undefined, 2));
+                const sessionInfo = this.pendingSessions[sessionId];
+                this.FLogger.debug(`Session Request: ${JSON.stringify(request, undefined, 2)}`);
                 if (sessionInfo) {
                     let width = 1280;
                     let height = 720;
@@ -337,7 +332,7 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                         mtu,
                     };
 
-                    let ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => params[word]));
+                    let ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map((s) => s.replace(/\$\{(.*?)}/g, (_, word) => params[word]));
 
                     if (this.camConfig.enableAudio && request.audio != null) {
                         let params = {
@@ -352,7 +347,7 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                             audiokey: sessionInfo.audioSRTP?.toString('base64'),
                         };
 
-                        ffmpegCommand = ffmpegCommand.concat(this.camConfig.ffmpegCommandLine.streamAudio.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => params[word])));
+                        ffmpegCommand = ffmpegCommand.concat(this.camConfig.ffmpegCommandLine.streamAudio.map((s) => s.replace(/\$\{(.*?)}/g, (_, word) => params[word])));
                     }
 
                     // this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
@@ -368,16 +363,16 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                         //this.FLogger.debug("FFMPEG:" + data.toString('utf8'));
                     });
                     ffmpeg.on('error', (error) => {
-                        this.FLogger.error('[Video] Failed to start video stream: ' + error.message);
+                        this.FLogger.error(`[Video] Failed to start video stream: ${error.message}`);
                         callback(new Error('ffmpeg process creation failed!'));
                     });
                     ffmpeg.on('exit', (code, signal) => {
-                        const message = '[Video] ffmpeg exited with code: ' + code + ' and signal: ' + signal;
+                        const message = `[Video] ffmpeg exited with code: ${code} and signal: ${signal}`;
 
                         if (code == null || code === 255) {
-                            this.FLogger.debug(message + ' (Video stream stopped!)');
+                            this.FLogger.debug(`${message} (Video stream stopped!)`);
                         } else {
-                            this.FLogger.error(message + ' (error)');
+                            this.FLogger.error(`${message} (error)`);
 
                             if (!started) {
                                 callback(new Error(message));
@@ -396,10 +391,12 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                     break;
                 }
             }
+                // break; // here should be break
 
             case StreamRequestTypes.RECONFIGURE:
                 callback();
                 break;
+
             case StreamRequestTypes.STOP:
                 this.stopStreaming(sessionId);
                 callback();

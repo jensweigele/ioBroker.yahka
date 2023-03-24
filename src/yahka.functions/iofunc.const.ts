@@ -1,4 +1,4 @@
-import { IInOutFunction } from "./iofunc.base";
+import { IInOutFunction } from './iofunc.base';
 export class TIoBrokerInOutFunction_Const implements IInOutFunction {
 
     static create(adapter: ioBroker.Adapter, parameters: any): IInOutFunction {

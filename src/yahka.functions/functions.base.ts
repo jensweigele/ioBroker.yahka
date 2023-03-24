@@ -1,13 +1,13 @@
-import { IInOutFunction, IInOutChangeNotify, ILogger } from "../yahka.interfaces";
-import { ISubscriptionRequestor, ISubscriptionRequest } from "../yahka.ioBroker-adapter";
-import { YahkaLogger } from "../shared/yahka.logger";
+import { IInOutFunction, IInOutChangeNotify, ILogger } from '../yahka.interfaces';
+import { ISubscriptionRequestor, ISubscriptionRequest } from '../yahka.ioBroker-adapter';
+import { YahkaLogger } from '../shared/yahka.logger';
 
 export abstract class TYahkaFunctionBase implements ISubscriptionRequestor {
     public subscriptionRequests: ISubscriptionRequest[] = [];
     protected stateCache = new Map<string, ioBroker.State>();
     protected log: ILogger;
 
-    constructor(protected adapter: ioBroker.Adapter, private logIdentifier: string = "") {
+    constructor(protected adapter: ioBroker.Adapter, private logIdentifier: string = '') {
         this.log = new YahkaLogger(this.adapter, this.logIdentifier);
     }
 
@@ -46,7 +46,7 @@ export abstract class TYahkaFunctionBase implements ISubscriptionRequestor {
         return needUpdate;
     }
     subscriptionEvent(stateName: string, ioState: ioBroker.State, callback: IInOutChangeNotify) {
-        this.log.debug('change event from ioBroker via [' + stateName + ']' + JSON.stringify(ioState));
+        this.log.debug(`change event from ioBroker via [${stateName}]${JSON.stringify(ioState)}`);
         if (this.shouldStateBeFiltered(stateName, ioState)) {
             this.log.debug('state was filtered - notification is canceled');
             return;

@@ -17,7 +17,7 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: '',
                         src: ['**', '!src/**', '!node_modules/**'],
-                        dest: destinationDir + 'node_modules/iobroker.yahka/'
+                        dest: `${destinationDir}node_modules/iobroker.yahka/`
                     }
                 ]
             }
@@ -29,7 +29,7 @@ module.exports = function (grunt) {
         exec: {
             refreshIOBroker: {
                 cwd: destinationDir,
-                command: './iobroker upload yahka'
+                command: 'iob upload yahka'
             },
             NPMPublish: {
                 cwd: '',
@@ -64,10 +64,12 @@ module.exports = function (grunt) {
     grunt.registerTask('NPMPublish', [
         'webpack',
         'exec:NPMPublish'
-    ])
+    ]);
 
     grunt.registerTask('NPMBeta', [
         'webpack',
         'exec:NPMBeta'
-    ])
+    ]);
+
+    grunt.registerTask('default', ['buildOnly']);
 };

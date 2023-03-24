@@ -1,4 +1,4 @@
-import { IInOutFunction, TIoBrokerInOutFunction_StateBase, IInOutChangeNotify } from "./iofunc.base";
+import { IInOutFunction, TIoBrokerInOutFunction_StateBase, IInOutChangeNotify } from './iofunc.base';
 
 export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition extends TIoBrokerInOutFunction_StateBase {
     protected lastWorkingState: boolean = false;
@@ -48,11 +48,11 @@ export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition exten
             return;
 
         if (stateName == this.workingItem) {
-            this.adapter.log.debug('[' + this.stateName + '] got a working item change event: ' + JSON.stringify(ioState));
+            this.adapter.log.debug(`[${this.stateName}] got a working item change event: ${JSON.stringify(ioState)}`);
             this.lastWorkingState = Boolean(ioState?.val);
             this.setupDeferredChangeEvent(callback);
         } else if (stateName == this.stateName) {
-            this.adapter.log.debug('[' + this.stateName + '] got a target state change event:' + JSON.stringify(ioState));
+            this.adapter.log.debug(`[${this.stateName}] got a target state change event:${JSON.stringify(ioState)}`);
             if (ioState.ack) {
                 this.lastAcknowledgedValue = ioState?.val;
                 this.setupDeferredChangeEvent(callback);
@@ -72,10 +72,10 @@ export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition exten
 
     deferredChangeEvent(callback: IInOutChangeNotify) {
         if (!this.lastWorkingState) { // only fire callback if the covering does not move
-            this.adapter.log.debug('[' + this.stateName + '] firing target state change event:' + JSON.stringify(this.lastAcknowledgedValue));
+            this.adapter.log.debug(`[${this.stateName}] firing target state change event:${JSON.stringify(this.lastAcknowledgedValue)}`);
             callback(this.lastAcknowledgedValue);
         } else {
-            this.adapter.log.debug('[' + this.stateName + '] canceling target state change event - covering is working');
+            this.adapter.log.debug(`[${this.stateName}] canceling target state change event - covering is working`);
         }
     }
 }

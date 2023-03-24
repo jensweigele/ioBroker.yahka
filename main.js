@@ -1105,7 +1105,6 @@ module.exports = function(homebridge, options) {
   return CommunityTypes;
 };
 
-
 /***/ }),
 
 /***/ "./main.ts":
@@ -1189,16 +1188,16 @@ class YahkaLogger {
         this.logIdentifier = logIdentifier;
     }
     debug(message) {
-        return this.adapter.log.debug("[" + this.logIdentifier + "] " + message);
+        return this.adapter.log.debug(`[${this.logIdentifier}] ${message}`);
     }
     info(message) {
-        return this.adapter.log.info("[" + this.logIdentifier + "] " + message);
+        return this.adapter.log.info(`[${this.logIdentifier}] ${message}`);
     }
     warn(message) {
-        return this.adapter.log.warn("[" + this.logIdentifier + "] " + message);
+        return this.adapter.log.warn(`[${this.logIdentifier}] ${message}`);
     }
     error(message) {
-        return this.adapter.log.error("[" + this.logIdentifier + "] " + message);
+        return this.adapter.log.error(`[${this.logIdentifier}] ${message}`);
     }
 }
 exports.YahkaLogger = YahkaLogger;
@@ -1252,10 +1251,10 @@ function importHAPCommunityTypesAndFixes() {
     for (let type in communityTypes) {
         let typeFct = communityTypes[type];
         if (typeFct.length == 0) { // characteristic
-            hap_nodejs_1.Characteristic["Community: " + type] = typeFct;
+            hap_nodejs_1.Characteristic[`Community: ${type}`] = typeFct;
         }
         else if (typeFct.length == 2) { // service
-            hap_nodejs_1.Service["Community: " + type] = typeFct;
+            hap_nodejs_1.Service[`Community: ${type}`] = typeFct;
         }
     }
     hapTypesImported = true;
@@ -1277,7 +1276,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIOBrokerConversionBase = void 0;
 const functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
 class TIOBrokerConversionBase extends functions_base_1.TYahkaFunctionBase {
-    constructor(adapter, logIdentifier = "") {
+    constructor(adapter, logIdentifier = '') {
         super(adapter, logIdentifier);
     }
     static castToNumber(value) {
@@ -1339,7 +1338,7 @@ class TIoBrokerConversion_HomematicDirection_To_PositionState extends conversion
                 result = hap_nodejs_1.Characteristic.PositionState.STOPPED;
                 break;
         }
-        this.adapter.log.debug('HomematicDirectionToHomekitPositionState.toHomeKit, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
+        this.adapter.log.debug(`HomematicDirectionToHomekitPositionState.toHomeKit, from ${JSON.stringify(value)}[${typeof value}] to ${JSON.stringify(result)}`);
         return result;
     }
     toIOBroker(value) {
@@ -1359,7 +1358,7 @@ class TIoBrokerConversion_HomematicDirection_To_PositionState extends conversion
                 result = 0;
                 break;
         }
-        this.adapter.log.debug('HomematicDirectionToHomekitPositionState.toIOBroker, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
+        this.adapter.log.debug(`HomematicDirectionToHomekitPositionState.toIOBroker, from ${JSON.stringify(value)}[${typeof value}] to ${JSON.stringify(result)}`);
         return result;
     }
 }
@@ -1385,7 +1384,7 @@ class TIoBrokerConversion_HomematicControlMode_To_CoolingState extends conversio
                 result = hap_nodejs_1.Characteristic.TargetHeatingCoolingState.OFF;
                 break;
         }
-        this.adapter.log.debug('HomematicDirectionToHomekitHeatingCoolingState.toHomeKit, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
+        this.adapter.log.debug(`HomematicDirectionToHomekitHeatingCoolingState.toHomeKit, from ${JSON.stringify(value)}[${typeof value}] to ${JSON.stringify(result)}`);
         return result;
     }
     toIOBroker(value) {
@@ -1408,7 +1407,7 @@ class TIoBrokerConversion_HomematicControlMode_To_CoolingState extends conversio
                 result = 0;
                 break;
         }
-        this.adapter.log.debug('HomematicDirectionToHomekitHeatingCoolingState.toIOBroker, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
+        this.adapter.log.debug(`HomematicDirectionToHomekitHeatingCoolingState.toIOBroker, from ${JSON.stringify(value)}[${typeof value}] to ${JSON.stringify(result)}`);
         return result;
     }
 }
@@ -1429,24 +1428,24 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Inverse = void 0;
 const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 class TIoBrokerConversion_Inverse extends conversion_base_1.TIOBrokerConversionBase {
-    constructor(adapter, maxValue) {
-        super(adapter);
-        this.maxValue = maxValue;
-    }
     static create(adapter, parameters) {
         let maxValue = conversion_base_1.TIOBrokerConversionBase.castToNumber(parameters);
         return new TIoBrokerConversion_Inverse(adapter, maxValue);
     }
+    constructor(adapter, maxValue) {
+        super(adapter);
+        this.maxValue = maxValue;
+    }
     toHomeKit(value) {
         let num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
         let newValue = this.maxValue - num;
-        this.adapter.log.debug('inverse: converting value to homekit: ' + value + ' to ' + newValue);
+        this.adapter.log.debug(`inverse: converting value to homekit: ${value} to ${newValue}`);
         return newValue;
     }
     toIOBroker(value) {
         let num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
         let newValue = this.maxValue - num;
-        this.adapter.log.debug('inverse: converting value to ioBroker: ' + value + ' to ' + newValue);
+        this.adapter.log.debug(`inverse: converting value to ioBroker: ${value} to ${newValue}`);
         return newValue;
     }
 }
@@ -1491,23 +1490,23 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Map = exports.isMultiStateParameter = void 0;
 const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 function isMultiStateParameter(params) {
-    return "mappings" in params;
+    return 'mappings' in params;
 }
 exports.isMultiStateParameter = isMultiStateParameter;
 class TIoBrokerConversion_Map extends conversion_base_1.TIOBrokerConversionBase {
-    constructor(adapter, parameters) {
-        super(adapter, "TIoBrokerConversion_Map");
-        this.parameters = parameters;
-        this.mappingArrayToHomeKit = new Map();
-        this.mappingArrayToIOBroker = new Map();
-        this.jsonReplacer = (key, value) => String(value);
-        this.buildMappingArray();
-    }
     static create(adapter, parameters) {
         if (!isMultiStateParameter(parameters)) {
             return undefined;
         }
         return new TIoBrokerConversion_Map(adapter, parameters);
+    }
+    constructor(adapter, parameters) {
+        super(adapter, 'TIoBrokerConversion_Map');
+        this.parameters = parameters;
+        this.mappingArrayToHomeKit = new Map();
+        this.mappingArrayToIOBroker = new Map();
+        this.jsonReplacer = (key, value) => String(value);
+        this.buildMappingArray();
     }
     buildMappingArray() {
         for (let mapDef of this.parameters.mappings) {
@@ -1593,42 +1592,42 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Scale_Rounded = exports.TIoBrokerConversion_Scale = void 0;
 const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 class TIoBrokerConversion_Scale extends conversion_base_1.TIOBrokerConversionBase {
+    static isScaleParameter(parameters) {
+        const castedParam = parameters;
+        return castedParam['homekit.min'] !== undefined &&
+            castedParam['homekit.max'] !== undefined &&
+            castedParam['iobroker.min'] !== undefined &&
+            castedParam['iobroker.max'] !== undefined;
+    }
     constructor(adapter, parameters, logName) {
         super(adapter);
         this.parameters = parameters;
         this.logName = logName;
         if (!TIoBrokerConversion_Scale.isScaleParameter(parameters)) {
             this.parameters = {
-                "homekit.min": 0,
-                "homekit.max": 1,
-                "iobroker.min": 0,
-                "iobroker.max": 1
+                'homekit.min': 0,
+                'homekit.max': 1,
+                'iobroker.min': 0,
+                'iobroker.max': 1
             };
         }
     }
-    static isScaleParameter(parameters) {
-        const castedParam = parameters;
-        return castedParam["homekit.min"] !== undefined &&
-            castedParam["homekit.max"] !== undefined &&
-            castedParam["iobroker.min"] !== undefined &&
-            castedParam["iobroker.max"] !== undefined;
-    }
     toHomeKit(value) {
         let num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
-        let homeKitMax = this.parameters["homekit.max"];
-        let ioBrokerMax = this.parameters["iobroker.max"];
-        let homeKitMin = this.parameters["homekit.min"];
-        let ioBrokerMin = this.parameters["iobroker.min"];
+        let homeKitMax = this.parameters['homekit.max'];
+        let ioBrokerMax = this.parameters['iobroker.max'];
+        let homeKitMin = this.parameters['homekit.min'];
+        let ioBrokerMin = this.parameters['iobroker.min'];
         let newValue = ((num - ioBrokerMin) / (ioBrokerMax - ioBrokerMin)) * (homeKitMax - homeKitMin) + homeKitMin;
         this.adapter.log.debug(`${this.logName}: converting value to homekit: ${value} to ${newValue}`);
         return newValue;
     }
     toIOBroker(value) {
         let num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
-        let homeKitMax = this.parameters["homekit.max"];
-        let ioBrokerMax = this.parameters["iobroker.max"];
-        let homeKitMin = this.parameters["homekit.min"];
-        let ioBrokerMin = this.parameters["iobroker.min"];
+        let homeKitMax = this.parameters['homekit.max'];
+        let ioBrokerMax = this.parameters['iobroker.max'];
+        let homeKitMin = this.parameters['homekit.min'];
+        let ioBrokerMin = this.parameters['iobroker.min'];
         let newValue = ((num - homeKitMin) / (homeKitMax - homeKitMin)) * (ioBrokerMax - ioBrokerMin) + ioBrokerMin;
         this.adapter.log.debug(`${this.logName}: converting value to ioBroker: ${value} to ${newValue}`);
         return newValue;
@@ -1660,16 +1659,10 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Script = void 0;
 const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 class TIoBrokerConversion_Script extends conversion_base_1.TIOBrokerConversionBase {
-    constructor(adapter, parameters) {
-        super(adapter);
-        this.parameters = parameters;
-        this.toHKFunction = new Function("value", this.parameters.toHomeKit);
-        this.toIOFunction = new Function("value", this.parameters.toIOBroker);
-    }
     static isScriptParameter(parameters) {
         const castedParam = parameters;
-        return castedParam["toHomeKit"] !== undefined &&
-            castedParam["toIOBroker"] !== undefined;
+        return castedParam['toHomeKit'] !== undefined &&
+            castedParam['toIOBroker'] !== undefined;
     }
     static create(adapter, parameters) {
         let params;
@@ -1678,20 +1671,26 @@ class TIoBrokerConversion_Script extends conversion_base_1.TIOBrokerConversionBa
         }
         else {
             params = {
-                toHomeKit: "return value",
-                toIOBroker: "return value"
+                toHomeKit: 'return value',
+                toIOBroker: 'return value'
             };
         }
         return new TIoBrokerConversion_Script(adapter, params);
     }
+    constructor(adapter, parameters) {
+        super(adapter);
+        this.parameters = parameters;
+        this.toHKFunction = new Function('value', this.parameters.toHomeKit);
+        this.toIOFunction = new Function('value', this.parameters.toIOBroker);
+    }
     toHomeKit(value) {
         let newValue = this.toHKFunction(value);
-        this.adapter.log.debug('script: converting value to homekit: ' + value + ' to ' + newValue);
+        this.adapter.log.debug(`script: converting value to homekit: ${value} to ${newValue}`);
         return newValue;
     }
     toIOBroker(value) {
         let newValue = this.toIOFunction(value);
-        this.adapter.log.debug('script: converting value to ioBroker: ' + value + ' to ' + newValue);
+        this.adapter.log.debug(`script: converting value to ioBroker: ${value} to ${newValue}`);
         return newValue;
     }
 }
@@ -1712,7 +1711,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TYahkaFunctionBase = void 0;
 const yahka_logger_1 = __webpack_require__(/*! ../shared/yahka.logger */ "./shared/yahka.logger.ts");
 class TYahkaFunctionBase {
-    constructor(adapter, logIdentifier = "") {
+    constructor(adapter, logIdentifier = '') {
         this.adapter = adapter;
         this.logIdentifier = logIdentifier;
         this.subscriptionRequests = [];
@@ -1752,7 +1751,7 @@ class TYahkaFunctionBase {
         return needUpdate;
     }
     subscriptionEvent(stateName, ioState, callback) {
-        this.log.debug('change event from ioBroker via [' + stateName + ']' + JSON.stringify(ioState));
+        this.log.debug(`change event from ioBroker via [${stateName}]${JSON.stringify(ioState)}`);
         if (this.shouldStateBeFiltered(stateName, ioState)) {
             this.log.debug('state was filtered - notification is canceled');
             return;
@@ -1787,12 +1786,12 @@ exports.conversionFactory = {};
 exports.functionFactory = {
     createInOutFunction: function (adapter, inOutFunction, inOutParameters) {
         if (!(inOutFunction in exports.inOutFactory))
-            return exports.inOutFactory["const"](adapter, inOutParameters);
+            return exports.inOutFactory['const'](adapter, inOutParameters);
         return exports.inOutFactory[inOutFunction](adapter, inOutParameters);
     },
     createConversionFunction: function (adapter, conversionFunction, conversionParameters) {
         if (!(conversionFunction in exports.conversionFactory))
-            return exports.conversionFactory["passthrough"](adapter, conversionParameters);
+            return exports.conversionFactory['passthrough'](adapter, conversionParameters);
         return exports.conversionFactory[conversionFunction](adapter, conversionParameters);
     }
 };
@@ -1823,36 +1822,36 @@ const conversion_map_1 = __webpack_require__(/*! ./conversion.map */ "./yahka.fu
 const iofunc_homematic_dimmer_1 = __webpack_require__(/*! ./iofunc.homematic.dimmer */ "./yahka.functions/iofunc.homematic.dimmer.ts");
 const conversion_round_1 = __webpack_require__(/*! ./conversion.round */ "./yahka.functions/conversion.round.ts");
 const conversion_invert_1 = __webpack_require__(/*! ./conversion.invert */ "./yahka.functions/conversion.invert.ts");
-functions_factory_1.inOutFactory["ioBroker.State"] = iofunc_state_1.TIoBrokerInOutFunction_State.create;
-functions_factory_1.inOutFactory["ioBroker.MultiState"] = iofunc_multi_state_1.TIoBrokerInOutFunction_MultiState.create;
-functions_factory_1.inOutFactory["ioBroker.State.Defered"] = iofunc_state_1.TIoBrokerInOutFunction_StateDeferred.create;
-functions_factory_1.inOutFactory["ioBroker.State.OnlyACK"] = iofunc_state_1.TIoBrokerInOutFunction_State_OnlyACK.create;
-functions_factory_1.inOutFactory["const"] = iofunc_const_1.TIoBrokerInOutFunction_Const.create;
-functions_factory_1.inOutFactory["ioBroker.homematic.WindowCovering.TargetPosition"] = iofunc_homematic_covering_1.TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.create;
-functions_factory_1.inOutFactory["ioBroker.homematic.Dimmer.On"] = iofunc_homematic_dimmer_1.TIoBrokerInOutFunction_Homematic_Dimmer_On.create;
-functions_factory_1.inOutFactory["ioBroker.homematic.Dimmer.Brightness"] = iofunc_homematic_dimmer_1.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.create;
-functions_factory_1.conversionFactory["passthrough"] = (adapter, param) => new conversion_passthrough_1.TIoBrokerConversion_Passthrough(adapter);
-functions_factory_1.conversionFactory["HomematicDirectionToHomekitPositionState"] = (adapter, param) => new conversion_homekit_homematic_1.TIoBrokerConversion_HomematicDirection_To_PositionState(adapter);
-functions_factory_1.conversionFactory["HomematicControlModeToHomekitHeathingCoolingState"] = (adapter, param) => new conversion_homekit_homematic_1.TIoBrokerConversion_HomematicControlMode_To_CoolingState(adapter);
-functions_factory_1.conversionFactory["level255"] = (adapter, param) => new conversion_scale_1.TIoBrokerConversion_Scale(adapter, {
-    "homekit.min": 0,
-    "homekit.max": 100,
-    "iobroker.min": 0,
-    "iobroker.max": 255
+functions_factory_1.inOutFactory['ioBroker.State'] = iofunc_state_1.TIoBrokerInOutFunction_State.create;
+functions_factory_1.inOutFactory['ioBroker.MultiState'] = iofunc_multi_state_1.TIoBrokerInOutFunction_MultiState.create;
+functions_factory_1.inOutFactory['ioBroker.State.Defered'] = iofunc_state_1.TIoBrokerInOutFunction_StateDeferred.create;
+functions_factory_1.inOutFactory['ioBroker.State.OnlyACK'] = iofunc_state_1.TIoBrokerInOutFunction_State_OnlyACK.create;
+functions_factory_1.inOutFactory['const'] = iofunc_const_1.TIoBrokerInOutFunction_Const.create;
+functions_factory_1.inOutFactory['ioBroker.homematic.WindowCovering.TargetPosition'] = iofunc_homematic_covering_1.TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.create;
+functions_factory_1.inOutFactory['ioBroker.homematic.Dimmer.On'] = iofunc_homematic_dimmer_1.TIoBrokerInOutFunction_Homematic_Dimmer_On.create;
+functions_factory_1.inOutFactory['ioBroker.homematic.Dimmer.Brightness'] = iofunc_homematic_dimmer_1.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.create;
+functions_factory_1.conversionFactory['passthrough'] = (adapter, param) => new conversion_passthrough_1.TIoBrokerConversion_Passthrough(adapter);
+functions_factory_1.conversionFactory['HomematicDirectionToHomekitPositionState'] = (adapter, param) => new conversion_homekit_homematic_1.TIoBrokerConversion_HomematicDirection_To_PositionState(adapter);
+functions_factory_1.conversionFactory['HomematicControlModeToHomekitHeathingCoolingState'] = (adapter, param) => new conversion_homekit_homematic_1.TIoBrokerConversion_HomematicControlMode_To_CoolingState(adapter);
+functions_factory_1.conversionFactory['level255'] = (adapter, param) => new conversion_scale_1.TIoBrokerConversion_Scale(adapter, {
+    'homekit.min': 0,
+    'homekit.max': 100,
+    'iobroker.min': 0,
+    'iobroker.max': 255
 }, 'level255');
-functions_factory_1.conversionFactory["scaleInt"] = (adapter, param) => new conversion_scale_1.TIoBrokerConversion_Scale_Rounded(adapter, param, 'scaleInt');
-functions_factory_1.conversionFactory["scaleFloat"] = (adapter, param) => new conversion_scale_1.TIoBrokerConversion_Scale(adapter, param, 'scaleFloat');
-functions_factory_1.conversionFactory["hue"] = (adapter, param) => new conversion_scale_1.TIoBrokerConversion_Scale(adapter, {
-    "homekit.min": 0,
-    "homekit.max": 360,
-    "iobroker.min": 0,
-    "iobroker.max": 65535
+functions_factory_1.conversionFactory['scaleInt'] = (adapter, param) => new conversion_scale_1.TIoBrokerConversion_Scale_Rounded(adapter, param, 'scaleInt');
+functions_factory_1.conversionFactory['scaleFloat'] = (adapter, param) => new conversion_scale_1.TIoBrokerConversion_Scale(adapter, param, 'scaleFloat');
+functions_factory_1.conversionFactory['hue'] = (adapter, param) => new conversion_scale_1.TIoBrokerConversion_Scale(adapter, {
+    'homekit.min': 0,
+    'homekit.max': 360,
+    'iobroker.min': 0,
+    'iobroker.max': 65535
 }, 'hue');
-functions_factory_1.conversionFactory["inverse"] = conversion_inverse_1.TIoBrokerConversion_Inverse.create;
-functions_factory_1.conversionFactory["script"] = (adapter, param) => new conversion_script_1.TIoBrokerConversion_Script(adapter, param);
-functions_factory_1.conversionFactory["map"] = conversion_map_1.TIoBrokerConversion_Map.create;
-functions_factory_1.conversionFactory["round"] = (adapter, _param) => new conversion_round_1.TIoBrokerConversion_Round(adapter);
-functions_factory_1.conversionFactory["invert"] = (adapter, _param) => new conversion_invert_1.TIoBrokerConversion_Invert(adapter);
+functions_factory_1.conversionFactory['inverse'] = conversion_inverse_1.TIoBrokerConversion_Inverse.create;
+functions_factory_1.conversionFactory['script'] = (adapter, param) => new conversion_script_1.TIoBrokerConversion_Script(adapter, param);
+functions_factory_1.conversionFactory['map'] = conversion_map_1.TIoBrokerConversion_Map.create;
+functions_factory_1.conversionFactory['round'] = (adapter, _param) => new conversion_round_1.TIoBrokerConversion_Round(adapter);
+functions_factory_1.conversionFactory['invert'] = (adapter, _param) => new conversion_invert_1.TIoBrokerConversion_Invert(adapter);
 
 
 /***/ }),
@@ -1875,7 +1874,7 @@ class TIoBrokerInOutFunctionBase extends functions_base_1.TYahkaFunctionBase {
         this.errorForHomeKit = null;
     }
     fromIOBroker(callback) {
-        this.log.debug('fromIOBroker event - delivering cached value (' + JSON.stringify(this.valueForHomeKit) + ")");
+        this.log.debug(`fromIOBroker event - delivering cached value (${JSON.stringify(this.valueForHomeKit)})`);
         callback(null, this.valueForHomeKit);
     }
     toIOBroker(plainIoValue, callback) {
@@ -1925,15 +1924,15 @@ class TIoBrokerInOutFunction_StateBase {
         return ioState === null || ioState === void 0 ? void 0 : ioState.val;
     }
     toIOBroker(plainIoValue, callback) {
-        this.adapter.log.debug('writing state to ioBroker [' + this.stateName + ']: ' + JSON.stringify(plainIoValue));
+        this.adapter.log.debug(`writing state to ioBroker [${this.stateName}]: ${JSON.stringify(plainIoValue)}`);
         this.adapter.getForeignState(this.stateName, (error, ioState) => {
             let value = this.getValueOnRead(ioState);
             let valueChanged = value !== plainIoValue;
-            this.adapter.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(plainIoValue) + ' = ' + valueChanged);
+            this.adapter.log.debug(`checking value change: ${JSON.stringify(value)} != ${JSON.stringify(plainIoValue)} = ${valueChanged}`);
             if (valueChanged) {
                 this.adapter.setForeignState(this.stateName, plainIoValue, false, (error) => {
                     if (error)
-                        this.adapter.log.error('setForeignState error [' + this.stateName + '] to [' + JSON.stringify(plainIoValue) + ']: ' + error);
+                        this.adapter.log.error(`setForeignState error [${this.stateName}] to [${JSON.stringify(plainIoValue)}]: ${error}`);
                     callback();
                 });
             }
@@ -1943,17 +1942,17 @@ class TIoBrokerInOutFunction_StateBase {
         });
     }
     fromIOBroker(callback) {
-        this.adapter.log.debug('reading state from ioBroker [' + this.stateName + ']');
+        this.adapter.log.debug(`reading state from ioBroker [${this.stateName}]`);
         this.adapter.getForeignState(this.stateName, (error, ioState) => {
-            this.adapter.log.debug('read state from ioBroker [' + this.stateName + ']: ' + JSON.stringify(ioState));
+            this.adapter.log.debug(`read state from ioBroker [${this.stateName}]: ${JSON.stringify(ioState)}`);
             if (error)
-                this.adapter.log.error('... with error: ' + error);
+                this.adapter.log.error(`... with error: ${error}`);
             let value = this.getValueOnRead(ioState);
             callback(error, value);
         });
     }
     subscriptionEvent(stateName, ioState, callback) {
-        this.adapter.log.debug('change event from ioBroker via [' + this.stateName + ']' + JSON.stringify(ioState));
+        this.adapter.log.debug(`change event from ioBroker via [${this.stateName}]${JSON.stringify(ioState)}`);
         let newValue = this.getValueOnNotify(ioState);
         if (newValue != null)
             this.executeCallback(callback, newValue);
@@ -1975,7 +1974,7 @@ class TIoBrokerInOutFunction_StateBase {
         this.debounceTimer = null;
     }
     deferredChangeEvent(callback, plainIOValue) {
-        this.adapter.log.debug('[' + this.stateName + '] firing deferred change event:' + JSON.stringify(plainIOValue));
+        this.adapter.log.debug(`[${this.stateName}] firing deferred change event:${JSON.stringify(plainIOValue)}`);
         callback(plainIOValue);
     }
 }
@@ -1995,12 +1994,12 @@ exports.TIoBrokerInOutFunction_StateBase = TIoBrokerInOutFunction_StateBase;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_Const = void 0;
 class TIoBrokerInOutFunction_Const {
+    static create(adapter, parameters) {
+        return new TIoBrokerInOutFunction_Const(adapter, parameters);
+    }
     constructor(adapter, parameters) {
         this.adapter = adapter;
         this.parameters = parameters;
-    }
-    static create(adapter, parameters) {
-        return new TIoBrokerInOutFunction_Const(adapter, parameters);
     }
     toIOBroker(ioValue, callback) {
         callback();
@@ -2026,22 +2025,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = void 0;
 const iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
 class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition extends iofunc_base_1.TIoBrokerInOutFunction_StateBase {
-    constructor(adapter, stateName, workingItem) {
-        super(adapter, stateName, 0);
-        this.adapter = adapter;
-        this.stateName = stateName;
-        this.workingItem = workingItem;
-        this.lastWorkingState = false;
-        this.lastAcknowledgedValue = undefined;
-        this.debounceTimer = null;
-        this.addSubscriptionRequest(workingItem);
-        adapter.getForeignState(workingItem, (error, ioState) => {
-            if (ioState)
-                this.lastWorkingState = Boolean(ioState === null || ioState === void 0 ? void 0 : ioState.val);
-            else
-                this.lastWorkingState = undefined;
-        });
-    }
     static create(adapter, parameters) {
         let p;
         if (typeof parameters === 'string')
@@ -2063,16 +2046,32 @@ class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition extends iofu
         }
         return new TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition(adapter, stateName, workingItemName);
     }
+    constructor(adapter, stateName, workingItem) {
+        super(adapter, stateName, 0);
+        this.adapter = adapter;
+        this.stateName = stateName;
+        this.workingItem = workingItem;
+        this.lastWorkingState = false;
+        this.lastAcknowledgedValue = undefined;
+        this.debounceTimer = null;
+        this.addSubscriptionRequest(workingItem);
+        adapter.getForeignState(workingItem, (error, ioState) => {
+            if (ioState)
+                this.lastWorkingState = Boolean(ioState === null || ioState === void 0 ? void 0 : ioState.val);
+            else
+                this.lastWorkingState = undefined;
+        });
+    }
     subscriptionEvent(stateName, ioState, callback) {
         if (!ioState)
             return;
         if (stateName == this.workingItem) {
-            this.adapter.log.debug('[' + this.stateName + '] got a working item change event: ' + JSON.stringify(ioState));
+            this.adapter.log.debug(`[${this.stateName}] got a working item change event: ${JSON.stringify(ioState)}`);
             this.lastWorkingState = Boolean(ioState === null || ioState === void 0 ? void 0 : ioState.val);
             this.setupDeferredChangeEvent(callback);
         }
         else if (stateName == this.stateName) {
-            this.adapter.log.debug('[' + this.stateName + '] got a target state change event:' + JSON.stringify(ioState));
+            this.adapter.log.debug(`[${this.stateName}] got a target state change event:${JSON.stringify(ioState)}`);
             if (ioState.ack) {
                 this.lastAcknowledgedValue = ioState === null || ioState === void 0 ? void 0 : ioState.val;
                 this.setupDeferredChangeEvent(callback);
@@ -2089,11 +2088,11 @@ class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition extends iofu
     }
     deferredChangeEvent(callback) {
         if (!this.lastWorkingState) { // only fire callback if the covering does not move
-            this.adapter.log.debug('[' + this.stateName + '] firing target state change event:' + JSON.stringify(this.lastAcknowledgedValue));
+            this.adapter.log.debug(`[${this.stateName}] firing target state change event:${JSON.stringify(this.lastAcknowledgedValue)}`);
             callback(this.lastAcknowledgedValue);
         }
         else {
-            this.adapter.log.debug('[' + this.stateName + '] canceling target state change event - covering is working');
+            this.adapter.log.debug(`[${this.stateName}] canceling target state change event - covering is working`);
         }
     }
 }
@@ -2120,16 +2119,10 @@ function isHomematic_Dimmer_Parameter(value) {
         return false;
     if (!(0, util_1.isObject)(value))
         return false;
-    return (0, yahka_utils_1.propertyExists)(value, "levelState");
+    return (0, yahka_utils_1.propertyExists)(value, 'levelState');
 }
 exports.isHomematic_Dimmer_Parameter = isHomematic_Dimmer_Parameter;
 class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends iofunc_base_1.TIoBrokerInOutFunctionBase {
-    constructor(adapter, functionName, parameters) {
-        super(adapter, functionName + "[" + parameters.levelState + "]");
-        this.parameters = parameters;
-        this.lastOnLevel = { val: undefined, ack: false, ts: undefined, lc: undefined, from: undefined };
-        this.addSubscriptionRequest(parameters.levelState);
-    }
     static parseParameters(parameters) {
         if (!isHomematic_Dimmer_Parameter(parameters)) {
             return undefined;
@@ -2137,11 +2130,17 @@ class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends iofunc_base_1.TIoBrok
         ;
         return parameters;
     }
+    constructor(adapter, functionName, parameters) {
+        super(adapter, `${functionName}[${parameters.levelState}]`);
+        this.parameters = parameters;
+        this.lastOnLevel = { val: undefined, ack: false, ts: undefined, lc: undefined, from: undefined };
+        this.addSubscriptionRequest(parameters.levelState);
+    }
     cacheChanged(stateName, callback) {
         // save level if we are switching off
         if (stateName === this.parameters.levelState) {
             const cacheValue = this.readValueFromCache(stateName);
-            if (cacheValue.val > 0) {
+            if (parseFloat(cacheValue.val) > 0) {
                 this.lastOnLevel = cacheValue;
             }
         }
@@ -2150,11 +2149,6 @@ class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends iofunc_base_1.TIoBrok
 }
 exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = TIoBrokerInOutFunction_Homematic_Dimmer_Base;
 class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFunction_Homematic_Dimmer_Base {
-    constructor(adapter, parameters) {
-        super(adapter, "Homematic.Dimmer.On", parameters);
-        this.adapter = adapter;
-        this.parameters = parameters;
-    }
     static create(adapter, parameters) {
         let params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
         if (params === undefined) {
@@ -2162,9 +2156,14 @@ class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFunction_
         }
         return new TIoBrokerInOutFunction_Homematic_Dimmer_On(adapter, params);
     }
+    constructor(adapter, parameters) {
+        super(adapter, 'Homematic.Dimmer.On', parameters);
+        this.adapter = adapter;
+        this.parameters = parameters;
+    }
     recalculateHomekitValues(stateName) {
         let hkValue = this.stateCache.get(this.parameters.levelState);
-        return Boolean((hkValue === null || hkValue === void 0 ? void 0 : hkValue.val) > 0);
+        return Boolean(parseFloat(hkValue === null || hkValue === void 0 ? void 0 : hkValue.val) > 0);
     }
     updateIOBrokerValue(plainIoValue, callback) {
         setTimeout(() => this.executeIOBrokerValue(plainIoValue, callback), 50);
@@ -2177,22 +2176,22 @@ class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFunction_
         const newOffValue = 0;
         const newValue = isSwitchingOn ? newOnValue : newOffValue;
         if (isSwitchingOn && this.parameters.restoreToPreviousLevel) {
-            this.log.debug('using previous level for switching on: ' + JSON.stringify((_b = this.lastOnLevel) === null || _b === void 0 ? void 0 : _b.val));
+            this.log.debug(`using previous level for switching on: ${JSON.stringify((_b = this.lastOnLevel) === null || _b === void 0 ? void 0 : _b.val)}`);
         }
-        this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
+        this.log.debug(`writing state to ioBroker [${stateName}]: ${JSON.stringify(newValue)}`);
         this.adapter.getForeignState(stateName, (error, ioState) => {
-            let value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
+            let value = parseFloat(ioState === null || ioState === void 0 ? void 0 : ioState.val);
             if (isSwitchingOn && value > 0) {
-                this.log.debug('function should switch on but level is already not equal to 0: ' + JSON.stringify(value));
+                this.log.debug(`function should switch on but level is already not equal to 0: ${JSON.stringify(value)}`);
                 callback();
                 return;
             }
             let valueChanged = value !== newValue;
-            this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
+            this.log.debug(`checking value change: ${JSON.stringify(value)} != ${JSON.stringify(newValue)} = ${valueChanged}`);
             if (valueChanged) {
                 this.adapter.setForeignState(stateName, newValue, false, (error) => {
                     if (error) {
-                        this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
+                        this.log.error(`setForeignState error [${stateName}] to [${JSON.stringify(newValue)}]: ${error}`);
                         callback();
                     }
                     callback();
@@ -2206,17 +2205,17 @@ class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFunction_
 }
 exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = TIoBrokerInOutFunction_Homematic_Dimmer_On;
 class TIoBrokerInOutFunction_Homematic_Dimmer_Brightness extends TIoBrokerInOutFunction_Homematic_Dimmer_Base {
-    constructor(adapter, parameters) {
-        super(adapter, "Homematic.Dimmer.Brightness", parameters);
-        this.adapter = adapter;
-        this.parameters = parameters;
-    }
     static create(adapter, parameters) {
         let params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
         if (params === undefined) {
             return undefined;
         }
         return new TIoBrokerInOutFunction_Homematic_Dimmer_Brightness(adapter, params);
+    }
+    constructor(adapter, parameters) {
+        super(adapter, 'Homematic.Dimmer.Brightness', parameters);
+        this.adapter = adapter;
+        this.parameters = parameters;
     }
     recalculateHomekitValues(stateName) {
         var _a;
@@ -2226,15 +2225,15 @@ class TIoBrokerInOutFunction_Homematic_Dimmer_Brightness extends TIoBrokerInOutF
     updateIOBrokerValue(plainIoValue, callback) {
         const newValue = plainIoValue;
         const stateName = this.parameters.levelState;
-        this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
+        this.log.debug(`writing state to ioBroker [${stateName}]: ${JSON.stringify(newValue)}`);
         this.adapter.getForeignState(stateName, (error, ioState) => {
             let value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
             let valueChanged = value !== newValue;
-            this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
+            this.log.debug(`checking value change: ${JSON.stringify(value)} != ${JSON.stringify(newValue)} = ${valueChanged}`);
             if (valueChanged) {
                 this.adapter.setForeignState(stateName, newValue, false, (error) => {
                     if (error) {
-                        this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
+                        this.log.error(`setForeignState error [${stateName}] to [${JSON.stringify(newValue)}]: ${error}`);
                         callback();
                     }
                     callback();
@@ -2268,24 +2267,16 @@ function isMultiStateParameter(value) {
         return false;
     if (!(0, util_1.isObject)(value))
         return false;
-    let propName = "readState";
+    let propName = 'readState';
     return (propName in value);
 }
 exports.isMultiStateParameter = isMultiStateParameter;
 class TIoBrokerInOutFunction_MultiState extends iofunc_base_1.TIoBrokerInOutFunctionBase {
-    constructor(adapter, stateProperties) {
-        super(adapter, "TIoBrokerInOutFunctionMultiState");
-        this.adapter = adapter;
-        this.stateProperties = stateProperties;
-        for (let state of stateProperties) {
-            this.addSubscriptionRequest(state.readState);
-        }
-    }
     static parseParameters(parameters) {
         if (Array.isArray(parameters)) {
             return parameters.filter(isMultiStateParameter);
         }
-        else if (typeof parameters === "string") {
+        else if (typeof parameters === 'string') {
             return [{ readState: parameters }];
         }
         else {
@@ -2299,6 +2290,14 @@ class TIoBrokerInOutFunction_MultiState extends iofunc_base_1.TIoBrokerInOutFunc
         }
         return new TIoBrokerInOutFunction_MultiState(adapter, stateNames);
     }
+    constructor(adapter, stateProperties) {
+        super(adapter, 'TIoBrokerInOutFunctionMultiState');
+        this.adapter = adapter;
+        this.stateProperties = stateProperties;
+        for (let state of stateProperties) {
+            this.addSubscriptionRequest(state.readState);
+        }
+    }
     recalculateHomekitValues(stateName) {
         let hkValues = this.stateProperties.map((state) => { var _a; return (_a = this.stateCache.get(state.readState)) === null || _a === void 0 ? void 0 : _a.val; });
         return hkValues.length === 1 ? hkValues[0] : hkValues;
@@ -2308,15 +2307,15 @@ class TIoBrokerInOutFunction_MultiState extends iofunc_base_1.TIoBrokerInOutFunc
             return Promise.resolve();
         return new Promise((resolve, reject) => {
             let stateName = state.writeState || state.readState;
-            this.log.debug('writing state to ioBroker [' + stateName + ']: ' + JSON.stringify(newValue));
+            this.log.debug(`writing state to ioBroker [${stateName}]: ${JSON.stringify(newValue)}`);
             this.adapter.getForeignState(stateName, (error, ioState) => {
                 let value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
                 let valueChanged = value !== newValue;
-                this.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(newValue) + ' = ' + valueChanged);
+                this.log.debug(`checking value change: ${JSON.stringify(value)} != ${JSON.stringify(newValue)} = ${valueChanged}`);
                 if (valueChanged) {
                     this.adapter.setForeignState(stateName, newValue, false, (error) => {
                         if (error) {
-                            this.log.error('setForeignState error [' + stateName + '] to [' + JSON.stringify(newValue) + ']: ' + error);
+                            this.log.error(`setForeignState error [${stateName}] to [${JSON.stringify(newValue)}]: ${error}`);
                             reject(error);
                         }
                         resolve();
@@ -2335,10 +2334,10 @@ class TIoBrokerInOutFunction_MultiState extends iofunc_base_1.TIoBrokerInOutFunc
             return this.updateSingleIOBrokerValue(state, newValueForThisState);
         });
         Promise.all(promiseArray).then(() => {
-            this.log.debug('wrote all states sucessfully to ioBroker');
+            this.log.debug('wrote all states successfully to ioBroker');
             callback();
         }).catch((e) => {
-            this.log.error('could not write all states to ioBroker: ' + JSON.stringify(e));
+            this.log.error(`could not write all states to ioBroker: ${JSON.stringify(e)}`);
             callback();
         });
     }
@@ -2361,27 +2360,27 @@ exports.TIoBrokerInOutFunction_State_OnlyACK = exports.TIoBrokerInOutFunction_St
 const iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
 class TIoBrokerInOutFunction_State extends iofunc_base_1.TIoBrokerInOutFunction_StateBase {
     static create(adapter, parameters) {
-        if (typeof parameters !== "string")
+        if (typeof parameters !== 'string')
             return undefined;
-        let stateName = parameters;
+        const stateName = parameters;
         return new TIoBrokerInOutFunction_State(adapter, stateName);
     }
 }
 exports.TIoBrokerInOutFunction_State = TIoBrokerInOutFunction_State;
 class TIoBrokerInOutFunction_StateDeferred extends iofunc_base_1.TIoBrokerInOutFunction_StateBase {
     static create(adapter, parameters) {
-        if (typeof parameters !== "string")
+        if (typeof parameters !== 'string')
             return undefined;
-        let stateName = parameters;
+        const stateName = parameters;
         return new TIoBrokerInOutFunction_StateDeferred(adapter, stateName, 250);
     }
 }
 exports.TIoBrokerInOutFunction_StateDeferred = TIoBrokerInOutFunction_StateDeferred;
 class TIoBrokerInOutFunction_State_OnlyACK extends iofunc_base_1.TIoBrokerInOutFunction_StateBase {
     static create(adapter, parameters) {
-        if (typeof parameters !== "string")
+        if (typeof parameters !== 'string')
             return undefined;
-        let stateName = parameters;
+        const stateName = parameters;
         return new TIoBrokerInOutFunction_State_OnlyACK(adapter, stateName);
     }
     getValueOnRead(ioState) {
@@ -2391,7 +2390,7 @@ class TIoBrokerInOutFunction_State_OnlyACK extends iofunc_base_1.TIoBrokerInOutF
                 return ioState === null || ioState === void 0 ? void 0 : ioState.val;
             }
             else {
-                this.adapter.log.debug("faking CurrentState.Read for [" + this.stateName + ']: ' + JSON.stringify(this.lastAcknowledgedValue));
+                this.adapter.log.debug(`faking CurrentState.Read for [${this.stateName}]: ${JSON.stringify(this.lastAcknowledgedValue)}`);
                 return this.lastAcknowledgedValue;
             }
         else
@@ -2404,7 +2403,7 @@ class TIoBrokerInOutFunction_State_OnlyACK extends iofunc_base_1.TIoBrokerInOutF
                 return ioState === null || ioState === void 0 ? void 0 : ioState.val;
             }
             else {
-                this.adapter.log.debug("discarding CurrentState.Notify for [" + this.stateName + ']');
+                this.adapter.log.debug(`discarding CurrentState.Notify for [${this.stateName}]`);
                 return undefined;
             }
         else
@@ -2432,7 +2431,7 @@ const util = __webpack_require__(/*! util */ "util");
 const yahka_community_types_1 = __webpack_require__(/*! ./yahka.community.types */ "./yahka.community.types.ts");
 const hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
 const yahka_homekit_service_1 = __webpack_require__(/*! ./yahka.homekit-service */ "./yahka.homekit-service.ts");
-var pjson = __webpack_require__(/*! ../package.json */ "../package.json");
+const pjson = __webpack_require__(/*! ../package.json */ "../package.json");
 (0, yahka_community_types_1.importHAPCommunityTypesAndFixes)();
 class THomeKitBridge {
     constructor(config, FBridgeFactory, FLogger) {
@@ -2600,8 +2599,8 @@ class THomeKitIPCamera {
         this.publishCamera();
     }
     createOptionsDictionary() {
-        var videoResolutions = [];
-        var maxFPS = this.camConfig.maxFPS > 30 ? 30 : this.camConfig.maxFPS;
+        const videoResolutions = [];
+        const maxFPS = this.camConfig.maxFPS > 30 ? 30 : this.camConfig.maxFPS;
         if (this.camConfig.maxWidth >= 320) {
             if (this.camConfig.maxHeight >= 240) {
                 videoResolutions.push([320, 240, maxFPS]);
@@ -2645,7 +2644,7 @@ class THomeKitIPCamera {
                 videoResolutions.push([1920, 1080, maxFPS]);
             }
         }
-        let options = {
+        const options = {
             proxy: false,
             disable_audio_proxy: false,
             srtp: true,
@@ -2716,24 +2715,19 @@ class THomeKitIPCamera {
             width: request.width,
             height: request.height,
         };
-        let ffmpegCommand = this.camConfig.ffmpegCommandLine.snapshot.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => {
+        let ffmpegCommand = this.camConfig.ffmpegCommandLine.snapshot.map((s) => s.replace(/\$\{(.*?)}/g, (_, word) => {
             return params[word];
         }));
-        this.FLogger.debug('Snapshot run: ffmpeg ' + ffmpegCommand.join(' '));
+        this.FLogger.debug(`Snapshot run: ffmpeg ${ffmpegCommand.join(' ')}`);
         let ffmpeg = (0, child_process_1.spawn)('ffmpeg', ffmpegCommand, { env: process.env });
         var imageBuffer = Buffer.alloc(0);
-        ffmpeg.stdout.on('data', function (data) {
-            imageBuffer = Buffer.concat([imageBuffer, data]);
-        });
-        ffmpeg.on('close', function (code) {
-            callback(undefined, imageBuffer);
-        });
+        ffmpeg.stdout.on('data', data => imageBuffer = Buffer.concat([imageBuffer, data]));
+        ffmpeg.on('close', code => callback(undefined, imageBuffer));
     }
     prepareStream(request, callback) {
         let sessionInfo = {};
         const sessionID = request.sessionID;
-        const targetAddress = request.targetAddress;
-        sessionInfo.address = targetAddress;
+        sessionInfo.address = request.targetAddress;
         let response = {};
         let videoInfo = request.video;
         if (videoInfo) {
@@ -2786,11 +2780,11 @@ class THomeKitIPCamera {
     }
     handleStreamRequest(request, callback) {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
-        var sessionId = request.sessionID;
+        const sessionId = request.sessionID;
         switch (request.type) {
             case "start" /* StreamRequestTypes.START */: {
-                var sessionInfo = this.pendingSessions[sessionId];
-                this.FLogger.debug('Session Request:' + JSON.stringify(request, undefined, 2));
+                const sessionInfo = this.pendingSessions[sessionId];
+                this.FLogger.debug(`Session Request: ${JSON.stringify(request, undefined, 2)}`);
                 if (sessionInfo) {
                     let width = 1280;
                     let height = 720;
@@ -2822,7 +2816,7 @@ class THomeKitIPCamera {
                         targetVideoSsrc: sessionInfo.videoSSRC,
                         mtu,
                     };
-                    let ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => params[word]));
+                    let ffmpegCommand = this.camConfig.ffmpegCommandLine.stream.map((s) => s.replace(/\$\{(.*?)}/g, (_, word) => params[word]));
                     if (this.camConfig.enableAudio && request.audio != null) {
                         let params = {
                             source: this.camConfig.source,
@@ -2835,7 +2829,7 @@ class THomeKitIPCamera {
                             targetAudioSsrc: sessionInfo.audioSSRC,
                             audiokey: (_k = sessionInfo.audioSRTP) === null || _k === void 0 ? void 0 : _k.toString('base64'),
                         };
-                        ffmpegCommand = ffmpegCommand.concat(this.camConfig.ffmpegCommandLine.streamAudio.map((s) => s.replace(/\$\{(.*?)\}/g, (_, word) => params[word])));
+                        ffmpegCommand = ffmpegCommand.concat(this.camConfig.ffmpegCommandLine.streamAudio.map((s) => s.replace(/\$\{(.*?)}/g, (_, word) => params[word])));
                     }
                     // this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
                     let ffmpeg = (0, child_process_1.spawn)('ffmpeg', ffmpegCommand, { env: process.env });
@@ -2849,16 +2843,16 @@ class THomeKitIPCamera {
                         //this.FLogger.debug("FFMPEG:" + data.toString('utf8'));
                     });
                     ffmpeg.on('error', (error) => {
-                        this.FLogger.error('[Video] Failed to start video stream: ' + error.message);
+                        this.FLogger.error(`[Video] Failed to start video stream: ${error.message}`);
                         callback(new Error('ffmpeg process creation failed!'));
                     });
                     ffmpeg.on('exit', (code, signal) => {
-                        const message = '[Video] ffmpeg exited with code: ' + code + ' and signal: ' + signal;
+                        const message = `[Video] ffmpeg exited with code: ${code} and signal: ${signal}`;
                         if (code == null || code === 255) {
-                            this.FLogger.debug(message + ' (Video stream stopped!)');
+                            this.FLogger.debug(`${message} (Video stream stopped!)`);
                         }
                         else {
-                            this.FLogger.error(message + ' (error)');
+                            this.FLogger.error(`${message} (error)`);
                             if (!started) {
                                 callback(new Error(message));
                             }
@@ -2875,6 +2869,7 @@ class THomeKitIPCamera {
                     break;
                 }
             }
+            // break; // here should be break
             case "reconfigure" /* StreamRequestTypes.RECONFIGURE */:
                 callback();
                 break;
@@ -2941,7 +2936,7 @@ class YahkaServiceInitializer {
         let isNew = false;
         let hapService = hapDevice.getService(hap_nodejs_1.Service[serviceConfig.type]);
         if (hapService !== undefined) {
-            const existingSubType = hapService.subtype ? hapService.subtype : "";
+            const existingSubType = hapService.subtype ? hapService.subtype : '';
             if (existingSubType != serviceConfig.subType)
                 hapService = undefined;
         }
@@ -3057,7 +3052,7 @@ class YahkaServiceInitializer {
         }
         binding.inOut.fromIOBroker((ioBrokerError, ioValue) => {
             let hkValue = binding.conversion.toHomeKit(ioValue);
-            // check if the value can be converetd to a number
+            // check if the value can be converted to a number
             if ((hkValue !== undefined) && (hkValue !== "")) {
                 let numValue = Number(hkValue);
                 if (!isNaN(numValue)) {
@@ -3088,8 +3083,8 @@ const yahka_homekit_ipcamera_1 = __webpack_require__(/*! ./yahka.homekit-ipcamer
 const functions_factory_1 = __webpack_require__(/*! ./yahka.functions/functions.factory */ "./yahka.functions/functions.factory.ts");
 const yahka_homekit_bridge_1 = __webpack_require__(/*! ./yahka.homekit-bridge */ "./yahka.homekit-bridge.ts");
 function isSubscriptionRequestor(param) {
-    return param["subscriptionRequests"] !== undefined &&
-        param["subscriptionRequests"] instanceof Array;
+    return param['subscriptionRequests'] !== undefined &&
+        param['subscriptionRequests'] instanceof Array;
 }
 function isCustomCharacteristicConfig(config) {
     if (!config)
@@ -3111,7 +3106,7 @@ class TIOBrokerAdapter {
         adapter.on('unload', this.handleUnload.bind(this));
     }
     adapterReady() {
-        (0, yahka_homekit_bridge_1.initHAP)(this.controllerPath + '/' + this.adapter.systemConfig.dataDir + this.adapter.name + '.' + this.adapter.instance + '.hapdata', this.handleHAPLogEvent.bind(this));
+        (0, yahka_homekit_bridge_1.initHAP)(`${this.controllerPath}/${this.adapter.systemConfig.dataDir}${this.adapter.name}.${this.adapter.instance}.hapdata`, this.handleHAPLogEvent.bind(this));
         this.adapter.log.info('adapter ready, checking config');
         let config = this.adapter.config;
         this.createHomeKitBridges(config);
@@ -3121,19 +3116,19 @@ class TIOBrokerAdapter {
         let bridgeConfig = config.bridge;
         if (!config.firstTimeInitialized) {
             this.adapter.log.info('first time initialization');
-            this.adapter.log.debug('system config:' + JSON.stringify(this.adapter.systemConfig));
-            bridgeConfig.ident = "Yahka-" + this.adapter.instance;
+            this.adapter.log.debug(`system config: ${JSON.stringify(this.adapter.systemConfig)}`);
+            bridgeConfig.ident = `Yahka-${this.adapter.instance}`;
             bridgeConfig.name = bridgeConfig.ident;
             bridgeConfig.serial = bridgeConfig.ident;
             let usr = [];
             for (let i = 0; i < 6; i++)
-                usr[i] = ('00' + (Math.floor((Math.random() * 256)).toString(16))).substr(-2);
+                usr[i] = (`00${Math.floor((Math.random() * 256)).toString(16)}`).substr(-2);
             bridgeConfig.username = usr.join(':');
             bridgeConfig.pincode = '123-45-678';
             bridgeConfig.port = 0;
             bridgeConfig.verboseLogging = false;
             config.firstTimeInitialized = true;
-            this.adapter.extendForeignObject('system.adapter.' + this.adapter.name + '.' + this.adapter.instance, { native: config }, undefined);
+            this.adapter.extendForeignObject(`system.adapter.${this.adapter.name}.${this.adapter.instance}`, { native: config }, undefined);
         }
         this.verboseHAPLogging = bridgeConfig.verboseLogging == true;
         this.adapter.log.debug('creating bridge');
@@ -3150,8 +3145,8 @@ class TIOBrokerAdapter {
     }
     handleHAPLogEvent(message) {
         if (this.verboseHAPLogging) {
-            console.log("HAP debug message", message);
-            this.adapter.log.debug("HAP debug message: " + message);
+            console.log('HAP debug message', message);
+            this.adapter.log.debug(`HAP debug message: ${message}`);
         }
     }
     handleState(id, state) {
@@ -3161,7 +3156,7 @@ class TIOBrokerAdapter {
             //this.adapter.log.debug('nobody subscribed for this state');
             return;
         }
-        this.adapter.log.debug('got a stateChange for [' + id + ']');
+        this.adapter.log.debug(`got a stateChange for [${id}]`);
         // try to convert it to a number
         convertStateValueToNumber(state);
         for (let method of notifyArray)
@@ -3201,14 +3196,14 @@ class TIOBrokerAdapter {
                 else
                     existingArray.push(changeInterceptor);
                 this.adapter.subscribeForeignStates(subscriptionRequest.subscriptionIdentifier);
-                this.adapter.log.debug('added subscription for: [' + subscriptionRequest.subscriptionType + ']' + subscriptionRequest.subscriptionIdentifier);
+                this.adapter.log.debug(`added subscription for: [${subscriptionRequest.subscriptionType}]${subscriptionRequest.subscriptionIdentifier}`);
                 this.adapter.getForeignState(subscriptionRequest.subscriptionIdentifier, (_, value) => {
                     convertStateValueToNumber(value);
                     changeInterceptor(value);
                 });
             }
             else {
-                this.adapter.log.warn('unknown subscription type: ' + subscriptionRequest.subscriptionType);
+                this.adapter.log.warn(`unknown subscription type: ${subscriptionRequest.subscriptionType}`);
             }
         }
     }
@@ -3216,12 +3211,12 @@ class TIOBrokerAdapter {
         if (isCustomCharacteristicConfig(characteristicConfig)) {
             let inoutFunc = functions_factory_1.functionFactory.createInOutFunction(this.adapter, characteristicConfig.inOutFunction, characteristicConfig.inOutParameters);
             if (inoutFunc === undefined) {
-                this.adapter.log.error('[' + characteristicConfig.name + '] could not create inout-function: ' + characteristicConfig.inOutFunction + ' with params: ' + JSON.stringify(characteristicConfig.inOutParameters));
+                this.adapter.log.error(`[${characteristicConfig.name}] could not create inout-function: ${characteristicConfig.inOutFunction} with params: ${JSON.stringify(characteristicConfig.inOutParameters)}`);
                 return undefined;
             }
             let convFunc = functions_factory_1.functionFactory.createConversionFunction(this.adapter, characteristicConfig.conversionFunction, characteristicConfig.conversionParameters);
             if (convFunc === undefined) {
-                this.adapter.log.error('[' + characteristicConfig.name + '] could not create conversion-function: ' + characteristicConfig.conversionFunction + ' with params: ' + JSON.stringify(characteristicConfig.conversionParameters));
+                this.adapter.log.error(`[${characteristicConfig.name}] could not create conversion-function: ${characteristicConfig.conversionFunction} with params: ${JSON.stringify(characteristicConfig.conversionParameters)}`);
                 return undefined;
             }
             if (isSubscriptionRequestor(inoutFunc)) {
@@ -3310,7 +3305,7 @@ module.exports = require("child_process");
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"iobroker.yahka","version":"0.17.0","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"engines":{"node":">=12.0.0"},"dependencies":{"@iobroker/adapter-core":"^2.6.7","debug":"^4.3.4","dev-null":"^0.1.1","hap-nodejs":"^0.10.4","ip":"^1.1.8","macaddress":"0.5.3","util":"^0.12.5"},"devDependencies":{"@alcalzone/release-script":"^3.5.9","@alcalzone/release-script-plugin-iobroker":"^3.5.9","@alcalzone/release-script-plugin-license":"^3.5.9","@types/iobroker":"^4.0.5","@types/jquery":"^3.5.14","@types/node":"^18.11.0","assert":"^2.0.0","chai":"^4.3.6","crypto-browserify":"^3.12.0","grunt":"^1.5.3","grunt-contrib-clean":"^2.0.1","grunt-contrib-compress":"^2.0.0","grunt-contrib-copy":"^1.0.0","grunt-contrib-jshint":"^3.2.0","grunt-exec":"^3.0.0","grunt-http":"^2.3.3","grunt-jscs":"^3.0.1","grunt-replace":"^2.0.2","grunt-ts":"^6.0.0-beta.22","grunt-webpack":"^5.0.0","html-webpack-plugin":"^5.5.0","mocha":"^10.1.0","path-browserify":"^1.0.1","process":"^0.11.10","raw-loader":"^4.0.2","stream-browserify":"^3.0.0","timers":"^0.1.1","ts-loader":"^9.4.1","typescript":"^4.8.4","webpack":"^5.74.0","webpack-cli":"^4.10.0","webpack-node-externals":"^3.0.0","xml2js":"^0.4.23"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","files":["admin/","main.js","LICENSE","README.md","io-package.json","hap-nodejs-community-types/"],"scripts":{"test":"node node_modules/mocha/bin/mocha --exit","release":"release-script","release-patch":"release-script patch --yes","release-minor":"release-script minor --yes","release-major":"release-script major --yes"}}');
+module.exports = JSON.parse('{"name":"iobroker.yahka","version":"0.17.0","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"engines":{"node":">=12.0.0"},"dependencies":{"@iobroker/adapter-core":"^2.6.7","debug":"^4.3.4","dev-null":"^0.1.1","hap-nodejs":"^0.11.0","ip":"^1.1.8","macaddress":"0.5.3","util":"^0.12.5"},"devDependencies":{"@alcalzone/release-script":"^3.5.9","@alcalzone/release-script-plugin-iobroker":"^3.5.9","@alcalzone/release-script-plugin-license":"^3.5.9","@types/iobroker":"^4.0.5","@types/jquery":"^3.5.16","@types/node":"^18.15.6","assert":"^2.0.0","chai":"^4.3.7","crypto-browserify":"^3.12.0","grunt":"^1.6.1","grunt-contrib-clean":"^2.0.1","grunt-contrib-compress":"^2.0.0","grunt-contrib-copy":"^1.0.0","grunt-contrib-jshint":"^3.2.0","grunt-exec":"^3.0.0","grunt-http":"^2.3.3","grunt-jscs":"^3.0.1","grunt-replace":"^2.0.2","grunt-ts":"^6.0.0-beta.22","grunt-webpack":"^5.0.0","html-webpack-plugin":"^5.5.0","mocha":"^10.2.0","path-browserify":"^1.0.1","process":"^0.11.10","raw-loader":"^4.0.2","stream-browserify":"^3.0.0","timers":"^0.1.1","ts-loader":"^9.4.2","typescript":"^5.0.2","webpack":"^5.76.3","webpack-cli":"^5.0.1","webpack-node-externals":"^3.0.0","xml2js":"^0.4.23"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","files":["admin/","main.js","LICENSE","README.md","io-package.json","hap-nodejs-community-types/"],"scripts":{"test":"node node_modules/mocha/bin/mocha --exit","build":"grunt","release":"release-script","release-patch":"release-script patch --yes","release-minor":"release-script minor --yes","release-major":"release-script major --yes"}}');
 
 /***/ })
 

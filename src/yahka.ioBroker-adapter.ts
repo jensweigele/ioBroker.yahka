@@ -18,8 +18,8 @@ export interface ISubscriptionRequestor {
 }
 
 function isSubscriptionRequestor(param: Object): param is ISubscriptionRequestor {
-    return param["subscriptionRequests"] !== undefined &&
-        param["subscriptionRequests"] instanceof Array;
+    return param['subscriptionRequests'] !== undefined &&
+        param['subscriptionRequests'] instanceof Array;
 }
 interface ICustomCharacteristicConfig extends Configuration.ICharacteristicConfig {
     conversionFunction?: string;
@@ -61,20 +61,20 @@ export class TIOBrokerAdapter implements IHomeKitBridgeBindingFactory {
         let bridgeConfig: Configuration.IBridgeConfig = config.bridge;
         if (!config.firstTimeInitialized) {
             this.adapter.log.info('first time initialization');
-            this.adapter.log.debug('system config:' + JSON.stringify(this.adapter.systemConfig));
+            this.adapter.log.debug(`system config: ${JSON.stringify(this.adapter.systemConfig)}`);
 
-            bridgeConfig.ident = "Yahka-" + this.adapter.instance;
+            bridgeConfig.ident = `Yahka-${this.adapter.instance}`;
             bridgeConfig.name = bridgeConfig.ident;
             bridgeConfig.serial = bridgeConfig.ident;
             let usr = [];
             for (let i = 0; i < 6; i++)
-                usr[i] = ('00' + (Math.floor((Math.random() * 256)).toString(16))).substr(-2);
+                usr[i] = (`00${Math.floor((Math.random() * 256)).toString(16)}`).substr(-2);
             bridgeConfig.username = usr.join(':');
             bridgeConfig.pincode = '123-45-678';
             bridgeConfig.port = 0;
             bridgeConfig.verboseLogging = false;
             config.firstTimeInitialized = true;
-            this.adapter.extendForeignObject('system.adapter.' + this.adapter.name + '.' + this.adapter.instance, { native: config }, undefined);
+            this.adapter.extendForeignObject(`system.adapter.${this.adapter.name}.${this.adapter.instance}`, { native: config }, undefined);
         }
         this.verboseHAPLogging = bridgeConfig.verboseLogging == true;
 
@@ -95,8 +95,8 @@ export class TIOBrokerAdapter implements IHomeKitBridgeBindingFactory {
 
     private handleHAPLogEvent(message) {
         if (this.verboseHAPLogging) {
-            console.log("HAP debug message", message);
-            this.adapter.log.debug("HAP debug message: " + message);
+            console.log('HAP debug message', message);
+            this.adapter.log.debug(`HAP debug message: ${message}`);
         }
     }
 
@@ -107,7 +107,7 @@ export class TIOBrokerAdapter implements IHomeKitBridgeBindingFactory {
             //this.adapter.log.debug('nobody subscribed for this state');
             return;
         }
-        this.adapter.log.debug('got a stateChange for [' + id + ']');
+        this.adapter.log.debug(`got a stateChange for [${id}]`);
 
         // try to convert it to a number
         convertStateValueToNumber(state);
@@ -154,13 +154,13 @@ export class TIOBrokerAdapter implements IHomeKitBridgeBindingFactory {
                     existingArray.push(changeInterceptor);
 
                 this.adapter.subscribeForeignStates(subscriptionRequest.subscriptionIdentifier);
-                this.adapter.log.debug('added subscription for: [' + subscriptionRequest.subscriptionType + ']' + subscriptionRequest.subscriptionIdentifier);
+                this.adapter.log.debug(`added subscription for: [${subscriptionRequest.subscriptionType}]${subscriptionRequest.subscriptionIdentifier}`);
                 this.adapter.getForeignState(subscriptionRequest.subscriptionIdentifier, (_, value) => {
                     convertStateValueToNumber(value);
                     changeInterceptor(value)
                 });
             } else {
-                this.adapter.log.warn('unknown subscription type: ' + subscriptionRequest.subscriptionType);
+                this.adapter.log.warn(`unknown subscription type: ${subscriptionRequest.subscriptionType}`);
             }
         }
 
@@ -170,13 +170,13 @@ export class TIOBrokerAdapter implements IHomeKitBridgeBindingFactory {
         if (isCustomCharacteristicConfig(characteristicConfig)) {
             let inoutFunc = functionFactory.createInOutFunction(this.adapter, characteristicConfig.inOutFunction, characteristicConfig.inOutParameters);
             if (inoutFunc === undefined) {
-                this.adapter.log.error('[' + characteristicConfig.name + '] could not create inout-function: ' + characteristicConfig.inOutFunction + ' with params: ' + JSON.stringify(characteristicConfig.inOutParameters));
+                this.adapter.log.error(`[${characteristicConfig.name}] could not create inout-function: ${characteristicConfig.inOutFunction} with params: ${JSON.stringify(characteristicConfig.inOutParameters)}`);
                 return undefined;
             }
 
             let convFunc = functionFactory.createConversionFunction(this.adapter, characteristicConfig.conversionFunction, characteristicConfig.conversionParameters);
             if (convFunc === undefined) {
-                this.adapter.log.error('[' + characteristicConfig.name + '] could not create conversion-function: ' + characteristicConfig.conversionFunction + ' with params: ' + JSON.stringify(characteristicConfig.conversionParameters));
+                this.adapter.log.error(`[${characteristicConfig.name}] could not create conversion-function: ${characteristicConfig.conversionFunction} with params: ${JSON.stringify(characteristicConfig.conversionParameters)}`);
                 return undefined;
             }
 

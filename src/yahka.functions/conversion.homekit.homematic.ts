@@ -1,5 +1,5 @@
-import { TIOBrokerConversionBase, IConversionFunction } from "./conversion.base";
-import { Characteristic } from "hap-nodejs";
+import { TIOBrokerConversionBase, IConversionFunction } from './conversion.base';
+import { Characteristic } from 'hap-nodejs';
 
 
 export class TIoBrokerConversion_HomematicDirection_To_PositionState extends TIOBrokerConversionBase implements IConversionFunction {
@@ -20,7 +20,7 @@ export class TIoBrokerConversion_HomematicDirection_To_PositionState extends TIO
                 result = Characteristic.PositionState.STOPPED;
                 break;
         }
-        this.adapter.log.debug('HomematicDirectionToHomekitPositionState.toHomeKit, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
+        this.adapter.log.debug(`HomematicDirectionToHomekitPositionState.toHomeKit, from ${JSON.stringify(value)}[${typeof value}] to ${JSON.stringify(result)}`);
         return result;
     }
     toIOBroker(value: any) {
@@ -40,7 +40,7 @@ export class TIoBrokerConversion_HomematicDirection_To_PositionState extends TIO
                 result = 0;
                 break;
         }
-        this.adapter.log.debug('HomematicDirectionToHomekitPositionState.toIOBroker, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
+        this.adapter.log.debug(`HomematicDirectionToHomekitPositionState.toIOBroker, from ${JSON.stringify(value)}[${typeof value}] to ${JSON.stringify(result)}`);
         return result;
     }
 }
@@ -68,7 +68,7 @@ export class TIoBrokerConversion_HomematicControlMode_To_CoolingState extends TI
                 result = Characteristic.TargetHeatingCoolingState.OFF;
                 break;
         }
-        this.adapter.log.debug('HomematicDirectionToHomekitHeatingCoolingState.toHomeKit, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
+        this.adapter.log.debug(`HomematicDirectionToHomekitHeatingCoolingState.toHomeKit, from ${JSON.stringify(value)}[${typeof value}] to ${JSON.stringify(result)}`);
         return result;
     }
     toIOBroker(value) {
@@ -92,7 +92,7 @@ export class TIoBrokerConversion_HomematicControlMode_To_CoolingState extends TI
                 result = 0;
                 break;
         }
-        this.adapter.log.debug('HomematicDirectionToHomekitHeatingCoolingState.toIOBroker, from ' + JSON.stringify(value) + '[' + (typeof value) + '] to ' + JSON.stringify(result));
+        this.adapter.log.debug(`HomematicDirectionToHomekitHeatingCoolingState.toIOBroker, from ${JSON.stringify(value)}[${typeof value}] to ${JSON.stringify(result)}`);
         return result;
     }
 }

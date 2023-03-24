@@ -1,5 +1,5 @@
-import { IConversionFunction } from "../yahka.interfaces";
-import { TIOBrokerConversionBase } from "./conversion.base";
+import { IConversionFunction } from '../yahka.interfaces';
+import { TIOBrokerConversionBase } from './conversion.base';
 
 export class TIoBrokerConversion_Passthrough extends TIOBrokerConversionBase implements IConversionFunction {
     toHomeKit(value: any) {

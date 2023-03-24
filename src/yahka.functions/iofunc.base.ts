@@ -8,7 +8,7 @@ export abstract class TIoBrokerInOutFunctionBase extends TYahkaFunctionBase impl
     protected errorForHomeKit: any = null;
 
     public fromIOBroker(callback: (error: any, plainIOValue: any) => void) {
-        this.log.debug('fromIOBroker event - delivering cached value (' + JSON.stringify(this.valueForHomeKit) + ")");
+        this.log.debug(`fromIOBroker event - delivering cached value (${JSON.stringify(this.valueForHomeKit)})`);
         callback(null, this.valueForHomeKit);
     }
 
@@ -65,15 +65,15 @@ export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionR
     }
 
     toIOBroker(plainIoValue, callback) {
-        this.adapter.log.debug('writing state to ioBroker [' + this.stateName + ']: ' + JSON.stringify(plainIoValue));
+        this.adapter.log.debug(`writing state to ioBroker [${this.stateName}]: ${JSON.stringify(plainIoValue)}`);
         this.adapter.getForeignState(this.stateName, (error, ioState) => {
             let value = this.getValueOnRead(ioState);
             let valueChanged = value !== plainIoValue;
-            this.adapter.log.debug('checking value change: ' + JSON.stringify(value) + ' != ' + JSON.stringify(plainIoValue) + ' = ' + valueChanged);
+            this.adapter.log.debug(`checking value change: ${JSON.stringify(value)} != ${JSON.stringify(plainIoValue)} = ${valueChanged}`);
             if (valueChanged) {
                 this.adapter.setForeignState(this.stateName, plainIoValue, false, (error) => {
                     if (error)
-                        this.adapter.log.error('setForeignState error [' + this.stateName + '] to [' + JSON.stringify(plainIoValue) + ']: ' + error);
+                        this.adapter.log.error(`setForeignState error [${this.stateName}] to [${JSON.stringify(plainIoValue)}]: ${error}`);
                     callback();
                 });
             } else {
@@ -83,11 +83,11 @@ export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionR
     }
 
     fromIOBroker(callback) {
-        this.adapter.log.debug('reading state from ioBroker [' + this.stateName + ']');
+        this.adapter.log.debug(`reading state from ioBroker [${this.stateName}]`);
         this.adapter.getForeignState(this.stateName, (error, ioState) => {
-            this.adapter.log.debug('read state from ioBroker [' + this.stateName + ']: ' + JSON.stringify(ioState));
+            this.adapter.log.debug(`read state from ioBroker [${this.stateName}]: ${JSON.stringify(ioState)}`);
             if (error)
-                this.adapter.log.error('... with error: ' + error);
+                this.adapter.log.error(`... with error: ${error}`);
 
             let value = this.getValueOnRead(ioState);
             callback(error, value);
@@ -95,7 +95,7 @@ export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionR
     }
 
     subscriptionEvent(stateName: string, ioState: ioBroker.State, callback: IInOutChangeNotify) {
-        this.adapter.log.debug('change event from ioBroker via [' + this.stateName + ']' + JSON.stringify(ioState));
+        this.adapter.log.debug(`change event from ioBroker via [${this.stateName}]${JSON.stringify(ioState)}`);
         let newValue = this.getValueOnNotify(ioState);
         if (newValue != null)
             this.executeCallback(callback, newValue);
@@ -121,7 +121,7 @@ export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionR
     }
 
     deferredChangeEvent(callback: IInOutChangeNotify, plainIOValue: any) {
-        this.adapter.log.debug('[' + this.stateName + '] firing deferred change event:' + JSON.stringify(plainIOValue));
+        this.adapter.log.debug(`[${this.stateName}] firing deferred change event:${JSON.stringify(plainIOValue)}`);
         callback(plainIOValue);
     }
 

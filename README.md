@@ -7,7 +7,6 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SJYXDK96G2NCN)
 
 ## Installation and Usage
-
 For details on how to install and configure this adapter, please see the [Wiki](https://github.com/jensweigele/ioBroker.yahka/wiki)
 
 ## Prerequisites
@@ -80,21 +79,28 @@ You have to install the pam-devel package:
 And after that install yahka adapter.
 
 ## Some words about HomeKit
-The architecture of HomeKit is as follows:<br>
-There are **devices** as logical entities. Each device can have multiple **services** and each service has multiple **characteristics**.<br>
-At the end, a characteristic is an endpoint where values could be read from or write to.<br>
+The architecture of HomeKit is as follows:
+
+There are **devices** as logical entities. Each device can have multiple **services** and each service has multiple **characteristics**.
+
+At the end, a characteristic is an endpoint where values could be read from or write to.
+
 Which characteristics a service could have, is defined by Apple/HomeKit and determined by the service type. The service types are also defined by Apple/HomeKit.
 
-Example:<br>
-A Garage Door opener is a device which could have two services: <br>
+Example:
+
+A Garage Door opener is a device which could have two services:
+
 1. Garage Door Opener 
 2. Light
 
-The Garage Door Opener Service itself could have different characteristic like: CurrentDoorState, TargetDoorState and many more. <br>
-Also the Light Service could have different characteristics, like: On (and many others for changing the light color etc.)
+The Garage Door Opener Service itself could have different characteristic like: CurrentDoorState, TargetDoorState and many more.
+
+Also, the Light Service could have different characteristics, like: On (and many others for changing the light color etc.)
 
 ## What Yahka does
-With Yahka it is possible to map an ioBroker Datapoint to an HomeKit Characteristic. <br>
+With Yahka it is possible to map an ioBroker Datapoint to an HomeKit Characteristic.
+
 Since sometimes mappings are necessary (e.g. the "State" values of a garage door is different between HomeKit and other systems), there is also the possibility to specify Functions to convert the values. This is described below.
 
 To avoid too much administration work, all Devices you create in Yahka are behind a so-called "Bridge". With this bridge, you only need to pair the Bridge with your iOS device to get access to all devices. Otherwise, you would need to pair every Yahka device with Homekit.
@@ -159,7 +165,8 @@ To integrate the Homematic Blind Actuators (like HM-LC-Bl1PBU-FM), the following
 
 The value _\<path to Homematic object\>_ needs to be replaced with the actual path to the device (e.g. hm-rpc.0.NEQ0012345)
 
-For general Information about the Configuration Mask, see: TODO<br>
+For general Information about the Configuration Mask, see: TODO
+
 For more information about the Configuration, the InOut Functions and Conversion Functions, see: [Wiki](https://github.com/jensweigele/ioBroker.yahka/wiki/Configuration,-InOut-Functions-and-Conversion-Functions)
 
 <!--
@@ -167,132 +174,135 @@ For more information about the Configuration, the InOut Functions and Conversion
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
+### **WORK IN PROGRESS**
+* (foxriver76) Preparation for new js-controller version
+* (bluefox) Formatting
 
 ### **WORK IN PROGRESS**
 * (foxriver76) we ensured controller 5 compatibility
 
 ### 0.17.0 (2022-10-17)
-  Added AVAHI advertiser as default and updated HomeKit Library to improve performance and stability
-  Update release and test scripts
+* Added AVAHI advertiser as default and updated HomeKit Library to improve performance and stability
+* Update release and test scripts
 
 ### 0.14.0 (unreleased)
-  (jw) added support to group devices in Admin Interface<br>
-  (jw) added support to mark services as "primary" and as "hidden"<br>
-  (jw) added ioFunctions "round" and "invert"<br>
-  (jw) updated dependencies<br>
-  (jw) Updated to HAP-NodeJS 0.9.2<br>
-  (jw) Fixed crashes due to changes in used HomeKit Library<br>
-  (nh) improved changelog in readme<br>
+* (jw) added support to group devices in Admin Interface
+* (jw) added support to mark services as "primary" and as "hidden"
+* (jw) added ioFunctions "round" and "invert"
+* (jw) updated dependencies
+* (jw) Updated to HAP-NodeJS 0.9.2
+* (jw) Fixed crashes due to changes in used HomeKit Library
+* (nh) improved changelog in readme
 
 ### 0.13.1 (2021-01-14)
-  (jw) switched to HAP-NodeJS 0.9.0-beta.113 and added useLegacyAdvertiser option<br>
-  (jw) fixed bug which prevented cameras from deletion and duplication<br>
+* (jw) switched to HAP-NodeJS 0.9.0-beta.113 and added useLegacyAdvertiser option
+* (jw) fixed bug which prevented cameras from deletion and duplication
 
 ### 0.13.0 (2021-01-08)
-  (jw) updated dependencies<br>
-  (jw) improved state selector (scrolling and refresh on open)<br>
+* (jw) updated dependencies
+* (jw) improved state selector (scrolling and refresh on open)
 
 ### 0.12.0 (2020-12-23)
-  (jw) updated dependencies<br>
-  (jw) added support for linking services to support Television Services<br> 
-  (jw) added possibility to publish devices without the bridge (necessary for TV service)<br> 
-  (jw) added support for audio stream in camera<br> 
-  (jw) added support for custom characteristics on the services (e.g. to add Wattage characteristic to plugs)<br> 
-  (jw) added support for additonal services to camera (to enable usage of doorbell service)<br> 
-  (many20) fixed scaleInt conversion - results are now rounded<br> 
+* (jw) updated dependencies
+* (jw) added support for linking services to support Television Services
+* (jw) added possibility to publish devices without the bridge (necessary for TV service)
+* (jw) added support for audio stream in camera 
+* (jw) added support for custom characteristics on the services (e.g. to add Wattage characteristic to plugs) 
+* (jw) added support for additional services to camera (to enable usage of doorbell service)> 
+  (many20) fixed scaleInt conversion - results are now rounded 
   
 ### 0.11.0 (2020-02-19)
-  Intermediate release<br>
+* Intermediate release
 
 ### 0.10.0 (2020-02-19)
-  (apollon77) updated dependencies, nodejs 12 support<br>
+* (apollon77) updated dependencies, nodejs 12 support
 
 ### 0.10.0
-  (jw) updated dependencies<br>
-  (apollon77) removed support for NodeJS 4 - NodeJS 6 is now the minimum required NodeJS version (merged #109)<br>  
-  (yaming116) fixed scale conversion to support min values others than 0<br>
+* (jw) updated dependencies
+* (apollon77) removed support for NodeJS 4 - NodeJS 6 is now the minimum required NodeJS version (merged #109)  
+* (yaming116) fixed scale conversion to support min values others than 0
 
 ### 0.9.2 (2019-03-12)
-  (jw) fixed a bug where the adapter didn't start anymore<br>
-  (jw) removed the reference to the git repository of the hap community types<br>
+* (jw) fixed a bug where the adapter didn't start anymore
+* (jw) removed the reference to the git repository of the hap community types
 
 ### 0.9.1 (2019-01-29)
-  (jw) fixed a bug where the adapter crashes if a state does not exist<br>
-  (jw) added io functions for HomeMatic dimmers ([#30](https://github.com/jensweigele/ioBroker.yahka/issues/30) and [#75](https://github.com/jensweigele/ioBroker.yahka/issues/75))<br>
-  (jw) fixed a bug where adapter didn't start anymore when using the conversion function "inverse" ([#98](https://github.com/jensweigele/ioBroker.yahka/issues/98))
-  (jw) updated to latest HAP-NodeJS library to support TV services and characteristics (available since iOS 12.2 beta 1)<br>Note: that's still in development, not all services are working correctly. For more information see:  ([#89](https://github.com/jensweigele/ioBroker.yahka/issues/89))<br>
+* (jw) fixed a bug where the adapter crashes if a state does not exist
+* (jw) added io functions for HomeMatic dimmers ([#30](https://github.com/jensweigele/ioBroker.yahka/issues/30) and [#75](https://github.com/jensweigele/ioBroker.yahka/issues/75))
+* (jw) fixed a bug where adapter didn't start anymore when using the conversion function "inverse" ([#98](https://github.com/jensweigele/ioBroker.yahka/issues/98))
+* (jw) updated to latest HAP-NodeJS library to support TV services and characteristics (available since iOS 12.2 beta 1)<br>Note: that's still in development, not all services are working correctly. For more information see:  ([#89](https://github.com/jensweigele/ioBroker.yahka/issues/89))
 
 ### 0.9.0 (2019-01-24)
-  (jw) added more services and characteristics (from https://github.com/homespun/hap-nodejs-community-types)<br>
-  (jw) improved admin interface to support individual editors for IO/Conversion functions<br>
-  (jw) added new conversion function "script" which adds the ability to run JavaScript functions as conversion functions<br>
-  (jw) fixed a bug in the scaleInt and scaleFloat methods (thanks to balzreber) <br>
-  (jw) added ioFunction "MultiState" to get multiple states and/or seperate between read and write states <br>
-  (jw) added conversion function "map" to customize mappings betwen ioBroker and HomeKit <br>
-  (jw) added possibility to specifiy IP for Bonjour broadcasting (for bridge configuration and camera configuration)([#86](https://github.com/jensweigele/ioBroker.yahka/issues/86))<br> 
-  (jw) switched to webpack and refactored admin interface and io/conversion functions <br>
-  (jw) fixed a problem where numeric values where transmitted to homekit as strings ([#87](https://github.com/jensweigele/ioBroker.yahka/issues/87))<br>
-  (jw) added possibility to specify "firmware" version for bridge and devices ([#90](https://github.com/jensweigele/ioBroker.yahka/issues/90))<br>
-  (jw) added Internet Explorer / MS Edge detection to print error message in admin panel ([#83](https://github.com/jensweigele/ioBroker.yahka/issues/83))<br>
-  (jw) added support for new compact mode ([#95](https://github.com/jensweigele/ioBroker.yahka/issues/95))<br>
-  (jw) added support for specifiyng device information via datapoints ([#91](https://github.com/jensweigele/ioBroker.yahka/issues/91))<br>
-  (SchumyHao) added Chinese support
+* (jw) added more services and characteristics (from https://github.com/homespun/hap-nodejs-community-types)
+* (jw) improved admin interface to support individual editors for IO/Conversion functions
+* (jw) added new conversion function "script" which adds the ability to run JavaScript functions as conversion functions
+* (jw) fixed a bug in the scaleInt and scaleFloat methods (thanks to balzreber) 
+* (jw) added ioFunction "MultiState" to get multiple states and/or separate between read and write states 
+* (jw) added conversion function "map" to customize mappings between ioBroker and HomeKit 
+* (jw) added possibility to specify IP for Bonjour broadcasting (for bridge configuration and camera configuration)([#86](https://github.com/jensweigele/ioBroker.yahka/issues/86)) 
+* (jw) switched to webpack and refactored admin interface and io/conversion functions 
+* (jw) fixed a problem where numeric values where transmitted to homekit as strings ([#87](https://github.com/jensweigele/ioBroker.yahka/issues/87))
+* (jw) added possibility to specify "firmware" version for bridge and devices ([#90](https://github.com/jensweigele/ioBroker.yahka/issues/90))
+* (jw) added Internet Explorer / MS Edge detection to print error message in admin panel ([#83](https://github.com/jensweigele/ioBroker.yahka/issues/83))
+* (jw) added support for new compact mode ([#95](https://github.com/jensweigele/ioBroker.yahka/issues/95))
+* (jw) added support for specifying device information via data points ([#91](https://github.com/jensweigele/ioBroker.yahka/issues/91))
+* (SchumyHao) added Chinese support
   
 ### 0.8.2 (2018-12-09)
-  (jw) Removed a bug which flooded logging when starting/stopping the adapter which led to excessive memory consumption<br>
+* (jw) Removed a bug which flooded logging when starting/stopping the adapter which led to excessive memory consumption
 
 ### 0.8.1 (2018-12-04)
-  (jw) updated dependencies<br>
-  (jw) change default name of new instances<br>
-  (foxriver76) remove excessive logging<br>
-  (mdietz666) scaleInt and scaleFloat now supports min-values (this allows mapping from e.g. -90 to 90 to 0 to 180)<br>
-  (arichter83) added "Duplicate Device" functionality<br>
+* (jw) updated dependencies
+* (jw) change default name of new instances
+* (foxriver76) remove excessive logging
+* (mdietz666) scaleInt and scaleFloat now supports min-values (this allows mapping from e.g. -90 to 90 to 0 to 180)
+* (arichter83) added "Duplicate Device" functionality
 
 ### 0.7.1 (2018-02-14)
-  (jw) fixed a bug where state selection with admin 2.0.9 did not work anymore<br>
-  (jw) restructured repository to support install via url<br>
+* (jw) fixed a bug where state selection with admin 2.0.9 did not work anymore
+* (jw) restructured repository to support install via url
 
 ### 0.7.0 (2018-02-01)
-  (bluefox) Fixed the ID select dialog in Admin3<br>
-  (jw) updated hap-nodejs to support the following new services: Faucet, IrrigationSystem and Valve<br>
-  (jw) added ip-package to dependencies to avoid errors on some installations<br>
+* (bluefox) Fixed the ID select dialog in Admin3
+* (jw) updated hap-nodejs to support the following new services: Faucet, IrrigationSystem and Valve
+* (jw) added ip-package to dependencies to avoid errors on some installations
 
 ### 0.6.1 (2018-01-25)
-  (jw) fixed startup crash<br>
+* (jw) fixed startup crash
 
 ### 0.6.0 (2018-01-24)
-  (jw) add support for IP-Cameras<br>
-  (jw) included iOS 11 device definitions<br>
-  (jw) allowed negative temperatures for temperature sensors<br>
-  (jw) fixed crashes due to duplicate device names<br>
-  (oliverschulze) added conversion functions "hue" and "level255"<br>
-  (jw) added conversion functions scaleInt, scaleFloat and inverse<br>
-  (jw) devices are now sorted by name in the admin panel<br>
+* (jw) add support for IP-Cameras
+* (jw) included iOS 11 device definitions
+* (jw) allowed negative temperatures for temperature sensors
+* (jw) fixed crashes due to duplicate device names
+* (oliverschulze) added conversion functions "hue" and "level255"
+* (jw) added conversion functions scaleInt, scaleFloat and inverse
+* (jw) devices are now sorted by name in the admin panel
 
 ### 0.5.5 (2017-05-08)
-  (bluefox) allow select ID in configuration dialog<br>
+  (bluefox) allow select ID in configuration dialog
 
 ### 0.5.4 (2017-02-08)
-  (jw) improve logoutput<br>
-  (jw) added HomematicControlModeToHomekitHeathingCoolingState mapping<br>
+* (jw) improve log output
+* (jw) added HomematicControlModeToHomekitHeathingCoolingState mapping
 
 ### 0.5.3 (2017-02-08)
-  (jw) internal release<br>
+* (jw) internal release
 
 ### 0.5.2 (2016-12-23)
-  (jw) fixed issues with empty characteristic values<br>
-  (jw) fixed issue with empty adapter.systemConfig.system object<br>
+* (jw) fixed issues with empty characteristic values
+* (jw) fixed issue with empty adapter.systemConfig.system object
 
 ### 0.5.1 (2016-10-05)
-  (jw) fixed issue with wrongly displayed logo<br>
+* (jw) fixed issue with wrongly displayed logo
 
 ### 0.5.0 (2016-10-05)
-  (jw) initial release<br>
+* (jw) initial release
 
 ## License
 The MIT License (MIT)
 
-Copyright (c) 2016-2022 Jens Weigele (iobroker.yahka@gmail.com)
+Copyright (c) 2016-2023 Jens Weigele (iobroker.yahka@gmail.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

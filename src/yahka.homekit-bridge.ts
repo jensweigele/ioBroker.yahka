@@ -6,7 +6,7 @@ import { importHAPCommunityTypesAndFixes } from './yahka.community.types';
 import { Accessory, Bridge, uuid, Characteristic, Service, init as hapInit, MDNSAdvertiser } from 'hap-nodejs';
 import { YahkaServiceInitializer } from './yahka.homekit-service';
 import { IHomeKitBridgeBindingFactory, ILogger } from './yahka.interfaces';
-var pjson = require('../package.json');
+const pjson = require('../package.json');
 
 importHAPCommunityTypesAndFixes();
 

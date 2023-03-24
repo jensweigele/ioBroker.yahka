@@ -13,7 +13,7 @@ export function isMultiStateParameter(value: any): value is TIoBrokerInOutFuncti
         return false;
     if (!isObject(value))
         return false;
-    let propName: keyof TIoBrokerInOutFunction_MultiStateParameter = "readState";
+    let propName: keyof TIoBrokerInOutFunction_MultiStateParameter = 'readState';
     return (propName in value);
 }
 
@@ -22,7 +22,7 @@ export class TIoBrokerInOutFunction_MultiState extends TIoBrokerInOutFunctionBas
     static parseParameters(parameters: any): TIoBrokerInOutFunction_MultiStateParameter[] {
         if (Array.isArray(parameters)) {
             return parameters.filter(isMultiStateParameter);
-        } else if (typeof parameters === "string") {
+        } else if (typeof parameters === 'string') {
             return [{ readState: parameters }];
         } else {
             return undefined
@@ -37,7 +37,7 @@ export class TIoBrokerInOutFunction_MultiState extends TIoBrokerInOutFunctionBas
     }
 
     constructor(protected adapter: ioBroker.Adapter, protected stateProperties: TIoBrokerInOutFunction_MultiStateParameter[]) {
-        super(adapter, "TIoBrokerInOutFunctionMultiState");
+        super(adapter, 'TIoBrokerInOutFunctionMultiState');
         for (let state of stateProperties) {
             this.addSubscriptionRequest(state.readState);
         }
@@ -72,10 +72,10 @@ export class TIoBrokerInOutFunction_MultiState extends TIoBrokerInOutFunctionBas
             return this.updateSingleIOBrokerValue(state, newValueForThisState);
         });
         Promise.all(promiseArray).then(() => {
-            this.log.debug('wrote all states sucessfully to ioBroker');
+            this.log.debug('wrote all states successfully to ioBroker');
             callback();
         }).catch((e) => {
-            this.log.error('could not write all states to ioBroker: ' + JSON.stringify(e));
+            this.log.error(`could not write all states to ioBroker: ${JSON.stringify(e)}`);
             callback();
         });
     }

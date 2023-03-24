@@ -1,4 +1,4 @@
-import { TIOBrokerConversionBase, IConversionFunction } from "./conversion.base";
+import { TIOBrokerConversionBase, IConversionFunction } from './conversion.base';
 
 
 export interface IIoBrokerConversionScriptParameters {
@@ -9,8 +9,8 @@ export interface IIoBrokerConversionScriptParameters {
 export class TIoBrokerConversion_Script extends TIOBrokerConversionBase implements IConversionFunction {
     static isScriptParameter(parameters: any): parameters is IIoBrokerConversionScriptParameters {
         const castedParam = <IIoBrokerConversionScriptParameters>parameters;
-        return castedParam["toHomeKit"] !== undefined &&
-            castedParam["toIOBroker"] !== undefined;
+        return castedParam['toHomeKit'] !== undefined &&
+            castedParam['toIOBroker'] !== undefined;
     }
 
     static create(adapter: ioBroker.Adapter, parameters: any): IConversionFunction {
@@ -19,8 +19,8 @@ export class TIoBrokerConversion_Script extends TIOBrokerConversionBase implemen
             params = parameters;
         } else {
             params = {
-                toHomeKit: "return value",
-                toIOBroker: "return value"
+                toHomeKit: 'return value',
+                toIOBroker: 'return value'
             }
         }
         return new TIoBrokerConversion_Script(adapter, params);
@@ -31,18 +31,18 @@ export class TIoBrokerConversion_Script extends TIOBrokerConversionBase implemen
 
     constructor(adapter: ioBroker.Adapter, protected parameters: IIoBrokerConversionScriptParameters) {
         super(adapter);
-        this.toHKFunction = new Function("value", this.parameters.toHomeKit);
-        this.toIOFunction = new Function("value", this.parameters.toIOBroker);
+        this.toHKFunction = new Function('value', this.parameters.toHomeKit);
+        this.toIOFunction = new Function('value', this.parameters.toIOBroker);
     }
-    
-    toHomeKit(value: any) { 
+
+    toHomeKit(value: any) {
         let newValue = this.toHKFunction(value);
-        this.adapter.log.debug('script: converting value to homekit: ' + value + ' to ' + newValue); 
-        return newValue; 
+        this.adapter.log.debug(`script: converting value to homekit: ${value} to ${newValue}`);
+        return newValue;
     }
-    toIOBroker(value: any) { 
+    toIOBroker(value: any) {
         let newValue = this.toIOFunction(value);
-        this.adapter.log.debug('script: converting value to ioBroker: ' + value + ' to ' + newValue); 
-        return newValue; 
+        this.adapter.log.debug(`script: converting value to ioBroker: ${value} to ${newValue}`);
+        return newValue;
     }
 }
