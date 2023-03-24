@@ -89,6 +89,7 @@
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha --exit",
     "build": "grunt",
+    "prepublishOnly": "grunt",
     "release": "release-script",
     "release-patch": "release-script patch --yes",
     "release-minor": "release-script minor --yes",
