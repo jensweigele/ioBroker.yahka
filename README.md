@@ -174,7 +174,7 @@ For more information about the Configuration, the InOut Functions and Conversion
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
-### 1.0.0 (2023-03-24)
+### 1.0.1 (2023-03-24)
 * (foxriver76) we ensured controller 5 compatibility
 * (bluefox) Formatting
 
