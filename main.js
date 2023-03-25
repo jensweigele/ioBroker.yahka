@@ -1105,6 +1105,7 @@ module.exports = function(homebridge, options) {
   return CommunityTypes;
 };
 
+
 /***/ }),
 
 /***/ "./main.ts":
@@ -1429,13 +1430,13 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Inverse = void 0;
 const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 class TIoBrokerConversion_Inverse extends conversion_base_1.TIOBrokerConversionBase {
-    static create(adapter, parameters) {
-        let maxValue = conversion_base_1.TIOBrokerConversionBase.castToNumber(parameters);
-        return new TIoBrokerConversion_Inverse(adapter, maxValue);
-    }
     constructor(adapter, maxValue) {
         super(adapter);
         this.maxValue = maxValue;
+    }
+    static create(adapter, parameters) {
+        let maxValue = conversion_base_1.TIOBrokerConversionBase.castToNumber(parameters);
+        return new TIoBrokerConversion_Inverse(adapter, maxValue);
     }
     toHomeKit(value) {
         let num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
@@ -1495,12 +1496,6 @@ function isMultiStateParameter(params) {
 }
 exports.isMultiStateParameter = isMultiStateParameter;
 class TIoBrokerConversion_Map extends conversion_base_1.TIOBrokerConversionBase {
-    static create(adapter, parameters) {
-        if (!isMultiStateParameter(parameters)) {
-            return undefined;
-        }
-        return new TIoBrokerConversion_Map(adapter, parameters);
-    }
     constructor(adapter, parameters) {
         super(adapter, 'TIoBrokerConversion_Map');
         this.parameters = parameters;
@@ -1508,6 +1503,12 @@ class TIoBrokerConversion_Map extends conversion_base_1.TIOBrokerConversionBase 
         this.mappingArrayToIOBroker = new Map();
         this.jsonReplacer = (key, value) => String(value);
         this.buildMappingArray();
+    }
+    static create(adapter, parameters) {
+        if (!isMultiStateParameter(parameters)) {
+            return undefined;
+        }
+        return new TIoBrokerConversion_Map(adapter, parameters);
     }
     buildMappingArray() {
         for (let mapDef of this.parameters.mappings) {
@@ -1593,13 +1594,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Scale_Rounded = exports.TIoBrokerConversion_Scale = void 0;
 const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 class TIoBrokerConversion_Scale extends conversion_base_1.TIOBrokerConversionBase {
-    static isScaleParameter(parameters) {
-        const castedParam = parameters;
-        return castedParam['homekit.min'] !== undefined &&
-            castedParam['homekit.max'] !== undefined &&
-            castedParam['iobroker.min'] !== undefined &&
-            castedParam['iobroker.max'] !== undefined;
-    }
     constructor(adapter, parameters, logName) {
         super(adapter);
         this.parameters = parameters;
@@ -1612,6 +1606,13 @@ class TIoBrokerConversion_Scale extends conversion_base_1.TIOBrokerConversionBas
                 'iobroker.max': 1
             };
         }
+    }
+    static isScaleParameter(parameters) {
+        const castedParam = parameters;
+        return castedParam['homekit.min'] !== undefined &&
+            castedParam['homekit.max'] !== undefined &&
+            castedParam['iobroker.min'] !== undefined &&
+            castedParam['iobroker.max'] !== undefined;
     }
     toHomeKit(value) {
         let num = conversion_base_1.TIOBrokerConversionBase.castToNumber(value);
@@ -1660,6 +1661,12 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerConversion_Script = void 0;
 const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 class TIoBrokerConversion_Script extends conversion_base_1.TIOBrokerConversionBase {
+    constructor(adapter, parameters) {
+        super(adapter);
+        this.parameters = parameters;
+        this.toHKFunction = new Function('value', this.parameters.toHomeKit);
+        this.toIOFunction = new Function('value', this.parameters.toIOBroker);
+    }
     static isScriptParameter(parameters) {
         const castedParam = parameters;
         return castedParam['toHomeKit'] !== undefined &&
@@ -1677,12 +1684,6 @@ class TIoBrokerConversion_Script extends conversion_base_1.TIOBrokerConversionBa
             };
         }
         return new TIoBrokerConversion_Script(adapter, params);
-    }
-    constructor(adapter, parameters) {
-        super(adapter);
-        this.parameters = parameters;
-        this.toHKFunction = new Function('value', this.parameters.toHomeKit);
-        this.toIOFunction = new Function('value', this.parameters.toIOBroker);
     }
     toHomeKit(value) {
         let newValue = this.toHKFunction(value);
@@ -1995,12 +1996,12 @@ exports.TIoBrokerInOutFunction_StateBase = TIoBrokerInOutFunction_StateBase;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_Const = void 0;
 class TIoBrokerInOutFunction_Const {
-    static create(adapter, parameters) {
-        return new TIoBrokerInOutFunction_Const(adapter, parameters);
-    }
     constructor(adapter, parameters) {
         this.adapter = adapter;
         this.parameters = parameters;
+    }
+    static create(adapter, parameters) {
+        return new TIoBrokerInOutFunction_Const(adapter, parameters);
     }
     toIOBroker(ioValue, callback) {
         callback();
@@ -2026,6 +2027,22 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = void 0;
 const iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
 class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition extends iofunc_base_1.TIoBrokerInOutFunction_StateBase {
+    constructor(adapter, stateName, workingItem) {
+        super(adapter, stateName, 0);
+        this.adapter = adapter;
+        this.stateName = stateName;
+        this.workingItem = workingItem;
+        this.lastWorkingState = false;
+        this.lastAcknowledgedValue = undefined;
+        this.debounceTimer = null;
+        this.addSubscriptionRequest(workingItem);
+        adapter.getForeignState(workingItem, (error, ioState) => {
+            if (ioState)
+                this.lastWorkingState = Boolean(ioState === null || ioState === void 0 ? void 0 : ioState.val);
+            else
+                this.lastWorkingState = undefined;
+        });
+    }
     static create(adapter, parameters) {
         let p;
         if (typeof parameters === 'string')
@@ -2046,22 +2063,6 @@ class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition extends iofu
             workingItemName = pathNames.join('.');
         }
         return new TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition(adapter, stateName, workingItemName);
-    }
-    constructor(adapter, stateName, workingItem) {
-        super(adapter, stateName, 0);
-        this.adapter = adapter;
-        this.stateName = stateName;
-        this.workingItem = workingItem;
-        this.lastWorkingState = false;
-        this.lastAcknowledgedValue = undefined;
-        this.debounceTimer = null;
-        this.addSubscriptionRequest(workingItem);
-        adapter.getForeignState(workingItem, (error, ioState) => {
-            if (ioState)
-                this.lastWorkingState = Boolean(ioState === null || ioState === void 0 ? void 0 : ioState.val);
-            else
-                this.lastWorkingState = undefined;
-        });
     }
     subscriptionEvent(stateName, ioState, callback) {
         if (!ioState)
@@ -2124,18 +2125,18 @@ function isHomematic_Dimmer_Parameter(value) {
 }
 exports.isHomematic_Dimmer_Parameter = isHomematic_Dimmer_Parameter;
 class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends iofunc_base_1.TIoBrokerInOutFunctionBase {
+    constructor(adapter, functionName, parameters) {
+        super(adapter, `${functionName}[${parameters.levelState}]`);
+        this.parameters = parameters;
+        this.lastOnLevel = { val: undefined, ack: false, ts: undefined, lc: undefined, from: undefined };
+        this.addSubscriptionRequest(parameters.levelState);
+    }
     static parseParameters(parameters) {
         if (!isHomematic_Dimmer_Parameter(parameters)) {
             return undefined;
         }
         ;
         return parameters;
-    }
-    constructor(adapter, functionName, parameters) {
-        super(adapter, `${functionName}[${parameters.levelState}]`);
-        this.parameters = parameters;
-        this.lastOnLevel = { val: undefined, ack: false, ts: undefined, lc: undefined, from: undefined };
-        this.addSubscriptionRequest(parameters.levelState);
     }
     cacheChanged(stateName, callback) {
         // save level if we are switching off
@@ -2150,17 +2151,17 @@ class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends iofunc_base_1.TIoBrok
 }
 exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = TIoBrokerInOutFunction_Homematic_Dimmer_Base;
 class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFunction_Homematic_Dimmer_Base {
+    constructor(adapter, parameters) {
+        super(adapter, 'Homematic.Dimmer.On', parameters);
+        this.adapter = adapter;
+        this.parameters = parameters;
+    }
     static create(adapter, parameters) {
         let params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
         if (params === undefined) {
             return undefined;
         }
         return new TIoBrokerInOutFunction_Homematic_Dimmer_On(adapter, params);
-    }
-    constructor(adapter, parameters) {
-        super(adapter, 'Homematic.Dimmer.On', parameters);
-        this.adapter = adapter;
-        this.parameters = parameters;
     }
     recalculateHomekitValues(stateName) {
         let hkValue = this.stateCache.get(this.parameters.levelState);
@@ -2206,17 +2207,17 @@ class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFunction_
 }
 exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = TIoBrokerInOutFunction_Homematic_Dimmer_On;
 class TIoBrokerInOutFunction_Homematic_Dimmer_Brightness extends TIoBrokerInOutFunction_Homematic_Dimmer_Base {
+    constructor(adapter, parameters) {
+        super(adapter, 'Homematic.Dimmer.Brightness', parameters);
+        this.adapter = adapter;
+        this.parameters = parameters;
+    }
     static create(adapter, parameters) {
         let params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
         if (params === undefined) {
             return undefined;
         }
         return new TIoBrokerInOutFunction_Homematic_Dimmer_Brightness(adapter, params);
-    }
-    constructor(adapter, parameters) {
-        super(adapter, 'Homematic.Dimmer.Brightness', parameters);
-        this.adapter = adapter;
-        this.parameters = parameters;
     }
     recalculateHomekitValues(stateName) {
         var _a;
@@ -2273,6 +2274,14 @@ function isMultiStateParameter(value) {
 }
 exports.isMultiStateParameter = isMultiStateParameter;
 class TIoBrokerInOutFunction_MultiState extends iofunc_base_1.TIoBrokerInOutFunctionBase {
+    constructor(adapter, stateProperties) {
+        super(adapter, 'TIoBrokerInOutFunctionMultiState');
+        this.adapter = adapter;
+        this.stateProperties = stateProperties;
+        for (let state of stateProperties) {
+            this.addSubscriptionRequest(state.readState);
+        }
+    }
     static parseParameters(parameters) {
         if (Array.isArray(parameters)) {
             return parameters.filter(isMultiStateParameter);
@@ -2290,14 +2299,6 @@ class TIoBrokerInOutFunction_MultiState extends iofunc_base_1.TIoBrokerInOutFunc
             return undefined;
         }
         return new TIoBrokerInOutFunction_MultiState(adapter, stateNames);
-    }
-    constructor(adapter, stateProperties) {
-        super(adapter, 'TIoBrokerInOutFunctionMultiState');
-        this.adapter = adapter;
-        this.stateProperties = stateProperties;
-        for (let state of stateProperties) {
-            this.addSubscriptionRequest(state.readState);
-        }
     }
     recalculateHomekitValues(stateName) {
         let hkValues = this.stateProperties.map((state) => { var _a; return (_a = this.stateCache.get(state.readState)) === null || _a === void 0 ? void 0 : _a.val; });
