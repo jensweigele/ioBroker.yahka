@@ -26,6 +26,9 @@ Attention: To be able to restore `ioBroker.yahka` on another system, in addition
 
 ## Troubleshooting
 
+### Bridge is not working or device are not responding
+Try to change the MAC/Username of the bridge or activate the ciao advertiser
+
 ### Not all new features are available:
 If not all new feature are available after a yahka update, try a upload (f.e. `iob upload yahka`) and restart the adapter. 
 
@@ -174,7 +177,7 @@ For more information about the Configuration, the InOut Functions and Conversion
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
-### 1.0.0 (2023-03-24)
+### 1.0.1 (2023-03-24)
 * (foxriver76) we ensured controller 5 compatibility
 * (bluefox) Formatting
 

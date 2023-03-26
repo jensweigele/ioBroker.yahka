@@ -1,9 +1,9 @@
 {
   "common": {
     "name": "yahka",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "news": {
-      "1.0.0": {
+      "1.0.1": {
         "en": "we ensured controller 5 compatibility\nFormatting",
         "de": "wir sorgten für controller 5 kompatibilität\nFormatierung",
         "ru": "мы обеспечили совместимость контроллера 5\nФорматирование",
