@@ -177,6 +177,9 @@ For more information about the Configuration, the InOut Functions and Conversion
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
+### **WORK IN PROGRESS**
+* (TA2K) Corrected empty device list with rebuild
+
 ### 1.0.1 (2023-03-24)
 * (foxriver76) we ensured controller 5 compatibility
 * (bluefox) Formatting
