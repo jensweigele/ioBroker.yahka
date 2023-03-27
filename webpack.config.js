@@ -4,10 +4,10 @@ const webpack = require('webpack');
 
 let backendConfig = {
   context: path.resolve(__dirname, 'src'),
-  target: "node",
-  mode: "development",
+  target: 'node',
+  mode: 'development',
   entry: {
-    "main": "./main.ts"
+    'main': './main.ts'
   },
   module: {
     rules: [{
@@ -20,7 +20,7 @@ let backendConfig = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js']
   },
-  devtool: "source-map",
+  devtool: 'source-map',
   externals: [nodeExternals()],
   output: {
     path: path.resolve(__dirname)
@@ -29,10 +29,10 @@ let backendConfig = {
 
 let frontendConfig = {
   context: path.resolve(__dirname, 'src'),
-  target: "web",
-  mode: "development",
+  target: 'web',
+  mode: 'development',
   entry: {
-    "yahka.admin": "./admin/yahka.admin.ts"
+    'yahka.admin': './admin/yahka.admin.ts'
   },
   module: {
     rules: [{
@@ -54,26 +54,26 @@ let frontendConfig = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
     fallback: {
-      "assert": false,
-      "os": false,
-      "dgram": false,
-      "child_process": false,
-      "fs": false,
-      "net": false,
-      "http": false,
-      "path": require.resolve("path-browserify"),
-      "crypto": require.resolve("crypto-browserify"),
-      "stream": require.resolve("stream-browserify")
+      'assert': false,
+      'os': false,
+      'dgram': false,
+      'child_process': false,
+      'fs': false,
+      'net': false,
+      'http': false,
+      'path': require.resolve('path-browserify'),
+      'crypto': require.resolve('crypto-browserify'),
+      'stream': require.resolve('stream-browserify')
     }
   },
-  devtool: "source-map",
+  devtool: 'source-map',
   externals: {
     jquery: 'jQuery'
   },
   output: {
-    library: "yahkaAdmin",
-    libraryTarget: "var",
-    path: path.resolve(__dirname, "admin/")
+    library: 'yahkaAdmin',
+    libraryTarget: 'var',
+    path: path.resolve(__dirname, 'admin/')
   },
   plugins: [
     new webpack.ProvidePlugin({
