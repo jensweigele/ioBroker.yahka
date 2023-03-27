@@ -177,7 +177,7 @@ For more information about the Configuration, the InOut Functions and Conversion
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
-### **WORK IN PROGRESS**
+### 1.0.2 (2023-03-27)
 * (TA2K) Corrected empty device list with rebuild
 
 ### 1.0.1 (2023-03-24)

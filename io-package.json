@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "yahka",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "news": {
+      "1.0.2": {
+        "en": "Corrected empty device list with rebuild",
+        "de": "Korrigierte leere Geräteliste mit Neuaufbau",
+        "ru": "Исправлено пустой список устройств с перестраиваем",
+        "pt": "Lista de dispositivos vazios corrigido com reconstrução",
+        "nl": "Vertaling:",
+        "fr": "Correction de la liste des périphériques vides avec reconstruction",
+        "it": "Elenco dei dispositivi vuoti corretti con ricostruito",
+        "es": "Lista de dispositivos vacíos corregidos con reconstrucción",
+        "pl": "Naprawdę puste urządzenie z rekonstrukcją",
+        "uk": "Виправлено порожній список пристроїв з перебудуванням",
+        "zh-cn": "改编空装置清单,重建"
+      },
       "1.0.1": {
         "en": "we ensured controller 5 compatibility\nFormatting",
         "de": "wir sorgten für controller 5 kompatibilität\nFormatierung",
@@ -31,17 +44,6 @@
       "0.13.0": {
         "en": "Reworked State selection",
         "de": "State Selektion überarbeitet"
-      },
-      "0.12.0": {
-        "en": "Updated dependencies",
-        "de": "Aktualisierte Abhängigkeiten",
-        "ru": "Обновлены зависимости",
-        "pt": "Dependências atualizadas",
-        "nl": "Bijgewerkte afhankelijkheden",
-        "fr": "Dépendances mises à jour",
-        "it": "Dipendenze aggiornate",
-        "es": "Dependencias actualizadas",
-        "pl": "Zaktualizowano zależności"
       }
     },
     "title": "Homekit",
