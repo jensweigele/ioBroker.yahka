@@ -1105,6 +1105,7 @@ module.exports = function(homebridge, options) {
   return CommunityTypes;
 };
 
+
 /***/ }),
 
 /***/ "./main.ts":
