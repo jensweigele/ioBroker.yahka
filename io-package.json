@@ -1,9 +1,9 @@
 {
   "common": {
     "name": "yahka",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "news": {
-      "1.0.2": {
+      "1.0.3": {
         "en": "Corrected empty device list with rebuild",
         "de": "Korrigierte leere Geräteliste mit Neuaufbau",
         "ru": "Исправлено пустой список устройств с перестраиваем",
@@ -47,6 +47,9 @@
       }
     },
     "title": "Homekit",
+    "titleLang": {
+      "en": "Homekit YAHKA"
+    },
     "desc": {
       "en": "yet another Homekit adapter",
       "de": "noch ein weiterer Homekit-Adapter",
@@ -74,17 +77,13 @@
     "type": "iot-systems",
     "materialize": true,
     "compact": true,
+    "connectionType": "local",
+    "dataSource": "push",
     "osDependencies": {
       "linux": [
         "libavahi-compat-libdnssd-dev",
         "pam-devel"
       ]
-    },
-    "config": {
-      "minWidth": 800,
-      "width ": 1440,
-      "minHeight": 600,
-      "height ": 860
     },
     "authors": [
       {

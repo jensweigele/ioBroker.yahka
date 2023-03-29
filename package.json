@@ -1,6 +1,6 @@
 {
   "name": "iobroker.yahka",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "ioBroker HomeKit Adapter",
   "author": {
     "name": "Jens Weigele",
@@ -71,6 +71,7 @@
   "files": [
     "admin/",
     "main.js",
+    "main.js.map",
     "LICENSE",
     "README.md",
     "io-package.json",
@@ -79,7 +80,7 @@
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha --exit",
     "build": "gulp",
-    "prepublishOnly": "gulp",
+    "_prepublishOnly": "gulp",
     "release": "release-script",
     "release-patch": "release-script patch --yes",
     "release-minor": "release-script minor --yes",
