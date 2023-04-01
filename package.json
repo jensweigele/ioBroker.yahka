@@ -30,7 +30,7 @@
     "node": ">=12.0.0"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.6.7",
+    "@iobroker/adapter-core": "^2.6.8",
     "debug": "^4.3.4",
     "dev-null": "^0.1.1",
     "hap-nodejs": "^0.11.0",
