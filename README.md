@@ -24,6 +24,11 @@ If you want to be on the edge and test the latest beta, you could install the ad
 ## Backup & Restore
 Attention: To be able to restore `ioBroker.yahka` on another system, in addition to the usual `iobroker backup` and `iobroker restore`, the `yahka.X.hapdata` folder under `/opt/iobroker/iobroker-data` must also be backuped and, if necessary, restored. [Wiki](https://github.com/jensweigele/ioBroker.yahka/wiki/ioBroker.yahka-auf-ein-anderes-System-umziehen) / [Issue](https://github.com/jensweigele/ioBroker.yahka/issues/176)
 
+Another option for a backup and restore is the [Backitup](https://github.com/simatec/ioBroker.backitup/blob/master/README.md) adapter. This automatically backs up the `yahka.X.hapdata` folder.
+A restore is also possible via the Backitup GUI.
+
+You can find a detailed description [here](https://github.com/simatec/ioBroker.backitup/wiki/ioBroker.backitup-Wiki-Deutsch#yahka-backup).
+
 ## Troubleshooting
 
 ### Bridge is not working or device are not responding
