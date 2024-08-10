@@ -1216,11 +1216,10 @@ exports.YahkaLogger = YahkaLogger;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.propertyExists = void 0;
+exports.propertyExists = propertyExists;
 function propertyExists(object, property) {
     return property in object;
 }
-exports.propertyExists = propertyExists;
 
 
 /***/ }),
@@ -1234,7 +1233,7 @@ exports.propertyExists = propertyExists;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.importHAPCommunityTypesAndFixes = void 0;
+exports.importHAPCommunityTypesAndFixes = importHAPCommunityTypesAndFixes;
 const hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
 const HapCommunity = __webpack_require__(/*! ../hap-nodejs-community-types */ "../hap-nodejs-community-types/types.js");
 let hapTypesImported = false;
@@ -1261,7 +1260,6 @@ function importHAPCommunityTypesAndFixes() {
     }
     hapTypesImported = true;
 }
-exports.importHAPCommunityTypesAndFixes = importHAPCommunityTypesAndFixes;
 
 
 /***/ }),
@@ -1489,12 +1487,12 @@ exports.TIoBrokerConversion_Invert = TIoBrokerConversion_Invert;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TIoBrokerConversion_Map = exports.isMultiStateParameter = void 0;
+exports.TIoBrokerConversion_Map = void 0;
+exports.isMultiStateParameter = isMultiStateParameter;
 const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
 function isMultiStateParameter(params) {
     return 'mappings' in params;
 }
-exports.isMultiStateParameter = isMultiStateParameter;
 class TIoBrokerConversion_Map extends conversion_base_1.TIOBrokerConversionBase {
     static create(adapter, parameters) {
         if (!isMultiStateParameter(parameters)) {
@@ -2112,7 +2110,8 @@ exports.TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition = TIoBroke
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = exports.isHomematic_Dimmer_Parameter = void 0;
+exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = void 0;
+exports.isHomematic_Dimmer_Parameter = isHomematic_Dimmer_Parameter;
 const iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
 const util_1 = __webpack_require__(/*! util */ "util");
 const yahka_utils_1 = __webpack_require__(/*! ../shared/yahka.utils */ "./shared/yahka.utils.ts");
@@ -2123,7 +2122,6 @@ function isHomematic_Dimmer_Parameter(value) {
         return false;
     return (0, yahka_utils_1.propertyExists)(value, 'levelState');
 }
-exports.isHomematic_Dimmer_Parameter = isHomematic_Dimmer_Parameter;
 class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends iofunc_base_1.TIoBrokerInOutFunctionBase {
     static parseParameters(parameters) {
         if (!isHomematic_Dimmer_Parameter(parameters)) {
@@ -2261,7 +2259,8 @@ exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = TIoBrokerInOutFunct
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TIoBrokerInOutFunction_MultiState = exports.isMultiStateParameter = void 0;
+exports.TIoBrokerInOutFunction_MultiState = void 0;
+exports.isMultiStateParameter = isMultiStateParameter;
 const iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
 const util_1 = __webpack_require__(/*! util */ "util");
 function isMultiStateParameter(value) {
@@ -2272,7 +2271,6 @@ function isMultiStateParameter(value) {
     let propName = 'readState';
     return (propName in value);
 }
-exports.isMultiStateParameter = isMultiStateParameter;
 class TIoBrokerInOutFunction_MultiState extends iofunc_base_1.TIoBrokerInOutFunctionBase {
     static parseParameters(parameters) {
         if (Array.isArray(parameters)) {
@@ -2417,7 +2415,9 @@ exports.TIoBrokerInOutFunction_State_OnlyACK = TIoBrokerInOutFunction_State_Only
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.deinitHAP = exports.initHAP = exports.THomeKitBridge = void 0;
+exports.THomeKitBridge = void 0;
+exports.initHAP = initHAP;
+exports.deinitHAP = deinitHAP;
 /// <reference path="./typings/index.d.ts" />
 const debug = __webpack_require__(/*! debug */ "debug");
 const util = __webpack_require__(/*! util */ "util");
@@ -2545,7 +2545,6 @@ function initHAP(storagePath, HAPdebugLogMethod) {
         HAPdebugLogMethod(util.format.apply(this, arguments));
     };
 }
-exports.initHAP = initHAP;
 function deinitHAP() {
     if (!hapInited) {
         return;
@@ -2554,7 +2553,6 @@ function deinitHAP() {
     debug.log = originalLogMethod;
     hapInited = false;
 }
-exports.deinitHAP = deinitHAP;
 
 
 /***/ }),
@@ -2638,9 +2636,9 @@ class THomeKitIPCamera {
             }
         }
         const options = {
-            proxy: false,
-            disable_audio_proxy: false,
-            srtp: true,
+            proxy: false, // Requires RTP/RTCP MUX Proxy
+            disable_audio_proxy: false, // If proxy = true, you can opt out audio proxy via this
+            srtp: true, // Supports SRTP AES_CM_128_HMAC_SHA1_80 encryption
             supportedCryptoSuites: [0 /* SRTPCryptoSuites.AES_CM_128_HMAC_SHA1_80 */],
             video: {
                 resolutions: videoResolutions,
@@ -2679,7 +2677,7 @@ class THomeKitIPCamera {
     }
     createCameraController() {
         this.cameraController = new hap_nodejs_1.CameraController({
-            cameraStreamCount: 2,
+            cameraStreamCount: 2, // HomeKit requires at least 2 streams, but 1 is also just fine
             delegate: this,
             streamingOptions: this.createOptionsDictionary(),
         });
@@ -3310,7 +3308,7 @@ module.exports = require("path");
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"iobroker.yahka","version":"1.0.2","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"engines":{"node":">=12.0.0"},"dependencies":{"@iobroker/adapter-core":"^2.6.7","debug":"^4.3.4","dev-null":"^0.1.1","hap-nodejs":"^0.11.0","ip":"^1.1.8","macaddress":"0.5.3","util":"^0.12.5"},"devDependencies":{"@alcalzone/release-script":"^3.5.9","@alcalzone/release-script-plugin-iobroker":"^3.5.9","@alcalzone/release-script-plugin-license":"^3.5.9","@types/iobroker":"^4.0.5","@types/jquery":"^3.5.16","@types/node":"^18.15.6","assert":"^2.0.0","chai":"^4.3.7","crypto-browserify":"^3.12.0","gulp":"^4.0.2","html-webpack-plugin":"^5.5.0","mocha":"^10.2.0","path-browserify":"^1.0.1","process":"^0.11.10","raw-loader":"^4.0.2","stream-browserify":"^3.0.0","timers":"^0.1.1","ts-loader":"^9.4.2","typescript":"^5.0.2","webpack":"^5.76.3","webpack-cli":"^5.0.1","webpack-node-externals":"^3.0.0","xml2js":"^0.4.23"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","files":["admin/","main.js","LICENSE","README.md","io-package.json","hap-nodejs-community-types/"],"scripts":{"test":"node node_modules/mocha/bin/mocha --exit","build":"gulp","prepublishOnly":"gulp","release":"release-script","release-patch":"release-script patch --yes","release-minor":"release-script minor --yes","release-major":"release-script major --yes"}}');
+module.exports = /*#__PURE__*/JSON.parse('{"name":"iobroker.yahka","version":"1.0.3","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"engines":{"node":">=12.0.0"},"dependencies":{"@iobroker/adapter-core":"^3.1.6","debug":"^4.3.6","dev-null":"^0.1.1","hap-nodejs":"^0.11.2","ip":"^1.1.9","macaddress":"0.5.3","util":"^0.12.5"},"devDependencies":{"@alcalzone/release-script":"^3.8.0","@alcalzone/release-script-plugin-iobroker":"^3.7.2","@alcalzone/release-script-plugin-license":"^3.7.0","@iobroker/types":"^6.0.10","@types/jquery":"^3.5.30","@types/node":"^22.2.0","assert":"^2.1.0","chai":"^4.5.0","crypto-browserify":"^3.12.0","gulp":"^4.0.2","html-webpack-plugin":"^5.6.0","mocha":"^10.7.3","path-browserify":"^1.0.1","process":"^0.11.10","raw-loader":"^4.0.2","stream-browserify":"^3.0.0","timers":"^0.1.1","ts-loader":"^9.5.1","typescript":"^5.5.4","webpack":"^5.93.0","webpack-cli":"^5.1.4","webpack-node-externals":"^3.0.0","xml2js":"^0.4.23"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","files":["admin/","main.js","main.js.map","LICENSE","README.md","io-package.json","hap-nodejs-community-types/"],"scripts":{"test":"node node_modules/mocha/bin/mocha --exit","build":"gulp","_prepublishOnly":"gulp","release":"release-script","release-patch":"release-script patch --yes","release-minor":"release-script minor --yes","release-major":"release-script major --yes"}}');
 
 /***/ })
 

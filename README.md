@@ -172,11 +172,18 @@ For general Information about the Configuration Mask, see: TODO
 
 For more information about the Configuration, the InOut Functions and Conversion Functions, see: [Wiki](https://github.com/jensweigele/ioBroker.yahka/wiki/Configuration,-InOut-Functions-and-Conversion-Functions)
 
+## Notes for developers
+
+This repo includes one submodule , so before building you need to also close/init this one, ege. use `git submodule update --init --recursive` to update and fetch it's content.
+
 <!--
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
+### __WORK IN PROGRESS__
+* Important: js-controller 5.0 is required at least
+
 ### 1.0.3 (2023-03-29)
 * (TA2K) Corrected empty device list with rebuild
 

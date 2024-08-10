@@ -33,7 +33,7 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 18.x
 
 
       - name: Install Dependencies
@@ -57,7 +57,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [18.x, 20.x, 22.x]
         os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
@@ -99,7 +99,7 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 18.x
 
       - name: Extract the version and commit body from the tag
         id: extract_release

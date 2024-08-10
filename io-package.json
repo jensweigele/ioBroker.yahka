@@ -62,7 +62,11 @@
       "pl": "kolejny adapter Homekit",
       "zh-cn": "另一款Homekit适配器"
     },
-    "license": "MIT",
+    "licenseInformation": {
+      "type": "free",
+      "license": "MIT"
+    },
+    "tier": 2,
     "platform": "Javascript/Node.js",
     "mode": "daemon",
     "icon": "yahka.png",
@@ -85,6 +89,11 @@
         "pam-devel"
       ]
     },
+    "dependencies": [
+      {
+        "js-controller": ">=5.0.0"
+      }
+    ],
     "authors": [
       {
         "name": "Jens Weigele",

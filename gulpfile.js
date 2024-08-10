@@ -9,6 +9,11 @@ function assets() {
                 return reject(err)
             }
             if (stats.hasErrors()) {
+                if (Array.isArray(stats.stats)) {
+                    console.log(stats.stats[0].compilation.errors.join('\n'));
+                    console.log(stats.stats[1].compilation.errors.join('\n'));
+                    return reject(new Error(stats.stats[0].compilation.errors.join('\n')))
+                }
                 return reject(new Error(stats.compilation.errors.join('\n')))
             }
             resolve();
