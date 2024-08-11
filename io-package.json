@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "yahka",
-    "version": "1.0.4",
+    "version": "1.0.3",
     "news": {
       "1.0.3": {
         "en": "Corrected empty device list with rebuild",
