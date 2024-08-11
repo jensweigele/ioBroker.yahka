@@ -4,3 +4,7 @@
 /.tscache
 .DS_Store
 package-lock.json
+
+
+# ioBroker dev-server
+.dev-server/
