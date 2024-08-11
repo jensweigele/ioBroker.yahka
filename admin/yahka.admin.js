@@ -98423,7 +98423,7 @@ class ConfigPageBuilder_ServicePanel extends pageBuilder_base_1.ConfigPageBuilde
             if (serviceConfig) {
                 admin_utils_1.Utils.setInputValue(input, serviceConfig[configName]);
             }
-            if (input.type === 'select-one') {
+            if (input.type === 'checkbox') {
                 input.checked = (_a = serviceConfig[configName]) !== null && _a !== void 0 ? _a : defaultForCheckbox;
                 input.addEventListener('change', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
             }
