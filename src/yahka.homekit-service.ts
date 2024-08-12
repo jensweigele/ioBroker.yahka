@@ -1,7 +1,12 @@
 /// <reference path="./typings/index.d.ts" />
-import { Configuration } from './shared/yahka.configuration';
-import { Accessory, Characteristic, Service } from 'hap-nodejs';
-import { IHasIHomeKitBridgeBinding, IHomeKitBridgeBindingFactory, ILogger, IHomeKitBridgeBinding } from './yahka.interfaces';
+import {Configuration} from './shared/yahka.configuration';
+import {Accessory, Characteristic, CharacteristicSetCallback, HAPStatus, Service} from 'hap-nodejs';
+import {
+    IHasIHomeKitBridgeBinding,
+    IHomeKitBridgeBinding,
+    IHomeKitBridgeBindingFactory,
+    ILogger
+} from './yahka.interfaces';
 
 type IHAPCharacteristic = Characteristic & IHasIHomeKitBridgeBinding;
 
@@ -10,13 +15,28 @@ export class YahkaServiceInitializer {
     constructor(private FBridgeFactory: IHomeKitBridgeBindingFactory, private FLogger: ILogger) {
 
     }
-    public initServices(hapDevice: Accessory, serviceConfigs: Configuration.IServiceConfig[]) {
+    public initServices(hapDevice: Accessory, serviceConfigs: Configuration.IServiceConfig[], availabilityIobState?: string) {
         if (serviceConfigs == null) {
             return;
         }
 
+        let iobStateGiven = availabilityIobState !== undefined && availabilityIobState.trim() !== '';
+
+        let availableStateBinding = iobStateGiven ? this.FBridgeFactory.CreateBinding(
+                {
+                    name: 'Dummy',
+                    enabled: true,
+                    customCharacteristic: true,
+                    properties: [],
+                    inOutFunction: 'ioBroker.State',
+                    inOutParameters: availabilityIobState
+                },
+                (dummy: any) => {}
+            )
+            : null;
+
         for (const service of serviceConfigs) {
-            this.initService(hapDevice, service);
+            this.initService(hapDevice, service, availableStateBinding);
         }
 
         for (const service of serviceConfigs) {
@@ -24,7 +44,7 @@ export class YahkaServiceInitializer {
         }
     }
 
-    private initService(hapDevice: Accessory, serviceConfig: Configuration.IServiceConfig) {
+    private initService(hapDevice: Accessory, serviceConfig: Configuration.IServiceConfig, availabilityBinding: IHomeKitBridgeBinding) {
         if (serviceConfig.enabled === false) {
             this.FLogger.debug(`[${hapDevice.displayName}] service ${serviceConfig.name} is disabled`);
             return;
@@ -58,7 +78,7 @@ export class YahkaServiceInitializer {
         }
 
         for (let charactConfig of serviceConfig.characteristics) {
-            this.initCharacteristic(hapService, charactConfig);
+            this.initCharacteristic(hapService, charactConfig, availabilityBinding);
         }
 
         if (isNew) {
@@ -88,7 +108,7 @@ export class YahkaServiceInitializer {
     }
 
 
-    private initCharacteristic(hapService: Service, characteristicConfig: Configuration.ICharacteristicConfig) {
+    private initCharacteristic(hapService: Service, characteristicConfig: Configuration.ICharacteristicConfig, availabilityBinding: IHomeKitBridgeBinding) {
         const logName = `[${hapService.displayName}.${characteristicConfig.name}]`;
         if (!characteristicConfig.enabled) {
             return;
@@ -129,37 +149,70 @@ export class YahkaServiceInitializer {
             }
         });
 
-        hapCharacteristic.on('set', (hkValue: any, callback: () => void, context: any) => {
-            this.FLogger.debug(`${logName} got a set event, hkValue: ${JSON.stringify(hkValue)} `);
-            let binding: IHomeKitBridgeBinding = hapCharacteristic.binding;
-            if (!binding) {
-                this.FLogger.error(`${logName} no binding!`);
-                callback();
+        hapCharacteristic.on('set', (hkValue: any, callback: CharacteristicSetCallback, context: any) => {
+            let availableCallback = () => {
+                this.FLogger.debug(`${logName} got a set event, hkValue: ${JSON.stringify(hkValue)} `);
+                let binding: IHomeKitBridgeBinding = hapCharacteristic.binding;
+                if (!binding) {
+                    this.FLogger.error(`${logName} no binding!`);
+                    callback();
+                    return;
+                }
+
+                if (context === binding) {
+                    this.FLogger.debug(`${logName} set was initiated from ioBroker - exiting here`);
+                    callback();
+                    return;
+                }
+
+                let ioValue = binding.conversion.toIOBroker(hkValue);
+                binding.inOut.toIOBroker(ioValue, () => {
+                    this.FLogger.debug(`${logName} set was accepted by ioBroker(value: ${JSON.stringify(ioValue)})`);
+                    callback();
+                });
+            }
+
+            if (availabilityBinding === null || availabilityBinding === undefined) {
+                availableCallback();
+
                 return;
             }
 
-            if (context === binding) {
-                this.FLogger.debug(`${logName} set was initiated from ioBroker - exiting here`);
-                callback();
-                return;
-            }
+            availabilityBinding.inOut.fromIOBroker((error: any, plainIOValue: any) => {
+                if (!plainIOValue) {
+                    callback(HAPStatus.SERVICE_COMMUNICATION_FAILURE);
+                    return;
+                }
 
-            let ioValue = binding.conversion.toIOBroker(hkValue);
-            binding.inOut.toIOBroker(ioValue, () => {
-                this.FLogger.debug(`${logName} set was accepted by ioBroker(value: ${JSON.stringify(ioValue)})`);
-                callback();
+                availableCallback();
             });
         });
 
         hapCharacteristic.on('get', (hkCallback) => {
             this.FLogger.debug(`${logName} got a get event`);
-            this.getValueFromIOBroker(hapCharacteristic.binding, (error, ioValue, hkValue) => {
-                this.FLogger.debug(`${logName} forwarding value from ioBroker(${JSON.stringify(ioValue)}) to homekit as (${JSON.stringify(hkValue)})`);
-                try {
-                    hkCallback(error, hkValue);
-                } catch (e) {
-                    this.FLogger.error(`${logName} error while setting value ${hkValue} - message: ${e}`);
+            const availableCallback = () => {
+                this.getValueFromIOBroker(hapCharacteristic.binding, (error, ioValue, hkValue) => {
+                    this.FLogger.debug(`${logName} forwarding value from ioBroker(${JSON.stringify(ioValue)}) to homekit as (${JSON.stringify(hkValue)})`);
+                    try {
+                        hkCallback(error, hkValue);
+                    } catch (e) {
+                        this.FLogger.error(`${logName} error while setting value ${hkValue} - message: ${e}`);
+                    }
+                });
+            };
+
+            if (availabilityBinding === null || availabilityBinding === undefined) {
+                availableCallback();
+
+                return;
+            }
+
+            availabilityBinding.inOut.fromIOBroker((error: any, plainIOValue: any) => {
+                if (!plainIOValue) {
+                    hkCallback(HAPStatus.SERVICE_COMMUNICATION_FAILURE);
+                    return;
                 }
+                availableCallback();
             });
         });
     }

@@ -32,7 +32,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
         let frameNode = <HTMLElement>servicePanel.querySelector('#yahka_service_panel');
         translateFragment(servicePanel);
         let inputHelper = (selector: string, configName: keyof hkBridge.Configuration.IServiceConfig, selectList?: IDictionary<ISelectListEntry> | ISelectListEntry[], eventHandler?: (this: HTMLSelectElement, ev: Event) => any, defaultForCheckbox = true) => {
-            let input = <HTMLSelectElement>frameNode.querySelector(selector);
+            let input = <HTMLInputElement>frameNode.querySelector(selector);
             if (selectList != null) {
                 this.fillSelectByListEntries(input, selectList);
             }
@@ -41,7 +41,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
                 Utils.setInputValue(input, serviceConfig[configName]);
             }
 
-            if (input.type === 'select-one') {
+            if (input.type === 'checkbox') {
                 (input as unknown as HTMLInputElement).checked = serviceConfig[configName] ?? defaultForCheckbox;
                 input.addEventListener('change', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
             } else if (eventHandler !== undefined) {

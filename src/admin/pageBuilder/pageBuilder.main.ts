@@ -239,7 +239,8 @@ class ioBroker_ButtonHandler extends ConfigPageBuilder_Base {
                     firmware: '',
                     enabled: true,
                     category: 1,
-                    services: []
+                    services: [],
+                    availableState: null
                 };
                 bridge.devices.push(newCustomDevice);
                 this.delegate.setSelectedDeviceConfig(newCustomDevice, true);
