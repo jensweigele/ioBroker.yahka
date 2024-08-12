@@ -186,7 +186,7 @@ This repo includes one submodule, so before building you need to also close/init
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
-### __WORK IN PROGRESS__
+### 1.0.4 (2024-08-12)
 * (Apollon77) Important: js-controller 5.0 is required at least
 * (tarikweiss) Rewrote community types from submodule (js) to typescript
 * (tarikweiss) Added the ability to set an ioBroker state for the availability indication in HomeKit

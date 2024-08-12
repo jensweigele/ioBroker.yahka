@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "yahka",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "news": {
+      "1.0.4": {
+        "en": "Important: js-controller 5.0 is required at least\nRewrote community types from submodule (js) to typescript\nAdded the ability to set an ioBroker state for the availability indication in HomeKit",
+        "de": "Wichtig: js-controller 5.0 ist mindestens erforderlich\nRewrote Community-Typen von Submodul (js) zu Typescript\nHinzugefügt die Fähigkeit, einen ioBroker Zustand für die Verfügbarkeitsanzeige in HomeKit",
+        "ru": "Важно: js-контроллер 5.0 требуется по крайней мере\nПереписать типы сообществ из субмодуля (js) в типографию\nДобавлена возможность установить состояние ioBroker для указания доступности в HomeKit",
+        "pt": "Importante: js-controller 5.0 é exigido pelo menos\nReescrever tipos de comunidade de submódulo (js) para typescript\nAdicionado a capacidade de definir um estado ioBroker para a indicação de disponibilidade em HomeKit",
+        "nl": "Belangrijk: js-controller 5.0 is minimaal vereist\nCommunity types herschreven van submodule (js) naar typescript\nToegevoegd de mogelijkheid om een ioBroker staat voor de beschikbaarheid indicatie in HomeKit instellen",
+        "fr": "Important : js-controller 5.0 est nécessaire au moins\nRéécrire les types de communautés du sous-module (js) au dactylographie\nAjout de la possibilité de définir un état ioBroker pour l'indication de disponibilité dans HomeKit",
+        "it": "Importante: js-controller 5.0 è richiesto almeno\nRewrote tipi di comunità da sottomodulo (js) a typescript\nAggiunta la capacità di impostare uno stato ioBroker per l'indicazione di disponibilità in HomeKit",
+        "es": "Importante: js-controller 5.0 se requiere por lo menos\nRewrote community types from submodule (js) to typescript\nSe agregó la capacidad de establecer un estado de yoBroker para la indicación de disponibilidad en HomeKit",
+        "pl": "Ważne: kontroler js- 5.0 jest wymagany co najmniej\nPrzepisywane typy społeczności z podmodułu (js) na maszynopis\nDodano możliwość ustawienia stanu joBroker dla wskazania dostępności w HomeKit",
+        "uk": "Важливо: js-controller 5.0 потрібно принаймні\nРевротні типи громад від субмодуля (js) до типу\nДодана можливість встановити стан ioBroker для показання доступності в HomeKit",
+        "zh-cn": "重要:至少需要 js 控制器 5.0\n从子模块(js)到打字符重写社区类型\n添加了为 HomeKit 中的可用性指示设置 ioBroker 状态的能力"
+      },
       "1.0.3": {
         "en": "Corrected empty device list with rebuild",
         "de": "Korrigierte leere Geräteliste mit Neuaufbau",
@@ -40,10 +53,6 @@
       },
       "0.13.1": {
         "en": "Added ability to switch to legacy advertiser in case devices are showing 'no response' in HomeApp"
-      },
-      "0.13.0": {
-        "en": "Reworked State selection",
-        "de": "State Selektion überarbeitet"
       }
     },
     "title": "Homekit",
