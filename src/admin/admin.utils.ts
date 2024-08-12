@@ -7,7 +7,6 @@ export module Utils {
             return input.checked;
         }
 
-
         if ('valueAsDate' in input) {
             let dateValue = input.valueAsDate;
             if (dateValue)
@@ -62,5 +61,4 @@ export module Utils {
             input.value = ((value !== undefined) && (value !== null)) ? value : '';
         }
     }
-
 }

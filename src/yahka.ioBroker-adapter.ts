@@ -4,7 +4,7 @@ import { Configuration } from './shared/yahka.configuration';
 import { functionFactory } from './yahka.functions/functions.factory';
 import { IHomeKitBridgeBinding, IHomeKitBridgeBindingFactory, IInOutChangeNotify } from './yahka.interfaces';
 import { THomeKitBridge, initHAP, deinitHAP } from './yahka.homekit-bridge';
-import { join } from 'path';
+import { join } from 'node:path';
 
 export type TSubscriptionType = 'state' | 'object';
 
@@ -13,11 +13,11 @@ export interface ISubscriptionRequest {
     subscriptionIdentifier: string;
     subscriptionEvent: (ioValue: any, callback: IInOutChangeNotify) => void;
 }
-export interface ISubscriptionRequestor {
+export interface ISubscriptionRequester {
     subscriptionRequests: ISubscriptionRequest[];
 }
 
-function isSubscriptionRequestor(param: Object): param is ISubscriptionRequestor {
+function isSubscriptionRequester(param: Object): param is ISubscriptionRequester {
     return param['subscriptionRequests'] !== undefined &&
         param['subscriptionRequests'] instanceof Array;
 }
@@ -101,7 +101,7 @@ export class TIOBrokerAdapter implements IHomeKitBridgeBindingFactory {
     }
 
     private handleState(id: string, state: ioBroker.State) {
-        // Warning, state can be null if it was deleted
+        // Warning, the state can be null if it was deleted
         let notifyArray = this.stateToEventMap.get(id);
         if (!notifyArray) {
             //this.adapter.log.debug('nobody subscribed for this state');
@@ -137,11 +137,11 @@ export class TIOBrokerAdapter implements IHomeKitBridgeBindingFactory {
         }
     }
 
-    private handleInOutSubscriptionRequest(requestor: ISubscriptionRequestor, changeNotify: IInOutChangeNotify) {
-        if (requestor.subscriptionRequests.length == 0)
+    private handleInOutSubscriptionRequest(requester: ISubscriptionRequester, changeNotify: IInOutChangeNotify) {
+        if (requester.subscriptionRequests.length == 0)
             return;
 
-        for (let subscriptionRequest of requestor.subscriptionRequests) {
+        for (let subscriptionRequest of requester.subscriptionRequests) {
             let changeInterceptor = (ioValue: any) => subscriptionRequest.subscriptionEvent(ioValue, changeNotify);
 
 
@@ -180,7 +180,7 @@ export class TIOBrokerAdapter implements IHomeKitBridgeBindingFactory {
                 return undefined;
             }
 
-            if (isSubscriptionRequestor(inoutFunc)) {
+            if (isSubscriptionRequester(inoutFunc)) {
                 this.handleInOutSubscriptionRequest(inoutFunc, changeNotify);
             }
 

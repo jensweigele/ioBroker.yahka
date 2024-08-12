@@ -1,6 +1,4 @@
 import { TIoBrokerInOutFunctionBase, IInOutFunction } from './iofunc.base';
-import { isObject } from 'util';
-
 
 export interface TIoBrokerInOutFunction_MultiStateParameter {
     readState: string;
@@ -9,10 +7,9 @@ export interface TIoBrokerInOutFunction_MultiStateParameter {
 }
 
 export function isMultiStateParameter(value: any): value is TIoBrokerInOutFunction_MultiStateParameter {
-    if (value === undefined)
+    if (value === undefined || value === null || typeof value !== 'object') {
         return false;
-    if (!isObject(value))
-        return false;
+    }
     let propName: keyof TIoBrokerInOutFunction_MultiStateParameter = 'readState';
     return (propName in value);
 }

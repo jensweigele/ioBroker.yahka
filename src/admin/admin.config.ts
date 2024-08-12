@@ -1,6 +1,4 @@
-
 import { IDictionary } from '../shared/yahka.configuration';
-
 
 
 export interface IHAPServiceDefinition {

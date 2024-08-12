@@ -1105,7 +1105,6 @@ module.exports = function(homebridge, options) {
   return CommunityTypes;
 };
 
-
 /***/ }),
 
 /***/ "./main.ts":
@@ -1878,7 +1877,7 @@ class TIoBrokerInOutFunctionBase extends functions_base_1.TYahkaFunctionBase {
         callback(null, this.valueForHomeKit);
     }
     toIOBroker(plainIoValue, callback) {
-        this.log.debug('writing state to ioBroker: ' + JSON.stringify(plainIoValue));
+        this.log.debug(`writing state to ioBroker: ${JSON.stringify(plainIoValue)}`);
         this.updateIOBrokerValue(plainIoValue, callback);
     }
     cacheChanged(stateName, callback) {
@@ -2113,13 +2112,11 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = void 0;
 exports.isHomematic_Dimmer_Parameter = isHomematic_Dimmer_Parameter;
 const iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
-const util_1 = __webpack_require__(/*! util */ "util");
 const yahka_utils_1 = __webpack_require__(/*! ../shared/yahka.utils */ "./shared/yahka.utils.ts");
 function isHomematic_Dimmer_Parameter(value) {
-    if (value === undefined)
+    if (value === undefined || value === null || typeof value !== 'object') {
         return false;
-    if (!(0, util_1.isObject)(value))
-        return false;
+    }
     return (0, yahka_utils_1.propertyExists)(value, 'levelState');
 }
 class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends iofunc_base_1.TIoBrokerInOutFunctionBase {
@@ -2127,7 +2124,6 @@ class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends iofunc_base_1.TIoBrok
         if (!isHomematic_Dimmer_Parameter(parameters)) {
             return undefined;
         }
-        ;
         return parameters;
     }
     constructor(adapter, functionName, parameters) {
@@ -2140,7 +2136,7 @@ class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends iofunc_base_1.TIoBrok
         // save level if we are switching off
         if (stateName === this.parameters.levelState) {
             const cacheValue = this.readValueFromCache(stateName);
-            if (cacheValue && parseFloat(cacheValue.val) > 0) {
+            if (parseFloat(cacheValue.val) > 0) {
                 this.lastOnLevel = cacheValue;
             }
         }
@@ -2262,12 +2258,10 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIoBrokerInOutFunction_MultiState = void 0;
 exports.isMultiStateParameter = isMultiStateParameter;
 const iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
-const util_1 = __webpack_require__(/*! util */ "util");
 function isMultiStateParameter(value) {
-    if (value === undefined)
+    if (value === undefined || value === null || typeof value !== 'object') {
         return false;
-    if (!(0, util_1.isObject)(value))
-        return false;
+    }
     let propName = 'readState';
     return (propName in value);
 }
@@ -2375,7 +2369,7 @@ class TIoBrokerInOutFunction_State_OnlyACK extends iofunc_base_1.TIoBrokerInOutF
         return new TIoBrokerInOutFunction_State_OnlyACK(adapter, stateName);
     }
     getValueOnRead(ioState) {
-        if (ioState)
+        if (ioState) {
             if (ioState.ack) {
                 this.lastAcknowledgedValue = ioState === null || ioState === void 0 ? void 0 : ioState.val;
                 return ioState === null || ioState === void 0 ? void 0 : ioState.val;
@@ -2384,11 +2378,13 @@ class TIoBrokerInOutFunction_State_OnlyACK extends iofunc_base_1.TIoBrokerInOutF
                 this.adapter.log.debug(`faking CurrentState.Read for [${this.stateName}]: ${JSON.stringify(this.lastAcknowledgedValue)}`);
                 return this.lastAcknowledgedValue;
             }
-        else
+        }
+        else {
             return null;
+        }
     }
     getValueOnNotify(ioState) {
-        if (ioState)
+        if (ioState) {
             if (ioState.ack) {
                 this.lastAcknowledgedValue = ioState === null || ioState === void 0 ? void 0 : ioState.val;
                 return ioState === null || ioState === void 0 ? void 0 : ioState.val;
@@ -2397,8 +2393,10 @@ class TIoBrokerInOutFunction_State_OnlyACK extends iofunc_base_1.TIoBrokerInOutF
                 this.adapter.log.debug(`discarding CurrentState.Notify for [${this.stateName}]`);
                 return undefined;
             }
-        else
+        }
+        else {
             return null;
+        }
     }
 }
 exports.TIoBrokerInOutFunction_State_OnlyACK = TIoBrokerInOutFunction_State_OnlyACK;
@@ -2420,7 +2418,7 @@ exports.initHAP = initHAP;
 exports.deinitHAP = deinitHAP;
 /// <reference path="./typings/index.d.ts" />
 const debug = __webpack_require__(/*! debug */ "debug");
-const util = __webpack_require__(/*! util */ "util");
+const util = __webpack_require__(/*! node:util */ "node:util");
 const yahka_community_types_1 = __webpack_require__(/*! ./yahka.community.types */ "./yahka.community.types.ts");
 const hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
 const yahka_homekit_service_1 = __webpack_require__(/*! ./yahka.homekit-service */ "./yahka.homekit-service.ts");
@@ -2568,7 +2566,7 @@ function deinitHAP() {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.THomeKitIPCamera = void 0;
 /// <reference path="./typings/index.d.ts" />
-const child_process_1 = __webpack_require__(/*! child_process */ "child_process");
+const node_child_process_1 = __webpack_require__(/*! node:child_process */ "node:child_process");
 const hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
 const yahka_homekit_service_1 = __webpack_require__(/*! ./yahka.homekit-service */ "./yahka.homekit-service.ts");
 class THomeKitIPCamera {
@@ -2710,10 +2708,10 @@ class THomeKitIPCamera {
             return params[word];
         }));
         this.FLogger.debug(`Snapshot run: ffmpeg ${ffmpegCommand.join(' ')}`);
-        let ffmpeg = (0, child_process_1.spawn)('ffmpeg', ffmpegCommand, { env: process.env });
+        let ffmpeg = (0, node_child_process_1.spawn)('ffmpeg', ffmpegCommand, { env: process.env });
         let imageBuffer = Buffer.alloc(0);
         ffmpeg.stdout.on('data', data => imageBuffer = Buffer.concat([imageBuffer, data]));
-        ffmpeg.on('close', code => callback(undefined, imageBuffer));
+        ffmpeg.on('close', ( /* code */) => callback(undefined, imageBuffer));
     }
     prepareStream(request, callback) {
         let sessionInfo = {};
@@ -2823,9 +2821,9 @@ class THomeKitIPCamera {
                         ffmpegCommand = ffmpegCommand.concat(this.camConfig.ffmpegCommandLine.streamAudio.map((s) => s.replace(/\$\{(.*?)}/g, (_, word) => params[word])));
                     }
                     // this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
-                    let ffmpeg = (0, child_process_1.spawn)('ffmpeg', ffmpegCommand, { env: process.env });
+                    let ffmpeg = (0, node_child_process_1.spawn)('ffmpeg', ffmpegCommand, { env: process.env });
                     let started = false;
-                    ffmpeg.stderr.on('data', (data) => {
+                    ffmpeg.stderr.on('data', ( /* data: Buffer */) => {
                         if (!started) {
                             started = true;
                             this.FLogger.debug('FFMPEG: received first frame');
@@ -3073,8 +3071,8 @@ exports.TIOBrokerAdapter = void 0;
 const yahka_homekit_ipcamera_1 = __webpack_require__(/*! ./yahka.homekit-ipcamera */ "./yahka.homekit-ipcamera.ts");
 const functions_factory_1 = __webpack_require__(/*! ./yahka.functions/functions.factory */ "./yahka.functions/functions.factory.ts");
 const yahka_homekit_bridge_1 = __webpack_require__(/*! ./yahka.homekit-bridge */ "./yahka.homekit-bridge.ts");
-const path_1 = __webpack_require__(/*! path */ "path");
-function isSubscriptionRequestor(param) {
+const node_path_1 = __webpack_require__(/*! node:path */ "node:path");
+function isSubscriptionRequester(param) {
     return param['subscriptionRequests'] !== undefined &&
         param['subscriptionRequests'] instanceof Array;
 }
@@ -3098,7 +3096,7 @@ class TIOBrokerAdapter {
         adapter.on('unload', this.handleUnload.bind(this));
     }
     adapterReady() {
-        (0, yahka_homekit_bridge_1.initHAP)((0, path_1.join)(this.dataDir, `${this.adapter.name}.${this.adapter.instance}.hapdata`), this.handleHAPLogEvent.bind(this));
+        (0, yahka_homekit_bridge_1.initHAP)((0, node_path_1.join)(this.dataDir, `${this.adapter.name}.${this.adapter.instance}.hapdata`), this.handleHAPLogEvent.bind(this));
         this.adapter.log.info('adapter ready, checking config');
         let config = this.adapter.config;
         this.createHomeKitBridges(config);
@@ -3142,7 +3140,7 @@ class TIOBrokerAdapter {
         }
     }
     handleState(id, state) {
-        // Warning, state can be null if it was deleted
+        // Warning, the state can be null if it was deleted
         let notifyArray = this.stateToEventMap.get(id);
         if (!notifyArray) {
             //this.adapter.log.debug('nobody subscribed for this state');
@@ -3174,10 +3172,10 @@ class TIOBrokerAdapter {
             callback();
         }
     }
-    handleInOutSubscriptionRequest(requestor, changeNotify) {
-        if (requestor.subscriptionRequests.length == 0)
+    handleInOutSubscriptionRequest(requester, changeNotify) {
+        if (requester.subscriptionRequests.length == 0)
             return;
-        for (let subscriptionRequest of requestor.subscriptionRequests) {
+        for (let subscriptionRequest of requester.subscriptionRequests) {
             let changeInterceptor = (ioValue) => subscriptionRequest.subscriptionEvent(ioValue, changeNotify);
             if (subscriptionRequest.subscriptionType === 'state') {
                 let existingArray = this.stateToEventMap.get(subscriptionRequest.subscriptionIdentifier);
@@ -3211,7 +3209,7 @@ class TIOBrokerAdapter {
                 this.adapter.log.error(`[${characteristicConfig.name}] could not create conversion-function: ${characteristicConfig.conversionFunction} with params: ${JSON.stringify(characteristicConfig.conversionParameters)}`);
                 return undefined;
             }
-            if (isSubscriptionRequestor(inoutFunc)) {
+            if (isSubscriptionRequester(inoutFunc)) {
                 this.handleInOutSubscriptionRequest(inoutFunc, changeNotify);
             }
             return {
@@ -3279,25 +3277,36 @@ module.exports = require("util");
 
 /***/ }),
 
-/***/ "child_process":
-/*!********************************!*\
-  !*** external "child_process" ***!
-  \********************************/
+/***/ "node:child_process":
+/*!*************************************!*\
+  !*** external "node:child_process" ***!
+  \*************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("child_process");
+module.exports = require("node:child_process");
 
 /***/ }),
 
-/***/ "path":
-/*!***********************!*\
-  !*** external "path" ***!
-  \***********************/
+/***/ "node:path":
+/*!****************************!*\
+  !*** external "node:path" ***!
+  \****************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("path");
+module.exports = require("node:path");
+
+/***/ }),
+
+/***/ "node:util":
+/*!****************************!*\
+  !*** external "node:util" ***!
+  \****************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:util");
 
 /***/ }),
 
@@ -3308,7 +3317,7 @@ module.exports = require("path");
 /***/ ((module) => {
 
 "use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"name":"iobroker.yahka","version":"1.0.3","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"engines":{"node":">=12.0.0"},"dependencies":{"@iobroker/adapter-core":"^3.1.6","debug":"^4.3.6","dev-null":"^0.1.1","hap-nodejs":"^0.11.2","ip":"^1.1.9","macaddress":"0.5.3","util":"^0.12.5"},"devDependencies":{"@alcalzone/release-script":"^3.8.0","@alcalzone/release-script-plugin-iobroker":"^3.7.2","@alcalzone/release-script-plugin-license":"^3.7.0","@iobroker/types":"^6.0.10","@types/jquery":"^3.5.30","@types/node":"^22.2.0","assert":"^2.1.0","chai":"^4.5.0","crypto-browserify":"^3.12.0","gulp":"^4.0.2","html-webpack-plugin":"^5.6.0","mocha":"^10.7.3","path-browserify":"^1.0.1","process":"^0.11.10","raw-loader":"^4.0.2","stream-browserify":"^3.0.0","timers":"^0.1.1","ts-loader":"^9.5.1","typescript":"^5.5.4","webpack":"^5.93.0","webpack-cli":"^5.1.4","webpack-node-externals":"^3.0.0","xml2js":"^0.4.23"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","files":["admin/","main.js","main.js.map","LICENSE","README.md","io-package.json","hap-nodejs-community-types/"],"scripts":{"test":"node node_modules/mocha/bin/mocha --exit","build":"gulp","_prepublishOnly":"gulp","release":"release-script","release-patch":"release-script patch --yes","release-minor":"release-script minor --yes","release-major":"release-script major --yes"}}');
+module.exports = /*#__PURE__*/JSON.parse('{"name":"iobroker.yahka","version":"1.0.3","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"engines":{"node":">=18.0.0"},"dependencies":{"@iobroker/adapter-core":"^3.1.6","debug":"^4.3.6","dev-null":"^0.1.1","hap-nodejs":"^0.12.2","ip":"^1.1.9","macaddress":"0.5.3"},"devDependencies":{"@alcalzone/release-script":"^3.8.0","@alcalzone/release-script-plugin-iobroker":"^3.7.2","@alcalzone/release-script-plugin-license":"^3.7.0","@iobroker/types":"^6.0.10","@types/jquery":"^3.5.30","@types/node":"^22.2.0","assert":"^2.1.0","chai":"^4.5.0","crypto-browserify":"^3.12.0","gulp":"^4.0.2","html-webpack-plugin":"^5.6.0","mocha":"^10.7.3","path-browserify":"^1.0.1","process":"^0.11.10","raw-loader":"^4.0.2","stream-browserify":"^3.0.0","timers":"^0.1.1","ts-loader":"^9.5.1","typescript":"^5.5.4","webpack":"^5.93.0","webpack-cli":"^5.1.4","webpack-node-externals":"^3.0.0","xml2js":"^0.6.2"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","files":["admin/","main.js","main.js.map","LICENSE","README.md","io-package.json","hap-nodejs-community-types/"],"scripts":{"test":"node node_modules/mocha/bin/mocha --exit","build":"gulp","_prepublishOnly":"gulp","release":"release-script","release-patch":"release-script patch --yes","release-minor":"release-script minor --yes","release-major":"release-script major --yes"}}');
 
 /***/ })
 

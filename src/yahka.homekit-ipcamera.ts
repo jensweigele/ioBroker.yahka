@@ -1,5 +1,5 @@
 /// <reference path="./typings/index.d.ts" />
-import { spawn, ChildProcess } from 'child_process';
+import { spawn, ChildProcess } from 'node:child_process';
 import {
     uuid,
     Accessory,
@@ -220,7 +220,7 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
         let imageBuffer = Buffer.alloc(0);
 
         ffmpeg.stdout.on('data', data => imageBuffer = Buffer.concat([imageBuffer, <Buffer>data]));
-        ffmpeg.on('close', code => callback(undefined, imageBuffer));
+        ffmpeg.on('close', (/* code */) => callback(undefined, imageBuffer));
     }
 
     public prepareStream(request: PrepareStreamRequest, callback: PrepareStreamCallback): void {
@@ -354,7 +354,7 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                     let ffmpeg = spawn('ffmpeg', ffmpegCommand, { env: process.env });
 
                     let started = false;
-                    ffmpeg.stderr.on('data', (data: Buffer) => {
+                    ffmpeg.stderr.on('data', (/* data: Buffer */) => {
                         if (!started) {
                             started = true;
                             this.FLogger.debug('FFMPEG: received first frame');

@@ -1,4 +1,4 @@
-import { Configuration } from "./shared/yahka.configuration";
+import { Configuration } from './shared/yahka.configuration';
 
 export interface IHasIHomeKitBridgeBinding {
     binding: IHomeKitBridgeBinding;
@@ -23,7 +23,7 @@ export interface IHomeKitBridgeBinding {
 export interface ILogger {
     /** log message with debug level */
     debug(message: string);
-    /** log message with info level */
+    /** log a message with info level */
     info(message: string);
     /** log message with info warn */
     warn(message: string);

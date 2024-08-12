@@ -1,6 +1,6 @@
 import { TYahkaFunctionBase } from './functions.base';
 import { IInOutFunction, IInOutChangeNotify } from '../yahka.interfaces';
-import { ISubscriptionRequest, ISubscriptionRequestor } from '../yahka.ioBroker-adapter';
+import { ISubscriptionRequest, ISubscriptionRequester } from '../yahka.ioBroker-adapter';
 export { IInOutChangeNotify, IInOutFunction } from '../yahka.interfaces';
 
 export abstract class TIoBrokerInOutFunctionBase extends TYahkaFunctionBase implements IInOutFunction {
@@ -13,7 +13,7 @@ export abstract class TIoBrokerInOutFunctionBase extends TYahkaFunctionBase impl
     }
 
     public toIOBroker(plainIoValue: any, callback: () => void) {
-        this.log.debug('writing state to ioBroker: ' + JSON.stringify(plainIoValue));
+        this.log.debug(`writing state to ioBroker: ${JSON.stringify(plainIoValue)}`);
         this.updateIOBrokerValue(plainIoValue, callback);
     }
 
@@ -39,7 +39,7 @@ export abstract class TIoBrokerInOutFunctionBase extends TYahkaFunctionBase impl
 
 }
 
-export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionRequestor, IInOutFunction {
+export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionRequester, IInOutFunction {
     protected debounceTimer: NodeJS.Timeout = null;
     public subscriptionRequests: ISubscriptionRequest[] = [];
 
@@ -124,5 +124,4 @@ export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionR
         this.adapter.log.debug(`[${this.stateName}] firing deferred change event:${JSON.stringify(plainIOValue)}`);
         callback(plainIOValue);
     }
-
 }

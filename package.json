@@ -27,16 +27,15 @@
     "url": "https://github.com/jensweigele/ioBroker.yahka"
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=18.0.0"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.1.6",
     "debug": "^4.3.6",
     "dev-null": "^0.1.1",
-    "hap-nodejs": "^0.11.2",
+    "hap-nodejs": "^0.12.2",
     "ip": "^1.1.9",
-    "macaddress": "0.5.3",
-    "util": "^0.12.5"
+    "macaddress": "0.5.3"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^3.8.0",
@@ -61,7 +60,7 @@
     "webpack": "^5.93.0",
     "webpack-cli": "^5.1.4",
     "webpack-node-externals": "^3.0.0",
-    "xml2js": "^0.4.23"
+    "xml2js": "^0.6.2"
   },
   "bugs": {
     "url": "https://github.com/jensweigele/ioBroker.yahka/issues"

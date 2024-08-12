@@ -1,8 +1,8 @@
-import { IInOutFunction, IInOutChangeNotify, ILogger } from '../yahka.interfaces';
-import { ISubscriptionRequestor, ISubscriptionRequest } from '../yahka.ioBroker-adapter';
+import { IInOutChangeNotify, ILogger } from '../yahka.interfaces';
+import { ISubscriptionRequester, ISubscriptionRequest } from '../yahka.ioBroker-adapter';
 import { YahkaLogger } from '../shared/yahka.logger';
 
-export abstract class TYahkaFunctionBase implements ISubscriptionRequestor {
+export abstract class TYahkaFunctionBase implements ISubscriptionRequester {
     public subscriptionRequests: ISubscriptionRequest[] = [];
     protected stateCache = new Map<string, ioBroker.State>();
     protected log: ILogger;
