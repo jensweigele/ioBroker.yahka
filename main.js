@@ -2140,7 +2140,7 @@ class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends iofunc_base_1.TIoBrok
         // save level if we are switching off
         if (stateName === this.parameters.levelState) {
             const cacheValue = this.readValueFromCache(stateName);
-            if (parseFloat(cacheValue.val) > 0) {
+            if (cacheValue && parseFloat(cacheValue.val) > 0) {
                 this.lastOnLevel = cacheValue;
             }
         }
