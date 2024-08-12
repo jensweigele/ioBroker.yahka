@@ -2,9 +2,9 @@ import { Characteristic, Formats, Units, Perms, Service, uuid } from 'hap-nodejs
 
 let hapTypesImported = false;
 export function importHAPCommunityTypesAndFixes() {
-
-    if (hapTypesImported)
+    if (hapTypesImported) {
         return;
+    }
 
     Characteristic[`Community: ${Timestamp.name}`]                        = Timestamp;
     Characteristic[`Community: ${AudioDataURL.name}`]                     = AudioDataURL;

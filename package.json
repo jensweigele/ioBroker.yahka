@@ -35,8 +35,7 @@
     "dev-null": "^0.1.1",
     "hap-nodejs": "^1.1.0",
     "ip": "^2.0.1",
-    "macaddress": "0.5.3",
-    "util": "^0.12.5"
+    "macaddress": "0.5.3"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^3.8.0",

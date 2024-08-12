@@ -99,11 +99,11 @@ export class THomeKitBridge {
         let deviceID = uuid.generate(this.config.ident + ':' + devName);
         let i = 0;
         while (this.bridgeObject.bridgedAccessories.some((a) => a.UUID == deviceID)) {
-            devName = device.name + '_' + ++i;
-            deviceID = uuid.generate(this.config.ident + ':' + devName);
+            devName = `${device.name}_${++i}`;
+            deviceID = uuid.generate(`${this.config.ident}:${devName}`);
         }
 
-        this.FLogger.info('adding ' + devName + ' with UUID: ' + deviceID);
+        this.FLogger.info(`adding ${devName} with UUID: ${deviceID}`);
         let hapDevice = new Accessory(devName, deviceID);
 
         let infoService = hapDevice.getService(Service.AccessoryInformation);

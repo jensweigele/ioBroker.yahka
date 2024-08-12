@@ -67,8 +67,9 @@ export class TIOBrokerAdapter implements IHomeKitBridgeBindingFactory {
             bridgeConfig.name = bridgeConfig.ident;
             bridgeConfig.serial = bridgeConfig.ident;
             let usr = [];
-            for (let i = 0; i < 6; i++)
+            for (let i = 0; i < 6; i++) {
                 usr[i] = (`00${Math.floor((Math.random() * 256)).toString(16)}`).substr(-2);
+            }
             bridgeConfig.username = usr.join(':');
             bridgeConfig.pincode = '123-45-678';
             bridgeConfig.port = 0;
@@ -117,11 +118,12 @@ export class TIOBrokerAdapter implements IHomeKitBridgeBindingFactory {
     }
 
     private handleMessage(obj: any) {
-        if (typeof obj === 'object' && obj.message) {
+        if (typeof obj === 'object' && obj?.message) {
             if (obj.command === 'send') {
                 // Send response in callback if required
-                if (obj.callback)
+                if (obj.callback) {
                     this.adapter.sendTo(obj.from, obj.command, 'Message received', obj.callback);
+                }
             }
         }
     }

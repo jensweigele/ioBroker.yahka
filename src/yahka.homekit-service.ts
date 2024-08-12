@@ -1,6 +1,6 @@
 /// <reference path="./typings/index.d.ts" />
-import {Configuration} from './shared/yahka.configuration';
-import {Accessory, Characteristic, CharacteristicSetCallback, HAPStatus, Service} from 'hap-nodejs';
+import { Configuration } from './shared/yahka.configuration';
+import { Accessory, Characteristic, CharacteristicSetCallback, HAPStatus, Service } from 'hap-nodejs';
 import {
     IHasIHomeKitBridgeBinding,
     IHomeKitBridgeBinding,
@@ -11,7 +11,6 @@ import {
 type IHAPCharacteristic = Characteristic & IHasIHomeKitBridgeBinding;
 
 export class YahkaServiceInitializer {
-
     constructor(private FBridgeFactory: IHomeKitBridgeBindingFactory, private FLogger: ILogger) {
 
     }
