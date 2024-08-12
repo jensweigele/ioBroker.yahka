@@ -41,7 +41,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
                 Utils.setInputValue(input, serviceConfig[configName]);
             }
 
-            if (input.type === 'checkbox') {
+            if (input.type === 'select-one') {
                 (input as unknown as HTMLInputElement).checked = serviceConfig[configName] ?? defaultForCheckbox;
                 input.addEventListener('change', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
             } else if (eventHandler !== undefined) {
