@@ -1,4 +1,3 @@
-
 import * as $ from 'jquery';
 
 declare function translateWord(text: string): string | undefined;

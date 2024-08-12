@@ -1,6 +1,6 @@
 /// <reference path="./typings/index.d.ts" />
 import debug = require('debug');
-import util = require('util');
+import util = require('node:util');
 import { Configuration } from './shared/yahka.configuration';
 import { importHAPCommunityTypesAndFixes } from './yahka.community.types';
 import {Accessory, Bridge, uuid, Characteristic, Service, MDNSAdvertiser, HAPStorage} from 'hap-nodejs';

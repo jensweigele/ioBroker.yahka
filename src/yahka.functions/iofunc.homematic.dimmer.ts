@@ -1,5 +1,4 @@
 import { TIoBrokerInOutFunctionBase, IInOutFunction, IInOutChangeNotify } from './iofunc.base';
-import { isObject } from 'util';
 import { propertyExists } from '../shared/yahka.utils';
 
 
@@ -10,10 +9,9 @@ export interface TIoBrokerInOutFunction_Homematic_Dimmer_Parameter {
 }
 
 export function isHomematic_Dimmer_Parameter(value: any): value is TIoBrokerInOutFunction_Homematic_Dimmer_Parameter {
-    if (value === undefined)
+    if (value === undefined || value === null || typeof value !== 'object') {
         return false;
-    if (!isObject(value))
-        return false;
+    }
     return propertyExists<TIoBrokerInOutFunction_Homematic_Dimmer_Parameter>(value, 'levelState')
 }
 
@@ -23,7 +21,7 @@ export class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends TIoBrokerInOut
     static parseParameters(parameters: any): TIoBrokerInOutFunction_Homematic_Dimmer_Parameter {
         if (!isHomematic_Dimmer_Parameter(parameters)) {
             return undefined
-        };
+        }
         return parameters;
     }
     constructor(adapter: ioBroker.Adapter, functionName: string, protected parameters: TIoBrokerInOutFunction_Homematic_Dimmer_Parameter) {
@@ -42,8 +40,6 @@ export class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends TIoBrokerInOut
         super.cacheChanged(stateName, callback);
     }
 }
-
-
 
 export class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFunction_Homematic_Dimmer_Base {
     static create(adapter: ioBroker.Adapter, parameters: any): IInOutFunction {
@@ -145,6 +141,5 @@ export class TIoBrokerInOutFunction_Homematic_Dimmer_Brightness extends TIoBroke
                 callback();
             }
         });
-
     }
 }

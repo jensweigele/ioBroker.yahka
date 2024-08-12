@@ -9,6 +9,7 @@ interface IServiceDictionary {
 }
 
 importHAPCommunityTypesAndFixes();
+
 export function generateMetaDataDictionary(): IServiceDictionary {
 
     let availableServices = Object.keys(Service);
@@ -22,7 +23,7 @@ export function generateMetaDataDictionary(): IServiceDictionary {
     };
 }
 
-function createCharacteristicDescriper(name: string, optional: boolean, char: Characteristic): IHAPCharacteristicDefintion {
+function createCharacteristicDescriber(name: string, optional: boolean, char: Characteristic): IHAPCharacteristicDefintion {
     return {
         uuid: char?.UUID,
         name: name,
@@ -61,7 +62,7 @@ function buildServiceDictionary(availableServices: string[], availableCharacteri
                 continue;
             }
 
-            serviceDescriptor.characteristics[charName] = createCharacteristicDescriper(charName, false, char);
+            serviceDescriptor.characteristics[charName] = createCharacteristicDescriber(charName, false, char);
         }
 
         for (let char of serviceInstance.optionalCharacteristics) {
@@ -70,7 +71,7 @@ function buildServiceDictionary(availableServices: string[], availableCharacteri
                 continue;
             }
 
-            serviceDescriptor.characteristics[charName] = createCharacteristicDescriper(charName, true, char);
+            serviceDescriptor.characteristics[charName] = createCharacteristicDescriber(charName, true, char);
         }
 
         serviceDictionary[serviceName] = serviceDescriptor;
@@ -95,7 +96,7 @@ function buildCharacteristicDictionary(availableCharacteristics: string[]): IDic
         }
 
         let charInstance = new Characteristic[charName]();
-        characteristicDictionary[charName] = createCharacteristicDescriper(charName, true, charInstance);
+        characteristicDictionary[charName] = createCharacteristicDescriber(charName, true, charInstance);
     }
     return characteristicDictionary;
 }

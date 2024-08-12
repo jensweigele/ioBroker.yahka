@@ -1,4 +1,3 @@
-
 export function createTemplateElement(html: string): HTMLTemplateElement {
     let template = document.createElement('template');
     template.innerHTML = html;

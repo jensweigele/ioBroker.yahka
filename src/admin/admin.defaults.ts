@@ -1,9 +1,7 @@
 import { Configuration } from '../shared/yahka.configuration';
 
 export module Defaults {
-
-    export let defaultCommandLine: Configuration.ICameraFfmpegCommandLine =
-    {
+    export let defaultCommandLine: Configuration.ICameraFfmpegCommandLine = {
         stream: [
             '-nostats',
             '-nostdin',
@@ -65,6 +63,7 @@ export module Defaults {
             '-'
         ]
     };
+
     export let webcamCommandLine: Configuration.ICameraFfmpegCommandLine = {
         stream: [
             '-re',
@@ -96,12 +95,12 @@ export module Defaults {
             '-s', '${width}x${height}',
             '-f', 'image2',
             '-'
-        ]
-    }
+        ],
+    };
 
     export const ffmpegCommandLines = {
         default: defaultCommandLine,
         webcam: webcamCommandLine
-    }
+    };
 }
 

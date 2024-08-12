@@ -23,7 +23,6 @@ export const ioBrokerInterfaceList = new Promise<IIPInformation[]>(async (resolv
     });
 });
 
-
 export class ioBroker_YahkaAdmin {
     settings: any;
     pageBuilder: ioBroker_YahkaPageBuilder;
@@ -43,7 +42,6 @@ export class ioBroker_YahkaAdmin {
 
         onChangeCallback(false);
     }
-
 
     saveSettings(callback: TIOBrokerAdminSaveCallback) {
         this.pageBuilder.rebuildDeviceList()
