@@ -3,7 +3,7 @@ import debug = require('debug');
 import util = require('node:util');
 import { Configuration } from './shared/yahka.configuration';
 import { importHAPCommunityTypesAndFixes } from './yahka.community.types';
-import { Accessory, Bridge, uuid, Characteristic, Service, init as hapInit, MDNSAdvertiser } from 'hap-nodejs';
+import {Accessory, Bridge, uuid, Characteristic, Service, MDNSAdvertiser, HAPStorage} from 'hap-nodejs';
 import { YahkaServiceInitializer } from './yahka.homekit-service';
 import { IHomeKitBridgeBindingFactory, ILogger } from './yahka.interfaces';
 const pjson = require('../package.json');
@@ -56,10 +56,7 @@ export class THomeKitBridge {
                             pincode: device.pincode,
                             category: device.category,
                             advertiser,
-                            mdns: {
-                                interface: device.interface,
-                                reuseAddr: true,
-                            } as any,
+                            bind: device.interface,
                         });
                     });
                 } else {
@@ -121,7 +118,8 @@ export class THomeKitBridge {
             this.FLogger.debug(`[${device.name}] device identify`);
             callback(); // success
         });
-        this.serviceInitializer.initServices(hapDevice, device.services);
+
+        this.serviceInitializer.initServices(hapDevice, device.services, device.availableState);
         return hapDevice;
     }
 }
@@ -134,7 +132,7 @@ export function initHAP(storagePath: string, HAPdebugLogMethod: Function) {
         return;
     }
 
-    hapInit(storagePath);
+    HAPStorage.setCustomStoragePath(storagePath);
     debug.log = function () {
         HAPdebugLogMethod(util.format.apply(this, arguments));
     };

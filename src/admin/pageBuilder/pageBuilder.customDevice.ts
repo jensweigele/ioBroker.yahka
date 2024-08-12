@@ -109,6 +109,7 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         inputHelper('#username', 'username');
         inputHelper('#pincode', 'pincode');
         inputHelper('#port', 'port');
+        inputHelper('#availableStateIobState', 'availableState');
         let ipList = await ioBrokerInterfaceList;
         const ipListForSelectBox = ipList
             .filter((a) => a.family === 'ipv4')

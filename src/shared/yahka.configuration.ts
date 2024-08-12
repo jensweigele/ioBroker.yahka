@@ -50,6 +50,7 @@ export module Configuration {
         useLegacyAdvertiser?: boolean;
         useCiaoAdvertiser?: boolean;
         interface?: string;
+        availableState: string;
         [key: string]: any;
     }
 
