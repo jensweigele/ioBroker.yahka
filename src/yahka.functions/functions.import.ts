@@ -15,7 +15,7 @@ import { TIoBrokerConversion_Invert } from './conversion.invert';
 
 inOutFactory['ioBroker.State'] = TIoBrokerInOutFunction_State.create;
 inOutFactory['ioBroker.MultiState'] = TIoBrokerInOutFunction_MultiState.create;
-inOutFactory['ioBroker.State.Defered'] = TIoBrokerInOutFunction_StateDeferred.create;
+inOutFactory['ioBroker.State.Deferred'] = TIoBrokerInOutFunction_StateDeferred.create;
 inOutFactory['ioBroker.State.OnlyACK'] = TIoBrokerInOutFunction_State_OnlyACK.create;
 inOutFactory['const'] = TIoBrokerInOutFunction_Const.create;
 inOutFactory['ioBroker.homematic.WindowCovering.TargetPosition'] = TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.create;
@@ -24,7 +24,7 @@ inOutFactory['ioBroker.homematic.Dimmer.Brightness'] = TIoBrokerInOutFunction_Ho
 
 conversionFactory['passthrough'] = (adapter, param) => new TIoBrokerConversion_Passthrough(adapter);
 conversionFactory['HomematicDirectionToHomekitPositionState'] = (adapter, param) => new TIoBrokerConversion_HomematicDirection_To_PositionState(adapter);
-conversionFactory['HomematicControlModeToHomekitHeathingCoolingState'] = (adapter, param) => new TIoBrokerConversion_HomematicControlMode_To_CoolingState(adapter);
+conversionFactory['HomematicControlModeToHomekitHeatingCoolingState'] = (adapter, param) => new TIoBrokerConversion_HomematicControlMode_To_CoolingState(adapter);
 conversionFactory['level255'] = (adapter, param) => new TIoBrokerConversion_Scale(adapter, {
     'homekit.min': 0,
     'homekit.max': 100,

@@ -19,23 +19,23 @@ Just hit the "+" button behind "Homekit yahka adapter" in the ioBroker Admin Pan
 ## Install the latest **Beta**
 If you want to be on the edge and test the latest beta, you could install the adapter via a GitHub url.
 
-(Sometimes an additional upload (e.g. `iobroker upload yahka`) and adapter restart is needed)
+(Sometimes an additional upload (e.g. `iobroker upload yahka`) and adapter restart is necessary)
 
 ## Backup & Restore
 Attention: To be able to restore `ioBroker.yahka` on another system, in addition to the usual `iobroker backup` and `iobroker restore`, the `yahka.X.hapdata` folder under `/opt/iobroker/iobroker-data` must also be backuped and, if necessary, restored. [Wiki](https://github.com/jensweigele/ioBroker.yahka/wiki/ioBroker.yahka-auf-ein-anderes-System-umziehen) / [Issue](https://github.com/jensweigele/ioBroker.yahka/issues/176)
 
 Another option for a backup and restore is the [Backitup](https://github.com/simatec/ioBroker.backitup/blob/master/README.md) adapter. This automatically backs up the `yahka.X.hapdata` folder.
-A restore is also possible via the Backitup GUI.
+A restore is also possible via the BackItUp GUI.
 
 You can find a detailed description [here](https://github.com/simatec/ioBroker.backitup/wiki/ioBroker.backitup-Wiki-Deutsch#yahka-backup).
 
 ## Troubleshooting
 
-### Bridge is not working or device are not responding
+### The bridge is not working or a device is not responding
 Try to change the MAC/Username of the bridge or activate the ciao advertiser
 
 ### Not all new features are available:
-If not all new feature are available after a yahka update, try a upload (f.e. `iob upload yahka`) and restart the adapter. 
+If not all new features are available after a yahka update, try an upload (e.g. `iob upload yahka`) and restart the adapter. 
 
 ### Missing Avahi daemon (linux)
 If you are having the following error in the log:
@@ -97,28 +97,28 @@ Which characteristics a service could have, is defined by Apple/HomeKit and dete
 
 Example:
 
-A Garage Door opener is a device which could have two services:
+A Garage Door opener is a device that could have two services:
 
 1. Garage Door Opener 
 2. Light
 
-The Garage Door Opener Service itself could have different characteristic like: CurrentDoorState, TargetDoorState and many more.
+The Garage Door Opener Service itself could have different characteristics like: CurrentDoorState, TargetDoorState and many more.
 
 Also, the Light Service could have different characteristics, like: On (and many others for changing the light color etc.)
 
 ## What Yahka does
-With Yahka it is possible to map an ioBroker Datapoint to an HomeKit Characteristic.
+With Yahka it is possible to map an ioBroker Datapoint to a HomeKit Characteristic.
 
-Since sometimes mappings are necessary (e.g. the "State" values of a garage door is different between HomeKit and other systems), there is also the possibility to specify Functions to convert the values. This is described below.
+Since sometimes mappings are necessary (e.g., the "State" values of a garage door are different between HomeKit and other systems), there is also the possibility to specify Functions to convert the values. This is described below.
 
 To avoid too much administration work, all Devices you create in Yahka are behind a so-called "Bridge". With this bridge, you only need to pair the Bridge with your iOS device to get access to all devices. Otherwise, you would need to pair every Yahka device with Homekit.
 
 ## Set up the Bridge and create devices and services 
-Each device which needs to be paired with Homekit needs a "username" which has the form of a mac-address. Yahka automatically generates a random username for each yahka instance.
+Each device that needs to be paired with Homekit needs a "username" which has the form of a mac-address. Yahka automatically generates a random username for each yahka instance.
 
-**Important: if you change the username after pairing Yahka with HomeKit, you need to reconfigure all devices in iOS (room assignment, position etc.). Changing the username means to iOS, that it is a completely new device!**
+**Important: if you change the username after pairing Yahka with HomeKit, you need to reconfigure all devices in iOS (room assignment, position etc.). Changing the username means to iOS that it is a completely new device!**
 
-Beside the username, you need to specify a PIN code which needs to be entered on the iOS device.
+Besides the username, you need to specify a PIN code which needs to be entered on the iOS device.
 This could all be specified by clicking on ":yahka.0" in the admin panel of Yahka. (Expand the Panel on the right side after clicking on the list entry). The name of the bridge could also be changed there.
 
 After setting up the bridge, you could add the devices you like with the "Add Device" Button on the top.
@@ -130,9 +130,9 @@ Depending on the service type, the list of available characteristic changes.
 
 ## Setting up Characteristics
 If you want to support a characteristic, you have to tick the "enabled" checkbox on the left side of the characteristic.
-For each characteristic you could specify the following properties:
+For each characteristic, you could specify the following properties:
 - InOutFunction: you could specify a predefined function which is responsible for passing the values from HomeKit to ioBroker and vice versa
-- InOutParameter: here you could specify parameters for the selected InOutFunction. The available/expected Parameters depends on the selected Function. A brief overview of the Functions and Parameters are stated below.
+- InOutParameter: here you could specify parameters for the selected InOutFunction. The available/expected Parameters depend on the selected Function. A brief overview of the Functions and Parameters are stated below.
 - ConversionFunction: additionally to the InOutFunction, you could also specify a function which converts a value coming from HomeKit to ioBroker (and vice versa)
 - ConversionParameter: same as InOutParameter - the available/expected params depend on the selected function.
 
@@ -142,24 +142,24 @@ For each characteristic you could specify the following properties:
 |------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | const                                                | Value                                                                                                                                | The const function always passes the value specified in "InOutParameter" to Conversion Function if HomeKit reads the value. If HomeKit wants to write the value, this action is denied                                                                                                                                                                          |       
 | ioBroker.State                                       | name of a ioBroker datapoint                                                                                                         | With this function, the adapter uses the specified ioBroker datapoint for read and write operations. All operations are done immediatelly without buffering or filtering (values are passed to the specified Conversion functions)                                                                                                                              |
-| ioBroker.State.Defered                               | name of a ioBroker datapoint                                                                                                         | With this function, the adapter uses the specified ioBroker datapoint for read and write operations. Write operations from HomeKit are directly passed to the conversion function. Changes from ioBroker are debounced for 150ms - which means that the value is only transmitted to HomeKit if no other change occured within 150ms.                           |
+| ioBroker.State.Deferred                              | name of a ioBroker datapoint                                                                                                         | With this function, the adapter uses the specified ioBroker datapoint for read and write operations. Write operations from HomeKit are directly passed to the conversion function. Changes from ioBroker are debounced for 150ms - which means that the value is only transmitted to HomeKit if no other change occured within 150ms.                           |
 | ioBroker.State.OnlyACK                               | name of a ioBroker datapoint                                                                                                         | With this function, the adapter uses the specified ioBroker datapoint for read and write operations. Write operations from HomeKit are directly passed to the conversion function. Changes from ioBroker are only forwarded to HomeKit if the "Acknowledged"-Flag of the value is set. Otherwise, the last acknowledged value is getting transmitted to HomeKit |
 | ioBroker.homematic.<br>WindowCovering.TargetPosition | Id of the HomeMatic Level Datapoint <br> or <br> String-Array with the Id of the Level Datapoint and the Id of the Working Datapoint | This function is especially for controlling the HomeMatic Window Covering. This function defferes the transmission of values to HomeKit while the Window Covering is moving. This is necessary to avoid flickering of the window covering slider in iOS                                                                                                         |
 
 ## Overview of Conversion-Functions
 
-| Function                                              | Expected Parameter                                                                                         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|-------------------------------------------------------|------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| passthrough                                           | \<none\>                                                                                                   | The value from ioBroker is passed to HomeKit without conversion (and vice versa)                                                                                                                                                                                                                                                                                                                                                                                                                                             |                                                                                                                                                                                                                                                                                                                                                                                                                                        
-| HomematicDirectionTo<br>HomekitPositionState          | \<none\>                                                                                                   | This function maps the direction enum of Homematic window covering to the PositionState enum of HomeKit (and back)                                                                                                                                                                                                                                                                                                                                                                                                           |
-| HomematicControlModeTo<br>HomekitHeathingCoolingState | \<none\>                                                                                                   | This function maps the ControlMode enum of Homematic to the HeathingCoolingState enum of HomeKit (and back)                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| level255                                              | \<none\>                                                                                                   | This function scales an ioBroker value with a value range from 0 to 255 to a HomeKit value with a value range from 0 to 100 (and back). <br>**Example:** 255 in ioBroker is transformed to 100 for HomeKit.                                                                                                                                                                                                                                                                                                                  |
-| scaleInt<br>scaleFloat                                | `{ "homekit.min": <number>, "homekit.max": <number>, "iobroker.min": <number>, "iobroker.max": <number> }` | This function is similiar to "level255" but it's more generic. It transforms an ioBroker value with an range from "iobroker.min" (0 if omitted) to "iobroker.max" to a HomeKit value with a value range from "homekit.min" (0 if omitted) to "homekit.max" (and back).<br> **Example:** If the parameter field is: `{ "homekit.max": 500, "iobroker.max": 250}` <br> the value of ioBroker is in fact multiplied by 2 before sending it to HomeKit.<br>**The min-Parameters are only available in version 0.8.0 and higher** |
-| inverse                                               | number                                                                                                     | This function is used to "inverse" a value from ioBroker. The parameter specified the maximum of the value in ioBroker. The formula is: `Parameter - value`<br>**Example:** If the parameter field is `100`, the value 100 from ioBroker is send as 0 to HomeKit, the value 80 is send as 20 to HomeKit etc.                                                                                                                                                                                                                 |
-| hue                                                   | \<none\>                                                                                                   | This function is specialized version of scaleInt with the parameters `iobroker.max=65535` and `homekit.max=360`.                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Function                                             | Expected Parameter                                                                                         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+|------------------------------------------------------|------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| passthrough                                          | \<none\>                                                                                                   | The value from ioBroker is passed to HomeKit without conversion (and vice versa)                                                                                                                                                                                                                                                                                                                                                                                                                                             |                                                                                                                                                                                                                                                                                                                                                                                                                                        
+| HomematicDirectionTo<br>HomekitPositionState         | \<none\>                                                                                                   | This function maps the direction enum of Homematic window covering to the PositionState enum of HomeKit (and back)                                                                                                                                                                                                                                                                                                                                                                                                           |
+| HomematicControlModeTo<br>HomekitHeatingCoolingState | \<none\>                                                                                                   | This function maps the ControlMode enum of Homematic to the HeathingCoolingState enum of HomeKit (and back)                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| level255                                             | \<none\>                                                                                                   | This function scales an ioBroker value with a value range from 0 to 255 to a HomeKit value with a value range from 0 to 100 (and back). <br>**Example:** 255 in ioBroker is transformed to 100 for HomeKit.                                                                                                                                                                                                                                                                                                                  |
+| scaleInt<br>scaleFloat                               | `{ "homekit.min": <number>, "homekit.max": <number>, "iobroker.min": <number>, "iobroker.max": <number> }` | This function is similiar to "level255" but it's more generic. It transforms an ioBroker value with an range from "iobroker.min" (0 if omitted) to "iobroker.max" to a HomeKit value with a value range from "homekit.min" (0 if omitted) to "homekit.max" (and back).<br> **Example:** If the parameter field is: `{ "homekit.max": 500, "iobroker.max": 250}` <br> the value of ioBroker is in fact multiplied by 2 before sending it to HomeKit.<br>**The min-Parameters are only available in version 0.8.0 and higher** |
+| inverse                                              | number                                                                                                     | This function is used to "inverse" a value from ioBroker. The parameter specified the maximum of the value in ioBroker. The formula is: `Parameter - value`<br>**Example:** If the parameter field is `100`, the value 100 from ioBroker is send as 0 to HomeKit, the value 80 is send as 20 to HomeKit etc.                                                                                                                                                                                                                 |
+| hue                                                  | \<none\>                                                                                                   | This function is specialized version of scaleInt with the parameters `iobroker.max=65535` and `homekit.max=360`.                                                                                                                                                                                                                                                                                                                                                                                                             |
 
 ## Homematic Blind Actuator \ Window Covering
-To integrate the Homematic Blind Actuators (like HM-LC-Bl1PBU-FM), the following settings are needed:
+To integrate the Homematic Blind Actuators (like HM-LC-Bl1PBU-FM), the following settings are necessary:
 
 * Add a service to a device
 * Set Service Name to some name and service type to "WindowCovering". Service subtype could be left blank
@@ -171,7 +171,7 @@ To integrate the Homematic Blind Actuators (like HM-LC-Bl1PBU-FM), the following
 | PositionState       | 1: ioBroker.State.OnlyACK<br>2: HomematicDirectionToHomekitPositionState  | 1: _\<path to homematic object\>_.1.DIRECTION<br> 2: \<empty\> |
 | TargetPosition      | 1: ioBroker.homematic.WindowCovering.TargetPosition<br>2: passthrough     | 1: _\<path to homematic object\>_.1.LEVEL<br> 2: \<empty\>     |
 
-The value _\<path to Homematic object\>_ needs to be replaced with the actual path to the device (e.g. hm-rpc.0.NEQ0012345)
+The value _\<path to Homematic object\>_ needs to be replaced with the actual path to the device (e.g., hm-rpc.0.NEQ0012345)
 
 For general Information about the Configuration Mask, see: TODO
 
@@ -179,7 +179,7 @@ For more information about the Configuration, the InOut Functions and Conversion
 
 ## Notes for developers
 
-This repo includes one submodule , so before building you need to also close/init this one, ege. use `git submodule update --init --recursive` to update and fetch it's content.
+This repo includes one submodule, so before building you need to also close/init this one, e.g., use `git submodule update --init --recursive` to update and fetch it's content.
 
 <!--
 	Placeholder for the next version (at the beginning of the line):
@@ -189,7 +189,7 @@ This repo includes one submodule , so before building you need to also close/ini
 ### __WORK IN PROGRESS__
 * (Apollon77) Important: js-controller 5.0 is required at least
 * (tarikweiss) Rewrote community types from submodule (js) to typescript
-* (tarikweiss) Added ability to set an ioBroker state for the availability indication in HomeKit
+* (tarikweiss) Added the ability to set an ioBroker state for the availability indication in HomeKit
 
 ### 1.0.3 (2023-03-29)
 * (TA2K) Corrected empty device list with rebuild
@@ -319,7 +319,7 @@ This repo includes one submodule , so before building you need to also close/ini
 ## License
 The MIT License (MIT)
 
-Copyright (c) 2016-2023 Jens Weigele (iobroker.yahka@gmail.com)
+Copyright (c) 2016-2024 Jens Weigele (iobroker.yahka@gmail.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
