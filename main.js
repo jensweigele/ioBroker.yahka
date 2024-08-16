@@ -1721,7 +1721,7 @@ const conversion_round_1 = __webpack_require__(/*! ./conversion.round */ "./yahk
 const conversion_invert_1 = __webpack_require__(/*! ./conversion.invert */ "./yahka.functions/conversion.invert.ts");
 functions_factory_1.inOutFactory['ioBroker.State'] = iofunc_state_1.TIoBrokerInOutFunction_State.create;
 functions_factory_1.inOutFactory['ioBroker.MultiState'] = iofunc_multi_state_1.TIoBrokerInOutFunction_MultiState.create;
-functions_factory_1.inOutFactory['ioBroker.State.Deferred'] = iofunc_state_1.TIoBrokerInOutFunction_StateDeferred.create;
+functions_factory_1.inOutFactory['ioBroker.State.Defered'] = iofunc_state_1.TIoBrokerInOutFunction_StateDeferred.create;
 functions_factory_1.inOutFactory['ioBroker.State.OnlyACK'] = iofunc_state_1.TIoBrokerInOutFunction_State_OnlyACK.create;
 functions_factory_1.inOutFactory['const'] = iofunc_const_1.TIoBrokerInOutFunction_Const.create;
 functions_factory_1.inOutFactory['ioBroker.homematic.WindowCovering.TargetPosition'] = iofunc_homematic_covering_1.TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition.create;
@@ -1729,7 +1729,7 @@ functions_factory_1.inOutFactory['ioBroker.homematic.Dimmer.On'] = iofunc_homema
 functions_factory_1.inOutFactory['ioBroker.homematic.Dimmer.Brightness'] = iofunc_homematic_dimmer_1.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness.create;
 functions_factory_1.conversionFactory['passthrough'] = (adapter, param) => new conversion_passthrough_1.TIoBrokerConversion_Passthrough(adapter);
 functions_factory_1.conversionFactory['HomematicDirectionToHomekitPositionState'] = (adapter, param) => new conversion_homekit_homematic_1.TIoBrokerConversion_HomematicDirection_To_PositionState(adapter);
-functions_factory_1.conversionFactory['HomematicControlModeToHomekitHeatingCoolingState'] = (adapter, param) => new conversion_homekit_homematic_1.TIoBrokerConversion_HomematicControlMode_To_CoolingState(adapter);
+functions_factory_1.conversionFactory['HomematicControlModeToHomekitHeathingCoolingState'] = (adapter, param) => new conversion_homekit_homematic_1.TIoBrokerConversion_HomematicControlMode_To_CoolingState(adapter);
 functions_factory_1.conversionFactory['level255'] = (adapter, param) => new conversion_scale_1.TIoBrokerConversion_Scale(adapter, {
     'homekit.min': 0,
     'homekit.max': 100,

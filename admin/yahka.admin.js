@@ -99435,7 +99435,7 @@ exports.inoutFunctions = new Map([
     ['const', (callback) => new parameterEditor_const_1.ParameterEditor_Const(callback)],
     ['ioBroker.State', (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
     ['ioBroker.MultiState', (callback) => new parameterEditor_multiState_1.ParameterEditor_MultiState(callback)],
-    ['ioBroker.State.Deferred', (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
+    ['ioBroker.State.Defered', (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
     ['ioBroker.State.OnlyACK', (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
     ['ioBroker.homematic.WindowCovering.TargetPosition', (callback) => new parameterEditor_homematic_WindowCovering_TargetPosition_1.ParameterEditor_HomeMaticWindowCoveringTargetPosition(callback)],
     ['ioBroker.homematic.Dimmer.On', (callback) => new parameterEditor_homematic_dimmer_1.ParameterEditor_HomeMatic_Dimmer(callback, true)],
@@ -112937,6 +112937,7 @@ var defaults = {
     parameterLimit: 1000,
     parseArrays: true,
     plainObjects: false,
+    strictDepth: false,
     strictNullHandling: false
 };
 
@@ -112968,6 +112969,7 @@ var parseValues = function parseQueryStringValues(str, options) {
     var obj = { __proto__: null };
 
     var cleanStr = options.ignoreQueryPrefix ? str.replace(/^\?/, '') : str;
+    cleanStr = cleanStr.replace(/%5B/gi, '[').replace(/%5D/gi, ']');
     var limit = options.parameterLimit === Infinity ? undefined : options.parameterLimit;
     var parts = cleanStr.split(options.delimiter, limit);
     var skipIndex = -1; // Keep track of where the utf8 sentinel was found
@@ -113038,7 +113040,9 @@ var parseObject = function (chain, val, options, valuesParsed) {
         var root = chain[i];
 
         if (root === '[]' && options.parseArrays) {
-            obj = options.allowEmptyArrays && leaf === '' ? [] : [].concat(leaf);
+            obj = options.allowEmptyArrays && (leaf === '' || (options.strictNullHandling && leaf === null))
+                ? []
+                : [].concat(leaf);
         } else {
             obj = options.plainObjects ? Object.create(null) : {};
             var cleanRoot = root.charAt(0) === '[' && root.charAt(root.length - 1) === ']' ? root.slice(1, -1) : root;
@@ -113111,9 +113115,12 @@ var parseKeys = function parseQueryStringKeys(givenKey, val, options, valuesPars
         keys.push(segment[1]);
     }
 
-    // If there's a remainder, just add whatever is left
+    // If there's a remainder, check strictDepth option for throw, else just add whatever is left
 
     if (segment) {
+        if (options.strictDepth === true) {
+            throw new RangeError('Input depth exceeded depth option of ' + options.depth + ' and strictDepth is true');
+        }
         keys.push('[' + key.slice(segment.index) + ']');
     }
 
@@ -113170,6 +113177,7 @@ var normalizeParseOptions = function normalizeParseOptions(opts) {
         parameterLimit: typeof opts.parameterLimit === 'number' ? opts.parameterLimit : defaults.parameterLimit,
         parseArrays: opts.parseArrays !== false,
         plainObjects: typeof opts.plainObjects === 'boolean' ? opts.plainObjects : defaults.plainObjects,
+        strictDepth: typeof opts.strictDepth === 'boolean' ? !!opts.strictDepth : defaults.strictDepth,
         strictNullHandling: typeof opts.strictNullHandling === 'boolean' ? opts.strictNullHandling : defaults.strictNullHandling
     };
 };
@@ -114191,7 +114199,7 @@ Stream.prototype.pipe = function(dest, options) {
 
 
 
-var punycode = __webpack_require__(/*! punycode */ "../../node_modules/punycode/punycode.js");
+var punycode = __webpack_require__(/*! punycode/ */ "../../node_modules/punycode/punycode.js");
 
 function Url() {
   this.protocol = null;

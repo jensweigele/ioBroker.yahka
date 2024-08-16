@@ -186,6 +186,9 @@ This repo includes one submodule, so before building you need to also close/init
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
+### **WORK IN PROGRESS**
+* (bluefox) Revert renaming of states back: `HomematicControlModeToHomekitHeatingCoolingState => HomematicControlModeToHomekitHeathingCoolingState, Deferred => Defered`
+
 ### 1.0.4 (2024-08-12)
 * (Apollon77) Important: js-controller 5.0 is required at least
 * (tarikweiss) Rewrote community types from submodule (js) to typescript
