@@ -87,17 +87,23 @@ export module Configuration {
     }
 
     export function isBridgeConfig(config: IBaseConfigNode): config is IBridgeConfig {
-        if (config === undefined || config === null || typeof config !== 'object') return false;
+        if (config === undefined || config === null || typeof config !== 'object') {
+            return false;
+        }
         return config.configType === 'bridge';
     }
 
     export function isDeviceConfig(config: IBaseConfigNode): config is IDeviceConfig {
-        if (config === undefined || config === null || typeof config !== 'object') return false;
+        if (config === undefined || config === null || typeof config !== 'object') {
+            return false;
+        }
         return config.configType === 'customdevice' || (<IDeviceConfig>config).services !== undefined;
     }
 
     export function isIPCameraConfig(config: IBaseConfigNode): config is ICameraConfig {
-        if (config === undefined || config === null || typeof config !== 'object') return false;
+        if (config === undefined || config === null || typeof config !== 'object') {
+            return false;
+        }
         return config.configType === 'ipcamera';
     }
 }

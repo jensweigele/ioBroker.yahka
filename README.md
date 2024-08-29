@@ -187,6 +187,7 @@ This repo includes one submodule, so before building you need to also close/init
 -->
 ## Changelog
 ### **WORK IN PROGRESS**
+* (tarikweiss) Fixes errors with non-existing service types
 * (bluefox) Revert renaming of states back: `HomematicControlModeToHomekitHeatingCoolingState => HomematicControlModeToHomekitHeathingCoolingState, Deferred => Defered`
 
 ### 1.0.4 (2024-08-12)

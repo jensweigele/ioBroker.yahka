@@ -1,4 +1,7 @@
-import { Characteristic, Formats, Units, Perms, Service, uuid } from 'hap-nodejs';
+import {
+    Characteristic, Formats,
+    Units, Perms, Service, uuid,
+} from 'hap-nodejs';
 
 let hapTypesImported = false;
 export function importHAPCommunityTypesAndFixes() {
@@ -91,8 +94,8 @@ export class Timestamp extends Characteristic {
             'FF000001-0000-1000-8000-135D67EC4377',
             {
                 format: Formats.STRING,
-                perms : [Perms.PAIRED_READ, Perms.PAIRED_WRITE, Perms.NOTIFY]
-            }
+                perms : [Perms.PAIRED_READ, Perms.PAIRED_WRITE, Perms.NOTIFY],
+            },
         );
         // this.value = this.getDefaultValue();
     }
@@ -105,8 +108,8 @@ export class AudioDataURL extends Characteristic {
             'FF000002-0000-1000-8000-135D67EC4377',
             {
                 format: Formats.STRING,
-                perms : [Perms.PAIRED_READ, Perms.PAIRED_WRITE, Perms.NOTIFY]
-            }
+                perms : [Perms.PAIRED_READ, Perms.PAIRED_WRITE, Perms.NOTIFY],
+            },
         );
     }
 }
@@ -118,8 +121,8 @@ export class VideoDataURL extends Characteristic {
             'FF000003-0000-1000-8000-135D67EC4377',
             {
                 format: Formats.STRING,
-                perms : [Perms.PAIRED_READ, Perms.PAIRED_WRITE, Perms.NOTIFY]
-            }
+                perms : [Perms.PAIRED_READ, Perms.PAIRED_WRITE, Perms.NOTIFY],
+            },
         );
     }
 }
@@ -135,8 +138,8 @@ export class AudioVolume extends Characteristic {
                 maxValue: 100,
                 minValue: 0,
                 minStep : 1,
-                perms   : [Perms.PAIRED_READ, Perms.PAIRED_WRITE, Perms.NOTIFY]
-            }
+                perms   : [Perms.PAIRED_READ, Perms.PAIRED_WRITE, Perms.NOTIFY],
+            },
         );
         // this.value = this.getDefaultValue();
     }
@@ -149,8 +152,8 @@ export class Muting extends Characteristic {
             '00001002-0000-1000-8000-135D67EC4377',
             {
                 format: Formats.UINT8,
-                perms : [Perms.PAIRED_READ, Perms.PAIRED_WRITE, Perms.NOTIFY]
-            }
+                perms : [Perms.PAIRED_READ, Perms.PAIRED_WRITE, Perms.NOTIFY],
+            },
         );
         // this.value = this.getDefaultValue();
     }
@@ -167,8 +170,8 @@ export class PlaybackState extends Characteristic {
             '00002001-0000-1000-8000-135D67EC4377',
             {
                 format: Formats.UINT8,
-                perms : [Perms.PAIRED_READ, Perms.PAIRED_WRITE, Perms.NOTIFY]
-            }
+                perms : [Perms.PAIRED_READ, Perms.PAIRED_WRITE, Perms.NOTIFY],
+            },
         );
         // this.value = this.getDefaultValue();
     }
@@ -181,8 +184,8 @@ export class SkipForward extends Characteristic {
             '00002002-0000-1000-8000-135D67EC4377',
             {
                 format: Formats.BOOL,
-                perms : [Perms.PAIRED_WRITE]
-            }
+                perms : [Perms.PAIRED_WRITE],
+            },
         );
         // this.value = this.getDefaultValue();
     }
@@ -195,8 +198,8 @@ export class SkipBackward extends Characteristic {
             '00002003-0000-1000-8000-135D67EC4377',
             {
                 format: Formats.BOOL,
-                perms : [Perms.PAIRED_WRITE]
-            }
+                perms : [Perms.PAIRED_WRITE],
+            },
         );
         // this.value = this.getDefaultValue();
     }
@@ -211,9 +214,9 @@ export class ShuffleMode extends Characteristic {
     //NOTE: INDIVIDUAL is deprecated.
     static INDIVIDUAL = 1;
     static ITEM       = 1;
-    static GROUP      = 2; // e.g. iTunes "Groupings"
-    static ALBUM      = 3; // e.g. album or season
-    static SET        = 4; // e.g. T.V. Series or album box set
+    static GROUP      = 2; // e.g., iTunes "Groupings"
+    static ALBUM      = 3; // e.g., album or season
+    static SET        = 4; // e.g., T.V. Series or album box set
     constructor() {
         super(
             'Shuffle Mode',
@@ -221,7 +224,7 @@ export class ShuffleMode extends Characteristic {
             {
                 format: Formats.UINT8,
                 perms : [Perms.PAIRED_READ, Perms.PAIRED_WRITE, Perms.NOTIFY]
-            }
+            },
         );
         // this.value = this.getDefaultValue();
     }
@@ -238,8 +241,8 @@ export class RepeatMode extends Characteristic {
             '00002005-0000-1000-8000-135D67EC4377',
             {
                 format: Formats.UINT8,
-                perms : [Perms.PAIRED_READ, Perms.PAIRED_WRITE, Perms.NOTIFY]
-            }
+                perms : [Perms.PAIRED_READ, Perms.PAIRED_WRITE, Perms.NOTIFY],
+            },
         );
         // this.value = this.getDefaultValue();
     }
@@ -252,8 +255,8 @@ export class PlaybackSpeed extends Characteristic {
             '00002006-0000-1000-8000-135D67EC4377',
             {
                 format: Formats.FLOAT,
-                perms : [Perms.PAIRED_READ, Perms.PAIRED_WRITE, Perms.NOTIFY]
-            }
+                perms : [Perms.PAIRED_READ, Perms.PAIRED_WRITE, Perms.NOTIFY],
+            },
         );
         // this.value = this.getDefaultValue();
     }
@@ -266,8 +269,8 @@ export class MediaCurrentPosition extends Characteristic {
             '00002007-0000-1000-8000-135D67EC4377',
             {
                 format: Formats.FLOAT, // In seconds
-                perms : [Perms.PAIRED_READ, Perms.NOTIFY]
-            }
+                perms : [Perms.PAIRED_READ, Perms.NOTIFY],
+            },
         );
     }
 }
@@ -280,8 +283,8 @@ export class MediaItemName extends Characteristic {
             '00003001-0000-1000-8000-135D67EC4377',
             {
                 format: Formats.STRING,
-                perms : [Perms.PAIRED_READ, Perms.NOTIFY]
-            }
+                perms : [Perms.PAIRED_READ, Perms.NOTIFY],
+            },
         );
         // this.value = this.getDefaultValue();
     }
@@ -294,8 +297,8 @@ export class MediaItemAlbumName extends Characteristic {
             '00003002-0000-1000-8000-135D67EC4377',
             {
                 format: Formats.STRING,
-                perms : [Perms.PAIRED_READ, Perms.NOTIFY]
-            }
+                perms : [Perms.PAIRED_READ, Perms.NOTIFY],
+            },
         );
         // this.value = this.getDefaultValue();
     }
@@ -308,8 +311,8 @@ export class MediaItemArtist extends Characteristic {
             '00003003-0000-1000-8000-135D67EC4377',
             {
                 format: Formats.STRING,
-                perms : [Perms.PAIRED_READ, Perms.NOTIFY]
-            }
+                perms : [Perms.PAIRED_READ, Perms.NOTIFY],
+            },
         );
         // this.value = this.getDefaultValue();
     }
@@ -1372,7 +1375,7 @@ export class NotificationService extends Service {
         super(
             displayName,
             '074D8CE9-5B4B-48D5-9990-D98850C2F3FE',
-            subtype
+            subtype,
         );
 
         // Required Characteristics

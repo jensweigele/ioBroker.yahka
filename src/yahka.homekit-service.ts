@@ -5,7 +5,7 @@ import {
     IHasIHomeKitBridgeBinding,
     IHomeKitBridgeBinding,
     IHomeKitBridgeBindingFactory,
-    ILogger
+    ILogger,
 } from './yahka.interfaces';
 
 type IHAPCharacteristic = Characteristic & IHasIHomeKitBridgeBinding;
@@ -14,6 +14,7 @@ export class YahkaServiceInitializer {
     constructor(private FBridgeFactory: IHomeKitBridgeBindingFactory, private FLogger: ILogger) {
 
     }
+
     public initServices(hapDevice: Accessory, serviceConfigs: Configuration.IServiceConfig[], availabilityIobState?: string) {
         if (serviceConfigs == null) {
             return;
@@ -52,36 +53,30 @@ export class YahkaServiceInitializer {
         let newType = serviceConfig.type;
 
         switch (serviceConfig.type) {
-            case 'BatteryType':
-            {
+            case 'BatteryType': {
                 newType = 'Battery';
                 break;
             }
-            case 'CameraEventRecordingManagement':
-            {
+            case 'CameraEventRecordingManagement': {
                 newType = 'CameraRecordingManagement';
                 break;
             }
-            case 'Relay':
-            {
+            case 'Relay': {
                 newType = 'CloudRelay';
                 break;
             }
-            case 'Slat':
-            {
+            case 'Slat': {
                 newType = 'Slats';
                 break;
             }
-            case 'TunneledBTLEAccessoryService':
-            {
+            case 'TunneledBTLEAccessoryService': {
                 newType = 'Tunnel';
                 break;
             }
             case 'BridgeConfiguration':
             case 'BridgingState':
             case 'CameraControl':
-            case 'TimeInformation':
-            {
+            case 'TimeInformation': {
                 this.FLogger.warn(`The type ${serviceConfig.type} is not supported anymore and has been removed. You can change your service configuration and remove the item.`);
                 return;
             }
@@ -145,7 +140,6 @@ export class YahkaServiceInitializer {
         linkToService.addLinkedService(existingService);
         this.FLogger.debug(`[${serviceConfig.name}] established link from ${existingService.displayName} to ${linkToService.displayName}`);
     }
-
 
     private initCharacteristic(hapService: Service, characteristicConfig: Configuration.ICharacteristicConfig, availabilityBinding: IHomeKitBridgeBinding) {
         const logName = `[${hapService.displayName}.${characteristicConfig.name}]`;

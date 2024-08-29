@@ -3,7 +3,10 @@ import debug = require('debug');
 import util = require('node:util');
 import { Configuration } from './shared/yahka.configuration';
 import { importHAPCommunityTypesAndFixes } from './yahka.community.types';
-import {Accessory, Bridge, uuid, Characteristic, Service, MDNSAdvertiser, HAPStorage} from 'hap-nodejs';
+import {
+    Accessory, Bridge, uuid, Characteristic,
+    Service, MDNSAdvertiser, HAPStorage,
+} from 'hap-nodejs';
 import { YahkaServiceInitializer } from './yahka.homekit-service';
 import { IHomeKitBridgeBindingFactory, ILogger } from './yahka.interfaces';
 const pjson = require('../package.json');
@@ -64,7 +67,7 @@ export class THomeKitBridge {
                         this.bridgeObject.addBridgedAccessory(hapDevice);
                     } catch (e) {
                         this.FLogger.warn(e);
-                        this.FLogger.warn('Error by adding: ' + JSON.stringify(device));
+                        this.FLogger.warn(`Error by adding: ${JSON.stringify(device)}`);
                     }
                 }
             }
@@ -88,7 +91,7 @@ export class THomeKitBridge {
 
         // Listen for bridge identification event
         hapBridge.on('identify', (paired, callback) => {
-            this.FLogger.debug('Node Bridge identify:' + paired);
+            this.FLogger.debug(`Node Bridge identify:${paired}`);
             callback(); // success
         });
         return hapBridge;
@@ -96,7 +99,7 @@ export class THomeKitBridge {
 
     private createDevice(device: Configuration.IDeviceConfig) {
         let devName = device.name;
-        let deviceID = uuid.generate(this.config.ident + ':' + devName);
+        let deviceID = uuid.generate(`${this.config.ident}:${devName}`);
         let i = 0;
         while (this.bridgeObject.bridgedAccessories.some((a) => a.UUID == deviceID)) {
             devName = `${device.name}_${++i}`;

@@ -1,10 +1,10 @@
 /// <reference path="./typings/index.d.ts" />
+import { join } from 'node:path';
 import { THomeKitIPCamera } from './yahka.homekit-ipcamera';
 import { Configuration } from './shared/yahka.configuration';
 import { functionFactory } from './yahka.functions/functions.factory';
 import { IHomeKitBridgeBinding, IHomeKitBridgeBindingFactory, IInOutChangeNotify } from './yahka.interfaces';
 import { THomeKitBridge, initHAP, deinitHAP } from './yahka.homekit-bridge';
-import { join } from 'node:path';
 
 export type TSubscriptionType = 'state' | 'object';
 
@@ -133,10 +133,9 @@ export class TIOBrokerAdapter implements IHomeKitBridgeBindingFactory {
             this.adapter.log.info('cleaning up ...');
             deinitHAP();
             this.adapter.log.info('cleaned up ...');
-            callback();
         } catch (e) {
-            callback();
         }
+        callback();
     }
 
     private handleInOutSubscriptionRequest(requester: ISubscriptionRequester, changeNotify: IInOutChangeNotify) {
@@ -145,7 +144,6 @@ export class TIOBrokerAdapter implements IHomeKitBridgeBindingFactory {
 
         for (let subscriptionRequest of requester.subscriptionRequests) {
             let changeInterceptor = (ioValue: any) => subscriptionRequest.subscriptionEvent(ioValue, changeNotify);
-
 
             if (subscriptionRequest.subscriptionType === 'state') {
                 let existingArray = this.stateToEventMap.get(subscriptionRequest.subscriptionIdentifier);
@@ -165,7 +163,6 @@ export class TIOBrokerAdapter implements IHomeKitBridgeBindingFactory {
                 this.adapter.log.warn(`unknown subscription type: ${subscriptionRequest.subscriptionType}`);
             }
         }
-
     }
 
     public CreateBinding(characteristicConfig: Configuration.ICharacteristicConfig, changeNotify: IInOutChangeNotify): IHomeKitBridgeBinding {
