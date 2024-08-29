@@ -211,7 +211,7 @@ class Timestamp extends hap_nodejs_1.Characteristic {
     constructor() {
         super('Timestamp', 'FF000001-0000-1000-8000-135D67EC4377', {
             format: "string" /* Formats.STRING */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
         });
         // this.value = this.getDefaultValue();
     }
@@ -221,7 +221,7 @@ class AudioDataURL extends hap_nodejs_1.Characteristic {
     constructor() {
         super('Audio URL', 'FF000002-0000-1000-8000-135D67EC4377', {
             format: "string" /* Formats.STRING */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
         });
     }
 }
@@ -230,7 +230,7 @@ class VideoDataURL extends hap_nodejs_1.Characteristic {
     constructor() {
         super('Video URL', 'FF000003-0000-1000-8000-135D67EC4377', {
             format: "string" /* Formats.STRING */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
         });
     }
 }
@@ -243,7 +243,7 @@ class AudioVolume extends hap_nodejs_1.Characteristic {
             maxValue: 100,
             minValue: 0,
             minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
         });
         // this.value = this.getDefaultValue();
     }
@@ -253,7 +253,7 @@ class Muting extends hap_nodejs_1.Characteristic {
     constructor() {
         super('Muting', '00001002-0000-1000-8000-135D67EC4377', {
             format: "uint8" /* Formats.UINT8 */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
         });
         // this.value = this.getDefaultValue();
     }
@@ -263,7 +263,7 @@ class PlaybackState extends hap_nodejs_1.Characteristic {
     constructor() {
         super('Playback State', '00002001-0000-1000-8000-135D67EC4377', {
             format: "uint8" /* Formats.UINT8 */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
         });
         // this.value = this.getDefaultValue();
     }
@@ -276,7 +276,7 @@ class SkipForward extends hap_nodejs_1.Characteristic {
     constructor() {
         super('Skip Forward', '00002002-0000-1000-8000-135D67EC4377', {
             format: "bool" /* Formats.BOOL */,
-            perms: ["pw" /* Perms.PAIRED_WRITE */]
+            perms: ["pw" /* Perms.PAIRED_WRITE */],
         });
         // this.value = this.getDefaultValue();
     }
@@ -286,7 +286,7 @@ class SkipBackward extends hap_nodejs_1.Characteristic {
     constructor() {
         super('Skip Backward', '00002003-0000-1000-8000-135D67EC4377', {
             format: "bool" /* Formats.BOOL */,
-            perms: ["pw" /* Perms.PAIRED_WRITE */]
+            perms: ["pw" /* Perms.PAIRED_WRITE */],
         });
         // this.value = this.getDefaultValue();
     }
@@ -310,14 +310,14 @@ ShuffleMode.OFF = 0;
 //NOTE: INDIVIDUAL is deprecated.
 ShuffleMode.INDIVIDUAL = 1;
 ShuffleMode.ITEM = 1;
-ShuffleMode.GROUP = 2; // e.g. iTunes "Groupings"
-ShuffleMode.ALBUM = 3; // e.g. album or season
-ShuffleMode.SET = 4; // e.g. T.V. Series or album box set
+ShuffleMode.GROUP = 2; // e.g., iTunes "Groupings"
+ShuffleMode.ALBUM = 3; // e.g., album or season
+ShuffleMode.SET = 4; // e.g., T.V. Series or album box set
 class RepeatMode extends hap_nodejs_1.Characteristic {
     constructor() {
         super('Repeat Mode', '00002005-0000-1000-8000-135D67EC4377', {
             format: "uint8" /* Formats.UINT8 */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
         });
         // this.value = this.getDefaultValue();
     }
@@ -330,7 +330,7 @@ class PlaybackSpeed extends hap_nodejs_1.Characteristic {
     constructor() {
         super('Playback Speed', '00002006-0000-1000-8000-135D67EC4377', {
             format: "float" /* Formats.FLOAT */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
         });
         // this.value = this.getDefaultValue();
     }
@@ -340,7 +340,7 @@ class MediaCurrentPosition extends hap_nodejs_1.Characteristic {
     constructor() {
         super('Media Current Position', '00002007-0000-1000-8000-135D67EC4377', {
             format: "float" /* Formats.FLOAT */, // In seconds
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */],
         });
     }
 }
@@ -349,7 +349,7 @@ class MediaItemName extends hap_nodejs_1.Characteristic {
     constructor() {
         super('Media Name', '00003001-0000-1000-8000-135D67EC4377', {
             format: "string" /* Formats.STRING */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */],
         });
         // this.value = this.getDefaultValue();
     }
@@ -359,7 +359,7 @@ class MediaItemAlbumName extends hap_nodejs_1.Characteristic {
     constructor() {
         super('Media Album Name', '00003002-0000-1000-8000-135D67EC4377', {
             format: "string" /* Formats.STRING */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */],
         });
         // this.value = this.getDefaultValue();
     }
@@ -369,7 +369,7 @@ class MediaItemArtist extends hap_nodejs_1.Characteristic {
     constructor() {
         super('Media Artist', '00003003-0000-1000-8000-135D67EC4377', {
             format: "string" /* Formats.STRING */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */],
         });
         // this.value = this.getDefaultValue();
     }
@@ -2368,7 +2368,7 @@ class THomeKitBridge {
                     }
                     catch (e) {
                         this.FLogger.warn(e);
-                        this.FLogger.warn('Error by adding: ' + JSON.stringify(device));
+                        this.FLogger.warn(`Error by adding: ${JSON.stringify(device)}`);
                     }
                 }
             }
@@ -2389,14 +2389,14 @@ class THomeKitBridge {
         }
         // Listen for bridge identification event
         hapBridge.on('identify', (paired, callback) => {
-            this.FLogger.debug('Node Bridge identify:' + paired);
+            this.FLogger.debug(`Node Bridge identify:${paired}`);
             callback(); // success
         });
         return hapBridge;
     }
     createDevice(device) {
         let devName = device.name;
-        let deviceID = hap_nodejs_1.uuid.generate(this.config.ident + ':' + devName);
+        let deviceID = hap_nodejs_1.uuid.generate(`${this.config.ident}:${devName}`);
         let i = 0;
         while (this.bridgeObject.bridgedAccessories.some((a) => a.UUID == deviceID)) {
             devName = `${device.name}_${++i}`;
@@ -2816,39 +2816,33 @@ class YahkaServiceInitializer {
         }
         let newType = serviceConfig.type;
         switch (serviceConfig.type) {
-            case 'BatteryType':
-                {
-                    newType = 'Battery';
-                    break;
-                }
-            case 'CameraEventRecordingManagement':
-                {
-                    newType = 'CameraRecordingManagement';
-                    break;
-                }
-            case 'Relay':
-                {
-                    newType = 'CloudRelay';
-                    break;
-                }
-            case 'Slat':
-                {
-                    newType = 'Slats';
-                    break;
-                }
-            case 'TunneledBTLEAccessoryService':
-                {
-                    newType = 'Tunnel';
-                    break;
-                }
+            case 'BatteryType': {
+                newType = 'Battery';
+                break;
+            }
+            case 'CameraEventRecordingManagement': {
+                newType = 'CameraRecordingManagement';
+                break;
+            }
+            case 'Relay': {
+                newType = 'CloudRelay';
+                break;
+            }
+            case 'Slat': {
+                newType = 'Slats';
+                break;
+            }
+            case 'TunneledBTLEAccessoryService': {
+                newType = 'Tunnel';
+                break;
+            }
             case 'BridgeConfiguration':
             case 'BridgingState':
             case 'CameraControl':
-            case 'TimeInformation':
-                {
-                    this.FLogger.warn(`The type ${serviceConfig.type} is not supported anymore and has been removed. You can change your service configuration and remove the item.`);
-                    return;
-                }
+            case 'TimeInformation': {
+                this.FLogger.warn(`The type ${serviceConfig.type} is not supported anymore and has been removed. You can change your service configuration and remove the item.`);
+                return;
+            }
         }
         serviceConfig.type = newType;
         if (!(serviceConfig.type in hap_nodejs_1.Service)) {
@@ -3026,10 +3020,10 @@ exports.YahkaServiceInitializer = YahkaServiceInitializer;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TIOBrokerAdapter = void 0;
 /// <reference path="./typings/index.d.ts" />
+const node_path_1 = __webpack_require__(/*! node:path */ "node:path");
 const yahka_homekit_ipcamera_1 = __webpack_require__(/*! ./yahka.homekit-ipcamera */ "./yahka.homekit-ipcamera.ts");
 const functions_factory_1 = __webpack_require__(/*! ./yahka.functions/functions.factory */ "./yahka.functions/functions.factory.ts");
 const yahka_homekit_bridge_1 = __webpack_require__(/*! ./yahka.homekit-bridge */ "./yahka.homekit-bridge.ts");
-const node_path_1 = __webpack_require__(/*! node:path */ "node:path");
 function isSubscriptionRequester(param) {
     return param['subscriptionRequests'] !== undefined &&
         param['subscriptionRequests'] instanceof Array;
@@ -3126,11 +3120,10 @@ class TIOBrokerAdapter {
             this.adapter.log.info('cleaning up ...');
             (0, yahka_homekit_bridge_1.deinitHAP)();
             this.adapter.log.info('cleaned up ...');
-            callback();
         }
         catch (e) {
-            callback();
         }
+        callback();
     }
     handleInOutSubscriptionRequest(requester, changeNotify) {
         if (requester.subscriptionRequests.length == 0)
@@ -3259,7 +3252,7 @@ module.exports = require("node:util");
   \***********************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"name":"iobroker.yahka","version":"1.0.4","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"engines":{"node":">=18.0.0"},"dependencies":{"@iobroker/adapter-core":"^3.1.6","debug":"^4.3.6","dev-null":"^0.1.1","hap-nodejs":"^1.1.0","ip":"^2.0.1","macaddress":"0.5.3"},"devDependencies":{"@alcalzone/release-script":"^3.8.0","@alcalzone/release-script-plugin-iobroker":"^3.7.2","@alcalzone/release-script-plugin-license":"^3.7.0","@iobroker/adapter-dev":"^1.3.0","@iobroker/types":"^6.0.10","@types/jquery":"^3.5.30","@types/node":"^22.2.0","assert":"^2.1.0","buffer":"^6.0.3","chai":"^4.5.0","crypto-browserify":"^3.12.0","gulp":"^4.0.2","html-webpack-plugin":"^5.6.0","mocha":"^10.7.3","path-browserify":"^1.0.1","process":"^0.11.10","raw-loader":"^4.0.2","stream-browserify":"^3.0.0","timers":"^0.1.1","ts-loader":"^9.5.1","typescript":"^5.5.4","webpack":"^5.93.0","webpack-cli":"^5.1.4","webpack-node-externals":"^3.0.0","xml2js":"^0.6.2"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","files":["admin/","main.js","main.js.map","LICENSE","README.md","io-package.json","hap-nodejs-community-types/"],"scripts":{"test":"node node_modules/mocha/bin/mocha --exit","build":"gulp","_prepublishOnly":"gulp","release":"release-script","release-patch":"release-script patch --yes","release-minor":"release-script minor --yes","release-major":"release-script major --yes","setupDev":"dev-server setup","startDev":"dev-server watch --no-start"}}');
+module.exports = /*#__PURE__*/JSON.parse('{"name":"iobroker.yahka","version":"1.0.5","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"engines":{"node":">=18.0.0"},"dependencies":{"@iobroker/adapter-core":"^3.1.6","debug":"^4.3.6","dev-null":"^0.1.1","hap-nodejs":"^1.1.0","ip":"^2.0.1","macaddress":"0.5.3"},"devDependencies":{"@alcalzone/release-script":"^3.8.0","@alcalzone/release-script-plugin-iobroker":"^3.7.2","@alcalzone/release-script-plugin-license":"^3.7.0","@iobroker/adapter-dev":"^1.3.0","@iobroker/types":"^6.0.11","@types/jquery":"^3.5.30","@types/node":"^22.5.1","assert":"^2.1.0","buffer":"^6.0.3","chai":"^4.5.0","crypto-browserify":"^3.12.0","gulp":"^4.0.2","html-webpack-plugin":"^5.6.0","mocha":"^10.7.3","path-browserify":"^1.0.1","process":"^0.11.10","raw-loader":"^4.0.2","stream-browserify":"^3.0.0","timers":"^0.1.1","ts-loader":"^9.5.1","typescript":"^5.5.4","webpack":"^5.94.0","webpack-cli":"^5.1.4","webpack-node-externals":"^3.0.0","xml2js":"^0.6.2"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","files":["admin/","main.js","main.js.map","LICENSE","README.md","io-package.json","hap-nodejs-community-types/"],"scripts":{"test":"node node_modules/mocha/bin/mocha --exit","build":"gulp","_prepublishOnly":"gulp","release":"release-script","release-patch":"release-script patch --yes","release-minor":"release-script minor --yes","release-major":"release-script major --yes","setupDev":"dev-server setup","startDev":"dev-server watch --no-start"}}');
 
 /***/ })
 

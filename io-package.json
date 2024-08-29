@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "yahka",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "news": {
+      "1.0.5": {
+        "en": "Fixes errors with non-existing service types\nRevert renaming of states back: `HomematicControlModeToHomekitHeatingCoolingState => HomematicControlModeToHomekitHeathingCoolingState, Deferred => Defered`",
+        "de": "Behebt Fehler mit nicht vorhandenen Servicetypen\nUmbenennung von Zuständen zurück: `HomematicControlModeToHomekitHeatingCoolingState => HomematicControlModeToHomekitHeathingCoolingState, Deferred => Verteidigt `",
+        "ru": "Исправления ошибок с несуществующими типами услуг\nПеревернуть переименование государств назад: `HomematicControlModeToHomekitHeatingCoolingState => HomematicControlModeToHomekitHeathingCoolingState, Deferred => Потерпевшие \"",
+        "pt": "Corrige erros com tipos de serviço não existentes\nReverter a renomeação de estados de volta: `HomematicControlModeToHomekitHeatingCoolingState => HomematicControlModeToHomekitHeathingCoolingState, Deferred => Deferido \"",
+        "nl": "Fouten met niet-bestaande servicetypes herstellen\nHernoemen van staten terug: HomematicControlModeToHomekitHeatingCoolingState=> HomematicControlModeToHomekitHeathingCoolingState, Deduced => Afgewezen Wat",
+        "fr": "Correction d'erreurs avec des types de services non existants\nRetourner le nom des états : `HomematicControlModeToHomekitHeatingCoolingState => HomematicControlModeToHomekitHeathingCoolingState, différé => Défaut \"",
+        "it": "Risolve gli errori con tipi di servizio non esistenti\nRevertire la rinominazione degli stati indietro: `HomematicControlModeToHomekitHeatingCoolingState => HomematicControlModeToHomekitHeathingCoolingState, differito => Difensore #",
+        "es": "Corregir errores con tipos de servicio no existentes\nRevertir el renombramiento de estados de vuelta: `HomematicControlModeToHomekitHeatingCoolingState = confianza HomematicControlModeToHomekitHeathingCoolingState, Deferred = confianza Fecha diferida `",
+        "pl": "Naprawia błędy z nieistniejącymi typami usług\nRevert renaming of state back: 'HomematicControlModeHomekit HeatingCoolingState = > HomematicControlModeHomekitHeathingCoolingState, Deferred = > Pokonany'",
+        "uk": "Виправлення помилок з нестандартними типами послуг\nRevert renaming стани назад: `HomematicControlModeToHomekitHeatingCoolingState => HomematicControlModeToHomekitВітаємозв'язокКорольingState, Deferred => Зареєструватися й",
+        "zh-cn": "以不存在的服务类型纠正错误\n将州名重新命名回原名: ' 家庭控制模式ToHomekit HeatingCooling State QQ 家庭控制模式ToHomekit HeathingCooling Station, 推迟QQ 推迟 `"
+      },
       "1.0.4": {
         "en": "Important: js-controller 5.0 is required at least\nRewrote community types from submodule (js) to typescript\nAdded the ability to set an ioBroker state for the availability indication in HomeKit",
         "de": "Wichtig: js-controller 5.0 ist mindestens erforderlich\nRewrote Community-Typen von Submodul (js) zu Typescript\nHinzugefügt die Fähigkeit, einen ioBroker Zustand für die Verfügbarkeitsanzeige in HomeKit",
@@ -50,9 +63,6 @@
       },
       "0.13.2": {
         "en": "Fixed crashes due to changes in used HomeKit Library"
-      },
-      "0.13.1": {
-        "en": "Added ability to switch to legacy advertiser in case devices are showing 'no response' in HomeApp"
       }
     },
     "title": "Homekit",
