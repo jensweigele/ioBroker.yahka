@@ -19,7 +19,7 @@ export class YahkaServiceInitializer {
             return;
         }
 
-        let iobStateGiven = availabilityIobState !== undefined && availabilityIobState.trim() !== '';
+        let iobStateGiven = availabilityIobState !== undefined && availabilityIobState !== null && availabilityIobState.trim() !== '';
 
         let availableStateBinding = iobStateGiven ? this.FBridgeFactory.CreateBinding(
                 {
@@ -48,6 +48,46 @@ export class YahkaServiceInitializer {
             this.FLogger.debug(`[${hapDevice.displayName}] service ${serviceConfig.name} is disabled`);
             return;
         }
+
+        let newType = serviceConfig.type;
+
+        switch (serviceConfig.type) {
+            case 'BatteryType':
+            {
+                newType = 'Battery';
+                break;
+            }
+            case 'CameraEventRecordingManagement':
+            {
+                newType = 'CameraRecordingManagement';
+                break;
+            }
+            case 'Relay':
+            {
+                newType = 'CloudRelay';
+                break;
+            }
+            case 'Slat':
+            {
+                newType = 'Slats';
+                break;
+            }
+            case 'TunneledBTLEAccessoryService':
+            {
+                newType = 'Tunnel';
+                break;
+            }
+            case 'BridgeConfiguration':
+            case 'BridgingState':
+            case 'CameraControl':
+            case 'TimeInformation':
+            {
+                this.FLogger.warn(`The type ${serviceConfig.type} is not supported anymore and has been removed. You can change your service configuration and remove the item.`);
+                return;
+            }
+        }
+
+        serviceConfig.type = newType;
 
         if (!(serviceConfig.type in Service)) {
             throw Error(`[${hapDevice.displayName}] unknown service type: ${serviceConfig.type}`);
