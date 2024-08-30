@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "yahka",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "news": {
+      "1.0.6": {
+        "en": "Fixes errors with non-existing service types",
+        "de": "Behebt Fehler mit nicht vorhandenen Servicetypen",
+        "ru": "Исправления ошибок с несуществующими типами услуг",
+        "pt": "Corrige erros com tipos de serviço não existentes",
+        "nl": "Fouten met niet-bestaande servicetypes herstellen",
+        "fr": "Correction d'erreurs avec des types de services non existants",
+        "it": "Risolve gli errori con tipi di servizio non esistenti",
+        "es": "Corregir errores con tipos de servicio no existentes",
+        "pl": "Naprawia błędy z nieistniejącymi typami usług",
+        "uk": "Виправлення помилок з нестандартними типами послуг",
+        "zh-cn": "以不存在的服务类型纠正错误"
+      },
       "1.0.5": {
         "en": "Fixes errors with non-existing service types\nRevert renaming of states back: `HomematicControlModeToHomekitHeatingCoolingState => HomematicControlModeToHomekitHeathingCoolingState, Deferred => Defered`",
         "de": "Behebt Fehler mit nicht vorhandenen Servicetypen\nUmbenennung von Zuständen zurück: `HomematicControlModeToHomekitHeatingCoolingState => HomematicControlModeToHomekitHeathingCoolingState, Deferred => Verteidigt `",
@@ -60,9 +73,6 @@
       },
       "0.14.0": {
         "en": "Updated HomeKit Library"
-      },
-      "0.13.2": {
-        "en": "Fixed crashes due to changes in used HomeKit Library"
       }
     },
     "title": "Homekit",
