@@ -2816,7 +2816,7 @@ class YahkaServiceInitializer {
         }
         let newType = serviceConfig.type;
         switch (serviceConfig.type) {
-            case 'BatteryType': {
+            case 'BatteryService': {
                 newType = 'Battery';
                 break;
             }
