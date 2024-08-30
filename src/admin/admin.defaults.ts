@@ -103,4 +103,3 @@ export module Defaults {
         webcam: webcamCommandLine
     };
 }
-

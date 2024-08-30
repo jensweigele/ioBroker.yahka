@@ -1,6 +1,5 @@
 import { IDictionary } from '../shared/yahka.configuration';
 
-
 export interface IHAPServiceDefinition {
     type: string;
     characteristics: IDictionary<IHAPCharacteristicDefintion>;
@@ -23,6 +22,3 @@ export interface ISelectListEntry {
     value?: string,
     [otherProps: string]: any;
 }
-
-
-

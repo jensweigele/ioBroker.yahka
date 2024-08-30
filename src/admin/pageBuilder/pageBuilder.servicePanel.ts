@@ -1,4 +1,3 @@
-
 /// <reference path="../../typings/index.d.ts" />
 import * as hkBridge from '../../shared/yahka.configuration';
 import { generateMetaDataDictionary } from '../yahka.meta-generator';
@@ -11,7 +10,6 @@ import { ParameterEditor_Null } from '../parameterEditor/parameterEditor.null';
 import { translateFragment } from '../admin.translation';
 import { createTemplateElement } from '../admin.pageLoader';
 import { Utils } from '../admin.utils';
-
 
 let HAPServiceDictionary = generateMetaDataDictionary();
 
@@ -259,7 +257,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
 
         this.refreshEnabledClass(bracketElement, enabled);
         this.refreshOptionalClass(bracketElement, charDef?.optional ?? true);
-        this.refershCustomClass(bracketElement, charConfig?.customCharacteristic ?? false);
+        this.refreshCustomClass(bracketElement, charConfig?.customCharacteristic ?? false);
 
         rowElement.querySelector('#characteristic_name').textContent = name;
 
@@ -304,7 +302,12 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
         return rowElement;
     }
 
-    private updateCharacteristicProperties(rowElement: DocumentFragment, serviceConfig: hkBridge.Configuration.IServiceConfig, charDef: IHAPCharacteristicDefintion, charConfig: hkBridge.Configuration.ICharacteristicConfig) {
+    private updateCharacteristicProperties(
+        rowElement: DocumentFragment,
+        serviceConfig: hkBridge.Configuration.IServiceConfig,
+        charDef: IHAPCharacteristicDefintion,
+        charConfig: hkBridge.Configuration.ICharacteristicConfig
+    ) {
         let charName = charConfig ? charConfig.name : charDef.name;
         let toggleLink = rowElement.querySelector('#toggleProperties');
         let propContainer = rowElement.querySelector('#characteristic_propertyTable_container');
@@ -329,27 +332,29 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
             return { asString: result, isObject: isObject };
         }
 
-        for (let propertyName in charDef.properties) {
-            let propertyDefaultValue = transformValue(charDef.properties[propertyName]);
-            let propElement = <DocumentFragment>document.importNode(this.characteristicPropRow.content, true);
-            let nameSpan = propElement.querySelector('#propName');
-            nameSpan.id = '';
-            nameSpan.textContent = propertyName;
+        if (charDef?.properties) {
+            for (let propertyName in charDef.properties) {
+                let propertyDefaultValue = transformValue(charDef.properties[propertyName]);
+                let propElement = <DocumentFragment>document.importNode(this.characteristicPropRow.content, true);
+                let nameSpan = propElement.querySelector('#propName');
+                nameSpan.id = '';
+                nameSpan.textContent = propertyName;
 
-            let propInput = <HTMLInputElement>propElement.querySelector('#propValue')
-            propInput.id = propertyName;
-            propInput.placeholder = propertyDefaultValue.asString;
-            if (charConfig !== undefined) {
-                if (charConfig.properties !== undefined) {
-                    if (charConfig.properties[propertyName] !== undefined) {
-                        let charValue = transformValue(charConfig.properties[propertyName]);
-                        Utils.setInputValue(propInput, charValue.asString);
+                let propInput = <HTMLInputElement>propElement.querySelector('#propValue')
+                propInput.id = propertyName;
+                propInput.placeholder = propertyDefaultValue.asString;
+                if (charConfig !== undefined) {
+                    if (charConfig.properties !== undefined) {
+                        if (charConfig.properties[propertyName] !== undefined) {
+                            let charValue = transformValue(charConfig.properties[propertyName]);
+                            Utils.setInputValue(propInput, charValue.asString);
+                        }
                     }
                 }
+                nameSpan.classList.toggle('properties-defined', propInput.value != '');
+                propInput.addEventListener('input', this.handleCharacteristicPropertyChange.bind(this, serviceConfig, charName, propertyName, propertyDefaultValue.isObject))
+                propTable.appendChild(propElement);
             }
-            nameSpan.classList.toggle('properties-defined', propInput.value != '');
-            propInput.addEventListener('input', this.handleCharacteristicPropertyChange.bind(this, serviceConfig, charName, propertyName, propertyDefaultValue.isObject))
-            propTable.appendChild(propElement);
         }
     }
 
@@ -361,7 +366,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
         row.classList.toggle('optional-characteristic', optional);
     }
 
-    private refershCustomClass(row: HTMLElement, custom: boolean) {
+    private refreshCustomClass(row: HTMLElement, custom: boolean) {
         row.classList.toggle('custom-characteristic', custom);
     }
 

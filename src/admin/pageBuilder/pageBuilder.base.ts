@@ -9,7 +9,6 @@ export interface IConfigPageBuilder {
     readonly addServiceAvailable: boolean;
     readonly removeDeviceAvailable: boolean;
     readonly duplicateDeviceAvailable: boolean;
-
 }
 
 export interface IConfigPageBuilderDelegate {
@@ -45,6 +44,7 @@ export class ConfigPageBuilder_Base {
             selectElement.add(optElem);
         }
     }
+
     private fillSelectByDict(selectElement: HTMLSelectElement, dictionary: IDictionary<ISelectListEntry>) {
         for (let key in dictionary) {
             let optElem = document.createElement('option');
@@ -76,6 +76,4 @@ export class ConfigPageBuilder_Base {
             selectElement.add(optElem);
         }
     }
-
-
 }

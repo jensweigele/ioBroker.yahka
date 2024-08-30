@@ -4,15 +4,14 @@ import { ioBroker_YahkaPageBuilder } from './pageBuilder/pageBuilder.main';
 type TIOBrokerAdminChangeCallback = (changeMarker?: boolean) => void;
 type TIOBrokerAdminSaveCallback = (settingsObject: any) => void;
 
-
 let resolveMethodForSettingsLoader: (value?: void | Thenable<void>) => void;
 const ioBrokerSettingsLoaded = new Promise<void>((resolve, reject) => {
     resolveMethodForSettingsLoader = resolve;
 });
 declare interface IIPInformation {
-    address: string
-    family: string
-    name: string
+    address: string;
+    family: string;
+    name: string;
 }
 declare function getIPs(callback: (ips: IIPInformation[]) => void);
 

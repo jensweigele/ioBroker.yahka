@@ -8,21 +8,23 @@ export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition exten
     static create(adapter: ioBroker.Adapter, parameters: any): IInOutFunction {
         let p: Array<string>;
 
-        if (typeof parameters === 'string')
+        if (typeof parameters === 'string') {
             p = [parameters];
-        else if (parameters instanceof Array)
+        } else if (parameters instanceof Array) {
             p = parameters;
-        else
+        } else {
             p = [];
+        }
 
-        if (p.length == 0)
+        if (p.length == 0) {
             return undefined;
+        }
 
         let stateName: string = p[0];
         let workingItemName: string;
-        if (p.length >= 2)
+        if (p.length >= 2) {
             workingItemName = p[1];
-        else {
+        } else {
             let pathNames = stateName.split('.');
             pathNames[pathNames.length - 1] = 'WORKING';
             workingItemName = pathNames.join('.');
@@ -31,21 +33,22 @@ export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition exten
         return new TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition(adapter, stateName, workingItemName);
     }
 
-
     constructor(protected adapter: ioBroker.Adapter, protected stateName: string, protected workingItem: string) {
         super(adapter, stateName, 0);
         this.addSubscriptionRequest(workingItem);
         adapter.getForeignState(workingItem, (error, ioState) => {
-            if (ioState)
+            if (ioState) {
                 this.lastWorkingState = Boolean(ioState?.val);
-            else
+            } else {
                 this.lastWorkingState = undefined;
+            }
         });
     }
 
     subscriptionEvent(stateName: string, ioState: ioBroker.State, callback: IInOutChangeNotify) {
-        if (!ioState)
+        if (!ioState) {
             return;
+        }
 
         if (stateName == this.workingItem) {
             this.adapter.log.debug(`[${this.stateName}] got a working item change event: ${JSON.stringify(ioState)}`);
@@ -79,4 +82,3 @@ export class TIoBrokerInOutFunction_HomematicWindowCovering_TargetPosition exten
         }
     }
 }
-

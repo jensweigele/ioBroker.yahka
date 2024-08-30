@@ -52,7 +52,6 @@ export class TIoBrokerConversion_Scale extends TIOBrokerConversionBase implement
 }
 
 export class TIoBrokerConversion_Scale_Rounded extends TIoBrokerConversion_Scale {
-
     public toHomeKit(value: any): number {
         return Math.round(super.toHomeKit(value));
     }

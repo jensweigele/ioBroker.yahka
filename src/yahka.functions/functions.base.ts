@@ -45,6 +45,7 @@ export abstract class TYahkaFunctionBase implements ISubscriptionRequester {
             this.stateCache.set(stateName, ioState);
         return needUpdate;
     }
+
     subscriptionEvent(stateName: string, ioState: ioBroker.State, callback: IInOutChangeNotify) {
         this.log.debug(`change event from ioBroker via [${stateName}]${JSON.stringify(ioState)}`);
         if (this.shouldStateBeFiltered(stateName, ioState)) {
@@ -59,14 +60,10 @@ export abstract class TYahkaFunctionBase implements ISubscriptionRequester {
         }
 
         this.cacheChanged(stateName, callback);
-
     }
 
     protected cacheChanged(stateName: string, callback: IInOutChangeNotify) {
 
     }
-
-
-
 }
 

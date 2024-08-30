@@ -1,8 +1,7 @@
 import { ParameterEditor, IParameterEditorDelegate } from './parameterEditor.base';
 import { createAndCloneTemplateElement } from '../admin.pageLoader';
 import { Utils } from '../admin.utils';
-import { TIoBrokerInOutFunction_MultiStateParameter, isMultiStateParameter, TIoBrokerInOutFunction_MultiState } from '../../yahka.functions/iofunc.multi-state';
-import { write } from 'fs';
+import { TIoBrokerInOutFunction_MultiStateParameter, TIoBrokerInOutFunction_MultiState } from '../../yahka.functions/iofunc.multi-state';
 
 export class ParameterEditor_MultiState extends ParameterEditor {
     private templateNode: DocumentFragment;
@@ -68,7 +67,6 @@ export class ParameterEditor_MultiState extends ParameterEditor {
             return myRow;
         Utils.setInputValue(readField, item.readState);
         Utils.setInputValue(writeField, item.writeState);
-
     }
 
     addRowClicked() {

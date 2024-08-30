@@ -1,6 +1,7 @@
 import * as $ from 'jquery';
 
 declare function translateWord(text: string): string | undefined;
+
 export function translateFragment(fragment) {
     const elements = fragment.querySelectorAll('.translate');
     if (elements) {

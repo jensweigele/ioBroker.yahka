@@ -36,7 +36,6 @@ export abstract class TIoBrokerInOutFunctionBase extends TYahkaFunctionBase impl
     protected updateIOBrokerValue(plainIoValue: any, callback: () => void) {
         // to be filled in derived class
     }
-
 }
 
 export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionRequester, IInOutFunction {

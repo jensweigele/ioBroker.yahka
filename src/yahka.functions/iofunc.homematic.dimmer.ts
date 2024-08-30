@@ -1,7 +1,6 @@
 import { TIoBrokerInOutFunctionBase, IInOutFunction, IInOutChangeNotify } from './iofunc.base';
 import { propertyExists } from '../shared/yahka.utils';
 
-
 export interface TIoBrokerInOutFunction_Homematic_Dimmer_Parameter {
     levelState: string;
     restoreToPreviousLevel?: boolean;
@@ -15,15 +14,16 @@ export function isHomematic_Dimmer_Parameter(value: any): value is TIoBrokerInOu
     return propertyExists<TIoBrokerInOutFunction_Homematic_Dimmer_Parameter>(value, 'levelState')
 }
 
-
 export class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends TIoBrokerInOutFunctionBase {
     protected lastOnLevel: ioBroker.State = { val: undefined, ack: false, ts: undefined, lc: undefined, from: undefined };
+
     static parseParameters(parameters: any): TIoBrokerInOutFunction_Homematic_Dimmer_Parameter {
         if (!isHomematic_Dimmer_Parameter(parameters)) {
             return undefined
         }
         return parameters;
     }
+
     constructor(adapter: ioBroker.Adapter, functionName: string, protected parameters: TIoBrokerInOutFunction_Homematic_Dimmer_Parameter) {
         super(adapter, `${functionName}[${parameters.levelState}]`);
         this.addSubscriptionRequest(parameters.levelState);
@@ -62,6 +62,7 @@ export class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFu
     protected updateIOBrokerValue(plainIoValue: any, callback: () => void) {
         setTimeout(() => this.executeIOBrokerValue(plainIoValue, callback), 50);
     }
+
     protected executeIOBrokerValue(plainIoValue: any, callback: () => void) {
 
         const isSwitchingOn = Boolean(plainIoValue);

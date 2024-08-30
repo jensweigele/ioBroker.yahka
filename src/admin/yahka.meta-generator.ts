@@ -4,14 +4,13 @@ import { IDictionary } from '../shared/yahka.configuration';
 import { IHAPServiceDefinition, IHAPCharacteristicDefintion } from './admin.config';
 
 interface IServiceDictionary {
-    services: IDictionary<IHAPServiceDefinition>
-    characteristics: IDictionary<IHAPCharacteristicDefintion>
+    services: IDictionary<IHAPServiceDefinition>;
+    characteristics: IDictionary<IHAPCharacteristicDefintion>;
 }
 
 importHAPCommunityTypesAndFixes();
 
 export function generateMetaDataDictionary(): IServiceDictionary {
-
     let availableServices = Object.keys(Service);
     let availableCharacteristics = Object.keys(Characteristic);
 
@@ -19,7 +18,7 @@ export function generateMetaDataDictionary(): IServiceDictionary {
     const characteristics = buildCharacteristicDictionary(availableCharacteristics);
     return {
         services,
-        characteristics
+        characteristics,
     };
 }
 
@@ -29,8 +28,8 @@ function createCharacteristicDescriber(name: string, optional: boolean, char: Ch
         name: name,
         displayName: char?.displayName,
         optional: optional,
-        properties: char?.props
-    }
+        properties: char?.props,
+    };
 }
 
 function buildServiceDictionary(availableServices: string[], availableCharacteristics: string[]): IDictionary<IHAPServiceDefinition> {
@@ -52,7 +51,7 @@ function buildServiceDictionary(availableServices: string[], availableCharacteri
 
         let serviceDescriptor: IHAPServiceDefinition = {
             type: serviceName,
-            characteristics: {}
+            characteristics: {},
         };
 
         let serviceInstance = new Service[serviceName]('', '');
@@ -87,7 +86,7 @@ function buildCharacteristicDictionary(availableCharacteristics: string[]): IDic
         'Units',
         'Perms',
         'serialize',
-        'deserialize'
+        'deserialize',
     ];
     const characteristicDictionary: IDictionary<IHAPCharacteristicDefintion> = {};
     for (let charName of availableCharacteristics) {

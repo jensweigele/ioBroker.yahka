@@ -21,4 +21,3 @@ export const functionFactory = {
         return conversionFactory[conversionFunction](adapter, conversionParameters);
     }
 };
-

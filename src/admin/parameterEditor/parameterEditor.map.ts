@@ -90,11 +90,11 @@ export class ParameterEditor_Map extends ParameterEditor {
         containerElement.appendChild(this.templateNode);
 
         if (parameterValue === undefined) {
-            return
+            return;
         }
 
         if (!isMultiStateParameter(parameterValue)) {
-            return
+            return;
         }
 
         parameterValue.mappings.forEach(item => this.createRow(item));
@@ -111,8 +111,7 @@ export class ParameterEditor_Map extends ParameterEditor {
                     left: isSimpleValue.checked ? leftValue?.toString() : JSON.parse(leftValue?.toString()),
                     right: Utils.getInputValue(hkValue),
                 }
-
-            })
-        }
+            }),
+        };
     }
 }

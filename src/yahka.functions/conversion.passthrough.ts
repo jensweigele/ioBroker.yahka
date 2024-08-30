@@ -5,6 +5,7 @@ export class TIoBrokerConversion_Passthrough extends TIOBrokerConversionBase imp
     toHomeKit(value: any) {
         return value
     }
+
     toIOBroker(value: any) {
         return value
     }

@@ -9,4 +9,3 @@ export class TIoBrokerConversion_Invert extends TIOBrokerConversionBase implemen
         return !TIOBrokerConversionBase.castToBool(value);
     }
 }
-

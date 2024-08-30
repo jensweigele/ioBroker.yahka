@@ -50,16 +50,10 @@ export class TIoBrokerInOutFunction_State_OnlyACK extends TIoBrokerInOutFunction
             if (ioState.ack) {
                 this.lastAcknowledgedValue = ioState?.val;
                 return ioState?.val;
-            } else {
-                this.adapter.log.debug(`discarding CurrentState.Notify for [${this.stateName}]`);
-                return undefined;
             }
-        } else {
-            return null;
+            this.adapter.log.debug(`discarding CurrentState.Notify for [${this.stateName}]`);
+            return undefined;
         }
+        return null;
     }
 }
-
-
-
-

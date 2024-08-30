@@ -6,12 +6,13 @@ export abstract class TIOBrokerConversionBase extends TYahkaFunctionBase {
     }
 
     protected static castToNumber(value: any): number {
-        if (value === undefined)
+        if (value === undefined) {
             return undefined;
-        else if (typeof value !== 'number')
+        }
+        if (typeof value !== 'number') {
             return Number(value);
-        else
-            return value;
+        }
+        return value;
     }
 
     protected static castToBool(value: any): boolean {
@@ -19,15 +20,15 @@ export abstract class TIOBrokerConversionBase extends TYahkaFunctionBase {
     }
 
     protected static parameterValueByName(parameters: any, name: string): any {
-        let paramArray = undefined;
+        let paramArray;
         if (typeof parameters === 'object') {
             paramArray = parameters
         } else {
             paramArray = JSON.parse(parameters);
         }
-        if (paramArray === undefined)
+        if (paramArray === undefined) {
             return undefined;
+        }
         return paramArray[name];
     }
 }
-

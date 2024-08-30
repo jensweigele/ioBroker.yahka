@@ -5,8 +5,6 @@ export interface IParameterEditor {
 export type IParameterEditorDelegate = (newValue: any) => void;
 
 export class ParameterEditor implements IParameterEditor {
-
-
     constructor(private valueChangeCallback: IParameterEditorDelegate) {
 
     }
@@ -27,5 +25,4 @@ export class ParameterEditor implements IParameterEditor {
     protected valueChanged() {
         this.valueChangeCallback(this.buildNewParameterValue());
     }
-
 }
