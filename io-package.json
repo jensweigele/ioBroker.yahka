@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "yahka",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "news": {
+      "1.0.7": {
+        "en": "Corrected Admin GUI",
+        "de": "Korrigierte Admin-GUI",
+        "ru": "Исправленный пользовательский интерфейс",
+        "pt": "GUI de Administrador Correto",
+        "nl": "Gecorrigeerde beheerder GUI",
+        "fr": "GUI administratif corrigé",
+        "it": "GUI corretta dell'amministratore",
+        "es": "GUI de Admin corregido",
+        "pl": "Poprawiony interfejs administracyjny",
+        "uk": "Виправлений інтерфейс адміністратора",
+        "zh-cn": "校正管理员图形界面"
+      },
       "1.0.6": {
         "en": "Fixes errors with non-existing service types",
         "de": "Behebt Fehler mit nicht vorhandenen Servicetypen",
@@ -70,9 +83,6 @@
       },
       "0.17.0": {
         "en": "Added AVAHI advertiser as default and updated HomeKit Library to improve performance and stability"
-      },
-      "0.14.0": {
-        "en": "Updated HomeKit Library"
       }
     },
     "title": "Homekit",

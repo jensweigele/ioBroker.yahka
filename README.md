@@ -186,7 +186,7 @@ This repo includes one submodule, so before building you need to also close/init
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
-### **WORK IN PROGRESS**
+### 1.0.7 (2024-09-05)
 * (Apollon77) Corrected Admin GUI
 
 ### 1.0.6 (2024-08-30)
