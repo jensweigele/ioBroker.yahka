@@ -1,9 +1,9 @@
 {
   "common": {
     "name": "yahka",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "news": {
-      "1.0.8": {
+      "1.0.9": {
         "en": "Corrected Admin GUI",
         "de": "Korrigierte Admin-GUI",
         "ru": "Исправленный пользовательский интерфейс",
