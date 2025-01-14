@@ -186,7 +186,7 @@ This repo includes one submodule, so before building you need to also close/init
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
-### **WORK IN PROGRESS**
+### 1.1.0 (2025-01-14)
 * (tarikweiss) Updated github build file. Try testing build-process with github.
 * Updated design to be more responsive
 * Restructured code a bit

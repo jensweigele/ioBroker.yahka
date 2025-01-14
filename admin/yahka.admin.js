@@ -98399,15 +98399,6 @@ class ioBroker_DeviceListHandler extends pageBuilder_base_1.ConfigPageBuilder_Ba
         deviceList.innerHTML = '';
         this.listEntryToConfigMap.clear();
         this.entryGroupMap.clear();
-        // this
-        //     .getDeviceList()
-        //     .forEach((deviceConfig) => {
-        //         const deviceEntryElement = this.createDeviceListEntry(deviceConfig);
-        //         let node                 = deviceEntryElement.querySelector<HTMLElement>('.collection-item');
-        //         this.listEntryToConfigMap.set(node, deviceConfig);
-        //         deviceList.appendChild(deviceEntryElement);
-        //     });
-        // ;
         for (let deviceConfig of this.getDeviceList().sort((a, b) => { var _a; return (_a = a.name) === null || _a === void 0 ? void 0 : _a.localeCompare(b.name); })) {
             const groupNode = this.getDeviceGroupNode(deviceList, deviceConfig);
             let fragment = this.createDeviceListEntry(deviceConfig);

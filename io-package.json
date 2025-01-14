@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "yahka",
-    "version": "1.0.9",
+    "version": "1.1.0",
     "news": {
+      "1.1.0": {
+        "en": "Updated github build file. Try testing build-process with github.\nUpdated design to be more responsive\nRestructured code a bit",
+        "de": "Aktualisierte github build-Datei. Testen Sie Build-Prozess mit github.\nAktualisiertes Design, um ansprechender zu sein\nRestrukturierter Code ein bisschen",
+        "ru": "Обновленный файл github build. Попробуйте тестировать сборочный процесс с помощью github.\nОбновленный дизайн, чтобы быть более отзывчивым\nРеструктурированный код немного",
+        "pt": "Arquivo de compilação github atualizado. Tente testar o processo de compilação com github.\nDesign atualizado para ser mais responsivo\nCódigo reestruturado um pouco",
+        "nl": "Bijgewerkt github build bestand. Probeer bouwproces te testen met github.\nBijgewerkt ontwerp om meer responsief te zijn\nGestructureerde code een beetje",
+        "fr": "Mise à jour du fichier github build. Essayez de tester le processus de construction avec github.\nConception mise à jour pour être plus sensible\nUn peu de code restructuré",
+        "it": "Aggiornato github costruire file. Prova a testare il processo di costruzione con github.\nDesign aggiornato per essere più reattivo\nCodice ristrutturato un po'",
+        "es": "Actualizado archivo de construcción de github. Prueba el proceso de construcción con github.\nDiseño actualizado para ser más sensible\nCódigo reestructurado un poco",
+        "pl": "Aktualizacja pliku Github build. Spróbuj testować proces build- z github.\nAktualizacja projektu, aby być bardziej elastyczne\nZrestrukturyzowany kod trochę",
+        "uk": "Оновлено файл побудови github. Спробуйте тестування з використанням github.\nОновлений дизайн, щоб бути більш відповідальним\nРеструктурований код трохи",
+        "zh-cn": "更新 github 构建文件 。 尝试用 github 测试构建进程 .\n更新设计,使其更能回应\n稍微调整了代码"
+      },
       "1.0.9": {
         "en": "Corrected Admin GUI",
         "de": "Korrigierte Admin-GUI",
@@ -80,9 +93,6 @@
         "pl": "umożliwiamy kompatybilność kontrolną 5\nFormacja",
         "uk": "ми забезпечуємо сумісність контролера 5\nФорматування",
         "zh-cn": "我们确保控制的7兼容性\n表格"
-      },
-      "0.17.0": {
-        "en": "Added AVAHI advertiser as default and updated HomeKit Library to improve performance and stability"
       }
     },
     "title": "Homekit",
