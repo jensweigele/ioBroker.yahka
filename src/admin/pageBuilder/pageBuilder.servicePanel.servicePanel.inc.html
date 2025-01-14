@@ -1,66 +1,96 @@
-<div class="frame" id="yahka_service_panel">
-    <div class="heading">
-        <span class="translate">Service: </span><span id="yahka_service_caption"></span>
-        <a href="#" class="place-right" id="yakha_delete_service"><span class="mif-cross fg-red"></span></a>
+<li class="yahka_service_panel">
+    <div class="collapsible-header" style="display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: bold;">
+        <div>
+            <span class="translate">Service: </span>
+            <span class="yahka_service_caption"></span>
+        </div>
+        <button type="button" class="btn-small red icon-button yakha_delete_service">
+            <i class="material-icons">clear</i>
+        </button>
     </div>
-    <div class="content">
-        <div class="flex-container-row flex-grow flex-align-baseline">
-            <div>
-                <label class="input-control checkbox small-check">
-                    <input type="checkbox" id="service_enabled">
-                    <span class="check"></span>
-                </label>
+    <div class="content collapsible-body card-outer-container">
+        <div class="card-inner-container">
+            <div class="row">
+                <div class="col s12">
+                    <label>
+                        <input type="checkbox" class="service_enabled"/>
+                        <span class="translate">Enabled</span>
+                    </label>
+                </div>
             </div>
-            <div><label class="translate" for="service_name">Service name:</label></div>
-            <div class="input control flex-grow margin10">
-                <input class="full-size" type="text" id="service_name" />
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <label class="translate">Service Name</label>
+                    <input class="full-size service_name" type="text" />
+                </div>
             </div>
-            <div><label class="translate" for="service_type">Service Type:</label></div>
-            <div class="input control select flex-grow  margin10">
-                <select class="full-size" id="service_type"></select>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <select class="full-size service_type"></select>
+                    <label class="translate">Service Type:</label>
+                </div>
             </div>
-            <div><label class="translate" for="service_subtype">Service Subtype:</label></div>
-            <div class="input control flex-grow  margin10">
-                <input class="full-size" type="text" id="service_subtype" />
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <label class="translate">Service Subtype</label>
+                    <input class="full-size service_subtype" type="text">
+                    <div class="translate edit-hint">
+                        This is intended to use, if you have multiple services of the same type in an composed device.<br>
+                        For example, if you have a garage door with two different lights.
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col s12">
+                    <label>
+                        <input type="checkbox" class="service_isPrimary"/>
+                        <span class="translate">Primary Service</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s12">
+                    <label>
+                        <input type="checkbox" class="service_isHidden"/>
+                        <span class="translate">Hidden Service</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <select class="full-size service_link_to"></select>
+                    <label class="translate">Link to</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s12">
+                    <span class="translate" style="font-size: 1.1rem;">Characteristics</span>
+                </div>
             </div>
         </div>
-        <div class="flex-container-row flex-grow flex-align-baseline">
-            <div><label class="translate" for="service_link_to">Link to:</label></div>
-            <div class="input control select flex-grow  margin10">
-                <select class="full-size" id="service_link_to"></select>
+        <ul class="collapsible yahka_characteristic_table">
+        </ul>
+
+        <div class="card-inner-container">
+            <div class="row">
+                <div class="col s12 button-appendix">
+                    <div class="input-field">
+                        <select class="full-size new_custom_characteristic"></select>
+                        <label class="translate new_custom_characteristic">Custom Characteristic</label>
+                    </div>
+                    <button type="button" class="btn btn-small yahka_add_characteristic">
+                        <span class="translate">Add</span>
+                    </button>
+                </div>
             </div>
-            <div style="padding-right: 6px">
-                <label class=" checkbox small-check">
-                    <input type="checkbox" id="service_isPrimary">
-                    Primary Service
-                </label>
-            </div>
-            <div>
-                <label class=" checkbox small-check">
-                    <input type="checkbox" id="service_isHidden">
-                    Hidden Service
-                </label>
-            </div>
-        </div>
-        <div><span class="translate">Characteristics Table</span></div>
-        <table class="characteristic-table" id="yahka_characteristic_table">
-            <thead>
-                <th class="translate">Enabled</th>
-                <th class="translate">Name</th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </thead>
-        </table>
-        <div class="flex-container-row flex-align-baseline">
-            <div><label class="translate" for="new_custom_characteristic">Custom Characteristic</label></div>
-            <div class="input-control select flex-grow margin10">
-                <select class="full-size" id="new_custom_characteristic"></select>
-            </div>
-            <button class="image-button primary" id="yahka_add_characteristic">
-                <span class="icon mif-plus bg-darkCobalt  fg-white"></span>
-                <span class="translate">Add Custom Characteristic</span>
-            </button>
         </div>
     </div>
-</div>
+</li>

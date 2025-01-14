@@ -1,92 +1,114 @@
-<div>
-    <div><label class="translate" for="name">Name:</label><span class="edit-hint translate">descriptive
-            only - displayed in homekit apps. Changes are only recognized after readding the bridge in the
-            app.</span></div>
-    <div class="errorpanel translate" id="name_error">A device with this name already exists. Please change
-        the name!</div>
-    <div class="input control flex-grow margin10">
-        <input class="full-size" type="text" id="name" />
+<div class="card-inner-container">
+    <div class="row">
+        <div class="col s12">
+            <h5 class="translate">Bridge Properties</h5>
+        </div>
     </div>
-</div>
-<div>
-    <div><label class="translate" for="group">Group:</label><span class="edit-hint translate">string to be used to group
-            devices within Yahka. Has no effect to HomeKit!</span></div>
-    <div class="input control flex-grow margin10">
-        <input class="full-size" type="text" id="group" />
+    <div class="row">
+        <div class="col s12 input-field">
+            <label class="translate">Name</label>
+            <input type="text" class="name"/>
+            <div class="edit-hint translate">
+                descriptive only - displayed in homekit apps. Changes are only recognized after readding the bridge in
+                the app.
+            </div>
+            <div class="errorpanel translate name_error">
+                A device with this name already exists. Please change the name!
+            </div>
+        </div>
     </div>
-</div>
+    <div class="row">
+        <div class="col s12 input-field">
+            <label class="translate">Group</label>
+            <input type="text" class="group"/>
+            <div class="edit-hint translate">
+                string to be used to group devices within Yahka. Has no effect to HomeKit!
+            </div>
+        </div>
+    </div>
 
-<div>
-    <div><label class="translate" for="manufacturer">Manufacturer:</label><span class="edit-hint translate">descriptive
-            only - displayed in some homekit apps</span></div>
-    <div class="input control flex-grow  margin10">
-        <input class="full-size" type="text" id="manufacturer" />
+    <div class="row">
+        <div class="col s12 input-field">
+            <label class="translate">Manufacturer</label>
+            <input type="text" class="manufacturer"/>
+            <div class="edit-hint translate">descriptive only - displayed in some homekit apps</div>
+        </div>
     </div>
-</div>
-<div>
-    <div><label class="translate" for="model">Model:</label><span class="edit-hint translate">descriptive
-            only - displayed in some homekit apps</span></div>
-    <div class="input controlflex-grow  margin10">
-        <input class="full-size" type="text" id="model" />
+    <div class="row">
+        <div class="col s12 input-field">
+            <label class="translate">Model</label>
+            <input type="text" class="model"/>
+            <div class="edit-hint translate">descriptive only - displayed in some homekit apps</div>
+        </div>
     </div>
-</div>
-<div>
-    <div><label class="translate" for="serial">Serial:</label><span class="edit-hint translate">descriptive
-            only - displayed in some homekit apps</span></div>
-    <div class="input controlflex-grow  margin10">
-        <input class="full-size" type="text" id="serial" />
+    <div class="row">
+        <div class="col s12 input-field">
+            <label class="translate">Serial</label>
+            <input type="text" class="serial"/>
+            <div class="edit-hint translate">descriptive only - displayed in some homekit apps</div>
+        </div>
     </div>
-</div>
-<div>
-    <div><label class="translate" for="firmware">Firmware:</label><span class="edit-hint translate">descriptive
-            only - displayed in some homekit apps</span></div>
-    <div class="input control flex-grow  margin10">
-        <input class="full-size" type="text" id="firmware" placeholder="leave empty to use Yahka Version" />
+    <div class="row">
+        <div class="col s12 input-field">
+            <label class="translate">Firmware</label>
+            <input type="text" class="firmware" placeholder="leave empty to use Yahka Version"/>
+            <div class="edit-hint translate">descriptive only - displayed in some homekit apps</div>
+        </div>
     </div>
-</div>
-<div>
-    <div><label class="translate" for="username">Username:</label><span class="edit-hint translate">change 
-        this if you have trouble with your bridge. needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. 
-        <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b></span></div>
-    <div class="input controlflex-grow  margin10">
-        <input class="full-size" type="text" id="username" />
+    <div class="row">
+        <div class="col s12 input-field">
+            <label class="translate">Username</label>
+            <input type="text" class="username"/>
+            <div class="edit-hint translate">
+                change
+                this if you have trouble with your bridge. needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8.
+                <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b>
+            </div>
+        </div>
     </div>
-</div>
-<div>
-    <div><label class="translate" for="pincode">Pincode:</label><span class="edit-hint translate">needs to
-            be in the form of 123-45-678</span></div>
-    <div class="input controlflex-grow  margin10">
-        <input class="full-size" type="text" id="pincode" />
+    <div class="row">
+        <div class="col s12 input-field">
+            <label class="translate">Pincode</label>
+            <input type="text" class="pincode"/>
+            <div class="edit-hint translate">needs to be in the form of 123-45-678</div>
+        </div>
     </div>
-</div>
-<div>
-    <div><label class="translate" for="port">IP/Port:</label><span class="edit-hint translate">Port 0 =
-            random free port assigned by the operation system (default)</span></div>
-    <div class="input controlflex-grow  margin10">
-        <select id="interface">
-        </select>
-        <input min="0" max="65535" type="number" id="port" />
+    <div class="row">
+        <div class="col s8 input-field">
+            <select class="interface"></select>
+            <label>Interface</label>
+        </div>
+        <div class="col s4 input-field">
+            <label class="translate">Port</label>
+            <input min="0" max="65535" type="number" class="port"/>
+            <span class="edit-hint translate">Port 0 = random free port assigned by the operation system (default)</span>
+        </div>
     </div>
-</div>
-<div>
-    <div><label class="translate" for="useLegacyAdvertiser">Use Legacy Advertiser:</label><span
-            class="edit-hint translate">true
-            = use bonjour-hap instead of avahi</span></div>
-    <div class="input controlflex-grow  margin10">
-        <input class="" type="checkbox" id="useLegacyAdvertiser" />
+    <div class="row">
+        <div class="col s12">
+            <label>
+                <input type="checkbox" class="useLegacyAdvertiser"/>
+                <span class="translate">Use Legacy Advertiser</span>
+            </label>
+            <span class="edit-hint translate">true = use bonjour-hap instead of avahi</span>
+        </div>
     </div>
-</div>
-<div>
-    <div><label class="translate" for="useCiaoAdvertiser">Use CIAO Advertiser:</label><span
-            class="edit-hint translate">true = use ciao instead of avahi, if your bridge is not detected</span></div>
-    <div class="input controlflex-grow  margin10">
-        <input class="" type="checkbox" id="useCiaoAdvertiser" />
+    <div class="row">
+        <div class="col s12">
+            <label>
+                <input type="checkbox" class="useCiaoAdvertiser"/>
+                <span class="translate">Use CIAO Advertiser</span>
+            </label>
+            <span class="edit-hint translate">true = use ciao instead of avahi, if your bridge is not detected</span>
+        </div>
     </div>
-</div>
-<div>
-    <div><label class="translate" for="verboseLogging">Verbose Logging:</label><span class="edit-hint translate">true
-            = redirect hap-node logging to adapter logging</span></div>
-    <div class="input controlflex-grow  margin10">
-        <input class="" type="checkbox" id="verboseLogging" />
+    <div class="row">
+        <div class="col s12">
+            <label>
+                <input type="checkbox" class="verboseLogging"/>
+                <span class="translate">Verbose Logging</span>
+            </label>
+            <span class="edit-hint translate">true = redirect hap-node logging to adapter logging</span>
+        </div>
     </div>
 </div>

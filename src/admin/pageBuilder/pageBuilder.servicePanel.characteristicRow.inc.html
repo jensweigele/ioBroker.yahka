@@ -1,59 +1,43 @@
-<tbody id="characteristic" class="row-group">
-    <tr id="anchor">
-        <td class="center">
-            <label class="input-control checkbox small-check">
-                <input type="checkbox" id="characteristic_enabled">
-                <span class="check"></span>
-            </label>
-        </td>
-        <td>
-            <span id="characteristic_name"></span><a href="#" id="toggleProperties"
-                class="">&nbsp;&nbsp;[properties]</a>
-        </td>
-        <td class="right inOut">
-            <span class="translate">InOut: </span>
-        </td>
-        <td class="inOut">
-            <div class="input-control select full-width">
-                <select id="characteristic_inoutfunction"></select>
+<li>
+    <div class="collapsible-header" style="gap: 10px; display: flex; justify-content: space-between; align-items: center;">
+        <span class="yahka_characteristic_name"></span>
+        <button type="button" class="btn red icon-button yakha_delete_characteristic">
+            <i class="material-icons">close</i>
+        </button>
+    </div>
+    <div class="collapsible-body">
+        <div class="row">
+            <div class="col s12">
+                <label>
+                    <input type="checkbox" class="characteristic_enabled"/>
+                    <span class="translate">Enabled</span>
+                </label>
             </div>
-        </td>
-        <td rowspan="3" style="vertical-align: middle;">
-            <a href="#" class="place-right" id="yakha_delete_characteristic"><span class="mif-cross fg-red"></span></a>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-        </td>
-        <td rowspan="3" class="characteristic-property-cell">
-            <div class="no-display" id="characteristic_propertyTable_container">
-                <span>Characteristic Properties</span>
-                <div class="editor-table" id="characteristic_propertyTable">
+        </div>
+        <div class="card-panel">
+            <div class="row">
+                <div class="col s12 characteristic_propertyTable_container">
+                    <h6 class="translate">Characteristic Properties</h6>
+                    <div class="editor-table characteristic_propertyTable">
+                    </div>
                 </div>
             </div>
-        </td>
-        <td colspan="2" id="characteristic_inoutparams_container" class="editor-container-cell inOut">
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-        </td>
-        <td class="right conversion">
-            <span class="translate">Conversion: </span>
-        </td>
-        <td class="conversion">
-            <div class="input-control select full-width">
-                <select id="characteristic_conversionfunction"></select>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <select class="characteristic_inoutfunction"></select>
+                <label class="translate">In-Out Data</label>
             </div>
-        </td>
-    </tr>
-
-    <tr class="row">
-        <td>
-        </td>
-        <td colspan="2" id="characteristic_conversionparams_container" class="editor-container-cell conversion">
-        </td>
-    </tr>
-</tbody>
+            <div class="editor-container-cell inOut col s12 characteristic_inoutparams_container">
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <select class="characteristic_conversionfunction"></select>
+                <label class="translate">Conversion</label>
+            </div>
+            <div class="editor-container-cell conversion col s12 characteristic_conversionparams_container">
+            </div>
+        </div>
+    </div>
+</li>

@@ -83793,7 +83793,7 @@ function randomFillSync (buf, offset, size) {
   \******************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div>\n    <div><label class=\"translate\" for=\"name\">Name:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in homekit apps. Changes are only recognized after readding the bridge in the\n            app.</span></div>\n    <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists. Please change\n        the name!</div>\n    <div class=\"input control flex-grow margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"name\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"group\">Group:</label><span class=\"edit-hint translate\">string to be used to group\n            devices within Yahka. Has no effect to HomeKit!</span></div>\n    <div class=\"input control flex-grow margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"group\" />\n    </div>\n</div>\n\n<div>\n    <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input control flex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"model\">Model:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"model\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"serial\">Serial:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"serial\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"firmware\">Firmware:</label><span class=\"edit-hint translate\">descriptive\n            only - displayed in some homekit apps</span></div>\n    <div class=\"input control flex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"firmware\" placeholder=\"leave empty to use Yahka Version\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"username\">Username:</label><span class=\"edit-hint translate\">change \n        this if you have trouble with your bridge. needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. \n        <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b></span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"username\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"pincode\">Pincode:</label><span class=\"edit-hint translate\">needs to\n            be in the form of 123-45-678</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"full-size\" type=\"text\" id=\"pincode\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"port\">IP/Port:</label><span class=\"edit-hint translate\">Port 0 =\n            random free port assigned by the operation system (default)</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <select id=\"interface\">\n        </select>\n        <input min=\"0\" max=\"65535\" type=\"number\" id=\"port\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"useLegacyAdvertiser\">Use Legacy Advertiser:</label><span\n            class=\"edit-hint translate\">true\n            = use bonjour-hap instead of avahi</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"\" type=\"checkbox\" id=\"useLegacyAdvertiser\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"useCiaoAdvertiser\">Use CIAO Advertiser:</label><span\n            class=\"edit-hint translate\">true = use ciao instead of avahi, if your bridge is not detected</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"\" type=\"checkbox\" id=\"useCiaoAdvertiser\" />\n    </div>\n</div>\n<div>\n    <div><label class=\"translate\" for=\"verboseLogging\">Verbose Logging:</label><span class=\"edit-hint translate\">true\n            = redirect hap-node logging to adapter logging</span></div>\n    <div class=\"input controlflex-grow  margin10\">\n        <input class=\"\" type=\"checkbox\" id=\"verboseLogging\" />\n    </div>\n</div>";
+module.exports = "<div class=\"card-inner-container\">\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <h5 class=\"translate\">Bridge Properties</h5>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Name</label>\n            <input type=\"text\" class=\"name\"/>\n            <div class=\"edit-hint translate\">\n                descriptive only - displayed in homekit apps. Changes are only recognized after readding the bridge in\n                the app.\n            </div>\n            <div class=\"errorpanel translate name_error\">\n                A device with this name already exists. Please change the name!\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Group</label>\n            <input type=\"text\" class=\"group\"/>\n            <div class=\"edit-hint translate\">\n                string to be used to group devices within Yahka. Has no effect to HomeKit!\n            </div>\n        </div>\n    </div>\n\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Manufacturer</label>\n            <input type=\"text\" class=\"manufacturer\"/>\n            <div class=\"edit-hint translate\">descriptive only - displayed in some homekit apps</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Model</label>\n            <input type=\"text\" class=\"model\"/>\n            <div class=\"edit-hint translate\">descriptive only - displayed in some homekit apps</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Serial</label>\n            <input type=\"text\" class=\"serial\"/>\n            <div class=\"edit-hint translate\">descriptive only - displayed in some homekit apps</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Firmware</label>\n            <input type=\"text\" class=\"firmware\" placeholder=\"leave empty to use Yahka Version\"/>\n            <div class=\"edit-hint translate\">descriptive only - displayed in some homekit apps</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Username</label>\n            <input type=\"text\" class=\"username\"/>\n            <div class=\"edit-hint translate\">\n                change\n                this if you have trouble with your bridge. needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8.\n                <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Pincode</label>\n            <input type=\"text\" class=\"pincode\"/>\n            <div class=\"edit-hint translate\">needs to be in the form of 123-45-678</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s8 input-field\">\n            <select class=\"interface\"></select>\n            <label>Interface</label>\n        </div>\n        <div class=\"col s4 input-field\">\n            <label class=\"translate\">Port</label>\n            <input min=\"0\" max=\"65535\" type=\"number\" class=\"port\"/>\n            <span class=\"edit-hint translate\">Port 0 = random free port assigned by the operation system (default)</span>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label>\n                <input type=\"checkbox\" class=\"useLegacyAdvertiser\"/>\n                <span class=\"translate\">Use Legacy Advertiser</span>\n            </label>\n            <span class=\"edit-hint translate\">true = use bonjour-hap instead of avahi</span>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label>\n                <input type=\"checkbox\" class=\"useCiaoAdvertiser\"/>\n                <span class=\"translate\">Use CIAO Advertiser</span>\n            </label>\n            <span class=\"edit-hint translate\">true = use ciao instead of avahi, if your bridge is not detected</span>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label>\n                <input type=\"checkbox\" class=\"verboseLogging\"/>\n                <span class=\"translate\">Verbose Logging</span>\n            </label>\n            <span class=\"edit-hint translate\">true = redirect hap-node logging to adapter logging</span>\n        </div>\n    </div>\n</div>";
 
 /***/ }),
 
@@ -83803,7 +83803,7 @@ module.exports = "<div>\n    <div><label class=\"translate\" for=\"name\">Name:<
   \***********************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"frame\" id=\"yahka_device_info_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Device Properties</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"enabled\">Enabled:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enabled\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"name\">Name:</label></div>\n            <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists.\n                Please change the name!</div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"name\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"group\">Group:</label><span class=\"edit-hint translate\">string to be used\n                    to group\n                    devices within Yahka. Has no effect to HomeKit!</span></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"group\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"model\">Model:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"model\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"serial\">Serial:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"serial\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"firmware\">Firmware:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"firmware\" />\n            </div>\n        </div>\n\n        <div>\n            <div><label class=\"translate\" for=\"category\">Categeory:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select class=\"full-size\" id=\"category\"></select>\n            </div>\n        </div>\n        <div>\n            <label class=\"input-control checkbox small-check\">\n                <input type=\"checkbox\" id=\"publish_as_own_device\">\n                <span class=\"check\"></span>\n            </label>\n            <span>Publish as own device</span>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"username\">Username:</label><span class=\"edit-hint translate\">needs\n                    to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the\n                        bridge needs to be reconfigured in the HomeKit database</b></span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"username\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"pincode\">Pincode:</label><span class=\"edit-hint translate\">needs to\n                    be in the form of 123-45-678</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"pincode\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"port\">IP/Port:</label><span class=\"edit-hint translate\">Port 0 =\n                    random free port assigned by the operation system (default)</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select id=\"interface\">\n                </select>\n                <input min=\"0\" max=\"65535\" type=\"number\" id=\"port\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"useLegacyAdvertiser\">Use Legacy Advertiser:</label><span\n                    class=\"edit-hint translate\">true\n                    = use bonjour-hap instead of avahi</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"\" type=\"checkbox\" id=\"useLegacyAdvertiser\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"useCiaoAdvertiser\">Use CIAO Advertiser:</label><span\n                    class=\"edit-hint translate\">true = use ciao instead of avahi</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"\" type=\"checkbox\" id=\"useCiaoAdvertiser\" />\n            </div>\n        </div>\n        <div>\n            <div>\n                <label class=\"translate\" for=\"availableStateIobState\">Availability state:</label>\n                <span class=\"edit-hint translate\">Empty = always available, otherwise iobroker state.</span>\n            </div>\n            <div class=\"input controlflex-grow margin10\">\n                <input class=\"full-width stateSelectTarget\" type=\"text\" id=\"availableStateIobState\"/>\n                <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n            </div>\n        </div>\n    </div>\n</div>\n";
+module.exports = "<div class=\"frame yahka_device_info_panel\">\n    <div class=\"card-inner-container\">\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <h5 class=\"translate\">Device Properties</h5>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <div class=\"switch\">\n                    <label>\n                        <span class=\"translate\">Enabled</span>\n                        <input class=\"enabledCharacteristic\" type=\"checkbox\">\n                        <span class=\"lever\"></span>\n                    </label>\n                </div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <label class=\"translate\">Name</label>\n                <input class=\"name\" type=\"text\">\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <label>Group</label>\n                <input type=\"text\" class=\"group\" />\n                <div class=\"edit-hint\">string to be used to group devices within Yahka. Has no effect to HomeKit!</div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <label class=\"translate\">Manufacturer</label>\n                <input type=\"text\" class=\"manufacturer\" />\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <input type=\"text\" class=\"model\" />\n                <label class=\"translate\">Model</label>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <input type=\"text\" class=\"serial\"/>\n                <label class=\"translate\">Serial</label>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <input type=\"text\" class=\"firmware\"/>\n                <label class=\"translate\">Firmware</label>\n            </div>\n        </div>\n\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <select class=\"category\"></select>\n                <label class=\"translate\">Category</label>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <label>\n                    <input type=\"checkbox\" class=\"publish_as_own_device\">\n                    <span class=\"translate\">Publish as own device</span>\n                </label>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <label class=\"translate\">Username</label>\n                <input type=\"text\" class=\"username\"/>\n                <div class=\"edit-hint translate\">needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b></div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <label class=\"translate\">Pincode</label>\n                <input type=\"text\" class=\"pincode\"/>\n                <div class=\"edit-hint translate\">needs to be in the form of 123-45-678</div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s8\">\n                <select class=\"interface\"></select>\n                <label class=\"translate\">Interface</label>\n            </div>\n            <div class=\"input-field col s4\">\n                <label>Port</label>\n                <input min=\"0\" max=\"65535\" type=\"number\" class=\"port\"/>\n                <div class=\"edit-hint translate\">Port 0 = random free port assigned by the operation system (default)</div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <label>\n                    <input type=\"checkbox\" class=\"useLegacyAdvertiser\"/>\n                    <span class=\"translate\">Use Legacy Advertiser</span>\n                </label>\n                <span class=\"edit-hint translate\">true = use bonjour-hap instead of avahi</span>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <label>\n                    <input type=\"checkbox\" class=\"useCiaoAdvertiser\"/>\n                    <span class=\"translate\">Use CIAO Advertiser</span>\n                </label>\n                <span class=\"edit-hint translate\">true = use ciao instead of avahi</span>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\" style=\"display: flex; flex-direction: column;\">\n                <div class=\"button-appendix\">\n                    <div class=\"input-field\">\n                        <label class=\"translate\">Availability state</label>\n                        <input class=\"stateSelectTarget availableStateIobState\" type=\"text\"/>\n                        <div class=\"edit-hint translate\">Empty = always available, otherwise iobroker state.</div>\n                    </div>\n                    <button type=\"button\" class=\"btn btn-small id-selector\">\n                        <span class=\"material-icons\">more_horiz</span>\n                    </button>\n                </div>\n            </div>\n        </div>\n    </div>\n    <ul class=\"collapsible yahka_service_container card-outer-container\">\n    </ul>\n    <div class=\"card-inner-container\">\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <button class=\"yahka_add_service btn\">Add Service</button>\n            </div>\n        </div>\n    </div>\n</div>";
 
 /***/ }),
 
@@ -83813,7 +83813,7 @@ module.exports = "<div class=\"frame\" id=\"yahka_device_info_panel\">\n    <div
   \***********************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Basic Properties</span>\n    </div>\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"enabled\">Enabled:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enabled\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"name\">Device name:</label></div>\n            <div class=\"errorpanel translate\" id=\"name_error\">A device with this name already exists.\n                Please change the name!</div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"name\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"group\">Group:</label><span class=\"edit-hint translate\">string to be used\n                    to group\n                    devices within Yahka. Has no effect to HomeKit!</span></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"group\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"manufacturer\">Manufacturer:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"manufacturer\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"model\">Model:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"model\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"serial\">Serial:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"serial\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"firmware\">Firmware:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"firmware\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"username\">Username:</label><span class=\"edit-hint translate\">needs\n                    to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field,\n                        the camera needs to be reconfigured in the HomeKit database</b></span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"username\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"pincode\">Pincode:</label><span class=\"edit-hint translate\">needs\n                    to be in the form of 123-45-678</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"pincode\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"port\">IP/Port:</label><span class=\"edit-hint translate\">Port 0 =\n                    random free port assigned by the operation system (default)</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <select id=\"interface\"></select>\n                <input min=\"0\" max=\"65535\" type=\"number\" id=\"port\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"useLegacyAdvertiser\">Use Legacy Advertiser:</label><span\n                    class=\"edit-hint translate\">true\n                    = use bonjour-hap instead of avahi</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"\" type=\"checkbox\" id=\"useLegacyAdvertiser\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"useCiaoAdvertiser\">Use CIAO Advertiser:</label><span\n                    class=\"edit-hint translate\">true = use ciao instead of avahi</span></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"\" type=\"checkbox\" id=\"useCiaoAdvertiser\" />\n            </div>\n        </div>\n    </div>\n</div>\n\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Stream Properties</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div><label class=\"translate\" for=\"source\">Source:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"source\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"codec\">Codec:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"codec\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"numberOfStreams\">Number of Streams:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"numberOfStreams\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxWidth\">maxWidth:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxWidth\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxHeight\">maxHeight:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxHeight\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"maxFPS\">maxFPS:</label></div>\n            <div class=\"input controlflex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"maxFPS\" />\n            </div>\n        </div>\n        <div>\n            <div><label class=\"translate\" for=\"enableAudio\">Enable Audio:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input type=\"checkbox\" id=\"enableAudio\" />\n            </div>\n        </div>\n    </div>\n</div>\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Advanced Settings</span>\n    </div>\n\n    <div class=\"content\">\n        <div>\n            <div style=\"display: flex; justify-content: space-between;\">\n                <label class=\"translate\" for=\"ffmpeg_snapshot\">FFMPEG Command Line - Snapshot:</label>\n                <a id=\"ffmpeg_snapshot_reset\" href=\"#\"><span class=\"icon mif-sync-problem translate\">Reset to\n                        default</span></a>\n            </div>\n            <div class=\"errorpanel\" id=\"ffmpeg_snapshot_error\"></div>\n            <div class=\"input control flex-grow margin10 flex-container-row\">\n                <textarea rows=8 class=\"flex-grow\" id=\"ffmpeg_snapshot\"></textarea>\n                <div class=\"margin10\"><span class=\"translate\">Available replacers:</span> <br>\n                    <ul class=\"simple-list blue-bullet replace-list\">\n                        <li>${source}</li>\n                        <li>${width}</li>\n                        <li>${height}</li>\n                    </ul>\n                </div>\n            </div>\n        </div>\n        <div>\n            <div style=\"display: flex; justify-content: space-between;\">\n                <label class=\"translate\" for=\"ffmpeg_stream\">FFMPEG Command Line - Stream:</label>\n                <a id=\"ffmpeg_stream_reset\" href=\"#\"><span class=\"icon mif-sync-problem translate\">Reset to\n                        default</span></a>\n            </div>\n            <div class=\"errorpanel\" id=\"ffmpeg_stream_error\"></div>\n            <div class=\"input control flex-grow margin10 flex-container-row\">\n                <textarea rows=8 class=\"flex-grow\" id=\"ffmpeg_stream\"></textarea>\n                <div class=\"margin10\"><span class=\"translate\">Available replacers:</span> <br>\n                    <ul class=\"simple-list blue-bullet replace-list\">\n                        <li>${source}</li>\n                        <li>${codec}</li>\n                        <li>${fps}</li>\n                        <li>${width}</li>\n                        <li>${height}</li>\n                        <li>${bitrate}</li>\n                        <li>${payloadtype}</li>\n                        <li>${targetVideoSsrc}</li>\n                        <li>${videokey}</li>\n                        <li>${targetAddress}</li>\n                        <li>${targetVideoPort}</li>\n                        <li>${mtu}</li>\n                    </ul>\n                </div>\n            </div>\n\n        </div>\n        <div>\n            <div style=\"display: flex; justify-content: space-between;\">\n                <label class=\"translate\" for=\"ffmpeg_streamAudio\">FFMPEG Command Line - Audio Stream:</label>\n                <a id=\"ffmpeg_streamAudio_reset\" href=\"#\"><span class=\"icon mif-sync-problem translate\">Reset to\n                        default</span></a>\n            </div>\n            <div class=\"errorpanel\" id=\"ffmpeg_streamAudio_error\"></div>\n            <div class=\"input control flex-grow margin10 flex-container-row\">\n                <textarea rows=8 class=\"flex-grow\" id=\"ffmpeg_streamAudio\"></textarea>\n                <div class=\"margin10\"><span class=\"translate\">Available replacers:</span> <br>\n                    <ul class=\"simple-list blue-bullet replace-list\">\n                        <li>${source}</li>\n                        <li>${bitrate}</li>\n                        <li>${samplerate}</li>\n                        <li>${channel}</li>\n                        <li>${payloadtype}</li>\n                        <li>${targetAddress}</li>\n                        <li>${targetAudioPort}</li>\n                        <li>${targetAudioSsrc}</li>\n                        <li>${audiokey}</li>\n                    </ul>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n";
+module.exports = "<div class=\"frame\">\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <h5 class=\"translate\">Camera Properties</h5>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <div class=\"switch\">\n                <label>\n                    <span class=\"translate\">Enabled</span>\n                    <input class=\"enabled\" type=\"checkbox\">\n                    <span class=\"lever\"></span>\n                </label>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Device name</label>\n            <input class=\"name\" type=\"text\"/>\n            <div class=\"errorpanel translate name_error\">\n                A device with this name already exists. Please change the name!\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Group</label>\n            <input class=\"group\" type=\"text\"/>\n            <div class=\"edit-hint translate\">\n                string to be used to group devices within Yahka. Has no effect to HomeKit!\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Manufacturer</label>\n            <input type=\"text\" class=\"manufacturer\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\" >Model</label>\n            <input type=\"text\" class=\"model\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Serial</label>\n            <input type=\"text\" class=\"serial\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Firmware</label>\n            <input type=\"text\" class=\"firmware\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Username</label>\n            <input type=\"text\" class=\"username\"/>\n            <div class=\"edit-hint translate\">\n                needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the camera needs to be reconfigured in the HomeKit database</b>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Pincode</label>\n            <input type=\"text\" class=\"pincode\"/>\n            <span class=\"edit-hint translate\">needs to be in the form of 123-45-678</span>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s8\">\n            <select class=\"interface\"></select>\n            <label class=\"translate\">Interface</label>\n        </div>\n        <div class=\"input-field col s4\">\n            <label>Port</label>\n            <input min=\"0\" max=\"65535\" type=\"number\" class=\"port\"/>\n            <div class=\"edit-hint translate\">Port 0 = random free port assigned by the operation system (default)</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label>\n                <input type=\"checkbox\" class=\"useLegacyAdvertiser\"/>\n                <span class=\"translate\">Use Legacy Advertiser</span>\n            </label>\n            <span class=\"edit-hint translate\">true = use bonjour-hap instead of avahi</span>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label>\n                <input type=\"checkbox\" class=\"useCiaoAdvertiser\"/>\n                <span class=\"translate\">Use CIAO Advertiser</span>\n            </label>\n            <span class=\"edit-hint translate\">true = use ciao instead of avahi</span>\n        </div>\n    </div>\n</div>\n\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Stream Properties</span>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">Source</label>\n            <input type=\"text\" class=\"source\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">Codec</label>\n            <input type=\"text\" class=\"codec\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">Number of Streams</label>\n            <input type=\"text\" class=\"numberOfStreams\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">maxWidth</label>\n            <input type=\"text\" class=\"maxWidth\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">maxHeight</label>\n            <input type=\"text\" class=\"maxHeight\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">maxFPS</label>\n            <input type=\"text\" class=\"maxFPS\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label>\n                <input type=\"checkbox\" class=\"enableAudio\"/>\n                <span class=\"translate\">Enable Audio</span>\n            </label>\n        </div>\n    </div>\n</div>\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Advanced Settings</span>\n    </div>\n\n    <div class=\"content\">\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <div class=\"row\">\n                    <div class=\"input-field col s12\">\n                        <textarea style=\"resize: vertical; height: 205px;\" class=\"flex-grow ffmpeg_snapshot\"></textarea>\n                        <label class=\"translate\" style=\"padding-bottom: 10px;\">FFMPEG Command Line - Snapshot:</label>\n                        <div class=\"errorpanel ffmpeg_snapshot_error\"></div>\n                        <a class=\"btn ffmpeg_snapshot_reset\" href=\"#\">\n                            <i class=\"material-icons left\">refresh</i> Reset to default\n                        </a>\n                        <div class=\"card-panel\">\n                            <span class=\"translate\">Available replacers:</span>\n                            <ul>\n                                <li>${source}</li>\n                                <li>${width}</li>\n                                <li>${height}</li>\n                            </ul>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <div class=\"row\">\n                    <div class=\"input-field col s12\">\n                        <textarea style=\"resize: vertical; height: 530px;\" class=\"flex-grow ffmpeg_stream\"></textarea>\n                        <label class=\"translate\">FFMPEG Command Line - Stream:</label>\n                        <div class=\"errorpanel ffmpeg_stream_error\"></div>\n                        <a class=\"btn ffmpeg_stream_reset\" href=\"#\">\n                            <i class=\"material-icons left\">refresh</i> Reset to default\n                        </a>\n                        <div class=\"card-panel\">\n                            <span class=\"translate\">Available replacers</span>\n                            <ul class=\"simple-list blue-bullet replace-list\">\n                                <li>${source}</li>\n                                <li>${codec}</li>\n                                <li>${fps}</li>\n                                <li>${width}</li>\n                                <li>${height}</li>\n                                <li>${bitrate}</li>\n                                <li>${payloadtype}</li>\n                                <li>${targetVideoSsrc}</li>\n                                <li>${videokey}</li>\n                                <li>${targetAddress}</li>\n                                <li>${targetVideoPort}</li>\n                                <li>${mtu}</li>\n                            </ul>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <div class=\"row\">\n                    <div class=\"input-field col s12\">\n                        <textarea style=\"resize: vertical; height: 530px;\" rows=8 class=\"ffmpeg_streamAudio\"></textarea>\n                        <label class=\"translate\">FFMPEG Command Line - Audio Stream:</label>\n                        <div class=\"errorpanel ffmpeg_streamAudio_error\"></div>\n                        <a class=\"btn ffmpeg_streamAudio_reset translate\" href=\"#\">\n                            <i class=\"material-icons left\">refresh</i> Reset to default\n                        </a>\n                        <div class=\"card-panel\">\n                            <span class=\"translate\">Available replacers</span>\n                            <ul class=\"simple-list blue-bullet replace-list\">\n                                <li>${source}</li>\n                                <li>${bitrate}</li>\n                                <li>${samplerate}</li>\n                                <li>${channel}</li>\n                                <li>${payloadtype}</li>\n                                <li>${targetAddress}</li>\n                                <li>${targetAudioPort}</li>\n                                <li>${targetAudioSsrc}</li>\n                                <li>${audiokey}</li>\n                            </ul>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n    <ul class=\"collapsible yahka_service_container card-outer-container\">\n    </ul>\n    <div class=\"card-inner-container\">\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <button class=\"yahka_add_service btn\">Add Service</button>\n            </div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ }),
 
@@ -83823,7 +83823,7 @@ module.exports = "<div class=\"frame\">\n    <div class=\"heading\">\n        <s
   \*********************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"list device-entry\">\n    <span class=\"icon list-icon\"></span>\n    <span class=\"list-title\"> </span>\n</div>";
+module.exports = "<li class=\"collection-item\">\n    <div style=\"display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;\">\n        <div style=\"display: flex\">\n            <i class=\"device-icon material-symbols-outlined circle\">mode_fan</i>\n            <div style=\"display: flex; flex-direction: column\">\n                <span class=\"list-title\"></span>\n                <span class=\"device-type\"></span>\n            </div>\n        </div>\n        <div class=\"device-actions\" style=\"display: flex; flex-wrap: nowrap; gap: 4px;\">\n            <button class=\"edit-button btn waves-effect waves-light\">\n                <span class=\"translate\">Edit</span>\n            </button>\n            <button class=\"yahka_duplicate_device btn waves-effect waves-light\">\n                <span class=\"translate\">Duplicate</span>\n            </button>\n            <button class=\"yahka_remove_device btn waves-effect waves-light red\">\n                <span class=\"translate\">Remove</span>\n            </button>\n        </div>\n    </div>\n    <div class=\"collapsible-body\">\n    </div>\n</li>";
 
 /***/ }),
 
@@ -83843,7 +83843,7 @@ module.exports = "<div class=\"list-group collapsed\">\n    <span class=\"list-g
   \************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"row\">\n    <div class=\"cell\">\n        <span id=\"propName\"></span>\n    </div>\n    <div class=\"cell\">\n        <div class=\"input-container\">\n            <input type=\"text\" id=\"propValue\"></input>\n        </div>\n    </div>\n</div>";
+module.exports = "<div class=\"input-field\">\n    <label id=\"propName\"></label>\n    <input type=\"text\" class=\"propValue\">\n</div>";
 
 /***/ }),
 
@@ -83853,7 +83853,7 @@ module.exports = "<div class=\"row\">\n    <div class=\"cell\">\n        <span i
   \*******************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<tbody id=\"characteristic\" class=\"row-group\">\n    <tr id=\"anchor\">\n        <td class=\"center\">\n            <label class=\"input-control checkbox small-check\">\n                <input type=\"checkbox\" id=\"characteristic_enabled\">\n                <span class=\"check\"></span>\n            </label>\n        </td>\n        <td>\n            <span id=\"characteristic_name\"></span><a href=\"#\" id=\"toggleProperties\"\n                class=\"\">&nbsp;&nbsp;[properties]</a>\n        </td>\n        <td class=\"right inOut\">\n            <span class=\"translate\">InOut: </span>\n        </td>\n        <td class=\"inOut\">\n            <div class=\"input-control select full-width\">\n                <select id=\"characteristic_inoutfunction\"></select>\n            </div>\n        </td>\n        <td rowspan=\"3\" style=\"vertical-align: middle;\">\n            <a href=\"#\" class=\"place-right\" id=\"yakha_delete_characteristic\"><span class=\"mif-cross fg-red\"></span></a>\n        </td>\n    </tr>\n\n    <tr>\n        <td>\n        </td>\n        <td rowspan=\"3\" class=\"characteristic-property-cell\">\n            <div class=\"no-display\" id=\"characteristic_propertyTable_container\">\n                <span>Characteristic Properties</span>\n                <div class=\"editor-table\" id=\"characteristic_propertyTable\">\n                </div>\n            </div>\n        </td>\n        <td colspan=\"2\" id=\"characteristic_inoutparams_container\" class=\"editor-container-cell inOut\">\n        </td>\n    </tr>\n\n    <tr>\n        <td>\n        </td>\n        <td class=\"right conversion\">\n            <span class=\"translate\">Conversion: </span>\n        </td>\n        <td class=\"conversion\">\n            <div class=\"input-control select full-width\">\n                <select id=\"characteristic_conversionfunction\"></select>\n            </div>\n        </td>\n    </tr>\n\n    <tr class=\"row\">\n        <td>\n        </td>\n        <td colspan=\"2\" id=\"characteristic_conversionparams_container\" class=\"editor-container-cell conversion\">\n        </td>\n    </tr>\n</tbody>\n";
+module.exports = "<li>\n    <div class=\"collapsible-header\" style=\"gap: 10px; display: flex; justify-content: space-between; align-items: center;\">\n        <span class=\"yahka_characteristic_name\"></span>\n        <button type=\"button\" class=\"btn red icon-button yakha_delete_characteristic\">\n            <i class=\"material-icons\">close</i>\n        </button>\n    </div>\n    <div class=\"collapsible-body\">\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <label>\n                    <input type=\"checkbox\" class=\"characteristic_enabled\"/>\n                    <span class=\"translate\">Enabled</span>\n                </label>\n            </div>\n        </div>\n        <div class=\"card-panel\">\n            <div class=\"row\">\n                <div class=\"col s12 characteristic_propertyTable_container\">\n                    <h6 class=\"translate\">Characteristic Properties</h6>\n                    <div class=\"editor-table characteristic_propertyTable\">\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <select class=\"characteristic_inoutfunction\"></select>\n                <label class=\"translate\">In-Out Data</label>\n            </div>\n            <div class=\"editor-container-cell inOut col s12 characteristic_inoutparams_container\">\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <select class=\"characteristic_conversionfunction\"></select>\n                <label class=\"translate\">Conversion</label>\n            </div>\n            <div class=\"editor-container-cell conversion col s12 characteristic_conversionparams_container\">\n            </div>\n        </div>\n    </div>\n</li>\n";
 
 /***/ }),
 
@@ -83863,7 +83863,7 @@ module.exports = "<tbody id=\"characteristic\" class=\"row-group\">\n    <tr id=
   \**************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"frame\" id=\"yahka_service_panel\">\n    <div class=\"heading\">\n        <span class=\"translate\">Service: </span><span id=\"yahka_service_caption\"></span>\n        <a href=\"#\" class=\"place-right\" id=\"yakha_delete_service\"><span class=\"mif-cross fg-red\"></span></a>\n    </div>\n    <div class=\"content\">\n        <div class=\"flex-container-row flex-grow flex-align-baseline\">\n            <div>\n                <label class=\"input-control checkbox small-check\">\n                    <input type=\"checkbox\" id=\"service_enabled\">\n                    <span class=\"check\"></span>\n                </label>\n            </div>\n            <div><label class=\"translate\" for=\"service_name\">Service name:</label></div>\n            <div class=\"input control flex-grow margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_name\" />\n            </div>\n            <div><label class=\"translate\" for=\"service_type\">Service Type:</label></div>\n            <div class=\"input control select flex-grow  margin10\">\n                <select class=\"full-size\" id=\"service_type\"></select>\n            </div>\n            <div><label class=\"translate\" for=\"service_subtype\">Service Subtype:</label></div>\n            <div class=\"input control flex-grow  margin10\">\n                <input class=\"full-size\" type=\"text\" id=\"service_subtype\" />\n            </div>\n        </div>\n        <div class=\"flex-container-row flex-grow flex-align-baseline\">\n            <div><label class=\"translate\" for=\"service_link_to\">Link to:</label></div>\n            <div class=\"input control select flex-grow  margin10\">\n                <select class=\"full-size\" id=\"service_link_to\"></select>\n            </div>\n            <div style=\"padding-right: 6px\">\n                <label class=\" checkbox small-check\">\n                    <input type=\"checkbox\" id=\"service_isPrimary\">\n                    Primary Service\n                </label>\n            </div>\n            <div>\n                <label class=\" checkbox small-check\">\n                    <input type=\"checkbox\" id=\"service_isHidden\">\n                    Hidden Service\n                </label>\n            </div>\n        </div>\n        <div><span class=\"translate\">Characteristics Table</span></div>\n        <table class=\"characteristic-table\" id=\"yahka_characteristic_table\">\n            <thead>\n                <th class=\"translate\">Enabled</th>\n                <th class=\"translate\">Name</th>\n                <th></th>\n                <th></th>\n                <th></th>\n            </thead>\n        </table>\n        <div class=\"flex-container-row flex-align-baseline\">\n            <div><label class=\"translate\" for=\"new_custom_characteristic\">Custom Characteristic</label></div>\n            <div class=\"input-control select flex-grow margin10\">\n                <select class=\"full-size\" id=\"new_custom_characteristic\"></select>\n            </div>\n            <button class=\"image-button primary\" id=\"yahka_add_characteristic\">\n                <span class=\"icon mif-plus bg-darkCobalt  fg-white\"></span>\n                <span class=\"translate\">Add Custom Characteristic</span>\n            </button>\n        </div>\n    </div>\n</div>\n";
+module.exports = "<li class=\"yahka_service_panel\">\n    <div class=\"collapsible-header\" style=\"display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: bold;\">\n        <div>\n            <span class=\"translate\">Service: </span>\n            <span class=\"yahka_service_caption\"></span>\n        </div>\n        <button type=\"button\" class=\"btn-small red icon-button yakha_delete_service\">\n            <i class=\"material-icons\">clear</i>\n        </button>\n    </div>\n    <div class=\"content collapsible-body card-outer-container\">\n        <div class=\"card-inner-container\">\n            <div class=\"row\">\n                <div class=\"col s12\">\n                    <label>\n                        <input type=\"checkbox\" class=\"service_enabled\"/>\n                        <span class=\"translate\">Enabled</span>\n                    </label>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <label class=\"translate\">Service Name</label>\n                    <input class=\"full-size service_name\" type=\"text\" />\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <select class=\"full-size service_type\"></select>\n                    <label class=\"translate\">Service Type:</label>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <label class=\"translate\">Service Subtype</label>\n                    <input class=\"full-size service_subtype\" type=\"text\">\n                    <div class=\"translate edit-hint\">\n                        This is intended to use, if you have multiple services of the same type in an composed device.<br>\n                        For example, if you have a garage door with two different lights.\n                    </div>\n                </div>\n            </div>\n\n\n            <div class=\"row\">\n                <div class=\"col s12\">\n                    <label>\n                        <input type=\"checkbox\" class=\"service_isPrimary\"/>\n                        <span class=\"translate\">Primary Service</span>\n                    </label>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"col s12\">\n                    <label>\n                        <input type=\"checkbox\" class=\"service_isHidden\"/>\n                        <span class=\"translate\">Hidden Service</span>\n                    </label>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <select class=\"full-size service_link_to\"></select>\n                    <label class=\"translate\">Link to</label>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"col s12\">\n                    <span class=\"translate\" style=\"font-size: 1.1rem;\">Characteristics</span>\n                </div>\n            </div>\n        </div>\n        <ul class=\"collapsible yahka_characteristic_table\">\n        </ul>\n\n        <div class=\"card-inner-container\">\n            <div class=\"row\">\n                <div class=\"col s12 button-appendix\">\n                    <div class=\"input-field\">\n                        <select class=\"full-size new_custom_characteristic\"></select>\n                        <label class=\"translate new_custom_characteristic\">Custom Characteristic</label>\n                    </div>\n                    <button type=\"button\" class=\"btn btn-small yahka_add_characteristic\">\n                        <span class=\"translate\">Add</span>\n                    </button>\n                </div>\n            </div>\n        </div>\n    </div>\n</li>\n";
 
 /***/ }),
 
@@ -83873,7 +83873,7 @@ module.exports = "<div class=\"frame\" id=\"yahka_service_panel\">\n    <div cla
   \************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"editor-table\">\n    <div class=\"row padding5\">\n        <div class=\"cell padding5\">\n            ioBroker\n        </div>\n        <div class=\"cell padding5\">\n\n        </div>\n        <div class=\"cell padding5\">\n            HomeKit\n        </div>\n        <div class=\"cell padding5\">\n            Actions\n        </div>\n    </div>\n    <template id=\"mappingRow\">\n        <div class=\"row\">\n            <div class=\"cell padding5\">\n                <div class=\"input-container flex-container-row full-width\">\n                    <input id=\"ioBrokerValue\" type=\"text\"></input>\n                    <div>\n                        <input type=\"checkbox\" id=\"isSimpleValue\"/><span> is simple value</span>\n                    </div>\n                </div>\n            </div>\n            <div class=\"cell padding5\">\n                &hArr;\n            </div>\n            <div class=\"cell padding5\">\n                <div class=\"input-container full-width\">\n                    <input id=\"homekitValue\" type=\"text\"></input>\n                </div>\n            </div>\n            <div class=\"cell padding5\">\n                <a id=\"moveUp\" href=\"#\"><span class=\"icon mif-move-up fg-black\"></span></a>\n                <a id=\"moveDown\" href=\"#\"><span class=\"icon mif-move-down fg-black\"></span></a>\n                <a id=\"delRow\" href=\"#\"><span class=\"icon mif-minus fg-red\"></span></a>\n            </div>\n        </div>\n    </template>\n    <div class=\"row\" id=\"lastRow\">\n        <div class=\"cell padding5\">\n            <a id=\"addRow\" href=\"#\"><span class=\"icon mif-plus fg-green\"></span><span\n                    class=\"translate\">add new mapping</span></a>\n        </div>\n    </div>\n</div>\n";
+module.exports = "<div class=\"editor-table\">\n    <div class=\"row padding5\">\n    </div>\n    <template id=\"mappingRow\">\n        <div class=\"card-panel\">\n            <div class=\"row\">\n                <div class=\"col s12\">\n                    <label>\n                        <input class=\"isSimpleValue\" type=\"checkbox\"/>\n                        <span class=\"translate\">is simple value</span>\n                    </label>\n                </div>\n                <div class=\"input-field col s12\">\n                    <label class=\"ioBrokerValue translate\">ioBroker Value</label>\n                    <input type=\"text\">\n                </div>\n                <div class=\"input-field col s12\">\n                    <label class=\"homekitValue translate\">HomeKit Value</label>\n                    <input type=\"text\">\n                </div>\n                <div class=\"col s12\">\n                    <button class=\"btn-flat moveUp\" type=\"button\"><i class=\"material-icons\">arrow_upward</i></button>\n                    <button class=\"btn-flat moveDown\" type=\"button\"><i class=\"material-icons\">arrow_downward</i></button>\n                    <button class=\"btn-flat delRow\" type=\"button\"><i class=\"material-icons\">delete</i></button>\n                </div>\n            </div>\n        </div>\n    </template>\n    <div id=\"lastRow\">\n        <button class=\"btn\" id=\"addRow\">\n            <span class=\"translate\">add new mapping</span>\n        </button>\n    </div>\n</div>\n";
 
 /***/ }),
 
@@ -83883,7 +83883,7 @@ module.exports = "<div class=\"editor-table\">\n    <div class=\"row padding5\">
   \**************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"editor-table\" id=\"yahka_characteristic_table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <label class=\"translate\">Value:</label>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container\">\n                <textarea id=\"textfield\" rows=1 class=\"full-width stateSelectTarget\"></textarea>\n            </div>\n        </div>\n    </div>\n</div>";
+module.exports = "<div class=\"editor-table\" id=\"yahka_characteristic_table\">\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">Value</label>\n            <input type=\"text\" class=\"textfield\">\n        </div>\n    </div>\n</div>";
 
 /***/ }),
 
@@ -83893,7 +83893,7 @@ module.exports = "<div class=\"editor-table\" id=\"yahka_characteristic_table\">
   \*************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div>Explanation: use the variable <b>value</b> to access the sourcevalue. Example: <i>return value * 2;</i><br /></div>\n<div class=\"editor-table\" id=\"yahka_characteristic_table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">To HomeKit:</span>\n        </div>\n        <div class=\"cell\">\n            <span>function(value) {</span>\n            <div class=\"input-container full-width\">\n                <textarea id=\"toHomeKit\" rows=4></textarea>\n            </div>\n            <span>}</span>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">To IOBroker:</span>\n        </div>\n        <div class=\"cell\">\n            <span>function(value) {</span>\n            <div class=\"input-container  auto-height full-width\">\n                <textarea id=\"toIOBroker\" rows=4></textarea>\n            </div>\n            <span>}</span>\n        </div>\n    </div>\n</div>";
+module.exports = "<div class=\"edit-hint\">Explanation: use the variable <b>value</b> to access the sourcevalue. Example: <i>return value * 2;</i><br /></div>\n<div class=\"editor-table\" id=\"yahka_characteristic_table\">\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label class=\"translate\">To HomeKit:</label>\n            <div>function(value) {</div>\n            <div class=\"input-container full-width\">\n                <textarea id=\"toHomeKit\" rows=4></textarea>\n            </div>\n            <div>}</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label class=\"translate\">To IOBroker:</label>\n            <div>function(value) {</div>\n            <div class=\"input-container auto-height full-width\">\n                <textarea id=\"toIOBroker\" rows=4></textarea>\n            </div>\n            <div>}</div>\n        </div>\n    </div>\n</div>";
 
 /***/ }),
 
@@ -83903,7 +83903,7 @@ module.exports = "<div>Explanation: use the variable <b>value</b> to access the 
   \************************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"editor-table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">Level Datapoint:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <textarea id=\"level\" rows=1 class=\"stateSelectTarget\"></textarea>\n                <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">Working Datapoint:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <textarea id=\"working\" rows=1 class=\"stateSelectTarget\"></textarea>\n                <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n            </div>\n\n        </div>\n    </div>\n</div>";
+module.exports = "<div class=\"editor-table\">\n    <div class=\"button-appendix\">\n        <div class=\"input-field\">\n            <label class=\"translate\">Level Datapoint</label>\n            <input type=\"text\" class=\"level stateSelectTarget\">\n        </div>\n        <button type=\"button\" class=\"btn btn-small id-selector\">\n            <span class=\"material-icons\">more_horiz</span>\n        </button>\n    </div>\n    <div class=\"button-appendix\">\n        <div class=\"input-field\">\n            <label class=\"translate\">Working Datapoint</label>\n            <input type=\"text\" class=\"working stateSelectTarget\">\n        </div>\n        <button type=\"button\" class=\"btn btn-small id-selector\">\n            <span class=\"material-icons\">more_horiz</span>\n        </button>\n    </div>\n</div>";
 
 /***/ }),
 
@@ -83913,7 +83913,7 @@ module.exports = "<div class=\"editor-table\">\n    <div class=\"row\">\n       
   \*************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"editor-table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">Level Datapoint:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <input id=\"level\" type=\"text\" class=\"stateSelectTarget\"></input>\n                <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n            </div>\n        </div>\n    </div>\n    <div class=\"row extended-dimmer-properties\">\n        <div class=\"cell\">\n            <span class=\"translate\">Restore level on switch on:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <input type=\"checkbox\" id=\"restoreToPreviousLevel\" />\n            </div>\n        </div>\n    </div>\n    <div class=\"row extended-dimmer-properties\">\n        <div class=\"cell\">\n            <span class=\"translate\">Default level on switch on:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <input type=\"number\" id=\"defaultLevel\" class=\"full-width\"></input>\n            </div>\n        </div>\n    </div>\n</div>\n";
+module.exports = "<div class=\"editor-table\">\n    <div class=\"button-appendix\">\n        <div class=\"input-field\">\n            <label class=\"translate\">Level Datapoint</label>\n            <input type=\"text\" class=\"level stateSelectTarget\">\n        </div>\n        <button type=\"button\" class=\"btn btn-small id-selector\">\n            <span class=\"material-icons\">more_horiz</span>\n        </button>\n    </div>\n    <div class=\"extended-dimmer-properties\">\n        <label>\n            <input type=\"checkbox\" class=\"restoreToPreviousLevel\"/>\n            <span class=\"translate\">Restore level on switch on</span>\n        </label>\n    </div>\n    <div class=\"extended-dimmer-properties\">\n        <div class=\"input-field\">\n            <label class=\"translate\">Default level on switch on</label>\n            <input type=\"number\" class=\"defaultLevel\">\n        </div>\n    </div>\n</div>\n";
 
 /***/ }),
 
@@ -83923,7 +83923,7 @@ module.exports = "<div class=\"editor-table\">\n    <div class=\"row\">\n       
   \*******************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"editor-table\">\n    <template id=\"stateRow\">\n        <div class=\"row\">\n            <div class=\"cell\">\n                <span class=\"translate\">Read:</span>\n            </div>\n            <div class=\"cell padding5\">\n                <div class=\"input-container full-width\">\n                    <input id=\"readState\" type=\"text\" class=\"stateSelectTarget\"></input>\n                    <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n                </div>\n            </div>\n            <div class=\"cell \">\n                <span class=\"translate\">Write:</span>\n            </div>\n            <div class=\"cell padding5\">\n                <div class=\"input-container full-width\">\n                    <input id=\"writeState\" type=\"text\" class=\"stateSelectTarget\" placeholder=\"leave empty to use read-state \"></input>\n                    <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n                </div>\n            </div>\n            <div class=\"cell padding5\">\n                <a id=\"moveUp\" href=\"#\"><span class=\"icon mif-move-up fg-black\"></span></a>\n                <a id=\"moveDown\" href=\"#\"><span class=\"icon mif-move-down fg-black\"></span></a>\n                <a id=\"delRow\" href=\"#\"><span class=\"icon mif-minus fg-red\"></span></a>\n            </div>\n        </div>\n    </template>\n    <div class=\"row\" id=\"lastRow\">\n        <div class=\"cell padding5\">\n            <a id=\"addRow\" href=\"#\"><span class=\"icon mif-plus fg-green\"></span><span class=\"translate\">add new state</span></a>\n        </div>\n    </div>\n</div>\n";
+module.exports = "<div class=\"editor-table\">\n    <template class=\"stateRow\">\n        <div class=\"card-panel\">\n            <div class=\"button-appendix\">\n                <div class=\"input-field\" style=\"flex-grow: 1\">\n                    <label>Read</label>\n                    <input type=\"text\" class=\"readState stateSelectTarget\">\n                </div>\n                <button type=\"button\" class=\"btn btn-small id-selector\">\n                    <span class=\"material-icons\">more_horiz</span>\n                </button>\n            </div>\n            <div class=\"button-appendix\">\n                <div class=\"input-field\">\n                    <label>Write</label>\n                    <input type=\"text\" class=\"writeState stateSelectTarget\">\n                    <div class=\"edit-hint translate\">leave empty to use read-state</div>\n                </div>\n                <button type=\"button\" class=\"btn btn-small id-selector\">\n                    <span class=\"material-icons\">more_horiz</span>\n                </button>\n            </div>\n            <div>\n                <button class=\"btn-flat moveUp\" type=\"button\"><i class=\"material-icons\">arrow_upward</i></button>\n                <button class=\"btn-flat moveDown\" type=\"button\"><i class=\"material-icons\">arrow_downward</i></button>\n                <button class=\"btn-flat delRow\" type=\"button\"><i class=\"material-icons\">delete</i></button>\n            </div>\n        </div>\n    </template>\n    <div class=\"lastRow\">\n        <button class=\"btn addRow\"><span class=\"translate\">Add new state</span></button>\n    </div>\n</div>\n";
 
 /***/ }),
 
@@ -83933,7 +83933,7 @@ module.exports = "<div class=\"editor-table\">\n    <template id=\"stateRow\">\n
   \************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<!-- <div>Explanation: <br/>\n        $value is mapped to HomeKit with:  (homekitMin + ((homekitMax - homekitMin) / (ioBrokerMax - ioBrokerMin)) * ($value - ioBrokerMin))</br>\n        $value is mapped to ioBroker with: (ioBrokerMin + ((ioBrokerMax - ioBrokerMin) / (homeKitMax - homeKitMin)) * ($value - homeKitMin))\n    </div> -->\n<div class=\"editor-table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">HomeKit Minimum:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container\">\n                <input type=\"number\" id=\"hkMin\" class=\"full-width\"></input>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">HomeKit Maximum:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container\">\n                <input type=\"number\" id=\"hkMax\" class=\"full-width\"></input>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">ioBroker Minimum:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container\">\n                <input type=\"number\" id=\"ioMin\" class=\"full-width\"></input>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"cell\">\n            <span class=\"translate\">ioBroker Maximum:</span>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container\">\n                <input type=\"number\" id=\"ioMax\" class=\"full-width\"></input>\n            </div>\n        </div>\n    </div>\n</div>\n";
+module.exports = "<!-- <div>Explanation: <br/>\n        $value is mapped to HomeKit with:  (homekitMin + ((homekitMax - homekitMin) / (ioBrokerMax - ioBrokerMin)) * ($value - ioBrokerMin))</br>\n        $value is mapped to ioBroker with: (ioBrokerMin + ((ioBrokerMax - ioBrokerMin) / (homeKitMax - homeKitMin)) * ($value - homeKitMin))\n    </div> -->\n<div class=\"editor-table\">\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <span class=\"translate\">HomeKit Minimum</span>\n            <input type=\"number\" class=\"hkMin\">\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">HomeKit Maximum</label>\n            <input type=\"number\" class=\"hkMax\">\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">ioBroker Minimum</label>\n            <input type=\"number\" class=\"ioMin\">\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">ioBroker Maximum</label>\n            <input type=\"number\" class=\"ioMax\">\n        </div>\n    </div>\n</div>\n";
 
 /***/ }),
 
@@ -83943,7 +83943,7 @@ module.exports = "<!-- <div>Explanation: <br/>\n        $value is mapped to Home
   \********************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"editor-table\">\n    <div class=\"row\">\n        <div class=\"cell\">\n            <label class=\"translate\">State:</label>\n        </div>\n        <div class=\"cell\">\n            <div class=\"input-container full-width\">\n                <textarea id=\"textfield\" rows=1 class=\"stateSelectTarget\"></textarea>\n                <button class=\"input-control button id-selector\"><span class=\"mif-more-horiz\"></span></button>\n            </div>\n        </div>\n    </div>\n</div>\n";
+module.exports = "<div class=\"button-appendix\">\n    <div class=\"input-field\">\n        <label class=\"translate\">State</label>\n        <input id=\"textfield\" type=\"text\" class=\"stateSelectTarget\">\n    </div>\n    <button type=\"button\" class=\"btn btn-small id-selector\">\n        <span class=\"material-icons\">more_horiz</span>\n    </button>\n</div>";
 
 /***/ }),
 
@@ -97547,6 +97547,166 @@ var Utils;
 
 /***/ }),
 
+/***/ "./admin/pageBuilder/pageBuilder.accessoryCategories.ts":
+/*!**************************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.accessoryCategories.ts ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const accessoryCategories = {
+    "1": {
+        "text": "Other",
+        "icon": "help"
+    },
+    "2": {
+        "text": "Bridge",
+        "icon": "settings_ethernet"
+    },
+    "3": {
+        "text": "Fan",
+        "icon": "mode_fan"
+    },
+    "4": {
+        "text": "Garage door opener",
+        "icon": "garage_door"
+    },
+    "5": {
+        "text": "Lightbulb",
+        "icon": "lightbulb"
+    },
+    "6": {
+        "text": "Door lock",
+        "icon": "lock"
+    },
+    "7": {
+        "text": "Outlet",
+        "icon": "power"
+    },
+    "8": {
+        "text": "Switch",
+        "icon": "toggle_off"
+    },
+    "9": {
+        "text": "Thermostat",
+        "icon": "thermostat"
+    },
+    "10": {
+        "text": "Sensor",
+        "icon": "sensors"
+    },
+    "11": {
+        "text": "Alarm system",
+        "icon": "siren"
+    },
+    "12": {
+        "text": "Door",
+        "icon": "door_front"
+    },
+    "13": {
+        "text": "Window",
+        "icon": "window"
+    },
+    "14": {
+        "text": "Window covering",
+        "icon": "blinds"
+    },
+    "15": {
+        "text": "Programmable switch",
+        "icon": "action_key"
+    },
+    "16": {
+        "text": "Range extender",
+        "icon": "settings_input_antenna"
+    },
+    "17": {
+        "text": "Camera",
+        "icon": "photo_camera"
+    },
+    "18": {
+        "text": "VIDEO_DOORBELL",
+        "icon": "video_camera_front"
+    },
+    "19": {
+        "text": "AIR_PURIFIER",
+        "icon": "air_purifier"
+    },
+    "20": {
+        "text": "AIR_HEATER",
+        "icon": "heat"
+    },
+    "21": {
+        "text": "AIR_CONDITIONER",
+        "icon": "hvac"
+    },
+    "22": {
+        "text": "AIR_HUMIDIFIER",
+        "icon": "humidity_mid"
+    },
+    "23": {
+        "text": "AIR_DEHUMIDIFIER",
+        "icon": "water_voc"
+    },
+    "24": {
+        "text": "APPLE_TV",
+        "icon": "tv"
+    },
+    "25": {
+        "text": "HOMEPOD",
+        "icon": "speaker"
+    },
+    "26": {
+        "text": "SPEAKER",
+        "icon": "speaker"
+    },
+    "27": {
+        "text": "AIRPORT",
+        "icon": "wifi_tethering"
+    },
+    "28": {
+        "text": "SPRINKLER",
+        "icon": "sprinkler"
+    },
+    "29": {
+        "text": "FAUCET",
+        "icon": "faucet"
+    },
+    "30": {
+        "text": "SHOWER_HEAD",
+        "icon": "shower"
+    },
+    "31": {
+        "text": "TELEVISION",
+        "icon": "tv"
+    },
+    "32": {
+        "text": "TARGET_CONTROLLER",
+        "icon": "sports_esports"
+    },
+    "33": {
+        "text": "ROUTER",
+        "icon": "router"
+    },
+    "34": {
+        "text": "AUDIO_RECEIVER",
+        "icon": "music_cast"
+    },
+    "35": {
+        "text": "TV_SET_TOP_BOX",
+        "icon": "audio_video_receiver"
+    },
+    "36": {
+        "text": "TV_STREAMING_STIC",
+        "icon": "cast"
+    }
+};
+exports["default"] = accessoryCategories;
+
+
+/***/ }),
+
 /***/ "./admin/pageBuilder/pageBuilder.base.ts":
 /*!***********************************************!*\
   !*** ./admin/pageBuilder/pageBuilder.base.ts ***!
@@ -97662,6 +97822,7 @@ class ConfigPageBuilder_BridgeConfig extends pageBuilder_base_1.ConfigPageBuilde
                     input.value = '';
                 }
                 input.addEventListener('input', this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
+                input.addEventListener('change', this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
                 this.refreshSimpleErrorElement(errorElement, validator);
             };
             let checkboxHelper = (selector, propertyName, validator = undefined) => {
@@ -97672,32 +97833,40 @@ class ConfigPageBuilder_BridgeConfig extends pageBuilder_base_1.ConfigPageBuilde
                 input.addEventListener('click', this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
                 this.refreshSimpleErrorElement(errorElement, validator);
             };
-            inputHelper('#name', 'name', undefined, () => !this.delegate.deviceIsUnique(config));
-            inputHelper('#group', 'groupString');
-            inputHelper('#manufacturer', 'manufacturer');
-            inputHelper('#model', 'model');
-            inputHelper('#serial', 'serial');
-            inputHelper('#firmware', 'firmware');
-            inputHelper('#username', 'username');
-            inputHelper('#pincode', 'pincode');
-            inputHelper('#port', 'port');
+            inputHelper('.name', 'name', undefined, () => !this.delegate.deviceIsUnique(config));
+            inputHelper('.group', 'groupString');
+            inputHelper('.manufacturer', 'manufacturer');
+            inputHelper('.model', 'model');
+            inputHelper('.serial', 'serial');
+            inputHelper('.firmware', 'firmware');
+            inputHelper('.username', 'username');
+            inputHelper('.pincode', 'pincode');
+            inputHelper('.port', 'port');
             let ipList = yield yahka_admin_1.ioBrokerInterfaceList;
             let ipListForSelectBox = ipList
                 .filter((a) => a.family === 'ipv4')
                 .map((a) => {
                 return { value: a.address, text: a.name };
             });
-            inputHelper('#interface', 'interface', ipListForSelectBox);
-            checkboxHelper('#useLegacyAdvertiser', 'useLegacyAdvertiser');
-            checkboxHelper('#useCiaoAdvertiser', 'useCiaoAdvertiser');
-            checkboxHelper('#verboseLogging', 'verboseLogging');
+            inputHelper('.interface', 'interface', ipListForSelectBox);
+            checkboxHelper('.useLegacyAdvertiser', 'useLegacyAdvertiser');
+            checkboxHelper('.useCiaoAdvertiser', 'useCiaoAdvertiser');
+            checkboxHelper('.verboseLogging', 'verboseLogging');
             devicePanel.appendChild(bridgeConfigFragment);
         });
     }
     styleListItem(listItem, deviceConfig) {
-        let listIcon = listItem.querySelector('.list-icon');
-        listIcon.className = 'list-icon icon mif-tree';
-        listItem.classList.add('fg-grayDark');
+        const actions = listItem.querySelector('.device-actions');
+        const duplicateButton = actions.querySelector('.yahka_duplicate_device');
+        const removeButton = actions.querySelector('.yahka_remove_device');
+        duplicateButton.classList.add('disabled');
+        removeButton.classList.add('disabled');
+        const listIcon = listItem.querySelector('.device-icon');
+        listIcon.innerHTML = 'settings_ethernet';
+        // actions.remove();
+        // let listIcon = listItem.querySelector('.list-icon');
+        // listIcon.className = 'list-icon icon mif-tree';
+        // listItem.classList.add('fg-grayDark');
         return true;
     }
     handleBridgeMetaDataChange(bridgeConfig, propertyName, errorElement, validator, ev) {
@@ -97745,10 +97914,8 @@ const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./adm
 const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
 const pageBuilder_servicePanel_1 = __webpack_require__(/*! ./pageBuilder.servicePanel */ "./admin/pageBuilder/pageBuilder.servicePanel.ts");
 const yahka_admin_1 = __webpack_require__(/*! ../yahka.admin */ "./admin/yahka.admin.ts");
-let accessoryCategories = {};
-getObject('yahka.meta._accessoryCategories', (_, object) => {
-    accessoryCategories = object.native;
-});
+const pageBuilder_accessoryCategories_1 = __webpack_require__(/*! ./pageBuilder.accessoryCategories */ "./admin/pageBuilder/pageBuilder.accessoryCategories.ts");
+let accessoryCategories = pageBuilder_accessoryCategories_1.default;
 class ConfigPageBuilder_CustomDevice extends pageBuilder_base_1.ConfigPageBuilder_Base {
     constructor(delegate) {
         super(delegate);
@@ -97765,9 +97932,10 @@ class ConfigPageBuilder_CustomDevice extends pageBuilder_base_1.ConfigPageBuilde
                 return;
             }
             let lastPane = yield this.buildDeviceInformationPanel(config, devicePanel);
+            const servicePanelContainer = devicePanel.querySelector('.yahka_service_container');
             for (let serviceConfig of config.services) {
                 let servicePanel = this.servicePanelBuilder.createServicePanel(config.services, serviceConfig);
-                devicePanel.appendChild(servicePanel);
+                servicePanelContainer.appendChild(servicePanel);
                 lastPane = servicePanel;
             }
             if (AFocusLastPanel && lastPane) {
@@ -97778,29 +97946,47 @@ class ConfigPageBuilder_CustomDevice extends pageBuilder_base_1.ConfigPageBuilde
                         heading.click();
                 }
             }
+            const addServiceButton = devicePanel.querySelector('.yahka_add_service');
+            addServiceButton.addEventListener('click', () => {
+                if (!hkBridge.Configuration.isDeviceConfig(config) && !hkBridge.Configuration.isIPCameraConfig(config)) {
+                    return;
+                }
+                config.services.push({
+                    name: '',
+                    subType: '',
+                    type: '',
+                    characteristics: []
+                });
+                this.delegate.refreshDevicePanel(config, true);
+                this.delegate.changeCallback();
+            });
         });
     }
     styleListItem(listItem, deviceConfig) {
         if (!hkBridge.Configuration.isDeviceConfig(deviceConfig)) {
             return false;
         }
-        let iconClass = 'mif-question';
+        let iconName = 'mif-question';
         let cat;
         if (accessoryCategories !== undefined) {
-            if ((cat = accessoryCategories[deviceConfig.category]))
-                iconClass = cat['icon'];
+            if ((cat = accessoryCategories[deviceConfig.category])) {
+                iconName = cat['icon'];
+            }
         }
-        let listIcon = listItem.querySelector('.list-icon');
-        listIcon.className = '';
-        listIcon.classList.add('list-icon', 'icon', iconClass);
-        listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
-        listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
+        let listIcon = listItem.querySelector('.device-icon');
+        listIcon.innerHTML = iconName;
+        listItem.classList.remove('yellow');
+        listItem.classList.remove('lighten-5');
+        if (false === deviceConfig.enabled) {
+            listItem.classList.add('yellow');
+            listItem.classList.add('lighten-5');
+        }
         return true;
     }
     buildDeviceInformationPanel(deviceConfig, devicePane) {
         return __awaiter(this, void 0, void 0, function* () {
             let devInfoFragment = document.importNode(this.deviceInfoPanelTemplate.content, true);
-            let devInfoPanel = devInfoFragment.querySelector('#yahka_device_info_panel');
+            let devInfoPanel = devInfoFragment.querySelector('.yahka_device_info_panel');
             (0, admin_translation_1.translateFragment)(devInfoFragment);
             let inputHelper = (selector, propertyName, selectList, validator = undefined, checkDefault = true) => {
                 let input = devInfoPanel.querySelector(selector);
@@ -97814,31 +98000,32 @@ class ConfigPageBuilder_CustomDevice extends pageBuilder_base_1.ConfigPageBuilde
                 else {
                     admin_utils_1.Utils.setInputValue(input, value);
                     input.addEventListener('input', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator));
+                    input.addEventListener('change', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator));
                 }
                 this.refreshSimpleErrorElement(errorElement, validator);
             };
-            inputHelper('#name', 'name', undefined, () => !this.delegate.deviceIsUnique(deviceConfig));
-            inputHelper('#group', 'groupString');
-            inputHelper('#enabled', 'enabled');
-            inputHelper('#manufacturer', 'manufacturer');
-            inputHelper('#model', 'model');
-            inputHelper('#serial', 'serial');
-            inputHelper('#firmware', 'firmware');
-            inputHelper('#category', 'category', accessoryCategories);
-            inputHelper('#publish_as_own_device', 'publishAsOwnDevice', undefined, undefined, false);
-            inputHelper('#useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
-            inputHelper('#useCiaoAdvertiser', 'useCiaoAdvertiser', undefined, undefined, false);
-            inputHelper('#username', 'username');
-            inputHelper('#pincode', 'pincode');
-            inputHelper('#port', 'port');
-            inputHelper('#availableStateIobState', 'availableState');
+            inputHelper('.name', 'name', undefined, () => !this.delegate.deviceIsUnique(deviceConfig));
+            inputHelper('.group', 'groupString');
+            inputHelper('.enabledCharacteristic', 'enabled');
+            inputHelper('.manufacturer', 'manufacturer');
+            inputHelper('.model', 'model');
+            inputHelper('.serial', 'serial');
+            inputHelper('.firmware', 'firmware');
+            inputHelper('.category', 'category', accessoryCategories);
+            inputHelper('.publish_as_own_device', 'publishAsOwnDevice', undefined, undefined, false);
+            inputHelper('.useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
+            inputHelper('.useCiaoAdvertiser', 'useCiaoAdvertiser', undefined, undefined, false);
+            inputHelper('.username', 'username');
+            inputHelper('.pincode', 'pincode');
+            inputHelper('.port', 'port');
+            inputHelper('.availableStateIobState', 'availableState');
             let ipList = yield yahka_admin_1.ioBrokerInterfaceList;
             const ipListForSelectBox = ipList
                 .filter((a) => a.family === 'ipv4')
                 .map((a) => {
                 return { value: a.address, text: a.name };
             });
-            inputHelper('#interface', 'interface', ipListForSelectBox);
+            inputHelper('.interface', 'interface', ipListForSelectBox);
             devicePane.appendChild(devInfoFragment);
             return devInfoPanel;
         });
@@ -97899,7 +98086,7 @@ class ConfigPageBuilder_IPCamera extends pageBuilder_base_1.ConfigPageBuilder_Ba
             if (!hkBridge.Configuration.isIPCameraConfig(config)) {
                 return;
             }
-            this.refreshCameraPanels(config, AFocusLastPanel, devicePanel);
+            yield this.refreshCameraPanels(config, AFocusLastPanel, devicePanel);
             this.refreshServicePanels(config, AFocusLastPanel, devicePanel);
         });
     }
@@ -97924,6 +98111,7 @@ class ConfigPageBuilder_IPCamera extends pageBuilder_base_1.ConfigPageBuilder_Ba
                         input.value = '';
                     }
                     input.addEventListener('input', this.handlePropertyChange.bind(this, config, propertyName, errorElement, validator));
+                    input.addEventListener('change', this.handlePropertyChange.bind(this, config, propertyName, errorElement, validator));
                 }
                 this.refreshSimpleErrorElement(errorElement, validator);
             };
@@ -97944,45 +98132,60 @@ class ConfigPageBuilder_IPCamera extends pageBuilder_base_1.ConfigPageBuilder_Ba
                     return true;
                 });
             };
-            inputHelper('#enabled', 'enabled');
-            inputHelper('#name', 'name', undefined, () => !this.delegate.deviceIsUnique(config));
-            inputHelper('#group', 'groupString');
-            inputHelper('#manufacturer', 'manufacturer');
-            inputHelper('#model', 'model');
-            inputHelper('#serial', 'serial');
-            inputHelper('#firmware', 'firmware');
-            inputHelper('#username', 'username');
-            inputHelper('#pincode', 'pincode');
-            inputHelper('#port', 'port');
+            inputHelper('.enabled', 'enabled');
+            inputHelper('.name', 'name', undefined, () => !this.delegate.deviceIsUnique(config));
+            inputHelper('.group', 'groupString');
+            inputHelper('.manufacturer', 'manufacturer');
+            inputHelper('.model', 'model');
+            inputHelper('.serial', 'serial');
+            inputHelper('.firmware', 'firmware');
+            inputHelper('.username', 'username');
+            inputHelper('.pincode', 'pincode');
+            inputHelper('.port', 'port');
             let ipList = yield yahka_admin_1.ioBrokerInterfaceList;
             let ipListForSelectBox = ipList
                 .filter((a) => a.family === 'ipv4')
                 .map((a) => {
                 return { value: a.address, text: a.name };
             });
-            inputHelper('#interface', 'interface', ipListForSelectBox);
-            inputHelper('#useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
-            inputHelper('#useCiaoAdvertiser', 'useCiaoAdvertiser', undefined, undefined, false);
-            inputHelper('#source', 'source');
-            inputHelper('#codec', 'codec');
-            inputHelper('#enableAudio', 'enableAudio', undefined, undefined, false);
-            inputHelper('#numberOfStreams', 'numberOfStreams');
-            inputHelper('#maxWidth', 'maxWidth');
-            inputHelper('#maxHeight', 'maxHeight');
-            inputHelper('#maxFPS', 'maxFPS');
-            ffmpegHelper('#ffmpeg_snapshot', 'snapshot');
-            ffmpegHelper('#ffmpeg_stream', 'stream');
-            ffmpegHelper('#ffmpeg_streamAudio', 'streamAudio');
+            inputHelper('.interface', 'interface', ipListForSelectBox);
+            inputHelper('.useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
+            inputHelper('.useCiaoAdvertiser', 'useCiaoAdvertiser', undefined, undefined, false);
+            inputHelper('.source', 'source');
+            inputHelper('.codec', 'codec');
+            inputHelper('.enableAudio', 'enableAudio', undefined, undefined, false);
+            inputHelper('.numberOfStreams', 'numberOfStreams');
+            inputHelper('.maxWidth', 'maxWidth');
+            inputHelper('.maxHeight', 'maxHeight');
+            inputHelper('.maxFPS', 'maxFPS');
+            ffmpegHelper('.ffmpeg_snapshot', 'snapshot');
+            ffmpegHelper('.ffmpeg_stream', 'stream');
+            ffmpegHelper('.ffmpeg_streamAudio', 'streamAudio');
+            const addServiceButton = configFragment.querySelector('.yahka_add_service');
+            addServiceButton.addEventListener('click', () => {
+                if (!hkBridge.Configuration.isIPCameraConfig(config)) {
+                    return;
+                }
+                config.services.push({
+                    name: '',
+                    subType: '',
+                    type: '',
+                    characteristics: []
+                });
+                this.delegate.refreshDevicePanel(config, true);
+                this.delegate.changeCallback();
+            });
             devicePanel.appendChild(configFragment);
         });
     }
     refreshServicePanels(config, AFocusLastPanel, devicePanel) {
         var _a;
+        const servicePanelContainer = devicePanel.querySelector('.yahka_service_container');
         let lastPane;
         config.services = (_a = config.services) !== null && _a !== void 0 ? _a : [];
         for (let serviceConfig of config.services) {
             let servicePanel = this.servicePanelBuilder.createServicePanel(config.services, serviceConfig);
-            devicePanel.appendChild(servicePanel);
+            servicePanelContainer.appendChild(servicePanel);
             lastPane = servicePanel;
         }
         if (AFocusLastPanel && lastPane) {
@@ -97998,8 +98201,8 @@ class ConfigPageBuilder_IPCamera extends pageBuilder_base_1.ConfigPageBuilder_Ba
         if (!hkBridge.Configuration.isIPCameraConfig(deviceConfig)) {
             return false;
         }
-        let listIcon = listItem.querySelector('.list-icon');
-        listIcon.className = 'list-icon icon mif-camera';
+        let listIcon = listItem.querySelector('.device-icon');
+        listIcon.innerHTML = 'camera_alt';
         listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
         listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
         return true;
@@ -98082,17 +98285,33 @@ class ioBroker_YahkaPageBuilder {
         this.pageBuilders.set('ipcamera', new pageBuilder_ipCam_1.ConfigPageBuilder_IPCamera(this));
         this.bootstrap();
     }
+    refreshInputs() {
+        setTimeout(() => {
+            const devicePanel = document.querySelector('.yahka-edit-device-container');
+            const selectElements = devicePanel.querySelectorAll('select');
+            selectElements.forEach(selectElement => {
+                M.FormSelect.init(selectElement);
+            });
+            const collapsibleElements = document.querySelectorAll('.collapsible');
+            M.Collapsible.init(collapsibleElements, {
+                accordion: false
+            });
+            M.updateTextFields();
+            const textareaElements = document.querySelectorAll('.materialize-textarea');
+            textareaElements.forEach(textareaElement => {
+                M.textareaAutoResize(textareaElement);
+            });
+        }, 10);
+    }
     bootstrap() {
         let bridgeFrame = document.querySelector('#yahka_bridge_frame');
         this.deviceListHandler.buildDeviceList(bridgeFrame);
         this.buttonHandler.bindBridgeButtons(bridgeFrame);
-        this.buttonHandler.refreshBridgeButtons(bridgeFrame);
         return bridgeFrame;
     }
     rebuildDeviceList() {
         let bridgeFrame = document.querySelector('#yahka_bridge_frame');
         this.deviceListHandler.buildDeviceList(bridgeFrame);
-        this.buttonHandler.refreshBridgeButtons(bridgeFrame);
     }
     deviceIsUnique(deviceConfig) {
         let devList = this.deviceListHandler.getDeviceList();
@@ -98121,18 +98340,24 @@ class ioBroker_YahkaPageBuilder {
     }
     refreshDevicePanel(deviceConfig, AFocusLastPanel) {
         let pageBuilder = this.getPageBuilderByConfig(deviceConfig);
-        let devicePanel = document.querySelector('#yahka_device_details');
+        const devicePanel = document.querySelector('.yahka-edit-device-container');
+        if (devicePanel.style.display == 'none') {
+            devicePanel.style.display = null;
+        }
         if (devicePanel) {
             devicePanel.innerHTML = '';
+        }
+        if (!pageBuilder) {
+            devicePanel.style.display = 'none';
         }
         if (pageBuilder) {
             pageBuilder.refresh(deviceConfig, AFocusLastPanel, devicePanel);
         }
+        this.refreshInputs();
     }
     setSelectedDeviceConfig(deviceConfig, AFocusLastPanel) {
         this._selectedDeviceConfig = deviceConfig;
         this.refreshDevicePanel(deviceConfig, AFocusLastPanel);
-        this.buttonHandler.refreshBridgeButtons(document.body);
     }
     refreshSelectedDeviceConfig() {
         this.setSelectedDeviceConfig(this._selectedDeviceConfig, false);
@@ -98164,7 +98389,7 @@ class ioBroker_DeviceListHandler extends pageBuilder_base_1.ConfigPageBuilder_Ba
     }
     createDeviceListEntry(deviceConfig) {
         let deviceEntry = document.importNode(this.deviceListEntryTemplate.content, true);
-        let listItem = deviceEntry.querySelector('.list');
+        let listItem = deviceEntry.querySelector('.collection-item');
         this.refreshDeviceListEntry(deviceConfig, listItem);
         return deviceEntry;
     }
@@ -98174,19 +98399,81 @@ class ioBroker_DeviceListHandler extends pageBuilder_base_1.ConfigPageBuilder_Ba
         deviceList.innerHTML = '';
         this.listEntryToConfigMap.clear();
         this.entryGroupMap.clear();
-        for (let deviceConfig of this.getDeviceList().sort((a, b) => { var _a; return (_a = a.name) === null || _a === void 0 ? void 0 : _a.localeCompare(b.name); })) {
-            const groupNode = this.getDeviceGroupNode(deviceList, deviceConfig);
-            let fragment = this.createDeviceListEntry(deviceConfig);
-            let node = fragment.querySelector('.list');
+        this
+            .getDeviceList()
+            .forEach((deviceConfig) => {
+            const deviceEntryElement = this.createDeviceListEntry(deviceConfig);
+            let node = deviceEntryElement.querySelector('.collection-item');
             this.listEntryToConfigMap.set(node, deviceConfig);
-            groupNode.appendChild(fragment);
-        }
-        [...deviceList.children]
-            .sort((a, b) => { var _a; return (_a = a.innerText) === null || _a === void 0 ? void 0 : _a.localeCompare(b.innerText); })
-            .forEach(node => {
-            return deviceList.appendChild(node);
+            deviceList.appendChild(deviceEntryElement);
+            const editButton = node.querySelector('.edit-button');
+            const removeButton = node.querySelector('.yahka_remove_device');
+            const duplicateButton = node.querySelector('.yahka_duplicate_device');
+            if (editButton) {
+                editButton.addEventListener('click', () => {
+                    this.delegate.setSelectedDeviceConfig(deviceConfig, false);
+                });
+            }
+            if (removeButton) {
+                removeButton.addEventListener('click', () => {
+                    if (hkBridge.Configuration.isIPCameraConfig(deviceConfig)) {
+                        let idx = this.delegate.cameraConfigs.indexOf(deviceConfig);
+                        if (idx > -1) {
+                            this.delegate.cameraConfigs.splice(idx, 1);
+                            this.delegate.changeCallback();
+                            this.delegate.setSelectedDeviceConfig(undefined, false);
+                            this.buildDeviceList(bridgeFrame);
+                            this.delegate.changeCallback();
+                        }
+                    }
+                    if (hkBridge.Configuration.isDeviceConfig(deviceConfig)) {
+                        let idx = bridge.devices.indexOf(deviceConfig);
+                        if (idx > -1) {
+                            bridge.devices.splice(idx, 1);
+                            this.delegate.changeCallback();
+                            this.delegate.setSelectedDeviceConfig(undefined, false);
+                            this.buildDeviceList(bridgeFrame);
+                            this.delegate.changeCallback();
+                        }
+                    }
+                });
+            }
+            if (duplicateButton) {
+                duplicateButton.addEventListener('click', () => {
+                    let copyOfDevice = $.extend(true, {}, deviceConfig);
+                    copyOfDevice.name = `${copyOfDevice.name} copy`;
+                    if (hkBridge.Configuration.isIPCameraConfig(copyOfDevice)) {
+                        copyOfDevice.serial = '';
+                        this.delegate.cameraConfigs.push(copyOfDevice);
+                    }
+                    else if (hkBridge.Configuration.isDeviceConfig(copyOfDevice)) {
+                        copyOfDevice.serial = '';
+                        bridge.devices.push(copyOfDevice);
+                    }
+                    else {
+                        return;
+                    }
+                    this.delegate.setSelectedDeviceConfig(copyOfDevice, true);
+                    this.buildDeviceList(bridgeFrame);
+                    this.delegate.changeCallback();
+                });
+            }
         });
-        $(deviceList).listview({ onListClick: this.handleDeviceListClick.bind(this) });
+        ;
+        // for (let deviceConfig of this.getDeviceList().sort((a, b) => a.name?.localeCompare(b.name))) {
+        //     const groupNode = this.getDeviceGroupNode(deviceList, deviceConfig);
+        //     let fragment = this.createDeviceListEntry(deviceConfig);
+        //     let node = (<HTMLElement>fragment.querySelector('.list'));
+        //     this.listEntryToConfigMap.set(node, deviceConfig);
+        //     groupNode.appendChild(fragment);
+        // }
+        // [...deviceList.children]
+        //     .sort((a: HTMLElement, b: HTMLElement) => a.innerText?.localeCompare(b.innerText))
+        //     .forEach(node => {
+        //         return deviceList.appendChild(node);
+        //     });
+        //
+        // (<any>$(deviceList)).listview({ onListClick: this.handleDeviceListClick.bind(this) });
     }
     getDeviceGroupNode(deviceList, deviceConfig) {
         const groupName = deviceConfig.groupString ? deviceConfig.groupString : '<no group>';
@@ -98212,21 +98499,19 @@ class ioBroker_DeviceListHandler extends pageBuilder_base_1.ConfigPageBuilder_Ba
             return;
         let pageBuilder = this.delegate.getPageBuilderByConfig(deviceConfig);
         listItem.querySelector('.list-title').textContent = deviceConfig.name;
-        listItem.classList.toggle('active', (deviceConfig === this.delegate.selectedDeviceConfig));
+        // listItem.classList.toggle('active', (deviceConfig === this.delegate.selectedDeviceConfig));
         let stylingDone = false;
         if (pageBuilder !== undefined) {
             stylingDone = pageBuilder.styleListItem(listItem, deviceConfig);
         }
         listItem.classList.toggle('error', !this.delegate.deviceIsUnique(deviceConfig));
         if (!stylingDone) {
-            let listIcon = listItem.querySelector('.list-icon');
-            listIcon.className = 'list-icon icon mif-question';
+            let listIcon = listItem.querySelector('.device-icon');
+            listIcon.innerHTML = 'crop_free';
         }
     }
     handleDeviceListClick(deviceNode) {
-        if (!deviceNode)
-            return;
-        let deviceConfig = this.listEntryToConfigMap.get(deviceNode[0]);
+        let deviceConfig = this.listEntryToConfigMap.get(deviceNode);
         this.delegate.setSelectedDeviceConfig(deviceConfig, false);
     }
 }
@@ -98292,92 +98577,6 @@ class ioBroker_ButtonHandler extends pageBuilder_base_1.ConfigPageBuilder_Base {
                 this.delegate.changeCallback();
             });
         }
-        if (elem = bridgePane.querySelector('#yahka_add_service')) {
-            elem.addEventListener('click', (e) => {
-                e.preventDefault();
-                let dev = this.delegate.selectedDeviceConfig;
-                if (!hkBridge.Configuration.isDeviceConfig(dev) && !hkBridge.Configuration.isIPCameraConfig(dev))
-                    return;
-                dev.services.push({
-                    name: '',
-                    subType: '',
-                    type: '',
-                    characteristics: []
-                });
-                this.delegate.refreshDevicePanel(dev, true);
-                this.delegate.changeCallback();
-            });
-        }
-        if (elem = bridgePane.querySelector('#yahka_remove_device')) {
-            elem.addEventListener('click', (e) => {
-                e.preventDefault();
-                let dev = this.delegate.selectedDeviceConfig;
-                if (hkBridge.Configuration.isIPCameraConfig(dev)) {
-                    let idx = this.delegate.cameraConfigs.indexOf(dev);
-                    if (idx > -1) {
-                        this.delegate.cameraConfigs.splice(idx, 1);
-                        this.delegate.changeCallback();
-                        this.delegate.setSelectedDeviceConfig(undefined, false);
-                        this.deviceListHandler.buildDeviceList(bridgePane);
-                        this.delegate.changeCallback();
-                    }
-                }
-                else if (hkBridge.Configuration.isDeviceConfig(dev)) {
-                    let idx = bridge.devices.indexOf(dev);
-                    if (idx > -1) {
-                        bridge.devices.splice(idx, 1);
-                        this.delegate.changeCallback();
-                        this.delegate.setSelectedDeviceConfig(undefined, false);
-                        this.deviceListHandler.buildDeviceList(bridgePane);
-                        this.delegate.changeCallback();
-                    }
-                }
-            });
-        }
-        if (elem = bridgePane.querySelector('#yahka_duplicate_device')) {
-            elem.addEventListener('click', (e) => {
-                e.preventDefault();
-                let dev = this.delegate.selectedDeviceConfig;
-                let copyOfDevice = $.extend(true, {}, dev);
-                copyOfDevice.name = `${copyOfDevice.name} copy`;
-                if (hkBridge.Configuration.isIPCameraConfig(copyOfDevice)) {
-                    copyOfDevice.serial = '';
-                    this.delegate.cameraConfigs.push(copyOfDevice);
-                }
-                else if (hkBridge.Configuration.isDeviceConfig(copyOfDevice)) {
-                    copyOfDevice.serial = '';
-                    bridge.devices.push(copyOfDevice);
-                }
-                else {
-                    return;
-                }
-                this.delegate.setSelectedDeviceConfig(copyOfDevice, true);
-                this.deviceListHandler.buildDeviceList(bridgePane);
-                this.delegate.changeCallback();
-            });
-        }
-    }
-    refreshBridgeButtons(parent) {
-        // let addDeviceButton    = <HTMLElement>document.querySelector('#yahka_add_device');
-        let addServiceButton = parent.querySelector('#yahka_add_service');
-        let removeDeviceButton = parent.querySelector('#yahka_remove_device');
-        let duplicateDeviceButton = parent.querySelector('#yahka_duplicate_device');
-        let pageBuilder = this.delegate.getPageBuilderByConfig(this.delegate.selectedDeviceConfig);
-        let addServiceEnabled = pageBuilder ? pageBuilder.addServiceAvailable : false;
-        let removeDevEnabled = pageBuilder ? pageBuilder.removeDeviceAvailable : false;
-        let duplicateDeviceEnabled = pageBuilder ? pageBuilder.duplicateDeviceAvailable : false;
-        if (addServiceEnabled)
-            addServiceButton.removeAttribute('disabled');
-        else
-            addServiceButton.setAttribute('disabled', '');
-        if (removeDevEnabled)
-            removeDeviceButton.removeAttribute('disabled');
-        else
-            removeDeviceButton.setAttribute('disabled', '');
-        if (duplicateDeviceEnabled)
-            duplicateDeviceButton.removeAttribute('disabled');
-        else
-            duplicateDeviceButton.setAttribute('disabled', '');
     }
 }
 
@@ -98412,7 +98611,7 @@ class ConfigPageBuilder_ServicePanel extends pageBuilder_base_1.ConfigPageBuilde
     }
     createServicePanel(services, serviceConfig) {
         let servicePanel = document.importNode(this.deviceServicePanelTemplate.content, true);
-        let frameNode = servicePanel.querySelector('#yahka_service_panel');
+        let frameNode = servicePanel.querySelector('.yahka_service_panel');
         (0, admin_translation_1.translateFragment)(servicePanel);
         let inputHelper = (selector, configName, selectList, eventHandler, defaultForCheckbox = true) => {
             var _a;
@@ -98429,29 +98628,31 @@ class ConfigPageBuilder_ServicePanel extends pageBuilder_base_1.ConfigPageBuilde
             }
             else if (eventHandler !== undefined) {
                 input.addEventListener('input', eventHandler);
+                input.addEventListener('change', eventHandler);
             }
             else {
                 input.addEventListener('input', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
+                input.addEventListener('change', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
             }
         };
         this.refreshServicePanelCaption(serviceConfig, frameNode);
-        inputHelper('#service_enabled', 'enabled');
-        inputHelper('#service_isPrimary', 'isPrimary', undefined, undefined, false);
-        inputHelper('#service_isHidden', 'isHidden', undefined, undefined, false);
-        inputHelper('#service_name', 'name');
-        inputHelper('#service_type', 'type', Object.keys(HAPServiceDictionary.services).map(s => ({
+        inputHelper('.service_enabled', 'enabled');
+        inputHelper('.service_isPrimary', 'isPrimary', undefined, undefined, false);
+        inputHelper('.service_isHidden', 'isHidden', undefined, undefined, false);
+        inputHelper('.service_name', 'name');
+        inputHelper('.service_type', 'type', Object.keys(HAPServiceDictionary.services).map(s => ({
             text: s,
             value: s
         })), this.handleServiceTypeChange.bind(this, serviceConfig, frameNode));
-        inputHelper('#service_subtype', 'subType');
-        inputHelper('#service_link_to', 'linkTo', [{
+        inputHelper('.service_subtype', 'subType');
+        inputHelper('.service_link_to', 'linkTo', [{
                 text: '',
                 value: '',
             }].concat(services.map((s) => ({
             text: s.name,
             value: s.name
         }))));
-        inputHelper('#new_custom_characteristic', '', Object.entries(HAPServiceDictionary.characteristics)
+        inputHelper('.new_custom_characteristic', '', Object.entries(HAPServiceDictionary.characteristics)
             .map(([key, c]) => ({
             text: c.name,
             value: key
@@ -98459,7 +98660,7 @@ class ConfigPageBuilder_ServicePanel extends pageBuilder_base_1.ConfigPageBuilde
             .sort((a, b) => { var _a, _b; return ((_a = a.text) !== null && _a !== void 0 ? _a : a.value).localeCompare((_b = b.text) !== null && _b !== void 0 ? _b : b.value); }), () => { });
         this.buildCharacteristicTable(serviceConfig, frameNode);
         // bind delete buttton
-        frameNode.querySelector('#yakha_delete_service').addEventListener('click', () => {
+        frameNode.querySelector('.yakha_delete_service').addEventListener('click', () => {
             let idx = services.indexOf(serviceConfig);
             if (idx > -1) {
                 services.splice(idx, 1);
@@ -98468,11 +98669,17 @@ class ConfigPageBuilder_ServicePanel extends pageBuilder_base_1.ConfigPageBuilde
             }
             this.delegate.refreshSelectedDeviceConfig();
         });
-        frameNode.querySelector('#yahka_add_characteristic').addEventListener('click', this.addCustomCharacteristic.bind(this, serviceConfig, frameNode));
+        frameNode.querySelector('.yahka_add_characteristic').addEventListener('click', this.addCustomCharacteristic.bind(this, serviceConfig, frameNode));
         return frameNode;
     }
     refreshServicePanelCaption(serviceConfig, servicePanel) {
-        servicePanel.querySelector('#yahka_service_caption').textContent = `${serviceConfig.enabled === false ? '[## disabled ##]' : ''} ${serviceConfig.name}[${serviceConfig.type}]`;
+        const captionElement = servicePanel.querySelector('.yahka_service_caption');
+        captionElement.textContent = `${serviceConfig.name}[${serviceConfig.type}]`;
+        if (true === serviceConfig.enabled) {
+            captionElement.classList.remove('grey-text');
+            return;
+        }
+        captionElement.classList.add('grey-text');
     }
     findHAPCharacteristic(serviceDef, characteristicName) {
         if (!serviceDef)
@@ -98551,13 +98758,14 @@ class ConfigPageBuilder_ServicePanel extends pageBuilder_base_1.ConfigPageBuilde
                 return a[1] ? -1 : 1;
             return a[0].localeCompare(b[0]);
         });
-        let table = servicePanel.querySelector('#yahka_characteristic_table');
-        while (table.childElementCount > 1) { // first row is the header row
+        let table = servicePanel.querySelector('.yahka_characteristic_table');
+        while (table.childElementCount > 0) { // first row is the header row
             table.removeChild(table.lastElementChild);
         }
         for (let row of charRows) {
             table.appendChild(row[2]);
         }
+        this.delegate.refreshInputs();
     }
     getParameterEditor(functionName, valueChangeCallback, functionMap) {
         if (!functionMap.has(functionName)) {
@@ -98584,11 +98792,11 @@ class ConfigPageBuilder_ServicePanel extends pageBuilder_base_1.ConfigPageBuilde
             anchorAttribute.value = name;
             anchor.attributes.setNamedItem(anchorAttribute);
         }
-        let bracketElement = rowElement.querySelector('#characteristic');
-        let checkBox = rowElement.querySelector('#characteristic_enabled');
+        const characteristicName = rowElement.querySelector('.yahka_characteristic_name');
+        let checkBox = rowElement.querySelector('.characteristic_enabled');
         checkBox.checked = enabled;
-        checkBox.addEventListener('click', this.handleCharacteristicEnabledChange.bind(this, serviceConfig, name, bracketElement));
-        let delButton = rowElement.querySelector('#yakha_delete_characteristic');
+        checkBox.addEventListener('click', this.handleCharacteristicEnabledChange.bind(this, serviceConfig, name, characteristicName));
+        let delButton = rowElement.querySelector('.yakha_delete_characteristic');
         delButton.addEventListener('click', () => {
             const charConfig = this.findConfigCharacteristic(serviceConfig, name);
             if (charConfig != null) {
@@ -98597,10 +98805,10 @@ class ConfigPageBuilder_ServicePanel extends pageBuilder_base_1.ConfigPageBuilde
                 this.buildCharacteristicTable(serviceConfig, servicePanel);
             }
         });
-        this.refreshEnabledClass(bracketElement, enabled);
-        this.refreshOptionalClass(bracketElement, (_a = charDef === null || charDef === void 0 ? void 0 : charDef.optional) !== null && _a !== void 0 ? _a : true);
-        this.refreshCustomClass(bracketElement, (_b = charConfig === null || charConfig === void 0 ? void 0 : charConfig.customCharacteristic) !== null && _b !== void 0 ? _b : false);
-        rowElement.querySelector('#characteristic_name').textContent = name;
+        this.refreshEnabledClass(characteristicName, enabled);
+        this.refreshOptionalClass(characteristicName, (_a = charDef === null || charDef === void 0 ? void 0 : charDef.optional) !== null && _a !== void 0 ? _a : true);
+        this.refreshCustomClass(characteristicName, (_b = charConfig === null || charConfig === void 0 ? void 0 : charConfig.customCharacteristic) !== null && _b !== void 0 ? _b : false);
+        characteristicName.textContent = name;
         let functionSelector = (selector, containerSelector, configName, parameterName, functionMap) => {
             var _a;
             let input = rowElement.querySelector(selector);
@@ -98624,32 +98832,28 @@ class ConfigPageBuilder_ServicePanel extends pageBuilder_base_1.ConfigPageBuilde
                 this.delegate.changeCallback();
             };
             this.updateParameterEditor((_a = admin_utils_1.Utils.getSelectInputValue(input)) === null || _a === void 0 ? void 0 : _a.toString(), container, parameterValue, paramUpdateMethod, functionMap);
-            input.addEventListener('input', (e) => {
+            input.addEventListener('change', (e) => {
                 var _a;
                 this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
                 let charConfig = this.findConfigCharacteristic(serviceConfig, name);
                 this.updateParameterEditor((_a = admin_utils_1.Utils.getSelectInputValue(input)) === null || _a === void 0 ? void 0 : _a.toString(), container, charConfig[parameterName], paramUpdateMethod, functionMap);
                 return false;
             });
+            try {
+                M.FormSelect.init(input);
+            }
+            catch (error) {
+                // Just do nothing. M.FormSelect does seemingly not work, when element is not in DOM yet or invisible.
+            }
         };
-        functionSelector('#characteristic_inoutfunction', '#characteristic_inoutparams_container', 'inOutFunction', 'inOutParameters', parameterEditor_factory_1.inoutFunctions);
-        functionSelector('#characteristic_conversionfunction', '#characteristic_conversionparams_container', 'conversionFunction', 'conversionParameters', parameterEditor_factory_1.convFunctions);
+        functionSelector('.characteristic_inoutfunction', '.characteristic_inoutparams_container', 'inOutFunction', 'inOutParameters', parameterEditor_factory_1.inoutFunctions);
+        functionSelector('.characteristic_conversionfunction', '.characteristic_conversionparams_container', 'conversionFunction', 'conversionParameters', parameterEditor_factory_1.convFunctions);
         this.updateCharacteristicProperties(rowElement, serviceConfig, charDef, charConfig);
         return rowElement;
     }
     updateCharacteristicProperties(rowElement, serviceConfig, charDef, charConfig) {
         let charName = charConfig ? charConfig.name : charDef.name;
-        let toggleLink = rowElement.querySelector('#toggleProperties');
-        let propContainer = rowElement.querySelector('#characteristic_propertyTable_container');
-        let hasCustomProperties = charConfig ? (charConfig.properties !== undefined) && (Object.keys(charConfig.properties).length > 0) : false;
-        if (toggleLink) {
-            toggleLink.addEventListener('click', () => {
-                propContainer.classList.toggle('no-display');
-            });
-            propContainer.classList.toggle('no-display', !hasCustomProperties);
-            toggleLink.classList.toggle('properties-defined', hasCustomProperties);
-        }
-        let propTable = rowElement.querySelector('#characteristic_propertyTable');
+        let propTable = rowElement.querySelector('.characteristic_propertyTable');
         function transformValue(value) {
             let result = value;
             let isObject = false;
@@ -98666,7 +98870,7 @@ class ConfigPageBuilder_ServicePanel extends pageBuilder_base_1.ConfigPageBuilde
                 let nameSpan = propElement.querySelector('#propName');
                 nameSpan.id = '';
                 nameSpan.textContent = propertyName;
-                let propInput = propElement.querySelector('#propValue');
+                let propInput = propElement.querySelector('.propValue');
                 propInput.id = propertyName;
                 propInput.placeholder = propertyDefaultValue.asString;
                 if (charConfig !== undefined) {
@@ -98684,7 +98888,7 @@ class ConfigPageBuilder_ServicePanel extends pageBuilder_base_1.ConfigPageBuilde
         }
     }
     refreshEnabledClass(row, enabled) {
-        row.classList.toggle('disabled', !enabled);
+        row.classList.toggle('grey-text', !enabled);
     }
     refreshOptionalClass(row, optional) {
         row.classList.toggle('optional-characteristic', optional);
@@ -98759,7 +98963,7 @@ class ConfigPageBuilder_ServicePanel extends pageBuilder_base_1.ConfigPageBuilde
     }
     addCustomCharacteristic(serviceConfig, servicePanel) {
         var _a;
-        const select = servicePanel.querySelector('#new_custom_characteristic');
+        const select = servicePanel.querySelector('.new_custom_characteristic');
         const charName = (_a = admin_utils_1.Utils.getSelectInputValue(select)) === null || _a === void 0 ? void 0 : _a.toString();
         const existingChar = serviceConfig.characteristics.find((c) => c.name === charName);
         if (existingChar != null) {
@@ -98968,9 +99172,9 @@ class ParameterEditor_HomeMaticWindowCoveringTargetPosition extends parameterEdi
     constructor(valueChangeCallback) {
         super(valueChangeCallback);
         this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.homematic.WindowCovering.TargetPosition.inc.html */ "./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.inc.html"));
-        this.txtLevel = this.templateNode.querySelector('#level');
+        this.txtLevel = this.templateNode.querySelector('.level');
         this.txtLevel.addEventListener('input', (ev) => this.valueChanged());
-        this.txtWorking = this.templateNode.querySelector('#working');
+        this.txtWorking = this.templateNode.querySelector('.working');
         this.txtWorking.addEventListener('input', (ev) => this.valueChanged());
     }
     refreshAndShow(containerElement, parameterValue) {
@@ -99028,11 +99232,11 @@ class ParameterEditor_HomeMatic_Dimmer extends parameterEditor_base_1.ParameterE
         super(valueChangeCallback);
         this.showExtendedDimmerProps = showExtendedDimmerProps;
         this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.homematic.dimmer.inc.html */ "./admin/parameterEditor/parameterEditor.homematic.dimmer.inc.html"));
-        this.txtLevel = this.templateNode.querySelector('#level');
+        this.txtLevel = this.templateNode.querySelector('.level');
         this.txtLevel.addEventListener('input', (ev) => this.valueChanged());
-        this.chkRestoreToPrevious = this.templateNode.querySelector('#restoreToPreviousLevel');
+        this.chkRestoreToPrevious = this.templateNode.querySelector('.restoreToPreviousLevel');
         this.chkRestoreToPrevious.addEventListener('click', (ev) => this.valueChanged());
-        this.txtDefaultLevel = this.templateNode.querySelector('#defaultLevel');
+        this.txtDefaultLevel = this.templateNode.querySelector('.defaultLevel');
         this.txtDefaultLevel.addEventListener('input', (ev) => this.valueChanged());
         if (!showExtendedDimmerProps) {
             $(this.templateNode).find('.extended-dimmer-properties').hide();
@@ -99098,18 +99302,18 @@ class ParameterEditor_Map extends parameterEditor_base_1.ParameterEditor {
         let importedRow = document.importNode(this.stateTemplate.content, true);
         let myRow = this.lastRow.parentElement.insertBefore(importedRow.firstElementChild, this.lastRow);
         this.stateRows.push(myRow);
-        let leftField = myRow.querySelector('#ioBrokerValue');
+        let leftField = myRow.querySelector('.ioBrokerValue');
         leftField.addEventListener('input', (ev) => this.valueChanged());
-        let leftCheck = myRow.querySelector('#isSimpleValue');
+        let leftCheck = myRow.querySelector('.isSimpleValue');
         leftCheck.addEventListener('input', (ev) => this.valueChanged());
-        let rightField = myRow.querySelector('#homekitValue');
+        let rightField = myRow.querySelector('.homekitValue');
         rightField.addEventListener('input', (ev) => this.valueChanged());
-        myRow.querySelector('#delRow').addEventListener('click', () => {
+        myRow.querySelector('.delRow').addEventListener('click', () => {
             myRow.remove();
             this.stateRows = this.stateRows.filter(row => row != myRow);
             this.valueChanged();
         });
-        myRow.querySelector('#moveUp').addEventListener('click', () => {
+        myRow.querySelector('.moveUp').addEventListener('click', () => {
             let myIndex = this.stateRows.indexOf(myRow);
             let prevIndex = myIndex - 1;
             if (prevIndex < 0) {
@@ -99121,7 +99325,7 @@ class ParameterEditor_Map extends parameterEditor_base_1.ParameterEditor {
             this.lastRow.parentElement.insertBefore(myRow, prevRow);
             this.valueChanged();
         });
-        myRow.querySelector('#moveDown').addEventListener('click', () => {
+        myRow.querySelector('.moveDown').addEventListener('click', () => {
             let myIndex = this.stateRows.indexOf(myRow);
             let nextIndex = myIndex + 1;
             if ((myIndex < 0) || (nextIndex >= this.stateRows.length)) {
@@ -99163,10 +99367,10 @@ class ParameterEditor_Map extends parameterEditor_base_1.ParameterEditor {
     buildNewParameterValue() {
         return {
             mappings: this.stateRows.map((row) => {
-                let ioValue = row.querySelector('#ioBrokerValue');
-                let isSimpleValue = row.querySelector('#isSimpleValue');
+                let ioValue = row.querySelector('.ioBrokerValue');
+                let isSimpleValue = row.querySelector('.isSimpleValue');
                 let leftValue = admin_utils_1.Utils.getInputValue(ioValue);
-                let hkValue = row.querySelector('#homekitValue');
+                let hkValue = row.querySelector('.homekitValue');
                 return {
                     left: isSimpleValue.checked ? leftValue === null || leftValue === void 0 ? void 0 : leftValue.toString() : JSON.parse(leftValue === null || leftValue === void 0 ? void 0 : leftValue.toString()),
                     right: admin_utils_1.Utils.getInputValue(hkValue),
@@ -99199,25 +99403,25 @@ class ParameterEditor_MultiState extends parameterEditor_base_1.ParameterEditor 
         super(valueChangeCallback);
         this.stateRows = [];
         this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.multiState.inc.html */ "./admin/parameterEditor/parameterEditor.multiState.inc.html"));
-        this.stateTemplate = this.templateNode.querySelector('#stateRow');
-        this.lastRow = this.templateNode.querySelector('#lastRow');
-        let addRow = this.templateNode.querySelector('#addRow');
+        this.stateTemplate = this.templateNode.querySelector('.stateRow');
+        this.lastRow = this.templateNode.querySelector('.lastRow');
+        let addRow = this.templateNode.querySelector('.addRow');
         addRow.addEventListener('click', this.addRowClicked.bind(this));
     }
     createRow(item) {
         let importedRow = document.importNode(this.stateTemplate.content, true);
         let myRow = this.lastRow.parentElement.insertBefore(importedRow.firstElementChild, this.lastRow);
         this.stateRows.push(myRow);
-        let readField = myRow.querySelector('#readState');
+        let readField = myRow.querySelector('.readState');
         readField.addEventListener('input', (ev) => this.valueChanged());
-        let writeField = myRow.querySelector('#writeState');
+        let writeField = myRow.querySelector('.writeState');
         writeField.addEventListener('input', (ev) => this.valueChanged());
-        myRow.querySelector('#delRow').addEventListener('click', () => {
+        myRow.querySelector('.delRow').addEventListener('click', () => {
             myRow.remove();
             this.stateRows = this.stateRows.filter(row => row != myRow);
             this.valueChanged();
         });
-        myRow.querySelector('#moveUp').addEventListener('click', () => {
+        myRow.querySelector('.moveUp').addEventListener('click', () => {
             let myIndex = this.stateRows.indexOf(myRow);
             let prevIndex = myIndex - 1;
             if (prevIndex < 0) {
@@ -99229,7 +99433,7 @@ class ParameterEditor_MultiState extends parameterEditor_base_1.ParameterEditor 
             this.lastRow.parentElement.insertBefore(myRow, prevRow);
             this.valueChanged();
         });
-        myRow.querySelector('#moveDown').addEventListener('click', () => {
+        myRow.querySelector('.moveDown').addEventListener('click', () => {
             let myIndex = this.stateRows.indexOf(myRow);
             let nextIndex = myIndex + 1;
             if ((myIndex < 0) || (nextIndex >= this.stateRows.length)) {
@@ -99265,8 +99469,8 @@ class ParameterEditor_MultiState extends parameterEditor_base_1.ParameterEditor 
     buildNewParameterValue() {
         return this.stateRows.map((row) => {
             var _a, _b;
-            const readField = row.querySelector('#readState');
-            const writeField = row.querySelector('#writeState');
+            const readField = row.querySelector('.readState');
+            const writeField = row.querySelector('.writeState');
             return {
                 readState: (_a = admin_utils_1.Utils.getInputValue(readField)) === null || _a === void 0 ? void 0 : _a.toString(),
                 writeState: (_b = admin_utils_1.Utils.getInputValue(writeField)) === null || _b === void 0 ? void 0 : _b.toString(),
@@ -99321,13 +99525,13 @@ class ParameterEditor_ScaleConversionEditor extends parameterEditor_base_1.Param
     constructor(valueChangeCallback) {
         super(valueChangeCallback);
         this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.scaleConversion.inc.html */ "./admin/parameterEditor/parameterEditor.scaleConversion.inc.html"));
-        this.txtHKMin = this.templateNode.querySelector('#hkMin');
+        this.txtHKMin = this.templateNode.querySelector('.hkMin');
         this.txtHKMin.addEventListener('input', (ev) => this.valueChanged());
-        this.txtHKMax = this.templateNode.querySelector('#hkMax');
+        this.txtHKMax = this.templateNode.querySelector('.hkMax');
         this.txtHKMax.addEventListener('input', (ev) => this.valueChanged());
-        this.txtIOBrokerMin = this.templateNode.querySelector('#ioMin');
+        this.txtIOBrokerMin = this.templateNode.querySelector('.ioMin');
         this.txtIOBrokerMin.addEventListener('input', (ev) => this.valueChanged());
-        this.txtIOBrokerMax = this.templateNode.querySelector('#ioMax');
+        this.txtIOBrokerMax = this.templateNode.querySelector('.ioMax');
         this.txtIOBrokerMax.addEventListener('input', (ev) => this.valueChanged());
     }
     refreshAndShow(containerElement, parameterValue) {
@@ -100973,7 +101177,7 @@ class TIoBrokerInOutFunction_StateBase {
     }
     setupDeferredChangeEvent(callback, plainIOValue) {
         this.cancelDeferredChangeEvent();
-        this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback, plainIOValue), 150);
+        this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback, plainIOValue), this.deferredTime);
     }
     cancelDeferredChangeEvent() {
         clearTimeout(this.debounceTimer);

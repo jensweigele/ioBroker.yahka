@@ -1,34 +1,33 @@
 <div class="editor-table">
-    <template id="stateRow">
-        <div class="row">
-            <div class="cell">
-                <span class="translate">Read:</span>
-            </div>
-            <div class="cell padding5">
-                <div class="input-container full-width">
-                    <input id="readState" type="text" class="stateSelectTarget"></input>
-                    <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
+    <template class="stateRow">
+        <div class="card-panel">
+            <div class="button-appendix">
+                <div class="input-field" style="flex-grow: 1">
+                    <label>Read</label>
+                    <input type="text" class="readState stateSelectTarget">
                 </div>
+                <button type="button" class="btn btn-small id-selector">
+                    <span class="material-icons">more_horiz</span>
+                </button>
             </div>
-            <div class="cell ">
-                <span class="translate">Write:</span>
-            </div>
-            <div class="cell padding5">
-                <div class="input-container full-width">
-                    <input id="writeState" type="text" class="stateSelectTarget" placeholder="leave empty to use read-state "></input>
-                    <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
+            <div class="button-appendix">
+                <div class="input-field">
+                    <label>Write</label>
+                    <input type="text" class="writeState stateSelectTarget">
+                    <div class="edit-hint translate">leave empty to use read-state</div>
                 </div>
+                <button type="button" class="btn btn-small id-selector">
+                    <span class="material-icons">more_horiz</span>
+                </button>
             </div>
-            <div class="cell padding5">
-                <a id="moveUp" href="#"><span class="icon mif-move-up fg-black"></span></a>
-                <a id="moveDown" href="#"><span class="icon mif-move-down fg-black"></span></a>
-                <a id="delRow" href="#"><span class="icon mif-minus fg-red"></span></a>
+            <div>
+                <button class="btn-flat moveUp" type="button"><i class="material-icons">arrow_upward</i></button>
+                <button class="btn-flat moveDown" type="button"><i class="material-icons">arrow_downward</i></button>
+                <button class="btn-flat delRow" type="button"><i class="material-icons">delete</i></button>
             </div>
         </div>
     </template>
-    <div class="row" id="lastRow">
-        <div class="cell padding5">
-            <a id="addRow" href="#"><span class="icon mif-plus fg-green"></span><span class="translate">add new state</span></a>
-        </div>
+    <div class="lastRow">
+        <button class="btn addRow"><span class="translate">Add new state</span></button>
     </div>
 </div>

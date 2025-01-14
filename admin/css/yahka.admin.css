@@ -1,6 +1,35 @@
+@font-face {
+    font-family: 'Material Symbols Outlined';
+    font-style: normal;
+    src: url(./../ext/material/fonts/MaterialSymbolsOutlined_28pt-Regular.ttf) format('truetype');
+}
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 48
+}
+
+
+body {
+    height: 100vh;
+}
+
 #adapter-container {
     font-size: 1em;
-    height: 100%;
+    /*height: 100%;*/
 }
 
 .auto-scroll {
@@ -49,7 +78,6 @@
 .flex-panel {
     padding: 5px;
     margin: 5px;
-    border: 1px solid #2086bf;
 }
 
 .flex-panel>.caption {
@@ -67,106 +95,15 @@
 .edit-hint {
     color: #999999;
     font-size: 0.9em;
-    padding-left: 1em;
     font-style: italic;
 }
 
-.characteristic-table {
-    width: 100%;
-    margin: .625rem 0;
-}
-
-.characteristic-table tr:not(:last-child) {
-    height: fit-content;
-}
-
-.characteristic-table th {
-    padding: 0.5em 4px 0.5em 4px;
-    font-weight: bold;
-    background: gainsboro;
-}
-
-.characteristic-table tbody td {
-    padding: 0px 4px 0px 4px;
-}
-
-.characteristic-table td.center {
-    text-align: center;
-}
-
-.characteristic-table td {
-    vertical-align: baseline;
-}
-
-.characteristic-table .optional-characteristic>tr {
+.optional-characteristic {
     font-style: italic;
 }
 
-.characteristic-table .custom-characteristic> {
+.custom-characteristic {
     background-color: #9ddbff24;
-}
-
-.characteristic-table .disabled>tr {
-    background-color: #eee;
-    color: #999;
-}
-
-.characteristic-table tr .input-control textarea {
-    min-height: initial;
-}
-
-.characteristic-table tr .input-control {
-    display: flex;
-    align-items: center;
-}
-
-.characteristic-table .characteristic-property-cell {
-    padding: 4px 8px 8px 20px;
-    vertical-align: top;
-}
-
-.characteristic-table .editor-container-cell {
-    padding-left: 20px;
-}
-
-.characteristic-table .inOut {
-    background-color: #d2e8f924;
-}
-
-.characteristic-table .conversion {
-    background-color: #f7f9d36b;
-}
-
-.characteristic-property-cell .properties-defined {
-    font-weight: bold;
-}
-
-.characteristic-table tbody {
-    border: 1px solid gainsboro;
-}
-
-.editor-table {
-    display: table;
-    width: 100%;
-}
-
-.editor-table .row {
-    display: table-row;
-}
-
-.editor-table .cell {
-    vertical-align: baseline;
-    display: table-cell;
-}
-
-.editor-table .input-container {
-    display: flex;
-    align-items: center;
-    min-height: 2rem;
-}
-
-.editor-table .input-container>*:first-child {
-    flex: 1 1 auto;
 }
 
 .tabcontrol2 .frames .frame.flex-container-col,
@@ -224,7 +161,6 @@ textarea.validationError {
     background: red;
     color: white;
     padding: 8px;
-    margin: 10px;
 }
 
 .errorpanel.validationError {
@@ -289,4 +225,41 @@ textarea.validationError {
     color: white;
     font-weight: bold;
     cursor: pointer;
+}
+
+/** SELECT DIALOG FIXES END **/
+
+
+.button-appendix {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-outer-container {
+    /*padding: 0 !important;*/
+}
+
+.card-inner-container {
+    /*padding: 2em;*/
+}
+
+.button-appendix > .input-field {
+    flex-grow: 1;
+}
+
+.icon-button {
+    text-align: center;
+    padding-left: 0.3em !important;
+    padding-right: 0.3em !important;
+}
+
+.icon-button > .material-icons {
+    margin: 0 !important;
+}
+
+.yahka_characteristic_name {
+    font-weight: bold;
+    font-size: 1.1rem;
+    overflow-wrap: anywhere;
 }

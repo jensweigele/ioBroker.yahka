@@ -1,17 +1,23 @@
 /// <reference path="../../typings/index.d.ts" />
 import * as hkBridge from '../../shared/yahka.configuration';
-import { ConfigPageBuilder_Base, IConfigPageBuilder, IConfigPageBuilderDelegate, TValidatorFunction } from './pageBuilder.base';
-import { translateFragment } from '../admin.translation';
-import { createTemplateElement } from '../admin.pageLoader';
-import { IDictionary } from '../../shared/yahka.configuration';
-import { ISelectListEntry } from '../admin.config';
-import { ioBrokerInterfaceList } from '../yahka.admin';
+import {
+    ConfigPageBuilder_Base,
+    IConfigPageBuilder,
+    IConfigPageBuilderDelegate,
+    TValidatorFunction
+} from './pageBuilder.base';
+import {translateFragment} from '../admin.translation';
+import {createTemplateElement} from '../admin.pageLoader';
+import {IDictionary} from '../../shared/yahka.configuration';
+import {ISelectListEntry} from '../admin.config';
+import {ioBrokerInterfaceList} from '../yahka.admin';
 
 export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base implements IConfigPageBuilder {
-    public addServiceAvailable: boolean = false;
-    public removeDeviceAvailable: boolean = false;
+    public addServiceAvailable: boolean      = false;
+    public removeDeviceAvailable: boolean    = false;
     public duplicateDeviceAvailable: boolean = false;
     bridgeConfigPanelTemplate: HTMLTemplateElement;
+
     constructor(protected delegate: IConfigPageBuilderDelegate) {
         super(delegate);
         this.bridgeConfigPanelTemplate = createTemplateElement(require('./pageBuilder.bridgeConfig.main.inc.html'));
@@ -25,7 +31,7 @@ export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base imple
         translateFragment(bridgeConfigFragment);
 
         let inputHelper = (selector: string, propertyName: string, selectList?: IDictionary<ISelectListEntry> | ISelectListEntry[], validator: TValidatorFunction = undefined) => {
-            let input = <HTMLSelectElement>bridgeConfigFragment.querySelector(selector);
+            let input        = <HTMLSelectElement>bridgeConfigFragment.querySelector(selector);
             let errorElement = <HTMLElement>bridgeConfigFragment.querySelector(selector + '_error');
             this.fillSelectByListEntries(input, selectList);
             let value = config[propertyName];
@@ -35,46 +41,59 @@ export class ConfigPageBuilder_BridgeConfig extends ConfigPageBuilder_Base imple
                 input.value = '';
             }
             input.addEventListener('input', this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
+            input.addEventListener('change', this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
             this.refreshSimpleErrorElement(errorElement, validator);
         };
 
         let checkboxHelper = (selector: string, propertyName: string, validator: TValidatorFunction = undefined) => {
-            let input = <HTMLInputElement>bridgeConfigFragment.querySelector(selector);
+            let input        = <HTMLInputElement>bridgeConfigFragment.querySelector(selector);
             let errorElement = <HTMLElement>bridgeConfigFragment.querySelector(`${selector}_error`);
 
-            const value = config[propertyName];
+            const value   = config[propertyName];
             input.checked = value;
             input.addEventListener('click', this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
             this.refreshSimpleErrorElement(errorElement, validator);
         };
 
-        inputHelper('#name', 'name', undefined, () => !this.delegate.deviceIsUnique(config));
-        inputHelper('#group', 'groupString');
-        inputHelper('#manufacturer', 'manufacturer');
-        inputHelper('#model', 'model');
-        inputHelper('#serial', 'serial');
-        inputHelper('#firmware', 'firmware');
-        inputHelper('#username', 'username');
-        inputHelper('#pincode', 'pincode');
-        inputHelper('#port', 'port');
-        let ipList = await ioBrokerInterfaceList;
+        inputHelper('.name', 'name', undefined, () => !this.delegate.deviceIsUnique(config));
+        inputHelper('.group', 'groupString');
+        inputHelper('.manufacturer', 'manufacturer');
+        inputHelper('.model', 'model');
+        inputHelper('.serial', 'serial');
+        inputHelper('.firmware', 'firmware');
+        inputHelper('.username', 'username');
+        inputHelper('.pincode', 'pincode');
+        inputHelper('.port', 'port');
+        let ipList             = await ioBrokerInterfaceList;
         let ipListForSelectBox = ipList
             .filter((a) => a.family === 'ipv4')
             .map((a) => {
-                return { value: a.address, text: a.name };
+                return {value: a.address, text: a.name};
             });
-        inputHelper('#interface', 'interface', ipListForSelectBox);
-        checkboxHelper('#useLegacyAdvertiser', 'useLegacyAdvertiser');
-        checkboxHelper('#useCiaoAdvertiser', 'useCiaoAdvertiser');
-        checkboxHelper('#verboseLogging', 'verboseLogging');
+        inputHelper('.interface', 'interface', ipListForSelectBox);
+        checkboxHelper('.useLegacyAdvertiser', 'useLegacyAdvertiser');
+        checkboxHelper('.useCiaoAdvertiser', 'useCiaoAdvertiser');
+        checkboxHelper('.verboseLogging', 'verboseLogging');
 
         devicePanel.appendChild(bridgeConfigFragment);
     }
 
     public styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean {
-        let listIcon = listItem.querySelector('.list-icon');
-        listIcon.className = 'list-icon icon mif-tree';
-        listItem.classList.add('fg-grayDark');
+        const actions         = listItem.querySelector('.device-actions');
+        const duplicateButton = actions.querySelector('.yahka_duplicate_device');
+        const removeButton    = actions.querySelector('.yahka_remove_device');
+
+        duplicateButton.classList.add('disabled');
+        removeButton.classList.add('disabled');
+
+        const listIcon = listItem.querySelector('.device-icon');
+        listIcon.innerHTML = 'settings_ethernet';
+
+        // actions.remove();
+
+        // let listIcon = listItem.querySelector('.list-icon');
+        // listIcon.className = 'list-icon icon mif-tree';
+        // listItem.classList.add('fg-grayDark');
         return true;
     }
 

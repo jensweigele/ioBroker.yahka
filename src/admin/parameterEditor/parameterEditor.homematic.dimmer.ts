@@ -11,11 +11,11 @@ export class ParameterEditor_HomeMatic_Dimmer extends ParameterEditor {
     constructor(valueChangeCallback: IParameterEditorDelegate, private showExtendedDimmerProps: boolean) {
         super(valueChangeCallback);
         this.templateNode = createAndCloneTemplateElement(require('./parameterEditor.homematic.dimmer.inc.html'));
-        this.txtLevel = this.templateNode.querySelector('#level');
+        this.txtLevel = this.templateNode.querySelector('.level');
         this.txtLevel.addEventListener('input', (ev) => this.valueChanged());
-        this.chkRestoreToPrevious = this.templateNode.querySelector('#restoreToPreviousLevel');
+        this.chkRestoreToPrevious = this.templateNode.querySelector('.restoreToPreviousLevel');
         this.chkRestoreToPrevious.addEventListener('click', (ev) => this.valueChanged());
-        this.txtDefaultLevel = this.templateNode.querySelector('#defaultLevel');
+        this.txtDefaultLevel = this.templateNode.querySelector('.defaultLevel');
         this.txtDefaultLevel.addEventListener('input', (ev) => this.valueChanged());
         if (!showExtendedDimmerProps) {
             $(this.templateNode).find('.extended-dimmer-properties').hide();

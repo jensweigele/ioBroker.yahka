@@ -111,7 +111,7 @@ export abstract class TIoBrokerInOutFunction_StateBase implements ISubscriptionR
 
     setupDeferredChangeEvent(callback: IInOutChangeNotify, plainIOValue: any) {
         this.cancelDeferredChangeEvent();
-        this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback, plainIOValue), 150);
+        this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback, plainIOValue), this.deferredTime);
     }
 
     cancelDeferredChangeEvent() {

@@ -350,17 +350,17 @@ export class THomeKitIPCamera implements CameraStreamingDelegate {
                         ffmpegCommand = ffmpegCommand.concat(this.camConfig.ffmpegCommandLine.streamAudio.map((s) => s.replace(/\$\{(.*?)}/g, (_, word) => params[word])));
                     }
 
-                    // this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
+                    this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
                     let ffmpeg = spawn('ffmpeg', ffmpegCommand, { env: process.env });
 
                     let started = false;
-                    ffmpeg.stderr.on('data', (/* data: Buffer */) => {
+                    ffmpeg.stderr.on('data', (data: Buffer) => {
                         if (!started) {
                             started = true;
                             this.FLogger.debug('FFMPEG: received first frame');
                             callback(); // do not forget to execute callback once set up
                         }
-                        //this.FLogger.debug("FFMPEG:" + data.toString('utf8'));
+                        this.FLogger.debug("FFMPEG:" + data.toString('utf8'));
                     });
                     ffmpeg.on('error', (error) => {
                         this.FLogger.error(`[Video] Failed to start video stream: ${error.message}`);

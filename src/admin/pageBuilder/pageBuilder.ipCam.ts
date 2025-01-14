@@ -27,7 +27,7 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
             return;
         }
 
-        this.refreshCameraPanels(config, AFocusLastPanel, devicePanel);
+        await this.refreshCameraPanels(config, AFocusLastPanel, devicePanel);
         this.refreshServicePanels(config, AFocusLastPanel, devicePanel);
     }
 
@@ -56,6 +56,7 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
                     input.value = '';
                 }
                 input.addEventListener('input', this.handlePropertyChange.bind(this, config, propertyName, errorElement, validator));
+                input.addEventListener('change', this.handlePropertyChange.bind(this, config, propertyName, errorElement, validator));
             }
             this.refreshSimpleErrorElement(errorElement, validator);
         };
@@ -79,47 +80,66 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
             });
         };
 
-        inputHelper('#enabled', 'enabled');
-        inputHelper('#name', 'name', undefined, () => !this.delegate.deviceIsUnique(config));
-        inputHelper('#group', 'groupString');
-        inputHelper('#manufacturer', 'manufacturer');
-        inputHelper('#model', 'model');
-        inputHelper('#serial', 'serial');
-        inputHelper('#firmware', 'firmware');
-        inputHelper('#username', 'username');
-        inputHelper('#pincode', 'pincode');
-        inputHelper('#port', 'port');
+        inputHelper('.enabled', 'enabled');
+        inputHelper('.name', 'name', undefined, () => !this.delegate.deviceIsUnique(config));
+        inputHelper('.group', 'groupString');
+        inputHelper('.manufacturer', 'manufacturer');
+        inputHelper('.model', 'model');
+        inputHelper('.serial', 'serial');
+        inputHelper('.firmware', 'firmware');
+        inputHelper('.username', 'username');
+        inputHelper('.pincode', 'pincode');
+        inputHelper('.port', 'port');
         let ipList = await ioBrokerInterfaceList;
         let ipListForSelectBox = ipList
             .filter((a) => a.family === 'ipv4')
             .map((a) => {
                 return { value: a.address, text: a.name };
             });
-        inputHelper('#interface', 'interface', ipListForSelectBox);
-        inputHelper('#useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
-        inputHelper('#useCiaoAdvertiser', 'useCiaoAdvertiser', undefined, undefined, false);
+        inputHelper('.interface', 'interface', ipListForSelectBox);
+        inputHelper('.useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
+        inputHelper('.useCiaoAdvertiser', 'useCiaoAdvertiser', undefined, undefined, false);
 
-        inputHelper('#source', 'source');
-        inputHelper('#codec', 'codec');
-        inputHelper('#enableAudio', 'enableAudio', undefined, undefined, false);
-        inputHelper('#numberOfStreams', 'numberOfStreams');
-        inputHelper('#maxWidth', 'maxWidth');
-        inputHelper('#maxHeight', 'maxHeight');
-        inputHelper('#maxFPS', 'maxFPS');
+        inputHelper('.source', 'source');
+        inputHelper('.codec', 'codec');
+        inputHelper('.enableAudio', 'enableAudio', undefined, undefined, false);
+        inputHelper('.numberOfStreams', 'numberOfStreams');
+        inputHelper('.maxWidth', 'maxWidth');
+        inputHelper('.maxHeight', 'maxHeight');
+        inputHelper('.maxFPS', 'maxFPS');
 
-        ffmpegHelper('#ffmpeg_snapshot', 'snapshot');
-        ffmpegHelper('#ffmpeg_stream', 'stream');
-        ffmpegHelper('#ffmpeg_streamAudio', 'streamAudio');
+        ffmpegHelper('.ffmpeg_snapshot', 'snapshot');
+        ffmpegHelper('.ffmpeg_stream', 'stream');
+        ffmpegHelper('.ffmpeg_streamAudio', 'streamAudio');
+
+
+        const addServiceButton = configFragment.querySelector<HTMLButtonElement>('.yahka_add_service');
+        addServiceButton.addEventListener('click', () => {
+            if (!hkBridge.Configuration.isIPCameraConfig(config)) {
+                return;
+            }
+
+            config.services.push({
+                name: '',
+                subType: '',
+                type: '',
+                characteristics: []
+            });
+
+            this.delegate.refreshDevicePanel(config, true);
+            this.delegate.changeCallback();
+        });
 
         devicePanel.appendChild(configFragment);
     }
 
     private refreshServicePanels(config: hkBridge.Configuration.ICameraConfig, AFocusLastPanel: boolean, devicePanel: HTMLElement) {
+        const servicePanelContainer = devicePanel.querySelector('.yahka_service_container');
         let lastPane: HTMLElement;
         config.services = config.services ?? [];
         for (let serviceConfig of config.services) {
             let servicePanel = this.servicePanelBuilder.createServicePanel(config.services, serviceConfig);
-            devicePanel.appendChild(servicePanel);
+            servicePanelContainer.appendChild(servicePanel);
             lastPane = servicePanel;
         }
 
@@ -137,8 +157,8 @@ export class ConfigPageBuilder_IPCamera extends ConfigPageBuilder_Base implement
             return false;
         }
 
-        let listIcon = listItem.querySelector('.list-icon');
-        listIcon.className = 'list-icon icon mif-camera';
+        let listIcon = listItem.querySelector('.device-icon');
+        listIcon.innerHTML = 'camera_alt';
         listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
         listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
         return true;

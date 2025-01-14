@@ -27,7 +27,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
 
     public createServicePanel(services: hkBridge.Configuration.IServiceConfig[], serviceConfig: hkBridge.Configuration.IServiceConfig): HTMLElement {
         let servicePanel = <DocumentFragment>document.importNode(this.deviceServicePanelTemplate.content, true);
-        let frameNode = <HTMLElement>servicePanel.querySelector('#yahka_service_panel');
+        let frameNode = <HTMLElement>servicePanel.querySelector('.yahka_service_panel');
         translateFragment(servicePanel);
         let inputHelper = (selector: string, configName: keyof hkBridge.Configuration.IServiceConfig, selectList?: IDictionary<ISelectListEntry> | ISelectListEntry[], eventHandler?: (this: HTMLSelectElement, ev: Event) => any, defaultForCheckbox = true) => {
             let input = <HTMLInputElement>frameNode.querySelector(selector);
@@ -44,18 +44,20 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
                 input.addEventListener('change', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
             } else if (eventHandler !== undefined) {
                 input.addEventListener('input', eventHandler);
+                input.addEventListener('change', eventHandler);
             } else {
                 input.addEventListener('input', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
+                input.addEventListener('change', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
             }
         };
 
         this.refreshServicePanelCaption(serviceConfig, frameNode);
-        inputHelper('#service_enabled', 'enabled');
-        inputHelper('#service_isPrimary', 'isPrimary', undefined, undefined, false);
-        inputHelper('#service_isHidden', 'isHidden', undefined, undefined, false);
-        inputHelper('#service_name', 'name');
+        inputHelper('.service_enabled', 'enabled');
+        inputHelper('.service_isPrimary', 'isPrimary', undefined, undefined, false);
+        inputHelper('.service_isHidden', 'isHidden', undefined, undefined, false);
+        inputHelper('.service_name', 'name');
         inputHelper(
-            '#service_type',
+            '.service_type',
             'type',
             Object.keys(HAPServiceDictionary.services).map(s => ({
                 text: s,
@@ -63,9 +65,9 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
             })),
             this.handleServiceTypeChange.bind(this, serviceConfig, frameNode)
         );
-        inputHelper('#service_subtype', 'subType');
+        inputHelper('.service_subtype', 'subType');
         inputHelper(
-            '#service_link_to',
+            '.service_link_to',
             'linkTo',
             [{
                 text: '',
@@ -77,7 +79,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
         );
 
         inputHelper(
-            '#new_custom_characteristic',
+            '.new_custom_characteristic',
             '',
             Object.entries(HAPServiceDictionary.characteristics)
                 .map(([key, c]) => ({
@@ -91,7 +93,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
         this.buildCharacteristicTable(serviceConfig, frameNode);
 
         // bind delete buttton
-        frameNode.querySelector('#yakha_delete_service').addEventListener('click', () => {
+        frameNode.querySelector('.yakha_delete_service').addEventListener('click', () => {
             let idx = services.indexOf(serviceConfig);
             if (idx > -1) {
                 services.splice(idx, 1);
@@ -101,13 +103,19 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
             this.delegate.refreshSelectedDeviceConfig();
         });
 
-        frameNode.querySelector('#yahka_add_characteristic').addEventListener('click',
+        frameNode.querySelector('.yahka_add_characteristic').addEventListener('click',
             this.addCustomCharacteristic.bind(this, serviceConfig, frameNode));
         return frameNode;
     }
 
     private refreshServicePanelCaption(serviceConfig: hkBridge.Configuration.IServiceConfig, servicePanel: HTMLElement) {
-        servicePanel.querySelector('#yahka_service_caption').textContent = `${serviceConfig.enabled === false ? '[## disabled ##]' : ''} ${serviceConfig.name}[${serviceConfig.type}]`;
+        const captionElement         = servicePanel.querySelector('.yahka_service_caption');
+        captionElement.textContent = `${serviceConfig.name}[${serviceConfig.type}]`;
+        if (true === serviceConfig.enabled) {
+            captionElement.classList.remove('grey-text');
+            return;
+        }
+        captionElement.classList.add('grey-text');
     }
 
     private findHAPCharacteristic(serviceDef: IHAPServiceDefinition, characteristicName: string): IHAPCharacteristicDefintion {
@@ -201,13 +209,15 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
             return a[0].localeCompare(b[0]);
         });
 
-        let table = servicePanel.querySelector('#yahka_characteristic_table');
-        while (table.childElementCount > 1) {// first row is the header row
+        let table = servicePanel.querySelector('.yahka_characteristic_table');
+        while (table.childElementCount > 0) {// first row is the header row
             table.removeChild(table.lastElementChild);
         }
         for (let row of charRows) {
             table.appendChild(row[2]);
         }
+
+        this.delegate.refreshInputs();
     }
 
     private getParameterEditor(functionName: string, valueChangeCallback: IParameterEditorDelegate, functionMap: Map<string, ParameterEditorFactory>): IParameterEditor {
@@ -239,13 +249,14 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
             anchor.attributes.setNamedItem(anchorAttribute);
         }
 
-        let bracketElement = <HTMLElement>rowElement.querySelector('#characteristic');
+        const characteristicName = rowElement.querySelector<HTMLElement>('.yahka_characteristic_name');
 
-        let checkBox = <HTMLInputElement>rowElement.querySelector('#characteristic_enabled');
+        let checkBox = <HTMLInputElement>rowElement.querySelector('.characteristic_enabled');
         checkBox.checked = enabled;
-        checkBox.addEventListener('click', this.handleCharacteristicEnabledChange.bind(this, serviceConfig, name, bracketElement))
+        checkBox.addEventListener('click', this.handleCharacteristicEnabledChange.bind(this, serviceConfig, name, characteristicName))
 
-        let delButton = rowElement.querySelector('#yakha_delete_characteristic');
+        let delButton = rowElement.querySelector('.yakha_delete_characteristic');
+
         delButton.addEventListener('click', () => {
             const charConfig = this.findConfigCharacteristic(serviceConfig, name);
             if (charConfig != null) {
@@ -255,11 +266,11 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
             }
         });
 
-        this.refreshEnabledClass(bracketElement, enabled);
-        this.refreshOptionalClass(bracketElement, charDef?.optional ?? true);
-        this.refreshCustomClass(bracketElement, charConfig?.customCharacteristic ?? false);
+        this.refreshEnabledClass(characteristicName, enabled);
+        this.refreshOptionalClass(characteristicName, charDef?.optional ?? true);
+        this.refreshCustomClass(characteristicName, charConfig?.customCharacteristic ?? false);
 
-        rowElement.querySelector('#characteristic_name').textContent = name;
+        characteristicName.textContent = name;
 
         let functionSelector = (selector: string, containerSelector: string, configName: string, parameterName: string, functionMap: Map<string, ParameterEditorFactory>) => {
             let input = <HTMLSelectElement>rowElement.querySelector(selector);
@@ -286,16 +297,22 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
             }
 
             this.updateParameterEditor(Utils.getSelectInputValue(input)?.toString(), container, parameterValue, paramUpdateMethod, functionMap);
-            input.addEventListener('input', (e) => {
+            input.addEventListener('change', (e) => {
                 this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
                 let charConfig = this.findConfigCharacteristic(serviceConfig, name);
                 this.updateParameterEditor(Utils.getSelectInputValue(input)?.toString(), container, charConfig[parameterName], paramUpdateMethod, functionMap);
                 return false;
             });
+
+            try {
+                M.FormSelect.init(input);
+            } catch (error) {
+                // Just do nothing. M.FormSelect does seemingly not work, when element is not in DOM yet or invisible.
+            }
         };
 
-        functionSelector('#characteristic_inoutfunction', '#characteristic_inoutparams_container', 'inOutFunction', 'inOutParameters', inoutFunctions);
-        functionSelector('#characteristic_conversionfunction', '#characteristic_conversionparams_container', 'conversionFunction', 'conversionParameters', convFunctions);
+        functionSelector('.characteristic_inoutfunction', '.characteristic_inoutparams_container', 'inOutFunction', 'inOutParameters', inoutFunctions);
+        functionSelector('.characteristic_conversionfunction', '.characteristic_conversionparams_container', 'conversionFunction', 'conversionParameters', convFunctions);
 
         this.updateCharacteristicProperties(rowElement, serviceConfig, charDef, charConfig);
 
@@ -309,18 +326,8 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
         charConfig: hkBridge.Configuration.ICharacteristicConfig
     ) {
         let charName = charConfig ? charConfig.name : charDef.name;
-        let toggleLink = rowElement.querySelector('#toggleProperties');
-        let propContainer = rowElement.querySelector('#characteristic_propertyTable_container');
-        let hasCustomProperties = charConfig ? (charConfig.properties !== undefined) && (Object.keys(charConfig.properties).length > 0) : false;
 
-        if (toggleLink) {
-            toggleLink.addEventListener('click', () => {
-                propContainer.classList.toggle('no-display');
-            })
-            propContainer.classList.toggle('no-display', !hasCustomProperties);
-            toggleLink.classList.toggle('properties-defined', hasCustomProperties);
-        }
-        let propTable = rowElement.querySelector('#characteristic_propertyTable');
+        let propTable = rowElement.querySelector('.characteristic_propertyTable');
 
         function transformValue(value: any) {
             let result = value;
@@ -340,7 +347,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
                 nameSpan.id = '';
                 nameSpan.textContent = propertyName;
 
-                let propInput = <HTMLInputElement>propElement.querySelector('#propValue')
+                let propInput = <HTMLInputElement>propElement.querySelector('.propValue')
                 propInput.id = propertyName;
                 propInput.placeholder = propertyDefaultValue.asString;
                 if (charConfig !== undefined) {
@@ -359,7 +366,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
     }
 
     private refreshEnabledClass(row: HTMLElement, enabled: boolean) {
-        row.classList.toggle('disabled', !enabled);
+        row.classList.toggle('grey-text', !enabled);
     }
 
     private refreshOptionalClass(row: HTMLElement, optional: boolean) {
@@ -451,7 +458,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
     }
 
     private addCustomCharacteristic(serviceConfig: hkBridge.Configuration.IServiceConfig, servicePanel: HTMLElement) {
-        const select = servicePanel.querySelector('#new_custom_characteristic') as HTMLSelectElement;
+        const select = servicePanel.querySelector<HTMLSelectElement>('.new_custom_characteristic');
         const charName = Utils.getSelectInputValue(select)?.toString();
         const existingChar = serviceConfig.characteristics.find((c) => c.name === charName);
         if (existingChar != null) {

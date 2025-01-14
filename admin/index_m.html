@@ -20,9 +20,9 @@
     <script type="text/javascript" src="words.js"></script>
 
     <script type="text/javascript" src="ext/metroui/js/metro.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="ext/metroui/css/metro.min.css" />
-    <link rel="stylesheet" type="text/css" href="ext/metroui/css/metro-icons.min.css" />
-    <link rel="stylesheet" type="text/css" href="ext/metroui/css/metro-colors.min.css" />
+<!--    <link rel="stylesheet" type="text/css" href="ext/metroui/css/metro.min.css" />-->
+<!--    <link rel="stylesheet" type="text/css" href="ext/metroui/css/metro-icons.min.css" />-->
+<!--    <link rel="stylesheet" type="text/css" href="ext/metroui/css/metro-colors.min.css" />-->
     <link rel="stylesheet" type="text/css" href="css/yahka.admin.css" />
 
     <script type="text/javascript" src="yahka.admin.js"></script>
@@ -138,45 +138,31 @@
 </head>
 
 <body>
-    <div id="adapter-container" class="flex-container-col flex-container-stretch auto-scroll">
-        <div class="flex-grow flex-container-col flex-container-stretch bg-white auto-scroll" id="yahka_bridge_frame">
-            <div class="flex-container-row" style="flex: 0 0 auto;">
-                <div class="flex-grow flex-panel">
+    <div id="adapter-container" class="m">
+        <div class="container-fluid flex-grow" id="yahka_bridge_frame">
+            <div class="row">
+                <div class="col s12 left" style="margin-top: 20px;">
                     <div>
-                        <button class="image-button primary" id="yahka_add_device">
-                            <span class="icon mif-plus bg-darkCobalt  fg-white"></span>
+                        <button class="btn" id="yahka_add_device">
+                            <span class="material-icons">add</span>
                             <span class="translate">Add Device</span>
                         </button>
-                        <button class="image-button primary" id="yahka_add_camera">
-                            <span class="icon mif-plus bg-darkCobalt  fg-white"></span>
+                        <button class="btn" id="yahka_add_camera">
+                            <span class="material-icons">add</span>
                             <span class="translate">Add Camera</span>
                         </button>
-                        <button class="image-button danger" id="yahka_remove_device">
-                            <span class="icon mif-minus bg-darkCrimson  fg-white"></span>
-                            <span class="translate">Remove Device</span>
-                        </button>
-                        <button class="image-button primary" id="yahka_duplicate_device">
-                            <span class="icon mif-plus bg-darkCobalt  fg-white"></span>
-                            <span class="translate">Duplicate Device</span>
-                        </button>
-                        <button class="image-button primary" id="yahka_add_service">
-                            <span class="icon mif-plus bg-darkCobalt  fg-white"></span>
-                            <span class="translate">Add Service</span>
-                        </button>
-
                     </div>
                 </div>
             </div>
-
-            <div class="flex-grow treeAndData flex-container-row  auto-scroll">
-                <div class="flex-panel auto-scroll" style="min-width: 20%">
-                    <div class="caption translate">Devices</div>
-                    <div class="listview" id="yahka_deviceList">
-                    </div>
+            <div class="row">
+                <div class="col s12">
+                    <ul class="collection collapsible" id="yahka_deviceList">
+                    </ul>
                 </div>
-                <div class=" flex-grow flex-panel auto-scroll">
-                    <div class="caption translate">Properties and Services</div>
-                    <div class="accordion" id="yahka_device_details" data-role="accordion">
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <div style="display: none" class="yahka-edit-device-container card-panel card-outer-container">
                     </div>
                 </div>
             </div>
@@ -204,5 +190,4 @@
         </div>
     </div>
 </body>
-
 </html>
