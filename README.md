@@ -334,7 +334,7 @@ This repo includes one submodule, so before building you need to also close/init
 ## License
 The MIT License (MIT)
 
-Copyright (c) 2016-2024 Jens Weigele (iobroker.yahka@gmail.com)
+Copyright (c) 2016-2025 Jens Weigele (iobroker.yahka@gmail.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
