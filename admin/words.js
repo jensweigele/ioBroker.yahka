@@ -300,9 +300,9 @@ systemDictionary = {
         "ru"   : "Наименование услуги",
         "zh-cn": "服务名称："
     },
-    "Service: "                                                                                                                                                                                                    : {
-        "en"   : "Service: ",
-        "de"   : "Bedienung: ",
+    "Service"                                                                                                                                                                                                    : {
+        "en"   : "Service",
+        "de"   : "Service",
         "ru"   : "Обслуживание: ",
         "zh-cn": "服务："
     },

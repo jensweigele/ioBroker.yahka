@@ -83823,7 +83823,7 @@ module.exports = "<div class=\"frame\">\n    <div class=\"row\">\n        <div c
   \*********************************************************************/
 /***/ ((module) => {
 
-module.exports = "<li class=\"collection-item\">\n    <div style=\"display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;\">\n        <div style=\"display: flex\">\n            <i class=\"device-icon material-symbols-outlined circle\">mode_fan</i>\n            <div style=\"display: flex; flex-direction: column\">\n                <span class=\"list-title\"></span>\n                <span class=\"device-type\"></span>\n            </div>\n        </div>\n        <div class=\"device-actions\" style=\"display: flex; flex-wrap: nowrap; gap: 4px;\">\n            <button class=\"edit-button btn waves-effect waves-light\">\n                <span class=\"translate\">Edit</span>\n            </button>\n            <button class=\"yahka_duplicate_device btn waves-effect waves-light\">\n                <span class=\"translate\">Duplicate</span>\n            </button>\n            <button class=\"yahka_remove_device btn waves-effect waves-light red\">\n                <span class=\"translate\">Remove</span>\n            </button>\n        </div>\n    </div>\n    <div class=\"collapsible-body\">\n    </div>\n</li>";
+module.exports = "<li class=\"collection-item\">\n    <div style=\"display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;\">\n        <div style=\"display: flex; gap: 10px;\">\n            <i class=\"device-icon material-symbols-outlined circle\">mode_fan</i>\n            <div style=\"display: flex; flex-direction: column\">\n                <span class=\"list-title\"></span>\n                <span class=\"device-type\"></span>\n            </div>\n        </div>\n        <div class=\"device-actions\" style=\"display: flex; flex-wrap: nowrap; gap: 4px;\">\n            <button class=\"edit-button btn waves-effect waves-light\">\n                <span class=\"translate\">Edit</span>\n            </button>\n            <button class=\"yahka_duplicate_device btn waves-effect waves-light\">\n                <span class=\"translate\">Duplicate</span>\n            </button>\n            <button class=\"yahka_remove_device btn waves-effect waves-light red\">\n                <span class=\"translate\">Remove</span>\n            </button>\n        </div>\n    </div>\n    <div class=\"collapsible-body\">\n    </div>\n</li>";
 
 /***/ }),
 
@@ -83833,7 +83833,7 @@ module.exports = "<li class=\"collection-item\">\n    <div style=\"display: flex
   \**************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"list-group collapsed\">\n    <span class=\"list-group-toggle\">..list group title...</span>\n    <div class=\"list-group-content\">\n\n    </div>\n</div>";
+module.exports = "<li>\n    <div class=\"collapsible-header\" style=\"display: flex; align-items: center\">\n        <span class=\"material-symbols-outlined\" style=\"font-size: 18px;\">expand_all</span>\n        <span class=\"group-name\"></span>\n    </div>\n    <div class=\"collapsible-body collapsible-body-container\">\n        <ul class=\"collection group-content\">\n        </ul>\n    </div>\n</li>";
 
 /***/ }),
 
@@ -98292,7 +98292,7 @@ class ioBroker_YahkaPageBuilder {
             selectElements.forEach(selectElement => {
                 M.FormSelect.init(selectElement);
             });
-            const collapsibleElements = document.querySelectorAll('.collapsible');
+            const collapsibleElements = document.querySelectorAll('.collapsible:not(.no-re-init)');
             M.Collapsible.init(collapsibleElements, {
                 accordion: false
             });
@@ -98399,13 +98399,21 @@ class ioBroker_DeviceListHandler extends pageBuilder_base_1.ConfigPageBuilder_Ba
         deviceList.innerHTML = '';
         this.listEntryToConfigMap.clear();
         this.entryGroupMap.clear();
-        this
-            .getDeviceList()
-            .forEach((deviceConfig) => {
-            const deviceEntryElement = this.createDeviceListEntry(deviceConfig);
-            let node = deviceEntryElement.querySelector('.collection-item');
+        // this
+        //     .getDeviceList()
+        //     .forEach((deviceConfig) => {
+        //         const deviceEntryElement = this.createDeviceListEntry(deviceConfig);
+        //         let node                 = deviceEntryElement.querySelector<HTMLElement>('.collection-item');
+        //         this.listEntryToConfigMap.set(node, deviceConfig);
+        //         deviceList.appendChild(deviceEntryElement);
+        //     });
+        // ;
+        for (let deviceConfig of this.getDeviceList().sort((a, b) => { var _a; return (_a = a.name) === null || _a === void 0 ? void 0 : _a.localeCompare(b.name); })) {
+            const groupNode = this.getDeviceGroupNode(deviceList, deviceConfig);
+            let fragment = this.createDeviceListEntry(deviceConfig);
+            let node = fragment.querySelector('.collection-item');
             this.listEntryToConfigMap.set(node, deviceConfig);
-            deviceList.appendChild(deviceEntryElement);
+            groupNode.appendChild(fragment);
             const editButton = node.querySelector('.edit-button');
             const removeButton = node.querySelector('.yahka_remove_device');
             const duplicateButton = node.querySelector('.yahka_duplicate_device');
@@ -98458,22 +98466,12 @@ class ioBroker_DeviceListHandler extends pageBuilder_base_1.ConfigPageBuilder_Ba
                     this.delegate.changeCallback();
                 });
             }
+        }
+        [...deviceList.children]
+            .sort((a, b) => { var _a; return (_a = a.innerText) === null || _a === void 0 ? void 0 : _a.localeCompare(b.innerText); })
+            .forEach(node => {
+            return deviceList.appendChild(node);
         });
-        ;
-        // for (let deviceConfig of this.getDeviceList().sort((a, b) => a.name?.localeCompare(b.name))) {
-        //     const groupNode = this.getDeviceGroupNode(deviceList, deviceConfig);
-        //     let fragment = this.createDeviceListEntry(deviceConfig);
-        //     let node = (<HTMLElement>fragment.querySelector('.list'));
-        //     this.listEntryToConfigMap.set(node, deviceConfig);
-        //     groupNode.appendChild(fragment);
-        // }
-        // [...deviceList.children]
-        //     .sort((a: HTMLElement, b: HTMLElement) => a.innerText?.localeCompare(b.innerText))
-        //     .forEach(node => {
-        //         return deviceList.appendChild(node);
-        //     });
-        //
-        // (<any>$(deviceList)).listview({ onListClick: this.handleDeviceListClick.bind(this) });
     }
     getDeviceGroupNode(deviceList, deviceConfig) {
         const groupName = deviceConfig.groupString ? deviceConfig.groupString : '<no group>';
@@ -98483,13 +98481,13 @@ class ioBroker_DeviceListHandler extends pageBuilder_base_1.ConfigPageBuilder_Ba
             return existingNode;
         }
         const fragment = document.importNode(this.deviceListEntryGroupTemplate.content, true);
-        const listGroupNode = fragment.querySelector('.list-group');
-        const listGroupName = fragment.querySelector('.list-group-toggle');
-        const listGroupContent = fragment.querySelector('.list-group-content');
-        listGroupName.innerText = groupName;
-        this.entryGroupMap.set(dictIdentifier, listGroupContent);
-        deviceList.appendChild(listGroupNode);
-        return listGroupContent;
+        const groupRootNode = fragment.querySelector('li');
+        const groupNameNode = fragment.querySelector('.group-name');
+        const groupContentNode = fragment.querySelector('.group-content');
+        groupNameNode.innerText = groupName;
+        this.entryGroupMap.set(dictIdentifier, groupContentNode);
+        deviceList.appendChild(groupRootNode);
+        return groupContentNode;
     }
     refreshDeviceList() {
         this.listEntryToConfigMap.forEach((node, element) => this.refreshDeviceListEntry(node, element));

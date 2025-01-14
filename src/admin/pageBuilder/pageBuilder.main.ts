@@ -45,7 +45,7 @@ export class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
                 M.FormSelect.init(selectElement);
             });
 
-            const collapsibleElements = document.querySelectorAll('.collapsible');
+            const collapsibleElements = document.querySelectorAll('.collapsible:not(.no-re-init)');
             M.Collapsible.init(collapsibleElements, {
                 accordion: false
             });
@@ -185,102 +185,91 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
         this.listEntryToConfigMap.clear();
         this.entryGroupMap.clear();
 
-        this
-            .getDeviceList()
-            .forEach((deviceConfig) => {
-                const deviceEntryElement = this.createDeviceListEntry(deviceConfig);
-                let node                 = deviceEntryElement.querySelector<HTMLElement>('.collection-item');
-                this.listEntryToConfigMap.set(node, deviceConfig);
-                deviceList.appendChild(deviceEntryElement);
+        for (let deviceConfig of this.getDeviceList().sort((a, b) => a.name?.localeCompare(b.name))) {
+            const groupNode = this.getDeviceGroupNode(deviceList, deviceConfig);
+            let fragment    = this.createDeviceListEntry(deviceConfig);
+            let node        = (<HTMLElement>fragment.querySelector('.collection-item'));
+            this.listEntryToConfigMap.set(node, deviceConfig);
+            groupNode.appendChild(fragment);
 
-                const editButton = node.querySelector<HTMLButtonElement>('.edit-button');
-                const removeButton = node.querySelector<HTMLButtonElement>('.yahka_remove_device');
-                const duplicateButton = node.querySelector('.yahka_duplicate_device');
+            const editButton = node.querySelector<HTMLButtonElement>('.edit-button');
+            const removeButton = node.querySelector<HTMLButtonElement>('.yahka_remove_device');
+            const duplicateButton = node.querySelector('.yahka_duplicate_device');
 
-                if (editButton) {
-                    editButton.addEventListener('click', () => {
-                        this.delegate.setSelectedDeviceConfig(deviceConfig, false);
-                    });
-                }
+            if (editButton) {
+                editButton.addEventListener('click', () => {
+                    this.delegate.setSelectedDeviceConfig(deviceConfig, false);
+                });
+            }
 
-                if (removeButton) {
-                    removeButton.addEventListener('click', () => {
-                        if (hkBridge.Configuration.isIPCameraConfig(deviceConfig)) {
-                            let idx = this.delegate.cameraConfigs.indexOf(deviceConfig);
-                            if (idx > -1) {
-                                this.delegate.cameraConfigs.splice(idx, 1);
-                                this.delegate.changeCallback();
-                                this.delegate.setSelectedDeviceConfig(undefined, false);
-                                this.buildDeviceList(bridgeFrame);
-                                this.delegate.changeCallback();
-                            }
+            if (removeButton) {
+                removeButton.addEventListener('click', () => {
+                    if (hkBridge.Configuration.isIPCameraConfig(deviceConfig)) {
+                        let idx = this.delegate.cameraConfigs.indexOf(deviceConfig);
+                        if (idx > -1) {
+                            this.delegate.cameraConfigs.splice(idx, 1);
+                            this.delegate.changeCallback();
+                            this.delegate.setSelectedDeviceConfig(undefined, false);
+                            this.buildDeviceList(bridgeFrame);
+                            this.delegate.changeCallback();
                         }
+                    }
 
-                        if (hkBridge.Configuration.isDeviceConfig(deviceConfig)) {
-                            let idx = bridge.devices.indexOf(deviceConfig);
-                            if (idx > -1) {
-                                bridge.devices.splice(idx, 1);
-                                this.delegate.changeCallback();
-                                this.delegate.setSelectedDeviceConfig(undefined, false);
-                                this.buildDeviceList(bridgeFrame);
-                                this.delegate.changeCallback();
-                            }
+                    if (hkBridge.Configuration.isDeviceConfig(deviceConfig)) {
+                        let idx = bridge.devices.indexOf(deviceConfig);
+                        if (idx > -1) {
+                            bridge.devices.splice(idx, 1);
+                            this.delegate.changeCallback();
+                            this.delegate.setSelectedDeviceConfig(undefined, false);
+                            this.buildDeviceList(bridgeFrame);
+                            this.delegate.changeCallback();
                         }
-                    })
-                }
+                    }
+                })
+            }
 
-                if (duplicateButton) {
-                    duplicateButton.addEventListener('click', () => {
-                        let copyOfDevice = $.extend(true, {}, deviceConfig)
-                        copyOfDevice.name = `${copyOfDevice.name} copy`
-                        if (hkBridge.Configuration.isIPCameraConfig(copyOfDevice)) {
-                            copyOfDevice.serial = '';
-                            this.delegate.cameraConfigs.push(copyOfDevice);
-                        } else if (hkBridge.Configuration.isDeviceConfig(copyOfDevice)) {
-                            copyOfDevice.serial = '';
-                            bridge.devices.push(copyOfDevice);
-                        } else {
-                            return
-                        }
-                        this.delegate.setSelectedDeviceConfig(copyOfDevice, true);
-                        this.buildDeviceList(bridgeFrame);
-                        this.delegate.changeCallback();
-                    })
-                }
+            if (duplicateButton) {
+                duplicateButton.addEventListener('click', () => {
+                    let copyOfDevice = $.extend(true, {}, deviceConfig)
+                    copyOfDevice.name = `${copyOfDevice.name} copy`
+                    if (hkBridge.Configuration.isIPCameraConfig(copyOfDevice)) {
+                        copyOfDevice.serial = '';
+                        this.delegate.cameraConfigs.push(copyOfDevice);
+                    } else if (hkBridge.Configuration.isDeviceConfig(copyOfDevice)) {
+                        copyOfDevice.serial = '';
+                        bridge.devices.push(copyOfDevice);
+                    } else {
+                        return
+                    }
+                    this.delegate.setSelectedDeviceConfig(copyOfDevice, true);
+                    this.buildDeviceList(bridgeFrame);
+                    this.delegate.changeCallback();
+                })
+            }
+        }
+        [...deviceList.children]
+            .sort((a: HTMLElement, b: HTMLElement) => a.innerText?.localeCompare(b.innerText))
+            .forEach(node => {
+                return deviceList.appendChild(node);
             });
-        ;
-
-        // for (let deviceConfig of this.getDeviceList().sort((a, b) => a.name?.localeCompare(b.name))) {
-        //     const groupNode = this.getDeviceGroupNode(deviceList, deviceConfig);
-        //     let fragment = this.createDeviceListEntry(deviceConfig);
-        //     let node = (<HTMLElement>fragment.querySelector('.list'));
-        //     this.listEntryToConfigMap.set(node, deviceConfig);
-        //     groupNode.appendChild(fragment);
-        // }
-        // [...deviceList.children]
-        //     .sort((a: HTMLElement, b: HTMLElement) => a.innerText?.localeCompare(b.innerText))
-        //     .forEach(node => {
-        //         return deviceList.appendChild(node);
-        //     });
-        //
-        // (<any>$(deviceList)).listview({ onListClick: this.handleDeviceListClick.bind(this) });
     }
 
     private getDeviceGroupNode(deviceList: Element, deviceConfig: hkBridge.Configuration.IBaseConfigNode): HTMLElement {
-        const groupName = deviceConfig.groupString ? deviceConfig.groupString : '<no group>';
+        const groupName      = deviceConfig.groupString ? deviceConfig.groupString : '<no group>';
         const dictIdentifier = groupName.toLocaleLowerCase();
-        const existingNode = this.entryGroupMap.get(dictIdentifier);
+        const existingNode   = this.entryGroupMap.get(dictIdentifier);
         if (existingNode != null) {
             return existingNode;
         }
-        const fragment = <DocumentFragment>document.importNode(this.deviceListEntryGroupTemplate.content, true);
-        const listGroupNode = (<HTMLElement>fragment.querySelector('.list-group'));
-        const listGroupName = (<HTMLElement>fragment.querySelector('.list-group-toggle'));
-        const listGroupContent = (<HTMLElement>fragment.querySelector('.list-group-content'));
-        listGroupName.innerText = groupName;
-        this.entryGroupMap.set(dictIdentifier, listGroupContent);
-        deviceList.appendChild(listGroupNode);
-        return listGroupContent;
+
+        const fragment          = <DocumentFragment>document.importNode(this.deviceListEntryGroupTemplate.content, true);
+        const groupRootNode     = (<HTMLElement>fragment.querySelector('li'));
+        const groupNameNode     = (<HTMLElement>fragment.querySelector('.group-name'));
+        const groupContentNode  = (<HTMLElement>fragment.querySelector('.group-content'));
+        groupNameNode.innerText = groupName;
+        this.entryGroupMap.set(dictIdentifier, groupContentNode);
+        deviceList.appendChild(groupRootNode);
+        return groupContentNode;
     }
 
     public refreshDeviceList() {

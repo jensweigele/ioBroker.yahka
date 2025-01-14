@@ -19,10 +19,6 @@
     <script type="text/javascript" src="../../js/adapter-settings.js"></script>
     <script type="text/javascript" src="words.js"></script>
 
-    <script type="text/javascript" src="ext/metroui/js/metro.min.js"></script>
-<!--    <link rel="stylesheet" type="text/css" href="ext/metroui/css/metro.min.css" />-->
-<!--    <link rel="stylesheet" type="text/css" href="ext/metroui/css/metro-icons.min.css" />-->
-<!--    <link rel="stylesheet" type="text/css" href="ext/metroui/css/metro-colors.min.css" />-->
     <link rel="stylesheet" type="text/css" href="css/yahka.admin.css" />
 
     <script type="text/javascript" src="yahka.admin.js"></script>
@@ -156,10 +152,16 @@
             </div>
             <div class="row">
                 <div class="col s12">
-                    <ul class="collection collapsible" id="yahka_deviceList">
+                    <ul class="collapsible no-re-init" id="yahka_deviceList">
                     </ul>
                 </div>
             </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var elems = document.querySelectorAll('#yahka_deviceList');
+                    M.Collapsible.init(elems);
+                });
+            </script>
             <div class="row">
                 <div class="col s12">
                     <div style="display: none" class="yahka-edit-device-container card-panel card-outer-container">

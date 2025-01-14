@@ -263,3 +263,7 @@ textarea.validationError {
     font-size: 1.1rem;
     overflow-wrap: anywhere;
 }
+
+.collapsible-body-container {
+    padding: 0 !important;
+}
