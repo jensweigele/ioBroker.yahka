@@ -41,7 +41,7 @@ export class TIOBrokerAdapter implements IHomeKitBridgeBindingFactory {
     devices: Array<THomeKitBridge | THomeKitIPCamera> = [];
     verboseHAPLogging: boolean = false;
 
-    constructor(private adapter: ioBroker.Adapter, private dataDir) {
+    constructor(private adapter: ioBroker.Adapter, private dataDir: string) {
         adapter.on('ready', this.adapterReady.bind(this));
         adapter.on('stateChange', this.handleState.bind(this));
         adapter.on('message', this.handleMessage.bind(this));

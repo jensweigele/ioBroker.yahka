@@ -6252,6 +6252,17 @@ function getIPFromV4Mapped(address) {
 
 /***/ }),
 
+/***/ "../node_modules/@homebridge/ciao/package.json":
+/*!*****************************************************!*\
+  !*** ../node_modules/@homebridge/ciao/package.json ***!
+  \*****************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = /*#__PURE__*/JSON.parse('{"name":"@homebridge/ciao","version":"1.3.1","description":"ciao is a RFC 6763 compliant dns-sd library, advertising on multicast dns (RFC 6762) implemented in plain Typescript/JavaScript","main":"lib/index.js","types":"lib/index.d.ts","maintainers":["Andreas Bauer <mail@anderl-bauer.de>"],"author":"Andreas Bauer <mail@anderl-bauer.de>","homepage":"https://github.com/homebridge/ciao","license":"MIT","scripts":{"clean":"rimraf lib && rimraf coverage","lint":"eslint \'src/**/*.{js,ts,json}\'","lint-docs":"typedoc --emit none","build":"npm run clean && tsc","test":"jest","test-coverage":"jest --coverage","docs":"typedoc","prepublishOnly":"npm run build","postpublish":"npm run clean","preversion":"npm run lint","version":"npm run docs && git add docs"},"bin":{"ciao-bcs":"lib/bonjour-conformance-testing.js"},"keywords":["ciao","rfc-6762","rfc-6763","multicast-dns","dns-sd","bonjour","zeroconf","zero-configuration","mdns","mdns-sd","service-discovery"],"repository":{"type":"git","url":"git+https://github.com/homebridge/ciao.git"},"bugs":{"url":"https://github.com/homebridge/ciao/issues"},"engines":{"node":"^18 || ^20 || ^22"},"files":["lib","types","README.md","LICENSE","package.json"],"dependencies":{"debug":"^4.3.6","fast-deep-equal":"^3.1.3","source-map-support":"^0.5.21","tslib":"^2.6.3"},"devDependencies":{"@types/debug":"^4.1.12","@types/jest":"^29.5.12","@types/node":"^22.1.0","@types/source-map-support":"^0.5.10","@typescript-eslint/eslint-plugin":"^8.0.1","@typescript-eslint/parser":"^8.0.1","eslint":"^8.57.0","jest":"^29.7.0","rimraf":"^6.0.1","ts-jest":"^29.2.4","ts-node":"^10.9.2","typedoc":"^0.26.5","typescript":"^5.5.4"}}');
+
+/***/ }),
+
 /***/ "../node_modules/@homebridge/dbus-native/index.js":
 /*!********************************************************!*\
   !*** ../node_modules/@homebridge/dbus-native/index.js ***!
@@ -7229,6 +7240,17 @@ function tryAuth(stream, methods, cb) {
   }
 }
 
+
+/***/ }),
+
+/***/ "../node_modules/@homebridge/dbus-native/lib/header-signature.json":
+/*!*************************************************************************!*\
+  !*** ../node_modules/@homebridge/dbus-native/lib/header-signature.json ***!
+  \*************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = /*#__PURE__*/JSON.parse('[{"type":"a","child":[{"type":"(","child":[{"type":"y","child":[]},{"type":"v","child":[]}]}]}]');
 
 /***/ }),
 
@@ -8434,6 +8456,1453 @@ stdIfaces =
 
 /***/ }),
 
+/***/ "../node_modules/@homebridge/long/umd/index.js":
+/*!*****************************************************!*\
+  !*** ../node_modules/@homebridge/long/umd/index.js ***!
+  \*****************************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// GENERATED FILE. DO NOT EDIT.
+var Long = (function(exports) {
+  "use strict";
+  
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = void 0;
+  
+  /**
+   * @license
+   * Copyright 2009 The Closure Library Authors
+   * Copyright 2020 Daniel Wirtz / The long.js Authors.
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *     http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *
+   * SPDX-License-Identifier: Apache-2.0
+   */
+  // WebAssembly optimizations to do native i64 multiplication and divide
+  var wasm = null;
+  
+  try {
+    if ((__webpack_require__(/*! os */ "?2f9f").cpus)().find(cpu => cpus.model.toLowerCase().includes("armv6"))) {
+      throw new Error("Workaround for V8 crashing on ARMv6 platform when using WASM");
+    }
+  
+    wasm = new WebAssembly.Instance(new WebAssembly.Module(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 13, 2, 96, 0, 1, 127, 96, 4, 127, 127, 127, 127, 1, 127, 3, 7, 6, 0, 1, 1, 1, 1, 1, 6, 6, 1, 127, 1, 65, 0, 11, 7, 50, 6, 3, 109, 117, 108, 0, 1, 5, 100, 105, 118, 95, 115, 0, 2, 5, 100, 105, 118, 95, 117, 0, 3, 5, 114, 101, 109, 95, 115, 0, 4, 5, 114, 101, 109, 95, 117, 0, 5, 8, 103, 101, 116, 95, 104, 105, 103, 104, 0, 0, 10, 191, 1, 6, 4, 0, 35, 0, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 126, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 127, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 128, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 129, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 130, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11])), {}).exports;
+  } catch (e) {// no wasm support :(
+  }
+  /**
+   * Constructs a 64 bit two's-complement integer, given its low and high 32 bit values as *signed* integers.
+   *  See the from* functions below for more convenient ways of constructing Longs.
+   * @exports Long
+   * @class A Long class for representing a 64 bit two's-complement integer value.
+   * @param {number} low The low (signed) 32 bits of the long
+   * @param {number} high The high (signed) 32 bits of the long
+   * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
+   * @constructor
+   */
+  
+  
+  function Long(low, high, unsigned) {
+    /**
+     * The low 32 bits as a signed value.
+     * @type {number}
+     */
+    this.low = low | 0;
+    /**
+     * The high 32 bits as a signed value.
+     * @type {number}
+     */
+  
+    this.high = high | 0;
+    /**
+     * Whether unsigned or not.
+     * @type {boolean}
+     */
+  
+    this.unsigned = !!unsigned;
+  } // The internal representation of a long is the two given signed, 32-bit values.
+  // We use 32-bit pieces because these are the size of integers on which
+  // Javascript performs bit-operations.  For operations like addition and
+  // multiplication, we split each number into 16 bit pieces, which can easily be
+  // multiplied within Javascript's floating-point representation without overflow
+  // or change in sign.
+  //
+  // In the algorithms below, we frequently reduce the negative case to the
+  // positive case by negating the input(s) and then post-processing the result.
+  // Note that we must ALWAYS check specially whether those values are MIN_VALUE
+  // (-2^63) because -MIN_VALUE == MIN_VALUE (since 2^63 cannot be represented as
+  // a positive number, it overflows back into a negative).  Not handling this
+  // case would often result in infinite recursion.
+  //
+  // Common constant values ZERO, ONE, NEG_ONE, etc. are defined below the from*
+  // methods on which they depend.
+  
+  /**
+   * An indicator used to reliably determine if an object is a Long or not.
+   * @type {boolean}
+   * @const
+   * @private
+   */
+  
+  
+  Long.prototype.__isLong__;
+  Object.defineProperty(Long.prototype, "__isLong__", {
+    value: true
+  });
+  /**
+   * @function
+   * @param {*} obj Object
+   * @returns {boolean}
+   * @inner
+   */
+  
+  function isLong(obj) {
+    return (obj && obj["__isLong__"]) === true;
+  }
+  /**
+   * @function
+   * @param {*} value number
+   * @returns {number}
+   * @inner
+   */
+  
+  
+  function ctz32(value) {
+    var c = Math.clz32(value & -value);
+    return value ? 31 - c : c;
+  }
+  /**
+   * Tests if the specified object is a Long.
+   * @function
+   * @param {*} obj Object
+   * @returns {boolean}
+   */
+  
+  
+  Long.isLong = isLong;
+  /**
+   * A cache of the Long representations of small integer values.
+   * @type {!Object}
+   * @inner
+   */
+  
+  var INT_CACHE = {};
+  /**
+   * A cache of the Long representations of small unsigned integer values.
+   * @type {!Object}
+   * @inner
+   */
+  
+  var UINT_CACHE = {};
+  /**
+   * @param {number} value
+   * @param {boolean=} unsigned
+   * @returns {!Long}
+   * @inner
+   */
+  
+  function fromInt(value, unsigned) {
+    var obj, cachedObj, cache;
+  
+    if (unsigned) {
+      value >>>= 0;
+  
+      if (cache = 0 <= value && value < 256) {
+        cachedObj = UINT_CACHE[value];
+        if (cachedObj) return cachedObj;
+      }
+  
+      obj = fromBits(value, 0, true);
+      if (cache) UINT_CACHE[value] = obj;
+      return obj;
+    } else {
+      value |= 0;
+  
+      if (cache = -128 <= value && value < 128) {
+        cachedObj = INT_CACHE[value];
+        if (cachedObj) return cachedObj;
+      }
+  
+      obj = fromBits(value, value < 0 ? -1 : 0, false);
+      if (cache) INT_CACHE[value] = obj;
+      return obj;
+    }
+  }
+  /**
+   * Returns a Long representing the given 32 bit integer value.
+   * @function
+   * @param {number} value The 32 bit integer in question
+   * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
+   * @returns {!Long} The corresponding Long value
+   */
+  
+  
+  Long.fromInt = fromInt;
+  /**
+   * @param {number} value
+   * @param {boolean=} unsigned
+   * @returns {!Long}
+   * @inner
+   */
+  
+  function fromNumber(value, unsigned) {
+    if (isNaN(value)) return unsigned ? UZERO : ZERO;
+  
+    if (unsigned) {
+      if (value < 0) return UZERO;
+      if (value >= TWO_PWR_64_DBL) return MAX_UNSIGNED_VALUE;
+    } else {
+      if (value <= -TWO_PWR_63_DBL) return MIN_VALUE;
+      if (value + 1 >= TWO_PWR_63_DBL) return MAX_VALUE;
+    }
+  
+    if (value < 0) return fromNumber(-value, unsigned).neg();
+    return fromBits(value % TWO_PWR_32_DBL | 0, value / TWO_PWR_32_DBL | 0, unsigned);
+  }
+  /**
+   * Returns a Long representing the given value, provided that it is a finite number. Otherwise, zero is returned.
+   * @function
+   * @param {number} value The number in question
+   * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
+   * @returns {!Long} The corresponding Long value
+   */
+  
+  
+  Long.fromNumber = fromNumber;
+  /**
+   * @param {number} lowBits
+   * @param {number} highBits
+   * @param {boolean=} unsigned
+   * @returns {!Long}
+   * @inner
+   */
+  
+  function fromBits(lowBits, highBits, unsigned) {
+    return new Long(lowBits, highBits, unsigned);
+  }
+  /**
+   * Returns a Long representing the 64 bit integer that comes by concatenating the given low and high bits. Each is
+   *  assumed to use 32 bits.
+   * @function
+   * @param {number} lowBits The low 32 bits
+   * @param {number} highBits The high 32 bits
+   * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
+   * @returns {!Long} The corresponding Long value
+   */
+  
+  
+  Long.fromBits = fromBits;
+  /**
+   * @function
+   * @param {number} base
+   * @param {number} exponent
+   * @returns {number}
+   * @inner
+   */
+  
+  var pow_dbl = Math.pow; // Used 4 times (4*8 to 15+4)
+  
+  /**
+   * @param {string} str
+   * @param {(boolean|number)=} unsigned
+   * @param {number=} radix
+   * @returns {!Long}
+   * @inner
+   */
+  
+  function fromString(str, unsigned, radix) {
+    if (str.length === 0) throw Error('empty string');
+  
+    if (typeof unsigned === 'number') {
+      // For goog.math.long compatibility
+      radix = unsigned;
+      unsigned = false;
+    } else {
+      unsigned = !!unsigned;
+    }
+  
+    if (str === "NaN" || str === "Infinity" || str === "+Infinity" || str === "-Infinity") return unsigned ? UZERO : ZERO;
+    radix = radix || 10;
+    if (radix < 2 || 36 < radix) throw RangeError('radix');
+    var p;
+    if ((p = str.indexOf('-')) > 0) throw Error('interior hyphen');else if (p === 0) {
+      return fromString(str.substring(1), unsigned, radix).neg();
+    } // Do several (8) digits each time through the loop, so as to
+    // minimize the calls to the very expensive emulated div.
+  
+    var radixToPower = fromNumber(pow_dbl(radix, 8));
+    var result = ZERO;
+  
+    for (var i = 0; i < str.length; i += 8) {
+      var size = Math.min(8, str.length - i),
+          value = parseInt(str.substring(i, i + size), radix);
+  
+      if (size < 8) {
+        var power = fromNumber(pow_dbl(radix, size));
+        result = result.mul(power).add(fromNumber(value));
+      } else {
+        result = result.mul(radixToPower);
+        result = result.add(fromNumber(value));
+      }
+    }
+  
+    result.unsigned = unsigned;
+    return result;
+  }
+  /**
+   * Returns a Long representation of the given string, written using the specified radix.
+   * @function
+   * @param {string} str The textual representation of the Long
+   * @param {(boolean|number)=} unsigned Whether unsigned or not, defaults to signed
+   * @param {number=} radix The radix in which the text is written (2-36), defaults to 10
+   * @returns {!Long} The corresponding Long value
+   */
+  
+  
+  Long.fromString = fromString;
+  /**
+   * @function
+   * @param {!Long|number|string|!{low: number, high: number, unsigned: boolean}} val
+   * @param {boolean=} unsigned
+   * @returns {!Long}
+   * @inner
+   */
+  
+  function fromValue(val, unsigned) {
+    if (typeof val === 'number') return fromNumber(val, unsigned);
+    if (typeof val === 'string') return fromString(val, unsigned); // Throws for non-objects, converts non-instanceof Long:
+  
+    return fromBits(val.low, val.high, typeof unsigned === 'boolean' ? unsigned : val.unsigned);
+  }
+  /**
+   * Converts the specified value to a Long using the appropriate from* function for its type.
+   * @function
+   * @param {!Long|number|string|!{low: number, high: number, unsigned: boolean}} val Value
+   * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
+   * @returns {!Long}
+   */
+  
+  
+  Long.fromValue = fromValue; // NOTE: the compiler should inline these constant values below and then remove these variables, so there should be
+  // no runtime penalty for these.
+  
+  /**
+   * @type {number}
+   * @const
+   * @inner
+   */
+  
+  var TWO_PWR_16_DBL = 1 << 16;
+  /**
+   * @type {number}
+   * @const
+   * @inner
+   */
+  
+  var TWO_PWR_24_DBL = 1 << 24;
+  /**
+   * @type {number}
+   * @const
+   * @inner
+   */
+  
+  var TWO_PWR_32_DBL = TWO_PWR_16_DBL * TWO_PWR_16_DBL;
+  /**
+   * @type {number}
+   * @const
+   * @inner
+   */
+  
+  var TWO_PWR_64_DBL = TWO_PWR_32_DBL * TWO_PWR_32_DBL;
+  /**
+   * @type {number}
+   * @const
+   * @inner
+   */
+  
+  var TWO_PWR_63_DBL = TWO_PWR_64_DBL / 2;
+  /**
+   * @type {!Long}
+   * @const
+   * @inner
+   */
+  
+  var TWO_PWR_24 = fromInt(TWO_PWR_24_DBL);
+  /**
+   * @type {!Long}
+   * @inner
+   */
+  
+  var ZERO = fromInt(0);
+  /**
+   * Signed zero.
+   * @type {!Long}
+   */
+  
+  Long.ZERO = ZERO;
+  /**
+   * @type {!Long}
+   * @inner
+   */
+  
+  var UZERO = fromInt(0, true);
+  /**
+   * Unsigned zero.
+   * @type {!Long}
+   */
+  
+  Long.UZERO = UZERO;
+  /**
+   * @type {!Long}
+   * @inner
+   */
+  
+  var ONE = fromInt(1);
+  /**
+   * Signed one.
+   * @type {!Long}
+   */
+  
+  Long.ONE = ONE;
+  /**
+   * @type {!Long}
+   * @inner
+   */
+  
+  var UONE = fromInt(1, true);
+  /**
+   * Unsigned one.
+   * @type {!Long}
+   */
+  
+  Long.UONE = UONE;
+  /**
+   * @type {!Long}
+   * @inner
+   */
+  
+  var NEG_ONE = fromInt(-1);
+  /**
+   * Signed negative one.
+   * @type {!Long}
+   */
+  
+  Long.NEG_ONE = NEG_ONE;
+  /**
+   * @type {!Long}
+   * @inner
+   */
+  
+  var MAX_VALUE = fromBits(0xFFFFFFFF | 0, 0x7FFFFFFF | 0, false);
+  /**
+   * Maximum signed value.
+   * @type {!Long}
+   */
+  
+  Long.MAX_VALUE = MAX_VALUE;
+  /**
+   * @type {!Long}
+   * @inner
+   */
+  
+  var MAX_UNSIGNED_VALUE = fromBits(0xFFFFFFFF | 0, 0xFFFFFFFF | 0, true);
+  /**
+   * Maximum unsigned value.
+   * @type {!Long}
+   */
+  
+  Long.MAX_UNSIGNED_VALUE = MAX_UNSIGNED_VALUE;
+  /**
+   * @type {!Long}
+   * @inner
+   */
+  
+  var MIN_VALUE = fromBits(0, 0x80000000 | 0, false);
+  /**
+   * Minimum signed value.
+   * @type {!Long}
+   */
+  
+  Long.MIN_VALUE = MIN_VALUE;
+  /**
+   * @alias Long.prototype
+   * @inner
+   */
+  
+  var LongPrototype = Long.prototype;
+  /**
+   * Converts the Long to a 32 bit integer, assuming it is a 32 bit integer.
+   * @this {!Long}
+   * @returns {number}
+   */
+  
+  LongPrototype.toInt = function toInt() {
+    return this.unsigned ? this.low >>> 0 : this.low;
+  };
+  /**
+   * Converts the Long to a the nearest floating-point representation of this value (double, 53 bit mantissa).
+   * @this {!Long}
+   * @returns {number}
+   */
+  
+  
+  LongPrototype.toNumber = function toNumber() {
+    if (this.unsigned) return (this.high >>> 0) * TWO_PWR_32_DBL + (this.low >>> 0);
+    return this.high * TWO_PWR_32_DBL + (this.low >>> 0);
+  };
+  /**
+   * Converts the Long to a string written in the specified radix.
+   * @this {!Long}
+   * @param {number=} radix Radix (2-36), defaults to 10
+   * @returns {string}
+   * @override
+   * @throws {RangeError} If `radix` is out of range
+   */
+  
+  
+  LongPrototype.toString = function toString(radix) {
+    radix = radix || 10;
+    if (radix < 2 || 36 < radix) throw RangeError('radix');
+    if (this.isZero()) return '0';
+  
+    if (this.isNegative()) {
+      // Unsigned Longs are never negative
+      if (this.eq(MIN_VALUE)) {
+        // We need to change the Long value before it can be negated, so we remove
+        // the bottom-most digit in this base and then recurse to do the rest.
+        var radixLong = fromNumber(radix),
+            div = this.div(radixLong),
+            rem1 = div.mul(radixLong).sub(this);
+        return div.toString(radix) + rem1.toInt().toString(radix);
+      } else return '-' + this.neg().toString(radix);
+    } // Do several (6) digits each time through the loop, so as to
+    // minimize the calls to the very expensive emulated div.
+  
+  
+    var radixToPower = fromNumber(pow_dbl(radix, 6), this.unsigned),
+        rem = this;
+    var result = '';
+  
+    while (true) {
+      var remDiv = rem.div(radixToPower),
+          intval = rem.sub(remDiv.mul(radixToPower)).toInt() >>> 0,
+          digits = intval.toString(radix);
+      rem = remDiv;
+      if (rem.isZero()) return digits + result;else {
+        while (digits.length < 6) digits = '0' + digits;
+  
+        result = '' + digits + result;
+      }
+    }
+  };
+  /**
+   * Gets the high 32 bits as a signed integer.
+   * @this {!Long}
+   * @returns {number} Signed high bits
+   */
+  
+  
+  LongPrototype.getHighBits = function getHighBits() {
+    return this.high;
+  };
+  /**
+   * Gets the high 32 bits as an unsigned integer.
+   * @this {!Long}
+   * @returns {number} Unsigned high bits
+   */
+  
+  
+  LongPrototype.getHighBitsUnsigned = function getHighBitsUnsigned() {
+    return this.high >>> 0;
+  };
+  /**
+   * Gets the low 32 bits as a signed integer.
+   * @this {!Long}
+   * @returns {number} Signed low bits
+   */
+  
+  
+  LongPrototype.getLowBits = function getLowBits() {
+    return this.low;
+  };
+  /**
+   * Gets the low 32 bits as an unsigned integer.
+   * @this {!Long}
+   * @returns {number} Unsigned low bits
+   */
+  
+  
+  LongPrototype.getLowBitsUnsigned = function getLowBitsUnsigned() {
+    return this.low >>> 0;
+  };
+  /**
+   * Gets the number of bits needed to represent the absolute value of this Long.
+   * @this {!Long}
+   * @returns {number}
+   */
+  
+  
+  LongPrototype.getNumBitsAbs = function getNumBitsAbs() {
+    if (this.isNegative()) // Unsigned Longs are never negative
+      return this.eq(MIN_VALUE) ? 64 : this.neg().getNumBitsAbs();
+    var val = this.high != 0 ? this.high : this.low;
+  
+    for (var bit = 31; bit > 0; bit--) if ((val & 1 << bit) != 0) break;
+  
+    return this.high != 0 ? bit + 33 : bit + 1;
+  };
+  /**
+   * Tests if this Long's value equals zero.
+   * @this {!Long}
+   * @returns {boolean}
+   */
+  
+  
+  LongPrototype.isZero = function isZero() {
+    return this.high === 0 && this.low === 0;
+  };
+  /**
+   * Tests if this Long's value equals zero. This is an alias of {@link Long#isZero}.
+   * @returns {boolean}
+   */
+  
+  
+  LongPrototype.eqz = LongPrototype.isZero;
+  /**
+   * Tests if this Long's value is negative.
+   * @this {!Long}
+   * @returns {boolean}
+   */
+  
+  LongPrototype.isNegative = function isNegative() {
+    return !this.unsigned && this.high < 0;
+  };
+  /**
+   * Tests if this Long's value is positive or zero.
+   * @this {!Long}
+   * @returns {boolean}
+   */
+  
+  
+  LongPrototype.isPositive = function isPositive() {
+    return this.unsigned || this.high >= 0;
+  };
+  /**
+   * Tests if this Long's value is odd.
+   * @this {!Long}
+   * @returns {boolean}
+   */
+  
+  
+  LongPrototype.isOdd = function isOdd() {
+    return (this.low & 1) === 1;
+  };
+  /**
+   * Tests if this Long's value is even.
+   * @this {!Long}
+   * @returns {boolean}
+   */
+  
+  
+  LongPrototype.isEven = function isEven() {
+    return (this.low & 1) === 0;
+  };
+  /**
+   * Tests if this Long's value equals the specified's.
+   * @this {!Long}
+   * @param {!Long|number|string} other Other value
+   * @returns {boolean}
+   */
+  
+  
+  LongPrototype.equals = function equals(other) {
+    if (!isLong(other)) other = fromValue(other);
+    if (this.unsigned !== other.unsigned && this.high >>> 31 === 1 && other.high >>> 31 === 1) return false;
+    return this.high === other.high && this.low === other.low;
+  };
+  /**
+   * Tests if this Long's value equals the specified's. This is an alias of {@link Long#equals}.
+   * @function
+   * @param {!Long|number|string} other Other value
+   * @returns {boolean}
+   */
+  
+  
+  LongPrototype.eq = LongPrototype.equals;
+  /**
+   * Tests if this Long's value differs from the specified's.
+   * @this {!Long}
+   * @param {!Long|number|string} other Other value
+   * @returns {boolean}
+   */
+  
+  LongPrototype.notEquals = function notEquals(other) {
+    return !this.eq(
+    /* validates */
+    other);
+  };
+  /**
+   * Tests if this Long's value differs from the specified's. This is an alias of {@link Long#notEquals}.
+   * @function
+   * @param {!Long|number|string} other Other value
+   * @returns {boolean}
+   */
+  
+  
+  LongPrototype.neq = LongPrototype.notEquals;
+  /**
+   * Tests if this Long's value differs from the specified's. This is an alias of {@link Long#notEquals}.
+   * @function
+   * @param {!Long|number|string} other Other value
+   * @returns {boolean}
+   */
+  
+  LongPrototype.ne = LongPrototype.notEquals;
+  /**
+   * Tests if this Long's value is less than the specified's.
+   * @this {!Long}
+   * @param {!Long|number|string} other Other value
+   * @returns {boolean}
+   */
+  
+  LongPrototype.lessThan = function lessThan(other) {
+    return this.comp(
+    /* validates */
+    other) < 0;
+  };
+  /**
+   * Tests if this Long's value is less than the specified's. This is an alias of {@link Long#lessThan}.
+   * @function
+   * @param {!Long|number|string} other Other value
+   * @returns {boolean}
+   */
+  
+  
+  LongPrototype.lt = LongPrototype.lessThan;
+  /**
+   * Tests if this Long's value is less than or equal the specified's.
+   * @this {!Long}
+   * @param {!Long|number|string} other Other value
+   * @returns {boolean}
+   */
+  
+  LongPrototype.lessThanOrEqual = function lessThanOrEqual(other) {
+    return this.comp(
+    /* validates */
+    other) <= 0;
+  };
+  /**
+   * Tests if this Long's value is less than or equal the specified's. This is an alias of {@link Long#lessThanOrEqual}.
+   * @function
+   * @param {!Long|number|string} other Other value
+   * @returns {boolean}
+   */
+  
+  
+  LongPrototype.lte = LongPrototype.lessThanOrEqual;
+  /**
+   * Tests if this Long's value is less than or equal the specified's. This is an alias of {@link Long#lessThanOrEqual}.
+   * @function
+   * @param {!Long|number|string} other Other value
+   * @returns {boolean}
+   */
+  
+  LongPrototype.le = LongPrototype.lessThanOrEqual;
+  /**
+   * Tests if this Long's value is greater than the specified's.
+   * @this {!Long}
+   * @param {!Long|number|string} other Other value
+   * @returns {boolean}
+   */
+  
+  LongPrototype.greaterThan = function greaterThan(other) {
+    return this.comp(
+    /* validates */
+    other) > 0;
+  };
+  /**
+   * Tests if this Long's value is greater than the specified's. This is an alias of {@link Long#greaterThan}.
+   * @function
+   * @param {!Long|number|string} other Other value
+   * @returns {boolean}
+   */
+  
+  
+  LongPrototype.gt = LongPrototype.greaterThan;
+  /**
+   * Tests if this Long's value is greater than or equal the specified's.
+   * @this {!Long}
+   * @param {!Long|number|string} other Other value
+   * @returns {boolean}
+   */
+  
+  LongPrototype.greaterThanOrEqual = function greaterThanOrEqual(other) {
+    return this.comp(
+    /* validates */
+    other) >= 0;
+  };
+  /**
+   * Tests if this Long's value is greater than or equal the specified's. This is an alias of {@link Long#greaterThanOrEqual}.
+   * @function
+   * @param {!Long|number|string} other Other value
+   * @returns {boolean}
+   */
+  
+  
+  LongPrototype.gte = LongPrototype.greaterThanOrEqual;
+  /**
+   * Tests if this Long's value is greater than or equal the specified's. This is an alias of {@link Long#greaterThanOrEqual}.
+   * @function
+   * @param {!Long|number|string} other Other value
+   * @returns {boolean}
+   */
+  
+  LongPrototype.ge = LongPrototype.greaterThanOrEqual;
+  /**
+   * Compares this Long's value with the specified's.
+   * @this {!Long}
+   * @param {!Long|number|string} other Other value
+   * @returns {number} 0 if they are the same, 1 if the this is greater and -1
+   *  if the given one is greater
+   */
+  
+  LongPrototype.compare = function compare(other) {
+    if (!isLong(other)) other = fromValue(other);
+    if (this.eq(other)) return 0;
+    var thisNeg = this.isNegative(),
+        otherNeg = other.isNegative();
+    if (thisNeg && !otherNeg) return -1;
+    if (!thisNeg && otherNeg) return 1; // At this point the sign bits are the same
+  
+    if (!this.unsigned) return this.sub(other).isNegative() ? -1 : 1; // Both are positive if at least one is unsigned
+  
+    return other.high >>> 0 > this.high >>> 0 || other.high === this.high && other.low >>> 0 > this.low >>> 0 ? -1 : 1;
+  };
+  /**
+   * Compares this Long's value with the specified's. This is an alias of {@link Long#compare}.
+   * @function
+   * @param {!Long|number|string} other Other value
+   * @returns {number} 0 if they are the same, 1 if the this is greater and -1
+   *  if the given one is greater
+   */
+  
+  
+  LongPrototype.comp = LongPrototype.compare;
+  /**
+   * Negates this Long's value.
+   * @this {!Long}
+   * @returns {!Long} Negated Long
+   */
+  
+  LongPrototype.negate = function negate() {
+    if (!this.unsigned && this.eq(MIN_VALUE)) return MIN_VALUE;
+    return this.not().add(ONE);
+  };
+  /**
+   * Negates this Long's value. This is an alias of {@link Long#negate}.
+   * @function
+   * @returns {!Long} Negated Long
+   */
+  
+  
+  LongPrototype.neg = LongPrototype.negate;
+  /**
+   * Returns the sum of this and the specified Long.
+   * @this {!Long}
+   * @param {!Long|number|string} addend Addend
+   * @returns {!Long} Sum
+   */
+  
+  LongPrototype.add = function add(addend) {
+    if (!isLong(addend)) addend = fromValue(addend); // Divide each number into 4 chunks of 16 bits, and then sum the chunks.
+  
+    var a48 = this.high >>> 16;
+    var a32 = this.high & 0xFFFF;
+    var a16 = this.low >>> 16;
+    var a00 = this.low & 0xFFFF;
+    var b48 = addend.high >>> 16;
+    var b32 = addend.high & 0xFFFF;
+    var b16 = addend.low >>> 16;
+    var b00 = addend.low & 0xFFFF;
+    var c48 = 0,
+        c32 = 0,
+        c16 = 0,
+        c00 = 0;
+    c00 += a00 + b00;
+    c16 += c00 >>> 16;
+    c00 &= 0xFFFF;
+    c16 += a16 + b16;
+    c32 += c16 >>> 16;
+    c16 &= 0xFFFF;
+    c32 += a32 + b32;
+    c48 += c32 >>> 16;
+    c32 &= 0xFFFF;
+    c48 += a48 + b48;
+    c48 &= 0xFFFF;
+    return fromBits(c16 << 16 | c00, c48 << 16 | c32, this.unsigned);
+  };
+  /**
+   * Returns the difference of this and the specified Long.
+   * @this {!Long}
+   * @param {!Long|number|string} subtrahend Subtrahend
+   * @returns {!Long} Difference
+   */
+  
+  
+  LongPrototype.subtract = function subtract(subtrahend) {
+    if (!isLong(subtrahend)) subtrahend = fromValue(subtrahend);
+    return this.add(subtrahend.neg());
+  };
+  /**
+   * Returns the difference of this and the specified Long. This is an alias of {@link Long#subtract}.
+   * @function
+   * @param {!Long|number|string} subtrahend Subtrahend
+   * @returns {!Long} Difference
+   */
+  
+  
+  LongPrototype.sub = LongPrototype.subtract;
+  /**
+   * Returns the product of this and the specified Long.
+   * @this {!Long}
+   * @param {!Long|number|string} multiplier Multiplier
+   * @returns {!Long} Product
+   */
+  
+  LongPrototype.multiply = function multiply(multiplier) {
+    if (this.isZero()) return this;
+    if (!isLong(multiplier)) multiplier = fromValue(multiplier); // use wasm support if present
+  
+    if (wasm) {
+      var low = wasm["mul"](this.low, this.high, multiplier.low, multiplier.high);
+      return fromBits(low, wasm["get_high"](), this.unsigned);
+    }
+  
+    if (multiplier.isZero()) return this.unsigned ? UZERO : ZERO;
+    if (this.eq(MIN_VALUE)) return multiplier.isOdd() ? MIN_VALUE : ZERO;
+    if (multiplier.eq(MIN_VALUE)) return this.isOdd() ? MIN_VALUE : ZERO;
+  
+    if (this.isNegative()) {
+      if (multiplier.isNegative()) return this.neg().mul(multiplier.neg());else return this.neg().mul(multiplier).neg();
+    } else if (multiplier.isNegative()) return this.mul(multiplier.neg()).neg(); // If both longs are small, use float multiplication
+  
+  
+    if (this.lt(TWO_PWR_24) && multiplier.lt(TWO_PWR_24)) return fromNumber(this.toNumber() * multiplier.toNumber(), this.unsigned); // Divide each long into 4 chunks of 16 bits, and then add up 4x4 products.
+    // We can skip products that would overflow.
+  
+    var a48 = this.high >>> 16;
+    var a32 = this.high & 0xFFFF;
+    var a16 = this.low >>> 16;
+    var a00 = this.low & 0xFFFF;
+    var b48 = multiplier.high >>> 16;
+    var b32 = multiplier.high & 0xFFFF;
+    var b16 = multiplier.low >>> 16;
+    var b00 = multiplier.low & 0xFFFF;
+    var c48 = 0,
+        c32 = 0,
+        c16 = 0,
+        c00 = 0;
+    c00 += a00 * b00;
+    c16 += c00 >>> 16;
+    c00 &= 0xFFFF;
+    c16 += a16 * b00;
+    c32 += c16 >>> 16;
+    c16 &= 0xFFFF;
+    c16 += a00 * b16;
+    c32 += c16 >>> 16;
+    c16 &= 0xFFFF;
+    c32 += a32 * b00;
+    c48 += c32 >>> 16;
+    c32 &= 0xFFFF;
+    c32 += a16 * b16;
+    c48 += c32 >>> 16;
+    c32 &= 0xFFFF;
+    c32 += a00 * b32;
+    c48 += c32 >>> 16;
+    c32 &= 0xFFFF;
+    c48 += a48 * b00 + a32 * b16 + a16 * b32 + a00 * b48;
+    c48 &= 0xFFFF;
+    return fromBits(c16 << 16 | c00, c48 << 16 | c32, this.unsigned);
+  };
+  /**
+   * Returns the product of this and the specified Long. This is an alias of {@link Long#multiply}.
+   * @function
+   * @param {!Long|number|string} multiplier Multiplier
+   * @returns {!Long} Product
+   */
+  
+  
+  LongPrototype.mul = LongPrototype.multiply;
+  /**
+   * Returns this Long divided by the specified. The result is signed if this Long is signed or
+   *  unsigned if this Long is unsigned.
+   * @this {!Long}
+   * @param {!Long|number|string} divisor Divisor
+   * @returns {!Long} Quotient
+   */
+  
+  LongPrototype.divide = function divide(divisor) {
+    if (!isLong(divisor)) divisor = fromValue(divisor);
+    if (divisor.isZero()) throw Error('division by zero'); // use wasm support if present
+  
+    if (wasm) {
+      // guard against signed division overflow: the largest
+      // negative number / -1 would be 1 larger than the largest
+      // positive number, due to two's complement.
+      if (!this.unsigned && this.high === -0x80000000 && divisor.low === -1 && divisor.high === -1) {
+        // be consistent with non-wasm code path
+        return this;
+      }
+  
+      var low = (this.unsigned ? wasm["div_u"] : wasm["div_s"])(this.low, this.high, divisor.low, divisor.high);
+      return fromBits(low, wasm["get_high"](), this.unsigned);
+    }
+  
+    if (this.isZero()) return this.unsigned ? UZERO : ZERO;
+    var approx, rem, res;
+  
+    if (!this.unsigned) {
+      // This section is only relevant for signed longs and is derived from the
+      // closure library as a whole.
+      if (this.eq(MIN_VALUE)) {
+        if (divisor.eq(ONE) || divisor.eq(NEG_ONE)) return MIN_VALUE; // recall that -MIN_VALUE == MIN_VALUE
+        else if (divisor.eq(MIN_VALUE)) return ONE;else {
+          // At this point, we have |other| >= 2, so |this/other| < |MIN_VALUE|.
+          var halfThis = this.shr(1);
+          approx = halfThis.div(divisor).shl(1);
+  
+          if (approx.eq(ZERO)) {
+            return divisor.isNegative() ? ONE : NEG_ONE;
+          } else {
+            rem = this.sub(divisor.mul(approx));
+            res = approx.add(rem.div(divisor));
+            return res;
+          }
+        }
+      } else if (divisor.eq(MIN_VALUE)) return this.unsigned ? UZERO : ZERO;
+  
+      if (this.isNegative()) {
+        if (divisor.isNegative()) return this.neg().div(divisor.neg());
+        return this.neg().div(divisor).neg();
+      } else if (divisor.isNegative()) return this.div(divisor.neg()).neg();
+  
+      res = ZERO;
+    } else {
+      // The algorithm below has not been made for unsigned longs. It's therefore
+      // required to take special care of the MSB prior to running it.
+      if (!divisor.unsigned) divisor = divisor.toUnsigned();
+      if (divisor.gt(this)) return UZERO;
+      if (divisor.gt(this.shru(1))) // 15 >>> 1 = 7 ; with divisor = 8 ; true
+        return UONE;
+      res = UZERO;
+    } // Repeat the following until the remainder is less than other:  find a
+    // floating-point that approximates remainder / other *from below*, add this
+    // into the result, and subtract it from the remainder.  It is critical that
+    // the approximate value is less than or equal to the real value so that the
+    // remainder never becomes negative.
+  
+  
+    rem = this;
+  
+    while (rem.gte(divisor)) {
+      // Approximate the result of division. This may be a little greater or
+      // smaller than the actual value.
+      approx = Math.max(1, Math.floor(rem.toNumber() / divisor.toNumber())); // We will tweak the approximate result by changing it in the 48-th digit or
+      // the smallest non-fractional digit, whichever is larger.
+  
+      var log2 = Math.ceil(Math.log(approx) / Math.LN2),
+          delta = log2 <= 48 ? 1 : pow_dbl(2, log2 - 48),
+          // Decrease the approximation until it is smaller than the remainder.  Note
+      // that if it is too large, the product overflows and is negative.
+      approxRes = fromNumber(approx),
+          approxRem = approxRes.mul(divisor);
+  
+      while (approxRem.isNegative() || approxRem.gt(rem)) {
+        approx -= delta;
+        approxRes = fromNumber(approx, this.unsigned);
+        approxRem = approxRes.mul(divisor);
+      } // We know the answer can't be zero... and actually, zero would cause
+      // infinite recursion since we would make no progress.
+  
+  
+      if (approxRes.isZero()) approxRes = ONE;
+      res = res.add(approxRes);
+      rem = rem.sub(approxRem);
+    }
+  
+    return res;
+  };
+  /**
+   * Returns this Long divided by the specified. This is an alias of {@link Long#divide}.
+   * @function
+   * @param {!Long|number|string} divisor Divisor
+   * @returns {!Long} Quotient
+   */
+  
+  
+  LongPrototype.div = LongPrototype.divide;
+  /**
+   * Returns this Long modulo the specified.
+   * @this {!Long}
+   * @param {!Long|number|string} divisor Divisor
+   * @returns {!Long} Remainder
+   */
+  
+  LongPrototype.modulo = function modulo(divisor) {
+    if (!isLong(divisor)) divisor = fromValue(divisor); // use wasm support if present
+  
+    if (wasm) {
+      var low = (this.unsigned ? wasm["rem_u"] : wasm["rem_s"])(this.low, this.high, divisor.low, divisor.high);
+      return fromBits(low, wasm["get_high"](), this.unsigned);
+    }
+  
+    return this.sub(this.div(divisor).mul(divisor));
+  };
+  /**
+   * Returns this Long modulo the specified. This is an alias of {@link Long#modulo}.
+   * @function
+   * @param {!Long|number|string} divisor Divisor
+   * @returns {!Long} Remainder
+   */
+  
+  
+  LongPrototype.mod = LongPrototype.modulo;
+  /**
+   * Returns this Long modulo the specified. This is an alias of {@link Long#modulo}.
+   * @function
+   * @param {!Long|number|string} divisor Divisor
+   * @returns {!Long} Remainder
+   */
+  
+  LongPrototype.rem = LongPrototype.modulo;
+  /**
+   * Returns the bitwise NOT of this Long.
+   * @this {!Long}
+   * @returns {!Long}
+   */
+  
+  LongPrototype.not = function not() {
+    return fromBits(~this.low, ~this.high, this.unsigned);
+  };
+  /**
+   * Returns count leading zeros of this Long.
+   * @this {!Long}
+   * @returns {!number}
+   */
+  
+  
+  LongPrototype.countLeadingZeros = function countLeadingZeros() {
+    return this.high ? Math.clz32(this.high) : Math.clz32(this.low) + 32;
+  };
+  /**
+   * Returns count leading zeros. This is an alias of {@link Long#countLeadingZeros}.
+   * @function
+   * @param {!Long}
+   * @returns {!number}
+   */
+  
+  
+  LongPrototype.clz = LongPrototype.countLeadingZeros;
+  /**
+   * Returns count trailing zeros of this Long.
+   * @this {!Long}
+   * @returns {!number}
+   */
+  
+  LongPrototype.countTrailingZeros = function countTrailingZeros() {
+    return this.low ? ctz32(this.low) : ctz32(this.high) + 32;
+  };
+  /**
+   * Returns count trailing zeros. This is an alias of {@link Long#countTrailingZeros}.
+   * @function
+   * @param {!Long}
+   * @returns {!number}
+   */
+  
+  
+  LongPrototype.ctz = LongPrototype.countTrailingZeros;
+  /**
+   * Returns the bitwise AND of this Long and the specified.
+   * @this {!Long}
+   * @param {!Long|number|string} other Other Long
+   * @returns {!Long}
+   */
+  
+  LongPrototype.and = function and(other) {
+    if (!isLong(other)) other = fromValue(other);
+    return fromBits(this.low & other.low, this.high & other.high, this.unsigned);
+  };
+  /**
+   * Returns the bitwise OR of this Long and the specified.
+   * @this {!Long}
+   * @param {!Long|number|string} other Other Long
+   * @returns {!Long}
+   */
+  
+  
+  LongPrototype.or = function or(other) {
+    if (!isLong(other)) other = fromValue(other);
+    return fromBits(this.low | other.low, this.high | other.high, this.unsigned);
+  };
+  /**
+   * Returns the bitwise XOR of this Long and the given one.
+   * @this {!Long}
+   * @param {!Long|number|string} other Other Long
+   * @returns {!Long}
+   */
+  
+  
+  LongPrototype.xor = function xor(other) {
+    if (!isLong(other)) other = fromValue(other);
+    return fromBits(this.low ^ other.low, this.high ^ other.high, this.unsigned);
+  };
+  /**
+   * Returns this Long with bits shifted to the left by the given amount.
+   * @this {!Long}
+   * @param {number|!Long} numBits Number of bits
+   * @returns {!Long} Shifted Long
+   */
+  
+  
+  LongPrototype.shiftLeft = function shiftLeft(numBits) {
+    if (isLong(numBits)) numBits = numBits.toInt();
+    if ((numBits &= 63) === 0) return this;else if (numBits < 32) return fromBits(this.low << numBits, this.high << numBits | this.low >>> 32 - numBits, this.unsigned);else return fromBits(0, this.low << numBits - 32, this.unsigned);
+  };
+  /**
+   * Returns this Long with bits shifted to the left by the given amount. This is an alias of {@link Long#shiftLeft}.
+   * @function
+   * @param {number|!Long} numBits Number of bits
+   * @returns {!Long} Shifted Long
+   */
+  
+  
+  LongPrototype.shl = LongPrototype.shiftLeft;
+  /**
+   * Returns this Long with bits arithmetically shifted to the right by the given amount.
+   * @this {!Long}
+   * @param {number|!Long} numBits Number of bits
+   * @returns {!Long} Shifted Long
+   */
+  
+  LongPrototype.shiftRight = function shiftRight(numBits) {
+    if (isLong(numBits)) numBits = numBits.toInt();
+    if ((numBits &= 63) === 0) return this;else if (numBits < 32) return fromBits(this.low >>> numBits | this.high << 32 - numBits, this.high >> numBits, this.unsigned);else return fromBits(this.high >> numBits - 32, this.high >= 0 ? 0 : -1, this.unsigned);
+  };
+  /**
+   * Returns this Long with bits arithmetically shifted to the right by the given amount. This is an alias of {@link Long#shiftRight}.
+   * @function
+   * @param {number|!Long} numBits Number of bits
+   * @returns {!Long} Shifted Long
+   */
+  
+  
+  LongPrototype.shr = LongPrototype.shiftRight;
+  /**
+   * Returns this Long with bits logically shifted to the right by the given amount.
+   * @this {!Long}
+   * @param {number|!Long} numBits Number of bits
+   * @returns {!Long} Shifted Long
+   */
+  
+  LongPrototype.shiftRightUnsigned = function shiftRightUnsigned(numBits) {
+    if (isLong(numBits)) numBits = numBits.toInt();
+    if ((numBits &= 63) === 0) return this;
+    if (numBits < 32) return fromBits(this.low >>> numBits | this.high << 32 - numBits, this.high >>> numBits, this.unsigned);
+    if (numBits === 32) return fromBits(this.high, 0, this.unsigned);
+    return fromBits(this.high >>> numBits - 32, 0, this.unsigned);
+  };
+  /**
+   * Returns this Long with bits logically shifted to the right by the given amount. This is an alias of {@link Long#shiftRightUnsigned}.
+   * @function
+   * @param {number|!Long} numBits Number of bits
+   * @returns {!Long} Shifted Long
+   */
+  
+  
+  LongPrototype.shru = LongPrototype.shiftRightUnsigned;
+  /**
+   * Returns this Long with bits logically shifted to the right by the given amount. This is an alias of {@link Long#shiftRightUnsigned}.
+   * @function
+   * @param {number|!Long} numBits Number of bits
+   * @returns {!Long} Shifted Long
+   */
+  
+  LongPrototype.shr_u = LongPrototype.shiftRightUnsigned;
+  /**
+   * Returns this Long with bits rotated to the left by the given amount.
+   * @this {!Long}
+   * @param {number|!Long} numBits Number of bits
+   * @returns {!Long} Rotated Long
+   */
+  
+  LongPrototype.rotateLeft = function rotateLeft(numBits) {
+    var b;
+    if (isLong(numBits)) numBits = numBits.toInt();
+    if ((numBits &= 63) === 0) return this;
+    if (numBits === 32) return fromBits(this.high, this.low, this.unsigned);
+  
+    if (numBits < 32) {
+      b = 32 - numBits;
+      return fromBits(this.low << numBits | this.high >>> b, this.high << numBits | this.low >>> b, this.unsigned);
+    }
+  
+    numBits -= 32;
+    b = 32 - numBits;
+    return fromBits(this.high << numBits | this.low >>> b, this.low << numBits | this.high >>> b, this.unsigned);
+  };
+  /**
+   * Returns this Long with bits rotated to the left by the given amount. This is an alias of {@link Long#rotateLeft}.
+   * @function
+   * @param {number|!Long} numBits Number of bits
+   * @returns {!Long} Rotated Long
+   */
+  
+  
+  LongPrototype.rotl = LongPrototype.rotateLeft;
+  /**
+   * Returns this Long with bits rotated to the right by the given amount.
+   * @this {!Long}
+   * @param {number|!Long} numBits Number of bits
+   * @returns {!Long} Rotated Long
+   */
+  
+  LongPrototype.rotateRight = function rotateRight(numBits) {
+    var b;
+    if (isLong(numBits)) numBits = numBits.toInt();
+    if ((numBits &= 63) === 0) return this;
+    if (numBits === 32) return fromBits(this.high, this.low, this.unsigned);
+  
+    if (numBits < 32) {
+      b = 32 - numBits;
+      return fromBits(this.high << b | this.low >>> numBits, this.low << b | this.high >>> numBits, this.unsigned);
+    }
+  
+    numBits -= 32;
+    b = 32 - numBits;
+    return fromBits(this.low << b | this.high >>> numBits, this.high << b | this.low >>> numBits, this.unsigned);
+  };
+  /**
+   * Returns this Long with bits rotated to the right by the given amount. This is an alias of {@link Long#rotateRight}.
+   * @function
+   * @param {number|!Long} numBits Number of bits
+   * @returns {!Long} Rotated Long
+   */
+  
+  
+  LongPrototype.rotr = LongPrototype.rotateRight;
+  /**
+   * Converts this Long to signed.
+   * @this {!Long}
+   * @returns {!Long} Signed long
+   */
+  
+  LongPrototype.toSigned = function toSigned() {
+    if (!this.unsigned) return this;
+    return fromBits(this.low, this.high, false);
+  };
+  /**
+   * Converts this Long to unsigned.
+   * @this {!Long}
+   * @returns {!Long} Unsigned long
+   */
+  
+  
+  LongPrototype.toUnsigned = function toUnsigned() {
+    if (this.unsigned) return this;
+    return fromBits(this.low, this.high, true);
+  };
+  /**
+   * Converts this Long to its byte representation.
+   * @param {boolean=} le Whether little or big endian, defaults to big endian
+   * @this {!Long}
+   * @returns {!Array.<number>} Byte representation
+   */
+  
+  
+  LongPrototype.toBytes = function toBytes(le) {
+    return le ? this.toBytesLE() : this.toBytesBE();
+  };
+  /**
+   * Converts this Long to its little endian byte representation.
+   * @this {!Long}
+   * @returns {!Array.<number>} Little endian byte representation
+   */
+  
+  
+  LongPrototype.toBytesLE = function toBytesLE() {
+    var hi = this.high,
+        lo = this.low;
+    return [lo & 0xff, lo >>> 8 & 0xff, lo >>> 16 & 0xff, lo >>> 24, hi & 0xff, hi >>> 8 & 0xff, hi >>> 16 & 0xff, hi >>> 24];
+  };
+  /**
+   * Converts this Long to its big endian byte representation.
+   * @this {!Long}
+   * @returns {!Array.<number>} Big endian byte representation
+   */
+  
+  
+  LongPrototype.toBytesBE = function toBytesBE() {
+    var hi = this.high,
+        lo = this.low;
+    return [hi >>> 24, hi >>> 16 & 0xff, hi >>> 8 & 0xff, hi & 0xff, lo >>> 24, lo >>> 16 & 0xff, lo >>> 8 & 0xff, lo & 0xff];
+  };
+  /**
+   * Creates a Long from its byte representation.
+   * @param {!Array.<number>} bytes Byte representation
+   * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
+   * @param {boolean=} le Whether little or big endian, defaults to big endian
+   * @returns {Long} The corresponding Long value
+   */
+  
+  
+  Long.fromBytes = function fromBytes(bytes, unsigned, le) {
+    return le ? Long.fromBytesLE(bytes, unsigned) : Long.fromBytesBE(bytes, unsigned);
+  };
+  /**
+   * Creates a Long from its little endian byte representation.
+   * @param {!Array.<number>} bytes Little endian byte representation
+   * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
+   * @returns {Long} The corresponding Long value
+   */
+  
+  
+  Long.fromBytesLE = function fromBytesLE(bytes, unsigned) {
+    return new Long(bytes[0] | bytes[1] << 8 | bytes[2] << 16 | bytes[3] << 24, bytes[4] | bytes[5] << 8 | bytes[6] << 16 | bytes[7] << 24, unsigned);
+  };
+  /**
+   * Creates a Long from its big endian byte representation.
+   * @param {!Array.<number>} bytes Big endian byte representation
+   * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
+   * @returns {Long} The corresponding Long value
+   */
+  
+  
+  Long.fromBytesBE = function fromBytesBE(bytes, unsigned) {
+    return new Long(bytes[4] << 24 | bytes[5] << 16 | bytes[6] << 8 | bytes[7], bytes[0] << 24 | bytes[1] << 16 | bytes[2] << 8 | bytes[3], unsigned);
+  };
+  
+  var _default = Long;
+  exports.default = _default;
+  return "default" in exports ? exports.default : exports;
+})({});
+if (true) !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function() { return Long; }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+else {}
+
+
+/***/ }),
+
 /***/ "../node_modules/@homebridge/put/index.js":
 /*!************************************************!*\
   !*** ../node_modules/@homebridge/put/index.js ***!
@@ -8548,6 +10017,267 @@ function Put () {
 
 /***/ }),
 
+/***/ "../node_modules/@leichtgewicht/ip-codec/index.cjs":
+/*!*********************************************************!*\
+  !*** ../node_modules/@leichtgewicht/ip-codec/index.cjs ***!
+  \*********************************************************/
+/***/ ((module, exports) => {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// GENERATED FILE. DO NOT EDIT.
+var ipCodec = (function(exports) {
+  "use strict";
+  
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.decode = decode;
+  exports.encode = encode;
+  exports.familyOf = familyOf;
+  exports.name = void 0;
+  exports.sizeOf = sizeOf;
+  exports.v6 = exports.v4 = void 0;
+  const v4Regex = /^(\d{1,3}\.){3,3}\d{1,3}$/;
+  const v4Size = 4;
+  const v6Regex = /^(::)?(((\d{1,3}\.){3}(\d{1,3}){1})?([0-9a-f]){0,4}:{0,2}){1,8}(::)?$/i;
+  const v6Size = 16;
+  const v4 = {
+    name: 'v4',
+    size: v4Size,
+    isFormat: ip => v4Regex.test(ip),
+  
+    encode(ip, buff, offset) {
+      offset = ~~offset;
+      buff = buff || new Uint8Array(offset + v4Size);
+      const max = ip.length;
+      let n = 0;
+  
+      for (let i = 0; i < max;) {
+        const c = ip.charCodeAt(i++);
+  
+        if (c === 46) {
+          // "."
+          buff[offset++] = n;
+          n = 0;
+        } else {
+          n = n * 10 + (c - 48);
+        }
+      }
+  
+      buff[offset] = n;
+      return buff;
+    },
+  
+    decode(buff, offset) {
+      offset = ~~offset;
+      return `${buff[offset++]}.${buff[offset++]}.${buff[offset++]}.${buff[offset]}`;
+    }
+  
+  };
+  exports.v4 = v4;
+  const v6 = {
+    name: 'v6',
+    size: v6Size,
+    isFormat: ip => ip.length > 0 && v6Regex.test(ip),
+  
+    encode(ip, buff, offset) {
+      offset = ~~offset;
+      let end = offset + v6Size;
+      let fill = -1;
+      let hexN = 0;
+      let decN = 0;
+      let prevColon = true;
+      let useDec = false;
+      buff = buff || new Uint8Array(offset + v6Size); // Note: This algorithm needs to check if the offset
+      // could exceed the buffer boundaries as it supports
+      // non-standard compliant encodings that may go beyond
+      // the boundary limits. if (offset < end) checks should
+      // not be necessary...
+  
+      for (let i = 0; i < ip.length; i++) {
+        let c = ip.charCodeAt(i);
+  
+        if (c === 58) {
+          // :
+          if (prevColon) {
+            if (fill !== -1) {
+              // Not Standard! (standard doesn't allow multiple ::)
+              // We need to treat
+              if (offset < end) buff[offset] = 0;
+              if (offset < end - 1) buff[offset + 1] = 0;
+              offset += 2;
+            } else if (offset < end) {
+              // :: in the middle
+              fill = offset;
+            }
+          } else {
+            // : ends the previous number
+            if (useDec === true) {
+              // Non-standard! (ipv4 should be at end only)
+              // A ipv4 address should not be found anywhere else but at
+              // the end. This codec also support putting characters
+              // after the ipv4 address..
+              if (offset < end) buff[offset] = decN;
+              offset++;
+            } else {
+              if (offset < end) buff[offset] = hexN >> 8;
+              if (offset < end - 1) buff[offset + 1] = hexN & 0xff;
+              offset += 2;
+            }
+  
+            hexN = 0;
+            decN = 0;
+          }
+  
+          prevColon = true;
+          useDec = false;
+        } else if (c === 46) {
+          // . indicates IPV4 notation
+          if (offset < end) buff[offset] = decN;
+          offset++;
+          decN = 0;
+          hexN = 0;
+          prevColon = false;
+          useDec = true;
+        } else {
+          prevColon = false;
+  
+          if (c >= 97) {
+            c -= 87; // a-f ... 97~102 -87 => 10~15
+          } else if (c >= 65) {
+            c -= 55; // A-F ... 65~70 -55 => 10~15
+          } else {
+            c -= 48; // 0-9 ... starting from charCode 48
+  
+            decN = decN * 10 + c;
+          } // We don't know yet if its a dec or hex number
+  
+  
+          hexN = (hexN << 4) + c;
+        }
+      }
+  
+      if (prevColon === false) {
+        // Commiting last number
+        if (useDec === true) {
+          if (offset < end) buff[offset] = decN;
+          offset++;
+        } else {
+          if (offset < end) buff[offset] = hexN >> 8;
+          if (offset < end - 1) buff[offset + 1] = hexN & 0xff;
+          offset += 2;
+        }
+      } else if (fill === 0) {
+        // Not Standard! (standard doesn't allow multiple ::)
+        // This means that a : was found at the start AND end which means the
+        // end needs to be treated as 0 entry...
+        if (offset < end) buff[offset] = 0;
+        if (offset < end - 1) buff[offset + 1] = 0;
+        offset += 2;
+      } else if (fill !== -1) {
+        // Non-standard! (standard doens't allow multiple ::)
+        // Here we find that there has been a :: somewhere in the middle
+        // and the end. To treat the end with priority we need to move all
+        // written data two bytes to the right.
+        offset += 2;
+  
+        for (let i = Math.min(offset - 1, end - 1); i >= fill + 2; i--) {
+          buff[i] = buff[i - 2];
+        }
+  
+        buff[fill] = 0;
+        buff[fill + 1] = 0;
+        fill = offset;
+      }
+  
+      if (fill !== offset && fill !== -1) {
+        // Move the written numbers to the end while filling the everything
+        // "fill" to the bytes with zeros.
+        if (offset > end - 2) {
+          // Non Standard support, when the cursor exceeds bounds.
+          offset = end - 2;
+        }
+  
+        while (end > fill) {
+          buff[--end] = offset < end && offset > fill ? buff[--offset] : 0;
+        }
+      } else {
+        // Fill the rest with zeros
+        while (offset < end) {
+          buff[offset++] = 0;
+        }
+      }
+  
+      return buff;
+    },
+  
+    decode(buff, offset) {
+      offset = ~~offset;
+      let result = '';
+  
+      for (let i = 0; i < v6Size; i += 2) {
+        if (i !== 0) {
+          result += ':';
+        }
+  
+        result += (buff[offset + i] << 8 | buff[offset + i + 1]).toString(16);
+      }
+  
+      return result.replace(/(^|:)0(:0)*:0(:|$)/, '$1::$3').replace(/:{3,4}/, '::');
+    }
+  
+  };
+  exports.v6 = v6;
+  const name = 'ip';
+  exports.name = name;
+  
+  function sizeOf(ip) {
+    if (v4.isFormat(ip)) return v4.size;
+    if (v6.isFormat(ip)) return v6.size;
+    throw Error(`Invalid ip address: ${ip}`);
+  }
+  
+  function familyOf(string) {
+    return sizeOf(string) === v4.size ? 1 : 2;
+  }
+  
+  function encode(ip, buff, offset) {
+    offset = ~~offset;
+    const size = sizeOf(ip);
+  
+    if (typeof buff === 'function') {
+      buff = buff(offset + size);
+    }
+  
+    if (size === v4.size) {
+      return v4.encode(ip, buff, offset);
+    }
+  
+    return v6.encode(ip, buff, offset);
+  }
+  
+  function decode(buff, offset, length) {
+    offset = ~~offset;
+    length = length || buff.length - offset;
+  
+    if (length === v4.size) {
+      return v4.decode(buff, offset, length);
+    }
+  
+    if (length === v6.size) {
+      return v6.decode(buff, offset, length);
+    }
+  
+    throw Error(`Invalid buffer size needs to be ${v4.size} for v4 or ${v6.size} for v6.`);
+  }
+  return "default" in exports ? exports.default : exports;
+})({});
+if (true) !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function() { return ipCodec; }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+else {}
+
+
+/***/ }),
+
 /***/ "../node_modules/array-buffer-byte-length/index.js":
 /*!*********************************************************!*\
   !*** ../node_modules/array-buffer-byte-length/index.js ***!
@@ -8557,7 +10287,7 @@ function Put () {
 "use strict";
 
 
-var callBound = __webpack_require__(/*! call-bind/callBound */ "../node_modules/call-bind/callBound.js");
+var callBound = __webpack_require__(/*! call-bound */ "../node_modules/call-bound/index.js");
 var $byteLength = callBound('ArrayBuffer.prototype.byteLength', true);
 
 var isArrayBuffer = __webpack_require__(/*! is-array-buffer */ "../node_modules/is-array-buffer/index.js");
@@ -15735,6 +17465,34 @@ module.exports = {
 
 /***/ }),
 
+/***/ "../node_modules/available-typed-arrays/index.js":
+/*!*******************************************************!*\
+  !*** ../node_modules/available-typed-arrays/index.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var possibleNames = __webpack_require__(/*! possible-typed-array-names */ "../node_modules/possible-typed-array-names/index.js");
+
+var g = typeof globalThis === 'undefined' ? __webpack_require__.g : globalThis;
+
+/** @type {import('.')} */
+module.exports = function availableTypedArrays() {
+	var /** @type {ReturnType<typeof availableTypedArrays>} */ out = [];
+	for (var i = 0; i < possibleNames.length; i++) {
+		if (typeof g[possibleNames[i]] === 'function') {
+			// @ts-expect-error
+			out[out.length] = possibleNames[i];
+		}
+	}
+	return out;
+};
+
+
+/***/ }),
+
 /***/ "../node_modules/base64-js/index.js":
 /*!******************************************!*\
   !*** ../node_modules/base64-js/index.js ***!
@@ -21563,6 +23321,17 @@ module.exports = modes
 
 /***/ }),
 
+/***/ "../node_modules/browserify-aes/modes/list.json":
+/*!******************************************************!*\
+  !*** ../node_modules/browserify-aes/modes/list.json ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = /*#__PURE__*/JSON.parse('{"aes-128-ecb":{"cipher":"AES","key":128,"iv":0,"mode":"ECB","type":"block"},"aes-192-ecb":{"cipher":"AES","key":192,"iv":0,"mode":"ECB","type":"block"},"aes-256-ecb":{"cipher":"AES","key":256,"iv":0,"mode":"ECB","type":"block"},"aes-128-cbc":{"cipher":"AES","key":128,"iv":16,"mode":"CBC","type":"block"},"aes-192-cbc":{"cipher":"AES","key":192,"iv":16,"mode":"CBC","type":"block"},"aes-256-cbc":{"cipher":"AES","key":256,"iv":16,"mode":"CBC","type":"block"},"aes128":{"cipher":"AES","key":128,"iv":16,"mode":"CBC","type":"block"},"aes192":{"cipher":"AES","key":192,"iv":16,"mode":"CBC","type":"block"},"aes256":{"cipher":"AES","key":256,"iv":16,"mode":"CBC","type":"block"},"aes-128-cfb":{"cipher":"AES","key":128,"iv":16,"mode":"CFB","type":"stream"},"aes-192-cfb":{"cipher":"AES","key":192,"iv":16,"mode":"CFB","type":"stream"},"aes-256-cfb":{"cipher":"AES","key":256,"iv":16,"mode":"CFB","type":"stream"},"aes-128-cfb8":{"cipher":"AES","key":128,"iv":16,"mode":"CFB8","type":"stream"},"aes-192-cfb8":{"cipher":"AES","key":192,"iv":16,"mode":"CFB8","type":"stream"},"aes-256-cfb8":{"cipher":"AES","key":256,"iv":16,"mode":"CFB8","type":"stream"},"aes-128-cfb1":{"cipher":"AES","key":128,"iv":16,"mode":"CFB1","type":"stream"},"aes-192-cfb1":{"cipher":"AES","key":192,"iv":16,"mode":"CFB1","type":"stream"},"aes-256-cfb1":{"cipher":"AES","key":256,"iv":16,"mode":"CFB1","type":"stream"},"aes-128-ofb":{"cipher":"AES","key":128,"iv":16,"mode":"OFB","type":"stream"},"aes-192-ofb":{"cipher":"AES","key":192,"iv":16,"mode":"OFB","type":"stream"},"aes-256-ofb":{"cipher":"AES","key":256,"iv":16,"mode":"OFB","type":"stream"},"aes-128-ctr":{"cipher":"AES","key":128,"iv":16,"mode":"CTR","type":"stream"},"aes-192-ctr":{"cipher":"AES","key":192,"iv":16,"mode":"CTR","type":"stream"},"aes-256-ctr":{"cipher":"AES","key":256,"iv":16,"mode":"CTR","type":"stream"},"aes-128-gcm":{"cipher":"AES","key":128,"iv":12,"mode":"GCM","type":"auth"},"aes-192-gcm":{"cipher":"AES","key":192,"iv":12,"mode":"GCM","type":"auth"},"aes-256-gcm":{"cipher":"AES","key":256,"iv":12,"mode":"GCM","type":"auth"}}');
+
+/***/ }),
+
 /***/ "../node_modules/browserify-aes/modes/ofb.js":
 /*!***************************************************!*\
   !*** ../node_modules/browserify-aes/modes/ofb.js ***!
@@ -21855,6 +23624,28 @@ module.exports = crt
 
 module.exports = __webpack_require__(/*! ./browser/algorithms.json */ "../node_modules/browserify-sign/browser/algorithms.json");
 
+
+/***/ }),
+
+/***/ "../node_modules/browserify-sign/browser/algorithms.json":
+/*!***************************************************************!*\
+  !*** ../node_modules/browserify-sign/browser/algorithms.json ***!
+  \***************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = /*#__PURE__*/JSON.parse('{"sha224WithRSAEncryption":{"sign":"rsa","hash":"sha224","id":"302d300d06096086480165030402040500041c"},"RSA-SHA224":{"sign":"ecdsa/rsa","hash":"sha224","id":"302d300d06096086480165030402040500041c"},"sha256WithRSAEncryption":{"sign":"rsa","hash":"sha256","id":"3031300d060960864801650304020105000420"},"RSA-SHA256":{"sign":"ecdsa/rsa","hash":"sha256","id":"3031300d060960864801650304020105000420"},"sha384WithRSAEncryption":{"sign":"rsa","hash":"sha384","id":"3041300d060960864801650304020205000430"},"RSA-SHA384":{"sign":"ecdsa/rsa","hash":"sha384","id":"3041300d060960864801650304020205000430"},"sha512WithRSAEncryption":{"sign":"rsa","hash":"sha512","id":"3051300d060960864801650304020305000440"},"RSA-SHA512":{"sign":"ecdsa/rsa","hash":"sha512","id":"3051300d060960864801650304020305000440"},"RSA-SHA1":{"sign":"rsa","hash":"sha1","id":"3021300906052b0e03021a05000414"},"ecdsa-with-SHA1":{"sign":"ecdsa","hash":"sha1","id":""},"sha256":{"sign":"ecdsa","hash":"sha256","id":""},"sha224":{"sign":"ecdsa","hash":"sha224","id":""},"sha384":{"sign":"ecdsa","hash":"sha384","id":""},"sha512":{"sign":"ecdsa","hash":"sha512","id":""},"DSA-SHA":{"sign":"dsa","hash":"sha1","id":""},"DSA-SHA1":{"sign":"dsa","hash":"sha1","id":""},"DSA":{"sign":"dsa","hash":"sha1","id":""},"DSA-WITH-SHA224":{"sign":"dsa","hash":"sha224","id":""},"DSA-SHA224":{"sign":"dsa","hash":"sha224","id":""},"DSA-WITH-SHA256":{"sign":"dsa","hash":"sha256","id":""},"DSA-SHA256":{"sign":"dsa","hash":"sha256","id":""},"DSA-WITH-SHA384":{"sign":"dsa","hash":"sha384","id":""},"DSA-SHA384":{"sign":"dsa","hash":"sha384","id":""},"DSA-WITH-SHA512":{"sign":"dsa","hash":"sha512","id":""},"DSA-SHA512":{"sign":"dsa","hash":"sha512","id":""},"DSA-RIPEMD160":{"sign":"dsa","hash":"rmd160","id":""},"ripemd160WithRSA":{"sign":"rsa","hash":"rmd160","id":"3021300906052b2403020105000414"},"RSA-RIPEMD160":{"sign":"rsa","hash":"rmd160","id":"3021300906052b2403020105000414"},"md5WithRSAEncryption":{"sign":"rsa","hash":"md5","id":"3020300c06082a864886f70d020505000410"},"RSA-MD5":{"sign":"rsa","hash":"md5","id":"3020300c06082a864886f70d020505000410"}}');
+
+/***/ }),
+
+/***/ "../node_modules/browserify-sign/browser/curves.json":
+/*!***********************************************************!*\
+  !*** ../node_modules/browserify-sign/browser/curves.json ***!
+  \***********************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = /*#__PURE__*/JSON.parse('{"1.3.132.0.10":"secp256k1","1.3.132.0.33":"p224","1.2.840.10045.3.1.1":"p192","1.2.840.10045.3.1.7":"p256","1.3.132.0.34":"p384","1.3.132.0.35":"p521"}');
 
 /***/ }),
 
@@ -24440,6 +26231,119 @@ function BufferBigIntNotDefined () {
 
 /***/ }),
 
+/***/ "../node_modules/call-bind-apply-helpers/actualApply.js":
+/*!**************************************************************!*\
+  !*** ../node_modules/call-bind-apply-helpers/actualApply.js ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var bind = __webpack_require__(/*! function-bind */ "../node_modules/function-bind/index.js");
+
+var $apply = __webpack_require__(/*! ./functionApply */ "../node_modules/call-bind-apply-helpers/functionApply.js");
+var $call = __webpack_require__(/*! ./functionCall */ "../node_modules/call-bind-apply-helpers/functionCall.js");
+var $reflectApply = __webpack_require__(/*! ./reflectApply */ "../node_modules/call-bind-apply-helpers/reflectApply.js");
+
+/** @type {import('./actualApply')} */
+module.exports = $reflectApply || bind.call($call, $apply);
+
+
+/***/ }),
+
+/***/ "../node_modules/call-bind-apply-helpers/applyBind.js":
+/*!************************************************************!*\
+  !*** ../node_modules/call-bind-apply-helpers/applyBind.js ***!
+  \************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var bind = __webpack_require__(/*! function-bind */ "../node_modules/function-bind/index.js");
+var $apply = __webpack_require__(/*! ./functionApply */ "../node_modules/call-bind-apply-helpers/functionApply.js");
+var actualApply = __webpack_require__(/*! ./actualApply */ "../node_modules/call-bind-apply-helpers/actualApply.js");
+
+/** @type {import('./applyBind')} */
+module.exports = function applyBind() {
+	return actualApply(bind, $apply, arguments);
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/call-bind-apply-helpers/functionApply.js":
+/*!****************************************************************!*\
+  !*** ../node_modules/call-bind-apply-helpers/functionApply.js ***!
+  \****************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('./functionApply')} */
+module.exports = Function.prototype.apply;
+
+
+/***/ }),
+
+/***/ "../node_modules/call-bind-apply-helpers/functionCall.js":
+/*!***************************************************************!*\
+  !*** ../node_modules/call-bind-apply-helpers/functionCall.js ***!
+  \***************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('./functionCall')} */
+module.exports = Function.prototype.call;
+
+
+/***/ }),
+
+/***/ "../node_modules/call-bind-apply-helpers/index.js":
+/*!********************************************************!*\
+  !*** ../node_modules/call-bind-apply-helpers/index.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var bind = __webpack_require__(/*! function-bind */ "../node_modules/function-bind/index.js");
+var $TypeError = __webpack_require__(/*! es-errors/type */ "../node_modules/es-errors/type.js");
+
+var $call = __webpack_require__(/*! ./functionCall */ "../node_modules/call-bind-apply-helpers/functionCall.js");
+var $actualApply = __webpack_require__(/*! ./actualApply */ "../node_modules/call-bind-apply-helpers/actualApply.js");
+
+/** @type {(args: [Function, thisArg?: unknown, ...args: unknown[]]) => Function} TODO FIXME, find a way to use import('.') */
+module.exports = function callBindBasic(args) {
+	if (args.length < 1 || typeof args[0] !== 'function') {
+		throw new $TypeError('a function is required');
+	}
+	return $actualApply(bind, $call, args);
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/call-bind-apply-helpers/reflectApply.js":
+/*!***************************************************************!*\
+  !*** ../node_modules/call-bind-apply-helpers/reflectApply.js ***!
+  \***************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('./reflectApply')} */
+module.exports = typeof Reflect !== 'undefined' && Reflect && Reflect.apply;
+
+
+/***/ }),
+
 /***/ "../node_modules/call-bind/callBound.js":
 /*!**********************************************!*\
   !*** ../node_modules/call-bind/callBound.js ***!
@@ -24475,32 +26379,21 @@ module.exports = function callBoundIntrinsic(name, allowMissing) {
 "use strict";
 
 
-var bind = __webpack_require__(/*! function-bind */ "../node_modules/function-bind/index.js");
-var GetIntrinsic = __webpack_require__(/*! get-intrinsic */ "../node_modules/get-intrinsic/index.js");
 var setFunctionLength = __webpack_require__(/*! set-function-length */ "../node_modules/set-function-length/index.js");
 
-var $TypeError = __webpack_require__(/*! es-errors/type */ "../node_modules/es-errors/type.js");
-var $apply = GetIntrinsic('%Function.prototype.apply%');
-var $call = GetIntrinsic('%Function.prototype.call%');
-var $reflectApply = GetIntrinsic('%Reflect.apply%', true) || bind.call($call, $apply);
-
 var $defineProperty = __webpack_require__(/*! es-define-property */ "../node_modules/es-define-property/index.js");
-var $max = GetIntrinsic('%Math.max%');
+
+var callBindBasic = __webpack_require__(/*! call-bind-apply-helpers */ "../node_modules/call-bind-apply-helpers/index.js");
+var applyBind = __webpack_require__(/*! call-bind-apply-helpers/applyBind */ "../node_modules/call-bind-apply-helpers/applyBind.js");
 
 module.exports = function callBind(originalFunction) {
-	if (typeof originalFunction !== 'function') {
-		throw new $TypeError('a function is required');
-	}
-	var func = $reflectApply(bind, $call, arguments);
+	var func = callBindBasic(arguments);
+	var adjustedLength = originalFunction.length - (arguments.length - 1);
 	return setFunctionLength(
 		func,
-		1 + $max(0, originalFunction.length - (arguments.length - 1)),
+		1 + (adjustedLength > 0 ? adjustedLength : 0),
 		true
 	);
-};
-
-var applyBind = function applyBind() {
-	return $reflectApply(bind, $apply, arguments);
 };
 
 if ($defineProperty) {
@@ -24508,6 +26401,36 @@ if ($defineProperty) {
 } else {
 	module.exports.apply = applyBind;
 }
+
+
+/***/ }),
+
+/***/ "../node_modules/call-bound/index.js":
+/*!*******************************************!*\
+  !*** ../node_modules/call-bound/index.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var GetIntrinsic = __webpack_require__(/*! get-intrinsic */ "../node_modules/get-intrinsic/index.js");
+
+var callBindBasic = __webpack_require__(/*! call-bind-apply-helpers */ "../node_modules/call-bind-apply-helpers/index.js");
+
+/** @type {(thisArg: string, searchString: string, position?: number) => number} */
+var $indexOf = callBindBasic([GetIntrinsic('%String.prototype.indexOf%')]);
+
+/** @type {import('.')} */
+module.exports = function callBoundIntrinsic(name, allowMissing) {
+	/* eslint no-extra-parens: 0 */
+
+	var intrinsic = /** @type {(this: unknown, ...args: unknown[]) => unknown} */ (GetIntrinsic(name, !!allowMissing));
+	if (typeof intrinsic === 'function' && $indexOf(name, '.prototype.') > -1) {
+		return callBindBasic(/** @type {const} */ ([intrinsic]));
+	}
+	return intrinsic;
+};
 
 
 /***/ }),
@@ -28525,101 +30448,107 @@ module.exports = Hmac
 "use strict";
 
 
-exports.randomBytes = exports.rng = exports.pseudoRandomBytes = exports.prng = __webpack_require__(/*! randombytes */ "../node_modules/randombytes/browser.js")
-exports.createHash = exports.Hash = __webpack_require__(/*! create-hash */ "../node_modules/create-hash/browser.js")
-exports.createHmac = exports.Hmac = __webpack_require__(/*! create-hmac */ "../node_modules/create-hmac/browser.js")
+// eslint-disable-next-line no-multi-assign
+exports.randomBytes = exports.rng = exports.pseudoRandomBytes = exports.prng = __webpack_require__(/*! randombytes */ "../node_modules/randombytes/browser.js");
 
-var algos = __webpack_require__(/*! browserify-sign/algos */ "../node_modules/browserify-sign/algos.js")
-var algoKeys = Object.keys(algos)
-var hashes = ['sha1', 'sha224', 'sha256', 'sha384', 'sha512', 'md5', 'rmd160'].concat(algoKeys)
+// eslint-disable-next-line no-multi-assign
+exports.createHash = exports.Hash = __webpack_require__(/*! create-hash */ "../node_modules/create-hash/browser.js");
+
+// eslint-disable-next-line no-multi-assign
+exports.createHmac = exports.Hmac = __webpack_require__(/*! create-hmac */ "../node_modules/create-hmac/browser.js");
+
+var algos = __webpack_require__(/*! browserify-sign/algos */ "../node_modules/browserify-sign/algos.js");
+var algoKeys = Object.keys(algos);
+var hashes = [
+	'sha1',
+	'sha224',
+	'sha256',
+	'sha384',
+	'sha512',
+	'md5',
+	'rmd160'
+].concat(algoKeys);
+
 exports.getHashes = function () {
-  return hashes
-}
+	return hashes;
+};
 
-var p = __webpack_require__(/*! pbkdf2 */ "../node_modules/pbkdf2/browser.js")
-exports.pbkdf2 = p.pbkdf2
-exports.pbkdf2Sync = p.pbkdf2Sync
+var p = __webpack_require__(/*! pbkdf2 */ "../node_modules/pbkdf2/browser.js");
+exports.pbkdf2 = p.pbkdf2;
+exports.pbkdf2Sync = p.pbkdf2Sync;
 
-var aes = __webpack_require__(/*! browserify-cipher */ "../node_modules/browserify-cipher/browser.js")
+var aes = __webpack_require__(/*! browserify-cipher */ "../node_modules/browserify-cipher/browser.js");
 
-exports.Cipher = aes.Cipher
-exports.createCipher = aes.createCipher
-exports.Cipheriv = aes.Cipheriv
-exports.createCipheriv = aes.createCipheriv
-exports.Decipher = aes.Decipher
-exports.createDecipher = aes.createDecipher
-exports.Decipheriv = aes.Decipheriv
-exports.createDecipheriv = aes.createDecipheriv
-exports.getCiphers = aes.getCiphers
-exports.listCiphers = aes.listCiphers
+exports.Cipher = aes.Cipher;
+exports.createCipher = aes.createCipher;
+exports.Cipheriv = aes.Cipheriv;
+exports.createCipheriv = aes.createCipheriv;
+exports.Decipher = aes.Decipher;
+exports.createDecipher = aes.createDecipher;
+exports.Decipheriv = aes.Decipheriv;
+exports.createDecipheriv = aes.createDecipheriv;
+exports.getCiphers = aes.getCiphers;
+exports.listCiphers = aes.listCiphers;
 
-var dh = __webpack_require__(/*! diffie-hellman */ "../node_modules/diffie-hellman/browser.js")
+var dh = __webpack_require__(/*! diffie-hellman */ "../node_modules/diffie-hellman/browser.js");
 
-exports.DiffieHellmanGroup = dh.DiffieHellmanGroup
-exports.createDiffieHellmanGroup = dh.createDiffieHellmanGroup
-exports.getDiffieHellman = dh.getDiffieHellman
-exports.createDiffieHellman = dh.createDiffieHellman
-exports.DiffieHellman = dh.DiffieHellman
+exports.DiffieHellmanGroup = dh.DiffieHellmanGroup;
+exports.createDiffieHellmanGroup = dh.createDiffieHellmanGroup;
+exports.getDiffieHellman = dh.getDiffieHellman;
+exports.createDiffieHellman = dh.createDiffieHellman;
+exports.DiffieHellman = dh.DiffieHellman;
 
-var sign = __webpack_require__(/*! browserify-sign */ "../node_modules/browserify-sign/browser/index.js")
+var sign = __webpack_require__(/*! browserify-sign */ "../node_modules/browserify-sign/browser/index.js");
 
-exports.createSign = sign.createSign
-exports.Sign = sign.Sign
-exports.createVerify = sign.createVerify
-exports.Verify = sign.Verify
+exports.createSign = sign.createSign;
+exports.Sign = sign.Sign;
+exports.createVerify = sign.createVerify;
+exports.Verify = sign.Verify;
 
-exports.createECDH = __webpack_require__(/*! create-ecdh */ "../node_modules/create-ecdh/browser.js")
+exports.createECDH = __webpack_require__(/*! create-ecdh */ "../node_modules/create-ecdh/browser.js");
 
-var publicEncrypt = __webpack_require__(/*! public-encrypt */ "../node_modules/public-encrypt/browser.js")
+var publicEncrypt = __webpack_require__(/*! public-encrypt */ "../node_modules/public-encrypt/browser.js");
 
-exports.publicEncrypt = publicEncrypt.publicEncrypt
-exports.privateEncrypt = publicEncrypt.privateEncrypt
-exports.publicDecrypt = publicEncrypt.publicDecrypt
-exports.privateDecrypt = publicEncrypt.privateDecrypt
+exports.publicEncrypt = publicEncrypt.publicEncrypt;
+exports.privateEncrypt = publicEncrypt.privateEncrypt;
+exports.publicDecrypt = publicEncrypt.publicDecrypt;
+exports.privateDecrypt = publicEncrypt.privateDecrypt;
 
 // the least I can do is make error messages for the rest of the node.js/crypto api.
-// ;[
+// [
 //   'createCredentials'
 // ].forEach(function (name) {
 //   exports[name] = function () {
-//     throw new Error([
-//       'sorry, ' + name + ' is not implemented yet',
-//       'we accept pull requests',
-//       'https://github.com/crypto-browserify/crypto-browserify'
-//     ].join('\n'))
-//   }
-// })
+//     throw new Error('sorry, ' + name + ' is not implemented yet\nwe accept pull requests\nhttps://github.com/browserify/crypto-browserify');
+//   };
+// });
 
-var rf = __webpack_require__(/*! randomfill */ "../node_modules/randomfill/browser.js")
+var rf = __webpack_require__(/*! randomfill */ "../node_modules/randomfill/browser.js");
 
-exports.randomFill = rf.randomFill
-exports.randomFillSync = rf.randomFillSync
+exports.randomFill = rf.randomFill;
+exports.randomFillSync = rf.randomFillSync;
 
 exports.createCredentials = function () {
-  throw new Error([
-    'sorry, createCredentials is not implemented yet',
-    'we accept pull requests',
-    'https://github.com/crypto-browserify/crypto-browserify'
-  ].join('\n'))
-}
+	throw new Error('sorry, createCredentials is not implemented yet\nwe accept pull requests\nhttps://github.com/browserify/crypto-browserify');
+};
 
 exports.constants = {
-  'DH_CHECK_P_NOT_SAFE_PRIME': 2,
-  'DH_CHECK_P_NOT_PRIME': 1,
-  'DH_UNABLE_TO_CHECK_GENERATOR': 4,
-  'DH_NOT_SUITABLE_GENERATOR': 8,
-  'NPN_ENABLED': 1,
-  'ALPN_ENABLED': 1,
-  'RSA_PKCS1_PADDING': 1,
-  'RSA_SSLV23_PADDING': 2,
-  'RSA_NO_PADDING': 3,
-  'RSA_PKCS1_OAEP_PADDING': 4,
-  'RSA_X931_PADDING': 5,
-  'RSA_PKCS1_PSS_PADDING': 6,
-  'POINT_CONVERSION_COMPRESSED': 2,
-  'POINT_CONVERSION_UNCOMPRESSED': 4,
-  'POINT_CONVERSION_HYBRID': 6
-}
+	DH_CHECK_P_NOT_SAFE_PRIME: 2,
+	DH_CHECK_P_NOT_PRIME: 1,
+	DH_UNABLE_TO_CHECK_GENERATOR: 4,
+	DH_NOT_SUITABLE_GENERATOR: 8,
+	NPN_ENABLED: 1,
+	ALPN_ENABLED: 1,
+	RSA_PKCS1_PADDING: 1,
+	RSA_SSLV23_PADDING: 2,
+	RSA_NO_PADDING: 3,
+	RSA_PKCS1_OAEP_PADDING: 4,
+	RSA_X931_PADDING: 5,
+	RSA_PKCS1_PSS_PADDING: 6,
+	POINT_CONVERSION_COMPRESSED: 2,
+	POINT_CONVERSION_UNCOMPRESSED: 4,
+	POINT_CONVERSION_HYBRID: 6
+};
 
 
 /***/ }),
@@ -28762,6 +30691,7 @@ function useColors() {
 
 	// Is webkit? http://stackoverflow.com/a/16459606/376773
 	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+	// eslint-disable-next-line no-return-assign
 	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
 		// Is firebug? http://stackoverflow.com/a/398120/376773
 		(typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
@@ -29080,24 +31010,62 @@ function setup(env) {
 		createDebug.names = [];
 		createDebug.skips = [];
 
-		let i;
-		const split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
-		const len = split.length;
+		const split = (typeof namespaces === 'string' ? namespaces : '')
+			.trim()
+			.replace(' ', ',')
+			.split(',')
+			.filter(Boolean);
 
-		for (i = 0; i < len; i++) {
-			if (!split[i]) {
-				// ignore empty strings
-				continue;
-			}
-
-			namespaces = split[i].replace(/\*/g, '.*?');
-
-			if (namespaces[0] === '-') {
-				createDebug.skips.push(new RegExp('^' + namespaces.slice(1) + '$'));
+		for (const ns of split) {
+			if (ns[0] === '-') {
+				createDebug.skips.push(ns.slice(1));
 			} else {
-				createDebug.names.push(new RegExp('^' + namespaces + '$'));
+				createDebug.names.push(ns);
 			}
 		}
+	}
+
+	/**
+	 * Checks if the given string matches a namespace template, honoring
+	 * asterisks as wildcards.
+	 *
+	 * @param {String} search
+	 * @param {String} template
+	 * @return {Boolean}
+	 */
+	function matchesTemplate(search, template) {
+		let searchIndex = 0;
+		let templateIndex = 0;
+		let starIndex = -1;
+		let matchIndex = 0;
+
+		while (searchIndex < search.length) {
+			if (templateIndex < template.length && (template[templateIndex] === search[searchIndex] || template[templateIndex] === '*')) {
+				// Match character or proceed with wildcard
+				if (template[templateIndex] === '*') {
+					starIndex = templateIndex;
+					matchIndex = searchIndex;
+					templateIndex++; // Skip the '*'
+				} else {
+					searchIndex++;
+					templateIndex++;
+				}
+			} else if (starIndex !== -1) { // eslint-disable-line no-negated-condition
+				// Backtrack to the last '*' and try to match more characters
+				templateIndex = starIndex + 1;
+				matchIndex++;
+				searchIndex = matchIndex;
+			} else {
+				return false; // No match
+			}
+		}
+
+		// Handle trailing '*' in template
+		while (templateIndex < template.length && template[templateIndex] === '*') {
+			templateIndex++;
+		}
+
+		return templateIndex === template.length;
 	}
 
 	/**
@@ -29108,8 +31076,8 @@ function setup(env) {
 	*/
 	function disable() {
 		const namespaces = [
-			...createDebug.names.map(toNamespace),
-			...createDebug.skips.map(toNamespace).map(namespace => '-' + namespace)
+			...createDebug.names,
+			...createDebug.skips.map(namespace => '-' + namespace)
 		].join(',');
 		createDebug.enable('');
 		return namespaces;
@@ -29123,39 +31091,19 @@ function setup(env) {
 	* @api public
 	*/
 	function enabled(name) {
-		if (name[name.length - 1] === '*') {
-			return true;
-		}
-
-		let i;
-		let len;
-
-		for (i = 0, len = createDebug.skips.length; i < len; i++) {
-			if (createDebug.skips[i].test(name)) {
+		for (const skip of createDebug.skips) {
+			if (matchesTemplate(name, skip)) {
 				return false;
 			}
 		}
 
-		for (i = 0, len = createDebug.names.length; i < len; i++) {
-			if (createDebug.names[i].test(name)) {
+		for (const ns of createDebug.names) {
+			if (matchesTemplate(name, ns)) {
 				return true;
 			}
 		}
 
 		return false;
-	}
-
-	/**
-	* Convert regexp to namespace
-	*
-	* @param {RegExp} regxep
-	* @return {String} namespace
-	* @api private
-	*/
-	function toNamespace(regexp) {
-		return regexp.toString()
-			.substring(2, regexp.toString().length - 2)
-			.replace(/\.\*\?$/, '*');
 	}
 
 	/**
@@ -30798,6 +32746,17 @@ function findPrime(bits, gen) {
 
 }
 
+
+/***/ }),
+
+/***/ "../node_modules/diffie-hellman/lib/primes.json":
+/*!******************************************************!*\
+  !*** ../node_modules/diffie-hellman/lib/primes.json ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = /*#__PURE__*/JSON.parse('{"modp1":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a63a3620ffffffffffffffff"},"modp2":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece65381ffffffffffffffff"},"modp5":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca237327ffffffffffffffff"},"modp14":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aacaa68ffffffffffffffff"},"modp15":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a93ad2caffffffffffffffff"},"modp16":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a92108011a723c12a787e6d788719a10bdba5b2699c327186af4e23c1a946834b6150bda2583e9ca2ad44ce8dbbbc2db04de8ef92e8efc141fbecaa6287c59474e6bc05d99b2964fa090c3a2233ba186515be7ed1f612970cee2d7afb81bdd762170481cd0069127d5b05aa993b4ea988d8fddc186ffb7dc90a6c08f4df435c934063199ffffffffffffffff"},"modp17":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a92108011a723c12a787e6d788719a10bdba5b2699c327186af4e23c1a946834b6150bda2583e9ca2ad44ce8dbbbc2db04de8ef92e8efc141fbecaa6287c59474e6bc05d99b2964fa090c3a2233ba186515be7ed1f612970cee2d7afb81bdd762170481cd0069127d5b05aa993b4ea988d8fddc186ffb7dc90a6c08f4df435c93402849236c3fab4d27c7026c1d4dcb2602646dec9751e763dba37bdf8ff9406ad9e530ee5db382f413001aeb06a53ed9027d831179727b0865a8918da3edbebcf9b14ed44ce6cbaced4bb1bdb7f1447e6cc254b332051512bd7af426fb8f401378cd2bf5983ca01c64b92ecf032ea15d1721d03f482d7ce6e74fef6d55e702f46980c82b5a84031900b1c9e59e7c97fbec7e8f323a97a7e36cc88be0f1d45b7ff585ac54bd407b22b4154aacc8f6d7ebf48e1d814cc5ed20f8037e0a79715eef29be32806a1d58bb7c5da76f550aa3d8a1fbff0eb19ccb1a313d55cda56c9ec2ef29632387fe8d76e3c0468043e8f663f4860ee12bf2d5b0b7474d6e694f91e6dcc4024ffffffffffffffff"},"modp18":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a92108011a723c12a787e6d788719a10bdba5b2699c327186af4e23c1a946834b6150bda2583e9ca2ad44ce8dbbbc2db04de8ef92e8efc141fbecaa6287c59474e6bc05d99b2964fa090c3a2233ba186515be7ed1f612970cee2d7afb81bdd762170481cd0069127d5b05aa993b4ea988d8fddc186ffb7dc90a6c08f4df435c93402849236c3fab4d27c7026c1d4dcb2602646dec9751e763dba37bdf8ff9406ad9e530ee5db382f413001aeb06a53ed9027d831179727b0865a8918da3edbebcf9b14ed44ce6cbaced4bb1bdb7f1447e6cc254b332051512bd7af426fb8f401378cd2bf5983ca01c64b92ecf032ea15d1721d03f482d7ce6e74fef6d55e702f46980c82b5a84031900b1c9e59e7c97fbec7e8f323a97a7e36cc88be0f1d45b7ff585ac54bd407b22b4154aacc8f6d7ebf48e1d814cc5ed20f8037e0a79715eef29be32806a1d58bb7c5da76f550aa3d8a1fbff0eb19ccb1a313d55cda56c9ec2ef29632387fe8d76e3c0468043e8f663f4860ee12bf2d5b0b7474d6e694f91e6dbe115974a3926f12fee5e438777cb6a932df8cd8bec4d073b931ba3bc832b68d9dd300741fa7bf8afc47ed2576f6936ba424663aab639c5ae4f5683423b4742bf1c978238f16cbe39d652de3fdb8befc848ad922222e04a4037c0713eb57a81a23f0c73473fc646cea306b4bcbc8862f8385ddfa9d4b7fa2c087e879683303ed5bdd3a062b3cf5b3a278a66d2a13f83f44f82ddf310ee074ab6a364597e899a0255dc164f31cc50846851df9ab48195ded7ea1b1d510bd7ee74d73faf36bc31ecfa268359046f4eb879f924009438b481c6cd7889a002ed5ee382bc9190da6fc026e479558e4475677e9aa9e3050e2765694dfc81f56e880b96e7160c980dd98edd3dfffffffffffffffff"}}');
 
 /***/ }),
 
@@ -36366,6 +38325,47 @@ exports.toType = function (name) {
   if (name.toUpperCase().startsWith('UNKNOWN_')) return parseInt(name.slice(8))
   return 0
 }
+
+
+/***/ }),
+
+/***/ "../node_modules/dunder-proto/get.js":
+/*!*******************************************!*\
+  !*** ../node_modules/dunder-proto/get.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var callBind = __webpack_require__(/*! call-bind-apply-helpers */ "../node_modules/call-bind-apply-helpers/index.js");
+var gOPD = __webpack_require__(/*! gopd */ "../node_modules/gopd/index.js");
+
+var hasProtoAccessor;
+try {
+	// eslint-disable-next-line no-extra-parens, no-proto
+	hasProtoAccessor = /** @type {{ __proto__?: typeof Array.prototype }} */ ([]).__proto__ === Array.prototype;
+} catch (e) {
+	if (!e || typeof e !== 'object' || !('code' in e) || e.code !== 'ERR_PROTO_ACCESS') {
+		throw e;
+	}
+}
+
+// eslint-disable-next-line no-extra-parens
+var desc = !!hasProtoAccessor && gOPD && gOPD(Object.prototype, /** @type {keyof typeof Object.prototype} */ ('__proto__'));
+
+var $Object = Object;
+var $getPrototypeOf = $Object.getPrototypeOf;
+
+/** @type {import('./get')} */
+module.exports = desc && typeof desc.get === 'function'
+	? callBind([desc.get])
+	: typeof $getPrototypeOf === 'function'
+		? /** @type {import('./get')} */ function getDunder(value) {
+			// eslint-disable-next-line eqeqeq
+			return $getPrototypeOf(value == null ? value : $Object(value));
+		}
+		: false;
 
 
 /***/ }),
@@ -43960,19 +45960,28 @@ utils.intFromLE = intFromLE;
 
 /***/ }),
 
+/***/ "../node_modules/elliptic/package.json":
+/*!*********************************************!*\
+  !*** ../node_modules/elliptic/package.json ***!
+  \*********************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = /*#__PURE__*/JSON.parse('{"name":"elliptic","version":"6.5.6","description":"EC cryptography","main":"lib/elliptic.js","files":["lib"],"scripts":{"lint":"eslint lib test","lint:fix":"npm run lint -- --fix","unit":"istanbul test _mocha --reporter=spec test/index.js","test":"npm run lint && npm run unit","version":"grunt dist && git add dist/"},"repository":{"type":"git","url":"git@github.com:indutny/elliptic"},"keywords":["EC","Elliptic","curve","Cryptography"],"author":"Fedor Indutny <fedor@indutny.com>","license":"MIT","bugs":{"url":"https://github.com/indutny/elliptic/issues"},"homepage":"https://github.com/indutny/elliptic","devDependencies":{"brfs":"^2.0.2","coveralls":"^3.1.0","eslint":"^7.6.0","grunt":"^1.2.1","grunt-browserify":"^5.3.0","grunt-cli":"^1.3.2","grunt-contrib-connect":"^3.0.0","grunt-contrib-copy":"^1.0.0","grunt-contrib-uglify":"^5.0.0","grunt-mocha-istanbul":"^5.0.2","grunt-saucelabs":"^9.0.1","istanbul":"^0.4.5","mocha":"^8.0.1"},"dependencies":{"bn.js":"^4.11.9","brorand":"^1.1.0","hash.js":"^1.0.0","hmac-drbg":"^1.0.1","inherits":"^2.0.4","minimalistic-assert":"^1.0.1","minimalistic-crypto-utils":"^1.0.1"}}');
+
+/***/ }),
+
 /***/ "../node_modules/es-define-property/index.js":
 /*!***************************************************!*\
   !*** ../node_modules/es-define-property/index.js ***!
   \***************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((module) => {
 
 "use strict";
 
 
-var GetIntrinsic = __webpack_require__(/*! get-intrinsic */ "../node_modules/get-intrinsic/index.js");
-
 /** @type {import('.')} */
-var $defineProperty = GetIntrinsic('%Object.defineProperty%', true) || false;
+var $defineProperty = Object.defineProperty || false;
 if ($defineProperty) {
 	try {
 		$defineProperty({}, 'a', { value: 1 });
@@ -44088,6 +46097,222 @@ module.exports = TypeError;
 
 /** @type {import('./uri')} */
 module.exports = URIError;
+
+
+/***/ }),
+
+/***/ "../node_modules/es-get-iterator/index.js":
+/*!************************************************!*\
+  !*** ../node_modules/es-get-iterator/index.js ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+/* provided dependency */ var process = __webpack_require__(/*! process/browser */ "../node_modules/process/browser.js");
+
+
+/* eslint global-require: 0 */
+// the code is structured this way so that bundlers can
+// alias out `has-symbols` to `() => true` or `() => false` if your target
+// environments' Symbol capabilities are known, and then use
+// dead code elimination on the rest of this module.
+//
+// Similarly, `isarray` can be aliased to `Array.isArray` if
+// available in all target environments.
+
+var isArguments = __webpack_require__(/*! is-arguments */ "../node_modules/is-arguments/index.js");
+var getStopIterationIterator = __webpack_require__(/*! stop-iteration-iterator */ "../node_modules/stop-iteration-iterator/index.js");
+
+if (__webpack_require__(/*! has-symbols */ "../node_modules/has-symbols/index.js")() || __webpack_require__(/*! has-symbols/shams */ "../node_modules/has-symbols/shams.js")()) {
+	var $iterator = Symbol.iterator;
+	// Symbol is available natively or shammed
+	// natively:
+	//  - Chrome >= 38
+	//  - Edge 12-14?, Edge >= 15 for sure
+	//  - FF >= 36
+	//  - Safari >= 9
+	//  - node >= 0.12
+	module.exports = function getIterator(iterable) {
+		// alternatively, `iterable[$iterator]?.()`
+		if (iterable != null && typeof iterable[$iterator] !== 'undefined') {
+			return iterable[$iterator]();
+		}
+		if (isArguments(iterable)) {
+			// arguments objects lack Symbol.iterator
+			// - node 0.12
+			return Array.prototype[$iterator].call(iterable);
+		}
+	};
+} else {
+	// Symbol is not available, native or shammed
+	var isArray = __webpack_require__(/*! isarray */ "../node_modules/isarray/index.js");
+	var isString = __webpack_require__(/*! is-string */ "../node_modules/is-string/index.js");
+	var GetIntrinsic = __webpack_require__(/*! get-intrinsic */ "../node_modules/get-intrinsic/index.js");
+	var $Map = GetIntrinsic('%Map%', true);
+	var $Set = GetIntrinsic('%Set%', true);
+	var callBound = __webpack_require__(/*! call-bind/callBound */ "../node_modules/call-bind/callBound.js");
+	var $arrayPush = callBound('Array.prototype.push');
+	var $charCodeAt = callBound('String.prototype.charCodeAt');
+	var $stringSlice = callBound('String.prototype.slice');
+
+	var advanceStringIndex = function advanceStringIndex(S, index) {
+		var length = S.length;
+		if ((index + 1) >= length) {
+			return index + 1;
+		}
+
+		var first = $charCodeAt(S, index);
+		if (first < 0xD800 || first > 0xDBFF) {
+			return index + 1;
+		}
+
+		var second = $charCodeAt(S, index + 1);
+		if (second < 0xDC00 || second > 0xDFFF) {
+			return index + 1;
+		}
+
+		return index + 2;
+	};
+
+	var getArrayIterator = function getArrayIterator(arraylike) {
+		var i = 0;
+		return {
+			next: function next() {
+				var done = i >= arraylike.length;
+				var value;
+				if (!done) {
+					value = arraylike[i];
+					i += 1;
+				}
+				return {
+					done: done,
+					value: value
+				};
+			}
+		};
+	};
+
+	var getNonCollectionIterator = function getNonCollectionIterator(iterable, noPrimordialCollections) {
+		if (isArray(iterable) || isArguments(iterable)) {
+			return getArrayIterator(iterable);
+		}
+		if (isString(iterable)) {
+			var i = 0;
+			return {
+				next: function next() {
+					var nextIndex = advanceStringIndex(iterable, i);
+					var value = $stringSlice(iterable, i, nextIndex);
+					i = nextIndex;
+					return {
+						done: nextIndex > iterable.length,
+						value: value
+					};
+				}
+			};
+		}
+
+		// es6-shim and es-shims' es-map use a string "_es6-shim iterator_" property on different iterables, such as MapIterator.
+		if (noPrimordialCollections && typeof iterable['_es6-shim iterator_'] !== 'undefined') {
+			return iterable['_es6-shim iterator_']();
+		}
+	};
+
+	if (!$Map && !$Set) {
+		// the only language iterables are Array, String, arguments
+		// - Safari <= 6.0
+		// - Chrome < 38
+		// - node < 0.12
+		// - FF < 13
+		// - IE < 11
+		// - Edge < 11
+
+		module.exports = function getIterator(iterable) {
+			if (iterable != null) {
+				return getNonCollectionIterator(iterable, true);
+			}
+		};
+	} else {
+		// either Map or Set are available, but Symbol is not
+		// - es6-shim on an ES5 browser
+		// - Safari 6.2 (maybe 6.1?)
+		// - FF v[13, 36)
+		// - IE 11
+		// - Edge 11
+		// - Safari v[6, 9)
+
+		var isMap = __webpack_require__(/*! is-map */ "../node_modules/is-map/index.js");
+		var isSet = __webpack_require__(/*! is-set */ "../node_modules/is-set/index.js");
+
+		// Firefox >= 27, IE 11, Safari 6.2 - 9, Edge 11, es6-shim in older envs, all have forEach
+		var $mapForEach = callBound('Map.prototype.forEach', true);
+		var $setForEach = callBound('Set.prototype.forEach', true);
+		if (typeof process === 'undefined' || !process.versions || !process.versions.node) { // "if is not node"
+
+			// Firefox 17 - 26 has `.iterator()`, whose iterator `.next()` either
+			// returns a value, or throws a StopIteration object. These browsers
+			// do not have any other mechanism for iteration.
+			var $mapIterator = callBound('Map.prototype.iterator', true);
+			var $setIterator = callBound('Set.prototype.iterator', true);
+		}
+		// Firefox 27-35, and some older es6-shim versions, use a string "@@iterator" property
+		// this returns a proper iterator object, so we should use it instead of forEach.
+		// newer es6-shim versions use a string "_es6-shim iterator_" property.
+		var $mapAtAtIterator = callBound('Map.prototype.@@iterator', true) || callBound('Map.prototype._es6-shim iterator_', true);
+		var $setAtAtIterator = callBound('Set.prototype.@@iterator', true) || callBound('Set.prototype._es6-shim iterator_', true);
+
+		var getCollectionIterator = function getCollectionIterator(iterable) {
+			if (isMap(iterable)) {
+				if ($mapIterator) {
+					return getStopIterationIterator($mapIterator(iterable));
+				}
+				if ($mapAtAtIterator) {
+					return $mapAtAtIterator(iterable);
+				}
+				if ($mapForEach) {
+					var entries = [];
+					$mapForEach(iterable, function (v, k) {
+						$arrayPush(entries, [k, v]);
+					});
+					return getArrayIterator(entries);
+				}
+			}
+			if (isSet(iterable)) {
+				if ($setIterator) {
+					return getStopIterationIterator($setIterator(iterable));
+				}
+				if ($setAtAtIterator) {
+					return $setAtAtIterator(iterable);
+				}
+				if ($setForEach) {
+					var values = [];
+					$setForEach(iterable, function (v) {
+						$arrayPush(values, v);
+					});
+					return getArrayIterator(values);
+				}
+			}
+		};
+
+		module.exports = function getIterator(iterable) {
+			return getCollectionIterator(iterable) || getNonCollectionIterator(iterable);
+		};
+	}
+}
+
+
+/***/ }),
+
+/***/ "../node_modules/es-object-atoms/index.js":
+/*!************************************************!*\
+  !*** ../node_modules/es-object-atoms/index.js ***!
+  \************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('.')} */
+module.exports = Object;
 
 
 /***/ }),
@@ -45075,6 +47300,2335 @@ module.exports = function equal(a, b) {
 
 /***/ }),
 
+/***/ "../node_modules/fast-srp-hap/jsbn/jsbn.js":
+/*!*************************************************!*\
+  !*** ../node_modules/fast-srp-hap/jsbn/jsbn.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/* provided dependency */ var Buffer = __webpack_require__(/*! buffer */ "../node_modules/buffer/index.js")["Buffer"];
+/*
+ * Basic JavaScript BN library - subset useful for RSA encryption.
+ *
+ * Copyright (c) 2003-2005  Tom Wu
+ * All Rights Reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS-IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS, IMPLIED OR OTHERWISE, INCLUDING WITHOUT LIMITATION, ANY
+ * WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * IN NO EVENT SHALL TOM WU BE LIABLE FOR ANY SPECIAL, INCIDENTAL,
+ * INDIRECT OR CONSEQUENTIAL DAMAGES OF ANY KIND, OR ANY DAMAGES WHATSOEVER
+ * RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER OR NOT ADVISED OF
+ * THE POSSIBILITY OF DAMAGE, AND ON ANY THEORY OF LIABILITY, ARISING OUT
+ * OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ *
+ * In addition, the following condition applies:
+ *
+ * All redistributions must retain an intact copy of this copyright notice
+ * and disclaimer.
+ */
+
+/*
+ *
+ * Copyright (c) 2015 Zarmack Tanen
+ * Fixed .toString(16) to be compatible with node >0.12.7 because hexWrite()
+ *       only accepts %2=0 strings
+ *
+ *
+ * Added Node.js Buffers support
+ * 2014 rzcoder
+ */
+
+var crypt = __webpack_require__(/*! crypto */ "../node_modules/crypto-browserify/index.js");
+
+// Bits per digit
+var dbits;
+
+// JavaScript engine analysis
+var canary = 0xdeadbeefcafe;
+var j_lm = ((canary & 0xffffff) == 0xefcafe);
+
+// (public) Constructor
+function BigInteger(a, b) {
+    if (a != null) {
+        if ("number" == typeof a) {
+            this.fromNumber(a, b);
+        } else if (Buffer.isBuffer(a)) {
+            this.fromBuffer(a);
+        } else if (b == null && "string" != typeof a) {
+            this.fromByteArray(a);
+        } else {
+            this.fromString(a, b);
+        }
+    }
+}
+
+// return new, unset BigInteger
+function nbi() {
+    return new BigInteger(null);
+}
+
+// am: Compute w_j += (x*this_i), propagate carries,
+// c is initial carry, returns final carry.
+// c < 3*dvalue, x < 2*dvalue, this_i < dvalue
+// We need to select the fastest one that works in this environment.
+
+// am1: use a single mult and divide to get the high bits,
+// max digit bits should be 26 because
+// max internal value = 2*dvalue^2-2*dvalue (< 2^53)
+function am1(i, x, w, j, c, n) {
+    while (--n >= 0) {
+        var v = x * this[i++] + w[j] + c;
+        c = Math.floor(v / 0x4000000);
+        w[j++] = v & 0x3ffffff;
+    }
+    return c;
+}
+// am2 avoids a big mult-and-extract completely.
+// Max digit bits should be <= 30 because we do bitwise ops
+// on values up to 2*hdvalue^2-hdvalue-1 (< 2^31)
+function am2(i, x, w, j, c, n) {
+    var xl = x & 0x7fff, xh = x >> 15;
+    while (--n >= 0) {
+        var l = this[i] & 0x7fff;
+        var h = this[i++] >> 15;
+        var m = xh * l + h * xl;
+        l = xl * l + ((m & 0x7fff) << 15) + w[j] + (c & 0x3fffffff);
+        c = (l >>> 30) + (m >>> 15) + xh * h + (c >>> 30);
+        w[j++] = l & 0x3fffffff;
+    }
+    return c;
+}
+// Alternately, set max digit bits to 28 since some
+// browsers slow down when dealing with 32-bit numbers.
+function am3(i, x, w, j, c, n) {
+    var xl = x & 0x3fff, xh = x >> 14;
+    while (--n >= 0) {
+        var l = this[i] & 0x3fff;
+        var h = this[i++] >> 14;
+        var m = xh * l + h * xl;
+        l = xl * l + ((m & 0x3fff) << 14) + w[j] + c;
+        c = (l >> 28) + (m >> 14) + xh * h;
+        w[j++] = l & 0xfffffff;
+    }
+    return c;
+}
+
+// We need to select the fastest one that works in this environment.
+//if (j_lm && (navigator.appName == "Microsoft Internet Explorer")) {
+//	BigInteger.prototype.am = am2;
+//	dbits = 30;
+//} else if (j_lm && (navigator.appName != "Netscape")) {
+//	BigInteger.prototype.am = am1;
+//	dbits = 26;
+//} else { // Mozilla/Netscape seems to prefer am3
+//	BigInteger.prototype.am = am3;
+//	dbits = 28;
+//}
+
+// For node.js, we pick am3 with max dbits to 28.
+BigInteger.prototype.am = am3;
+dbits = 28;
+
+BigInteger.prototype.DB = dbits;
+BigInteger.prototype.DM = ((1 << dbits) - 1);
+BigInteger.prototype.DV = (1 << dbits);
+
+var BI_FP = 52;
+BigInteger.prototype.FV = Math.pow(2, BI_FP);
+BigInteger.prototype.F1 = BI_FP - dbits;
+BigInteger.prototype.F2 = 2 * dbits - BI_FP;
+
+// Digit conversions
+var BI_RM = "0123456789abcdefghijklmnopqrstuvwxyz";
+var BI_RC = new Array();
+var rr, vv;
+rr = "0".charCodeAt(0);
+for (vv = 0; vv <= 9; ++vv) BI_RC[rr++] = vv;
+rr = "a".charCodeAt(0);
+for (vv = 10; vv < 36; ++vv) BI_RC[rr++] = vv;
+rr = "A".charCodeAt(0);
+for (vv = 10; vv < 36; ++vv) BI_RC[rr++] = vv;
+
+function int2char(n) {
+    return BI_RM.charAt(n);
+}
+function intAt(s, i) {
+    var c = BI_RC[s.charCodeAt(i)];
+    return (c == null) ? -1 : c;
+}
+
+// (protected) copy this to r
+function bnpCopyTo(r) {
+    for (var i = this.t - 1; i >= 0; --i) r[i] = this[i];
+    r.t = this.t;
+    r.s = this.s;
+}
+
+// (protected) set from integer value x, -DV <= x < DV
+function bnpFromInt(x) {
+    this.t = 1;
+    this.s = (x < 0) ? -1 : 0;
+    if (x > 0) this[0] = x;
+    else if (x < -1) this[0] = x + DV;
+    else this.t = 0;
+}
+
+// return bigint initialized to value
+function nbv(i) {
+    var r = nbi();
+    r.fromInt(i);
+    return r;
+}
+
+// (protected) set from string and radix
+function bnpFromString(data, radix, unsigned) {
+    var k;
+    switch (radix) {
+        case 2:
+            k = 1;
+            break;
+        case 4:
+            k = 2;
+            break;
+        case 8:
+            k = 3;
+            break;
+        case 16:
+            k = 4;
+            break;
+        case 32:
+            k = 5;
+            break;
+        case 256:
+            k = 8;
+            break;
+        default:
+            this.fromRadix(data, radix);
+            return;
+    }
+
+    this.t = 0;
+    this.s = 0;
+
+    var i = data.length;
+    var mi = false;
+    var sh = 0;
+
+    while (--i >= 0) {
+        var x = (k == 8) ? data[i] & 0xff : intAt(data, i);
+        if (x < 0) {
+            if (data.charAt(i) == "-") mi = true;
+            continue;
+        }
+        mi = false;
+        if (sh === 0)
+            this[this.t++] = x;
+        else if (sh + k > this.DB) {
+            this[this.t - 1] |= (x & ((1 << (this.DB - sh)) - 1)) << sh;
+            this[this.t++] = (x >> (this.DB - sh));
+        }
+        else
+            this[this.t - 1] |= x << sh;
+        sh += k;
+        if (sh >= this.DB) sh -= this.DB;
+    }
+    if ((!unsigned) && k == 8 && (data[0] & 0x80) != 0) {
+        this.s = -1;
+        if (sh > 0) this[this.t - 1] |= ((1 << (this.DB - sh)) - 1) << sh;
+    }
+    this.clamp();
+    if (mi) BigInteger.ZERO.subTo(this, this);
+}
+
+function bnpFromByteArray(a, unsigned) {
+    this.fromString(a, 256, unsigned)
+}
+
+function bnpFromBuffer(a) {
+    this.fromString(a, 256, true)
+}
+
+// (protected) clamp off excess high words
+function bnpClamp() {
+    var c = this.s & this.DM;
+    while (this.t > 0 && this[this.t - 1] == c) --this.t;
+}
+
+// (public) return string representation in given radix
+function bnToString(b) {
+    if (this.s < 0) return "-" + this.negate().toString(b);
+    var k;
+    if (b == 16) k = 4;
+    else if (b == 8) k = 3;
+    else if (b == 2) k = 1;
+    else if (b == 32) k = 5;
+    else if (b == 4) k = 2;
+    else return this.toRadix(b);
+    var km = (1 << k) - 1, d, m = false, r = "", i = this.t;
+    var p = this.DB - (i * this.DB) % k;
+    if (i-- > 0) {
+        if (p < this.DB && (d = this[i] >> p) > 0) {
+            m = true;
+            r = int2char(d);
+        }
+        while (i >= 0) {
+            if (p < k) {
+                d = (this[i] & ((1 << p) - 1)) << (k - p);
+                d |= this[--i] >> (p += this.DB - k);
+            }
+            else {
+                d = (this[i] >> (p -= k)) & km;
+                if (p <= 0) {
+                    p += this.DB;
+                    --i;
+                }
+            }
+            if (d > 0) m = true;
+            if (m) r += int2char(d);
+        }
+    }
+    //! Fix to be compatible with node >0.12.7 Buffer.js
+    if(b == 16 && r.length % 2 != 0)
+	     r = "0" + r;
+    return m ? r : "0";
+}
+
+// (public) -this
+function bnNegate() {
+    var r = nbi();
+    BigInteger.ZERO.subTo(this, r);
+    return r;
+}
+
+// (public) |this|
+function bnAbs() {
+    return (this.s < 0) ? this.negate() : this;
+}
+
+// (public) return + if this > a, - if this < a, 0 if equal
+function bnCompareTo(a) {
+    var r = this.s - a.s;
+    if (r != 0) return r;
+    var i = this.t;
+    r = i - a.t;
+    if (r != 0) return (this.s < 0) ? -r : r;
+    while (--i >= 0) if ((r = this[i] - a[i]) != 0) return r;
+    return 0;
+}
+
+function bnEqual(a) {
+  console.log(this.compareTo(a));
+  return (this.compareTo(a) == 0) ? true: false;
+}
+
+function bnGreater(a) {
+  return (this.compareTo(a) > 0) ? true : false;
+}
+
+function bnGreaterOrEqual(a) {
+  return (this.compareTo(a) >= 0) ? true : false;
+}
+
+function bnLesser(a) {
+  return (this.compareTo(a) < 0) ? true : false;
+}
+
+function bnLesserOrEqual(a) {
+  return (this.compareTo(a) <= 0) ? true : false;
+}
+
+// returns bit length of the integer x
+function nbits(x) {
+    var r = 1, t;
+    if ((t = x >>> 16) != 0) {
+        x = t;
+        r += 16;
+    }
+    if ((t = x >> 8) != 0) {
+        x = t;
+        r += 8;
+    }
+    if ((t = x >> 4) != 0) {
+        x = t;
+        r += 4;
+    }
+    if ((t = x >> 2) != 0) {
+        x = t;
+        r += 2;
+    }
+    if ((t = x >> 1) != 0) {
+        x = t;
+        r += 1;
+    }
+    return r;
+}
+
+// (public) return the number of bits in "this"
+function bnBitLength() {
+    if (this.t <= 0) return 0;
+    return this.DB * (this.t - 1) + nbits(this[this.t - 1] ^ (this.s & this.DM));
+}
+
+// (protected) r = this << n*DB
+function bnpDLShiftTo(n, r) {
+    var i;
+    for (i = this.t - 1; i >= 0; --i) r[i + n] = this[i];
+    for (i = n - 1; i >= 0; --i) r[i] = 0;
+    r.t = this.t + n;
+    r.s = this.s;
+}
+
+// (protected) r = this >> n*DB
+function bnpDRShiftTo(n, r) {
+    for (var i = n; i < this.t; ++i) r[i - n] = this[i];
+    r.t = Math.max(this.t - n, 0);
+    r.s = this.s;
+}
+
+// (protected) r = this << n
+function bnpLShiftTo(n, r) {
+    var bs = n % this.DB;
+    var cbs = this.DB - bs;
+    var bm = (1 << cbs) - 1;
+    var ds = Math.floor(n / this.DB), c = (this.s << bs) & this.DM, i;
+    for (i = this.t - 1; i >= 0; --i) {
+        r[i + ds + 1] = (this[i] >> cbs) | c;
+        c = (this[i] & bm) << bs;
+    }
+    for (i = ds - 1; i >= 0; --i) r[i] = 0;
+    r[ds] = c;
+    r.t = this.t + ds + 1;
+    r.s = this.s;
+    r.clamp();
+}
+
+// (protected) r = this >> n
+function bnpRShiftTo(n, r) {
+    r.s = this.s;
+    var ds = Math.floor(n / this.DB);
+    if (ds >= this.t) {
+        r.t = 0;
+        return;
+    }
+    var bs = n % this.DB;
+    var cbs = this.DB - bs;
+    var bm = (1 << bs) - 1;
+    r[0] = this[ds] >> bs;
+    for (var i = ds + 1; i < this.t; ++i) {
+        r[i - ds - 1] |= (this[i] & bm) << cbs;
+        r[i - ds] = this[i] >> bs;
+    }
+    if (bs > 0) r[this.t - ds - 1] |= (this.s & bm) << cbs;
+    r.t = this.t - ds;
+    r.clamp();
+}
+
+// (protected) r = this - a
+function bnpSubTo(a, r) {
+    var i = 0, c = 0, m = Math.min(a.t, this.t);
+    while (i < m) {
+        c += this[i] - a[i];
+        r[i++] = c & this.DM;
+        c >>= this.DB;
+    }
+    if (a.t < this.t) {
+        c -= a.s;
+        while (i < this.t) {
+            c += this[i];
+            r[i++] = c & this.DM;
+            c >>= this.DB;
+        }
+        c += this.s;
+    }
+    else {
+        c += this.s;
+        while (i < a.t) {
+            c -= a[i];
+            r[i++] = c & this.DM;
+            c >>= this.DB;
+        }
+        c -= a.s;
+    }
+    r.s = (c < 0) ? -1 : 0;
+    if (c < -1) r[i++] = this.DV + c;
+    else if (c > 0) r[i++] = c;
+    r.t = i;
+    r.clamp();
+}
+
+// (protected) r = this * a, r != this,a (HAC 14.12)
+// "this" should be the larger one if appropriate.
+function bnpMultiplyTo(a, r) {
+    var x = this.abs(), y = a.abs();
+    var i = x.t;
+    r.t = i + y.t;
+    while (--i >= 0) r[i] = 0;
+    for (i = 0; i < y.t; ++i) r[i + x.t] = x.am(0, y[i], r, i, 0, x.t);
+    r.s = 0;
+    r.clamp();
+    if (this.s != a.s) BigInteger.ZERO.subTo(r, r);
+}
+
+// (protected) r = this^2, r != this (HAC 14.16)
+function bnpSquareTo(r) {
+    var x = this.abs();
+    var i = r.t = 2 * x.t;
+    while (--i >= 0) r[i] = 0;
+    for (i = 0; i < x.t - 1; ++i) {
+        var c = x.am(i, x[i], r, 2 * i, 0, 1);
+        if ((r[i + x.t] += x.am(i + 1, 2 * x[i], r, 2 * i + 1, c, x.t - i - 1)) >= x.DV) {
+            r[i + x.t] -= x.DV;
+            r[i + x.t + 1] = 1;
+        }
+    }
+    if (r.t > 0) r[r.t - 1] += x.am(i, x[i], r, 2 * i, 0, 1);
+    r.s = 0;
+    r.clamp();
+}
+
+// (protected) divide this by m, quotient and remainder to q, r (HAC 14.20)
+// r != q, this != m.  q or r may be null.
+function bnpDivRemTo(m, q, r) {
+    var pm = m.abs();
+    if (pm.t <= 0) return;
+    var pt = this.abs();
+    if (pt.t < pm.t) {
+        if (q != null) q.fromInt(0);
+        if (r != null) this.copyTo(r);
+        return;
+    }
+    if (r == null) r = nbi();
+    var y = nbi(), ts = this.s, ms = m.s;
+    var nsh = this.DB - nbits(pm[pm.t - 1]);	// normalize modulus
+    if (nsh > 0) {
+        pm.lShiftTo(nsh, y);
+        pt.lShiftTo(nsh, r);
+    }
+    else {
+        pm.copyTo(y);
+        pt.copyTo(r);
+    }
+    var ys = y.t;
+    var y0 = y[ys - 1];
+    if (y0 === 0) return;
+    var yt = y0 * (1 << this.F1) + ((ys > 1) ? y[ys - 2] >> this.F2 : 0);
+    var d1 = this.FV / yt, d2 = (1 << this.F1) / yt, e = 1 << this.F2;
+    var i = r.t, j = i - ys, t = (q == null) ? nbi() : q;
+    y.dlShiftTo(j, t);
+    if (r.compareTo(t) >= 0) {
+        r[r.t++] = 1;
+        r.subTo(t, r);
+    }
+    BigInteger.ONE.dlShiftTo(ys, t);
+    t.subTo(y, y);	// "negative" y so we can replace sub with am later
+    while (y.t < ys) y[y.t++] = 0;
+    while (--j >= 0) {
+        // Estimate quotient digit
+        var qd = (r[--i] == y0) ? this.DM : Math.floor(r[i] * d1 + (r[i - 1] + e) * d2);
+        if ((r[i] += y.am(0, qd, r, j, 0, ys)) < qd) {	// Try it out
+            y.dlShiftTo(j, t);
+            r.subTo(t, r);
+            while (r[i] < --qd) r.subTo(t, r);
+        }
+    }
+    if (q != null) {
+        r.drShiftTo(ys, q);
+        if (ts != ms) BigInteger.ZERO.subTo(q, q);
+    }
+    r.t = ys;
+    r.clamp();
+    if (nsh > 0) r.rShiftTo(nsh, r);	// Denormalize remainder
+    if (ts < 0) BigInteger.ZERO.subTo(r, r);
+}
+
+// (public) this mod a
+function bnMod(a) {
+    var r = nbi();
+    this.abs().divRemTo(a, null, r);
+    if (this.s < 0 && r.compareTo(BigInteger.ZERO) > 0) a.subTo(r, r);
+    return r;
+}
+
+// Modular reduction using "classic" algorithm
+function Classic(m) {
+    this.m = m;
+}
+function cConvert(x) {
+    if (x.s < 0 || x.compareTo(this.m) >= 0) return x.mod(this.m);
+    else return x;
+}
+function cRevert(x) {
+    return x;
+}
+function cReduce(x) {
+    x.divRemTo(this.m, null, x);
+}
+function cMulTo(x, y, r) {
+    x.multiplyTo(y, r);
+    this.reduce(r);
+}
+function cSqrTo(x, r) {
+    x.squareTo(r);
+    this.reduce(r);
+}
+
+Classic.prototype.convert = cConvert;
+Classic.prototype.revert = cRevert;
+Classic.prototype.reduce = cReduce;
+Classic.prototype.mulTo = cMulTo;
+Classic.prototype.sqrTo = cSqrTo;
+
+// (protected) return "-1/this % 2^DB"; useful for Mont. reduction
+// justification:
+//         xy == 1 (mod m)
+//         xy =  1+km
+//   xy(2-xy) = (1+km)(1-km)
+// x[y(2-xy)] = 1-k^2m^2
+// x[y(2-xy)] == 1 (mod m^2)
+// if y is 1/x mod m, then y(2-xy) is 1/x mod m^2
+// should reduce x and y(2-xy) by m^2 at each step to keep size bounded.
+// JS multiply "overflows" differently from C/C++, so care is needed here.
+function bnpInvDigit() {
+    if (this.t < 1) return 0;
+    var x = this[0];
+    if ((x & 1) === 0) return 0;
+    var y = x & 3;		// y == 1/x mod 2^2
+    y = (y * (2 - (x & 0xf) * y)) & 0xf;	// y == 1/x mod 2^4
+    y = (y * (2 - (x & 0xff) * y)) & 0xff;	// y == 1/x mod 2^8
+    y = (y * (2 - (((x & 0xffff) * y) & 0xffff))) & 0xffff;	// y == 1/x mod 2^16
+    // last step - calculate inverse mod DV directly;
+    // assumes 16 < DB <= 32 and assumes ability to handle 48-bit ints
+    y = (y * (2 - x * y % this.DV)) % this.DV;		// y == 1/x mod 2^dbits
+    // we really want the negative inverse, and -DV < y < DV
+    return (y > 0) ? this.DV - y : -y;
+}
+
+// Montgomery reduction
+function Montgomery(m) {
+    this.m = m;
+    this.mp = m.invDigit();
+    this.mpl = this.mp & 0x7fff;
+    this.mph = this.mp >> 15;
+    this.um = (1 << (m.DB - 15)) - 1;
+    this.mt2 = 2 * m.t;
+}
+
+// xR mod m
+function montConvert(x) {
+    var r = nbi();
+    x.abs().dlShiftTo(this.m.t, r);
+    r.divRemTo(this.m, null, r);
+    if (x.s < 0 && r.compareTo(BigInteger.ZERO) > 0) this.m.subTo(r, r);
+    return r;
+}
+
+// x/R mod m
+function montRevert(x) {
+    var r = nbi();
+    x.copyTo(r);
+    this.reduce(r);
+    return r;
+}
+
+// x = x/R mod m (HAC 14.32)
+function montReduce(x) {
+    while (x.t <= this.mt2)	// pad x so am has enough room later
+        x[x.t++] = 0;
+    for (var i = 0; i < this.m.t; ++i) {
+        // faster way of calculating u0 = x[i]*mp mod DV
+        var j = x[i] & 0x7fff;
+        var u0 = (j * this.mpl + (((j * this.mph + (x[i] >> 15) * this.mpl) & this.um) << 15)) & x.DM;
+        // use am to combine the multiply-shift-add into one call
+        j = i + this.m.t;
+        x[j] += this.m.am(0, u0, x, i, 0, this.m.t);
+        // propagate carry
+        while (x[j] >= x.DV) {
+            x[j] -= x.DV;
+            x[++j]++;
+        }
+    }
+    x.clamp();
+    x.drShiftTo(this.m.t, x);
+    if (x.compareTo(this.m) >= 0) x.subTo(this.m, x);
+}
+
+// r = "x^2/R mod m"; x != r
+function montSqrTo(x, r) {
+    x.squareTo(r);
+    this.reduce(r);
+}
+
+// r = "xy/R mod m"; x,y != r
+function montMulTo(x, y, r) {
+    x.multiplyTo(y, r);
+    this.reduce(r);
+}
+
+Montgomery.prototype.convert = montConvert;
+Montgomery.prototype.revert = montRevert;
+Montgomery.prototype.reduce = montReduce;
+Montgomery.prototype.mulTo = montMulTo;
+Montgomery.prototype.sqrTo = montSqrTo;
+
+// (protected) true iff this is even
+function bnpIsEven() {
+    return ((this.t > 0) ? (this[0] & 1) : this.s) === 0;
+}
+
+// (protected) this^e, e < 2^32, doing sqr and mul with "r" (HAC 14.79)
+function bnpExp(e, z) {
+    if (e > 0xffffffff || e < 1) return BigInteger.ONE;
+    var r = nbi(), r2 = nbi(), g = z.convert(this), i = nbits(e) - 1;
+    g.copyTo(r);
+    while (--i >= 0) {
+        z.sqrTo(r, r2);
+        if ((e & (1 << i)) > 0) z.mulTo(r2, g, r);
+        else {
+            var t = r;
+            r = r2;
+            r2 = t;
+        }
+    }
+    return z.revert(r);
+}
+
+// (public) this^e % m, 0 <= e < 2^32
+function bnModPowInt(e, m) {
+    var z;
+    if (e < 256 || m.isEven()) z = new Classic(m); else z = new Montgomery(m);
+    return this.exp(e, z);
+}
+
+// Copyright (c) 2005-2009  Tom Wu
+// All Rights Reserved.
+// See "LICENSE" for details.
+
+// Extended JavaScript BN functions, required for RSA private ops.
+
+// Version 1.1: new BigInteger("0", 10) returns "proper" zero
+// Version 1.2: square() API, isProbablePrime fix
+
+//(public)
+function bnClone() {
+    var r = nbi();
+    this.copyTo(r);
+    return r;
+}
+
+//(public) return value as integer
+function bnIntValue() {
+    if (this.s < 0) {
+        if (this.t == 1) return this[0] - this.DV;
+        else if (this.t === 0) return -1;
+    }
+    else if (this.t == 1) return this[0];
+    else if (this.t === 0) return 0;
+// assumes 16 < DB < 32
+    return ((this[1] & ((1 << (32 - this.DB)) - 1)) << this.DB) | this[0];
+}
+
+//(public) return value as byte
+function bnByteValue() {
+    return (this.t == 0) ? this.s : (this[0] << 24) >> 24;
+}
+
+//(public) return value as short (assumes DB>=16)
+function bnShortValue() {
+    return (this.t == 0) ? this.s : (this[0] << 16) >> 16;
+}
+
+//(protected) return x s.t. r^x < DV
+function bnpChunkSize(r) {
+    return Math.floor(Math.LN2 * this.DB / Math.log(r));
+}
+
+//(public) 0 if this === 0, 1 if this > 0
+function bnSigNum() {
+    if (this.s < 0) return -1;
+    else if (this.t <= 0 || (this.t == 1 && this[0] <= 0)) return 0;
+    else return 1;
+}
+
+//(protected) convert to radix string
+function bnpToRadix(b) {
+    if (b == null) b = 10;
+    if (this.signum() === 0 || b < 2 || b > 36) return "0";
+    var cs = this.chunkSize(b);
+    var a = Math.pow(b, cs);
+    var d = nbv(a), y = nbi(), z = nbi(), r = "";
+    this.divRemTo(d, y, z);
+    while (y.signum() > 0) {
+        r = (a + z.intValue()).toString(b).substr(1) + r;
+        y.divRemTo(d, y, z);
+    }
+    return z.intValue().toString(b) + r;
+}
+
+//(protected) convert from radix string
+function bnpFromRadix(s, b) {
+    this.fromInt(0);
+    if (b == null) b = 10;
+    var cs = this.chunkSize(b);
+    var d = Math.pow(b, cs), mi = false, j = 0, w = 0;
+    for (var i = 0; i < s.length; ++i) {
+        var x = intAt(s, i);
+        if (x < 0) {
+            if (s.charAt(i) == "-" && this.signum() === 0) mi = true;
+            continue;
+        }
+        w = b * w + x;
+        if (++j >= cs) {
+            this.dMultiply(d);
+            this.dAddOffset(w, 0);
+            j = 0;
+            w = 0;
+        }
+    }
+    if (j > 0) {
+        this.dMultiply(Math.pow(b, j));
+        this.dAddOffset(w, 0);
+    }
+    if (mi) BigInteger.ZERO.subTo(this, this);
+}
+
+//(protected) alternate constructor
+function bnpFromNumber(a, b) {
+    if ("number" == typeof b) {
+        // new BigInteger(int,int,RNG)
+        if (a < 2) this.fromInt(1);
+        else {
+            this.fromNumber(a);
+            if (!this.testBit(a - 1))	// force MSB set
+                this.bitwiseTo(BigInteger.ONE.shiftLeft(a - 1), op_or, this);
+            if (this.isEven()) this.dAddOffset(1, 0); // force odd
+            while (!this.isProbablePrime(b)) {
+                this.dAddOffset(2, 0);
+                if (this.bitLength() > a) this.subTo(BigInteger.ONE.shiftLeft(a - 1), this);
+            }
+        }
+    } else {
+        // new BigInteger(int,RNG)
+        var x = crypt.randomBytes((a >> 3) + 1)
+        var t = a & 7;
+
+        if (t > 0)
+            x[0] &= ((1 << t) - 1);
+        else
+            x[0] = 0;
+
+        this.fromByteArray(x);
+    }
+}
+
+//(public) convert to bigendian byte array
+function bnToByteArray() {
+    var i = this.t, r = new Array();
+    r[0] = this.s;
+    var p = this.DB - (i * this.DB) % 8, d, k = 0;
+    if (i-- > 0) {
+        if (p < this.DB && (d = this[i] >> p) != (this.s & this.DM) >> p)
+            r[k++] = d | (this.s << (this.DB - p));
+        while (i >= 0) {
+            if (p < 8) {
+                d = (this[i] & ((1 << p) - 1)) << (8 - p);
+                d |= this[--i] >> (p += this.DB - 8);
+            }
+            else {
+                d = (this[i] >> (p -= 8)) & 0xff;
+                if (p <= 0) {
+                    p += this.DB;
+                    --i;
+                }
+            }
+            if ((d & 0x80) != 0) d |= -256;
+            if (k === 0 && (this.s & 0x80) != (d & 0x80)) ++k;
+            if (k > 0 || d != this.s) r[k++] = d;
+        }
+    }
+    return r;
+}
+
+/**
+ * return Buffer object
+ * @param trim {boolean} slice buffer if first element == 0
+ * @returns {Buffer}
+ */
+function bnToBuffer(trimOrSize) {
+    var res = Buffer.from(this.toByteArray());
+    if (trimOrSize === true && res[0] === 0) {
+        res = res.slice(1);
+    } else if (typeof trimOrSize == 'number') {
+        if (res.length > trimOrSize) {
+            for (var i = 0; i < res.length - trimOrSize; i++) {
+                if (res[i] !== 0) {
+                    return null;
+                }
+            }
+            return res.slice(res.length - trimOrSize);
+        } else if (res.length < trimOrSize) {
+            var padded = Buffer.alloc(trimOrSize);
+            padded.fill(0, 0, trimOrSize - res.length);
+            res.copy(padded, trimOrSize - res.length);
+            return padded;
+        }
+    }
+    return res;
+}
+
+function bnEquals(a) {
+    return (this.compareTo(a) == 0);
+}
+function bnMin(a) {
+    return (this.compareTo(a) < 0) ? this : a;
+}
+function bnMax(a) {
+    return (this.compareTo(a) > 0) ? this : a;
+}
+
+//(protected) r = this op a (bitwise)
+function bnpBitwiseTo(a, op, r) {
+    var i, f, m = Math.min(a.t, this.t);
+    for (i = 0; i < m; ++i) r[i] = op(this[i], a[i]);
+    if (a.t < this.t) {
+        f = a.s & this.DM;
+        for (i = m; i < this.t; ++i) r[i] = op(this[i], f);
+        r.t = this.t;
+    }
+    else {
+        f = this.s & this.DM;
+        for (i = m; i < a.t; ++i) r[i] = op(f, a[i]);
+        r.t = a.t;
+    }
+    r.s = op(this.s, a.s);
+    r.clamp();
+}
+
+//(public) this & a
+function op_and(x, y) {
+    return x & y;
+}
+function bnAnd(a) {
+    var r = nbi();
+    this.bitwiseTo(a, op_and, r);
+    return r;
+}
+
+//(public) this | a
+function op_or(x, y) {
+    return x | y;
+}
+function bnOr(a) {
+    var r = nbi();
+    this.bitwiseTo(a, op_or, r);
+    return r;
+}
+
+//(public) this ^ a
+function op_xor(x, y) {
+    return x ^ y;
+}
+function bnXor(a) {
+    var r = nbi();
+    this.bitwiseTo(a, op_xor, r);
+    return r;
+}
+
+//(public) this & ~a
+function op_andnot(x, y) {
+    return x & ~y;
+}
+function bnAndNot(a) {
+    var r = nbi();
+    this.bitwiseTo(a, op_andnot, r);
+    return r;
+}
+
+//(public) ~this
+function bnNot() {
+    var r = nbi();
+    for (var i = 0; i < this.t; ++i) r[i] = this.DM & ~this[i];
+    r.t = this.t;
+    r.s = ~this.s;
+    return r;
+}
+
+//(public) this << n
+function bnShiftLeft(n) {
+    var r = nbi();
+    if (n < 0) this.rShiftTo(-n, r); else this.lShiftTo(n, r);
+    return r;
+}
+
+//(public) this >> n
+function bnShiftRight(n) {
+    var r = nbi();
+    if (n < 0) this.lShiftTo(-n, r); else this.rShiftTo(n, r);
+    return r;
+}
+
+//return index of lowest 1-bit in x, x < 2^31
+function lbit(x) {
+    if (x === 0) return -1;
+    var r = 0;
+    if ((x & 0xffff) === 0) {
+        x >>= 16;
+        r += 16;
+    }
+    if ((x & 0xff) === 0) {
+        x >>= 8;
+        r += 8;
+    }
+    if ((x & 0xf) === 0) {
+        x >>= 4;
+        r += 4;
+    }
+    if ((x & 3) === 0) {
+        x >>= 2;
+        r += 2;
+    }
+    if ((x & 1) === 0) ++r;
+    return r;
+}
+
+//(public) returns index of lowest 1-bit (or -1 if none)
+function bnGetLowestSetBit() {
+    for (var i = 0; i < this.t; ++i)
+        if (this[i] != 0) return i * this.DB + lbit(this[i]);
+    if (this.s < 0) return this.t * this.DB;
+    return -1;
+}
+
+//return number of 1 bits in x
+function cbit(x) {
+    var r = 0;
+    while (x != 0) {
+        x &= x - 1;
+        ++r;
+    }
+    return r;
+}
+
+//(public) return number of set bits
+function bnBitCount() {
+    var r = 0, x = this.s & this.DM;
+    for (var i = 0; i < this.t; ++i) r += cbit(this[i] ^ x);
+    return r;
+}
+
+//(public) true iff nth bit is set
+function bnTestBit(n) {
+    var j = Math.floor(n / this.DB);
+    if (j >= this.t) return (this.s != 0);
+    return ((this[j] & (1 << (n % this.DB))) != 0);
+}
+
+//(protected) this op (1<<n)
+function bnpChangeBit(n, op) {
+    var r = BigInteger.ONE.shiftLeft(n);
+    this.bitwiseTo(r, op, r);
+    return r;
+}
+
+//(public) this | (1<<n)
+function bnSetBit(n) {
+    return this.changeBit(n, op_or);
+}
+
+//(public) this & ~(1<<n)
+function bnClearBit(n) {
+    return this.changeBit(n, op_andnot);
+}
+
+//(public) this ^ (1<<n)
+function bnFlipBit(n) {
+    return this.changeBit(n, op_xor);
+}
+
+//(protected) r = this + a
+function bnpAddTo(a, r) {
+    var i = 0, c = 0, m = Math.min(a.t, this.t);
+    while (i < m) {
+        c += this[i] + a[i];
+        r[i++] = c & this.DM;
+        c >>= this.DB;
+    }
+    if (a.t < this.t) {
+        c += a.s;
+        while (i < this.t) {
+            c += this[i];
+            r[i++] = c & this.DM;
+            c >>= this.DB;
+        }
+        c += this.s;
+    }
+    else {
+        c += this.s;
+        while (i < a.t) {
+            c += a[i];
+            r[i++] = c & this.DM;
+            c >>= this.DB;
+        }
+        c += a.s;
+    }
+    r.s = (c < 0) ? -1 : 0;
+    if (c > 0) r[i++] = c;
+    else if (c < -1) r[i++] = this.DV + c;
+    r.t = i;
+    r.clamp();
+}
+
+//(public) this + a
+function bnAdd(a) {
+    var r = nbi();
+    this.addTo(a, r);
+    return r;
+}
+
+//(public) this - a
+function bnSubtract(a) {
+    var r = nbi();
+    this.subTo(a, r);
+    return r;
+}
+
+//(public) this * a
+function bnMultiply(a) {
+    var r = nbi();
+    this.multiplyTo(a, r);
+    return r;
+}
+
+// (public) this^2
+function bnSquare() {
+    var r = nbi();
+    this.squareTo(r);
+    return r;
+}
+
+//(public) this / a
+function bnDivide(a) {
+    var r = nbi();
+    this.divRemTo(a, r, null);
+    return r;
+}
+
+//(public) this % a
+function bnRemainder(a) {
+    var r = nbi();
+    this.divRemTo(a, null, r);
+    return r;
+}
+
+//(public) [this/a,this%a]
+function bnDivideAndRemainder(a) {
+    var q = nbi(), r = nbi();
+    this.divRemTo(a, q, r);
+    return new Array(q, r);
+}
+
+//(protected) this *= n, this >= 0, 1 < n < DV
+function bnpDMultiply(n) {
+    this[this.t] = this.am(0, n - 1, this, 0, 0, this.t);
+    ++this.t;
+    this.clamp();
+}
+
+//(protected) this += n << w words, this >= 0
+function bnpDAddOffset(n, w) {
+    if (n === 0) return;
+    while (this.t <= w) this[this.t++] = 0;
+    this[w] += n;
+    while (this[w] >= this.DV) {
+        this[w] -= this.DV;
+        if (++w >= this.t) this[this.t++] = 0;
+        ++this[w];
+    }
+}
+
+//A "null" reducer
+function NullExp() {
+}
+function nNop(x) {
+    return x;
+}
+function nMulTo(x, y, r) {
+    x.multiplyTo(y, r);
+}
+function nSqrTo(x, r) {
+    x.squareTo(r);
+}
+
+NullExp.prototype.convert = nNop;
+NullExp.prototype.revert = nNop;
+NullExp.prototype.mulTo = nMulTo;
+NullExp.prototype.sqrTo = nSqrTo;
+
+//(public) this^e
+function bnPow(e) {
+    return this.exp(e, new NullExp());
+}
+
+//(protected) r = lower n words of "this * a", a.t <= n
+//"this" should be the larger one if appropriate.
+function bnpMultiplyLowerTo(a, n, r) {
+    var i = Math.min(this.t + a.t, n);
+    r.s = 0; // assumes a,this >= 0
+    r.t = i;
+    while (i > 0) r[--i] = 0;
+    var j;
+    for (j = r.t - this.t; i < j; ++i) r[i + this.t] = this.am(0, a[i], r, i, 0, this.t);
+    for (j = Math.min(a.t, n); i < j; ++i) this.am(0, a[i], r, i, 0, n - i);
+    r.clamp();
+}
+
+//(protected) r = "this * a" without lower n words, n > 0
+//"this" should be the larger one if appropriate.
+function bnpMultiplyUpperTo(a, n, r) {
+    --n;
+    var i = r.t = this.t + a.t - n;
+    r.s = 0; // assumes a,this >= 0
+    while (--i >= 0) r[i] = 0;
+    for (i = Math.max(n - this.t, 0); i < a.t; ++i)
+        r[this.t + i - n] = this.am(n - i, a[i], r, 0, 0, this.t + i - n);
+    r.clamp();
+    r.drShiftTo(1, r);
+}
+
+//Barrett modular reduction
+function Barrett(m) {
+// setup Barrett
+    this.r2 = nbi();
+    this.q3 = nbi();
+    BigInteger.ONE.dlShiftTo(2 * m.t, this.r2);
+    this.mu = this.r2.divide(m);
+    this.m = m;
+}
+
+function barrettConvert(x) {
+    if (x.s < 0 || x.t > 2 * this.m.t) return x.mod(this.m);
+    else if (x.compareTo(this.m) < 0) return x;
+    else {
+        var r = nbi();
+        x.copyTo(r);
+        this.reduce(r);
+        return r;
+    }
+}
+
+function barrettRevert(x) {
+    return x;
+}
+
+//x = x mod m (HAC 14.42)
+function barrettReduce(x) {
+    x.drShiftTo(this.m.t - 1, this.r2);
+    if (x.t > this.m.t + 1) {
+        x.t = this.m.t + 1;
+        x.clamp();
+    }
+    this.mu.multiplyUpperTo(this.r2, this.m.t + 1, this.q3);
+    this.m.multiplyLowerTo(this.q3, this.m.t + 1, this.r2);
+    while (x.compareTo(this.r2) < 0) x.dAddOffset(1, this.m.t + 1);
+    x.subTo(this.r2, x);
+    while (x.compareTo(this.m) >= 0) x.subTo(this.m, x);
+}
+
+//r = x^2 mod m; x != r
+function barrettSqrTo(x, r) {
+    x.squareTo(r);
+    this.reduce(r);
+}
+
+//r = x*y mod m; x,y != r
+function barrettMulTo(x, y, r) {
+    x.multiplyTo(y, r);
+    this.reduce(r);
+}
+
+Barrett.prototype.convert = barrettConvert;
+Barrett.prototype.revert = barrettRevert;
+Barrett.prototype.reduce = barrettReduce;
+Barrett.prototype.mulTo = barrettMulTo;
+Barrett.prototype.sqrTo = barrettSqrTo;
+
+//(public) this^e % m (HAC 14.85)
+function bnModPow(e, m) {
+    var i = e.bitLength(), k, r = nbv(1), z;
+    if (i <= 0) return r;
+    else if (i < 18) k = 1;
+    else if (i < 48) k = 3;
+    else if (i < 144) k = 4;
+    else if (i < 768) k = 5;
+    else k = 6;
+    if (i < 8)
+        z = new Classic(m);
+    else if (m.isEven())
+        z = new Barrett(m);
+    else
+        z = new Montgomery(m);
+
+// precomputation
+    var g = new Array(), n = 3, k1 = k - 1, km = (1 << k) - 1;
+    g[1] = z.convert(this);
+    if (k > 1) {
+        var g2 = nbi();
+        z.sqrTo(g[1], g2);
+        while (n <= km) {
+            g[n] = nbi();
+            z.mulTo(g2, g[n - 2], g[n]);
+            n += 2;
+        }
+    }
+
+    var j = e.t - 1, w, is1 = true, r2 = nbi(), t;
+    i = nbits(e[j]) - 1;
+    while (j >= 0) {
+        if (i >= k1) w = (e[j] >> (i - k1)) & km;
+        else {
+            w = (e[j] & ((1 << (i + 1)) - 1)) << (k1 - i);
+            if (j > 0) w |= e[j - 1] >> (this.DB + i - k1);
+        }
+
+        n = k;
+        while ((w & 1) === 0) {
+            w >>= 1;
+            --n;
+        }
+        if ((i -= n) < 0) {
+            i += this.DB;
+            --j;
+        }
+        if (is1) {	// ret == 1, don't bother squaring or multiplying it
+            g[w].copyTo(r);
+            is1 = false;
+        }
+        else {
+            while (n > 1) {
+                z.sqrTo(r, r2);
+                z.sqrTo(r2, r);
+                n -= 2;
+            }
+            if (n > 0) z.sqrTo(r, r2); else {
+                t = r;
+                r = r2;
+                r2 = t;
+            }
+            z.mulTo(r2, g[w], r);
+        }
+
+        while (j >= 0 && (e[j] & (1 << i)) === 0) {
+            z.sqrTo(r, r2);
+            t = r;
+            r = r2;
+            r2 = t;
+            if (--i < 0) {
+                i = this.DB - 1;
+                --j;
+            }
+        }
+    }
+    return z.revert(r);
+}
+
+//(public) gcd(this,a) (HAC 14.54)
+function bnGCD(a) {
+    var x = (this.s < 0) ? this.negate() : this.clone();
+    var y = (a.s < 0) ? a.negate() : a.clone();
+    if (x.compareTo(y) < 0) {
+        var t = x;
+        x = y;
+        y = t;
+    }
+    var i = x.getLowestSetBit(), g = y.getLowestSetBit();
+    if (g < 0) return x;
+    if (i < g) g = i;
+    if (g > 0) {
+        x.rShiftTo(g, x);
+        y.rShiftTo(g, y);
+    }
+    while (x.signum() > 0) {
+        if ((i = x.getLowestSetBit()) > 0) x.rShiftTo(i, x);
+        if ((i = y.getLowestSetBit()) > 0) y.rShiftTo(i, y);
+        if (x.compareTo(y) >= 0) {
+            x.subTo(y, x);
+            x.rShiftTo(1, x);
+        }
+        else {
+            y.subTo(x, y);
+            y.rShiftTo(1, y);
+        }
+    }
+    if (g > 0) y.lShiftTo(g, y);
+    return y;
+}
+
+//(protected) this % n, n < 2^26
+function bnpModInt(n) {
+    if (n <= 0) return 0;
+    var d = this.DV % n, r = (this.s < 0) ? n - 1 : 0;
+    if (this.t > 0)
+        if (d === 0) r = this[0] % n;
+        else for (var i = this.t - 1; i >= 0; --i) r = (d * r + this[i]) % n;
+    return r;
+}
+
+//(public) 1/this % m (HAC 14.61)
+function bnModInverse(m) {
+    var ac = m.isEven();
+    if ((this.isEven() && ac) || m.signum() === 0) return BigInteger.ZERO;
+    var u = m.clone(), v = this.clone();
+    var a = nbv(1), b = nbv(0), c = nbv(0), d = nbv(1);
+    while (u.signum() != 0) {
+        while (u.isEven()) {
+            u.rShiftTo(1, u);
+            if (ac) {
+                if (!a.isEven() || !b.isEven()) {
+                    a.addTo(this, a);
+                    b.subTo(m, b);
+                }
+                a.rShiftTo(1, a);
+            }
+            else if (!b.isEven()) b.subTo(m, b);
+            b.rShiftTo(1, b);
+        }
+        while (v.isEven()) {
+            v.rShiftTo(1, v);
+            if (ac) {
+                if (!c.isEven() || !d.isEven()) {
+                    c.addTo(this, c);
+                    d.subTo(m, d);
+                }
+                c.rShiftTo(1, c);
+            }
+            else if (!d.isEven()) d.subTo(m, d);
+            d.rShiftTo(1, d);
+        }
+        if (u.compareTo(v) >= 0) {
+            u.subTo(v, u);
+            if (ac) a.subTo(c, a);
+            b.subTo(d, b);
+        }
+        else {
+            v.subTo(u, v);
+            if (ac) c.subTo(a, c);
+            d.subTo(b, d);
+        }
+    }
+    if (v.compareTo(BigInteger.ONE) != 0) return BigInteger.ZERO;
+    if (d.compareTo(m) >= 0) return d.subtract(m);
+    if (d.signum() < 0) d.addTo(m, d); else return d;
+    if (d.signum() < 0) return d.add(m); else return d;
+}
+
+var lowprimes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541, 547, 557, 563, 569, 571, 577, 587, 593, 599, 601, 607, 613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691, 701, 709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997];
+var lplim = (1 << 26) / lowprimes[lowprimes.length - 1];
+
+//(public) test primality with certainty >= 1-.5^t
+function bnIsProbablePrime(t) {
+    var i, x = this.abs();
+    if (x.t == 1 && x[0] <= lowprimes[lowprimes.length - 1]) {
+        for (i = 0; i < lowprimes.length; ++i)
+            if (x[0] == lowprimes[i]) return true;
+        return false;
+    }
+    if (x.isEven()) return false;
+    i = 1;
+    while (i < lowprimes.length) {
+        var m = lowprimes[i], j = i + 1;
+        while (j < lowprimes.length && m < lplim) m *= lowprimes[j++];
+        m = x.modInt(m);
+        while (i < j) if (m % lowprimes[i++] === 0) return false;
+    }
+    return x.millerRabin(t);
+}
+
+//(protected) true if probably prime (HAC 4.24, Miller-Rabin)
+function bnpMillerRabin(t) {
+    var n1 = this.subtract(BigInteger.ONE);
+    var k = n1.getLowestSetBit();
+    if (k <= 0) return false;
+    var r = n1.shiftRight(k);
+    t = (t + 1) >> 1;
+    if (t > lowprimes.length) t = lowprimes.length;
+    var a = nbi();
+    for (var i = 0; i < t; ++i) {
+        //Pick bases at random, instead of starting at 2
+        a.fromInt(lowprimes[Math.floor(Math.random() * lowprimes.length)]);
+        var y = a.modPow(r, this);
+        if (y.compareTo(BigInteger.ONE) != 0 && y.compareTo(n1) != 0) {
+            var j = 1;
+            while (j++ < k && y.compareTo(n1) != 0) {
+                y = y.modPowInt(2, this);
+                if (y.compareTo(BigInteger.ONE) === 0) return false;
+            }
+            if (y.compareTo(n1) != 0) return false;
+        }
+    }
+    return true;
+}
+
+// protected
+BigInteger.prototype.copyTo = bnpCopyTo;
+BigInteger.prototype.fromInt = bnpFromInt;
+BigInteger.prototype.fromString = bnpFromString;
+BigInteger.prototype.fromByteArray = bnpFromByteArray;
+BigInteger.prototype.fromBuffer = bnpFromBuffer;
+BigInteger.prototype.clamp = bnpClamp;
+BigInteger.prototype.dlShiftTo = bnpDLShiftTo;
+BigInteger.prototype.drShiftTo = bnpDRShiftTo;
+BigInteger.prototype.lShiftTo = bnpLShiftTo;
+BigInteger.prototype.rShiftTo = bnpRShiftTo;
+BigInteger.prototype.subTo = bnpSubTo;
+BigInteger.prototype.multiplyTo = bnpMultiplyTo;
+BigInteger.prototype.squareTo = bnpSquareTo;
+BigInteger.prototype.divRemTo = bnpDivRemTo;
+BigInteger.prototype.invDigit = bnpInvDigit;
+BigInteger.prototype.isEven = bnpIsEven;
+BigInteger.prototype.exp = bnpExp;
+
+BigInteger.prototype.chunkSize = bnpChunkSize;
+BigInteger.prototype.toRadix = bnpToRadix;
+BigInteger.prototype.fromRadix = bnpFromRadix;
+BigInteger.prototype.fromNumber = bnpFromNumber;
+BigInteger.prototype.bitwiseTo = bnpBitwiseTo;
+BigInteger.prototype.changeBit = bnpChangeBit;
+BigInteger.prototype.addTo = bnpAddTo;
+BigInteger.prototype.dMultiply = bnpDMultiply;
+BigInteger.prototype.dAddOffset = bnpDAddOffset;
+BigInteger.prototype.multiplyLowerTo = bnpMultiplyLowerTo;
+BigInteger.prototype.multiplyUpperTo = bnpMultiplyUpperTo;
+BigInteger.prototype.modInt = bnpModInt;
+BigInteger.prototype.millerRabin = bnpMillerRabin;
+
+
+// public
+BigInteger.prototype.toString = bnToString;
+BigInteger.prototype.negate = bnNegate;
+BigInteger.prototype.abs = bnAbs;
+BigInteger.prototype.compareTo = bnCompareTo;
+BigInteger.prototype.bitLength = bnBitLength;
+BigInteger.prototype.mod = bnMod;
+BigInteger.prototype.modPowInt = bnModPowInt;
+
+BigInteger.prototype.clone = bnClone;
+BigInteger.prototype.intValue = bnIntValue;
+BigInteger.prototype.byteValue = bnByteValue;
+BigInteger.prototype.shortValue = bnShortValue;
+BigInteger.prototype.signum = bnSigNum;
+BigInteger.prototype.toByteArray = bnToByteArray;
+BigInteger.prototype.toBuffer = bnToBuffer;
+BigInteger.prototype.equals = bnEquals;
+BigInteger.prototype.eq = bnEqual;
+BigInteger.prototype.gt = bnGreater;
+BigInteger.prototype.gte = bnGreaterOrEqual;
+BigInteger.prototype.lt = bnLesser;
+BigInteger.prototype.lte = bnLesserOrEqual;
+BigInteger.prototype.min = bnMin;
+BigInteger.prototype.max = bnMax;
+BigInteger.prototype.and = bnAnd;
+BigInteger.prototype.or = bnOr;
+BigInteger.prototype.xor = bnXor;
+BigInteger.prototype.andNot = bnAndNot;
+BigInteger.prototype.not = bnNot;
+BigInteger.prototype.shiftLeft = bnShiftLeft;
+BigInteger.prototype.shiftRight = bnShiftRight;
+BigInteger.prototype.getLowestSetBit = bnGetLowestSetBit;
+BigInteger.prototype.bitCount = bnBitCount;
+BigInteger.prototype.testBit = bnTestBit;
+BigInteger.prototype.setBit = bnSetBit;
+BigInteger.prototype.clearBit = bnClearBit;
+BigInteger.prototype.flipBit = bnFlipBit;
+BigInteger.prototype.add = bnAdd;
+BigInteger.prototype.subtract = bnSubtract;
+BigInteger.prototype.multiply = bnMultiply;
+BigInteger.prototype.divide = bnDivide;
+BigInteger.prototype.remainder = bnRemainder;
+BigInteger.prototype.divideAndRemainder = bnDivideAndRemainder;
+BigInteger.prototype.modPow = bnModPow;
+BigInteger.prototype.modInverse = bnModInverse;
+BigInteger.prototype.pow = bnPow;
+BigInteger.prototype.gcd = bnGCD;
+BigInteger.prototype.isProbablePrime = bnIsProbablePrime;
+BigInteger.int2char = int2char;
+
+// "constants"
+BigInteger.ZERO = nbv(0);
+BigInteger.ONE = nbv(1);
+
+// JSBN-specific extension
+BigInteger.prototype.square = bnSquare;
+
+//BigInteger interfaces not implemented in jsbn:
+
+//BigInteger(int signum, byte[] magnitude)
+//double doubleValue()
+//float floatValue()
+//int hashCode()
+//long longValue()
+//static BigInteger valueOf(long val)
+
+module.exports = BigInteger;
+
+
+/***/ }),
+
+/***/ "../node_modules/fast-srp-hap/lib/params.js":
+/*!**************************************************!*\
+  !*** ../node_modules/fast-srp-hap/lib/params.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/**
+ * SRP Group Parameters
+ * http://tools.ietf.org/html/rfc5054#appendix-A
+ *
+ * The 1024-, 1536-, and 2048-bit groups are taken from software
+ * developed by Tom Wu and Eugene Jhong for the Stanford SRP
+ * distribution, and subsequently proven to be prime.  The larger primes
+ * are taken from [MODP], but generators have been calculated that are
+ * primitive roots of N, unlike the generators in [MODP].
+ *
+ * The 1024-bit and 1536-bit groups MUST be supported.
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.params = exports.hex = void 0;
+// since these are meant to be used internally, all values are numbers. If
+// you want to add parameter sets, you'll need to convert them to bignums.
+const BigInteger = __webpack_require__(/*! ../jsbn/jsbn */ "../node_modules/fast-srp-hap/jsbn/jsbn.js");
+function hex(s) {
+    return new BigInteger(s.split(/\s|\n/).join(""), 16);
+}
+exports.hex = hex;
+exports.params = {
+    1024: {
+        N_length_bits: 1024,
+        N: hex(`
+      EEAF0AB9 ADB38DD6 9C33F80A FA8FC5E8 60726187 75FF3C0B 9EA2314C
+      9C256576 D674DF74 96EA81D3 383B4813 D692C6E0 E0D5D8E2 50B98BE4
+      8E495C1D 6089DAD1 5DC7D7B4 6154D6B6 CE8EF4AD 69B15D49 82559B29
+      7BCF1885 C529F566 660E57EC 68EDBC3C 05726CC0 2FD4CBF4 976EAA9A
+      FD5138FE 8376435B 9FC61D2F C0EB06E3
+    `),
+        g: hex("02"),
+        hash: "sha1",
+    },
+    1536: {
+        N_length_bits: 1536,
+        N: hex(`
+      9DEF3CAF B939277A B1F12A86 17A47BBB DBA51DF4 99AC4C80 BEEEA961
+      4B19CC4D 5F4F5F55 6E27CBDE 51C6A94B E4607A29 1558903B A0D0F843
+      80B655BB 9A22E8DC DF028A7C EC67F0D0 8134B1C8 B9798914 9B609E0B
+      E3BAB63D 47548381 DBC5B1FC 764E3F4B 53DD9DA1 158BFD3E 2B9C8CF5
+      6EDF0195 39349627 DB2FD53D 24B7C486 65772E43 7D6C7F8C E442734A
+      F7CCB7AE 837C264A E3A9BEB8 7F8A2FE9 B8B5292E 5A021FFF 5E91479E
+      8CE7A28C 2442C6F3 15180F93 499A234D CF76E3FE D135F9BB
+    `),
+        g: hex("02"),
+        hash: "sha1",
+    },
+    2048: {
+        N_length_bits: 2048,
+        N: hex(`
+      AC6BDB41 324A9A9B F166DE5E 1389582F AF72B665 1987EE07 FC319294
+      3DB56050 A37329CB B4A099ED 8193E075 7767A13D D52312AB 4B03310D
+      CD7F48A9 DA04FD50 E8083969 EDB767B0 CF609517 9A163AB3 661A05FB
+      D5FAAAE8 2918A996 2F0B93B8 55F97993 EC975EEA A80D740A DBF4FF74
+      7359D041 D5C33EA7 1D281E44 6B14773B CA97B43A 23FB8016 76BD207A
+      436C6481 F1D2B907 8717461A 5B9D32E6 88F87748 544523B5 24B0D57D
+      5EA77A27 75D2ECFA 032CFBDB F52FB378 61602790 04E57AE6 AF874E73
+      03CE5329 9CCC041C 7BC308D8 2A5698F3 A8D0C382 71AE35F8 E9DBFBB6
+      94B5C803 D89F7AE4 35DE236D 525F5475 9B65E372 FCD68EF2 0FA7111F
+      9E4AFF73
+    `),
+        g: hex("02"),
+        hash: "sha256",
+    },
+    3072: {
+        N_length_bits: 3072,
+        N: hex(`
+      FFFFFFFF FFFFFFFF C90FDAA2 2168C234 C4C6628B 80DC1CD1 29024E08
+      8A67CC74 020BBEA6 3B139B22 514A0879 8E3404DD EF9519B3 CD3A431B
+      302B0A6D F25F1437 4FE1356D 6D51C245 E485B576 625E7EC6 F44C42E9
+      A637ED6B 0BFF5CB6 F406B7ED EE386BFB 5A899FA5 AE9F2411 7C4B1FE6
+      49286651 ECE45B3D C2007CB8 A163BF05 98DA4836 1C55D39A 69163FA8
+      FD24CF5F 83655D23 DCA3AD96 1C62F356 208552BB 9ED52907 7096966D
+      670C354E 4ABC9804 F1746C08 CA18217C 32905E46 2E36CE3B E39E772C
+      180E8603 9B2783A2 EC07A28F B5C55DF0 6F4C52C9 DE2BCBF6 95581718
+      3995497C EA956AE5 15D22618 98FA0510 15728E5A 8AAAC42D AD33170D
+      04507A33 A85521AB DF1CBA64 ECFB8504 58DBEF0A 8AEA7157 5D060C7D
+      B3970F85 A6E1E4C7 ABF5AE8C DB0933D7 1E8C94E0 4A25619D CEE3D226
+      1AD2EE6B F12FFA06 D98A0864 D8760273 3EC86A64 521F2B18 177B200C
+      BBE11757 7A615D6C 770988C0 BAD946E2 08E24FA0 74E5AB31 43DB5BFC
+      E0FD108E 4B82D120 A93AD2CA FFFFFFFF FFFFFFFF
+    `),
+        g: hex("05"),
+        hash: "sha256",
+    },
+    hap: {
+        N_length_bits: 3072,
+        N: hex(`
+      FFFFFFFF FFFFFFFF C90FDAA2 2168C234 C4C6628B 80DC1CD1 29024E08
+      8A67CC74 020BBEA6 3B139B22 514A0879 8E3404DD EF9519B3 CD3A431B
+      302B0A6D F25F1437 4FE1356D 6D51C245 E485B576 625E7EC6 F44C42E9
+      A637ED6B 0BFF5CB6 F406B7ED EE386BFB 5A899FA5 AE9F2411 7C4B1FE6
+      49286651 ECE45B3D C2007CB8 A163BF05 98DA4836 1C55D39A 69163FA8
+      FD24CF5F 83655D23 DCA3AD96 1C62F356 208552BB 9ED52907 7096966D
+      670C354E 4ABC9804 F1746C08 CA18217C 32905E46 2E36CE3B E39E772C
+      180E8603 9B2783A2 EC07A28F B5C55DF0 6F4C52C9 DE2BCBF6 95581718
+      3995497C EA956AE5 15D22618 98FA0510 15728E5A 8AAAC42D AD33170D
+      04507A33 A85521AB DF1CBA64 ECFB8504 58DBEF0A 8AEA7157 5D060C7D
+      B3970F85 A6E1E4C7 ABF5AE8C DB0933D7 1E8C94E0 4A25619D CEE3D226
+      1AD2EE6B F12FFA06 D98A0864 D8760273 3EC86A64 521F2B18 177B200C
+      BBE11757 7A615D6C 770988C0 BAD946E2 08E24FA0 74E5AB31 43DB5BFC
+      E0FD108E 4B82D120 A93AD2CA FFFFFFFF FFFFFFFF
+    `),
+        g: hex("05"),
+        hash: "sha512",
+    },
+    4096: {
+        N_length_bits: 4096,
+        N: hex(`
+      FFFFFFFF FFFFFFFF C90FDAA2 2168C234 C4C6628B 80DC1CD1 29024E08
+      8A67CC74 020BBEA6 3B139B22 514A0879 8E3404DD EF9519B3 CD3A431B
+      302B0A6D F25F1437 4FE1356D 6D51C245 E485B576 625E7EC6 F44C42E9
+      A637ED6B 0BFF5CB6 F406B7ED EE386BFB 5A899FA5 AE9F2411 7C4B1FE6
+      49286651 ECE45B3D C2007CB8 A163BF05 98DA4836 1C55D39A 69163FA8
+      FD24CF5F 83655D23 DCA3AD96 1C62F356 208552BB 9ED52907 7096966D
+      670C354E 4ABC9804 F1746C08 CA18217C 32905E46 2E36CE3B E39E772C
+      180E8603 9B2783A2 EC07A28F B5C55DF0 6F4C52C9 DE2BCBF6 95581718
+      3995497C EA956AE5 15D22618 98FA0510 15728E5A 8AAAC42D AD33170D
+      04507A33 A85521AB DF1CBA64 ECFB8504 58DBEF0A 8AEA7157 5D060C7D
+      B3970F85 A6E1E4C7 ABF5AE8C DB0933D7 1E8C94E0 4A25619D CEE3D226
+      1AD2EE6B F12FFA06 D98A0864 D8760273 3EC86A64 521F2B18 177B200C
+      BBE11757 7A615D6C 770988C0 BAD946E2 08E24FA0 74E5AB31 43DB5BFC
+      E0FD108E 4B82D120 A9210801 1A723C12 A787E6D7 88719A10 BDBA5B26
+      99C32718 6AF4E23C 1A946834 B6150BDA 2583E9CA 2AD44CE8 DBBBC2DB
+      04DE8EF9 2E8EFC14 1FBECAA6 287C5947 4E6BC05D 99B2964F A090C3A2
+      233BA186 515BE7ED 1F612970 CEE2D7AF B81BDD76 2170481C D0069127
+      D5B05AA9 93B4EA98 8D8FDDC1 86FFB7DC 90A6C08F 4DF435C9 34063199
+      FFFFFFFF FFFFFFFF
+    `),
+        g: hex("05"),
+        hash: "sha256",
+    },
+    6244: {
+        N_length_bits: 6244,
+        N: hex(`
+      FFFFFFFF FFFFFFFF C90FDAA2 2168C234 C4C6628B 80DC1CD1 29024E08
+      8A67CC74 020BBEA6 3B139B22 514A0879 8E3404DD EF9519B3 CD3A431B
+      302B0A6D F25F1437 4FE1356D 6D51C245 E485B576 625E7EC6 F44C42E9
+      A637ED6B 0BFF5CB6 F406B7ED EE386BFB 5A899FA5 AE9F2411 7C4B1FE6
+      49286651 ECE45B3D C2007CB8 A163BF05 98DA4836 1C55D39A 69163FA8
+      FD24CF5F 83655D23 DCA3AD96 1C62F356 208552BB 9ED52907 7096966D
+      670C354E 4ABC9804 F1746C08 CA18217C 32905E46 2E36CE3B E39E772C
+      180E8603 9B2783A2 EC07A28F B5C55DF0 6F4C52C9 DE2BCBF6 95581718
+      3995497C EA956AE5 15D22618 98FA0510 15728E5A 8AAAC42D AD33170D
+      04507A33 A85521AB DF1CBA64 ECFB8504 58DBEF0A 8AEA7157 5D060C7D
+      B3970F85 A6E1E4C7 ABF5AE8C DB0933D7 1E8C94E0 4A25619D CEE3D226
+      1AD2EE6B F12FFA06 D98A0864 D8760273 3EC86A64 521F2B18 177B200C
+      BBE11757 7A615D6C 770988C0 BAD946E2 08E24FA0 74E5AB31 43DB5BFC
+      E0FD108E 4B82D120 A9210801 1A723C12 A787E6D7 88719A10 BDBA5B26
+      99C32718 6AF4E23C 1A946834 B6150BDA 2583E9CA 2AD44CE8 DBBBC2DB
+      04DE8EF9 2E8EFC14 1FBECAA6 287C5947 4E6BC05D 99B2964F A090C3A2
+      233BA186 515BE7ED 1F612970 CEE2D7AF B81BDD76 2170481C D0069127
+      D5B05AA9 93B4EA98 8D8FDDC1 86FFB7DC 90A6C08F 4DF435C9 34028492
+      36C3FAB4 D27C7026 C1D4DCB2 602646DE C9751E76 3DBA37BD F8FF9406
+      AD9E530E E5DB382F 413001AE B06A53ED 9027D831 179727B0 865A8918
+      DA3EDBEB CF9B14ED 44CE6CBA CED4BB1B DB7F1447 E6CC254B 33205151
+      2BD7AF42 6FB8F401 378CD2BF 5983CA01 C64B92EC F032EA15 D1721D03
+      F482D7CE 6E74FEF6 D55E702F 46980C82 B5A84031 900B1C9E 59E7C97F
+      BEC7E8F3 23A97A7E 36CC88BE 0F1D45B7 FF585AC5 4BD407B2 2B4154AA
+      CC8F6D7E BF48E1D8 14CC5ED2 0F8037E0 A79715EE F29BE328 06A1D58B
+      B7C5DA76 F550AA3D 8A1FBFF0 EB19CCB1 A313D55C DA56C9EC 2EF29632
+      387FE8D7 6E3C0468 043E8F66 3F4860EE 12BF2D5B 0B7474D6 E694F91E
+      6DCC4024 FFFFFFFF FFFFFFFF
+    `),
+        g: hex("05"),
+        hash: "sha256",
+    },
+    8192: {
+        N_length_bits: 8192,
+        N: hex(`
+      FFFFFFFF FFFFFFFF C90FDAA2 2168C234 C4C6628B 80DC1CD1 29024E08
+      8A67CC74 020BBEA6 3B139B22 514A0879 8E3404DD EF9519B3 CD3A431B
+      302B0A6D F25F1437 4FE1356D 6D51C245 E485B576 625E7EC6 F44C42E9
+      A637ED6B 0BFF5CB6 F406B7ED EE386BFB 5A899FA5 AE9F2411 7C4B1FE6
+      49286651 ECE45B3D C2007CB8 A163BF05 98DA4836 1C55D39A 69163FA8
+      FD24CF5F 83655D23 DCA3AD96 1C62F356 208552BB 9ED52907 7096966D
+      670C354E 4ABC9804 F1746C08 CA18217C 32905E46 2E36CE3B E39E772C
+      180E8603 9B2783A2 EC07A28F B5C55DF0 6F4C52C9 DE2BCBF6 95581718
+      3995497C EA956AE5 15D22618 98FA0510 15728E5A 8AAAC42D AD33170D
+      04507A33 A85521AB DF1CBA64 ECFB8504 58DBEF0A 8AEA7157 5D060C7D
+      B3970F85 A6E1E4C7 ABF5AE8C DB0933D7 1E8C94E0 4A25619D CEE3D226
+      1AD2EE6B F12FFA06 D98A0864 D8760273 3EC86A64 521F2B18 177B200C
+      BBE11757 7A615D6C 770988C0 BAD946E2 08E24FA0 74E5AB31 43DB5BFC
+      E0FD108E 4B82D120 A9210801 1A723C12 A787E6D7 88719A10 BDBA5B26
+      99C32718 6AF4E23C 1A946834 B6150BDA 2583E9CA 2AD44CE8 DBBBC2DB
+      04DE8EF9 2E8EFC14 1FBECAA6 287C5947 4E6BC05D 99B2964F A090C3A2
+      233BA186 515BE7ED 1F612970 CEE2D7AF B81BDD76 2170481C D0069127
+      D5B05AA9 93B4EA98 8D8FDDC1 86FFB7DC 90A6C08F 4DF435C9 34028492
+      36C3FAB4 D27C7026 C1D4DCB2 602646DE C9751E76 3DBA37BD F8FF9406
+      AD9E530E E5DB382F 413001AE B06A53ED 9027D831 179727B0 865A8918
+      DA3EDBEB CF9B14ED 44CE6CBA CED4BB1B DB7F1447 E6CC254B 33205151
+      2BD7AF42 6FB8F401 378CD2BF 5983CA01 C64B92EC F032EA15 D1721D03
+      F482D7CE 6E74FEF6 D55E702F 46980C82 B5A84031 900B1C9E 59E7C97F
+      BEC7E8F3 23A97A7E 36CC88BE 0F1D45B7 FF585AC5 4BD407B2 2B4154AA
+      CC8F6D7E BF48E1D8 14CC5ED2 0F8037E0 A79715EE F29BE328 06A1D58B
+      B7C5DA76 F550AA3D 8A1FBFF0 EB19CCB1 A313D55C DA56C9EC 2EF29632
+      387FE8D7 6E3C0468 043E8F66 3F4860EE 12BF2D5B 0B7474D6 E694F91E
+      6DBE1159 74A3926F 12FEE5E4 38777CB6 A932DF8C D8BEC4D0 73B931BA
+      3BC832B6 8D9DD300 741FA7BF 8AFC47ED 2576F693 6BA42466 3AAB639C
+      5AE4F568 3423B474 2BF1C978 238F16CB E39D652D E3FDB8BE FC848AD9
+      22222E04 A4037C07 13EB57A8 1A23F0C7 3473FC64 6CEA306B 4BCBC886
+      2F8385DD FA9D4B7F A2C087E8 79683303 ED5BDD3A 062B3CF5 B3A278A6
+      6D2A13F8 3F44F82D DF310EE0 74AB6A36 4597E899 A0255DC1 64F31CC5
+      0846851D F9AB4819 5DED7EA1 B1D510BD 7EE74D73 FAF36BC3 1ECFA268
+      359046F4 EB879F92 4009438B 481C6CD7 889A002E D5EE382B C9190DA6
+      FC026E47 9558E447 5677E9AA 9E3050E2 765694DF C81F56E8 80B96E71
+      60C980DD 98EDD3DF FFFFFFFF FFFFFFFF
+    `),
+        g: hex("13"),
+        hash: "sha256",
+    },
+};
+exports["default"] = exports.params;
+//# sourceMappingURL=params.js.map
+
+/***/ }),
+
+/***/ "../node_modules/fast-srp-hap/lib/srp.js":
+/*!***********************************************!*\
+  !*** ../node_modules/fast-srp-hap/lib/srp.js ***!
+  \***********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+/* provided dependency */ var Buffer = __webpack_require__(/*! buffer */ "../node_modules/buffer/index.js")["Buffer"];
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SrpServer = exports.SrpClient = exports.SRP = void 0;
+const crypto_1 = __importDefault(__webpack_require__(/*! crypto */ "../node_modules/crypto-browserify/index.js"));
+const assert_1 = __importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/build/assert.js"));
+const BigInteger = __webpack_require__(/*! ../jsbn/jsbn */ "../node_modules/fast-srp-hap/jsbn/jsbn.js");
+const params_1 = __webpack_require__(/*! ./params */ "../node_modules/fast-srp-hap/lib/params.js");
+const zero = new BigInteger(0, 10);
+function assert_(val, msg) {
+    if (!val) {
+        throw new Error(msg || "assertion");
+    }
+}
+function assertIsBuffer(arg, argname = "arg") {
+    assert_(Buffer.isBuffer(arg), `Type error: ${argname} must be a buffer`);
+}
+function assertIsBigInteger(arg, argname = "arg") {
+    assert_(arg instanceof BigInteger, `Type error: ${argname} must be a BigInteger`);
+}
+/**
+ * If a conversion is explicitly specified with the operator PAD(),
+ * the integer will first be implicitly converted, then the resultant
+ * byte-string will be left-padded with zeros (if necessary) until its
+ * length equals the implicitly-converted length of N.
+ *
+ * @param {Buffer} n Number to pad
+ * @param {number} len Length of the resulting Buffer
+ * @return {Buffer}
+ */
+function padTo(n, len) {
+    assertIsBuffer(n, "n");
+    const padding = len - n.length;
+    assert_(padding > -1, "Negative padding.  Very uncomfortable.");
+    const result = Buffer.alloc(len);
+    result.fill(0, 0, padding);
+    n.copy(result, padding);
+    assert_1.default.strictEqual(result.length, len);
+    return result;
+}
+function padToN(number, params) {
+    assertIsBigInteger(number);
+    const n = number.toString(16).length % 2 !== 0 ? "0" + number.toString(16) : number.toString(16);
+    return padTo(Buffer.from(n, "hex"), params.N_length_bits / 8);
+}
+/**
+ * Compute the intermediate value x as a hash of three buffers:
+ * salt, identity, and password.  And a colon.  FOUR buffers.
+ *
+ *      x = H(s | H(I | ":" | P))
+ *
+ * @param {object} params
+ * @param {Buffer} salt
+ * @param {Buffer} I User identity
+ * @param {Buffer} P User password
+ * @return {BigInteger} User secret
+ */
+function getx(params, salt, I, P) {
+    assertIsBuffer(salt, "salt (salt)");
+    assertIsBuffer(I, "identity (I)");
+    assertIsBuffer(P, "password (P)");
+    const hashIP = crypto_1.default.createHash(params.hash)
+        .update(Buffer.concat([I, Buffer.from(":"), P]))
+        .digest();
+    const hashX = crypto_1.default.createHash(params.hash)
+        .update(salt)
+        .update(hashIP)
+        .digest();
+    return new BigInteger(hashX);
+}
+class SRP {
+    /**
+     * The verifier is calculated as described in Section 3 of [SRP-RFC].
+     * We give the algorithm here for convenience.
+     *
+     * The verifier (v) is computed based on the salt (s), user name (I),
+     * password (P), and group parameters (N, g).
+     *
+     *         x = H(s | H(I | ":" | P))
+     *         v = g^x % N
+     *
+     * @param {object} params Group parameters, with .N, .g, .hash
+     * @param {Buffer} salt
+     * @param {Buffer} I User identity
+     * @param {Buffer} P User password
+     * @return {Buffer}
+     */
+    static computeVerifier(params, salt, I, P) {
+        assertIsBuffer(salt, "salt (salt)");
+        assertIsBuffer(I, "identity (I)");
+        assertIsBuffer(P, "password (P)");
+        const v_num = params.g.modPow(getx(params, salt, I, P), params.N);
+        return v_num.toBuffer(params.N_length_bits / 8);
+    }
+    static genKey(bytes = 32, callback) {
+        // bytes is optional
+        if (typeof bytes !== "number") {
+            callback = bytes;
+            bytes = 32;
+        }
+        if (!callback) {
+            return new Promise((rs, rj) => SRP.genKey(bytes, (err, data) => err ? rj(err) : rs(data)));
+        }
+        crypto_1.default.randomBytes(bytes, (err, buf) => {
+            if (err) {
+                return callback(err, null);
+            }
+            return callback(null, buf);
+        });
+    }
+}
+exports.SRP = SRP;
+SRP.params = params_1.params;
+/**
+ * Calculate the SRP-6 multiplier.
+ *
+ * @param {object} params Group parameters, with .N, .g, .hash
+ * @return {BigInteger}
+ */
+function getk(params) {
+    const k_buf = crypto_1.default
+        .createHash(params.hash)
+        .update(padToN(params.N, params))
+        .update(padToN(params.g, params))
+        .digest();
+    return new BigInteger(k_buf);
+}
+/**
+ * The server key exchange message also contains the server's public
+ * value (B).  The server calculates this value as B = k*v + g^b % N,
+ * where b is a random number that SHOULD be at least 256 bits in length
+ * and k = H(N | PAD(g)).
+ *
+ * Note: as the tests imply, the entire expression is mod N.
+ *
+ * @param {SrpParams} params Group parameters, with .N, .g, .hash
+ * @param {BigInteger} k
+ * @param {BigInteger} v Verifier (stored)
+ * @param {BigInteger} b Server secret exponent
+ * @return {Buffer} B - The server public message
+ */
+function getB(params, k, v, b) {
+    assertIsBigInteger(v);
+    assertIsBigInteger(k);
+    assertIsBigInteger(b);
+    const r = k.multiply(v).add(params.g.modPow(b, params.N)).mod(params.N);
+    return r.toBuffer(params.N_length_bits / 8);
+}
+/**
+ * The client key exchange message carries the client's public value
+ * (A).  The client calculates this value as A = g^a % N, where a is a
+ * random number that SHOULD be at least 256 bits in length.
+ *
+ * Note: for this implementation, we take that to mean 256/8 bytes.
+ *
+ * @param {object} params Group parameters, with .N, .g, .hash
+ * @param {BigInteger} a_num Client secret exponent
+ * @return {Buffer} A - The client public message
+ */
+function getA(params, a_num) {
+    assertIsBigInteger(a_num);
+    if (Math.ceil(a_num.toString(16).length / 2) < 32) {
+        console.warn("getA: client key length %d is less than the recommended 256 bits", a_num.bitLength());
+    }
+    return params.g.modPow(a_num, params.N).toBuffer(params.N_length_bits / 8);
+}
+/**
+ * getu() hashes the two public messages together, to obtain a scrambling
+ * parameter "u" which cannot be predicted by either party ahead of time.
+ * This makes it safe to use the message ordering defined in the SRP-6a
+ * paper, in which the server reveals their "B" value before the client
+ * commits to their "A" value.
+ *
+ * @param {object} params Group parameters, with .N, .g, .hash
+ * @param {Buffer} A Client ephemeral public key
+ * @param {Buffer} B Server ephemeral public key
+ * @return {BigInteger} u - Shared scrambling parameter
+ */
+function getu(params, A, B) {
+    assertIsBuffer(A, "A");
+    assertIsBuffer(B, "B");
+    const u_buf = crypto_1.default.createHash(params.hash)
+        .update(padTo(A, params.N_length_bits / 8))
+        .update(padTo(B, params.N_length_bits / 8))
+        .digest();
+    return new BigInteger(u_buf);
+}
+/**
+ * The TLS premaster secret as calculated by the client
+ *
+ * @param {SrpParams} params Group parameters, with .N, .g, .hash
+ * @param {BigInteger} k_num
+ * @param {BigInteger} x_num
+ * @param {BigInteger} a_num
+ * @param {BigInteger} B_num
+ * @param {BigInteger} u_num
+ * @return {Buffer}
+ */
+function client_getS(params, k_num, x_num, a_num, B_num, u_num) {
+    assertIsBigInteger(k_num);
+    assertIsBigInteger(x_num);
+    assertIsBigInteger(a_num);
+    assertIsBigInteger(B_num);
+    assertIsBigInteger(u_num);
+    if ((zero.compareTo(B_num) >= 0) || (params.N.compareTo(B_num) <= 0)) {
+        throw new Error("invalid server-supplied \"B\", must be 1..N-1");
+    }
+    const S_num = B_num.subtract(k_num.multiply(params.g.modPow(x_num, params.N)))
+        .modPow(a_num.add(u_num.multiply(x_num)), params.N)
+        .mod(params.N);
+    return S_num.toBuffer(params.N_length_bits / 8);
+}
+/**
+ * The TLS premastersecret as calculated by the server
+ *
+ * @param {BigInteger} params Group parameters, with .N, .g, .hash
+ * @param {BigInteger} v_num Verifier (stored on server)
+ * @param {BigInteger} A_num Ephemeral client public key (read from client)
+ * @param {BigInteger} b_num Server ephemeral private key (generated for session)
+ * @param {BigInteger} u_num {@see getu}
+ * @return {Buffer}
+ */
+function server_getS(params, v_num, A_num, b_num, u_num) {
+    assertIsBigInteger(v_num);
+    assertIsBigInteger(A_num);
+    assertIsBigInteger(b_num);
+    assertIsBigInteger(u_num);
+    if ((zero.compareTo(A_num) >= 0) || (params.N.compareTo(A_num) <= 0)) {
+        throw new Error("invalid client-supplied \"A\", must be 1..N-1");
+    }
+    const S_num = A_num.multiply(v_num.modPow(u_num, params.N))
+        .modPow(b_num, params.N)
+        .mod(params.N);
+    return S_num.toBuffer(params.N_length_bits / 8);
+}
+/**
+ * Compute the shared session key K from S
+ *
+ * @param {object} params Group parameters, with .N, .g, .hash
+ * @param {Buffer} S_buf Session key
+ * @return {Buffer}
+ */
+function getK(params, S_buf) {
+    assertIsBuffer(S_buf, "S");
+    if (params.hash === "sha1") {
+        // use t_mgf1 interleave for short sha1 hashes
+        return Buffer.concat([
+            crypto_1.default.createHash(params.hash).update(S_buf).update(Buffer.from([0, 0, 0, 0])).digest(),
+            crypto_1.default.createHash(params.hash).update(S_buf).update(Buffer.from([0, 0, 0, 1])).digest(),
+        ]);
+    }
+    else {
+        // use hash as-is otherwise
+        return crypto_1.default.createHash(params.hash).update(S_buf).digest();
+    }
+}
+function getM1(params, u_buf, s_buf, A_buf, B_buf, K_buf) {
+    if (arguments.length > 4) {
+        assertIsBuffer(u_buf, "identity (I)");
+        assertIsBuffer(s_buf, "salt (s)");
+        assertIsBuffer(A_buf, "client public key (A)");
+        assertIsBuffer(B_buf, "server public key (B)");
+        assertIsBuffer(K_buf, "session key (K)");
+        const hN = crypto_1.default.createHash(params.hash).update(params.N.toBuffer(true)).digest();
+        const hG = crypto_1.default.createHash(params.hash).update(params.g.toBuffer(true)).digest();
+        for (let i = 0; i < hN.length; i++) {
+            hN[i] ^= hG[i];
+        }
+        const hU = crypto_1.default.createHash(params.hash).update(u_buf).digest();
+        return crypto_1.default.createHash(params.hash)
+            .update(hN).update(hU).update(s_buf)
+            .update(A_buf).update(B_buf).update(K_buf)
+            .digest();
+    }
+    else {
+        [A_buf, B_buf, s_buf] = [u_buf, s_buf, A_buf];
+        assertIsBuffer(A_buf, "A");
+        assertIsBuffer(B_buf, "B");
+        assertIsBuffer(s_buf, "S");
+        return crypto_1.default.createHash(params.hash)
+            .update(A_buf).update(B_buf).update(s_buf)
+            .digest();
+    }
+}
+function getM2(params, A_buf, M1_buf, K_buf) {
+    assertIsBuffer(A_buf, "A");
+    assertIsBuffer(M1_buf, "M1");
+    assertIsBuffer(K_buf, "K");
+    return crypto_1.default.createHash(params.hash)
+        .update(A_buf).update(M1_buf).update(K_buf)
+        .digest();
+}
+function equal(buf1, buf2) {
+    // constant-time comparison. A drop in the ocean compared to our
+    // non-constant-time modexp operations, but still good practice.
+    return buf1.toString("hex") === buf2.toString("hex");
+}
+class SrpClient {
+    /**
+     * Create an SRP client.
+     *
+     * @param {object} params Group parameters, with .N, .g, .hash
+     * @param {Buffer} salt_buf User salt (from server)
+     * @param {Buffer} identity_buf Identity/username
+     * @param {Buffer} password_buf Password
+     * @param {Buffer} secret1_buf Client private key {@see genKey}
+     * @param {boolean} hap
+     */
+    constructor(params, salt_buf, identity_buf, password_buf, secret1_buf, hap = true) {
+        assertIsBuffer(salt_buf, "salt (s)");
+        assertIsBuffer(identity_buf, "identity (I)");
+        assertIsBuffer(password_buf, "password (P)");
+        assertIsBuffer(secret1_buf, "secret1");
+        this._params = params;
+        this._k = getk(params);
+        this._x = getx(params, salt_buf, identity_buf, password_buf);
+        this._a = new BigInteger(secret1_buf);
+        if (hap) {
+            this._I = identity_buf;
+            this._s = salt_buf;
+        }
+        this._A = getA(params, this._a);
+    }
+    /**
+     * Returns the client's public key (A).
+     *
+     * @return {Buffer}
+     */
+    computeA() {
+        return this._A;
+    }
+    /**
+     * Sets the server's public key (B).
+     *
+     * @param {Buffer} B_buf The server's public key
+     */
+    setB(B_buf) {
+        const u_num = getu(this._params, this._A, B_buf);
+        const S_buf_x = client_getS(this._params, this._k, this._x, this._a, new BigInteger(B_buf), u_num);
+        this._K = getK(this._params, S_buf_x);
+        this._u = u_num; // only for tests
+        this._S = S_buf_x; // only for tests
+        this._B = B_buf;
+        if (this._I && this._s) {
+            this._M1 = getM1(this._params, this._I, this._s, this._A, this._B, this._K);
+        }
+        else {
+            this._M1 = getM1(this._params, this._A, this._B, this._S);
+        }
+        this._M2 = getM2(this._params, this._A, this._M1, this._K);
+    }
+    /**
+     * Gets the M1 value.
+     * This requires setting the server's public key {@see Client.setB}.
+     *
+     * @return {Buffer}
+     */
+    computeM1() {
+        if (this._M1 === undefined) {
+            throw new Error("incomplete protocol");
+        }
+        return this._M1;
+    }
+    /**
+     * Checks the server was able to calculate M2.
+     * This requires setting the server's public key {@see Client.setB}.
+     *
+     * @param M2 The server's M2 value
+     */
+    checkM2(M2) {
+        if (!equal(this._M2, M2)) {
+            throw new Error("server is not authentic");
+        }
+    }
+    /**
+     * Returns the shared session key.
+     *
+     * @return {Buffer}
+     */
+    computeK() {
+        if (this._K === undefined) {
+            throw new Error("incomplete protocol");
+        }
+        return this._K;
+    }
+}
+exports.SrpClient = SrpClient;
+class SrpServer {
+    constructor(params, salt_buf, identity_buf, password_buf, secret2_buf) {
+        this._params = params;
+        this._k = getk(params);
+        if (arguments.length > 3) {
+            assertIsBuffer(salt_buf, "salt (salt)");
+            assertIsBuffer(identity_buf, "identity (I)");
+            assertIsBuffer(password_buf, "password (P)");
+            assertIsBuffer(secret2_buf, "secret2");
+            this._b = new BigInteger(secret2_buf);
+            this._v = new BigInteger(SRP.computeVerifier(params, salt_buf, identity_buf, password_buf));
+            this._I = identity_buf;
+            this._s = salt_buf;
+        }
+        else if (salt_buf instanceof Buffer) {
+            const verifier_buf = salt_buf;
+            // noinspection JSUnusedAssignment
+            [secret2_buf, salt_buf, identity_buf, password_buf] = [identity_buf, undefined, undefined, undefined];
+            assertIsBuffer(verifier_buf, "verifier (v)");
+            assertIsBuffer(secret2_buf, "secret2");
+            this._b = new BigInteger(secret2_buf);
+            this._v = new BigInteger(verifier_buf);
+        }
+        else {
+            const identity = salt_buf;
+            // noinspection JSUnusedAssignment
+            [secret2_buf, salt_buf, identity_buf, password_buf] = [identity_buf, undefined, undefined, undefined];
+            // noinspection SuspiciousTypeOfGuard
+            (0, assert_1.default)(identity.username instanceof Buffer || typeof identity.username === "string", "identity.username (I) must be a string or Buffer");
+            assertIsBuffer(identity.salt, "identity.salt (s)");
+            (0, assert_1.default)("password" in identity || "verifier" in identity, "identity requires a password or verifier");
+            if ("verifier" in identity) {
+                assertIsBuffer(identity.verifier, "identity.verifier (v)");
+            }
+            else {
+                // noinspection SuspiciousTypeOfGuard
+                (0, assert_1.default)(identity.password instanceof Buffer || typeof identity.password === "string", "identity.password (p) must be a string or Buffer");
+            }
+            assertIsBuffer(secret2_buf, "secret2");
+            const username = typeof identity.username === "string" ? Buffer.from(identity.username) : identity.username;
+            this._b = new BigInteger(secret2_buf);
+            if ("verifier" in identity) {
+                this._v = new BigInteger(identity.verifier);
+            }
+            else {
+                this._v = new BigInteger(SRP.computeVerifier(params, identity.salt, username, typeof identity.password === "string" ? Buffer.from(identity.password) : identity.password));
+            }
+            this._I = username;
+            this._s = identity.salt;
+        }
+        this._B = getB(params, this._k, this._v, this._b);
+    }
+    /**
+     * Returns the server's public key (B).
+     *
+     * @return {Buffer}
+     */
+    computeB() {
+        return this._B;
+    }
+    /**
+     * Sets the client's public key (A).
+     *
+     * @param {Buffer} A The client's public key
+     */
+    setA(A) {
+        const u_num = getu(this._params, A, this._B);
+        const S_buf = server_getS(this._params, this._v, new BigInteger(A), this._b, u_num);
+        this._K = getK(this._params, S_buf);
+        this._u = u_num; // only for tests
+        this._S = S_buf; // only for tests
+        if (this._I && this._s) {
+            this._M1 = getM1(this._params, this._I, this._s, A, this._B, this._K);
+        }
+        else {
+            this._M1 = getM1(this._params, A, this._B, this._S);
+        }
+        this._M2 = getM2(this._params, A, this._M1, this._K);
+    }
+    /**
+     * Checks the client was able to calculate M1.
+     *
+     * @param {Buffer} M1 The client's M1 value
+     */
+    checkM1(M1) {
+        if (this._M1 === undefined) {
+            throw new Error("incomplete protocol");
+        }
+        if (!equal(this._M1, M1)) {
+            throw new Error("client did not use the same password");
+        }
+    }
+    /**
+     * Returns the shared session key.
+     *
+     * @return {Buffer}
+     */
+    computeK() {
+        if (this._K === undefined) {
+            throw new Error("incomplete protocol");
+        }
+        return this._K;
+    }
+    /**
+     * Gets the M2 value.
+     * This requires setting the client's public key {@see Server.setA}.
+     *
+     * @return {Buffer}
+     */
+    computeM2() {
+        if (this._M2 === undefined) {
+            throw new Error("incomplete protocol");
+        }
+        return this._M2;
+    }
+}
+exports.SrpServer = SrpServer;
+//# sourceMappingURL=srp.js.map
+
+/***/ }),
+
 /***/ "../node_modules/for-each/index.js":
 /*!*****************************************!*\
   !*** ../node_modules/for-each/index.js ***!
@@ -45381,6 +49935,192 @@ module.exports = functionsHaveNames;
 
 /***/ }),
 
+/***/ "../node_modules/futoin-hkdf/hkdf.js":
+/*!*******************************************!*\
+  !*** ../node_modules/futoin-hkdf/hkdf.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+/**
+ * @file
+ *
+ * Copyright 2018 FutoIn Project (https://futoin.org)
+ * Copyright 2018 Andrey Galkin <andrey@futoin.org>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+const { Buffer } = __webpack_require__( /*! buffer */ "../node_modules/buffer/index.js" );
+const { createHash, createHmac } = __webpack_require__( /*! crypto */ "../node_modules/crypto-browserify/index.js" );
+
+const g_digestLenCache = {};
+
+/**
+ * Get expected hash length.
+ *
+ * @func
+ * @alias hkdf.hash_length
+ * @param {string} hash - Hash algorithm (as in underlying Node.js crypto library)
+ * @returns {integer} hash digest byte length
+ *
+ * @note Values are hardcoded with fallback for unknown algorithms.
+ */
+const hash_length = ( hash ) => {
+    switch ( hash ) {
+    case 'sha256': return 32;
+    case 'sha512': return 64;
+    case 'sha224': return 28;
+    case 'sha384': return 48;
+    case 'sha3-256': return 32;
+    case 'sha3-512': return 64;
+    case 'sha3-224': return 28;
+    case 'sha3-384': return 48;
+    case 'blake2s256': return 32;
+    case 'blake2b512': return 64;
+    case 'sha1': return 20;
+    case 'md5': return 16;
+    default: {
+        let len = g_digestLenCache[hash];
+
+        if ( len === undefined ) {
+            len = createHash( hash ).digest().length;
+            g_digestLenCache[hash] = len;
+        }
+
+        return len;
+    }
+    }
+};
+
+/**
+ * HKDF extract action.
+ *
+ * @func
+ * @alias hkdf.extract
+ * @param {string} hash - Hash algorithm (as in underlying Node.js crypto library)
+ * @param {integer} hash_len - Hash digest length
+ * @param {Buffer|string} ikm - Initial Keying Material
+ * @param {Buffer|string} salt - Optional salt (recommended)
+ * @returns {Buffer} A buffer with pseudorandom key
+ *
+ * @note Values are hardcoded with fallback for unknown algorithms.
+ */
+const hkdf_extract = ( hash, hash_len, ikm, salt ) => {
+    const b_ikm = Buffer.isBuffer( ikm ) ? ikm : Buffer.from( ikm );
+    const b_salt = ( salt && salt.length ) ? Buffer.from( salt ) : Buffer.alloc( hash_len, 0 );
+
+    return createHmac( hash, b_salt ).update( b_ikm ).digest();
+};
+
+/**
+ * HKDF expand action.
+ *
+ * @func
+ * @alias hkdf.expand
+ * @param {string} hash - Hash algorithm (as in underlying Node.js crypto library)
+ * @param {integer} hash_len - Hash digest length
+ * @param {Buffer|string} prk - A buffer with pseudorandom key
+ * @param {integer} length - length of output keying material in octets
+ * @param {Buffer|string} info - Optional context (safe to skip)
+ * @returns {Buffer} A buffer with output keying material
+ *
+ * @note Values are hardcoded with fallback for unknown algorithms.
+ */
+const hkdf_expand = ( hash, hash_len, prk, length, info ) => {
+    const b_info = Buffer.isBuffer( info ) ? info : Buffer.from( info || '' );
+    const info_len = b_info.length;
+
+    const steps = Math.ceil( length / hash_len );
+
+    if ( steps > 0xFF ) {
+        throw new Error( `OKM length ${length} is too long for ${hash} hash` );
+    }
+
+    // use single buffer with unnecessary create/copy/move operations
+    const t = Buffer.alloc( hash_len * steps + info_len + 1 );
+
+    for ( let c = 1, start = 0, end = 0; c <= steps; ++c ) {
+        // add info
+        b_info.copy( t, end );
+        // add counter
+        t[ end + info_len ] = c;
+
+        createHmac( hash, prk )
+            // use view: T(C) = T(C-1) | info | C
+            .update( t.slice( start, end + info_len + 1 ) )
+            .digest()
+            // put back to the same buffer
+            .copy( t, end );
+
+        start = end; // used for T(C-1) start
+        end += hash_len; // used for T(C-1) end & overall end
+    }
+
+    return t.slice( 0, length );
+};
+
+/**
+ * HMAC-based Extract-and-Expand Key Derivation Function (HKDF)
+ *
+ * @param {Buffer|string} ikm - Initial Keying Material
+ * @param {integer} length - Required byte length of output
+ * @param {Buffer|string} salt='' - Optional salt (recommended)
+ * @param {Buffer|string} info='' - Optional context (safe to skip)
+ * @param {string} hash='SHA-256' - HMAC hash function to use
+ * @returns {Buffer} Raw buffer with derived key of @p length bytes
+ */
+function hkdf( ikm, length, { salt='', info='', hash='SHA-256' } = {} ) {
+    hash = hash.toLowerCase().replace( '-', '' );
+
+    // 0. Hash length
+    const hash_len = hash_length( hash );
+
+    // 1. extract
+    const prk = hkdf_extract( hash, hash_len, ikm, salt );
+
+    // 2. expand
+    return hkdf_expand( hash, hash_len, prk, length, info );
+}
+
+Object.defineProperties( hkdf, {
+    hash_length : {
+        configurable: false,
+        enumerable: false,
+        writable: false,
+        value: hash_length,
+    },
+    extract : {
+        configurable: false,
+        enumerable: false,
+        writable: false,
+        value: hkdf_extract,
+    },
+    expand : {
+        configurable: false,
+        enumerable: false,
+        writable: false,
+        value: hkdf_expand,
+    },
+} );
+
+module.exports = hkdf;
+
+
+/***/ }),
+
 /***/ "../node_modules/get-intrinsic/index.js":
 /*!**********************************************!*\
   !*** ../node_modules/get-intrinsic/index.js ***!
@@ -45392,6 +50132,8 @@ module.exports = functionsHaveNames;
 
 var undefined;
 
+var $Object = __webpack_require__(/*! es-object-atoms */ "../node_modules/es-object-atoms/index.js");
+
 var $Error = __webpack_require__(/*! es-errors */ "../node_modules/es-errors/index.js");
 var $EvalError = __webpack_require__(/*! es-errors/eval */ "../node_modules/es-errors/eval.js");
 var $RangeError = __webpack_require__(/*! es-errors/range */ "../node_modules/es-errors/range.js");
@@ -45399,6 +50141,14 @@ var $ReferenceError = __webpack_require__(/*! es-errors/ref */ "../node_modules/
 var $SyntaxError = __webpack_require__(/*! es-errors/syntax */ "../node_modules/es-errors/syntax.js");
 var $TypeError = __webpack_require__(/*! es-errors/type */ "../node_modules/es-errors/type.js");
 var $URIError = __webpack_require__(/*! es-errors/uri */ "../node_modules/es-errors/uri.js");
+
+var abs = __webpack_require__(/*! math-intrinsics/abs */ "../node_modules/math-intrinsics/abs.js");
+var floor = __webpack_require__(/*! math-intrinsics/floor */ "../node_modules/math-intrinsics/floor.js");
+var max = __webpack_require__(/*! math-intrinsics/max */ "../node_modules/math-intrinsics/max.js");
+var min = __webpack_require__(/*! math-intrinsics/min */ "../node_modules/math-intrinsics/min.js");
+var pow = __webpack_require__(/*! math-intrinsics/pow */ "../node_modules/math-intrinsics/pow.js");
+var round = __webpack_require__(/*! math-intrinsics/round */ "../node_modules/math-intrinsics/round.js");
+var sign = __webpack_require__(/*! math-intrinsics/sign */ "../node_modules/math-intrinsics/sign.js");
 
 var $Function = Function;
 
@@ -45409,14 +50159,8 @@ var getEvalledConstructor = function (expressionSyntax) {
 	} catch (e) {}
 };
 
-var $gOPD = Object.getOwnPropertyDescriptor;
-if ($gOPD) {
-	try {
-		$gOPD({}, '');
-	} catch (e) {
-		$gOPD = null; // this is IE 8, which has a broken gOPD
-	}
-}
+var $gOPD = __webpack_require__(/*! gopd */ "../node_modules/gopd/index.js");
+var $defineProperty = __webpack_require__(/*! es-define-property */ "../node_modules/es-define-property/index.js");
 
 var throwTypeError = function () {
 	throw new $TypeError();
@@ -45439,13 +50183,13 @@ var ThrowTypeError = $gOPD
 	: throwTypeError;
 
 var hasSymbols = __webpack_require__(/*! has-symbols */ "../node_modules/has-symbols/index.js")();
-var hasProto = __webpack_require__(/*! has-proto */ "../node_modules/has-proto/index.js")();
 
-var getProto = Object.getPrototypeOf || (
-	hasProto
-		? function (x) { return x.__proto__; } // eslint-disable-line no-proto
-		: null
-);
+var getProto = __webpack_require__(/*! get-proto */ "../node_modules/get-proto/index.js");
+var $ObjectGPO = __webpack_require__(/*! get-proto/Object.getPrototypeOf */ "../node_modules/get-proto/Object.getPrototypeOf.js");
+var $ReflectGPO = __webpack_require__(/*! get-proto/Reflect.getPrototypeOf */ "../node_modules/get-proto/Reflect.getPrototypeOf.js");
+
+var $apply = __webpack_require__(/*! call-bind-apply-helpers/functionApply */ "../node_modules/call-bind-apply-helpers/functionApply.js");
+var $call = __webpack_require__(/*! call-bind-apply-helpers/functionCall */ "../node_modules/call-bind-apply-helpers/functionCall.js");
 
 var needsEval = {};
 
@@ -45476,6 +50220,7 @@ var INTRINSICS = {
 	'%Error%': $Error,
 	'%eval%': eval, // eslint-disable-line no-eval
 	'%EvalError%': $EvalError,
+	'%Float16Array%': typeof Float16Array === 'undefined' ? undefined : Float16Array,
 	'%Float32Array%': typeof Float32Array === 'undefined' ? undefined : Float32Array,
 	'%Float64Array%': typeof Float64Array === 'undefined' ? undefined : Float64Array,
 	'%FinalizationRegistry%': typeof FinalizationRegistry === 'undefined' ? undefined : FinalizationRegistry,
@@ -45492,7 +50237,8 @@ var INTRINSICS = {
 	'%MapIteratorPrototype%': typeof Map === 'undefined' || !hasSymbols || !getProto ? undefined : getProto(new Map()[Symbol.iterator]()),
 	'%Math%': Math,
 	'%Number%': Number,
-	'%Object%': Object,
+	'%Object%': $Object,
+	'%Object.getOwnPropertyDescriptor%': $gOPD,
 	'%parseFloat%': parseFloat,
 	'%parseInt%': parseInt,
 	'%Promise%': typeof Promise === 'undefined' ? undefined : Promise,
@@ -45518,7 +50264,20 @@ var INTRINSICS = {
 	'%URIError%': $URIError,
 	'%WeakMap%': typeof WeakMap === 'undefined' ? undefined : WeakMap,
 	'%WeakRef%': typeof WeakRef === 'undefined' ? undefined : WeakRef,
-	'%WeakSet%': typeof WeakSet === 'undefined' ? undefined : WeakSet
+	'%WeakSet%': typeof WeakSet === 'undefined' ? undefined : WeakSet,
+
+	'%Function.prototype.call%': $call,
+	'%Function.prototype.apply%': $apply,
+	'%Object.defineProperty%': $defineProperty,
+	'%Object.getPrototypeOf%': $ObjectGPO,
+	'%Math.abs%': abs,
+	'%Math.floor%': floor,
+	'%Math.max%': max,
+	'%Math.min%': min,
+	'%Math.pow%': pow,
+	'%Math.round%': round,
+	'%Math.sign%': sign,
+	'%Reflect.getPrototypeOf%': $ReflectGPO
 };
 
 if (getProto) {
@@ -45613,11 +50372,11 @@ var LEGACY_ALIASES = {
 
 var bind = __webpack_require__(/*! function-bind */ "../node_modules/function-bind/index.js");
 var hasOwn = __webpack_require__(/*! hasown */ "../node_modules/hasown/index.js");
-var $concat = bind.call(Function.call, Array.prototype.concat);
-var $spliceApply = bind.call(Function.apply, Array.prototype.splice);
-var $replace = bind.call(Function.call, String.prototype.replace);
-var $strSlice = bind.call(Function.call, String.prototype.slice);
-var $exec = bind.call(Function.call, RegExp.prototype.exec);
+var $concat = bind.call($call, Array.prototype.concat);
+var $spliceApply = bind.call($apply, Array.prototype.splice);
+var $replace = bind.call($call, String.prototype.replace);
+var $strSlice = bind.call($call, String.prototype.slice);
+var $exec = bind.call($call, RegExp.prototype.exec);
 
 /* adapted from https://github.com/lodash/lodash/blob/4.17.15/dist/lodash.js#L6735-L6744 */
 var rePropName = /[^%.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|%$))/g;
@@ -45751,6 +50510,91 @@ module.exports = function GetIntrinsic(name, allowMissing) {
 
 /***/ }),
 
+/***/ "../node_modules/get-proto/Object.getPrototypeOf.js":
+/*!**********************************************************!*\
+  !*** ../node_modules/get-proto/Object.getPrototypeOf.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var $Object = __webpack_require__(/*! es-object-atoms */ "../node_modules/es-object-atoms/index.js");
+
+/** @type {import('./Object.getPrototypeOf')} */
+module.exports = $Object.getPrototypeOf || null;
+
+
+/***/ }),
+
+/***/ "../node_modules/get-proto/Reflect.getPrototypeOf.js":
+/*!***********************************************************!*\
+  !*** ../node_modules/get-proto/Reflect.getPrototypeOf.js ***!
+  \***********************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('./Reflect.getPrototypeOf')} */
+module.exports = (typeof Reflect !== 'undefined' && Reflect.getPrototypeOf) || null;
+
+
+/***/ }),
+
+/***/ "../node_modules/get-proto/index.js":
+/*!******************************************!*\
+  !*** ../node_modules/get-proto/index.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var reflectGetProto = __webpack_require__(/*! ./Reflect.getPrototypeOf */ "../node_modules/get-proto/Reflect.getPrototypeOf.js");
+var originalGetProto = __webpack_require__(/*! ./Object.getPrototypeOf */ "../node_modules/get-proto/Object.getPrototypeOf.js");
+
+var getDunderProto = __webpack_require__(/*! dunder-proto/get */ "../node_modules/dunder-proto/get.js");
+
+/** @type {import('.')} */
+module.exports = reflectGetProto
+	? function getProto(O) {
+		// @ts-expect-error TS can't narrow inside a closure, for some reason
+		return reflectGetProto(O);
+	}
+	: originalGetProto
+		? function getProto(O) {
+			if (!O || (typeof O !== 'object' && typeof O !== 'function')) {
+				throw new TypeError('getProto: not an object');
+			}
+			// @ts-expect-error TS can't narrow inside a closure, for some reason
+			return originalGetProto(O);
+		}
+		: getDunderProto
+			? function getProto(O) {
+				// @ts-expect-error TS can't narrow inside a closure, for some reason
+				return getDunderProto(O);
+			}
+			: null;
+
+
+/***/ }),
+
+/***/ "../node_modules/gopd/gOPD.js":
+/*!************************************!*\
+  !*** ../node_modules/gopd/gOPD.js ***!
+  \************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('./gOPD')} */
+module.exports = Object.getOwnPropertyDescriptor;
+
+
+/***/ }),
+
 /***/ "../node_modules/gopd/index.js":
 /*!*************************************!*\
   !*** ../node_modules/gopd/index.js ***!
@@ -45760,9 +50604,8 @@ module.exports = function GetIntrinsic(name, allowMissing) {
 "use strict";
 
 
-var GetIntrinsic = __webpack_require__(/*! get-intrinsic */ "../node_modules/get-intrinsic/index.js");
-
-var $gOPD = GetIntrinsic('%Object.getOwnPropertyDescriptor%', true);
+/** @type {import('.')} */
+var $gOPD = __webpack_require__(/*! ./gOPD */ "../node_modules/gopd/gOPD.js");
 
 if ($gOPD) {
 	try {
@@ -45935,6 +50778,96 @@ function printInit() {
 }
 printInit();
 //# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "../node_modules/hap-nodejs/dist/internal-types.js":
+/*!*********************************************************!*\
+  !*** ../node_modules/hap-nodejs/dist/internal-types.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.HAPMimeTypes = exports.PairingStates = exports.PairMethods = exports.TLVValues = void 0;
+exports.consideredTrue = consideredTrue;
+/**
+ * @group Utils
+ */
+function consideredTrue(input) {
+    if (!input) {
+        return false;
+    }
+    return input === "true" || input === "1";
+}
+/**
+ * @group HAP Accessory Server
+ */
+var TLVValues;
+(function (TLVValues) {
+    // noinspection JSUnusedGlobalSymbols
+    TLVValues[TLVValues["REQUEST_TYPE"] = 0] = "REQUEST_TYPE";
+    // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
+    TLVValues[TLVValues["METHOD"] = 0] = "METHOD";
+    TLVValues[TLVValues["USERNAME"] = 1] = "USERNAME";
+    // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
+    TLVValues[TLVValues["IDENTIFIER"] = 1] = "IDENTIFIER";
+    TLVValues[TLVValues["SALT"] = 2] = "SALT";
+    TLVValues[TLVValues["PUBLIC_KEY"] = 3] = "PUBLIC_KEY";
+    TLVValues[TLVValues["PASSWORD_PROOF"] = 4] = "PASSWORD_PROOF";
+    TLVValues[TLVValues["ENCRYPTED_DATA"] = 5] = "ENCRYPTED_DATA";
+    TLVValues[TLVValues["SEQUENCE_NUM"] = 6] = "SEQUENCE_NUM";
+    // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
+    TLVValues[TLVValues["STATE"] = 6] = "STATE";
+    TLVValues[TLVValues["ERROR_CODE"] = 7] = "ERROR_CODE";
+    TLVValues[TLVValues["RETRY_DELAY"] = 8] = "RETRY_DELAY";
+    TLVValues[TLVValues["CERTIFICATE"] = 9] = "CERTIFICATE";
+    TLVValues[TLVValues["PROOF"] = 10] = "PROOF";
+    // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
+    TLVValues[TLVValues["SIGNATURE"] = 10] = "SIGNATURE";
+    TLVValues[TLVValues["PERMISSIONS"] = 11] = "PERMISSIONS";
+    TLVValues[TLVValues["FRAGMENT_DATA"] = 12] = "FRAGMENT_DATA";
+    TLVValues[TLVValues["FRAGMENT_LAST"] = 13] = "FRAGMENT_LAST";
+    TLVValues[TLVValues["SEPARATOR"] = 255] = "SEPARATOR"; // Zero-length TLV that separates different TLVs in a list.
+})(TLVValues || (exports.TLVValues = TLVValues = {}));
+/**
+ * @group HAP Accessory Server
+ */
+var PairMethods;
+(function (PairMethods) {
+    // noinspection JSUnusedGlobalSymbols
+    PairMethods[PairMethods["PAIR_SETUP"] = 0] = "PAIR_SETUP";
+    PairMethods[PairMethods["PAIR_SETUP_WITH_AUTH"] = 1] = "PAIR_SETUP_WITH_AUTH";
+    PairMethods[PairMethods["PAIR_VERIFY"] = 2] = "PAIR_VERIFY";
+    PairMethods[PairMethods["ADD_PAIRING"] = 3] = "ADD_PAIRING";
+    PairMethods[PairMethods["REMOVE_PAIRING"] = 4] = "REMOVE_PAIRING";
+    PairMethods[PairMethods["LIST_PAIRINGS"] = 5] = "LIST_PAIRINGS";
+})(PairMethods || (exports.PairMethods = PairMethods = {}));
+/**
+ * Pairing states (pair-setup or pair-verify). Encoded in {@link TLVValues.SEQUENCE_NUM}.
+ *
+ * @group HAP Accessory Server
+ */
+var PairingStates;
+(function (PairingStates) {
+    PairingStates[PairingStates["M1"] = 1] = "M1";
+    PairingStates[PairingStates["M2"] = 2] = "M2";
+    PairingStates[PairingStates["M3"] = 3] = "M3";
+    PairingStates[PairingStates["M4"] = 4] = "M4";
+    PairingStates[PairingStates["M5"] = 5] = "M5";
+    PairingStates[PairingStates["M6"] = 6] = "M6";
+})(PairingStates || (exports.PairingStates = PairingStates = {}));
+/**
+ * @group HAP Accessory Server
+ */
+var HAPMimeTypes;
+(function (HAPMimeTypes) {
+    HAPMimeTypes["PAIRING_TLV8"] = "application/pairing+tlv8";
+    HAPMimeTypes["HAP_JSON"] = "application/hap+json";
+    HAPMimeTypes["IMAGE_JPEG"] = "image/jpeg";
+})(HAPMimeTypes || (exports.HAPMimeTypes = HAPMimeTypes = {}));
+//# sourceMappingURL=internal-types.js.map
 
 /***/ }),
 
@@ -50533,9 +55466,859 @@ __webpack_require__(/*! ./definitions/CharacteristicDefinitions */ "../node_modu
 /*!********************************************************!*\
   !*** ../node_modules/hap-nodejs/dist/lib/HAPServer.js ***!
   \********************************************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-// Empty file to avoid WebPack error messages
+"use strict";
+/* provided dependency */ var Buffer = __webpack_require__(/*! buffer */ "../node_modules/buffer/index.js")["Buffer"];
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.HAPServer = exports.HAPServerEventTypes = exports.HAPPairingHTTPCode = exports.HAPHTTPCode = exports.HAPStatus = exports.TLVErrorCode = void 0;
+exports.IsKnownHAPStatusError = IsKnownHAPStatusError;
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.mjs");
+const crypto_1 = tslib_1.__importDefault(__webpack_require__(/*! crypto */ "../node_modules/crypto-browserify/index.js"));
+const debug_1 = tslib_1.__importDefault(__webpack_require__(/*! debug */ "../node_modules/debug/src/browser.js"));
+const events_1 = __webpack_require__(/*! events */ "../node_modules/events/events.js");
+const fast_srp_hap_1 = __webpack_require__(/*! fast-srp-hap */ "../node_modules/fast-srp-hap/lib/srp.js");
+const tweetnacl_1 = tslib_1.__importDefault(__webpack_require__(/*! tweetnacl */ "../node_modules/tweetnacl/nacl-fast.js"));
+const url_1 = __webpack_require__(/*! url */ "?5d67");
+const internal_types_1 = __webpack_require__(/*! ../internal-types */ "../node_modules/hap-nodejs/dist/internal-types.js");
+const eventedhttp_1 = __webpack_require__(/*! ./util/eventedhttp */ "../node_modules/hap-nodejs/dist/lib/util/eventedhttp.js");
+const hapCrypto = tslib_1.__importStar(__webpack_require__(/*! ./util/hapCrypto */ "../node_modules/hap-nodejs/dist/lib/util/hapCrypto.js"));
+const once_1 = __webpack_require__(/*! ./util/once */ "../node_modules/hap-nodejs/dist/lib/util/once.js");
+const tlv = tslib_1.__importStar(__webpack_require__(/*! ./util/tlv */ "../node_modules/hap-nodejs/dist/lib/util/tlv.js"));
+const debug = (0, debug_1.default)("HAP-NodeJS:HAPServer");
+/**
+ * TLV error codes for the `TLVValues.ERROR_CODE` field.
+ *
+ * @group HAP Accessory Server
+ */
+var TLVErrorCode;
+(function (TLVErrorCode) {
+    // noinspection JSUnusedGlobalSymbols
+    TLVErrorCode[TLVErrorCode["UNKNOWN"] = 1] = "UNKNOWN";
+    TLVErrorCode[TLVErrorCode["INVALID_REQUEST"] = 2] = "INVALID_REQUEST";
+    // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
+    TLVErrorCode[TLVErrorCode["AUTHENTICATION"] = 2] = "AUTHENTICATION";
+    TLVErrorCode[TLVErrorCode["BACKOFF"] = 3] = "BACKOFF";
+    TLVErrorCode[TLVErrorCode["MAX_PEERS"] = 4] = "MAX_PEERS";
+    TLVErrorCode[TLVErrorCode["MAX_TRIES"] = 5] = "MAX_TRIES";
+    TLVErrorCode[TLVErrorCode["UNAVAILABLE"] = 6] = "UNAVAILABLE";
+    TLVErrorCode[TLVErrorCode["BUSY"] = 7] = "BUSY"; // cannot accept pairing request at this time
+})(TLVErrorCode || (exports.TLVErrorCode = TLVErrorCode = {}));
+/**
+ * @group HAP Accessory Server
+ */
+var HAPStatus;
+(function (HAPStatus) {
+    // noinspection JSUnusedGlobalSymbols
+    /**
+     * Success of the request.
+     */
+    HAPStatus[HAPStatus["SUCCESS"] = 0] = "SUCCESS";
+    /**
+     * The request was rejected due to insufficient privileges.
+     */
+    HAPStatus[HAPStatus["INSUFFICIENT_PRIVILEGES"] = -70401] = "INSUFFICIENT_PRIVILEGES";
+    /**
+     * Operation failed due to some communication failure with the characteristic.
+     */
+    HAPStatus[HAPStatus["SERVICE_COMMUNICATION_FAILURE"] = -70402] = "SERVICE_COMMUNICATION_FAILURE";
+    /**
+     * The resource is busy. Try again.
+     */
+    HAPStatus[HAPStatus["RESOURCE_BUSY"] = -70403] = "RESOURCE_BUSY";
+    /**
+     * Cannot write a read-only characteristic ({@link Perms.PAIRED_WRITE} not defined).
+     */
+    HAPStatus[HAPStatus["READ_ONLY_CHARACTERISTIC"] = -70404] = "READ_ONLY_CHARACTERISTIC";
+    /**
+     * Cannot read from a write-only characteristic ({@link Perms.PAIRED_READ} not defined).
+     */
+    HAPStatus[HAPStatus["WRITE_ONLY_CHARACTERISTIC"] = -70405] = "WRITE_ONLY_CHARACTERISTIC";
+    /**
+     * Event notifications are not supported for the requested characteristic ({@link Perms.NOTIFY} not defined).
+     */
+    HAPStatus[HAPStatus["NOTIFICATION_NOT_SUPPORTED"] = -70406] = "NOTIFICATION_NOT_SUPPORTED";
+    /**
+     * The device is out of resources to process the request.
+     */
+    HAPStatus[HAPStatus["OUT_OF_RESOURCE"] = -70407] = "OUT_OF_RESOURCE";
+    /**
+     * The operation timed out.
+     */
+    HAPStatus[HAPStatus["OPERATION_TIMED_OUT"] = -70408] = "OPERATION_TIMED_OUT";
+    /**
+     * The given resource does not exist.
+     */
+    HAPStatus[HAPStatus["RESOURCE_DOES_NOT_EXIST"] = -70409] = "RESOURCE_DOES_NOT_EXIST";
+    /**
+     * Received an invalid value in the given request for the given characteristic.
+     */
+    HAPStatus[HAPStatus["INVALID_VALUE_IN_REQUEST"] = -70410] = "INVALID_VALUE_IN_REQUEST";
+    /**
+     * Insufficient authorization.
+     */
+    HAPStatus[HAPStatus["INSUFFICIENT_AUTHORIZATION"] = -70411] = "INSUFFICIENT_AUTHORIZATION";
+    /**
+     * Operation not allowed in the current state.
+     */
+    HAPStatus[HAPStatus["NOT_ALLOWED_IN_CURRENT_STATE"] = -70412] = "NOT_ALLOWED_IN_CURRENT_STATE";
+    // when adding new status codes, remember to update bounds in IsKnownHAPStatusError below
+})(HAPStatus || (exports.HAPStatus = HAPStatus = {}));
+/**
+ * Determines if the given status code is a known {@link HAPStatus} error code.
+ *
+ * @group HAP Accessory Server
+ */
+function IsKnownHAPStatusError(status) {
+    return (
+    // Lower bound (most negative error code)
+    status >= -70412 /* HAPStatus.NOT_ALLOWED_IN_CURRENT_STATE */ &&
+        // Upper bound (negative error code closest to zero)
+        status <= -70401 /* HAPStatus.INSUFFICIENT_PRIVILEGES */);
+}
+/**
+ * Those status codes are the one listed as appropriate for the HAP spec!
+ *
+ * When the response is a client error 4xx or server error 5xx, the response
+ * must include a status {@link HAPStatus} property.
+ *
+ * When the response is a MULTI_STATUS EVERY entry in the characteristics property MUST include a status property (even success).
+ *
+ * @group HAP Accessory Server
+ */
+var HAPHTTPCode;
+(function (HAPHTTPCode) {
+    // noinspection JSUnusedGlobalSymbols
+    HAPHTTPCode[HAPHTTPCode["OK"] = 200] = "OK";
+    HAPHTTPCode[HAPHTTPCode["NO_CONTENT"] = 204] = "NO_CONTENT";
+    HAPHTTPCode[HAPHTTPCode["MULTI_STATUS"] = 207] = "MULTI_STATUS";
+    // client error
+    HAPHTTPCode[HAPHTTPCode["BAD_REQUEST"] = 400] = "BAD_REQUEST";
+    HAPHTTPCode[HAPHTTPCode["NOT_FOUND"] = 404] = "NOT_FOUND";
+    HAPHTTPCode[HAPHTTPCode["UNPROCESSABLE_ENTITY"] = 422] = "UNPROCESSABLE_ENTITY";
+    // server error
+    HAPHTTPCode[HAPHTTPCode["INTERNAL_SERVER_ERROR"] = 500] = "INTERNAL_SERVER_ERROR";
+    HAPHTTPCode[HAPHTTPCode["SERVICE_UNAVAILABLE"] = 503] = "SERVICE_UNAVAILABLE";
+})(HAPHTTPCode || (exports.HAPHTTPCode = HAPHTTPCode = {}));
+/**
+ * When in a request is made to the pairing endpoints, and mime type is 'application/pairing+tlv8'
+ * one should use the below status codes.
+ *
+ * @group HAP Accessory Server
+ */
+var HAPPairingHTTPCode;
+(function (HAPPairingHTTPCode) {
+    // noinspection JSUnusedGlobalSymbols
+    HAPPairingHTTPCode[HAPPairingHTTPCode["OK"] = 200] = "OK";
+    HAPPairingHTTPCode[HAPPairingHTTPCode["BAD_REQUEST"] = 400] = "BAD_REQUEST";
+    HAPPairingHTTPCode[HAPPairingHTTPCode["METHOD_NOT_ALLOWED"] = 405] = "METHOD_NOT_ALLOWED";
+    HAPPairingHTTPCode[HAPPairingHTTPCode["TOO_MANY_REQUESTS"] = 429] = "TOO_MANY_REQUESTS";
+    HAPPairingHTTPCode[HAPPairingHTTPCode["CONNECTION_AUTHORIZATION_REQUIRED"] = 470] = "CONNECTION_AUTHORIZATION_REQUIRED";
+    HAPPairingHTTPCode[HAPPairingHTTPCode["INTERNAL_SERVER_ERROR"] = 500] = "INTERNAL_SERVER_ERROR";
+})(HAPPairingHTTPCode || (exports.HAPPairingHTTPCode = HAPPairingHTTPCode = {}));
+/**
+ * @group HAP Accessory Server
+ */
+var HAPServerEventTypes;
+(function (HAPServerEventTypes) {
+    /**
+     * Emitted when the server is fully set up and ready to receive connections.
+     */
+    HAPServerEventTypes["LISTENING"] = "listening";
+    /**
+     * Emitted when a client wishes for this server to identify itself before pairing. You must call the
+     * callback to respond to the client with success.
+     */
+    HAPServerEventTypes["IDENTIFY"] = "identify";
+    HAPServerEventTypes["ADD_PAIRING"] = "add-pairing";
+    HAPServerEventTypes["REMOVE_PAIRING"] = "remove-pairing";
+    HAPServerEventTypes["LIST_PAIRINGS"] = "list-pairings";
+    /**
+     * This event is emitted when a client completes the "pairing" process and exchanges encryption keys.
+     * Note that this does not mean the "Add Accessory" process in iOS has completed.
+     * You must call the callback to complete the process.
+     */
+    HAPServerEventTypes["PAIR"] = "pair";
+    /**
+     * This event is emitted when a client requests the complete representation of Accessory data for
+     * this Accessory (for instance, what services, characteristics, etc. are supported) and any bridged
+     * Accessories in the case of a Bridge Accessory. The listener must call the provided callback function
+     * when the accessory data is ready. We will automatically JSON.stringify the data.
+     */
+    HAPServerEventTypes["ACCESSORIES"] = "accessories";
+    /**
+     * This event is emitted when a client wishes to retrieve the current value of one or more characteristics.
+     * The listener must call the provided callback function when the values are ready. iOS clients can typically
+     * wait up to 10 seconds for this call to return. We will automatically JSON.stringify the data (which must
+     * be an array) and wrap it in an object with a top-level "characteristics" property.
+     */
+    HAPServerEventTypes["GET_CHARACTERISTICS"] = "get-characteristics";
+    /**
+     * This event is emitted when a client wishes to set the current value of one or more characteristics and/or
+     * subscribe to one or more events. The 'events' param is an initially-empty object, associated with the current
+     * connection, on which you may store event registration keys for later processing. The listener must call
+     * the provided callback when the request has been processed.
+     */
+    HAPServerEventTypes["SET_CHARACTERISTICS"] = "set-characteristics";
+    HAPServerEventTypes["REQUEST_RESOURCE"] = "request-resource";
+    HAPServerEventTypes["CONNECTION_CLOSED"] = "connection-closed";
+})(HAPServerEventTypes || (exports.HAPServerEventTypes = HAPServerEventTypes = {}));
+/**
+ * The actual HAP server that iOS devices talk to.
+ *
+ * Notes
+ * -----
+ * It turns out that the IP-based version of HomeKit's HAP protocol operates over a sort of pseudo-HTTP.
+ * Accessories are meant to host a TCP socket server that initially behaves exactly as an HTTP/1.1 server.
+ * So iOS devices will open up a long-lived connection to this server and begin issuing HTTP requests.
+ * So far, this conforms with HTTP/1.1 Keepalive. However, after the "pairing" process is complete, the
+ * connection is expected to be "upgraded" to support full-packet encryption of both HTTP headers and data.
+ * This encryption is NOT SSL. It is a customized ChaCha20+Poly1305 encryption layer.
+ *
+ * Additionally, this "HTTP Server" supports sending "event" responses at any time without warning. The iOS
+ * device simply keeps the connection open after it's finished with HTTP request/response traffic, and while
+ * the connection is open, the server can elect to issue "EVENT/1.0 200 OK" HTTP-style responses. These are
+ * typically sent to inform the iOS device of a characteristic change for the accessory (like "Door was Unlocked").
+ *
+ * See {@link EventedHTTPServer} for more detail on the implementation of this protocol.
+ *
+ * @group HAP Accessory Server
+ */
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
+class HAPServer extends events_1.EventEmitter {
+    accessoryInfo;
+    httpServer;
+    unsuccessfulPairAttempts = 0; // after 100 unsuccessful attempts the server won't accept any further attempts. Will currently be reset on a reboot
+    allowInsecureRequest;
+    constructor(accessoryInfo) {
+        super();
+        this.accessoryInfo = accessoryInfo;
+        this.allowInsecureRequest = false;
+        // internal server that does all the actual communication
+        this.httpServer = new eventedhttp_1.EventedHTTPServer();
+        this.httpServer.on("listening" /* EventedHTTPServerEvent.LISTENING */, this.onListening.bind(this));
+        this.httpServer.on("request" /* EventedHTTPServerEvent.REQUEST */, this.handleRequestOnHAPConnection.bind(this));
+        this.httpServer.on("connection-closed" /* EventedHTTPServerEvent.CONNECTION_CLOSED */, this.handleConnectionClosed.bind(this));
+    }
+    listen(port = 0, host) {
+        if (host === "::") {
+            // this will work around "EAFNOSUPPORT: address family not supported" errors
+            // on systems where IPv6 is not supported/enabled, we just use the node default then by supplying undefined
+            host = undefined;
+        }
+        this.httpServer.listen(port, host);
+    }
+    stop() {
+        this.httpServer.stop();
+    }
+    destroy() {
+        this.stop();
+        this.removeAllListeners();
+    }
+    /**
+     * Send an even notification for given characteristic and changed value to all connected clients.
+     * If `originator` is specified, the given {@link HAPConnection} will be excluded from the broadcast.
+     *
+     * @param aid - The accessory id of the updated characteristic.
+     * @param iid - The instance id of the updated characteristic.
+     * @param value - The newly set value of the characteristic.
+     * @param originator - If specified, the connection will not get an event message.
+     * @param immediateDelivery - The HAP spec requires some characteristics to be delivery immediately.
+     *   Namely, for the {@link Characteristic.ButtonEvent} and the {@link Characteristic.ProgrammableSwitchEvent} characteristics.
+     */
+    sendEventNotifications(aid, iid, value, originator, immediateDelivery) {
+        try {
+            this.httpServer.broadcastEvent(aid, iid, value, originator, immediateDelivery);
+        }
+        catch (error) {
+            console.warn("[" + this.accessoryInfo.username + "] Error when sending event notifications: " + error.message);
+        }
+    }
+    onListening(port, hostname) {
+        this.emit("listening" /* HAPServerEventTypes.LISTENING */, port, hostname);
+    }
+    // Called when an HTTP request was detected.
+    handleRequestOnHAPConnection(connection, request, response) {
+        debug("[%s] HAP Request: %s %s", this.accessoryInfo.username, request.method, request.url);
+        const buffers = [];
+        request.on("data", data => buffers.push(data));
+        request.on("end", () => {
+            const url = new url_1.URL(request.url, "http://hap-nodejs.local"); // parse the url (query strings etc)
+            const handler = this.getHandler(url);
+            if (!handler) {
+                debug("[%s] WARNING: Handler for %s not implemented", this.accessoryInfo.username, request.url);
+                response.writeHead(404 /* HAPHTTPCode.NOT_FOUND */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+                response.end(JSON.stringify({ status: -70409 /* HAPStatus.RESOURCE_DOES_NOT_EXIST */ }));
+            }
+            else {
+                const data = Buffer.concat(buffers);
+                try {
+                    handler(connection, url, request, data, response);
+                }
+                catch (error) {
+                    debug("[%s] Error executing route handler: %s", this.accessoryInfo.username, error.stack);
+                    response.writeHead(500 /* HAPHTTPCode.INTERNAL_SERVER_ERROR */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+                    response.end(JSON.stringify({ status: -70403 /* HAPStatus.RESOURCE_BUSY */ })); // resource busy try again, does somehow fit?
+                }
+            }
+        });
+    }
+    handleConnectionClosed(connection) {
+        this.emit("connection-closed" /* HAPServerEventTypes.CONNECTION_CLOSED */, connection);
+    }
+    getHandler(url) {
+        switch (url.pathname.toLowerCase()) {
+            case "/identify":
+                return this.handleIdentifyRequest.bind(this);
+            case "/pair-setup":
+                return this.handlePairSetup.bind(this);
+            case "/pair-verify":
+                return this.handlePairVerify.bind(this);
+            case "/pairings":
+                return this.handlePairings.bind(this);
+            case "/accessories":
+                return this.handleAccessories.bind(this);
+            case "/characteristics":
+                return this.handleCharacteristics.bind(this);
+            case "/prepare":
+                return this.handlePrepareWrite.bind(this);
+            case "/resource":
+                return this.handleResource.bind(this);
+            default:
+                return undefined;
+        }
+    }
+    /**
+     * UNPAIRED Accessory identification.
+     */
+    handleIdentifyRequest(connection, url, request, data, response) {
+        // POST body is empty
+        if (this.accessoryInfo.paired() && !this.allowInsecureRequest) {
+            response.writeHead(400 /* HAPHTTPCode.BAD_REQUEST */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+            response.end(JSON.stringify({ status: -70401 /* HAPStatus.INSUFFICIENT_PRIVILEGES */ }));
+            return;
+        }
+        this.emit("identify" /* HAPServerEventTypes.IDENTIFY */, (0, once_1.once)(err => {
+            if (!err) {
+                debug("[%s] Identification success", this.accessoryInfo.username);
+                response.writeHead(204 /* HAPHTTPCode.NO_CONTENT */);
+                response.end();
+            }
+            else {
+                debug("[%s] Identification error: %s", this.accessoryInfo.username, err.message);
+                response.writeHead(500 /* HAPHTTPCode.INTERNAL_SERVER_ERROR */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+                response.end(JSON.stringify({ status: -70403 /* HAPStatus.RESOURCE_BUSY */ }));
+            }
+        }));
+    }
+    handlePairSetup(connection, url, request, data, response) {
+        // Can only be directly paired with one iOS device
+        if (!this.allowInsecureRequest && this.accessoryInfo.paired()) {
+            response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+            response.end(tlv.encode(6 /* TLVValues.STATE */, 2 /* PairingStates.M2 */, 7 /* TLVValues.ERROR_CODE */, 6 /* TLVErrorCode.UNAVAILABLE */));
+            return;
+        }
+        if (this.unsuccessfulPairAttempts > 100) {
+            debug("[%s] Reached maximum amount of unsuccessful pair attempts!", this.accessoryInfo.username);
+            response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+            response.end(tlv.encode(6 /* TLVValues.STATE */, 2 /* PairingStates.M2 */, 7 /* TLVValues.ERROR_CODE */, 5 /* TLVErrorCode.MAX_TRIES */));
+            return;
+        }
+        const tlvData = tlv.decode(data);
+        const sequence = tlvData[6 /* TLVValues.SEQUENCE_NUM */][0]; // value is single byte with sequence number
+        if (sequence === 1 /* PairingStates.M1 */) {
+            this.handlePairSetupM1(connection, request, response);
+        }
+        else if (sequence === 3 /* PairingStates.M3 */ && connection._pairSetupState === 2 /* PairingStates.M2 */) {
+            this.handlePairSetupM3(connection, request, response, tlvData);
+        }
+        else if (sequence === 5 /* PairingStates.M5 */ && connection._pairSetupState === 4 /* PairingStates.M4 */) {
+            this.handlePairSetupM5(connection, request, response, tlvData);
+        }
+        else {
+            // Invalid state/sequence number
+            response.writeHead(400 /* HAPPairingHTTPCode.BAD_REQUEST */, { "Content-Type": "application/pairing+tlv8" });
+            response.end(tlv.encode(6 /* TLVValues.STATE */, sequence + 1, 7 /* TLVValues.ERROR_CODE */, 1 /* TLVErrorCode.UNKNOWN */));
+            return;
+        }
+    }
+    handlePairSetupM1(connection, request, response) {
+        debug("[%s] Pair step 1/5", this.accessoryInfo.username);
+        const salt = crypto_1.default.randomBytes(16);
+        const srpParams = fast_srp_hap_1.SRP.params.hap;
+        fast_srp_hap_1.SRP.genKey(32).then(key => {
+            // create a new SRP server
+            const srpServer = new fast_srp_hap_1.SrpServer(srpParams, salt, Buffer.from("Pair-Setup"), Buffer.from(this.accessoryInfo.pincode), key);
+            const srpB = srpServer.computeB();
+            // attach it to the current TCP session
+            connection.srpServer = srpServer;
+            response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+            response.end(tlv.encode(6 /* TLVValues.SEQUENCE_NUM */, 2 /* PairingStates.M2 */, 2 /* TLVValues.SALT */, salt, 3 /* TLVValues.PUBLIC_KEY */, srpB));
+            connection._pairSetupState = 2 /* PairingStates.M2 */;
+        }).catch(error => {
+            debug("[%s] Error occurred when generating srp key: %s", this.accessoryInfo.username, error.message);
+            response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+            response.end(tlv.encode(6 /* TLVValues.STATE */, 2 /* PairingStates.M2 */, 7 /* TLVValues.ERROR_CODE */, 1 /* TLVErrorCode.UNKNOWN */));
+            return;
+        });
+    }
+    handlePairSetupM3(connection, request, response, tlvData) {
+        debug("[%s] Pair step 2/5", this.accessoryInfo.username);
+        const A = tlvData[3 /* TLVValues.PUBLIC_KEY */]; // "A is a public key that exists only for a single login session."
+        const M1 = tlvData[4 /* TLVValues.PASSWORD_PROOF */]; // "M1 is the proof that you actually know your own password."
+        // pull the SRP server we created in stepOne out of the current session
+        const srpServer = connection.srpServer;
+        srpServer.setA(A);
+        try {
+            srpServer.checkM1(M1);
+        }
+        catch (err) {
+            // most likely the client supplied an incorrect pincode.
+            this.unsuccessfulPairAttempts++;
+            debug("[%s] Error while checking pincode: %s", this.accessoryInfo.username, err.message);
+            response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+            response.end(tlv.encode(6 /* TLVValues.SEQUENCE_NUM */, 4 /* PairingStates.M4 */, 7 /* TLVValues.ERROR_CODE */, 2 /* TLVErrorCode.AUTHENTICATION */));
+            connection._pairSetupState = undefined;
+            return;
+        }
+        // "M2 is the proof that the server actually knows your password."
+        const M2 = srpServer.computeM2();
+        response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+        response.end(tlv.encode(6 /* TLVValues.SEQUENCE_NUM */, 4 /* PairingStates.M4 */, 4 /* TLVValues.PASSWORD_PROOF */, M2));
+        connection._pairSetupState = 4 /* PairingStates.M4 */;
+    }
+    handlePairSetupM5(connection, request, response, tlvData) {
+        debug("[%s] Pair step 3/5", this.accessoryInfo.username);
+        // pull the SRP server we created in stepOne out of the current session
+        const srpServer = connection.srpServer;
+        const encryptedData = tlvData[5 /* TLVValues.ENCRYPTED_DATA */];
+        const messageData = Buffer.alloc(encryptedData.length - 16);
+        const authTagData = Buffer.alloc(16);
+        encryptedData.copy(messageData, 0, 0, encryptedData.length - 16);
+        encryptedData.copy(authTagData, 0, encryptedData.length - 16, encryptedData.length);
+        const S_private = srpServer.computeK();
+        const encSalt = Buffer.from("Pair-Setup-Encrypt-Salt");
+        const encInfo = Buffer.from("Pair-Setup-Encrypt-Info");
+        const outputKey = hapCrypto.HKDF("sha512", encSalt, S_private, encInfo, 32);
+        let plaintext;
+        try {
+            plaintext = hapCrypto.chacha20_poly1305_decryptAndVerify(outputKey, Buffer.from("PS-Msg05"), null, messageData, authTagData);
+        }
+        catch (error) {
+            debug("[%s] Error while decrypting and verifying M5 subTlv: %s", this.accessoryInfo.username);
+            response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+            response.end(tlv.encode(6 /* TLVValues.SEQUENCE_NUM */, 4 /* PairingStates.M4 */, 7 /* TLVValues.ERROR_CODE */, 2 /* TLVErrorCode.AUTHENTICATION */));
+            connection._pairSetupState = undefined;
+            return;
+        }
+        // decode the client payload and pass it on to the next step
+        const M5Packet = tlv.decode(plaintext);
+        const clientUsername = M5Packet[1 /* TLVValues.USERNAME */];
+        const clientLTPK = M5Packet[3 /* TLVValues.PUBLIC_KEY */];
+        const clientProof = M5Packet[10 /* TLVValues.PROOF */];
+        this.handlePairSetupM5_2(connection, request, response, clientUsername, clientLTPK, clientProof, outputKey);
+    }
+    // M5-2
+    handlePairSetupM5_2(connection, request, response, clientUsername, clientLTPK, clientProof, hkdfEncKey) {
+        debug("[%s] Pair step 4/5", this.accessoryInfo.username);
+        const S_private = connection.srpServer.computeK();
+        const controllerSalt = Buffer.from("Pair-Setup-Controller-Sign-Salt");
+        const controllerInfo = Buffer.from("Pair-Setup-Controller-Sign-Info");
+        const outputKey = hapCrypto.HKDF("sha512", controllerSalt, S_private, controllerInfo, 32);
+        const completeData = Buffer.concat([outputKey, clientUsername, clientLTPK]);
+        if (!tweetnacl_1.default.sign.detached.verify(completeData, clientProof, clientLTPK)) {
+            debug("[%s] Invalid signature", this.accessoryInfo.username);
+            response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+            response.end(tlv.encode(6 /* TLVValues.SEQUENCE_NUM */, 6 /* PairingStates.M6 */, 7 /* TLVValues.ERROR_CODE */, 2 /* TLVErrorCode.AUTHENTICATION */));
+            connection._pairSetupState = undefined;
+            return;
+        }
+        this.handlePairSetupM5_3(connection, request, response, clientUsername, clientLTPK, hkdfEncKey);
+    }
+    // M5 - F + M6
+    handlePairSetupM5_3(connection, request, response, clientUsername, clientLTPK, hkdfEncKey) {
+        debug("[%s] Pair step 5/5", this.accessoryInfo.username);
+        const S_private = connection.srpServer.computeK();
+        const accessorySalt = Buffer.from("Pair-Setup-Accessory-Sign-Salt");
+        const accessoryInfo = Buffer.from("Pair-Setup-Accessory-Sign-Info");
+        const outputKey = hapCrypto.HKDF("sha512", accessorySalt, S_private, accessoryInfo, 32);
+        const serverLTPK = this.accessoryInfo.signPk;
+        const usernameData = Buffer.from(this.accessoryInfo.username);
+        const material = Buffer.concat([outputKey, usernameData, serverLTPK]);
+        const privateKey = Buffer.from(this.accessoryInfo.signSk);
+        const serverProof = tweetnacl_1.default.sign.detached(material, privateKey);
+        const message = tlv.encode(1 /* TLVValues.USERNAME */, usernameData, 3 /* TLVValues.PUBLIC_KEY */, serverLTPK, 10 /* TLVValues.PROOF */, serverProof);
+        const encrypted = hapCrypto.chacha20_poly1305_encryptAndSeal(hkdfEncKey, Buffer.from("PS-Msg06"), null, message);
+        // finally, notify listeners that we have been paired with a client
+        this.emit("pair" /* HAPServerEventTypes.PAIR */, clientUsername.toString(), clientLTPK, (0, once_1.once)(err => {
+            if (err) {
+                debug("[%s] Error adding pairing info: %s", this.accessoryInfo.username, err.message);
+                response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+                response.end(tlv.encode(6 /* TLVValues.SEQUENCE_NUM */, 6 /* PairingStates.M6 */, 7 /* TLVValues.ERROR_CODE */, 1 /* TLVErrorCode.UNKNOWN */));
+                connection._pairSetupState = undefined;
+                return;
+            }
+            // send final pairing response to client
+            response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+            response.end(tlv.encode(6 /* TLVValues.SEQUENCE_NUM */, 6 /* PairingStates.M6 */, 5 /* TLVValues.ENCRYPTED_DATA */, Buffer.concat([encrypted.ciphertext, encrypted.authTag])));
+            connection._pairSetupState = undefined;
+        }));
+    }
+    handlePairVerify(connection, url, request, data, response) {
+        const tlvData = tlv.decode(data);
+        const sequence = tlvData[6 /* TLVValues.SEQUENCE_NUM */][0]; // value is single byte with sequence number
+        if (sequence === 1 /* PairingStates.M1 */) {
+            this.handlePairVerifyM1(connection, request, response, tlvData);
+        }
+        else if (sequence === 3 /* PairingStates.M3 */ && connection._pairVerifyState === 2 /* PairingStates.M2 */) {
+            this.handlePairVerifyM3(connection, request, response, tlvData);
+        }
+        else {
+            // Invalid state/sequence number
+            response.writeHead(400 /* HAPPairingHTTPCode.BAD_REQUEST */, { "Content-Type": "application/pairing+tlv8" });
+            response.end(tlv.encode(6 /* TLVValues.STATE */, sequence + 1, 7 /* TLVValues.ERROR_CODE */, 1 /* TLVErrorCode.UNKNOWN */));
+            return;
+        }
+    }
+    handlePairVerifyM1(connection, request, response, tlvData) {
+        debug("[%s] Pair verify step 1/2", this.accessoryInfo.username);
+        const clientPublicKey = tlvData[3 /* TLVValues.PUBLIC_KEY */]; // Buffer
+        // generate new encryption keys for this session
+        const keyPair = hapCrypto.generateCurve25519KeyPair();
+        const secretKey = Buffer.from(keyPair.secretKey);
+        const publicKey = Buffer.from(keyPair.publicKey);
+        const sharedSec = Buffer.from(hapCrypto.generateCurve25519SharedSecKey(secretKey, clientPublicKey));
+        const usernameData = Buffer.from(this.accessoryInfo.username);
+        const material = Buffer.concat([publicKey, usernameData, clientPublicKey]);
+        const privateKey = Buffer.from(this.accessoryInfo.signSk);
+        const serverProof = tweetnacl_1.default.sign.detached(material, privateKey);
+        const encSalt = Buffer.from("Pair-Verify-Encrypt-Salt");
+        const encInfo = Buffer.from("Pair-Verify-Encrypt-Info");
+        const outputKey = hapCrypto.HKDF("sha512", encSalt, sharedSec, encInfo, 32).slice(0, 32);
+        connection.encryption = new eventedhttp_1.HAPEncryption(clientPublicKey, secretKey, publicKey, sharedSec, outputKey);
+        // compose the response data in TLV format
+        const message = tlv.encode(1 /* TLVValues.USERNAME */, usernameData, 10 /* TLVValues.PROOF */, serverProof);
+        const encrypted = hapCrypto.chacha20_poly1305_encryptAndSeal(outputKey, Buffer.from("PV-Msg02"), null, message);
+        response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+        response.end(tlv.encode(6 /* TLVValues.SEQUENCE_NUM */, 2 /* PairingStates.M2 */, 5 /* TLVValues.ENCRYPTED_DATA */, Buffer.concat([encrypted.ciphertext, encrypted.authTag]), 3 /* TLVValues.PUBLIC_KEY */, publicKey));
+        connection._pairVerifyState = 2 /* PairingStates.M2 */;
+    }
+    handlePairVerifyM3(connection, request, response, objects) {
+        debug("[%s] Pair verify step 2/2", this.accessoryInfo.username);
+        const encryptedData = objects[5 /* TLVValues.ENCRYPTED_DATA */];
+        const messageData = Buffer.alloc(encryptedData.length - 16);
+        const authTagData = Buffer.alloc(16);
+        encryptedData.copy(messageData, 0, 0, encryptedData.length - 16);
+        encryptedData.copy(authTagData, 0, encryptedData.length - 16, encryptedData.length);
+        // instance of HAPEncryption (created in handlePairVerifyStepOne)
+        const enc = connection.encryption;
+        let plaintext;
+        try {
+            plaintext = hapCrypto.chacha20_poly1305_decryptAndVerify(enc.hkdfPairEncryptionKey, Buffer.from("PV-Msg03"), null, messageData, authTagData);
+        }
+        catch (error) {
+            debug("[%s] M3: Failed to decrypt and/or verify", this.accessoryInfo.username);
+            response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+            response.end(tlv.encode(6 /* TLVValues.STATE */, 4 /* PairingStates.M4 */, 7 /* TLVValues.ERROR_CODE */, 2 /* TLVErrorCode.AUTHENTICATION */));
+            connection._pairVerifyState = undefined;
+            return;
+        }
+        const decoded = tlv.decode(plaintext);
+        const clientUsername = decoded[1 /* TLVValues.USERNAME */];
+        const proof = decoded[10 /* TLVValues.PROOF */];
+        const material = Buffer.concat([enc.clientPublicKey, clientUsername, enc.publicKey]);
+        // since we're paired, we should have the public key stored for this client
+        const clientPublicKey = this.accessoryInfo.getClientPublicKey(clientUsername.toString());
+        // if we're not actually paired, then there's nothing to verify - this client thinks it's paired with us, but we
+        // disagree. Respond with invalid request (seems to match HomeKit Accessory Simulator behavior)
+        if (!clientPublicKey) {
+            debug("[%s] Client %s attempting to verify, but we are not paired; rejecting client", this.accessoryInfo.username, clientUsername);
+            response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+            response.end(tlv.encode(6 /* TLVValues.STATE */, 4 /* PairingStates.M4 */, 7 /* TLVValues.ERROR_CODE */, 2 /* TLVErrorCode.AUTHENTICATION */));
+            connection._pairVerifyState = undefined;
+            return;
+        }
+        if (!tweetnacl_1.default.sign.detached.verify(material, proof, clientPublicKey)) {
+            debug("[%s] Client %s provided an invalid signature", this.accessoryInfo.username, clientUsername);
+            response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+            response.end(tlv.encode(6 /* TLVValues.STATE */, 4 /* PairingStates.M4 */, 7 /* TLVValues.ERROR_CODE */, 2 /* TLVErrorCode.AUTHENTICATION */));
+            connection._pairVerifyState = undefined;
+            return;
+        }
+        debug("[%s] Client %s verification complete", this.accessoryInfo.username, clientUsername);
+        response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+        response.end(tlv.encode(6 /* TLVValues.SEQUENCE_NUM */, 4 /* PairingStates.M4 */));
+        // now that the client has been verified, we must "upgrade" our pseudo-HTTP connection to include
+        // TCP-level encryption. We'll do this by adding some more encryption vars to the session, and using them
+        // in future calls to onEncrypt, onDecrypt.
+        const encSalt = Buffer.from("Control-Salt");
+        const infoRead = Buffer.from("Control-Read-Encryption-Key");
+        const infoWrite = Buffer.from("Control-Write-Encryption-Key");
+        enc.accessoryToControllerKey = hapCrypto.HKDF("sha512", encSalt, enc.sharedSecret, infoRead, 32);
+        enc.controllerToAccessoryKey = hapCrypto.HKDF("sha512", encSalt, enc.sharedSecret, infoWrite, 32);
+        // Our connection is now completely setup. We now want to subscribe this connection to special
+        connection.connectionAuthenticated(clientUsername.toString());
+        connection._pairVerifyState = undefined;
+    }
+    handlePairings(connection, url, request, data, response) {
+        // Only accept /pairing request if there is a secure session
+        if (!this.allowInsecureRequest && !connection.isAuthenticated()) {
+            response.writeHead(470 /* HAPPairingHTTPCode.CONNECTION_AUTHORIZATION_REQUIRED */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+            response.end(JSON.stringify({ status: -70401 /* HAPStatus.INSUFFICIENT_PRIVILEGES */ }));
+            return;
+        }
+        const objects = tlv.decode(data);
+        const method = objects[0 /* TLVValues.METHOD */][0]; // value is single byte with request type
+        const state = objects[6 /* TLVValues.STATE */][0];
+        if (state !== 1 /* PairingStates.M1 */) {
+            return;
+        }
+        if (method === 3 /* PairMethods.ADD_PAIRING */) {
+            const identifier = objects[1 /* TLVValues.IDENTIFIER */].toString();
+            const publicKey = objects[3 /* TLVValues.PUBLIC_KEY */];
+            const permissions = objects[11 /* TLVValues.PERMISSIONS */][0];
+            this.emit("add-pairing" /* HAPServerEventTypes.ADD_PAIRING */, connection, identifier, publicKey, permissions, (0, once_1.once)((error) => {
+                if (error > 0) {
+                    debug("[%s] Pairings: failed ADD_PAIRING with code %d", this.accessoryInfo.username, error);
+                    response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+                    response.end(tlv.encode(6 /* TLVValues.STATE */, 2 /* PairingStates.M2 */, 7 /* TLVValues.ERROR_CODE */, error));
+                    return;
+                }
+                response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+                response.end(tlv.encode(6 /* TLVValues.STATE */, 2 /* PairingStates.M2 */));
+                debug("[%s] Pairings: successfully executed ADD_PAIRING", this.accessoryInfo.username);
+            }));
+        }
+        else if (method === 4 /* PairMethods.REMOVE_PAIRING */) {
+            const identifier = objects[1 /* TLVValues.IDENTIFIER */].toString();
+            this.emit("remove-pairing" /* HAPServerEventTypes.REMOVE_PAIRING */, connection, identifier, (0, once_1.once)((error) => {
+                if (error > 0) {
+                    debug("[%s] Pairings: failed REMOVE_PAIRING with code %d", this.accessoryInfo.username, error);
+                    response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+                    response.end(tlv.encode(6 /* TLVValues.STATE */, 2 /* PairingStates.M2 */, 7 /* TLVValues.ERROR_CODE */, error));
+                    return;
+                }
+                response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+                response.end(tlv.encode(6 /* TLVValues.STATE */, 2 /* PairingStates.M2 */));
+                debug("[%s] Pairings: successfully executed REMOVE_PAIRING", this.accessoryInfo.username);
+            }));
+        }
+        else if (method === 5 /* PairMethods.LIST_PAIRINGS */) {
+            this.emit("list-pairings" /* HAPServerEventTypes.LIST_PAIRINGS */, connection, (0, once_1.once)((error, data) => {
+                if (error > 0) {
+                    debug("[%s] Pairings: failed LIST_PAIRINGS with code %d", this.accessoryInfo.username, error);
+                    response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" });
+                    response.end(tlv.encode(6 /* TLVValues.STATE */, 2 /* PairingStates.M2 */, 7 /* TLVValues.ERROR_CODE */, error));
+                    return;
+                }
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const tlvList = [];
+                data.forEach((value, index) => {
+                    if (index > 0) {
+                        tlvList.push(255 /* TLVValues.SEPARATOR */, Buffer.alloc(0));
+                    }
+                    tlvList.push(1 /* TLVValues.IDENTIFIER */, value.username, 3 /* TLVValues.PUBLIC_KEY */, value.publicKey, 11 /* TLVValues.PERMISSIONS */, value.permission);
+                });
+                const list = tlv.encode(6 /* TLVValues.STATE */, 2 /* PairingStates.M2 */, ...tlvList);
+                response.writeHead(200 /* HAPPairingHTTPCode.OK */, { "Content-Type": "application/pairing+tlv8" /* HAPMimeTypes.PAIRING_TLV8 */ });
+                response.end(list);
+                debug("[%s] Pairings: successfully executed LIST_PAIRINGS", this.accessoryInfo.username);
+            }));
+        }
+    }
+    handleAccessories(connection, url, request, data, response) {
+        if (!this.allowInsecureRequest && !connection.isAuthenticated()) {
+            response.writeHead(470 /* HAPPairingHTTPCode.CONNECTION_AUTHORIZATION_REQUIRED */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+            response.end(JSON.stringify({ status: -70401 /* HAPStatus.INSUFFICIENT_PRIVILEGES */ }));
+            return;
+        }
+        // call out to listeners to retrieve the latest accessories JSON
+        this.emit("accessories" /* HAPServerEventTypes.ACCESSORIES */, connection, (0, once_1.once)((error, result) => {
+            if (error) {
+                response.writeHead(error.httpCode, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+                response.end(JSON.stringify({ status: error.status }));
+            }
+            else {
+                response.writeHead(200 /* HAPHTTPCode.OK */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+                response.end(JSON.stringify(result));
+            }
+        }));
+    }
+    handleCharacteristics(connection, url, request, data, response) {
+        if (!this.allowInsecureRequest && !connection.isAuthenticated()) {
+            response.writeHead(470 /* HAPPairingHTTPCode.CONNECTION_AUTHORIZATION_REQUIRED */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+            response.end(JSON.stringify({ status: -70401 /* HAPStatus.INSUFFICIENT_PRIVILEGES */ }));
+            return;
+        }
+        if (request.method === "GET") {
+            const searchParams = url.searchParams;
+            const idParam = searchParams.get("id");
+            if (!idParam) {
+                response.writeHead(400 /* HAPHTTPCode.BAD_REQUEST */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+                response.end(JSON.stringify({ status: -70410 /* HAPStatus.INVALID_VALUE_IN_REQUEST */ }));
+                return;
+            }
+            const ids = [];
+            for (const entry of idParam.split(",")) { // ["1.9","2.14"]
+                const split = entry.split("."); // ["1","9"]
+                ids.push({
+                    aid: parseInt(split[0], 10), // accessory id
+                    iid: parseInt(split[1], 10), // (characteristic) instance id
+                });
+            }
+            const readRequest = {
+                ids: ids,
+                includeMeta: (0, internal_types_1.consideredTrue)(searchParams.get("meta")),
+                includePerms: (0, internal_types_1.consideredTrue)(searchParams.get("perms")),
+                includeType: (0, internal_types_1.consideredTrue)(searchParams.get("type")),
+                includeEvent: (0, internal_types_1.consideredTrue)(searchParams.get("ev")),
+            };
+            this.emit("get-characteristics" /* HAPServerEventTypes.GET_CHARACTERISTICS */, connection, readRequest, (0, once_1.once)((error, readResponse) => {
+                if (error) {
+                    response.writeHead(error.httpCode, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+                    response.end(JSON.stringify({ status: error.status }));
+                    return;
+                }
+                const characteristics = readResponse.characteristics;
+                let errorOccurred = false; // determine if we send a 207 Multi-Status
+                for (const data of characteristics) {
+                    if (data.status) {
+                        errorOccurred = true;
+                        break;
+                    }
+                }
+                if (errorOccurred) { // on a 207 Multi-Status EVERY characteristic MUST include a status property
+                    for (const data of characteristics) {
+                        if (!data.status) { // a status is undefined if the request was successful
+                            data.status = 0 /* HAPStatus.SUCCESS */; // a value of zero indicates success
+                        }
+                    }
+                }
+                // 207 "multi-status" is returned when an error occurs reading a characteristic. otherwise 200 is returned
+                response.writeHead(errorOccurred ? 207 /* HAPHTTPCode.MULTI_STATUS */ : 200 /* HAPHTTPCode.OK */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+                response.end(JSON.stringify({ characteristics: characteristics }));
+            }));
+        }
+        else if (request.method === "PUT") {
+            if (!connection.isAuthenticated()) {
+                if (!request.headers || (request.headers && request.headers.authorization !== this.accessoryInfo.pincode)) {
+                    response.writeHead(470 /* HAPPairingHTTPCode.CONNECTION_AUTHORIZATION_REQUIRED */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+                    response.end(JSON.stringify({ status: -70401 /* HAPStatus.INSUFFICIENT_PRIVILEGES */ }));
+                    return;
+                }
+            }
+            if (data.length === 0) {
+                response.writeHead(400 /* HAPHTTPCode.BAD_REQUEST */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+                response.end(JSON.stringify({ status: -70410 /* HAPStatus.INVALID_VALUE_IN_REQUEST */ }));
+                return;
+            }
+            const writeRequest = JSON.parse(data.toString("utf8"));
+            this.emit("set-characteristics" /* HAPServerEventTypes.SET_CHARACTERISTICS */, connection, writeRequest, (0, once_1.once)((error, writeResponse) => {
+                if (error) {
+                    response.writeHead(error.httpCode, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+                    response.end(JSON.stringify({ status: error.status }));
+                    return;
+                }
+                const characteristics = writeResponse.characteristics;
+                let multiStatus = false;
+                for (const data of characteristics) {
+                    if (data.status || data.value !== undefined) {
+                        // also send multiStatus on write response requests
+                        multiStatus = true;
+                        break;
+                    }
+                }
+                if (multiStatus) {
+                    // 207 is "multi-status" since HomeKit may be setting multiple things and any one can fail independently
+                    response.writeHead(207 /* HAPHTTPCode.MULTI_STATUS */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+                    response.end(JSON.stringify({ characteristics: characteristics }));
+                }
+                else {
+                    // if everything went fine send 204 no content response
+                    response.writeHead(204 /* HAPHTTPCode.NO_CONTENT */);
+                    response.end();
+                }
+            }));
+        }
+        else {
+            response.writeHead(400 /* HAPHTTPCode.BAD_REQUEST */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ }); // method not allowed
+            response.end(JSON.stringify({ status: -70410 /* HAPStatus.INVALID_VALUE_IN_REQUEST */ }));
+        }
+    }
+    handlePrepareWrite(connection, url, request, data, response) {
+        if (!this.allowInsecureRequest && !connection.isAuthenticated()) {
+            response.writeHead(470 /* HAPPairingHTTPCode.CONNECTION_AUTHORIZATION_REQUIRED */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+            response.end(JSON.stringify({ status: -70401 /* HAPStatus.INSUFFICIENT_PRIVILEGES */ }));
+            return;
+        }
+        if (request.method === "PUT") {
+            if (data.length === 0) {
+                response.writeHead(400 /* HAPHTTPCode.BAD_REQUEST */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+                response.end(JSON.stringify({ status: -70410 /* HAPStatus.INVALID_VALUE_IN_REQUEST */ }));
+                return;
+            }
+            const prepareRequest = JSON.parse(data.toString());
+            if (prepareRequest.pid && prepareRequest.ttl) {
+                debug("[%s] Received prepare write request with pid %d and ttl %d", this.accessoryInfo.username, prepareRequest.pid, prepareRequest.ttl);
+                if (connection.timedWriteTimeout) { // clear any currently existing timeouts
+                    clearTimeout(connection.timedWriteTimeout);
+                }
+                connection.timedWritePid = prepareRequest.pid;
+                connection.timedWriteTimeout = setTimeout(() => {
+                    debug("[%s] Timed write request timed out for pid %d", this.accessoryInfo.username, prepareRequest.pid);
+                    connection.timedWritePid = undefined;
+                    connection.timedWriteTimeout = undefined;
+                }, prepareRequest.ttl);
+                response.writeHead(200 /* HAPHTTPCode.OK */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+                response.end(JSON.stringify({ status: 0 /* HAPStatus.SUCCESS */ }));
+                return;
+            }
+            else {
+                response.writeHead(400 /* HAPHTTPCode.BAD_REQUEST */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+                response.end(JSON.stringify({ status: -70410 /* HAPStatus.INVALID_VALUE_IN_REQUEST */ }));
+            }
+        }
+        else {
+            response.writeHead(400 /* HAPHTTPCode.BAD_REQUEST */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+            response.end(JSON.stringify({ status: -70410 /* HAPStatus.INVALID_VALUE_IN_REQUEST */ }));
+        }
+    }
+    handleResource(connection, url, request, data, response) {
+        if (!connection.isAuthenticated()) {
+            if (!(this.allowInsecureRequest && request.headers && request.headers.authorization === this.accessoryInfo.pincode)) {
+                response.writeHead(470 /* HAPPairingHTTPCode.CONNECTION_AUTHORIZATION_REQUIRED */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+                response.end(JSON.stringify({ status: -70401 /* HAPStatus.INSUFFICIENT_PRIVILEGES */ }));
+                return;
+            }
+        }
+        if (request.method === "POST") {
+            if (data.length === 0) {
+                response.writeHead(400 /* HAPHTTPCode.BAD_REQUEST */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+                response.end(JSON.stringify({ status: -70410 /* HAPStatus.INVALID_VALUE_IN_REQUEST */ }));
+                return;
+            }
+            const resourceRequest = JSON.parse(data.toString());
+            // call out to listeners to retrieve the resource, snapshot only right now
+            this.emit("request-resource" /* HAPServerEventTypes.REQUEST_RESOURCE */, resourceRequest, (0, once_1.once)((error, resource) => {
+                if (error) {
+                    response.writeHead(error.httpCode, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ });
+                    response.end(JSON.stringify({ status: error.status }));
+                }
+                else {
+                    response.writeHead(200 /* HAPHTTPCode.OK */, { "Content-Type": "image/jpeg" /* HAPMimeTypes.IMAGE_JPEG */ });
+                    response.end(resource);
+                }
+            }));
+        }
+        else {
+            response.writeHead(400 /* HAPHTTPCode.BAD_REQUEST */, { "Content-Type": "application/hap+json" /* HAPMimeTypes.HAP_JSON */ }); // method not allowed
+            response.end(JSON.stringify({ status: -70410 /* HAPStatus.INVALID_VALUE_IN_REQUEST */ }));
+        }
+    }
+}
+exports.HAPServer = HAPServer;
+//# sourceMappingURL=HAPServer.js.map
 
 /***/ }),
 
@@ -66163,9 +71946,155 @@ exports.HAPConnection = HAPConnection;
 /*!*************************************************************!*\
   !*** ../node_modules/hap-nodejs/dist/lib/util/hapCrypto.js ***!
   \*************************************************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-// Empty file to avoid WebPack error messages
+"use strict";
+/* provided dependency */ var process = __webpack_require__(/*! process/browser */ "../node_modules/process/browser.js");
+/* provided dependency */ var Buffer = __webpack_require__(/*! buffer */ "../node_modules/buffer/index.js")["Buffer"];
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.generateCurve25519KeyPair = generateCurve25519KeyPair;
+exports.generateCurve25519SharedSecKey = generateCurve25519SharedSecKey;
+exports.HKDF = HKDF;
+exports.writeUInt64LE = writeUInt64LE;
+exports.chacha20_poly1305_decryptAndVerify = chacha20_poly1305_decryptAndVerify;
+exports.chacha20_poly1305_encryptAndSeal = chacha20_poly1305_encryptAndSeal;
+exports.layerEncrypt = layerEncrypt;
+exports.layerDecrypt = layerDecrypt;
+const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.mjs");
+const assert_1 = tslib_1.__importDefault(__webpack_require__(/*! assert */ "../node_modules/assert/build/assert.js"));
+const crypto_1 = tslib_1.__importDefault(__webpack_require__(/*! crypto */ "../node_modules/crypto-browserify/index.js"));
+const futoin_hkdf_1 = tslib_1.__importDefault(__webpack_require__(/*! futoin-hkdf */ "../node_modules/futoin-hkdf/hkdf.js"));
+const tweetnacl_1 = tslib_1.__importDefault(__webpack_require__(/*! tweetnacl */ "../node_modules/tweetnacl/nacl-fast.js"));
+if (!crypto_1.default.getCiphers().includes("chacha20-poly1305")) {
+    assert_1.default.fail("The cipher 'chacha20-poly1305' is not supported with your current running nodejs version v" + process.version + ". " +
+        "At least a nodejs version of v10.17.0 (excluding v11.0 and v11.1) is required!");
+}
+/**
+ * @group Cryptography
+ */
+function generateCurve25519KeyPair() {
+    return tweetnacl_1.default.box.keyPair();
+}
+/**
+ * @group Cryptography
+ */
+function generateCurve25519SharedSecKey(priKey, pubKey) {
+    return tweetnacl_1.default.scalarMult(priKey, pubKey);
+}
+/**
+ * @group Cryptography
+ */
+function HKDF(hashAlg, salt, ikm, info, size) {
+    return (0, futoin_hkdf_1.default)(ikm, size, { hash: hashAlg, salt: salt, info: info });
+}
+const MAX_UINT32 = 0x00000000FFFFFFFF;
+const MAX_INT53 = 0x001FFFFFFFFFFFFF;
+function uintHighLow(number) {
+    (0, assert_1.default)(number > -1 && number <= MAX_INT53, "number out of range");
+    (0, assert_1.default)(Math.floor(number) === number, "number must be an integer");
+    let high = 0;
+    const signbit = number & 0xFFFFFFFF;
+    const low = signbit < 0 ? (number & 0x7FFFFFFF) + 0x80000000 : signbit;
+    if (number > MAX_UINT32) {
+        high = (number - low) / (MAX_UINT32 + 1);
+    }
+    return [high, low];
+}
+/**
+ * @group Utils
+ */
+function writeUInt64LE(number, buffer, offset = 0) {
+    const hl = uintHighLow(number);
+    buffer.writeUInt32LE(hl[1], offset);
+    buffer.writeUInt32LE(hl[0], offset + 4);
+}
+//Security Layer Enc/Dec
+/**
+ * @group Cryptography
+ */
+function chacha20_poly1305_decryptAndVerify(key, nonce, aad, ciphertext, authTag) {
+    if (nonce.length < 12) { // openssl 3.x.x requires 98 bits nonce length
+        nonce = Buffer.concat([
+            Buffer.alloc(12 - nonce.length, 0),
+            nonce,
+        ]);
+    }
+    const decipher = crypto_1.default.createDecipheriv("chacha20-poly1305", key, nonce, { authTagLength: 16 });
+    if (aad) {
+        decipher.setAAD(aad, { plaintextLength: ciphertext.length });
+    }
+    decipher.setAuthTag(authTag);
+    const plaintext = decipher.update(ciphertext);
+    decipher.final(); // final call verifies integrity using the auth tag. Throws error if something was manipulated!
+    return plaintext;
+}
+/**
+ * @group Cryptography
+ */
+function chacha20_poly1305_encryptAndSeal(key, nonce, aad, plaintext) {
+    if (nonce.length < 12) { // openssl 3.x.x requires 98 bits nonce length
+        nonce = Buffer.concat([
+            Buffer.alloc(12 - nonce.length, 0),
+            nonce,
+        ]);
+    }
+    const cipher = crypto_1.default.createCipheriv("chacha20-poly1305", key, nonce, { authTagLength: 16 });
+    if (aad) {
+        cipher.setAAD(aad, { plaintextLength: plaintext.length });
+    }
+    const ciphertext = cipher.update(plaintext);
+    cipher.final(); // final call creates the auth tag
+    const authTag = cipher.getAuthTag();
+    return {
+        ciphertext: ciphertext,
+        authTag: authTag,
+    };
+}
+/**
+ * @group Cryptography
+ */
+function layerEncrypt(data, encryption) {
+    let result = Buffer.alloc(0);
+    const total = data.length;
+    for (let offset = 0; offset < total;) {
+        const length = Math.min(total - offset, 0x400);
+        const leLength = Buffer.alloc(2);
+        leLength.writeUInt16LE(length, 0);
+        const nonce = Buffer.alloc(8);
+        writeUInt64LE(encryption.accessoryToControllerCount++, nonce, 0);
+        const encrypted = chacha20_poly1305_encryptAndSeal(encryption.accessoryToControllerKey, nonce, leLength, data.slice(offset, offset + length));
+        offset += length;
+        result = Buffer.concat([result, leLength, encrypted.ciphertext, encrypted.authTag]);
+    }
+    return result;
+}
+/**
+ * @group Cryptography
+ */
+function layerDecrypt(packet, encryption) {
+    if (encryption.incompleteFrame) {
+        packet = Buffer.concat([encryption.incompleteFrame, packet]);
+        encryption.incompleteFrame = undefined;
+    }
+    let result = Buffer.alloc(0);
+    const total = packet.length;
+    for (let offset = 0; offset < total;) {
+        const realDataLength = packet.slice(offset, offset + 2).readUInt16LE(0);
+        const availableDataLength = total - offset - 2 - 16;
+        if (realDataLength > availableDataLength) { // Fragmented packet
+            encryption.incompleteFrame = packet.slice(offset);
+            break;
+        }
+        const nonce = Buffer.alloc(8);
+        writeUInt64LE(encryption.controllerToAccessoryCount++, nonce, 0);
+        const plaintext = chacha20_poly1305_decryptAndVerify(encryption.controllerToAccessoryKey, nonce, packet.slice(offset, offset + 2), packet.slice(offset + 2, offset + 2 + realDataLength), packet.slice(offset + 2 + realDataLength, offset + 2 + realDataLength + 16));
+        result = Buffer.concat([result, plaintext]);
+        offset += (18 + realDataLength);
+    }
+    return result;
+}
+//# sourceMappingURL=hapCrypto.js.map
 
 /***/ }),
 
@@ -66953,6 +72882,17 @@ var ResourceRequestType;
 
 /***/ }),
 
+/***/ "../node_modules/hap-nodejs/package.json":
+/*!***********************************************!*\
+  !*** ../node_modules/hap-nodejs/package.json ***!
+  \***********************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = /*#__PURE__*/JSON.parse('{"name":"hap-nodejs","version":"1.1.0","description":"HAP-NodeJS is a Node.js implementation of HomeKit Accessory Server.","main":"dist/index.js","types":"dist/index.d.ts","maintainers":["Andreas Bauer <mail@anderl-bauer.de>"],"author":"Khaos Tian <khaos.tian@gmail.com> (https://tz.is/)","homepage":"https://github.com/homebridge/HAP-NodeJS","license":"Apache-2.0","scripts":{"check":"npm install && npm outdated","clean":"rimraf dist && rimraf coverage","lint":"eslint \'src/**/*.{js,ts,json}\'","build":"rimraf dist && tsc && node .github/node-persist-ignore.js","prepublishOnly":"npm run build","postpublish":"npm run clean","test":"jest","test-coverage":"jest --coverage","start":"node dist/BridgedCore.js","docs":"typedoc","lint-docs":"typedoc --emit none --treatWarningsAsErrors"},"keywords":["hap-nodejs","hap","homekit","homekit-accessory-protocol","homekit-server","homekit-protocol","homekit-device","homekit-accessory","hap-server","homekit-support","siri"],"repository":{"type":"git","url":"git+https://github.com/homebridge/HAP-NodeJS.git"},"bugs":{"url":"https://github.com/homebridge/HAP-NodeJS/issues"},"engines":{"node":"^18 || ^20"},"files":["README.md","LICENSE","dist","@types"],"dependencies":{"@homebridge/ciao":"^1.3.0","@homebridge/dbus-native":"^0.6.0","bonjour-hap":"^3.8.0","debug":"^4.3.5","fast-srp-hap":"^2.0.4","futoin-hkdf":"^1.5.3","node-persist":"^0.0.12","source-map-support":"^0.5.21","tslib":"^2.6.3","tweetnacl":"^1.0.3"},"devDependencies":{"@types/debug":"^4.1.12","@types/escape-html":"^1.0.4","@types/jest":"^29.5.12","@types/node":"^20.14.11","@types/plist":"^3.0.5","@typescript-eslint/eslint-plugin":"^7.16.1","@typescript-eslint/parser":"^7.16.1","axios":"^1.7.2","commander":"^12.1.0","escape-html":"^1.0.3","eslint":"^8.57.0","http-parser-js":"^0.5.8","jest":"^29.7.0","rimraf":"^6.0.1","semver":"^7.6.3","simple-plist":"^1.4.0-0","ts-jest":"^29.2.3","ts-node":"^10.9.2","typedoc":"^0.26.5","typescript":"^5.5.3"}}');
+
+/***/ }),
+
 /***/ "../node_modules/has-bigints/index.js":
 /*!********************************************!*\
   !*** ../node_modules/has-bigints/index.js ***!
@@ -66964,6 +72904,7 @@ var ResourceRequestType;
 
 var $BigInt = typeof BigInt !== 'undefined' && BigInt;
 
+/** @type {import('.')} */
 module.exports = function hasNativeBigInts() {
 	return typeof $BigInt === 'function'
 		&& typeof BigInt === 'function'
@@ -67007,32 +72948,6 @@ module.exports = hasPropertyDescriptors;
 
 /***/ }),
 
-/***/ "../node_modules/has-proto/index.js":
-/*!******************************************!*\
-  !*** ../node_modules/has-proto/index.js ***!
-  \******************************************/
-/***/ ((module) => {
-
-"use strict";
-
-
-var test = {
-	__proto__: null,
-	foo: {}
-};
-
-var $Object = Object;
-
-/** @type {import('.')} */
-module.exports = function hasProto() {
-	// @ts-expect-error: TS errors on an inherited property for some reason
-	return { __proto__: test }.foo === test.foo
-		&& !(test instanceof $Object);
-};
-
-
-/***/ }),
-
 /***/ "../node_modules/has-symbols/index.js":
 /*!********************************************!*\
   !*** ../node_modules/has-symbols/index.js ***!
@@ -67045,6 +72960,7 @@ module.exports = function hasProto() {
 var origSymbol = typeof Symbol !== 'undefined' && Symbol;
 var hasSymbolSham = __webpack_require__(/*! ./shams */ "../node_modules/has-symbols/shams.js");
 
+/** @type {import('.')} */
 module.exports = function hasNativeSymbols() {
 	if (typeof origSymbol !== 'function') { return false; }
 	if (typeof Symbol !== 'function') { return false; }
@@ -67066,11 +72982,13 @@ module.exports = function hasNativeSymbols() {
 "use strict";
 
 
+/** @type {import('./shams')} */
 /* eslint complexity: [2, 18], max-statements: [2, 33] */
 module.exports = function hasSymbols() {
 	if (typeof Symbol !== 'function' || typeof Object.getOwnPropertySymbols !== 'function') { return false; }
 	if (typeof Symbol.iterator === 'symbol') { return true; }
 
+	/** @type {{ [k in symbol]?: unknown }} */
 	var obj = {};
 	var sym = Symbol('test');
 	var symObj = Object(sym);
@@ -67089,7 +73007,7 @@ module.exports = function hasSymbols() {
 
 	var symVal = 42;
 	obj[sym] = symVal;
-	for (sym in obj) { return false; } // eslint-disable-line no-restricted-syntax, no-unreachable-loop
+	for (var _ in obj) { return false; } // eslint-disable-line no-restricted-syntax, no-unreachable-loop
 	if (typeof Object.keys === 'function' && Object.keys(obj).length !== 0) { return false; }
 
 	if (typeof Object.getOwnPropertyNames === 'function' && Object.getOwnPropertyNames(obj).length !== 0) { return false; }
@@ -67100,7 +73018,8 @@ module.exports = function hasSymbols() {
 	if (!Object.prototype.propertyIsEnumerable.call(obj, sym)) { return false; }
 
 	if (typeof Object.getOwnPropertyDescriptor === 'function') {
-		var descriptor = Object.getOwnPropertyDescriptor(obj, sym);
+		// eslint-disable-next-line no-extra-parens
+		var descriptor = /** @type {PropertyDescriptor} */ (Object.getOwnPropertyDescriptor(obj, sym));
 		if (descriptor.value !== symVal || descriptor.enumerable !== true) { return false; }
 	}
 
@@ -68858,11 +74777,16 @@ if (typeof Object.create === 'function') {
 "use strict";
 
 
+/** @typedef {`$${import('.').InternalSlot}`} SaltedInternalSlot */
+/** @typedef {{ [k in SaltedInternalSlot]?: unknown }} SlotsObject */
+
 var hasOwn = __webpack_require__(/*! hasown */ "../node_modules/hasown/index.js");
+/** @type {import('side-channel').Channel<object, SlotsObject>} */
 var channel = __webpack_require__(/*! side-channel */ "../node_modules/side-channel/index.js")();
 
 var $TypeError = __webpack_require__(/*! es-errors/type */ "../node_modules/es-errors/type.js");
 
+/** @type {import('.')} */
 var SLOT = {
 	assert: function (O, slot) {
 		if (!O || (typeof O !== 'object' && typeof O !== 'function')) {
@@ -68884,7 +74808,8 @@ var SLOT = {
 			throw new $TypeError('`slot` must be a string');
 		}
 		var slots = channel.get(O);
-		return slots && slots['$' + slot];
+		// eslint-disable-next-line no-extra-parens
+		return slots && slots[/** @type {SaltedInternalSlot} */ ('$' + slot)];
 	},
 	has: function (O, slot) {
 		if (!O || (typeof O !== 'object' && typeof O !== 'function')) {
@@ -68894,7 +74819,8 @@ var SLOT = {
 			throw new $TypeError('`slot` must be a string');
 		}
 		var slots = channel.get(O);
-		return !!slots && hasOwn(slots, '$' + slot);
+		// eslint-disable-next-line no-extra-parens
+		return !!slots && hasOwn(slots, /** @type {SaltedInternalSlot} */ ('$' + slot));
 	},
 	set: function (O, slot, V) {
 		if (!O || (typeof O !== 'object' && typeof O !== 'function')) {
@@ -68908,7 +74834,8 @@ var SLOT = {
 			slots = {};
 			channel.set(O, slots);
 		}
-		slots['$' + slot] = V;
+		// eslint-disable-next-line no-extra-parens
+		slots[/** @type {SaltedInternalSlot} */ ('$' + slot)] = V;
 	}
 };
 
@@ -68975,7 +74902,7 @@ module.exports = supportsStandardArguments ? isStandardArguments : isLegacyArgum
 
 
 var callBind = __webpack_require__(/*! call-bind */ "../node_modules/call-bind/index.js");
-var callBound = __webpack_require__(/*! call-bind/callBound */ "../node_modules/call-bind/callBound.js");
+var callBound = __webpack_require__(/*! call-bound */ "../node_modules/call-bound/index.js");
 var GetIntrinsic = __webpack_require__(/*! get-intrinsic */ "../node_modules/get-intrinsic/index.js");
 
 var $ArrayBuffer = GetIntrinsic('%ArrayBuffer%', true);
@@ -69011,6 +74938,7 @@ module.exports = $byteLength || $abSlice
 		? function isArrayBuffer(obj) {
 			return $toString(obj) === '[object ArrayBuffer]';
 		}
+		// @ts-expect-error
 		: function isArrayBuffer(obj) { // eslint-disable-line no-unused-vars
 			return false;
 		};
@@ -69031,6 +74959,7 @@ var hasBigInts = __webpack_require__(/*! has-bigints */ "../node_modules/has-big
 
 if (hasBigInts) {
 	var bigIntValueOf = BigInt.prototype.valueOf;
+	/** @type {(value: object) => value is BigInt} */
 	var tryBigInt = function tryBigIntObject(value) {
 		try {
 			bigIntValueOf.call(value);
@@ -69040,6 +74969,7 @@ if (hasBigInts) {
 		return false;
 	};
 
+	/** @type {import('.')} */
 	module.exports = function isBigInt(value) {
 		if (
 			value === null
@@ -69059,6 +74989,7 @@ if (hasBigInts) {
 		return tryBigInt(value);
 	};
 } else {
+	/** @type {import('.')} */
 	module.exports = function isBigInt(value) {
 		return  false && 0;
 	};
@@ -69076,10 +75007,11 @@ if (hasBigInts) {
 "use strict";
 
 
-var callBound = __webpack_require__(/*! call-bind/callBound */ "../node_modules/call-bind/callBound.js");
+var callBound = __webpack_require__(/*! call-bound */ "../node_modules/call-bound/index.js");
 var $boolToStr = callBound('Boolean.prototype.toString');
 var $toString = callBound('Object.prototype.toString');
 
+/** @type {import('.')} */
 var tryBooleanObject = function booleanBrandCheck(value) {
 	try {
 		$boolToStr(value);
@@ -69091,6 +75023,7 @@ var tryBooleanObject = function booleanBrandCheck(value) {
 var boolClass = '[object Boolean]';
 var hasToStringTag = __webpack_require__(/*! has-tostringtag/shams */ "../node_modules/has-tostringtag/shams.js")();
 
+/** @type {import('.')} */
 module.exports = function isBoolean(value) {
 	if (typeof value === 'boolean') {
 		return true;
@@ -69098,7 +75031,7 @@ module.exports = function isBoolean(value) {
 	if (value === null || typeof value !== 'object') {
 		return false;
 	}
-	return hasToStringTag && Symbol.toStringTag in value ? tryBooleanObject(value) : $toString(value) === boolClass;
+	return hasToStringTag ? tryBooleanObject(value) : $toString(value) === boolClass;
 };
 
 
@@ -69225,25 +75158,30 @@ module.exports = reflectApply
 "use strict";
 
 
-var getDay = Date.prototype.getDay;
+var callBound = __webpack_require__(/*! call-bound */ "../node_modules/call-bound/index.js");
+
+var getDay = callBound('Date.prototype.getDay');
+/** @type {import('.')} */
 var tryDateObject = function tryDateGetDayCall(value) {
 	try {
-		getDay.call(value);
+		getDay(value);
 		return true;
 	} catch (e) {
 		return false;
 	}
 };
 
-var toStr = Object.prototype.toString;
+/** @type {(value: unknown) => string} */
+var toStr = callBound('Object.prototype.toString');
 var dateClass = '[object Date]';
 var hasToStringTag = __webpack_require__(/*! has-tostringtag/shams */ "../node_modules/has-tostringtag/shams.js")();
 
+/** @type {import('.')} */
 module.exports = function isDateObject(value) {
 	if (typeof value !== 'object' || value === null) {
 		return false;
 	}
-	return hasToStringTag ? tryDateObject(value) : toStr.call(value) === dateClass;
+	return hasToStringTag ? tryDateObject(value) : toStr(value) === dateClass;
 };
 
 
@@ -69462,27 +75400,32 @@ module.exports = function shimNumberIsNaN() {
 "use strict";
 
 
-var numToStr = Number.prototype.toString;
+var callBound = __webpack_require__(/*! call-bound */ "../node_modules/call-bound/index.js");
+
+var $numToStr = callBound('Number.prototype.toString');
+
+/** @type {import('.')} */
 var tryNumberObject = function tryNumberObject(value) {
 	try {
-		numToStr.call(value);
+		$numToStr(value);
 		return true;
 	} catch (e) {
 		return false;
 	}
 };
-var toStr = Object.prototype.toString;
+var $toString = callBound('Object.prototype.toString');
 var numClass = '[object Number]';
 var hasToStringTag = __webpack_require__(/*! has-tostringtag/shams */ "../node_modules/has-tostringtag/shams.js")();
 
+/** @type {import('.')} */
 module.exports = function isNumberObject(value) {
 	if (typeof value === 'number') {
 		return true;
 	}
-	if (typeof value !== 'object') {
+	if (!value || typeof value !== 'object') {
 		return false;
 	}
-	return hasToStringTag ? tryNumberObject(value) : toStr.call(value) === numClass;
+	return hasToStringTag ? tryNumberObject(value) : $toString(value) === numClass;
 };
 
 
@@ -69497,22 +75440,25 @@ module.exports = function isNumberObject(value) {
 "use strict";
 
 
-var callBound = __webpack_require__(/*! call-bind/callBound */ "../node_modules/call-bind/callBound.js");
+var callBound = __webpack_require__(/*! call-bound */ "../node_modules/call-bound/index.js");
 var hasToStringTag = __webpack_require__(/*! has-tostringtag/shams */ "../node_modules/has-tostringtag/shams.js")();
-var has;
-var $exec;
-var isRegexMarker;
-var badStringifier;
+var hasOwn = __webpack_require__(/*! hasown */ "../node_modules/hasown/index.js");
+var gOPD = __webpack_require__(/*! gopd */ "../node_modules/gopd/index.js");
+
+/** @type {import('.')} */
+var fn;
 
 if (hasToStringTag) {
-	has = callBound('Object.prototype.hasOwnProperty');
-	$exec = callBound('RegExp.prototype.exec');
-	isRegexMarker = {};
+	/** @type {(receiver: ThisParameterType<typeof RegExp.prototype.exec>, ...args: Parameters<typeof RegExp.prototype.exec>) => ReturnType<typeof RegExp.prototype.exec>} */
+	var $exec = callBound('RegExp.prototype.exec');
+	/** @type {object} */
+	var isRegexMarker = {};
 
 	var throwRegexMarker = function () {
 		throw isRegexMarker;
 	};
-	badStringifier = {
+	/** @type {{ toString(): never, valueOf(): never, [Symbol.toPrimitive]?(): never }} */
+	var badStringifier = {
 		toString: throwRegexMarker,
 		valueOf: throwRegexMarker
 	};
@@ -69520,32 +75466,37 @@ if (hasToStringTag) {
 	if (typeof Symbol.toPrimitive === 'symbol') {
 		badStringifier[Symbol.toPrimitive] = throwRegexMarker;
 	}
-}
 
-var $toString = callBound('Object.prototype.toString');
-var gOPD = Object.getOwnPropertyDescriptor;
-var regexClass = '[object RegExp]';
-
-module.exports = hasToStringTag
+	/** @type {import('.')} */
+	// @ts-expect-error TS can't figure out that the $exec call always throws
 	// eslint-disable-next-line consistent-return
-	? function isRegex(value) {
+	fn = function isRegex(value) {
 		if (!value || typeof value !== 'object') {
 			return false;
 		}
 
-		var descriptor = gOPD(value, 'lastIndex');
-		var hasLastIndexDataProperty = descriptor && has(descriptor, 'value');
+		// eslint-disable-next-line no-extra-parens
+		var descriptor = /** @type {NonNullable<typeof gOPD>} */ (gOPD)(/** @type {{ lastIndex?: unknown }} */ (value), 'lastIndex');
+		var hasLastIndexDataProperty = descriptor && hasOwn(descriptor, 'value');
 		if (!hasLastIndexDataProperty) {
 			return false;
 		}
 
 		try {
-			$exec(value, badStringifier);
+			// eslint-disable-next-line no-extra-parens
+			$exec(value, /** @type {string} */ (/** @type {unknown} */ (badStringifier)));
 		} catch (e) {
 			return e === isRegexMarker;
 		}
-	}
-	: function isRegex(value) {
+	};
+} else {
+	/** @type {(receiver: ThisParameterType<typeof Object.prototype.toString>, ...args: Parameters<typeof Object.prototype.toString>) => ReturnType<typeof Object.prototype.toString>} */
+	var $toString = callBound('Object.prototype.toString');
+	/** @const @type {'[object RegExp]'} */
+	var regexClass = '[object RegExp]';
+
+	/** @type {import('.')} */
+	fn = function isRegex(value) {
 		// In older browsers, typeof regex incorrectly returns 'function'
 		if (!value || (typeof value !== 'object' && typeof value !== 'function')) {
 			return false;
@@ -69553,6 +75504,9 @@ module.exports = hasToStringTag
 
 		return $toString(value) === regexClass;
 	};
+}
+
+module.exports = fn;
 
 
 /***/ }),
@@ -69623,8 +75577,9 @@ module.exports = exported || function isSet(x) {
 "use strict";
 
 
-var callBound = __webpack_require__(/*! call-bind/callBound */ "../node_modules/call-bind/callBound.js");
+var callBound = __webpack_require__(/*! call-bound */ "../node_modules/call-bound/index.js");
 
+/** @type {undefined | ((thisArg: SharedArrayBuffer) => number)} */
 var $byteLength = callBound('SharedArrayBuffer.prototype.byteLength', true);
 
 /** @type {import('.')} */
@@ -69634,13 +75589,14 @@ module.exports = $byteLength
 			return false;
 		}
 		try {
+			// @ts-expect-error TS can't figure out this closed-over variable is non-nullable, and it's fine that `obj` might not be a SAB
 			$byteLength(obj);
 			return true;
 		} catch (e) {
 			return false;
 		}
 	}
-	: function isSharedArrayBuffer(obj) { // eslint-disable-line no-unused-vars
+	: function isSharedArrayBuffer(_obj) { // eslint-disable-line no-unused-vars
 		return false;
 	};
 
@@ -69656,27 +75612,34 @@ module.exports = $byteLength
 "use strict";
 
 
-var strValue = String.prototype.valueOf;
+var callBound = __webpack_require__(/*! call-bound */ "../node_modules/call-bound/index.js");
+
+/** @type {(receiver: ThisParameterType<typeof String.prototype.valueOf>, ...args: Parameters<typeof String.prototype.valueOf>) => ReturnType<typeof String.prototype.valueOf>} */
+var $strValueOf = callBound('String.prototype.valueOf');
+
+/** @type {import('.')} */
 var tryStringObject = function tryStringObject(value) {
 	try {
-		strValue.call(value);
+		$strValueOf(value);
 		return true;
 	} catch (e) {
 		return false;
 	}
 };
-var toStr = Object.prototype.toString;
+/** @type {(receiver: ThisParameterType<typeof Object.prototype.toString>, ...args: Parameters<typeof Object.prototype.toString>) => ReturnType<typeof Object.prototype.toString>} */
+var $toString = callBound('Object.prototype.toString');
 var strClass = '[object String]';
 var hasToStringTag = __webpack_require__(/*! has-tostringtag/shams */ "../node_modules/has-tostringtag/shams.js")();
 
+/** @type {import('.')} */
 module.exports = function isString(value) {
 	if (typeof value === 'string') {
 		return true;
 	}
-	if (typeof value !== 'object') {
+	if (!value || typeof value !== 'object') {
 		return false;
 	}
-	return hasToStringTag ? tryStringObject(value) : toStr.call(value) === strClass;
+	return hasToStringTag ? tryStringObject(value) : $toString(value) === strClass;
 };
 
 
@@ -69691,24 +75654,29 @@ module.exports = function isString(value) {
 "use strict";
 
 
-var toStr = Object.prototype.toString;
+var callBound = __webpack_require__(/*! call-bound */ "../node_modules/call-bound/index.js");
+var $toString = callBound('Object.prototype.toString');
 var hasSymbols = __webpack_require__(/*! has-symbols */ "../node_modules/has-symbols/index.js")();
+var safeRegexTest = __webpack_require__(/*! safe-regex-test */ "../node_modules/safe-regex-test/index.js");
 
 if (hasSymbols) {
-	var symToStr = Symbol.prototype.toString;
-	var symStringRegex = /^Symbol\(.*\)$/;
+	var $symToStr = callBound('Symbol.prototype.toString');
+	var isSymString = safeRegexTest(/^Symbol\(.*\)$/);
+
+	/** @type {(value: object) => value is Symbol} */
 	var isSymbolObject = function isRealSymbolObject(value) {
 		if (typeof value.valueOf() !== 'symbol') {
 			return false;
 		}
-		return symStringRegex.test(symToStr.call(value));
+		return isSymString($symToStr(value));
 	};
 
+	/** @type {import('.')} */
 	module.exports = function isSymbol(value) {
 		if (typeof value === 'symbol') {
 			return true;
 		}
-		if (toStr.call(value) !== '[object Symbol]') {
+		if (!value || typeof value !== 'object' || $toString(value) !== '[object Symbol]') {
 			return false;
 		}
 		try {
@@ -69718,7 +75686,7 @@ if (hasSymbols) {
 		}
 	};
 } else {
-
+	/** @type {import('.')} */
 	module.exports = function isSymbol(value) {
 		// this environment does not support Symbols.
 		return  false && 0;
@@ -69814,13 +75782,15 @@ module.exports = exported || function isWeakMap(x) {
 
 
 var GetIntrinsic = __webpack_require__(/*! get-intrinsic */ "../node_modules/get-intrinsic/index.js");
-var callBound = __webpack_require__(/*! call-bind/callBound */ "../node_modules/call-bind/callBound.js");
+var callBound = __webpack_require__(/*! call-bound */ "../node_modules/call-bound/index.js");
 
 var $WeakSet = GetIntrinsic('%WeakSet%', true);
 
+/** @type {undefined | (<V>(thisArg: Set<V>, value: V) => boolean)} */
 var $setHas = callBound('WeakSet.prototype.has', true);
 
 if ($setHas) {
+	/** @type {undefined | (<K extends object, V>(thisArg: WeakMap<K, V>, key: K) => boolean)} */
 	var $mapHas = callBound('WeakMap.prototype.has', true);
 
 	/** @type {import('.')} */
@@ -69829,9 +75799,11 @@ if ($setHas) {
 			return false;
 		}
 		try {
+			// @ts-expect-error TS can't figure out that $setHas is always truthy here
 			$setHas(x, $setHas);
 			if ($mapHas) {
 				try {
+					// @ts-expect-error this indeed might not be a weak collection
 					$mapHas(x, $mapHas);
 				} catch (e) {
 					return true;
@@ -69844,8 +75816,8 @@ if ($setHas) {
 	};
 } else {
 	/** @type {import('.')} */
-	// eslint-disable-next-line no-unused-vars
-	module.exports = function isWeakSet(x) {
+	// @ts-expect-error
+	module.exports = function isWeakSet(x) { // eslint-disable-line no-unused-vars
 		// `WeakSet` does not exist, or does not have a `has` method
 		return false;
 	};
@@ -70020,6 +75992,135 @@ module.exports = function (mapper, opts) {
 
 
 
+
+
+/***/ }),
+
+/***/ "../node_modules/math-intrinsics/abs.js":
+/*!**********************************************!*\
+  !*** ../node_modules/math-intrinsics/abs.js ***!
+  \**********************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('./abs')} */
+module.exports = Math.abs;
+
+
+/***/ }),
+
+/***/ "../node_modules/math-intrinsics/floor.js":
+/*!************************************************!*\
+  !*** ../node_modules/math-intrinsics/floor.js ***!
+  \************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('./floor')} */
+module.exports = Math.floor;
+
+
+/***/ }),
+
+/***/ "../node_modules/math-intrinsics/isNaN.js":
+/*!************************************************!*\
+  !*** ../node_modules/math-intrinsics/isNaN.js ***!
+  \************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('./isNaN')} */
+module.exports = Number.isNaN || function isNaN(a) {
+	return a !== a;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/math-intrinsics/max.js":
+/*!**********************************************!*\
+  !*** ../node_modules/math-intrinsics/max.js ***!
+  \**********************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('./max')} */
+module.exports = Math.max;
+
+
+/***/ }),
+
+/***/ "../node_modules/math-intrinsics/min.js":
+/*!**********************************************!*\
+  !*** ../node_modules/math-intrinsics/min.js ***!
+  \**********************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('./min')} */
+module.exports = Math.min;
+
+
+/***/ }),
+
+/***/ "../node_modules/math-intrinsics/pow.js":
+/*!**********************************************!*\
+  !*** ../node_modules/math-intrinsics/pow.js ***!
+  \**********************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('./pow')} */
+module.exports = Math.pow;
+
+
+/***/ }),
+
+/***/ "../node_modules/math-intrinsics/round.js":
+/*!************************************************!*\
+  !*** ../node_modules/math-intrinsics/round.js ***!
+  \************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/** @type {import('./round')} */
+module.exports = Math.round;
+
+
+/***/ }),
+
+/***/ "../node_modules/math-intrinsics/sign.js":
+/*!***********************************************!*\
+  !*** ../node_modules/math-intrinsics/sign.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var $isNaN = __webpack_require__(/*! ./isNaN */ "../node_modules/math-intrinsics/isNaN.js");
+
+/** @type {import('./sign')} */
+module.exports = function sign(number) {
+	if ($isNaN(number) || number === 0) {
+		return number;
+	}
+	return number < 0 ? -1 : +1;
+};
 
 
 /***/ }),
@@ -73996,7 +80097,7 @@ var y = d * 365.25;
  * @api public
  */
 
-module.exports = function(val, options) {
+module.exports = function (val, options) {
   options = options || {};
   var type = typeof val;
   if (type === 'string' && val.length > 0) {
@@ -75406,10 +81507,21 @@ var utilInspect = __webpack_require__(/*! ./util.inspect */ "?d91c");
 var inspectCustom = utilInspect.custom;
 var inspectSymbol = isSymbol(inspectCustom) ? inspectCustom : null;
 
+var quotes = {
+    __proto__: null,
+    'double': '"',
+    single: "'"
+};
+var quoteREs = {
+    __proto__: null,
+    'double': /(["\\])/g,
+    single: /(['\\])/g
+};
+
 module.exports = function inspect_(obj, options, depth, seen) {
     var opts = options || {};
 
-    if (has(opts, 'quoteStyle') && (opts.quoteStyle !== 'single' && opts.quoteStyle !== 'double')) {
+    if (has(opts, 'quoteStyle') && !has(quotes, opts.quoteStyle)) {
         throw new TypeError('option "quoteStyle" must be "single" or "double"');
     }
     if (
@@ -75604,7 +81716,8 @@ module.exports = function inspect_(obj, options, depth, seen) {
 };
 
 function wrapQuotes(s, defaultStyle, opts) {
-    var quoteChar = (opts.quoteStyle || defaultStyle) === 'double' ? '"' : "'";
+    var style = opts.quoteStyle || defaultStyle;
+    var quoteChar = quotes[style];
     return quoteChar + s + quoteChar;
 }
 
@@ -75612,13 +81725,16 @@ function quote(s) {
     return $replace.call(String(s), /"/g, '&quot;');
 }
 
-function isArray(obj) { return toStr(obj) === '[object Array]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
-function isDate(obj) { return toStr(obj) === '[object Date]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
-function isRegExp(obj) { return toStr(obj) === '[object RegExp]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
-function isError(obj) { return toStr(obj) === '[object Error]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
-function isString(obj) { return toStr(obj) === '[object String]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
-function isNumber(obj) { return toStr(obj) === '[object Number]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
-function isBoolean(obj) { return toStr(obj) === '[object Boolean]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function canTrustToString(obj) {
+    return !toStringTag || !(typeof obj === 'object' && (toStringTag in obj || typeof obj[toStringTag] !== 'undefined'));
+}
+function isArray(obj) { return toStr(obj) === '[object Array]' && canTrustToString(obj); }
+function isDate(obj) { return toStr(obj) === '[object Date]' && canTrustToString(obj); }
+function isRegExp(obj) { return toStr(obj) === '[object RegExp]' && canTrustToString(obj); }
+function isError(obj) { return toStr(obj) === '[object Error]' && canTrustToString(obj); }
+function isString(obj) { return toStr(obj) === '[object String]' && canTrustToString(obj); }
+function isNumber(obj) { return toStr(obj) === '[object Number]' && canTrustToString(obj); }
+function isBoolean(obj) { return toStr(obj) === '[object Boolean]' && canTrustToString(obj); }
 
 // Symbol and BigInt do have Symbol.toStringTag by spec, so that can't be used to eliminate false positives
 function isSymbol(obj) {
@@ -75762,8 +81878,10 @@ function inspectString(str, opts) {
         var trailer = '... ' + remaining + ' more character' + (remaining > 1 ? 's' : '');
         return inspectString($slice.call(str, 0, opts.maxStringLength), opts) + trailer;
     }
+    var quoteRE = quoteREs[opts.quoteStyle || 'single'];
+    quoteRE.lastIndex = 0;
     // eslint-disable-next-line no-control-regex
-    var s = $replace.call($replace.call(str, /(['\\])/g, '\\$1'), /[\x00-\x1f]/g, lowbyte);
+    var s = $replace.call($replace.call(str, quoteRE, '\\$1'), /[\x00-\x1f]/g, lowbyte);
     return wrapQuotes(s, 'single', opts);
 }
 
@@ -76350,6 +82468,17 @@ module.exports = function shimAssign() {
 	return polyfill;
 };
 
+
+/***/ }),
+
+/***/ "../node_modules/parse-asn1/aesid.json":
+/*!*********************************************!*\
+  !*** ../node_modules/parse-asn1/aesid.json ***!
+  \*********************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = /*#__PURE__*/JSON.parse('{"2.16.840.1.101.3.4.1.1":"aes-128-ecb","2.16.840.1.101.3.4.1.2":"aes-128-cbc","2.16.840.1.101.3.4.1.3":"aes-128-ofb","2.16.840.1.101.3.4.1.4":"aes-128-cfb","2.16.840.1.101.3.4.1.21":"aes-192-ecb","2.16.840.1.101.3.4.1.22":"aes-192-cbc","2.16.840.1.101.3.4.1.23":"aes-192-ofb","2.16.840.1.101.3.4.1.24":"aes-192-cfb","2.16.840.1.101.3.4.1.41":"aes-256-ecb","2.16.840.1.101.3.4.1.42":"aes-256-cbc","2.16.840.1.101.3.4.1.43":"aes-256-ofb","2.16.840.1.101.3.4.1.44":"aes-256-cfb"}');
 
 /***/ }),
 
@@ -83787,166 +89916,6 @@ function randomFillSync (buf, offset, size) {
 
 /***/ }),
 
-/***/ "./admin/pageBuilder/pageBuilder.bridgeConfig.main.inc.html":
-/*!******************************************************************!*\
-  !*** ./admin/pageBuilder/pageBuilder.bridgeConfig.main.inc.html ***!
-  \******************************************************************/
-/***/ ((module) => {
-
-module.exports = "<div class=\"card-inner-container\">\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <h5 class=\"translate\">Bridge Properties</h5>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Name</label>\n            <input type=\"text\" class=\"name\"/>\n            <div class=\"edit-hint translate\">\n                descriptive only - displayed in homekit apps. Changes are only recognized after readding the bridge in\n                the app.\n            </div>\n            <div class=\"errorpanel translate name_error\">\n                A device with this name already exists. Please change the name!\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Group</label>\n            <input type=\"text\" class=\"group\"/>\n            <div class=\"edit-hint translate\">\n                string to be used to group devices within Yahka. Has no effect to HomeKit!\n            </div>\n        </div>\n    </div>\n\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Manufacturer</label>\n            <input type=\"text\" class=\"manufacturer\"/>\n            <div class=\"edit-hint translate\">descriptive only - displayed in some homekit apps</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Model</label>\n            <input type=\"text\" class=\"model\"/>\n            <div class=\"edit-hint translate\">descriptive only - displayed in some homekit apps</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Serial</label>\n            <input type=\"text\" class=\"serial\"/>\n            <div class=\"edit-hint translate\">descriptive only - displayed in some homekit apps</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Firmware</label>\n            <input type=\"text\" class=\"firmware\" placeholder=\"leave empty to use Yahka Version\"/>\n            <div class=\"edit-hint translate\">descriptive only - displayed in some homekit apps</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Username</label>\n            <input type=\"text\" class=\"username\"/>\n            <div class=\"edit-hint translate\">\n                change\n                this if you have trouble with your bridge. needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8.\n                <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Pincode</label>\n            <input type=\"text\" class=\"pincode\"/>\n            <div class=\"edit-hint translate\">needs to be in the form of 123-45-678</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s8 input-field\">\n            <select class=\"interface\"></select>\n            <label>Interface</label>\n        </div>\n        <div class=\"col s4 input-field\">\n            <label class=\"translate\">Port</label>\n            <input min=\"0\" max=\"65535\" type=\"number\" class=\"port\"/>\n            <span class=\"edit-hint translate\">Port 0 = random free port assigned by the operation system (default)</span>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label>\n                <input type=\"checkbox\" class=\"useLegacyAdvertiser\"/>\n                <span class=\"translate\">Use Legacy Advertiser</span>\n            </label>\n            <span class=\"edit-hint translate\">true = use bonjour-hap instead of avahi</span>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label>\n                <input type=\"checkbox\" class=\"useCiaoAdvertiser\"/>\n                <span class=\"translate\">Use CIAO Advertiser</span>\n            </label>\n            <span class=\"edit-hint translate\">true = use ciao instead of avahi, if your bridge is not detected</span>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label>\n                <input type=\"checkbox\" class=\"verboseLogging\"/>\n                <span class=\"translate\">Verbose Logging</span>\n            </label>\n            <span class=\"edit-hint translate\">true = redirect hap-node logging to adapter logging</span>\n        </div>\n    </div>\n</div>";
-
-/***/ }),
-
-/***/ "./admin/pageBuilder/pageBuilder.customDevice.infoPanel.inc.html":
-/*!***********************************************************************!*\
-  !*** ./admin/pageBuilder/pageBuilder.customDevice.infoPanel.inc.html ***!
-  \***********************************************************************/
-/***/ ((module) => {
-
-module.exports = "<div class=\"frame yahka_device_info_panel\">\n    <div class=\"card-inner-container\">\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <h5 class=\"translate\">Device Properties</h5>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <div class=\"switch\">\n                    <label>\n                        <span class=\"translate\">Enabled</span>\n                        <input class=\"enabledCharacteristic\" type=\"checkbox\">\n                        <span class=\"lever\"></span>\n                    </label>\n                </div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <label class=\"translate\">Name</label>\n                <input class=\"name\" type=\"text\">\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <label>Group</label>\n                <input type=\"text\" class=\"group\" />\n                <div class=\"edit-hint\">string to be used to group devices within Yahka. Has no effect to HomeKit!</div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <label class=\"translate\">Manufacturer</label>\n                <input type=\"text\" class=\"manufacturer\" />\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <input type=\"text\" class=\"model\" />\n                <label class=\"translate\">Model</label>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <input type=\"text\" class=\"serial\"/>\n                <label class=\"translate\">Serial</label>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <input type=\"text\" class=\"firmware\"/>\n                <label class=\"translate\">Firmware</label>\n            </div>\n        </div>\n\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <select class=\"category\"></select>\n                <label class=\"translate\">Category</label>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <label>\n                    <input type=\"checkbox\" class=\"publish_as_own_device\">\n                    <span class=\"translate\">Publish as own device</span>\n                </label>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <label class=\"translate\">Username</label>\n                <input type=\"text\" class=\"username\"/>\n                <div class=\"edit-hint translate\">needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b></div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <label class=\"translate\">Pincode</label>\n                <input type=\"text\" class=\"pincode\"/>\n                <div class=\"edit-hint translate\">needs to be in the form of 123-45-678</div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s8\">\n                <select class=\"interface\"></select>\n                <label class=\"translate\">Interface</label>\n            </div>\n            <div class=\"input-field col s4\">\n                <label>Port</label>\n                <input min=\"0\" max=\"65535\" type=\"number\" class=\"port\"/>\n                <div class=\"edit-hint translate\">Port 0 = random free port assigned by the operation system (default)</div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <label>\n                    <input type=\"checkbox\" class=\"useLegacyAdvertiser\"/>\n                    <span class=\"translate\">Use Legacy Advertiser</span>\n                </label>\n                <span class=\"edit-hint translate\">true = use bonjour-hap instead of avahi</span>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <label>\n                    <input type=\"checkbox\" class=\"useCiaoAdvertiser\"/>\n                    <span class=\"translate\">Use CIAO Advertiser</span>\n                </label>\n                <span class=\"edit-hint translate\">true = use ciao instead of avahi</span>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\" style=\"display: flex; flex-direction: column;\">\n                <div class=\"button-appendix\">\n                    <div class=\"input-field\">\n                        <label class=\"translate\">Availability state</label>\n                        <input class=\"stateSelectTarget availableStateIobState\" type=\"text\"/>\n                        <div class=\"edit-hint translate\">Empty = always available, otherwise iobroker state.</div>\n                    </div>\n                    <button type=\"button\" class=\"btn btn-small id-selector\">\n                        <span class=\"material-icons\">more_horiz</span>\n                    </button>\n                </div>\n            </div>\n        </div>\n    </div>\n    <ul class=\"collapsible yahka_service_container card-outer-container\">\n    </ul>\n    <div class=\"card-inner-container\">\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <button class=\"yahka_add_service btn\">Add Service</button>\n            </div>\n        </div>\n    </div>\n</div>";
-
-/***/ }),
-
-/***/ "./admin/pageBuilder/pageBuilder.ipCam.main.inc.html":
-/*!***********************************************************!*\
-  !*** ./admin/pageBuilder/pageBuilder.ipCam.main.inc.html ***!
-  \***********************************************************/
-/***/ ((module) => {
-
-module.exports = "<div class=\"frame\">\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <h5 class=\"translate\">Camera Properties</h5>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <div class=\"switch\">\n                <label>\n                    <span class=\"translate\">Enabled</span>\n                    <input class=\"enabled\" type=\"checkbox\">\n                    <span class=\"lever\"></span>\n                </label>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Device name</label>\n            <input class=\"name\" type=\"text\"/>\n            <div class=\"errorpanel translate name_error\">\n                A device with this name already exists. Please change the name!\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Group</label>\n            <input class=\"group\" type=\"text\"/>\n            <div class=\"edit-hint translate\">\n                string to be used to group devices within Yahka. Has no effect to HomeKit!\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Manufacturer</label>\n            <input type=\"text\" class=\"manufacturer\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\" >Model</label>\n            <input type=\"text\" class=\"model\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Serial</label>\n            <input type=\"text\" class=\"serial\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Firmware</label>\n            <input type=\"text\" class=\"firmware\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Username</label>\n            <input type=\"text\" class=\"username\"/>\n            <div class=\"edit-hint translate\">\n                needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the camera needs to be reconfigured in the HomeKit database</b>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Pincode</label>\n            <input type=\"text\" class=\"pincode\"/>\n            <span class=\"edit-hint translate\">needs to be in the form of 123-45-678</span>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s8\">\n            <select class=\"interface\"></select>\n            <label class=\"translate\">Interface</label>\n        </div>\n        <div class=\"input-field col s4\">\n            <label>Port</label>\n            <input min=\"0\" max=\"65535\" type=\"number\" class=\"port\"/>\n            <div class=\"edit-hint translate\">Port 0 = random free port assigned by the operation system (default)</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label>\n                <input type=\"checkbox\" class=\"useLegacyAdvertiser\"/>\n                <span class=\"translate\">Use Legacy Advertiser</span>\n            </label>\n            <span class=\"edit-hint translate\">true = use bonjour-hap instead of avahi</span>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label>\n                <input type=\"checkbox\" class=\"useCiaoAdvertiser\"/>\n                <span class=\"translate\">Use CIAO Advertiser</span>\n            </label>\n            <span class=\"edit-hint translate\">true = use ciao instead of avahi</span>\n        </div>\n    </div>\n</div>\n\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Stream Properties</span>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">Source</label>\n            <input type=\"text\" class=\"source\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">Codec</label>\n            <input type=\"text\" class=\"codec\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">Number of Streams</label>\n            <input type=\"text\" class=\"numberOfStreams\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">maxWidth</label>\n            <input type=\"text\" class=\"maxWidth\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">maxHeight</label>\n            <input type=\"text\" class=\"maxHeight\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">maxFPS</label>\n            <input type=\"text\" class=\"maxFPS\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label>\n                <input type=\"checkbox\" class=\"enableAudio\"/>\n                <span class=\"translate\">Enable Audio</span>\n            </label>\n        </div>\n    </div>\n</div>\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Advanced Settings</span>\n    </div>\n\n    <div class=\"content\">\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <div class=\"row\">\n                    <div class=\"input-field col s12\">\n                        <textarea style=\"resize: vertical; height: 205px;\" class=\"flex-grow ffmpeg_snapshot\"></textarea>\n                        <label class=\"translate\" style=\"padding-bottom: 10px;\">FFMPEG Command Line - Snapshot:</label>\n                        <div class=\"errorpanel ffmpeg_snapshot_error\"></div>\n                        <a class=\"btn ffmpeg_snapshot_reset\" href=\"#\">\n                            <i class=\"material-icons left\">refresh</i> Reset to default\n                        </a>\n                        <div class=\"card-panel\">\n                            <span class=\"translate\">Available replacers:</span>\n                            <ul>\n                                <li>${source}</li>\n                                <li>${width}</li>\n                                <li>${height}</li>\n                            </ul>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <div class=\"row\">\n                    <div class=\"input-field col s12\">\n                        <textarea style=\"resize: vertical; height: 530px;\" class=\"flex-grow ffmpeg_stream\"></textarea>\n                        <label class=\"translate\">FFMPEG Command Line - Stream:</label>\n                        <div class=\"errorpanel ffmpeg_stream_error\"></div>\n                        <a class=\"btn ffmpeg_stream_reset\" href=\"#\">\n                            <i class=\"material-icons left\">refresh</i> Reset to default\n                        </a>\n                        <div class=\"card-panel\">\n                            <span class=\"translate\">Available replacers</span>\n                            <ul class=\"simple-list blue-bullet replace-list\">\n                                <li>${source}</li>\n                                <li>${codec}</li>\n                                <li>${fps}</li>\n                                <li>${width}</li>\n                                <li>${height}</li>\n                                <li>${bitrate}</li>\n                                <li>${payloadtype}</li>\n                                <li>${targetVideoSsrc}</li>\n                                <li>${videokey}</li>\n                                <li>${targetAddress}</li>\n                                <li>${targetVideoPort}</li>\n                                <li>${mtu}</li>\n                            </ul>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <div class=\"row\">\n                    <div class=\"input-field col s12\">\n                        <textarea style=\"resize: vertical; height: 530px;\" rows=8 class=\"ffmpeg_streamAudio\"></textarea>\n                        <label class=\"translate\">FFMPEG Command Line - Audio Stream:</label>\n                        <div class=\"errorpanel ffmpeg_streamAudio_error\"></div>\n                        <a class=\"btn ffmpeg_streamAudio_reset translate\" href=\"#\">\n                            <i class=\"material-icons left\">refresh</i> Reset to default\n                        </a>\n                        <div class=\"card-panel\">\n                            <span class=\"translate\">Available replacers</span>\n                            <ul class=\"simple-list blue-bullet replace-list\">\n                                <li>${source}</li>\n                                <li>${bitrate}</li>\n                                <li>${samplerate}</li>\n                                <li>${channel}</li>\n                                <li>${payloadtype}</li>\n                                <li>${targetAddress}</li>\n                                <li>${targetAudioPort}</li>\n                                <li>${targetAudioSsrc}</li>\n                                <li>${audiokey}</li>\n                            </ul>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n    <ul class=\"collapsible yahka_service_container card-outer-container\">\n    </ul>\n    <div class=\"card-inner-container\">\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <button class=\"yahka_add_service btn\">Add Service</button>\n            </div>\n        </div>\n    </div>\n</div>\n";
-
-/***/ }),
-
-/***/ "./admin/pageBuilder/pageBuilder.main.deviceListEntry.inc.html":
-/*!*********************************************************************!*\
-  !*** ./admin/pageBuilder/pageBuilder.main.deviceListEntry.inc.html ***!
-  \*********************************************************************/
-/***/ ((module) => {
-
-module.exports = "<li class=\"collection-item\">\n    <div style=\"display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;\">\n        <div style=\"display: flex; gap: 10px;\">\n            <i class=\"device-icon material-symbols-outlined circle\">mode_fan</i>\n            <div style=\"display: flex; flex-direction: column\">\n                <span class=\"list-title\"></span>\n                <span class=\"device-type\"></span>\n            </div>\n        </div>\n        <div class=\"device-actions\" style=\"display: flex; flex-wrap: nowrap; gap: 4px;\">\n            <button class=\"edit-button btn waves-effect waves-light\">\n                <span class=\"translate\">Edit</span>\n            </button>\n            <button class=\"yahka_duplicate_device btn waves-effect waves-light\">\n                <span class=\"translate\">Duplicate</span>\n            </button>\n            <button class=\"yahka_remove_device btn waves-effect waves-light red\">\n                <span class=\"translate\">Remove</span>\n            </button>\n        </div>\n    </div>\n    <div class=\"collapsible-body\">\n    </div>\n</li>";
-
-/***/ }),
-
-/***/ "./admin/pageBuilder/pageBuilder.main.deviceListEntryGroup.inc.html":
-/*!**************************************************************************!*\
-  !*** ./admin/pageBuilder/pageBuilder.main.deviceListEntryGroup.inc.html ***!
-  \**************************************************************************/
-/***/ ((module) => {
-
-module.exports = "<li>\n    <div class=\"collapsible-header\" style=\"display: flex; align-items: center\">\n        <span class=\"material-symbols-outlined\" style=\"font-size: 18px;\">expand_all</span>\n        <span class=\"group-name\"></span>\n    </div>\n    <div class=\"collapsible-body collapsible-body-container\">\n        <ul class=\"collection group-content\">\n        </ul>\n    </div>\n</li>";
-
-/***/ }),
-
-/***/ "./admin/pageBuilder/pageBuilder.servicePanel.characteristic.propRow.inc.html":
-/*!************************************************************************************!*\
-  !*** ./admin/pageBuilder/pageBuilder.servicePanel.characteristic.propRow.inc.html ***!
-  \************************************************************************************/
-/***/ ((module) => {
-
-module.exports = "<div class=\"input-field\">\n    <label id=\"propName\"></label>\n    <input type=\"text\" class=\"propValue\">\n</div>";
-
-/***/ }),
-
-/***/ "./admin/pageBuilder/pageBuilder.servicePanel.characteristicRow.inc.html":
-/*!*******************************************************************************!*\
-  !*** ./admin/pageBuilder/pageBuilder.servicePanel.characteristicRow.inc.html ***!
-  \*******************************************************************************/
-/***/ ((module) => {
-
-module.exports = "<li>\n    <div class=\"collapsible-header\" style=\"gap: 10px; display: flex; justify-content: space-between; align-items: center;\">\n        <span class=\"yahka_characteristic_name\"></span>\n        <button type=\"button\" class=\"btn red icon-button yakha_delete_characteristic\">\n            <i class=\"material-icons\">close</i>\n        </button>\n    </div>\n    <div class=\"collapsible-body\">\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <label>\n                    <input type=\"checkbox\" class=\"characteristic_enabled\"/>\n                    <span class=\"translate\">Enabled</span>\n                </label>\n            </div>\n        </div>\n        <div class=\"card-panel\">\n            <div class=\"row\">\n                <div class=\"col s12 characteristic_propertyTable_container\">\n                    <h6 class=\"translate\">Characteristic Properties</h6>\n                    <div class=\"editor-table characteristic_propertyTable\">\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <select class=\"characteristic_inoutfunction\"></select>\n                <label class=\"translate\">In-Out Data</label>\n            </div>\n            <div class=\"editor-container-cell inOut col s12 characteristic_inoutparams_container\">\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <select class=\"characteristic_conversionfunction\"></select>\n                <label class=\"translate\">Conversion</label>\n            </div>\n            <div class=\"editor-container-cell conversion col s12 characteristic_conversionparams_container\">\n            </div>\n        </div>\n    </div>\n</li>\n";
-
-/***/ }),
-
-/***/ "./admin/pageBuilder/pageBuilder.servicePanel.servicePanel.inc.html":
-/*!**************************************************************************!*\
-  !*** ./admin/pageBuilder/pageBuilder.servicePanel.servicePanel.inc.html ***!
-  \**************************************************************************/
-/***/ ((module) => {
-
-module.exports = "<li class=\"yahka_service_panel\">\n    <div class=\"collapsible-header\" style=\"display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: bold;\">\n        <div>\n            <span class=\"translate\">Service: </span>\n            <span class=\"yahka_service_caption\"></span>\n        </div>\n        <button type=\"button\" class=\"btn-small red icon-button yakha_delete_service\">\n            <i class=\"material-icons\">clear</i>\n        </button>\n    </div>\n    <div class=\"content collapsible-body card-outer-container\">\n        <div class=\"card-inner-container\">\n            <div class=\"row\">\n                <div class=\"col s12\">\n                    <label>\n                        <input type=\"checkbox\" class=\"service_enabled\"/>\n                        <span class=\"translate\">Enabled</span>\n                    </label>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <label class=\"translate\">Service Name</label>\n                    <input class=\"full-size service_name\" type=\"text\" />\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <select class=\"full-size service_type\"></select>\n                    <label class=\"translate\">Service Type:</label>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <label class=\"translate\">Service Subtype</label>\n                    <input class=\"full-size service_subtype\" type=\"text\">\n                    <div class=\"translate edit-hint\">\n                        This is intended to use, if you have multiple services of the same type in an composed device.<br>\n                        For example, if you have a garage door with two different lights.\n                    </div>\n                </div>\n            </div>\n\n\n            <div class=\"row\">\n                <div class=\"col s12\">\n                    <label>\n                        <input type=\"checkbox\" class=\"service_isPrimary\"/>\n                        <span class=\"translate\">Primary Service</span>\n                    </label>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"col s12\">\n                    <label>\n                        <input type=\"checkbox\" class=\"service_isHidden\"/>\n                        <span class=\"translate\">Hidden Service</span>\n                    </label>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <select class=\"full-size service_link_to\"></select>\n                    <label class=\"translate\">Link to</label>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"col s12\">\n                    <span class=\"translate\" style=\"font-size: 1.1rem;\">Characteristics</span>\n                </div>\n            </div>\n        </div>\n        <ul class=\"collapsible yahka_characteristic_table\">\n        </ul>\n\n        <div class=\"card-inner-container\">\n            <div class=\"row\">\n                <div class=\"col s12 button-appendix\">\n                    <div class=\"input-field\">\n                        <select class=\"full-size new_custom_characteristic\"></select>\n                        <label class=\"translate new_custom_characteristic\">Custom Characteristic</label>\n                    </div>\n                    <button type=\"button\" class=\"btn btn-small yahka_add_characteristic\">\n                        <span class=\"translate\">Add</span>\n                    </button>\n                </div>\n            </div>\n        </div>\n    </div>\n</li>\n";
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.Map.inc.html":
-/*!************************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.Map.inc.html ***!
-  \************************************************************/
-/***/ ((module) => {
-
-module.exports = "<div class=\"editor-table\">\n    <div class=\"row padding5\">\n    </div>\n    <template id=\"mappingRow\">\n        <div class=\"card-panel\">\n            <div class=\"row\">\n                <div class=\"col s12\">\n                    <label>\n                        <input class=\"isSimpleValue\" type=\"checkbox\"/>\n                        <span class=\"translate\">is simple value</span>\n                    </label>\n                </div>\n                <div class=\"input-field col s12\">\n                    <label class=\"ioBrokerValue translate\">ioBroker Value</label>\n                    <input type=\"text\">\n                </div>\n                <div class=\"input-field col s12\">\n                    <label class=\"homekitValue translate\">HomeKit Value</label>\n                    <input type=\"text\">\n                </div>\n                <div class=\"col s12\">\n                    <button class=\"btn-flat moveUp\" type=\"button\"><i class=\"material-icons\">arrow_upward</i></button>\n                    <button class=\"btn-flat moveDown\" type=\"button\"><i class=\"material-icons\">arrow_downward</i></button>\n                    <button class=\"btn-flat delRow\" type=\"button\"><i class=\"material-icons\">delete</i></button>\n                </div>\n            </div>\n        </div>\n    </template>\n    <div id=\"lastRow\">\n        <button class=\"btn\" id=\"addRow\">\n            <span class=\"translate\">add new mapping</span>\n        </button>\n    </div>\n</div>\n";
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.const.inc.html":
-/*!**************************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.const.inc.html ***!
-  \**************************************************************/
-/***/ ((module) => {
-
-module.exports = "<div class=\"editor-table\" id=\"yahka_characteristic_table\">\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">Value</label>\n            <input type=\"text\" class=\"textfield\">\n        </div>\n    </div>\n</div>";
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.conversionScript.inc.html":
-/*!*************************************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.conversionScript.inc.html ***!
-  \*************************************************************************/
-/***/ ((module) => {
-
-module.exports = "<div class=\"edit-hint\">Explanation: use the variable <b>value</b> to access the sourcevalue. Example: <i>return value * 2;</i><br /></div>\n<div class=\"editor-table\" id=\"yahka_characteristic_table\">\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label class=\"translate\">To HomeKit:</label>\n            <div>function(value) {</div>\n            <div class=\"input-container full-width\">\n                <textarea id=\"toHomeKit\" rows=4></textarea>\n            </div>\n            <div>}</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label class=\"translate\">To IOBroker:</label>\n            <div>function(value) {</div>\n            <div class=\"input-container auto-height full-width\">\n                <textarea id=\"toIOBroker\" rows=4></textarea>\n            </div>\n            <div>}</div>\n        </div>\n    </div>\n</div>";
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.inc.html":
-/*!************************************************************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.inc.html ***!
-  \************************************************************************************************/
-/***/ ((module) => {
-
-module.exports = "<div class=\"editor-table\">\n    <div class=\"button-appendix\">\n        <div class=\"input-field\">\n            <label class=\"translate\">Level Datapoint</label>\n            <input type=\"text\" class=\"level stateSelectTarget\">\n        </div>\n        <button type=\"button\" class=\"btn btn-small id-selector\">\n            <span class=\"material-icons\">more_horiz</span>\n        </button>\n    </div>\n    <div class=\"button-appendix\">\n        <div class=\"input-field\">\n            <label class=\"translate\">Working Datapoint</label>\n            <input type=\"text\" class=\"working stateSelectTarget\">\n        </div>\n        <button type=\"button\" class=\"btn btn-small id-selector\">\n            <span class=\"material-icons\">more_horiz</span>\n        </button>\n    </div>\n</div>";
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.homematic.dimmer.inc.html":
-/*!*************************************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.homematic.dimmer.inc.html ***!
-  \*************************************************************************/
-/***/ ((module) => {
-
-module.exports = "<div class=\"editor-table\">\n    <div class=\"button-appendix\">\n        <div class=\"input-field\">\n            <label class=\"translate\">Level Datapoint</label>\n            <input type=\"text\" class=\"level stateSelectTarget\">\n        </div>\n        <button type=\"button\" class=\"btn btn-small id-selector\">\n            <span class=\"material-icons\">more_horiz</span>\n        </button>\n    </div>\n    <div class=\"extended-dimmer-properties\">\n        <label>\n            <input type=\"checkbox\" class=\"restoreToPreviousLevel\"/>\n            <span class=\"translate\">Restore level on switch on</span>\n        </label>\n    </div>\n    <div class=\"extended-dimmer-properties\">\n        <div class=\"input-field\">\n            <label class=\"translate\">Default level on switch on</label>\n            <input type=\"number\" class=\"defaultLevel\">\n        </div>\n    </div>\n</div>\n";
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.multiState.inc.html":
-/*!*******************************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.multiState.inc.html ***!
-  \*******************************************************************/
-/***/ ((module) => {
-
-module.exports = "<div class=\"editor-table\">\n    <template class=\"stateRow\">\n        <div class=\"card-panel\">\n            <div class=\"button-appendix\">\n                <div class=\"input-field\" style=\"flex-grow: 1\">\n                    <label>Read</label>\n                    <input type=\"text\" class=\"readState stateSelectTarget\">\n                </div>\n                <button type=\"button\" class=\"btn btn-small id-selector\">\n                    <span class=\"material-icons\">more_horiz</span>\n                </button>\n            </div>\n            <div class=\"button-appendix\">\n                <div class=\"input-field\">\n                    <label>Write</label>\n                    <input type=\"text\" class=\"writeState stateSelectTarget\">\n                    <div class=\"edit-hint translate\">leave empty to use read-state</div>\n                </div>\n                <button type=\"button\" class=\"btn btn-small id-selector\">\n                    <span class=\"material-icons\">more_horiz</span>\n                </button>\n            </div>\n            <div>\n                <button class=\"btn-flat moveUp\" type=\"button\"><i class=\"material-icons\">arrow_upward</i></button>\n                <button class=\"btn-flat moveDown\" type=\"button\"><i class=\"material-icons\">arrow_downward</i></button>\n                <button class=\"btn-flat delRow\" type=\"button\"><i class=\"material-icons\">delete</i></button>\n            </div>\n        </div>\n    </template>\n    <div class=\"lastRow\">\n        <button class=\"btn addRow\"><span class=\"translate\">Add new state</span></button>\n    </div>\n</div>\n";
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.scaleConversion.inc.html":
-/*!************************************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.scaleConversion.inc.html ***!
-  \************************************************************************/
-/***/ ((module) => {
-
-module.exports = "<!-- <div>Explanation: <br/>\n        $value is mapped to HomeKit with:  (homekitMin + ((homekitMax - homekitMin) / (ioBrokerMax - ioBrokerMin)) * ($value - ioBrokerMin))</br>\n        $value is mapped to ioBroker with: (ioBrokerMin + ((ioBrokerMax - ioBrokerMin) / (homeKitMax - homeKitMin)) * ($value - homeKitMin))\n    </div> -->\n<div class=\"editor-table\">\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <span class=\"translate\">HomeKit Minimum</span>\n            <input type=\"number\" class=\"hkMin\">\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">HomeKit Maximum</label>\n            <input type=\"number\" class=\"hkMax\">\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">ioBroker Minimum</label>\n            <input type=\"number\" class=\"ioMin\">\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">ioBroker Maximum</label>\n            <input type=\"number\" class=\"ioMax\">\n        </div>\n    </div>\n</div>\n";
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.singleState.inc.html":
-/*!********************************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.singleState.inc.html ***!
-  \********************************************************************/
-/***/ ((module) => {
-
-module.exports = "<div class=\"button-appendix\">\n    <div class=\"input-field\">\n        <label class=\"translate\">State</label>\n        <input id=\"textfield\" type=\"text\" class=\"stateSelectTarget\">\n    </div>\n    <button type=\"button\" class=\"btn btn-small id-selector\">\n        <span class=\"material-icons\">more_horiz</span>\n    </button>\n</div>";
-
-/***/ }),
-
 /***/ "../node_modules/readable-stream/lib/_stream_duplex.js":
 /*!*************************************************************!*\
   !*** ../node_modules/readable-stream/lib/_stream_duplex.js ***!
@@ -86491,8 +92460,8 @@ module.exports = function getPolyfill() {
 		if (
 			descriptor
 			&& typeof descriptor.get === 'function'
-			&& typeof RegExp.prototype.dotAll === 'boolean'
-			&& typeof RegExp.prototype.hasIndices === 'boolean'
+			&& 'dotAll' in RegExp.prototype
+			&& 'hasIndices' in RegExp.prototype
 		) {
 			/* eslint getter-return: 0 */
 			var calls = '';
@@ -86507,6 +92476,9 @@ module.exports = function getPolyfill() {
 					calls += 'y';
 				}
 			});
+
+			descriptor.get.call(o);
+
 			if (calls === 'dy') {
 				return descriptor.get;
 			}
@@ -86529,15 +92501,15 @@ module.exports = function getPolyfill() {
 
 var supportsDescriptors = (__webpack_require__(/*! define-properties */ "../node_modules/define-properties/index.js").supportsDescriptors);
 var getPolyfill = __webpack_require__(/*! ./polyfill */ "../node_modules/regexp.prototype.flags/polyfill.js");
-var gOPD = Object.getOwnPropertyDescriptor;
+var gOPD = __webpack_require__(/*! gopd */ "../node_modules/gopd/index.js");
 var defineProperty = Object.defineProperty;
-var TypeErr = TypeError;
-var getProto = Object.getPrototypeOf;
+var $TypeError = __webpack_require__(/*! es-errors */ "../node_modules/es-errors/index.js");
+var getProto = __webpack_require__(/*! get-proto */ "../node_modules/get-proto/index.js");
 var regex = /a/;
 
 module.exports = function shimFlags() {
 	if (!supportsDescriptors || !getProto) {
-		throw new TypeErr('RegExp.prototype.flags requires a true ES5 environment that supports property descriptors');
+		throw new $TypeError('RegExp.prototype.flags requires a true ES5 environment that supports property descriptors');
 	}
 	var polyfill = getPolyfill();
 	var proto = getProto(regex);
@@ -86800,6 +92772,34 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   }
   return buffer.SlowBuffer(size)
 }
+
+
+/***/ }),
+
+/***/ "../node_modules/safe-regex-test/index.js":
+/*!************************************************!*\
+  !*** ../node_modules/safe-regex-test/index.js ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var callBound = __webpack_require__(/*! call-bound */ "../node_modules/call-bound/index.js");
+var isRegex = __webpack_require__(/*! is-regex */ "../node_modules/is-regex/index.js");
+
+var $exec = callBound('RegExp.prototype.exec');
+var $TypeError = __webpack_require__(/*! es-errors/type */ "../node_modules/es-errors/type.js");
+
+/** @type {import('.')} */
+module.exports = function regexTester(regex) {
+	if (!isRegex(regex)) {
+		throw new $TypeError('`regex` must be a RegExp');
+	}
+	return function test(s) {
+		return $exec(regex, s) !== null;
+	};
+};
 
 
 /***/ }),
@@ -89373,6 +95373,304 @@ module.exports = Sha512
 
 /***/ }),
 
+/***/ "../node_modules/side-channel-list/index.js":
+/*!**************************************************!*\
+  !*** ../node_modules/side-channel-list/index.js ***!
+  \**************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var inspect = __webpack_require__(/*! object-inspect */ "../node_modules/object-inspect/index.js");
+
+var $TypeError = __webpack_require__(/*! es-errors/type */ "../node_modules/es-errors/type.js");
+
+/*
+* This function traverses the list returning the node corresponding to the given key.
+*
+* That node is also moved to the head of the list, so that if it's accessed again we don't need to traverse the whole list.
+* By doing so, all the recently used nodes can be accessed relatively quickly.
+*/
+/** @type {import('./list.d.ts').listGetNode} */
+// eslint-disable-next-line consistent-return
+var listGetNode = function (list, key, isDelete) {
+	/** @type {typeof list | NonNullable<(typeof list)['next']>} */
+	var prev = list;
+	/** @type {(typeof list)['next']} */
+	var curr;
+	// eslint-disable-next-line eqeqeq
+	for (; (curr = prev.next) != null; prev = curr) {
+		if (curr.key === key) {
+			prev.next = curr.next;
+			if (!isDelete) {
+				// eslint-disable-next-line no-extra-parens
+				curr.next = /** @type {NonNullable<typeof list.next>} */ (list.next);
+				list.next = curr; // eslint-disable-line no-param-reassign
+			}
+			return curr;
+		}
+	}
+};
+
+/** @type {import('./list.d.ts').listGet} */
+var listGet = function (objects, key) {
+	if (!objects) {
+		return void undefined;
+	}
+	var node = listGetNode(objects, key);
+	return node && node.value;
+};
+/** @type {import('./list.d.ts').listSet} */
+var listSet = function (objects, key, value) {
+	var node = listGetNode(objects, key);
+	if (node) {
+		node.value = value;
+	} else {
+		// Prepend the new node to the beginning of the list
+		objects.next = /** @type {import('./list.d.ts').ListNode<typeof value, typeof key>} */ ({ // eslint-disable-line no-param-reassign, no-extra-parens
+			key: key,
+			next: objects.next,
+			value: value
+		});
+	}
+};
+/** @type {import('./list.d.ts').listHas} */
+var listHas = function (objects, key) {
+	if (!objects) {
+		return false;
+	}
+	return !!listGetNode(objects, key);
+};
+/** @type {import('./list.d.ts').listDelete} */
+// eslint-disable-next-line consistent-return
+var listDelete = function (objects, key) {
+	if (objects) {
+		return listGetNode(objects, key, true);
+	}
+};
+
+/** @type {import('.')} */
+module.exports = function getSideChannelList() {
+	/** @typedef {ReturnType<typeof getSideChannelList>} Channel */
+	/** @typedef {Parameters<Channel['get']>[0]} K */
+	/** @typedef {Parameters<Channel['set']>[1]} V */
+
+	/** @type {import('./list.d.ts').RootNode<V, K> | undefined} */ var $o;
+
+	/** @type {Channel} */
+	var channel = {
+		assert: function (key) {
+			if (!channel.has(key)) {
+				throw new $TypeError('Side channel does not contain ' + inspect(key));
+			}
+		},
+		'delete': function (key) {
+			var root = $o && $o.next;
+			var deletedNode = listDelete($o, key);
+			if (deletedNode && root && root === deletedNode) {
+				$o = void undefined;
+			}
+			return !!deletedNode;
+		},
+		get: function (key) {
+			return listGet($o, key);
+		},
+		has: function (key) {
+			return listHas($o, key);
+		},
+		set: function (key, value) {
+			if (!$o) {
+				// Initialize the linked list as an empty node, so that we don't have to special-case handling of the first node: we can always refer to it as (previous node).next, instead of something like (list).head
+				$o = {
+					next: void undefined
+				};
+			}
+			// eslint-disable-next-line no-extra-parens
+			listSet(/** @type {NonNullable<typeof $o>} */ ($o), key, value);
+		}
+	};
+	// @ts-expect-error TODO: figure out why this is erroring
+	return channel;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/side-channel-map/index.js":
+/*!*************************************************!*\
+  !*** ../node_modules/side-channel-map/index.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var GetIntrinsic = __webpack_require__(/*! get-intrinsic */ "../node_modules/get-intrinsic/index.js");
+var callBound = __webpack_require__(/*! call-bound */ "../node_modules/call-bound/index.js");
+var inspect = __webpack_require__(/*! object-inspect */ "../node_modules/object-inspect/index.js");
+
+var $TypeError = __webpack_require__(/*! es-errors/type */ "../node_modules/es-errors/type.js");
+var $Map = GetIntrinsic('%Map%', true);
+
+/** @type {<K, V>(thisArg: Map<K, V>, key: K) => V} */
+var $mapGet = callBound('Map.prototype.get', true);
+/** @type {<K, V>(thisArg: Map<K, V>, key: K, value: V) => void} */
+var $mapSet = callBound('Map.prototype.set', true);
+/** @type {<K, V>(thisArg: Map<K, V>, key: K) => boolean} */
+var $mapHas = callBound('Map.prototype.has', true);
+/** @type {<K, V>(thisArg: Map<K, V>, key: K) => boolean} */
+var $mapDelete = callBound('Map.prototype.delete', true);
+/** @type {<K, V>(thisArg: Map<K, V>) => number} */
+var $mapSize = callBound('Map.prototype.size', true);
+
+/** @type {import('.')} */
+module.exports = !!$Map && /** @type {Exclude<import('.'), false>} */ function getSideChannelMap() {
+	/** @typedef {ReturnType<typeof getSideChannelMap>} Channel */
+	/** @typedef {Parameters<Channel['get']>[0]} K */
+	/** @typedef {Parameters<Channel['set']>[1]} V */
+
+	/** @type {Map<K, V> | undefined} */ var $m;
+
+	/** @type {Channel} */
+	var channel = {
+		assert: function (key) {
+			if (!channel.has(key)) {
+				throw new $TypeError('Side channel does not contain ' + inspect(key));
+			}
+		},
+		'delete': function (key) {
+			if ($m) {
+				var result = $mapDelete($m, key);
+				if ($mapSize($m) === 0) {
+					$m = void undefined;
+				}
+				return result;
+			}
+			return false;
+		},
+		get: function (key) { // eslint-disable-line consistent-return
+			if ($m) {
+				return $mapGet($m, key);
+			}
+		},
+		has: function (key) {
+			if ($m) {
+				return $mapHas($m, key);
+			}
+			return false;
+		},
+		set: function (key, value) {
+			if (!$m) {
+				// @ts-expect-error TS can't handle narrowing a variable inside a closure
+				$m = new $Map();
+			}
+			$mapSet($m, key, value);
+		}
+	};
+
+	// @ts-expect-error TODO: figure out why TS is erroring here
+	return channel;
+};
+
+
+/***/ }),
+
+/***/ "../node_modules/side-channel-weakmap/index.js":
+/*!*****************************************************!*\
+  !*** ../node_modules/side-channel-weakmap/index.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var GetIntrinsic = __webpack_require__(/*! get-intrinsic */ "../node_modules/get-intrinsic/index.js");
+var callBound = __webpack_require__(/*! call-bound */ "../node_modules/call-bound/index.js");
+var inspect = __webpack_require__(/*! object-inspect */ "../node_modules/object-inspect/index.js");
+var getSideChannelMap = __webpack_require__(/*! side-channel-map */ "../node_modules/side-channel-map/index.js");
+
+var $TypeError = __webpack_require__(/*! es-errors/type */ "../node_modules/es-errors/type.js");
+var $WeakMap = GetIntrinsic('%WeakMap%', true);
+
+/** @type {<K extends object, V>(thisArg: WeakMap<K, V>, key: K) => V} */
+var $weakMapGet = callBound('WeakMap.prototype.get', true);
+/** @type {<K extends object, V>(thisArg: WeakMap<K, V>, key: K, value: V) => void} */
+var $weakMapSet = callBound('WeakMap.prototype.set', true);
+/** @type {<K extends object, V>(thisArg: WeakMap<K, V>, key: K) => boolean} */
+var $weakMapHas = callBound('WeakMap.prototype.has', true);
+/** @type {<K extends object, V>(thisArg: WeakMap<K, V>, key: K) => boolean} */
+var $weakMapDelete = callBound('WeakMap.prototype.delete', true);
+
+/** @type {import('.')} */
+module.exports = $WeakMap
+	? /** @type {Exclude<import('.'), false>} */ function getSideChannelWeakMap() {
+		/** @typedef {ReturnType<typeof getSideChannelWeakMap>} Channel */
+		/** @typedef {Parameters<Channel['get']>[0]} K */
+		/** @typedef {Parameters<Channel['set']>[1]} V */
+
+		/** @type {WeakMap<K & object, V> | undefined} */ var $wm;
+		/** @type {Channel | undefined} */ var $m;
+
+		/** @type {Channel} */
+		var channel = {
+			assert: function (key) {
+				if (!channel.has(key)) {
+					throw new $TypeError('Side channel does not contain ' + inspect(key));
+				}
+			},
+			'delete': function (key) {
+				if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+					if ($wm) {
+						return $weakMapDelete($wm, key);
+					}
+				} else if (getSideChannelMap) {
+					if ($m) {
+						return $m['delete'](key);
+					}
+				}
+				return false;
+			},
+			get: function (key) {
+				if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+					if ($wm) {
+						return $weakMapGet($wm, key);
+					}
+				}
+				return $m && $m.get(key);
+			},
+			has: function (key) {
+				if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+					if ($wm) {
+						return $weakMapHas($wm, key);
+					}
+				}
+				return !!$m && $m.has(key);
+			},
+			set: function (key, value) {
+				if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+					if (!$wm) {
+						$wm = new $WeakMap();
+					}
+					$weakMapSet($wm, key, value);
+				} else if (getSideChannelMap) {
+					if (!$m) {
+						$m = getSideChannelMap();
+					}
+					// eslint-disable-next-line no-extra-parens
+					/** @type {NonNullable<typeof $m>} */ ($m).set(key, value);
+				}
+			}
+		};
+
+		// @ts-expect-error TODO: figure out why this is erroring
+		return channel;
+	}
+	: getSideChannelMap;
+
+
+/***/ }),
+
 /***/ "../node_modules/side-channel/index.js":
 /*!*********************************************!*\
   !*** ../node_modules/side-channel/index.js ***!
@@ -89382,131 +95680,45 @@ module.exports = Sha512
 "use strict";
 
 
-var GetIntrinsic = __webpack_require__(/*! get-intrinsic */ "../node_modules/get-intrinsic/index.js");
-var callBound = __webpack_require__(/*! call-bind/callBound */ "../node_modules/call-bind/callBound.js");
-var inspect = __webpack_require__(/*! object-inspect */ "../node_modules/object-inspect/index.js");
-
 var $TypeError = __webpack_require__(/*! es-errors/type */ "../node_modules/es-errors/type.js");
-var $WeakMap = GetIntrinsic('%WeakMap%', true);
-var $Map = GetIntrinsic('%Map%', true);
+var inspect = __webpack_require__(/*! object-inspect */ "../node_modules/object-inspect/index.js");
+var getSideChannelList = __webpack_require__(/*! side-channel-list */ "../node_modules/side-channel-list/index.js");
+var getSideChannelMap = __webpack_require__(/*! side-channel-map */ "../node_modules/side-channel-map/index.js");
+var getSideChannelWeakMap = __webpack_require__(/*! side-channel-weakmap */ "../node_modules/side-channel-weakmap/index.js");
 
-var $weakMapGet = callBound('WeakMap.prototype.get', true);
-var $weakMapSet = callBound('WeakMap.prototype.set', true);
-var $weakMapHas = callBound('WeakMap.prototype.has', true);
-var $mapGet = callBound('Map.prototype.get', true);
-var $mapSet = callBound('Map.prototype.set', true);
-var $mapHas = callBound('Map.prototype.has', true);
-
-/*
-* This function traverses the list returning the node corresponding to the given key.
-*
-* That node is also moved to the head of the list, so that if it's accessed again we don't need to traverse the whole list. By doing so, all the recently used nodes can be accessed relatively quickly.
-*/
-/** @type {import('.').listGetNode} */
-var listGetNode = function (list, key) { // eslint-disable-line consistent-return
-	/** @type {typeof list | NonNullable<(typeof list)['next']>} */
-	var prev = list;
-	/** @type {(typeof list)['next']} */
-	var curr;
-	for (; (curr = prev.next) !== null; prev = curr) {
-		if (curr.key === key) {
-			prev.next = curr.next;
-			// eslint-disable-next-line no-extra-parens
-			curr.next = /** @type {NonNullable<typeof list.next>} */ (list.next);
-			list.next = curr; // eslint-disable-line no-param-reassign
-			return curr;
-		}
-	}
-};
-
-/** @type {import('.').listGet} */
-var listGet = function (objects, key) {
-	var node = listGetNode(objects, key);
-	return node && node.value;
-};
-/** @type {import('.').listSet} */
-var listSet = function (objects, key, value) {
-	var node = listGetNode(objects, key);
-	if (node) {
-		node.value = value;
-	} else {
-		// Prepend the new node to the beginning of the list
-		objects.next = /** @type {import('.').ListNode<typeof value>} */ ({ // eslint-disable-line no-param-reassign, no-extra-parens
-			key: key,
-			next: objects.next,
-			value: value
-		});
-	}
-};
-/** @type {import('.').listHas} */
-var listHas = function (objects, key) {
-	return !!listGetNode(objects, key);
-};
+var makeChannel = getSideChannelWeakMap || getSideChannelMap || getSideChannelList;
 
 /** @type {import('.')} */
 module.exports = function getSideChannel() {
-	/** @type {WeakMap<object, unknown>} */ var $wm;
-	/** @type {Map<object, unknown>} */ var $m;
-	/** @type {import('.').RootNode<unknown>} */ var $o;
+	/** @typedef {ReturnType<typeof getSideChannel>} Channel */
 
-	/** @type {import('.').Channel} */
+	/** @type {Channel | undefined} */ var $channelData;
+
+	/** @type {Channel} */
 	var channel = {
 		assert: function (key) {
 			if (!channel.has(key)) {
 				throw new $TypeError('Side channel does not contain ' + inspect(key));
 			}
 		},
-		get: function (key) { // eslint-disable-line consistent-return
-			if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
-				if ($wm) {
-					return $weakMapGet($wm, key);
-				}
-			} else if ($Map) {
-				if ($m) {
-					return $mapGet($m, key);
-				}
-			} else {
-				if ($o) { // eslint-disable-line no-lonely-if
-					return listGet($o, key);
-				}
-			}
+		'delete': function (key) {
+			return !!$channelData && $channelData['delete'](key);
+		},
+		get: function (key) {
+			return $channelData && $channelData.get(key);
 		},
 		has: function (key) {
-			if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
-				if ($wm) {
-					return $weakMapHas($wm, key);
-				}
-			} else if ($Map) {
-				if ($m) {
-					return $mapHas($m, key);
-				}
-			} else {
-				if ($o) { // eslint-disable-line no-lonely-if
-					return listHas($o, key);
-				}
-			}
-			return false;
+			return !!$channelData && $channelData.has(key);
 		},
 		set: function (key, value) {
-			if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
-				if (!$wm) {
-					$wm = new $WeakMap();
-				}
-				$weakMapSet($wm, key, value);
-			} else if ($Map) {
-				if (!$m) {
-					$m = new $Map();
-				}
-				$mapSet($m, key, value);
-			} else {
-				if (!$o) {
-					// Initialize the linked list as an empty node, so that we don't have to special-case handling of the first node: we can always refer to it as (previous node).next, instead of something like (list).head
-					$o = { key: {}, next: null };
-				}
-				listSet($o, key, value);
+			if (!$channelData) {
+				$channelData = makeChannel();
 			}
+
+			$channelData.set(key, value);
 		}
 	};
+	// @ts-expect-error TODO: figure out why this is erroring
 	return channel;
 };
 
@@ -93465,10 +99677,11 @@ function split (matcher, mapper, options) {
 
 
 var SLOT = __webpack_require__(/*! internal-slot */ "../node_modules/internal-slot/index.js");
+var $SyntaxError = __webpack_require__(/*! es-errors/syntax */ "../node_modules/es-errors/syntax.js");
 
-var $SyntaxError = SyntaxError;
 var $StopIteration = typeof StopIteration === 'object' ? StopIteration : null;
 
+/** @type {import('.')} */
 module.exports = function getStopIterationIterator(origIterator) {
 	if (!$StopIteration) {
 		throw new $SyntaxError('this environment lacks StopIteration');
@@ -93476,14 +99689,18 @@ module.exports = function getStopIterationIterator(origIterator) {
 
 	SLOT.set(origIterator, '[[Done]]', false);
 
+	/** @template T @typedef {T extends Iterator<infer U> ? U : never} IteratorType */
+	/** @typedef {IteratorType<ReturnType<typeof getStopIterationIterator>>} T */
 	var siIterator = {
-		next: function next() {
-			var iterator = SLOT.get(this, '[[Iterator]]');
-			var done = SLOT.get(iterator, '[[Done]]');
+		next: /** @type {() => IteratorResult<T>} */ function next() {
+			// eslint-disable-next-line no-extra-parens
+			var iterator = /** @type {typeof origIterator} */ (SLOT.get(this, '[[Iterator]]'));
+			var done = !!SLOT.get(iterator, '[[Done]]');
 			try {
 				return {
 					done: done,
-					value: done ? void undefined : iterator.next()
+					// eslint-disable-next-line no-extra-parens
+					value: done ? void undefined : /** @type {T} */ (iterator.next())
 				};
 			} catch (e) {
 				SLOT.set(iterator, '[[Done]]', true);
@@ -93500,6 +99717,7 @@ module.exports = function getStopIterationIterator(origIterator) {
 
 	SLOT.set(siIterator, '[[Iterator]]', origIterator);
 
+	// @ts-expect-error TODO FIXME
 	return siIterator;
 };
 
@@ -97305,4111 +103523,450 @@ function parse(str) {
 
 /***/ }),
 
-/***/ "./admin/admin.defaults.ts":
-/*!*********************************!*\
-  !*** ./admin/admin.defaults.ts ***!
-  \*********************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ "../node_modules/tslib/tslib.es6.mjs":
+/*!*******************************************!*\
+  !*** ../node_modules/tslib/tslib.es6.mjs ***!
+  \*******************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   __addDisposableResource: () => (/* binding */ __addDisposableResource),
+/* harmony export */   __assign: () => (/* binding */ __assign),
+/* harmony export */   __asyncDelegator: () => (/* binding */ __asyncDelegator),
+/* harmony export */   __asyncGenerator: () => (/* binding */ __asyncGenerator),
+/* harmony export */   __asyncValues: () => (/* binding */ __asyncValues),
+/* harmony export */   __await: () => (/* binding */ __await),
+/* harmony export */   __awaiter: () => (/* binding */ __awaiter),
+/* harmony export */   __classPrivateFieldGet: () => (/* binding */ __classPrivateFieldGet),
+/* harmony export */   __classPrivateFieldIn: () => (/* binding */ __classPrivateFieldIn),
+/* harmony export */   __classPrivateFieldSet: () => (/* binding */ __classPrivateFieldSet),
+/* harmony export */   __createBinding: () => (/* binding */ __createBinding),
+/* harmony export */   __decorate: () => (/* binding */ __decorate),
+/* harmony export */   __disposeResources: () => (/* binding */ __disposeResources),
+/* harmony export */   __esDecorate: () => (/* binding */ __esDecorate),
+/* harmony export */   __exportStar: () => (/* binding */ __exportStar),
+/* harmony export */   __extends: () => (/* binding */ __extends),
+/* harmony export */   __generator: () => (/* binding */ __generator),
+/* harmony export */   __importDefault: () => (/* binding */ __importDefault),
+/* harmony export */   __importStar: () => (/* binding */ __importStar),
+/* harmony export */   __makeTemplateObject: () => (/* binding */ __makeTemplateObject),
+/* harmony export */   __metadata: () => (/* binding */ __metadata),
+/* harmony export */   __param: () => (/* binding */ __param),
+/* harmony export */   __propKey: () => (/* binding */ __propKey),
+/* harmony export */   __read: () => (/* binding */ __read),
+/* harmony export */   __rest: () => (/* binding */ __rest),
+/* harmony export */   __rewriteRelativeImportExtension: () => (/* binding */ __rewriteRelativeImportExtension),
+/* harmony export */   __runInitializers: () => (/* binding */ __runInitializers),
+/* harmony export */   __setFunctionName: () => (/* binding */ __setFunctionName),
+/* harmony export */   __spread: () => (/* binding */ __spread),
+/* harmony export */   __spreadArray: () => (/* binding */ __spreadArray),
+/* harmony export */   __spreadArrays: () => (/* binding */ __spreadArrays),
+/* harmony export */   __values: () => (/* binding */ __values),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/******************************************************************************
+Copyright (c) Microsoft Corporation.
 
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Defaults = void 0;
-var Defaults;
-(function (Defaults) {
-    Defaults.defaultCommandLine = {
-        stream: [
-            '-nostats',
-            '-nostdin',
-            '-y',
-            '-re',
-            '-i', '${source}',
-            '-an', '-sn', '-dn',
-            '-codec:v', '${codec}',
-            '-pix_fmt', 'yuv420p',
-            '-r', '${fps}',
-            '-f', 'rawvideo',
-            '-tune', 'zerolatency',
-            '-vf', 'scale=${width}:${height}',
-            '-b:v', '${bitrate}k',
-            '-bufsize', '${bitrate}k',
-            '-payload_type', '${payloadtype}',
-            '-ssrc', '${targetVideoSsrc}',
-            '-f', 'rtp',
-            '-srtp_out_suite', 'AES_CM_128_HMAC_SHA1_80',
-            '-srtp_out_params', '${videokey}',
-            'srtp://${targetAddress}:${targetVideoPort}?rtcpport=${targetVideoPort}&localrtcpport=${targetVideoPort}&pkt_size=${mtu}'
-        ],
-        streamAudio: [
-            '-vn', '-sn', '-dn',
-            '-codec:a',
-            'libfdk_aac',
-            '-profile:a',
-            'aac_eld',
-            '-flags',
-            '+global_header',
-            '-f',
-            'null',
-            '-ar',
-            '${samplerate}k',
-            '-b:a',
-            '${bitrate}k',
-            '-bufsize:a',
-            '${bitrate}k',
-            '-ac',
-            '${channel}',
-            '-payload_type',
-            '${payloadtype}',
-            '-ssrc',
-            '${targetAudioSsrc}',
-            '-f',
-            'rtp',
-            '-srtp_out_suite',
-            'AES_CM_128_HMAC_SHA1_80',
-            '-srtp_out_params',
-            '${audiokey}',
-            'srtp://${targetAddress}:${targetAudioPort}?rtcpport=${targetAudioPort}&localrtcpport=${targetAudioPort}&pkt_size=188'
-        ],
-        snapshot: [
-            '-re',
-            '-i', '${source}',
-            '-t', '1',
-            '-s', '${width}x${height}',
-            '-f', 'image2',
-            '-'
-        ]
-    };
-    Defaults.webcamCommandLine = {
-        stream: [
-            '-re',
-            '-f', 'dshow',
-            '-i', '${source}',
-            '-threads', '0',
-            '-vcodec', '${codec}',
-            '-an',
-            '-pix_fmt', 'yuv420p',
-            '-r', '${fps}',
-            '-f', 'rawvideo',
-            '-tune', 'zerolatency',
-            '-vf', 'scale=${width}:${height}',
-            '-b:v', '${bitrate}k',
-            '-bufsize', '${bitrate}k',
-            '-payload_type', '99',
-            '-ssrc', '${targetVideoSsrc}',
-            '-f', 'rtp',
-            '-srtp_out_suite', 'AES_CM_128_HMAC_SHA1_80',
-            '-srtp_out_params', '${videokey}',
-            'srtp://${targetAddress}:${targetVideoPort}?rtcpport=${targetVideoPort}&localrtcpport=${targetVideoPort}&pkt_size=1378'
-        ],
-        streamAudio: [],
-        snapshot: [
-            '-re',
-            '-f', 'dshow',
-            '-i', '${source}',
-            '-t', '1',
-            '-s', '${width}x${height}',
-            '-f', 'image2',
-            '-'
-        ],
-    };
-    Defaults.ffmpegCommandLines = {
-        default: Defaults.defaultCommandLine,
-        webcam: Defaults.webcamCommandLine
-    };
-})(Defaults || (exports.Defaults = Defaults = {}));
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
 
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+/* global Reflect, Promise, SuppressedError, Symbol, Iterator */
 
-/***/ }),
-
-/***/ "./admin/admin.pageLoader.ts":
-/*!***********************************!*\
-  !*** ./admin/admin.pageLoader.ts ***!
-  \***********************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.createTemplateElement = createTemplateElement;
-exports.createAndCloneTemplateElement = createAndCloneTemplateElement;
-function createTemplateElement(html) {
-    let template = document.createElement('template');
-    template.innerHTML = html;
-    return template;
-}
-function createAndCloneTemplateElement(html) {
-    let node = createTemplateElement(html);
-    return document.importNode(node.content, true);
-}
-
-
-/***/ }),
-
-/***/ "./admin/admin.translation.ts":
-/*!************************************!*\
-  !*** ./admin/admin.translation.ts ***!
-  \************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.translateFragment = translateFragment;
-const $ = __webpack_require__(/*! jquery */ "jquery");
-function translateFragment(fragment) {
-    const elements = fragment.querySelectorAll('.translate');
-    if (elements) {
-        for (let e = 0; e < elements.length; e++) {
-            let text = $(elements[e]).attr('data-lang');
-            if (!text) {
-                text = $(elements[e]).html();
-                $(elements[e]).attr('data-lang', text);
-            }
-            const transText = translateWord(text);
-            if (transText) {
-                $(elements[e]).html(transText);
-            }
-        }
-    }
-}
-
-
-/***/ }),
-
-/***/ "./admin/admin.utils.ts":
-/*!******************************!*\
-  !*** ./admin/admin.utils.ts ***!
-  \******************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Utils = void 0;
-var Utils;
-(function (Utils) {
-    function getInputValue(input, emptyStringAsUndefined = true) {
-        if (input == null)
-            return undefined;
-        if ((input.type == 'checkbox') && ('checked' in input)) {
-            return input.checked;
-        }
-        if ('valueAsDate' in input) {
-            let dateValue = input.valueAsDate;
-            if (dateValue)
-                return dateValue;
-        }
-        if ('valueAsNumber' in input) {
-            let numValue = input.valueAsNumber;
-            if (!isNaN(numValue))
-                return numValue;
-        }
-        let stringValue = input.value;
-        if ((stringValue === '') && emptyStringAsUndefined) {
-            return undefined;
-        }
-        if (stringValue !== '') {
-            let strAsNumber = Number(stringValue);
-            if (!isNaN(strAsNumber)) {
-                return strAsNumber;
-            }
-        }
-        return stringValue;
-    }
-    Utils.getInputValue = getInputValue;
-    function getSelectInputValue(input, emptyStringAsUndefined = true) {
-        if (input == null)
-            return undefined;
-        let stringValue = input.value;
-        if ((stringValue === '') && emptyStringAsUndefined)
-            return undefined;
-        if (stringValue !== '') {
-            let strAsNumber = Number(stringValue);
-            if (!isNaN(strAsNumber))
-                return strAsNumber;
-        }
-        return stringValue;
-    }
-    Utils.getSelectInputValue = getSelectInputValue;
-    function setInputValue(input, value) {
-        if (input === undefined || input === null)
-            return;
-        if (input.type == 'checkbox') {
-            input.checked = Boolean(value);
-        }
-        else {
-            input.value = ((value !== undefined) && (value !== null)) ? value : '';
-        }
-    }
-    Utils.setInputValue = setInputValue;
-})(Utils || (exports.Utils = Utils = {}));
-
-
-/***/ }),
-
-/***/ "./admin/pageBuilder/pageBuilder.accessoryCategories.ts":
-/*!**************************************************************!*\
-  !*** ./admin/pageBuilder/pageBuilder.accessoryCategories.ts ***!
-  \**************************************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const accessoryCategories = {
-    "1": {
-        "text": "Other",
-        "icon": "help"
-    },
-    "2": {
-        "text": "Bridge",
-        "icon": "settings_ethernet"
-    },
-    "3": {
-        "text": "Fan",
-        "icon": "mode_fan"
-    },
-    "4": {
-        "text": "Garage door opener",
-        "icon": "garage_door"
-    },
-    "5": {
-        "text": "Lightbulb",
-        "icon": "lightbulb"
-    },
-    "6": {
-        "text": "Door lock",
-        "icon": "lock"
-    },
-    "7": {
-        "text": "Outlet",
-        "icon": "power"
-    },
-    "8": {
-        "text": "Switch",
-        "icon": "toggle_off"
-    },
-    "9": {
-        "text": "Thermostat",
-        "icon": "thermostat"
-    },
-    "10": {
-        "text": "Sensor",
-        "icon": "sensors"
-    },
-    "11": {
-        "text": "Alarm system",
-        "icon": "siren"
-    },
-    "12": {
-        "text": "Door",
-        "icon": "door_front"
-    },
-    "13": {
-        "text": "Window",
-        "icon": "window"
-    },
-    "14": {
-        "text": "Window covering",
-        "icon": "blinds"
-    },
-    "15": {
-        "text": "Programmable switch",
-        "icon": "action_key"
-    },
-    "16": {
-        "text": "Range extender",
-        "icon": "settings_input_antenna"
-    },
-    "17": {
-        "text": "Camera",
-        "icon": "photo_camera"
-    },
-    "18": {
-        "text": "VIDEO_DOORBELL",
-        "icon": "video_camera_front"
-    },
-    "19": {
-        "text": "AIR_PURIFIER",
-        "icon": "air_purifier"
-    },
-    "20": {
-        "text": "AIR_HEATER",
-        "icon": "heat"
-    },
-    "21": {
-        "text": "AIR_CONDITIONER",
-        "icon": "hvac"
-    },
-    "22": {
-        "text": "AIR_HUMIDIFIER",
-        "icon": "humidity_mid"
-    },
-    "23": {
-        "text": "AIR_DEHUMIDIFIER",
-        "icon": "water_voc"
-    },
-    "24": {
-        "text": "APPLE_TV",
-        "icon": "tv"
-    },
-    "25": {
-        "text": "HOMEPOD",
-        "icon": "speaker"
-    },
-    "26": {
-        "text": "SPEAKER",
-        "icon": "speaker"
-    },
-    "27": {
-        "text": "AIRPORT",
-        "icon": "wifi_tethering"
-    },
-    "28": {
-        "text": "SPRINKLER",
-        "icon": "sprinkler"
-    },
-    "29": {
-        "text": "FAUCET",
-        "icon": "faucet"
-    },
-    "30": {
-        "text": "SHOWER_HEAD",
-        "icon": "shower"
-    },
-    "31": {
-        "text": "TELEVISION",
-        "icon": "tv"
-    },
-    "32": {
-        "text": "TARGET_CONTROLLER",
-        "icon": "sports_esports"
-    },
-    "33": {
-        "text": "ROUTER",
-        "icon": "router"
-    },
-    "34": {
-        "text": "AUDIO_RECEIVER",
-        "icon": "music_cast"
-    },
-    "35": {
-        "text": "TV_SET_TOP_BOX",
-        "icon": "audio_video_receiver"
-    },
-    "36": {
-        "text": "TV_STREAMING_STIC",
-        "icon": "cast"
-    }
+var extendStatics = function(d, b) {
+  extendStatics = Object.setPrototypeOf ||
+      ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+      function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+  return extendStatics(d, b);
 };
-exports["default"] = accessoryCategories;
 
-
-/***/ }),
-
-/***/ "./admin/pageBuilder/pageBuilder.base.ts":
-/*!***********************************************!*\
-  !*** ./admin/pageBuilder/pageBuilder.base.ts ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ConfigPageBuilder_Base = void 0;
-class ConfigPageBuilder_Base {
-    constructor(delegate) {
-        this.delegate = delegate;
-    }
-    refreshSimpleErrorElement(errorElement, validator) {
-        let errorVisible = false;
-        if (validator)
-            errorVisible = validator();
-        if (errorElement)
-            errorElement.classList.toggle('validationError', errorVisible);
-    }
-    fillSelectByEntryList(selectElement, selectListArray) {
-        for (let item of selectListArray) {
-            let optElem = document.createElement('option');
-            optElem.value = item.value;
-            optElem.text = item.text;
-            selectElement.add(optElem);
-        }
-    }
-    fillSelectByDict(selectElement, dictionary) {
-        for (let key in dictionary) {
-            let optElem = document.createElement('option');
-            optElem.value = key;
-            optElem.text = dictionary[key].text;
-            selectElement.add(optElem);
-        }
-    }
-    fillSelectByListEntries(selectElement, entries) {
-        if (!(selectElement instanceof HTMLSelectElement)) {
-            return;
-        }
-        if (entries === undefined)
-            return;
-        if (Array.isArray(entries))
-            this.fillSelectByEntryList(selectElement, entries);
-        else
-            this.fillSelectByDict(selectElement, entries);
-    }
-    fillSelectByArray(selectElement, stringlist) {
-        for (let itemName of stringlist) {
-            let optElem = document.createElement('option');
-            optElem.value = itemName;
-            optElem.text = itemName;
-            selectElement.add(optElem);
-        }
-    }
+function __extends(d, b) {
+  if (typeof b !== "function" && b !== null)
+      throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+  extendStatics(d, b);
+  function __() { this.constructor = d; }
+  d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 }
-exports.ConfigPageBuilder_Base = ConfigPageBuilder_Base;
 
+var __assign = function() {
+  __assign = Object.assign || function __assign(t) {
+      for (var s, i = 1, n = arguments.length; i < n; i++) {
+          s = arguments[i];
+          for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+      return t;
+  }
+  return __assign.apply(this, arguments);
+}
 
-/***/ }),
+function __rest(s, e) {
+  var t = {};
+  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+      t[p] = s[p];
+  if (s != null && typeof Object.getOwnPropertySymbols === "function")
+      for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+          if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+              t[p[i]] = s[p[i]];
+      }
+  return t;
+}
 
-/***/ "./admin/pageBuilder/pageBuilder.bridgeConfig.ts":
-/*!*******************************************************!*\
-  !*** ./admin/pageBuilder/pageBuilder.bridgeConfig.ts ***!
-  \*******************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+function __decorate(decorators, target, key, desc) {
+  var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+  if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+  else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+  return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
 
-"use strict";
+function __param(paramIndex, decorator) {
+  return function (target, key) { decorator(target, key, paramIndex); }
+}
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+function __esDecorate(ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+  function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
+  var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+  var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+  var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+  var _, done = false;
+  for (var i = decorators.length - 1; i >= 0; i--) {
+      var context = {};
+      for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+      for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+      context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+      var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+      if (kind === "accessor") {
+          if (result === void 0) continue;
+          if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+          if (_ = accept(result.get)) descriptor.get = _;
+          if (_ = accept(result.set)) descriptor.set = _;
+          if (_ = accept(result.init)) initializers.unshift(_);
+      }
+      else if (_ = accept(result)) {
+          if (kind === "field") initializers.unshift(_);
+          else descriptor[key] = _;
+      }
+  }
+  if (target) Object.defineProperty(target, contextIn.name, descriptor);
+  done = true;
 };
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ConfigPageBuilder_BridgeConfig = void 0;
-/// <reference path="../../typings/index.d.ts" />
-const hkBridge = __webpack_require__(/*! ../../shared/yahka.configuration */ "./shared/yahka.configuration.ts");
-const pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
-const admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
-const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-const yahka_admin_1 = __webpack_require__(/*! ../yahka.admin */ "./admin/yahka.admin.ts");
-class ConfigPageBuilder_BridgeConfig extends pageBuilder_base_1.ConfigPageBuilder_Base {
-    constructor(delegate) {
-        super(delegate);
-        this.delegate = delegate;
-        this.addServiceAvailable = false;
-        this.removeDeviceAvailable = false;
-        this.duplicateDeviceAvailable = false;
-        this.bridgeConfigPanelTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.bridgeConfig.main.inc.html */ "./admin/pageBuilder/pageBuilder.bridgeConfig.main.inc.html"));
-    }
-    refresh(config, AFocusLastPanel, devicePanel) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!hkBridge.Configuration.isBridgeConfig(config)) {
-                return;
-            }
-            let bridgeConfigFragment = document.importNode(this.bridgeConfigPanelTemplate.content, true);
-            (0, admin_translation_1.translateFragment)(bridgeConfigFragment);
-            let inputHelper = (selector, propertyName, selectList, validator = undefined) => {
-                let input = bridgeConfigFragment.querySelector(selector);
-                let errorElement = bridgeConfigFragment.querySelector(selector + '_error');
-                this.fillSelectByListEntries(input, selectList);
-                let value = config[propertyName];
-                if (value !== undefined) {
-                    input.value = value;
-                }
-                else {
-                    input.value = '';
-                }
-                input.addEventListener('input', this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
-                input.addEventListener('change', this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
-                this.refreshSimpleErrorElement(errorElement, validator);
-            };
-            let checkboxHelper = (selector, propertyName, validator = undefined) => {
-                let input = bridgeConfigFragment.querySelector(selector);
-                let errorElement = bridgeConfigFragment.querySelector(`${selector}_error`);
-                const value = config[propertyName];
-                input.checked = value;
-                input.addEventListener('click', this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
-                this.refreshSimpleErrorElement(errorElement, validator);
-            };
-            inputHelper('.name', 'name', undefined, () => !this.delegate.deviceIsUnique(config));
-            inputHelper('.group', 'groupString');
-            inputHelper('.manufacturer', 'manufacturer');
-            inputHelper('.model', 'model');
-            inputHelper('.serial', 'serial');
-            inputHelper('.firmware', 'firmware');
-            inputHelper('.username', 'username');
-            inputHelper('.pincode', 'pincode');
-            inputHelper('.port', 'port');
-            let ipList = yield yahka_admin_1.ioBrokerInterfaceList;
-            let ipListForSelectBox = ipList
-                .filter((a) => a.family === 'ipv4')
-                .map((a) => {
-                return { value: a.address, text: a.name };
-            });
-            inputHelper('.interface', 'interface', ipListForSelectBox);
-            checkboxHelper('.useLegacyAdvertiser', 'useLegacyAdvertiser');
-            checkboxHelper('.useCiaoAdvertiser', 'useCiaoAdvertiser');
-            checkboxHelper('.verboseLogging', 'verboseLogging');
-            devicePanel.appendChild(bridgeConfigFragment);
-        });
-    }
-    styleListItem(listItem, deviceConfig) {
-        const actions = listItem.querySelector('.device-actions');
-        const duplicateButton = actions.querySelector('.yahka_duplicate_device');
-        const removeButton = actions.querySelector('.yahka_remove_device');
-        duplicateButton.classList.add('disabled');
-        removeButton.classList.add('disabled');
-        const listIcon = listItem.querySelector('.device-icon');
-        listIcon.innerHTML = 'settings_ethernet';
-        // actions.remove();
-        // let listIcon = listItem.querySelector('.list-icon');
-        // listIcon.className = 'list-icon icon mif-tree';
-        // listItem.classList.add('fg-grayDark');
-        return true;
-    }
-    handleBridgeMetaDataChange(bridgeConfig, propertyName, errorElement, validator, ev) {
-        let inputTarget = ev.currentTarget;
-        if (inputTarget.type == 'checkbox') {
-            bridgeConfig[propertyName] = inputTarget.checked;
-        }
-        else {
-            bridgeConfig[propertyName] = inputTarget.value;
-        }
-        this.refreshSimpleErrorElement(errorElement, validator);
-        this.delegate.refreshDeviceListEntry(bridgeConfig);
-        this.delegate.changeCallback();
-    }
-}
-exports.ConfigPageBuilder_BridgeConfig = ConfigPageBuilder_BridgeConfig;
 
-
-/***/ }),
-
-/***/ "./admin/pageBuilder/pageBuilder.customDevice.ts":
-/*!*******************************************************!*\
-  !*** ./admin/pageBuilder/pageBuilder.customDevice.ts ***!
-  \*******************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+function __runInitializers(thisArg, initializers, value) {
+  var useValue = arguments.length > 2;
+  for (var i = 0; i < initializers.length; i++) {
+      value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+  }
+  return useValue ? value : void 0;
 };
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ConfigPageBuilder_CustomDevice = void 0;
-/// <reference path="../../typings/index.d.ts" />
-const hkBridge = __webpack_require__(/*! ../../shared/yahka.configuration */ "./shared/yahka.configuration.ts");
-const pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
-const admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
-const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-const pageBuilder_servicePanel_1 = __webpack_require__(/*! ./pageBuilder.servicePanel */ "./admin/pageBuilder/pageBuilder.servicePanel.ts");
-const yahka_admin_1 = __webpack_require__(/*! ../yahka.admin */ "./admin/yahka.admin.ts");
-const pageBuilder_accessoryCategories_1 = __webpack_require__(/*! ./pageBuilder.accessoryCategories */ "./admin/pageBuilder/pageBuilder.accessoryCategories.ts");
-let accessoryCategories = pageBuilder_accessoryCategories_1.default;
-class ConfigPageBuilder_CustomDevice extends pageBuilder_base_1.ConfigPageBuilder_Base {
-    constructor(delegate) {
-        super(delegate);
-        this.delegate = delegate;
-        this.addServiceAvailable = true;
-        this.removeDeviceAvailable = true;
-        this.duplicateDeviceAvailable = true;
-        this.servicePanelBuilder = new pageBuilder_servicePanel_1.ConfigPageBuilder_ServicePanel(delegate);
-        this.deviceInfoPanelTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.customDevice.infoPanel.inc.html */ "./admin/pageBuilder/pageBuilder.customDevice.infoPanel.inc.html"));
-    }
-    refresh(config, AFocusLastPanel, devicePanel) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!hkBridge.Configuration.isDeviceConfig(config)) {
-                return;
-            }
-            let lastPane = yield this.buildDeviceInformationPanel(config, devicePanel);
-            const servicePanelContainer = devicePanel.querySelector('.yahka_service_container');
-            for (let serviceConfig of config.services) {
-                let servicePanel = this.servicePanelBuilder.createServicePanel(config.services, serviceConfig);
-                servicePanelContainer.appendChild(servicePanel);
-                lastPane = servicePanel;
-            }
-            if (AFocusLastPanel && lastPane) {
-                lastPane.scrollIntoView();
-                if (!lastPane.classList.contains('active')) {
-                    let heading = lastPane.querySelector('.heading');
-                    if (heading)
-                        heading.click();
-                }
-            }
-            const addServiceButton = devicePanel.querySelector('.yahka_add_service');
-            addServiceButton.addEventListener('click', () => {
-                if (!hkBridge.Configuration.isDeviceConfig(config) && !hkBridge.Configuration.isIPCameraConfig(config)) {
-                    return;
-                }
-                config.services.push({
-                    name: '',
-                    subType: '',
-                    type: '',
-                    characteristics: []
-                });
-                this.delegate.refreshDevicePanel(config, true);
-                this.delegate.changeCallback();
-            });
-        });
-    }
-    styleListItem(listItem, deviceConfig) {
-        if (!hkBridge.Configuration.isDeviceConfig(deviceConfig)) {
-            return false;
-        }
-        let iconName = 'mif-question';
-        let cat;
-        if (accessoryCategories !== undefined) {
-            if ((cat = accessoryCategories[deviceConfig.category])) {
-                iconName = cat['icon'];
-            }
-        }
-        let listIcon = listItem.querySelector('.device-icon');
-        listIcon.innerHTML = iconName;
-        listItem.classList.remove('yellow');
-        listItem.classList.remove('lighten-5');
-        if (false === deviceConfig.enabled) {
-            listItem.classList.add('yellow');
-            listItem.classList.add('lighten-5');
-        }
-        return true;
-    }
-    buildDeviceInformationPanel(deviceConfig, devicePane) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let devInfoFragment = document.importNode(this.deviceInfoPanelTemplate.content, true);
-            let devInfoPanel = devInfoFragment.querySelector('.yahka_device_info_panel');
-            (0, admin_translation_1.translateFragment)(devInfoFragment);
-            let inputHelper = (selector, propertyName, selectList, validator = undefined, checkDefault = true) => {
-                let input = devInfoPanel.querySelector(selector);
-                let errorElement = devInfoPanel.querySelector(`${selector}_error`);
-                this.fillSelectByListEntries(input, selectList);
-                let value = deviceConfig[propertyName];
-                if (input.type === 'checkbox') {
-                    input.checked = value === undefined ? checkDefault : value;
-                    input.addEventListener('change', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator));
-                }
-                else {
-                    admin_utils_1.Utils.setInputValue(input, value);
-                    input.addEventListener('input', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator));
-                    input.addEventListener('change', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator));
-                }
-                this.refreshSimpleErrorElement(errorElement, validator);
-            };
-            inputHelper('.name', 'name', undefined, () => !this.delegate.deviceIsUnique(deviceConfig));
-            inputHelper('.group', 'groupString');
-            inputHelper('.enabledCharacteristic', 'enabled');
-            inputHelper('.manufacturer', 'manufacturer');
-            inputHelper('.model', 'model');
-            inputHelper('.serial', 'serial');
-            inputHelper('.firmware', 'firmware');
-            inputHelper('.category', 'category', accessoryCategories);
-            inputHelper('.publish_as_own_device', 'publishAsOwnDevice', undefined, undefined, false);
-            inputHelper('.useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
-            inputHelper('.useCiaoAdvertiser', 'useCiaoAdvertiser', undefined, undefined, false);
-            inputHelper('.username', 'username');
-            inputHelper('.pincode', 'pincode');
-            inputHelper('.port', 'port');
-            inputHelper('.availableStateIobState', 'availableState');
-            let ipList = yield yahka_admin_1.ioBrokerInterfaceList;
-            const ipListForSelectBox = ipList
-                .filter((a) => a.family === 'ipv4')
-                .map((a) => {
-                return { value: a.address, text: a.name };
-            });
-            inputHelper('.interface', 'interface', ipListForSelectBox);
-            devicePane.appendChild(devInfoFragment);
-            return devInfoPanel;
-        });
-    }
-    handleDeviceMetaDataChange(deviceConfig, propertyName, errorElement, validator, ev) {
-        let inputTarget = ev.currentTarget;
-        const inputValue = inputTarget.type === 'checkbox' ? inputTarget.checked : inputTarget.value;
-        deviceConfig[propertyName] = inputValue;
-        this.refreshSimpleErrorElement(errorElement, validator);
-        this.delegate.refreshDeviceListEntry(deviceConfig);
-        this.delegate.changeCallback();
-    }
-}
-exports.ConfigPageBuilder_CustomDevice = ConfigPageBuilder_CustomDevice;
 
-
-/***/ }),
-
-/***/ "./admin/pageBuilder/pageBuilder.ipCam.ts":
-/*!************************************************!*\
-  !*** ./admin/pageBuilder/pageBuilder.ipCam.ts ***!
-  \************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+function __propKey(x) {
+  return typeof x === "symbol" ? x : "".concat(x);
 };
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ConfigPageBuilder_IPCamera = void 0;
-/// <reference path="../../typings/index.d.ts" />
-const hkBridge = __webpack_require__(/*! ../../shared/yahka.configuration */ "./shared/yahka.configuration.ts");
-const pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
-const admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
-const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-const yahka_admin_1 = __webpack_require__(/*! ../yahka.admin */ "./admin/yahka.admin.ts");
-const admin_defaults_1 = __webpack_require__(/*! ../admin.defaults */ "./admin/admin.defaults.ts");
-const pageBuilder_servicePanel_1 = __webpack_require__(/*! ./pageBuilder.servicePanel */ "./admin/pageBuilder/pageBuilder.servicePanel.ts");
-class ConfigPageBuilder_IPCamera extends pageBuilder_base_1.ConfigPageBuilder_Base {
-    constructor(delegate) {
-        super(delegate);
-        this.delegate = delegate;
-        this.addServiceAvailable = true;
-        this.removeDeviceAvailable = true;
-        this.duplicateDeviceAvailable = true;
-        this.servicePanelBuilder = new pageBuilder_servicePanel_1.ConfigPageBuilder_ServicePanel(delegate);
-        this.configPanelTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.ipCam.main.inc.html */ "./admin/pageBuilder/pageBuilder.ipCam.main.inc.html"));
-    }
-    refresh(config, AFocusLastPanel, devicePanel) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!hkBridge.Configuration.isIPCameraConfig(config)) {
-                return;
-            }
-            yield this.refreshCameraPanels(config, AFocusLastPanel, devicePanel);
-            this.refreshServicePanels(config, AFocusLastPanel, devicePanel);
-        });
-    }
-    refreshCameraPanels(config, AFocusLastPanel, devicePanel) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let configFragment = document.importNode(this.configPanelTemplate.content, true);
-            (0, admin_translation_1.translateFragment)(configFragment);
-            let inputHelper = (selector, propertyName, selectList, validator = undefined, checkDefault = true) => {
-                let input = configFragment.querySelector(selector);
-                let errorElement = configFragment.querySelector(selector + '_error');
-                this.fillSelectByListEntries(input, selectList);
-                let value = config[propertyName];
-                if (input.type === 'checkbox') {
-                    input.checked = value === undefined ? checkDefault : Boolean(value);
-                    input.addEventListener('change', this.handlePropertyChange.bind(this, config, propertyName, errorElement, validator));
-                }
-                else {
-                    if (value !== undefined) {
-                        input.value = value.toString();
-                    }
-                    else {
-                        input.value = '';
-                    }
-                    input.addEventListener('input', this.handlePropertyChange.bind(this, config, propertyName, errorElement, validator));
-                    input.addEventListener('change', this.handlePropertyChange.bind(this, config, propertyName, errorElement, validator));
-                }
-                this.refreshSimpleErrorElement(errorElement, validator);
-            };
-            let ffmpegHelper = (selector, propertyName) => {
-                let input = configFragment.querySelector(selector);
-                let inputErrorMsg = configFragment.querySelector(selector + '_error');
-                let value = config.ffmpegCommandLine[propertyName];
-                if (value !== undefined) {
-                    input.value = JSON.stringify(value, null, 2);
-                }
-                else {
-                    input.value = '';
-                }
-                input.addEventListener('input', this.handleffMpegPropertyChange.bind(this, config, propertyName, inputErrorMsg));
-                configFragment.querySelector(`${selector}_reset`).addEventListener('click', () => {
-                    input.value = JSON.stringify(admin_defaults_1.Defaults.ffmpegCommandLines.default[propertyName], null, 2);
-                    input.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
-                    return true;
-                });
-            };
-            inputHelper('.enabled', 'enabled');
-            inputHelper('.name', 'name', undefined, () => !this.delegate.deviceIsUnique(config));
-            inputHelper('.group', 'groupString');
-            inputHelper('.manufacturer', 'manufacturer');
-            inputHelper('.model', 'model');
-            inputHelper('.serial', 'serial');
-            inputHelper('.firmware', 'firmware');
-            inputHelper('.username', 'username');
-            inputHelper('.pincode', 'pincode');
-            inputHelper('.port', 'port');
-            let ipList = yield yahka_admin_1.ioBrokerInterfaceList;
-            let ipListForSelectBox = ipList
-                .filter((a) => a.family === 'ipv4')
-                .map((a) => {
-                return { value: a.address, text: a.name };
-            });
-            inputHelper('.interface', 'interface', ipListForSelectBox);
-            inputHelper('.useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
-            inputHelper('.useCiaoAdvertiser', 'useCiaoAdvertiser', undefined, undefined, false);
-            inputHelper('.source', 'source');
-            inputHelper('.codec', 'codec');
-            inputHelper('.enableAudio', 'enableAudio', undefined, undefined, false);
-            inputHelper('.numberOfStreams', 'numberOfStreams');
-            inputHelper('.maxWidth', 'maxWidth');
-            inputHelper('.maxHeight', 'maxHeight');
-            inputHelper('.maxFPS', 'maxFPS');
-            ffmpegHelper('.ffmpeg_snapshot', 'snapshot');
-            ffmpegHelper('.ffmpeg_stream', 'stream');
-            ffmpegHelper('.ffmpeg_streamAudio', 'streamAudio');
-            const addServiceButton = configFragment.querySelector('.yahka_add_service');
-            addServiceButton.addEventListener('click', () => {
-                if (!hkBridge.Configuration.isIPCameraConfig(config)) {
-                    return;
-                }
-                config.services.push({
-                    name: '',
-                    subType: '',
-                    type: '',
-                    characteristics: []
-                });
-                this.delegate.refreshDevicePanel(config, true);
-                this.delegate.changeCallback();
-            });
-            devicePanel.appendChild(configFragment);
-        });
-    }
-    refreshServicePanels(config, AFocusLastPanel, devicePanel) {
-        var _a;
-        const servicePanelContainer = devicePanel.querySelector('.yahka_service_container');
-        let lastPane;
-        config.services = (_a = config.services) !== null && _a !== void 0 ? _a : [];
-        for (let serviceConfig of config.services) {
-            let servicePanel = this.servicePanelBuilder.createServicePanel(config.services, serviceConfig);
-            servicePanelContainer.appendChild(servicePanel);
-            lastPane = servicePanel;
-        }
-        if (AFocusLastPanel && lastPane) {
-            lastPane.scrollIntoView();
-            if (!lastPane.classList.contains('active')) {
-                let heading = lastPane.querySelector('.heading');
-                if (heading)
-                    heading.click();
-            }
-        }
-    }
-    styleListItem(listItem, deviceConfig) {
-        if (!hkBridge.Configuration.isIPCameraConfig(deviceConfig)) {
-            return false;
-        }
-        let listIcon = listItem.querySelector('.device-icon');
-        listIcon.innerHTML = 'camera_alt';
-        listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
-        listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
-        return true;
-    }
-    handlePropertyChange(config, propertyName, errorElement, validator, ev) {
-        let inputTarget = ev.currentTarget;
-        if (inputTarget.type == 'checkbox') {
-            config[propertyName] = inputTarget.checked;
-        }
-        else {
-            config[propertyName] = inputTarget.value;
-        }
-        this.refreshSimpleErrorElement(errorElement, validator);
-        this.delegate.refreshDeviceListEntry(config);
-        this.delegate.changeCallback();
-    }
-    displayExceptionHint(textArea, msgPanel, message) {
-        textArea.classList.toggle('validationError', message !== undefined);
-        msgPanel.classList.toggle('validationError', message !== undefined);
-        msgPanel.innerText = message;
-    }
-    handleffMpegPropertyChange(config, propertyName, inputErrorMsgPanel, ev) {
-        let inputTarget = ev.currentTarget;
-        try {
-            config.ffmpegCommandLine[propertyName] = JSON.parse(inputTarget.value);
-            this.displayExceptionHint(inputTarget, inputErrorMsgPanel, undefined);
-        }
-        catch (e) {
-            this.displayExceptionHint(inputTarget, inputErrorMsgPanel, e.message);
-        }
-        this.delegate.refreshDeviceListEntry(config);
-        this.delegate.changeCallback();
-    }
-}
-exports.ConfigPageBuilder_IPCamera = ConfigPageBuilder_IPCamera;
 
-
-/***/ }),
-
-/***/ "./admin/pageBuilder/pageBuilder.main.ts":
-/*!***********************************************!*\
-  !*** ./admin/pageBuilder/pageBuilder.main.ts ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ioBroker_YahkaPageBuilder = void 0;
-/// <reference path="../../typings/index.d.ts" />
-const hkBridge = __webpack_require__(/*! ../../shared/yahka.configuration */ "./shared/yahka.configuration.ts");
-const $ = __webpack_require__(/*! jquery */ "jquery");
-const admin_defaults_1 = __webpack_require__(/*! ../admin.defaults */ "./admin/admin.defaults.ts");
-const pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
-const pageBuilder_customDevice_1 = __webpack_require__(/*! ./pageBuilder.customDevice */ "./admin/pageBuilder/pageBuilder.customDevice.ts");
-const pageBuilder_bridgeConfig_1 = __webpack_require__(/*! ./pageBuilder.bridgeConfig */ "./admin/pageBuilder/pageBuilder.bridgeConfig.ts");
-const pageBuilder_ipCam_1 = __webpack_require__(/*! ./pageBuilder.ipCam */ "./admin/pageBuilder/pageBuilder.ipCam.ts");
-const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-function generateRandomUsername() {
-    let usr = [];
-    for (let i = 0; i < 6; i++)
-        usr[i] = (`00${Math.floor((Math.random() * 256)).toString(16)}`).substr(-2);
-    return usr.join(':');
-}
-class ioBroker_YahkaPageBuilder {
-    constructor(_bridgeSettings, cameraConfigs, _changeCallback) {
-        this._bridgeSettings = _bridgeSettings;
-        this.cameraConfigs = cameraConfigs;
-        this._changeCallback = _changeCallback;
-        this.pageBuilders = new Map();
-        this._selectedDeviceConfig = undefined;
-        if (!_bridgeSettings.devices) {
-            _bridgeSettings.devices = [];
-        }
-        _bridgeSettings.configType = 'bridge';
-        this.deviceListHandler = new ioBroker_DeviceListHandler(this);
-        this.buttonHandler = new ioBroker_ButtonHandler(this, this.deviceListHandler);
-        this.pageBuilders.set('bridge', new pageBuilder_bridgeConfig_1.ConfigPageBuilder_BridgeConfig(this));
-        this.pageBuilders.set('customdevice', new pageBuilder_customDevice_1.ConfigPageBuilder_CustomDevice(this));
-        this.pageBuilders.set('ipcamera', new pageBuilder_ipCam_1.ConfigPageBuilder_IPCamera(this));
-        this.bootstrap();
-    }
-    refreshInputs() {
-        setTimeout(() => {
-            const devicePanel = document.querySelector('.yahka-edit-device-container');
-            const selectElements = devicePanel.querySelectorAll('select');
-            selectElements.forEach(selectElement => {
-                M.FormSelect.init(selectElement);
-            });
-            const collapsibleElements = document.querySelectorAll('.collapsible:not(.no-re-init)');
-            M.Collapsible.init(collapsibleElements, {
-                accordion: false
-            });
-            M.updateTextFields();
-            const textareaElements = document.querySelectorAll('.materialize-textarea');
-            textareaElements.forEach(textareaElement => {
-                M.textareaAutoResize(textareaElement);
-            });
-        }, 10);
-    }
-    bootstrap() {
-        let bridgeFrame = document.querySelector('#yahka_bridge_frame');
-        this.deviceListHandler.buildDeviceList(bridgeFrame);
-        this.buttonHandler.bindBridgeButtons(bridgeFrame);
-        return bridgeFrame;
-    }
-    rebuildDeviceList() {
-        let bridgeFrame = document.querySelector('#yahka_bridge_frame');
-        this.deviceListHandler.buildDeviceList(bridgeFrame);
-    }
-    deviceIsUnique(deviceConfig) {
-        let devList = this.deviceListHandler.getDeviceList();
-        return !devList.some((a) => (a.name == deviceConfig.name) && (a !== deviceConfig));
-    }
-    getPageBuilderByConfig(deviceConfig) {
-        if (deviceConfig === undefined) {
-            return undefined;
-        }
-        let configType = deviceConfig.configType;
-        if (configType === undefined) {
-            if (hkBridge.Configuration.isBridgeConfig(deviceConfig)) {
-                configType = 'bridge';
-            }
-            else if (hkBridge.Configuration.isDeviceConfig(deviceConfig)) {
-                configType = 'customdevice';
-            }
-        }
-        return this.pageBuilders.get(configType);
-    }
-    get bridgeSettings() {
-        return this._bridgeSettings;
-    }
-    get selectedDeviceConfig() {
-        return this._selectedDeviceConfig;
-    }
-    refreshDevicePanel(deviceConfig, AFocusLastPanel) {
-        let pageBuilder = this.getPageBuilderByConfig(deviceConfig);
-        const devicePanel = document.querySelector('.yahka-edit-device-container');
-        if (devicePanel.style.display == 'none') {
-            devicePanel.style.display = null;
-        }
-        if (devicePanel) {
-            devicePanel.innerHTML = '';
-        }
-        if (!pageBuilder) {
-            devicePanel.style.display = 'none';
-        }
-        if (pageBuilder) {
-            pageBuilder.refresh(deviceConfig, AFocusLastPanel, devicePanel);
-        }
-        this.refreshInputs();
-    }
-    setSelectedDeviceConfig(deviceConfig, AFocusLastPanel) {
-        this._selectedDeviceConfig = deviceConfig;
-        this.refreshDevicePanel(deviceConfig, AFocusLastPanel);
-    }
-    refreshSelectedDeviceConfig() {
-        this.setSelectedDeviceConfig(this._selectedDeviceConfig, false);
-    }
-    refreshDeviceListEntry(deviceConfig) {
-        this.deviceListHandler.refreshDeviceList();
-    }
-    changeCallback() {
-        return this._changeCallback();
-    }
-}
-exports.ioBroker_YahkaPageBuilder = ioBroker_YahkaPageBuilder;
-class ioBroker_DeviceListHandler extends pageBuilder_base_1.ConfigPageBuilder_Base {
-    constructor(delegate) {
-        super(delegate);
-        this.listEntryToConfigMap = new Map();
-        this.entryGroupMap = new Map();
-        this.deviceListEntryTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.main.deviceListEntry.inc.html */ "./admin/pageBuilder/pageBuilder.main.deviceListEntry.inc.html"));
-        this.deviceListEntryGroupTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.main.deviceListEntryGroup.inc.html */ "./admin/pageBuilder/pageBuilder.main.deviceListEntryGroup.inc.html"));
-    }
-    getDeviceList() {
-        let result = [this.delegate.bridgeSettings];
-        let devices = [];
-        if (this.delegate.bridgeSettings.devices)
-            devices = devices.concat(this.delegate.bridgeSettings.devices);
-        if (this.delegate.cameraConfigs)
-            devices = devices.concat(this.delegate.cameraConfigs);
-        return result.concat(devices.sort((a, b) => a.name.localeCompare(b.name)));
-    }
-    createDeviceListEntry(deviceConfig) {
-        let deviceEntry = document.importNode(this.deviceListEntryTemplate.content, true);
-        let listItem = deviceEntry.querySelector('.collection-item');
-        this.refreshDeviceListEntry(deviceConfig, listItem);
-        return deviceEntry;
-    }
-    buildDeviceList(bridgeFrame) {
-        let bridge = this.delegate.bridgeSettings;
-        let deviceList = bridgeFrame.querySelector('#yahka_deviceList');
-        deviceList.innerHTML = '';
-        this.listEntryToConfigMap.clear();
-        this.entryGroupMap.clear();
-        for (let deviceConfig of this.getDeviceList().sort((a, b) => { var _a; return (_a = a.name) === null || _a === void 0 ? void 0 : _a.localeCompare(b.name); })) {
-            const groupNode = this.getDeviceGroupNode(deviceList, deviceConfig);
-            let fragment = this.createDeviceListEntry(deviceConfig);
-            let node = fragment.querySelector('.collection-item');
-            this.listEntryToConfigMap.set(node, deviceConfig);
-            groupNode.appendChild(fragment);
-            const editButton = node.querySelector('.edit-button');
-            const removeButton = node.querySelector('.yahka_remove_device');
-            const duplicateButton = node.querySelector('.yahka_duplicate_device');
-            if (editButton) {
-                editButton.addEventListener('click', () => {
-                    this.delegate.setSelectedDeviceConfig(deviceConfig, false);
-                });
-            }
-            if (removeButton) {
-                removeButton.addEventListener('click', () => {
-                    if (hkBridge.Configuration.isIPCameraConfig(deviceConfig)) {
-                        let idx = this.delegate.cameraConfigs.indexOf(deviceConfig);
-                        if (idx > -1) {
-                            this.delegate.cameraConfigs.splice(idx, 1);
-                            this.delegate.changeCallback();
-                            this.delegate.setSelectedDeviceConfig(undefined, false);
-                            this.buildDeviceList(bridgeFrame);
-                            this.delegate.changeCallback();
-                        }
-                    }
-                    if (hkBridge.Configuration.isDeviceConfig(deviceConfig)) {
-                        let idx = bridge.devices.indexOf(deviceConfig);
-                        if (idx > -1) {
-                            bridge.devices.splice(idx, 1);
-                            this.delegate.changeCallback();
-                            this.delegate.setSelectedDeviceConfig(undefined, false);
-                            this.buildDeviceList(bridgeFrame);
-                            this.delegate.changeCallback();
-                        }
-                    }
-                });
-            }
-            if (duplicateButton) {
-                duplicateButton.addEventListener('click', () => {
-                    let copyOfDevice = $.extend(true, {}, deviceConfig);
-                    copyOfDevice.name = `${copyOfDevice.name} copy`;
-                    if (hkBridge.Configuration.isIPCameraConfig(copyOfDevice)) {
-                        copyOfDevice.serial = '';
-                        this.delegate.cameraConfigs.push(copyOfDevice);
-                    }
-                    else if (hkBridge.Configuration.isDeviceConfig(copyOfDevice)) {
-                        copyOfDevice.serial = '';
-                        bridge.devices.push(copyOfDevice);
-                    }
-                    else {
-                        return;
-                    }
-                    this.delegate.setSelectedDeviceConfig(copyOfDevice, true);
-                    this.buildDeviceList(bridgeFrame);
-                    this.delegate.changeCallback();
-                });
-            }
-        }
-        [...deviceList.children]
-            .sort((a, b) => { var _a; return (_a = a.innerText) === null || _a === void 0 ? void 0 : _a.localeCompare(b.innerText); })
-            .forEach(node => {
-            return deviceList.appendChild(node);
-        });
-    }
-    getDeviceGroupNode(deviceList, deviceConfig) {
-        const groupName = deviceConfig.groupString ? deviceConfig.groupString : '<no group>';
-        const dictIdentifier = groupName.toLocaleLowerCase();
-        const existingNode = this.entryGroupMap.get(dictIdentifier);
-        if (existingNode != null) {
-            return existingNode;
-        }
-        const fragment = document.importNode(this.deviceListEntryGroupTemplate.content, true);
-        const groupRootNode = fragment.querySelector('li');
-        const groupNameNode = fragment.querySelector('.group-name');
-        const groupContentNode = fragment.querySelector('.group-content');
-        groupNameNode.innerText = groupName;
-        this.entryGroupMap.set(dictIdentifier, groupContentNode);
-        deviceList.appendChild(groupRootNode);
-        return groupContentNode;
-    }
-    refreshDeviceList() {
-        this.listEntryToConfigMap.forEach((node, element) => this.refreshDeviceListEntry(node, element));
-    }
-    refreshDeviceListEntry(deviceConfig, listItem) {
-        if (!listItem)
-            return;
-        let pageBuilder = this.delegate.getPageBuilderByConfig(deviceConfig);
-        listItem.querySelector('.list-title').textContent = deviceConfig.name;
-        // listItem.classList.toggle('active', (deviceConfig === this.delegate.selectedDeviceConfig));
-        let stylingDone = false;
-        if (pageBuilder !== undefined) {
-            stylingDone = pageBuilder.styleListItem(listItem, deviceConfig);
-        }
-        listItem.classList.toggle('error', !this.delegate.deviceIsUnique(deviceConfig));
-        if (!stylingDone) {
-            let listIcon = listItem.querySelector('.device-icon');
-            listIcon.innerHTML = 'crop_free';
-        }
-    }
-    handleDeviceListClick(deviceNode) {
-        let deviceConfig = this.listEntryToConfigMap.get(deviceNode);
-        this.delegate.setSelectedDeviceConfig(deviceConfig, false);
-    }
-}
-class ioBroker_ButtonHandler extends pageBuilder_base_1.ConfigPageBuilder_Base {
-    constructor(delegate, deviceListHandler) {
-        super(delegate);
-        this.deviceListHandler = deviceListHandler;
-    }
-    bindBridgeButtons(bridgePane) {
-        let bridge = this.delegate.bridgeSettings;
-        let elem;
-        if (elem = bridgePane.querySelector('#yahka_add_device')) {
-            elem.addEventListener('click', (e) => {
-                e.preventDefault();
-                let newCustomDevice = {
-                    configType: 'customdevice',
-                    manufacturer: '',
-                    model: '',
-                    name: `<new device ${this.deviceListHandler.getDeviceList().length}>`,
-                    serial: '',
-                    firmware: '',
-                    enabled: true,
-                    category: 1,
-                    services: [],
-                    availableState: null
-                };
-                bridge.devices.push(newCustomDevice);
-                this.delegate.setSelectedDeviceConfig(newCustomDevice, true);
-                this.deviceListHandler.buildDeviceList(bridgePane);
-                this.delegate.changeCallback();
-            });
-        }
-        if (elem = bridgePane.querySelector('#yahka_add_camera')) {
-            elem.addEventListener('click', (e) => {
-                e.preventDefault();
-                let newIPCamera = {
-                    configType: 'ipcamera',
-                    ident: '',
-                    manufacturer: '',
-                    model: '',
-                    name: `<new camera ${this.deviceListHandler.getDeviceList().length}>`,
-                    serial: '',
-                    firmware: '',
-                    port: 0,
-                    username: generateRandomUsername(),
-                    pincode: '123-45-678',
-                    enabled: true,
-                    source: '',
-                    codec: 'libx264',
-                    maxWidth: 1920,
-                    maxHeight: 1080,
-                    maxFPS: 60,
-                    verboseLogging: false,
-                    numberOfStreams: undefined,
-                    ffmpegCommandLine: admin_defaults_1.Defaults.ffmpegCommandLines.default,
-                    enableAudio: false,
-                    devices: [],
-                    services: []
-                };
-                this.delegate.cameraConfigs.push(newIPCamera);
-                this.delegate.setSelectedDeviceConfig(newIPCamera, true);
-                this.deviceListHandler.buildDeviceList(bridgePane);
-                this.delegate.changeCallback();
-            });
-        }
-    }
-}
-
-
-/***/ }),
-
-/***/ "./admin/pageBuilder/pageBuilder.servicePanel.ts":
-/*!*******************************************************!*\
-  !*** ./admin/pageBuilder/pageBuilder.servicePanel.ts ***!
-  \*******************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ConfigPageBuilder_ServicePanel = void 0;
-const yahka_meta_generator_1 = __webpack_require__(/*! ../yahka.meta-generator */ "./admin/yahka.meta-generator.ts");
-const pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
-const parameterEditor_factory_1 = __webpack_require__(/*! ../parameterEditor/parameterEditor.factory */ "./admin/parameterEditor/parameterEditor.factory.ts");
-const parameterEditor_null_1 = __webpack_require__(/*! ../parameterEditor/parameterEditor.null */ "./admin/parameterEditor/parameterEditor.null.ts");
-const admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
-const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-let HAPServiceDictionary = (0, yahka_meta_generator_1.generateMetaDataDictionary)();
-class ConfigPageBuilder_ServicePanel extends pageBuilder_base_1.ConfigPageBuilder_Base {
-    constructor(delegate) {
-        super(delegate);
-        this.delegate = delegate;
-        this.deviceServicePanelTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.servicePanel.servicePanel.inc.html */ "./admin/pageBuilder/pageBuilder.servicePanel.servicePanel.inc.html"));
-        this.characteristicRow = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.servicePanel.characteristicRow.inc.html */ "./admin/pageBuilder/pageBuilder.servicePanel.characteristicRow.inc.html"));
-        this.characteristicPropRow = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.servicePanel.characteristic.propRow.inc.html */ "./admin/pageBuilder/pageBuilder.servicePanel.characteristic.propRow.inc.html"));
-    }
-    createServicePanel(services, serviceConfig) {
-        let servicePanel = document.importNode(this.deviceServicePanelTemplate.content, true);
-        let frameNode = servicePanel.querySelector('.yahka_service_panel');
-        (0, admin_translation_1.translateFragment)(servicePanel);
-        let inputHelper = (selector, configName, selectList, eventHandler, defaultForCheckbox = true) => {
-            var _a;
-            let input = frameNode.querySelector(selector);
-            if (selectList != null) {
-                this.fillSelectByListEntries(input, selectList);
-            }
-            if (serviceConfig) {
-                admin_utils_1.Utils.setInputValue(input, serviceConfig[configName]);
-            }
-            if (input.type === 'checkbox') {
-                input.checked = (_a = serviceConfig[configName]) !== null && _a !== void 0 ? _a : defaultForCheckbox;
-                input.addEventListener('change', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
-            }
-            else if (eventHandler !== undefined) {
-                input.addEventListener('input', eventHandler);
-                input.addEventListener('change', eventHandler);
-            }
-            else {
-                input.addEventListener('input', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
-                input.addEventListener('change', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
-            }
-        };
-        this.refreshServicePanelCaption(serviceConfig, frameNode);
-        inputHelper('.service_enabled', 'enabled');
-        inputHelper('.service_isPrimary', 'isPrimary', undefined, undefined, false);
-        inputHelper('.service_isHidden', 'isHidden', undefined, undefined, false);
-        inputHelper('.service_name', 'name');
-        inputHelper('.service_type', 'type', Object.keys(HAPServiceDictionary.services).map(s => ({
-            text: s,
-            value: s
-        })), this.handleServiceTypeChange.bind(this, serviceConfig, frameNode));
-        inputHelper('.service_subtype', 'subType');
-        inputHelper('.service_link_to', 'linkTo', [{
-                text: '',
-                value: '',
-            }].concat(services.map((s) => ({
-            text: s.name,
-            value: s.name
-        }))));
-        inputHelper('.new_custom_characteristic', '', Object.entries(HAPServiceDictionary.characteristics)
-            .map(([key, c]) => ({
-            text: c.name,
-            value: key
-        }))
-            .sort((a, b) => { var _a, _b; return ((_a = a.text) !== null && _a !== void 0 ? _a : a.value).localeCompare((_b = b.text) !== null && _b !== void 0 ? _b : b.value); }), () => { });
-        this.buildCharacteristicTable(serviceConfig, frameNode);
-        // bind delete buttton
-        frameNode.querySelector('.yakha_delete_service').addEventListener('click', () => {
-            let idx = services.indexOf(serviceConfig);
-            if (idx > -1) {
-                services.splice(idx, 1);
-                this.delegate.changeCallback();
-                frameNode.parentNode.removeChild(frameNode);
-            }
-            this.delegate.refreshSelectedDeviceConfig();
-        });
-        frameNode.querySelector('.yahka_add_characteristic').addEventListener('click', this.addCustomCharacteristic.bind(this, serviceConfig, frameNode));
-        return frameNode;
-    }
-    refreshServicePanelCaption(serviceConfig, servicePanel) {
-        const captionElement = servicePanel.querySelector('.yahka_service_caption');
-        captionElement.textContent = `${serviceConfig.name}[${serviceConfig.type}]`;
-        if (true === serviceConfig.enabled) {
-            captionElement.classList.remove('grey-text');
-            return;
-        }
-        captionElement.classList.add('grey-text');
-    }
-    findHAPCharacteristic(serviceDef, characteristicName) {
-        if (!serviceDef)
-            return undefined;
-        const serviceChar = serviceDef.characteristics[characteristicName];
-        if (serviceChar != null)
-            return serviceChar;
-        return undefined;
-    }
-    findConfigCharacteristic(service, characteristicName) {
-        if (!service) {
-            return undefined;
-        }
-        for (let cfg of service.characteristics) {
-            if (cfg.name == characteristicName) {
-                return cfg;
-            }
-        }
-        return undefined;
-    }
-    isEmptyCharacteristic(charConfig) {
-        if (charConfig.customCharacteristic) {
-            return false;
-        }
-        if (charConfig === undefined) {
-            return true;
-        }
-        if (charConfig.name === '') {
-            return true;
-        }
-        if ((charConfig['inOutFunction'] === '') || (charConfig['inOutFunction'] === undefined)) {
-            return true;
-        }
-        return false;
-    }
-    removeCharacteristic(serviceConfig, charConfig) {
-        if (serviceConfig === undefined) {
-            return;
-        }
-        let idx = serviceConfig.characteristics.indexOf(charConfig);
-        if (idx > -1) {
-            serviceConfig.characteristics.splice(idx, 1);
-            this.delegate.changeCallback();
-        }
-    }
-    buildCharacteristicTable(serviceConfig, servicePanel) {
-        let serviceDef = HAPServiceDictionary.services[serviceConfig.type];
-        let createdCharacteristics = {};
-        for (let charConfig of serviceConfig.characteristics) {
-            let charDef = this.findHAPCharacteristic(serviceDef, charConfig.name);
-            if ((charDef === undefined) && (this.isEmptyCharacteristic(charConfig))) {
-                this.removeCharacteristic(serviceConfig, charConfig);
-                continue;
-            }
-            if (charDef == null) {
-                charDef = HAPServiceDictionary.characteristics[charConfig.name];
-            }
-            let charRow = this.createCharacteristicRow(charDef, serviceConfig, charConfig, servicePanel);
-            createdCharacteristics[charConfig.name] = [charConfig.name, charDef ? charDef.optional : false, charRow];
-        }
-        // add undefined characteristics
-        if (serviceDef) {
-            for (let charName in serviceDef.characteristics) {
-                if (createdCharacteristics[charName] === undefined) {
-                    let charDef = serviceDef.characteristics[charName];
-                    let charRow = this.createCharacteristicRow(charDef, serviceConfig, undefined, servicePanel);
-                    createdCharacteristics[charName] = [charName, charDef.optional, charRow];
-                }
-            }
-        }
-        let charRows = [];
-        for (let charRow in createdCharacteristics)
-            charRows.push(createdCharacteristics[charRow]);
-        charRows.sort((a, b) => {
-            if (a[1] != b[1])
-                return a[1] ? -1 : 1;
-            return a[0].localeCompare(b[0]);
-        });
-        let table = servicePanel.querySelector('.yahka_characteristic_table');
-        while (table.childElementCount > 0) { // first row is the header row
-            table.removeChild(table.lastElementChild);
-        }
-        for (let row of charRows) {
-            table.appendChild(row[2]);
-        }
-        this.delegate.refreshInputs();
-    }
-    getParameterEditor(functionName, valueChangeCallback, functionMap) {
-        if (!functionMap.has(functionName)) {
-            return new parameterEditor_null_1.ParameterEditor_Null(valueChangeCallback);
-        }
-        let factory = functionMap.get(functionName);
-        return factory(valueChangeCallback);
-    }
-    updateParameterEditor(functionName, parameterContainer, parameterValue, parameterChangeCallback, functionMap) {
-        let editor = this.getParameterEditor(functionName, parameterChangeCallback, functionMap);
-        if (editor == undefined)
-            return;
-        editor.refreshAndShow(parameterContainer, parameterValue);
-    }
-    createCharacteristicRow(charDef, serviceConfig, charConfig, servicePanel) {
-        var _a, _b;
-        let name = charConfig ? charConfig.name : charDef.name;
-        let enabled = charConfig ? charConfig.enabled : false;
-        let rowElement = document.importNode(this.characteristicRow.content, true);
-        (0, admin_translation_1.translateFragment)(rowElement);
-        let anchor = rowElement.querySelector('#anchor');
-        if (anchor != null) {
-            const anchorAttribute = document.createAttribute('x-yahka-anchor');
-            anchorAttribute.value = name;
-            anchor.attributes.setNamedItem(anchorAttribute);
-        }
-        const characteristicName = rowElement.querySelector('.yahka_characteristic_name');
-        let checkBox = rowElement.querySelector('.characteristic_enabled');
-        checkBox.checked = enabled;
-        checkBox.addEventListener('click', this.handleCharacteristicEnabledChange.bind(this, serviceConfig, name, characteristicName));
-        let delButton = rowElement.querySelector('.yakha_delete_characteristic');
-        delButton.addEventListener('click', () => {
-            const charConfig = this.findConfigCharacteristic(serviceConfig, name);
-            if (charConfig != null) {
-                charConfig.customCharacteristic = false;
-                this.removeCharacteristic(serviceConfig, charConfig);
-                this.buildCharacteristicTable(serviceConfig, servicePanel);
-            }
-        });
-        this.refreshEnabledClass(characteristicName, enabled);
-        this.refreshOptionalClass(characteristicName, (_a = charDef === null || charDef === void 0 ? void 0 : charDef.optional) !== null && _a !== void 0 ? _a : true);
-        this.refreshCustomClass(characteristicName, (_b = charConfig === null || charConfig === void 0 ? void 0 : charConfig.customCharacteristic) !== null && _b !== void 0 ? _b : false);
-        characteristicName.textContent = name;
-        let functionSelector = (selector, containerSelector, configName, parameterName, functionMap) => {
-            var _a;
-            let input = rowElement.querySelector(selector);
-            let container = rowElement.querySelector(containerSelector);
-            if (functionMap !== undefined) {
-                let mapKeys = [...functionMap.keys()];
-                this.fillSelectByArray(input, mapKeys);
-            }
-            let parameterValue = undefined;
-            if (charConfig) {
-                admin_utils_1.Utils.setInputValue(input, charConfig[configName]);
-                parameterValue = charConfig[parameterName];
-            }
-            let paramUpdateMethod = (newValue) => {
-                let charConfig = this.findConfigCharacteristic(serviceConfig, name);
-                if (charConfig === undefined) {
-                    charConfig = { name: name, enabled: false };
-                    serviceConfig.characteristics.push(charConfig);
-                }
-                charConfig[parameterName] = newValue;
-                this.delegate.changeCallback();
-            };
-            this.updateParameterEditor((_a = admin_utils_1.Utils.getSelectInputValue(input)) === null || _a === void 0 ? void 0 : _a.toString(), container, parameterValue, paramUpdateMethod, functionMap);
-            input.addEventListener('change', (e) => {
-                var _a;
-                this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
-                let charConfig = this.findConfigCharacteristic(serviceConfig, name);
-                this.updateParameterEditor((_a = admin_utils_1.Utils.getSelectInputValue(input)) === null || _a === void 0 ? void 0 : _a.toString(), container, charConfig[parameterName], paramUpdateMethod, functionMap);
-                return false;
-            });
-            try {
-                M.FormSelect.init(input);
-            }
-            catch (error) {
-                // Just do nothing. M.FormSelect does seemingly not work, when element is not in DOM yet or invisible.
-            }
-        };
-        functionSelector('.characteristic_inoutfunction', '.characteristic_inoutparams_container', 'inOutFunction', 'inOutParameters', parameterEditor_factory_1.inoutFunctions);
-        functionSelector('.characteristic_conversionfunction', '.characteristic_conversionparams_container', 'conversionFunction', 'conversionParameters', parameterEditor_factory_1.convFunctions);
-        this.updateCharacteristicProperties(rowElement, serviceConfig, charDef, charConfig);
-        return rowElement;
-    }
-    updateCharacteristicProperties(rowElement, serviceConfig, charDef, charConfig) {
-        let charName = charConfig ? charConfig.name : charDef.name;
-        let propTable = rowElement.querySelector('.characteristic_propertyTable');
-        function transformValue(value) {
-            let result = value;
-            let isObject = false;
-            if (typeof result === 'object') {
-                result = JSON.stringify(result);
-                isObject = true;
-            }
-            return { asString: result, isObject: isObject };
-        }
-        if (charDef === null || charDef === void 0 ? void 0 : charDef.properties) {
-            for (let propertyName in charDef.properties) {
-                let propertyDefaultValue = transformValue(charDef.properties[propertyName]);
-                let propElement = document.importNode(this.characteristicPropRow.content, true);
-                let nameSpan = propElement.querySelector('#propName');
-                nameSpan.id = '';
-                nameSpan.textContent = propertyName;
-                let propInput = propElement.querySelector('.propValue');
-                propInput.id = propertyName;
-                propInput.placeholder = propertyDefaultValue.asString;
-                if (charConfig !== undefined) {
-                    if (charConfig.properties !== undefined) {
-                        if (charConfig.properties[propertyName] !== undefined) {
-                            let charValue = transformValue(charConfig.properties[propertyName]);
-                            admin_utils_1.Utils.setInputValue(propInput, charValue.asString);
-                        }
-                    }
-                }
-                nameSpan.classList.toggle('properties-defined', propInput.value != '');
-                propInput.addEventListener('input', this.handleCharacteristicPropertyChange.bind(this, serviceConfig, charName, propertyName, propertyDefaultValue.isObject));
-                propTable.appendChild(propElement);
-            }
-        }
-    }
-    refreshEnabledClass(row, enabled) {
-        row.classList.toggle('grey-text', !enabled);
-    }
-    refreshOptionalClass(row, optional) {
-        row.classList.toggle('optional-characteristic', optional);
-    }
-    refreshCustomClass(row, custom) {
-        row.classList.toggle('custom-characteristic', custom);
-    }
-    handleCharacteristicEnabledChange(serviceConfig, charName, charRow, ev) {
-        let charConfig = this.findConfigCharacteristic(serviceConfig, charName);
-        if (charConfig === undefined) {
-            charConfig = { name: charName, enabled: false };
-            serviceConfig.characteristics.push(charConfig);
-        }
-        let inputTarget = ev.currentTarget;
-        charConfig.enabled = inputTarget.checked;
-        this.refreshEnabledClass(charRow, charConfig.enabled);
-        this.delegate.changeCallback();
-    }
-    handleCharacteristicInputChange(serviceConfig, charName, attribute, ev) {
-        let charConfig = this.findConfigCharacteristic(serviceConfig, charName);
-        if (charConfig === undefined) {
-            charConfig = { name: charName, enabled: false };
-            serviceConfig.characteristics.push(charConfig);
-        }
-        let inputTarget = ev.currentTarget;
-        let inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
-        charConfig[attribute] = inputValue;
-        this.delegate.changeCallback();
-    }
-    handleCharacteristicPropertyChange(serviceConfig, charName, property, isObjectProperty, ev) {
-        let charConfig = this.findConfigCharacteristic(serviceConfig, charName);
-        if (charConfig === undefined) {
-            charConfig = { name: charName, enabled: false };
-            serviceConfig.characteristics.push(charConfig);
-        }
-        let inputTarget = ev.currentTarget;
-        let inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
-        if (charConfig.properties === undefined)
-            charConfig.properties = {};
-        if (inputValue !== undefined) {
-            if (isObjectProperty) {
-                try {
-                    charConfig.properties[property] = JSON.parse(inputValue);
-                }
-                catch (e) {
-                    console.log('parsing of', inputValue, ' failed with: ', e);
-                }
-            }
-            else {
-                charConfig.properties[property] = inputValue;
-            }
-        }
-        else {
-            delete charConfig.properties[property];
-        }
-        this.delegate.changeCallback();
-    }
-    handleServiceMetaDataChange(serviceConfig, servicePanel, attribute, ev) {
-        let inputTarget = ev.currentTarget;
-        let inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
-        serviceConfig[attribute] = inputValue;
-        this.refreshServicePanelCaption(serviceConfig, servicePanel);
-        this.delegate.changeCallback();
-    }
-    handleServiceTypeChange(serviceConfig, servicePanel, ev) {
-        let inputTarget = ev.currentTarget;
-        let inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
-        serviceConfig.type = inputValue; //?.toString();
-        this.refreshServicePanelCaption(serviceConfig, servicePanel);
-        this.buildCharacteristicTable(serviceConfig, servicePanel);
-        this.delegate.changeCallback();
-    }
-    addCustomCharacteristic(serviceConfig, servicePanel) {
-        var _a;
-        const select = servicePanel.querySelector('.new_custom_characteristic');
-        const charName = (_a = admin_utils_1.Utils.getSelectInputValue(select)) === null || _a === void 0 ? void 0 : _a.toString();
-        const existingChar = serviceConfig.characteristics.find((c) => c.name === charName);
-        if (existingChar != null) {
-            this.setFocusToCharacteristic(servicePanel, charName);
-            return;
-        }
-        serviceConfig.characteristics.push({
-            name: charName,
-            enabled: true,
-            customCharacteristic: true
-        });
-        admin_utils_1.Utils.setInputValue(select, '');
-        this.buildCharacteristicTable(serviceConfig, servicePanel);
-        this.delegate.changeCallback();
-        this.setFocusToCharacteristic(servicePanel, charName);
-    }
-    setFocusToCharacteristic(servicePanel, name) {
-        const element = servicePanel.querySelector(`[x-yahka-anchor='${name}']`);
-        if (element == null) {
-            return;
-        }
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-}
-exports.ConfigPageBuilder_ServicePanel = ConfigPageBuilder_ServicePanel;
-
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.base.ts":
-/*!*******************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.base.ts ***!
-  \*******************************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ParameterEditor = void 0;
-class ParameterEditor {
-    constructor(valueChangeCallback) {
-        this.valueChangeCallback = valueChangeCallback;
-    }
-    refreshAndShow(containerElement, withValue) {
-    }
-    removeChildren(parentNode) {
-        while (parentNode.firstChild) {
-            parentNode.removeChild(parentNode.firstChild);
-        }
-    }
-    buildNewParameterValue() {
-        return undefined;
-    }
-    valueChanged() {
-        this.valueChangeCallback(this.buildNewParameterValue());
-    }
-}
-exports.ParameterEditor = ParameterEditor;
-
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.const.ts":
-/*!********************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.const.ts ***!
-  \********************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ParameterEditor_Const = void 0;
-const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
-const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-class ParameterEditor_Const extends parameterEditor_base_1.ParameterEditor {
-    constructor(valueChangeCallback) {
-        super(valueChangeCallback);
-        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.const.inc.html */ "./admin/parameterEditor/parameterEditor.const.inc.html"));
-        this.textField = this.templateNode.querySelector('#textfield');
-        this.textField.addEventListener('input', (ev) => this.valueChanged());
-    }
-    refreshAndShow(containerElement, parameterValue) {
-        this.removeChildren(containerElement);
-        containerElement.appendChild(this.templateNode);
-        admin_utils_1.Utils.setInputValue(this.textField, parameterValue);
-    }
-    buildNewParameterValue() {
-        return admin_utils_1.Utils.getInputValue(this.textField);
-    }
-}
-exports.ParameterEditor_Const = ParameterEditor_Const;
-
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.conversionScript.ts":
-/*!*******************************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.conversionScript.ts ***!
-  \*******************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ParameterEditor_ConversionScript = void 0;
-const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
-const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-class ParameterEditor_ConversionScript extends parameterEditor_base_1.ParameterEditor {
-    constructor(valueChangeCallback) {
-        super(valueChangeCallback);
-        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.conversionScript.inc.html */ "./admin/parameterEditor/parameterEditor.conversionScript.inc.html"));
-        this.txtToHomeKit = this.templateNode.querySelector('#toHomeKit');
-        this.txtToHomeKit.addEventListener('input', (ev) => this.valueChanged());
-        this.txtToIOBroker = this.templateNode.querySelector('#toIOBroker');
-        this.txtToIOBroker.addEventListener('input', (ev) => this.valueChanged());
-    }
-    refreshAndShow(containerElement, parameterValue) {
-        this.removeChildren(containerElement);
-        containerElement.appendChild(this.templateNode);
-        if (parameterValue) {
-            admin_utils_1.Utils.setInputValue(this.txtToHomeKit, parameterValue['toHomeKit']);
-            admin_utils_1.Utils.setInputValue(this.txtToIOBroker, parameterValue['toIOBroker']);
-        }
-        else {
-            this.txtToHomeKit.value = '';
-            this.txtToIOBroker.value = '';
-        }
-    }
-    buildNewParameterValue() {
-        return {
-            'toHomeKit': admin_utils_1.Utils.getInputValue(this.txtToHomeKit),
-            'toIOBroker': admin_utils_1.Utils.getInputValue(this.txtToIOBroker)
-        };
-    }
-}
-exports.ParameterEditor_ConversionScript = ParameterEditor_ConversionScript;
-
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.factory.ts":
-/*!**********************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.factory.ts ***!
-  \**********************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.convFunctions = exports.inoutFunctions = void 0;
-const parameterEditor_null_1 = __webpack_require__(/*! ./parameterEditor.null */ "./admin/parameterEditor/parameterEditor.null.ts");
-const parameterEditor_const_1 = __webpack_require__(/*! ./parameterEditor.const */ "./admin/parameterEditor/parameterEditor.const.ts");
-const parameterEditor_singleState_1 = __webpack_require__(/*! ./parameterEditor.singleState */ "./admin/parameterEditor/parameterEditor.singleState.ts");
-const parameterEditor_multiState_1 = __webpack_require__(/*! ./parameterEditor.multiState */ "./admin/parameterEditor/parameterEditor.multiState.ts");
-const parameterEditor_homematic_WindowCovering_TargetPosition_1 = __webpack_require__(/*! ./parameterEditor.homematic.WindowCovering.TargetPosition */ "./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.ts");
-const parameterEditor_scaleConversion_1 = __webpack_require__(/*! ./parameterEditor.scaleConversion */ "./admin/parameterEditor/parameterEditor.scaleConversion.ts");
-const parameterEditor_conversionScript_1 = __webpack_require__(/*! ./parameterEditor.conversionScript */ "./admin/parameterEditor/parameterEditor.conversionScript.ts");
-const parameterEditor_map_1 = __webpack_require__(/*! ./parameterEditor.map */ "./admin/parameterEditor/parameterEditor.map.ts");
-const parameterEditor_homematic_dimmer_1 = __webpack_require__(/*! ./parameterEditor.homematic.dimmer */ "./admin/parameterEditor/parameterEditor.homematic.dimmer.ts");
-exports.inoutFunctions = new Map([
-    ['', (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
-    ['const', (callback) => new parameterEditor_const_1.ParameterEditor_Const(callback)],
-    ['ioBroker.State', (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
-    ['ioBroker.MultiState', (callback) => new parameterEditor_multiState_1.ParameterEditor_MultiState(callback)],
-    ['ioBroker.State.Defered', (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
-    ['ioBroker.State.OnlyACK', (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
-    ['ioBroker.homematic.WindowCovering.TargetPosition', (callback) => new parameterEditor_homematic_WindowCovering_TargetPosition_1.ParameterEditor_HomeMaticWindowCoveringTargetPosition(callback)],
-    ['ioBroker.homematic.Dimmer.On', (callback) => new parameterEditor_homematic_dimmer_1.ParameterEditor_HomeMatic_Dimmer(callback, true)],
-    ['ioBroker.homematic.Dimmer.Brightness', (callback) => new parameterEditor_homematic_dimmer_1.ParameterEditor_HomeMatic_Dimmer(callback, false)]
-]);
-exports.convFunctions = new Map([
-    ['', (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
-    ['map', (callback) => new parameterEditor_map_1.ParameterEditor_Map(callback)],
-    ['hue', (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
-    ['level255', (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
-    ['passthrough', (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
-    ['inverse', (callback) => new parameterEditor_const_1.ParameterEditor_Const(callback)],
-    ['scaleInt', (callback) => new parameterEditor_scaleConversion_1.ParameterEditor_ScaleConversionEditor(callback)],
-    ['scaleFloat', (callback) => new parameterEditor_scaleConversion_1.ParameterEditor_ScaleConversionEditor(callback)],
-    ['round', (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
-    ['invert', (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
-    ['HomematicDirectionToHomekitPositionState', (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
-    ['HomematicControlModeToHomekitHeathingCoolingState', (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
-    ['script', (callback) => new parameterEditor_conversionScript_1.ParameterEditor_ConversionScript(callback)],
-]);
-
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.ts":
-/*!******************************************************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.ts ***!
-  \******************************************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ParameterEditor_HomeMaticWindowCoveringTargetPosition = void 0;
-const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
-const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-class ParameterEditor_HomeMaticWindowCoveringTargetPosition extends parameterEditor_base_1.ParameterEditor {
-    constructor(valueChangeCallback) {
-        super(valueChangeCallback);
-        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.homematic.WindowCovering.TargetPosition.inc.html */ "./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.inc.html"));
-        this.txtLevel = this.templateNode.querySelector('.level');
-        this.txtLevel.addEventListener('input', (ev) => this.valueChanged());
-        this.txtWorking = this.templateNode.querySelector('.working');
-        this.txtWorking.addEventListener('input', (ev) => this.valueChanged());
-    }
-    refreshAndShow(containerElement, parameterValue) {
-        this.removeChildren(containerElement);
-        containerElement.appendChild(this.templateNode);
-        try {
-            let p;
-            if (typeof parameterValue === 'string') {
-                p = [parameterValue];
-            }
-            else if (parameterValue instanceof Array) {
-                p = parameterValue;
-            }
-            else {
-                p = [];
-            }
-            admin_utils_1.Utils.setInputValue(this.txtLevel, (p.length >= 1) ? p[0] : '');
-            admin_utils_1.Utils.setInputValue(this.txtWorking, (p.length >= 2) ? p[1] : '');
-        }
-        catch (e) {
-            this.txtLevel.value = parameterValue;
-            this.txtWorking.value = '';
-        }
-    }
-    buildNewParameterValue() {
-        var _a;
-        const resultArray = [admin_utils_1.Utils.getInputValue(this.txtLevel).toString()];
-        if (this.txtWorking.value) {
-            resultArray.push((_a = admin_utils_1.Utils.getInputValue(this.txtWorking)) === null || _a === void 0 ? void 0 : _a.toString());
-        }
-        return resultArray;
-    }
-}
-exports.ParameterEditor_HomeMaticWindowCoveringTargetPosition = ParameterEditor_HomeMaticWindowCoveringTargetPosition;
-
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.homematic.dimmer.ts":
-/*!*******************************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.homematic.dimmer.ts ***!
-  \*******************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ParameterEditor_HomeMatic_Dimmer = void 0;
-const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
-const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-const iofunc_homematic_dimmer_1 = __webpack_require__(/*! ../../yahka.functions/iofunc.homematic.dimmer */ "./yahka.functions/iofunc.homematic.dimmer.ts");
-class ParameterEditor_HomeMatic_Dimmer extends parameterEditor_base_1.ParameterEditor {
-    constructor(valueChangeCallback, showExtendedDimmerProps) {
-        super(valueChangeCallback);
-        this.showExtendedDimmerProps = showExtendedDimmerProps;
-        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.homematic.dimmer.inc.html */ "./admin/parameterEditor/parameterEditor.homematic.dimmer.inc.html"));
-        this.txtLevel = this.templateNode.querySelector('.level');
-        this.txtLevel.addEventListener('input', (ev) => this.valueChanged());
-        this.chkRestoreToPrevious = this.templateNode.querySelector('.restoreToPreviousLevel');
-        this.chkRestoreToPrevious.addEventListener('click', (ev) => this.valueChanged());
-        this.txtDefaultLevel = this.templateNode.querySelector('.defaultLevel');
-        this.txtDefaultLevel.addEventListener('input', (ev) => this.valueChanged());
-        if (!showExtendedDimmerProps) {
-            $(this.templateNode).find('.extended-dimmer-properties').hide();
-        }
-    }
-    refreshAndShow(containerElement, parameterValue) {
-        this.removeChildren(containerElement);
-        containerElement.appendChild(this.templateNode);
-        if (parameterValue === undefined) {
-            return;
-        }
-        const params = iofunc_homematic_dimmer_1.TIoBrokerInOutFunction_Homematic_Dimmer_Base.parseParameters(parameterValue);
-        if (params === undefined) {
-            return;
-        }
-        admin_utils_1.Utils.setInputValue(this.txtLevel, params.levelState);
-        admin_utils_1.Utils.setInputValue(this.chkRestoreToPrevious, params.restoreToPreviousLevel);
-        admin_utils_1.Utils.setInputValue(this.txtDefaultLevel, params.defaultSwitchOnLevel);
-    }
-    buildNewParameterValue() {
-        var _a;
-        const result = {
-            levelState: (_a = admin_utils_1.Utils.getInputValue(this.txtLevel)) === null || _a === void 0 ? void 0 : _a.toString()
-        };
-        if (this.showExtendedDimmerProps) {
-            result.restoreToPreviousLevel = admin_utils_1.Utils.getInputValue(this.chkRestoreToPrevious);
-            result.defaultSwitchOnLevel = admin_utils_1.Utils.getInputValue(this.txtDefaultLevel);
-        }
-        return result;
-    }
-}
-exports.ParameterEditor_HomeMatic_Dimmer = ParameterEditor_HomeMatic_Dimmer;
-
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.map.ts":
-/*!******************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.map.ts ***!
-  \******************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ParameterEditor_Map = void 0;
-const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
-const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-const conversion_map_1 = __webpack_require__(/*! ../../yahka.functions/conversion.map */ "./yahka.functions/conversion.map.ts");
-const util_1 = __webpack_require__(/*! util */ "../node_modules/util/util.js");
-class ParameterEditor_Map extends parameterEditor_base_1.ParameterEditor {
-    constructor(valueChangeCallback) {
-        super(valueChangeCallback);
-        this.stateRows = [];
-        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.Map.inc.html */ "./admin/parameterEditor/parameterEditor.Map.inc.html"));
-        this.stateTemplate = this.templateNode.querySelector('#mappingRow');
-        this.lastRow = this.templateNode.querySelector('#lastRow');
-        let addRow = this.templateNode.querySelector('#addRow');
-        addRow.addEventListener('click', this.addRowClicked.bind(this));
-    }
-    createRow(item) {
-        let importedRow = document.importNode(this.stateTemplate.content, true);
-        let myRow = this.lastRow.parentElement.insertBefore(importedRow.firstElementChild, this.lastRow);
-        this.stateRows.push(myRow);
-        let leftField = myRow.querySelector('.ioBrokerValue');
-        leftField.addEventListener('input', (ev) => this.valueChanged());
-        let leftCheck = myRow.querySelector('.isSimpleValue');
-        leftCheck.addEventListener('input', (ev) => this.valueChanged());
-        let rightField = myRow.querySelector('.homekitValue');
-        rightField.addEventListener('input', (ev) => this.valueChanged());
-        myRow.querySelector('.delRow').addEventListener('click', () => {
-            myRow.remove();
-            this.stateRows = this.stateRows.filter(row => row != myRow);
-            this.valueChanged();
-        });
-        myRow.querySelector('.moveUp').addEventListener('click', () => {
-            let myIndex = this.stateRows.indexOf(myRow);
-            let prevIndex = myIndex - 1;
-            if (prevIndex < 0) {
-                return;
-            }
-            let prevRow = this.stateRows[prevIndex];
-            this.stateRows[prevIndex] = myRow;
-            this.stateRows[myIndex] = prevRow;
-            this.lastRow.parentElement.insertBefore(myRow, prevRow);
-            this.valueChanged();
-        });
-        myRow.querySelector('.moveDown').addEventListener('click', () => {
-            let myIndex = this.stateRows.indexOf(myRow);
-            let nextIndex = myIndex + 1;
-            if ((myIndex < 0) || (nextIndex >= this.stateRows.length)) {
-                return;
-            }
-            let nextRow = this.stateRows[nextIndex];
-            this.stateRows[nextIndex] = myRow;
-            this.stateRows[myIndex] = nextRow;
-            this.lastRow.parentElement.insertBefore(nextRow, myRow);
-            this.valueChanged();
-        });
-        if (item === undefined)
-            return myRow;
-        if ((0, util_1.isObject)(item.left)) {
-            admin_utils_1.Utils.setInputValue(leftField, JSON.stringify(item.left));
-            leftCheck.checked = false;
-        }
-        else {
-            admin_utils_1.Utils.setInputValue(leftField, item.left);
-            leftCheck.checked = true;
-        }
-        admin_utils_1.Utils.setInputValue(rightField, item.right);
-    }
-    addRowClicked() {
-        this.createRow(undefined);
-        return false;
-    }
-    refreshAndShow(containerElement, parameterValue) {
-        this.removeChildren(containerElement);
-        containerElement.appendChild(this.templateNode);
-        if (parameterValue === undefined) {
-            return;
-        }
-        if (!(0, conversion_map_1.isMultiStateParameter)(parameterValue)) {
-            return;
-        }
-        parameterValue.mappings.forEach(item => this.createRow(item));
-    }
-    buildNewParameterValue() {
-        return {
-            mappings: this.stateRows.map((row) => {
-                let ioValue = row.querySelector('.ioBrokerValue');
-                let isSimpleValue = row.querySelector('.isSimpleValue');
-                let leftValue = admin_utils_1.Utils.getInputValue(ioValue);
-                let hkValue = row.querySelector('.homekitValue');
-                return {
-                    left: isSimpleValue.checked ? leftValue === null || leftValue === void 0 ? void 0 : leftValue.toString() : JSON.parse(leftValue === null || leftValue === void 0 ? void 0 : leftValue.toString()),
-                    right: admin_utils_1.Utils.getInputValue(hkValue),
-                };
-            }),
-        };
-    }
-}
-exports.ParameterEditor_Map = ParameterEditor_Map;
-
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.multiState.ts":
-/*!*************************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.multiState.ts ***!
-  \*************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ParameterEditor_MultiState = void 0;
-const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
-const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-const iofunc_multi_state_1 = __webpack_require__(/*! ../../yahka.functions/iofunc.multi-state */ "./yahka.functions/iofunc.multi-state.ts");
-class ParameterEditor_MultiState extends parameterEditor_base_1.ParameterEditor {
-    constructor(valueChangeCallback) {
-        super(valueChangeCallback);
-        this.stateRows = [];
-        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.multiState.inc.html */ "./admin/parameterEditor/parameterEditor.multiState.inc.html"));
-        this.stateTemplate = this.templateNode.querySelector('.stateRow');
-        this.lastRow = this.templateNode.querySelector('.lastRow');
-        let addRow = this.templateNode.querySelector('.addRow');
-        addRow.addEventListener('click', this.addRowClicked.bind(this));
-    }
-    createRow(item) {
-        let importedRow = document.importNode(this.stateTemplate.content, true);
-        let myRow = this.lastRow.parentElement.insertBefore(importedRow.firstElementChild, this.lastRow);
-        this.stateRows.push(myRow);
-        let readField = myRow.querySelector('.readState');
-        readField.addEventListener('input', (ev) => this.valueChanged());
-        let writeField = myRow.querySelector('.writeState');
-        writeField.addEventListener('input', (ev) => this.valueChanged());
-        myRow.querySelector('.delRow').addEventListener('click', () => {
-            myRow.remove();
-            this.stateRows = this.stateRows.filter(row => row != myRow);
-            this.valueChanged();
-        });
-        myRow.querySelector('.moveUp').addEventListener('click', () => {
-            let myIndex = this.stateRows.indexOf(myRow);
-            let prevIndex = myIndex - 1;
-            if (prevIndex < 0) {
-                return;
-            }
-            let prevRow = this.stateRows[prevIndex];
-            this.stateRows[prevIndex] = myRow;
-            this.stateRows[myIndex] = prevRow;
-            this.lastRow.parentElement.insertBefore(myRow, prevRow);
-            this.valueChanged();
-        });
-        myRow.querySelector('.moveDown').addEventListener('click', () => {
-            let myIndex = this.stateRows.indexOf(myRow);
-            let nextIndex = myIndex + 1;
-            if ((myIndex < 0) || (nextIndex >= this.stateRows.length)) {
-                return;
-            }
-            let nextRow = this.stateRows[nextIndex];
-            this.stateRows[nextIndex] = myRow;
-            this.stateRows[myIndex] = nextRow;
-            this.lastRow.parentElement.insertBefore(nextRow, myRow);
-            this.valueChanged();
-        });
-        if (item === undefined)
-            return myRow;
-        admin_utils_1.Utils.setInputValue(readField, item.readState);
-        admin_utils_1.Utils.setInputValue(writeField, item.writeState);
-    }
-    addRowClicked() {
-        this.createRow(undefined);
-        return false;
-    }
-    refreshAndShow(containerElement, parameterValue) {
-        this.removeChildren(containerElement);
-        containerElement.appendChild(this.templateNode);
-        if (parameterValue === undefined) {
-            return;
-        }
-        const params = iofunc_multi_state_1.TIoBrokerInOutFunction_MultiState.parseParameters(parameterValue);
-        if (params === undefined) {
-            return;
-        }
-        params.forEach(item => this.createRow(item));
-    }
-    buildNewParameterValue() {
-        return this.stateRows.map((row) => {
-            var _a, _b;
-            const readField = row.querySelector('.readState');
-            const writeField = row.querySelector('.writeState');
-            return {
-                readState: (_a = admin_utils_1.Utils.getInputValue(readField)) === null || _a === void 0 ? void 0 : _a.toString(),
-                writeState: (_b = admin_utils_1.Utils.getInputValue(writeField)) === null || _b === void 0 ? void 0 : _b.toString(),
-            };
-        });
-    }
-}
-exports.ParameterEditor_MultiState = ParameterEditor_MultiState;
-
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.null.ts":
-/*!*******************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.null.ts ***!
-  \*******************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ParameterEditor_Null = void 0;
-const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
-class ParameterEditor_Null extends parameterEditor_base_1.ParameterEditor {
-    refreshAndShow(containerElement, parameterValue) {
-        this.removeChildren(containerElement);
-        this.lastParamValue = parameterValue;
-    }
-    buildNewParameterValue() {
-        return this.lastParamValue;
-    }
-}
-exports.ParameterEditor_Null = ParameterEditor_Null;
-
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.scaleConversion.ts":
-/*!******************************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.scaleConversion.ts ***!
-  \******************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ParameterEditor_ScaleConversionEditor = void 0;
-const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
-const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-class ParameterEditor_ScaleConversionEditor extends parameterEditor_base_1.ParameterEditor {
-    constructor(valueChangeCallback) {
-        super(valueChangeCallback);
-        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.scaleConversion.inc.html */ "./admin/parameterEditor/parameterEditor.scaleConversion.inc.html"));
-        this.txtHKMin = this.templateNode.querySelector('.hkMin');
-        this.txtHKMin.addEventListener('input', (ev) => this.valueChanged());
-        this.txtHKMax = this.templateNode.querySelector('.hkMax');
-        this.txtHKMax.addEventListener('input', (ev) => this.valueChanged());
-        this.txtIOBrokerMin = this.templateNode.querySelector('.ioMin');
-        this.txtIOBrokerMin.addEventListener('input', (ev) => this.valueChanged());
-        this.txtIOBrokerMax = this.templateNode.querySelector('.ioMax');
-        this.txtIOBrokerMax.addEventListener('input', (ev) => this.valueChanged());
-    }
-    refreshAndShow(containerElement, parameterValue) {
-        this.removeChildren(containerElement);
-        containerElement.appendChild(this.templateNode);
-        let parameterArray = undefined;
-        if (typeof parameterValue === 'object') {
-            parameterArray = parameterValue;
-        }
-        else {
-            try {
-                parameterArray = JSON.parse(parameterValue);
-            }
-            catch (e) {
-                admin_utils_1.Utils.setInputValue(this.txtHKMin, parameterValue);
-                return;
-            }
-        }
-        admin_utils_1.Utils.setInputValue(this.txtHKMin, parameterArray['homekit.min']);
-        admin_utils_1.Utils.setInputValue(this.txtHKMax, parameterArray['homekit.max']);
-        admin_utils_1.Utils.setInputValue(this.txtIOBrokerMin, parameterArray['iobroker.min']);
-        admin_utils_1.Utils.setInputValue(this.txtIOBrokerMax, parameterArray['iobroker.max']);
-    }
-    buildNewParameterValue() {
-        return {
-            'homekit.min': admin_utils_1.Utils.getInputValue(this.txtHKMin),
-            'homekit.max': admin_utils_1.Utils.getInputValue(this.txtHKMax),
-            'iobroker.min': admin_utils_1.Utils.getInputValue(this.txtIOBrokerMin),
-            'iobroker.max': admin_utils_1.Utils.getInputValue(this.txtIOBrokerMax)
-        };
-    }
-}
-exports.ParameterEditor_ScaleConversionEditor = ParameterEditor_ScaleConversionEditor;
-
-
-/***/ }),
-
-/***/ "./admin/parameterEditor/parameterEditor.singleState.ts":
-/*!**************************************************************!*\
-  !*** ./admin/parameterEditor/parameterEditor.singleState.ts ***!
-  \**************************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ParameterEditor_SingleState = void 0;
-const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
-const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
-const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
-class ParameterEditor_SingleState extends parameterEditor_base_1.ParameterEditor {
-    constructor(valueChangeCallback) {
-        super(valueChangeCallback);
-        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.singleState.inc.html */ "./admin/parameterEditor/parameterEditor.singleState.inc.html"));
-        this.textField = this.templateNode.querySelector('#textfield');
-        this.textField.addEventListener('input', (ev) => this.valueChanged());
-    }
-    refreshAndShow(containerElement, parameterValue) {
-        this.removeChildren(containerElement);
-        containerElement.appendChild(this.templateNode);
-        admin_utils_1.Utils.setInputValue(this.textField, parameterValue);
-    }
-    buildNewParameterValue() {
-        return admin_utils_1.Utils.getInputValue(this.textField);
-    }
-}
-exports.ParameterEditor_SingleState = ParameterEditor_SingleState;
-
-
-/***/ }),
-
-/***/ "./admin/yahka.admin.ts":
-/*!******************************!*\
-  !*** ./admin/yahka.admin.ts ***!
-  \******************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+function __setFunctionName(f, name, prefix) {
+  if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
+  return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
 };
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ioBroker_YahkaAdmin = exports.ioBrokerInterfaceList = void 0;
-/// <reference path="../typings/index.d.ts" />
-const pageBuilder_main_1 = __webpack_require__(/*! ./pageBuilder/pageBuilder.main */ "./admin/pageBuilder/pageBuilder.main.ts");
-let resolveMethodForSettingsLoader;
-const ioBrokerSettingsLoaded = new Promise((resolve, reject) => {
-    resolveMethodForSettingsLoader = resolve;
+
+function __metadata(metadataKey, metadataValue) {
+  if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
+
+function __awaiter(thisArg, _arguments, P, generator) {
+  function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+  return new (P || (P = Promise))(function (resolve, reject) {
+      function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+      function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+      function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+      step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+}
+
+function __generator(thisArg, body) {
+  var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+  return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+  function verb(n) { return function (v) { return step([n, v]); }; }
+  function step(op) {
+      if (f) throw new TypeError("Generator is already executing.");
+      while (g && (g = 0, op[0] && (_ = 0)), _) try {
+          if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+          if (y = 0, t) op = [op[0] & 2, t.value];
+          switch (op[0]) {
+              case 0: case 1: t = op; break;
+              case 4: _.label++; return { value: op[1], done: false };
+              case 5: _.label++; y = op[1]; op = [0]; continue;
+              case 7: op = _.ops.pop(); _.trys.pop(); continue;
+              default:
+                  if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                  if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                  if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                  if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                  if (t[2]) _.ops.pop();
+                  _.trys.pop(); continue;
+          }
+          op = body.call(thisArg, _);
+      } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+      if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+  }
+}
+
+var __createBinding = Object.create ? (function(o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+  }
+  Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
 });
-exports.ioBrokerInterfaceList = new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
-    yield ioBrokerSettingsLoaded;
-    getIPs((ipList) => {
-        resolve(ipList);
-    });
-}));
-class ioBroker_YahkaAdmin {
-    loadSettings(settingsObject, onChangeCallback) {
-        this.settings = settingsObject;
-        if (settingsObject.cameras === undefined) {
-            settingsObject.cameras = [];
+
+function __exportStar(m, o) {
+  for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
+}
+
+function __values(o) {
+  var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+  if (m) return m.call(o);
+  if (o && typeof o.length === "number") return {
+      next: function () {
+          if (o && i >= o.length) o = void 0;
+          return { value: o && o[i++], done: !o };
+      }
+  };
+  throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+
+function __read(o, n) {
+  var m = typeof Symbol === "function" && o[Symbol.iterator];
+  if (!m) return o;
+  var i = m.call(o), r, ar = [], e;
+  try {
+      while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+  }
+  catch (error) { e = { error: error }; }
+  finally {
+      try {
+          if (r && !r.done && (m = i["return"])) m.call(i);
+      }
+      finally { if (e) throw e.error; }
+  }
+  return ar;
+}
+
+/** @deprecated */
+function __spread() {
+  for (var ar = [], i = 0; i < arguments.length; i++)
+      ar = ar.concat(__read(arguments[i]));
+  return ar;
+}
+
+/** @deprecated */
+function __spreadArrays() {
+  for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+  for (var r = Array(s), k = 0, i = 0; i < il; i++)
+      for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+          r[k] = a[j];
+  return r;
+}
+
+function __spreadArray(to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+      if (ar || !(i in from)) {
+          if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+          ar[i] = from[i];
+      }
+  }
+  return to.concat(ar || Array.prototype.slice.call(from));
+}
+
+function __await(v) {
+  return this instanceof __await ? (this.v = v, this) : new __await(v);
+}
+
+function __asyncGenerator(thisArg, _arguments, generator) {
+  if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+  var g = generator.apply(thisArg, _arguments || []), i, q = [];
+  return i = Object.create((typeof AsyncIterator === "function" ? AsyncIterator : Object).prototype), verb("next"), verb("throw"), verb("return", awaitReturn), i[Symbol.asyncIterator] = function () { return this; }, i;
+  function awaitReturn(f) { return function (v) { return Promise.resolve(v).then(f, reject); }; }
+  function verb(n, f) { if (g[n]) { i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; if (f) i[n] = f(i[n]); } }
+  function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+  function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+  function fulfill(value) { resume("next", value); }
+  function reject(value) { resume("throw", value); }
+  function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+}
+
+function __asyncDelegator(o) {
+  var i, p;
+  return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+  function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: false } : f ? f(v) : v; } : f; }
+}
+
+function __asyncValues(o) {
+  if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+  var m = o[Symbol.asyncIterator], i;
+  return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+  function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+  function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+}
+
+function __makeTemplateObject(cooked, raw) {
+  if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+  return cooked;
+};
+
+var __setModuleDefault = Object.create ? (function(o, v) {
+  Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+  o["default"] = v;
+};
+
+var ownKeys = function(o) {
+  ownKeys = Object.getOwnPropertyNames || function (o) {
+    var ar = [];
+    for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+    return ar;
+  };
+  return ownKeys(o);
+};
+
+function __importStar(mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+  __setModuleDefault(result, mod);
+  return result;
+}
+
+function __importDefault(mod) {
+  return (mod && mod.__esModule) ? mod : { default: mod };
+}
+
+function __classPrivateFieldGet(receiver, state, kind, f) {
+  if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+  return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+}
+
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+  if (kind === "m") throw new TypeError("Private method is not writable");
+  if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+  return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+}
+
+function __classPrivateFieldIn(state, receiver) {
+  if (receiver === null || (typeof receiver !== "object" && typeof receiver !== "function")) throw new TypeError("Cannot use 'in' operator on non-object");
+  return typeof state === "function" ? receiver === state : state.has(receiver);
+}
+
+function __addDisposableResource(env, value, async) {
+  if (value !== null && value !== void 0) {
+    if (typeof value !== "object" && typeof value !== "function") throw new TypeError("Object expected.");
+    var dispose, inner;
+    if (async) {
+      if (!Symbol.asyncDispose) throw new TypeError("Symbol.asyncDispose is not defined.");
+      dispose = value[Symbol.asyncDispose];
+    }
+    if (dispose === void 0) {
+      if (!Symbol.dispose) throw new TypeError("Symbol.dispose is not defined.");
+      dispose = value[Symbol.dispose];
+      if (async) inner = dispose;
+    }
+    if (typeof dispose !== "function") throw new TypeError("Object not disposable.");
+    if (inner) dispose = function() { try { inner.call(this); } catch (e) { return Promise.reject(e); } };
+    env.stack.push({ value: value, dispose: dispose, async: async });
+  }
+  else if (async) {
+    env.stack.push({ async: true });
+  }
+  return value;
+}
+
+var _SuppressedError = typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
+  var e = new Error(message);
+  return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+};
+
+function __disposeResources(env) {
+  function fail(e) {
+    env.error = env.hasError ? new _SuppressedError(e, env.error, "An error was suppressed during disposal.") : e;
+    env.hasError = true;
+  }
+  var r, s = 0;
+  function next() {
+    while (r = env.stack.pop()) {
+      try {
+        if (!r.async && s === 1) return s = 0, env.stack.push(r), Promise.resolve().then(next);
+        if (r.dispose) {
+          var result = r.dispose.call(r.value);
+          if (r.async) return s |= 2, Promise.resolve(result).then(next, function(e) { fail(e); return next(); });
         }
-        if (resolveMethodForSettingsLoader !== undefined) {
-            resolveMethodForSettingsLoader();
-        }
-        resolveMethodForSettingsLoader = undefined;
-        this.pageBuilder = new pageBuilder_main_1.ioBroker_YahkaPageBuilder(this.settings.bridge, this.settings.cameras, onChangeCallback);
-        onChangeCallback(false);
+        else s |= 1;
+      }
+      catch (e) {
+        fail(e);
+      }
     }
-    saveSettings(callback) {
-        this.pageBuilder.rebuildDeviceList();
-        callback(this.settings);
-    }
-}
-exports.ioBroker_YahkaAdmin = ioBroker_YahkaAdmin;
-
-
-/***/ }),
-
-/***/ "./admin/yahka.meta-generator.ts":
-/*!***************************************!*\
-  !*** ./admin/yahka.meta-generator.ts ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.generateMetaDataDictionary = generateMetaDataDictionary;
-const hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "../node_modules/hap-nodejs/dist/index.js");
-const yahka_community_types_1 = __webpack_require__(/*! ../yahka.community.types */ "./yahka.community.types.ts");
-(0, yahka_community_types_1.importHAPCommunityTypesAndFixes)();
-function generateMetaDataDictionary() {
-    let availableServices = Object.keys(hap_nodejs_1.Service);
-    let availableCharacteristics = Object.keys(hap_nodejs_1.Characteristic);
-    const services = buildServiceDictionary(availableServices, availableCharacteristics);
-    const characteristics = buildCharacteristicDictionary(availableCharacteristics);
-    return {
-        services,
-        characteristics,
-    };
-}
-function createCharacteristicDescriber(name, optional, char) {
-    return {
-        uuid: char === null || char === void 0 ? void 0 : char.UUID,
-        name: name,
-        displayName: char === null || char === void 0 ? void 0 : char.displayName,
-        optional: optional,
-        properties: char === null || char === void 0 ? void 0 : char.props,
-    };
-}
-function buildServiceDictionary(availableServices, availableCharacteristics) {
-    const serviceDictionary = {};
-    const serviceExclusionList = ['super_', 'serialize', 'deserialize'];
-    let charDictionary = {};
-    for (let charName of availableCharacteristics) {
-        if (charName === 'super_') {
-            continue;
-        }
-        charDictionary[hap_nodejs_1.Characteristic[charName].UUID] = charName;
-    }
-    for (let serviceName of availableServices) {
-        if (serviceExclusionList.includes(serviceName)) {
-            continue;
-        }
-        let serviceDescriptor = {
-            type: serviceName,
-            characteristics: {},
-        };
-        let serviceInstance = new hap_nodejs_1.Service[serviceName]('', '');
-        for (let char of serviceInstance.characteristics) {
-            let charName = charDictionary[char.UUID];
-            if (charName === undefined) {
-                continue;
-            }
-            serviceDescriptor.characteristics[charName] = createCharacteristicDescriber(charName, false, char);
-        }
-        for (let char of serviceInstance.optionalCharacteristics) {
-            let charName = charDictionary[char.UUID];
-            if (charName === undefined) {
-                continue;
-            }
-            serviceDescriptor.characteristics[charName] = createCharacteristicDescriber(charName, true, char);
-        }
-        serviceDictionary[serviceName] = serviceDescriptor;
-    }
-    return serviceDictionary;
-}
-function buildCharacteristicDictionary(availableCharacteristics) {
-    const characteristicExclusionList = [
-        'super_',
-        'Formats',
-        'Units',
-        'Perms',
-        'serialize',
-        'deserialize',
-    ];
-    const characteristicDictionary = {};
-    for (let charName of availableCharacteristics) {
-        if (characteristicExclusionList.includes(charName)) {
-            continue;
-        }
-        let charInstance = new hap_nodejs_1.Characteristic[charName]();
-        characteristicDictionary[charName] = createCharacteristicDescriber(charName, true, charInstance);
-    }
-    return characteristicDictionary;
+    if (s === 1) return env.hasError ? Promise.reject(env.error) : Promise.resolve();
+    if (env.hasError) throw env.error;
+  }
+  return next();
 }
 
-
-/***/ }),
-
-/***/ "./shared/yahka.configuration.ts":
-/*!***************************************!*\
-  !*** ./shared/yahka.configuration.ts ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Configuration = void 0;
-var Configuration;
-(function (Configuration) {
-    function isBridgeConfig(config) {
-        if (config === undefined || config === null || typeof config !== 'object') {
-            return false;
-        }
-        return config.configType === 'bridge';
-    }
-    Configuration.isBridgeConfig = isBridgeConfig;
-    function isDeviceConfig(config) {
-        if (config === undefined || config === null || typeof config !== 'object') {
-            return false;
-        }
-        return config.configType === 'customdevice' || config.services !== undefined;
-    }
-    Configuration.isDeviceConfig = isDeviceConfig;
-    function isIPCameraConfig(config) {
-        if (config === undefined || config === null || typeof config !== 'object') {
-            return false;
-        }
-        return config.configType === 'ipcamera';
-    }
-    Configuration.isIPCameraConfig = isIPCameraConfig;
-})(Configuration || (exports.Configuration = Configuration = {}));
-
-
-/***/ }),
-
-/***/ "./shared/yahka.logger.ts":
-/*!********************************!*\
-  !*** ./shared/yahka.logger.ts ***!
-  \********************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.YahkaLogger = void 0;
-class YahkaLogger {
-    constructor(adapter, logIdentifier) {
-        this.adapter = adapter;
-        this.logIdentifier = logIdentifier;
-    }
-    debug(message) {
-        return this.adapter.log.debug(`[${this.logIdentifier}] ${message}`);
-    }
-    info(message) {
-        return this.adapter.log.info(`[${this.logIdentifier}] ${message}`);
-    }
-    warn(message) {
-        return this.adapter.log.warn(`[${this.logIdentifier}] ${message}`);
-    }
-    error(message) {
-        return this.adapter.log.error(`[${this.logIdentifier}] ${message}`);
-    }
-}
-exports.YahkaLogger = YahkaLogger;
-
-
-/***/ }),
-
-/***/ "./shared/yahka.utils.ts":
-/*!*******************************!*\
-  !*** ./shared/yahka.utils.ts ***!
-  \*******************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.propertyExists = propertyExists;
-function propertyExists(object, property) {
-    return property in object;
+function __rewriteRelativeImportExtension(path, preserveJsx) {
+  if (typeof path === "string" && /^\.\.?\//.test(path)) {
+      return path.replace(/\.(tsx)$|((?:\.d)?)((?:\.[^./]+?)?)\.([cm]?)ts$/i, function (m, tsx, d, ext, cm) {
+          return tsx ? preserveJsx ? ".jsx" : ".js" : d && (!ext || !cm) ? m : (d + ext + "." + cm.toLowerCase() + "js");
+      });
+  }
+  return path;
 }
 
-
-/***/ }),
-
-/***/ "./yahka.community.types.ts":
-/*!**********************************!*\
-  !*** ./yahka.community.types.ts ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.NotificationText = exports.NotificationCode = exports.VolatileOrganicCompoundPeakLevel = exports.VolatileOrganicCompoundLevel = exports.VolatileOrganicCompoundDetected = exports.SodiumDioxidePeakLevel = exports.SodiumDioxideLevel = exports.SodiumDioxideDetected = exports.OzonePeakLevel = exports.OzoneLevel = exports.OzoneDetected = exports.NitrogenDioxidePeakLevel = exports.NitrogenDioxideLevel = exports.NitrogenDioxideDetected = exports.AirFlow = exports.NoiseLevel = exports.AtmosphericPressureLevel = exports.EveResetTotal = exports.EveTimesOpened = exports.EveLastAction = exports.EveClosedDuration = exports.EveOpenDuration = exports.EveAirQuality = exports.BatteryLevel = exports.KilowattVoltAmpereHour = exports.KilowattHours = exports.VoltAmperes = exports.Watts = exports.Amperes = exports.Volts = exports.MediaHeight = exports.MediaWidth = exports.MediaTypeIdentifier = exports.StillImage = exports.MediaItemDuration = exports.MediaItemArtist = exports.MediaItemAlbumName = exports.MediaItemName = exports.MediaCurrentPosition = exports.PlaybackSpeed = exports.RepeatMode = exports.ShuffleMode = exports.SkipBackward = exports.SkipForward = exports.PlaybackState = exports.Muting = exports.AudioVolume = exports.VideoDataURL = exports.AudioDataURL = exports.Timestamp = void 0;
-exports.NotificationService = exports.VolatileOrganicCompoundSensor = exports.SodiumDioxideSensor = exports.OzoneSensor = exports.NitrogenDioxideSensor = exports.AirFlowSensor = exports.NoiseLevelSensor = exports.AtmosphericPressureSensor = exports.SecurityCameraService = exports.StillImageService = exports.MediaInformationService = exports.PlaybackDeviceService = exports.AudioDeviceService = exports.UPSLoadPercent = exports.BatteryVoltageDC = exports.OutputVoltageAC = exports.InputVoltageAC = exports.DewPoint = exports.Latency = exports.Ping = exports.UploadSpeed = exports.DownloadSpeed = exports.LastEventTime = void 0;
-exports.importHAPCommunityTypesAndFixes = importHAPCommunityTypesAndFixes;
-const hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "../node_modules/hap-nodejs/dist/index.js");
-let hapTypesImported = false;
-function importHAPCommunityTypesAndFixes() {
-    if (hapTypesImported) {
-        return;
-    }
-    hap_nodejs_1.Characteristic[`Community: ${Timestamp.name}`] = Timestamp;
-    hap_nodejs_1.Characteristic[`Community: ${AudioDataURL.name}`] = AudioDataURL;
-    hap_nodejs_1.Characteristic[`Community: ${VideoDataURL.name}`] = VideoDataURL;
-    hap_nodejs_1.Characteristic[`Community: ${AudioVolume.name}`] = AudioVolume;
-    hap_nodejs_1.Characteristic[`Community: ${Muting.name}`] = Muting;
-    hap_nodejs_1.Characteristic[`Community: ${PlaybackState.name}`] = PlaybackState;
-    hap_nodejs_1.Characteristic[`Community: ${SkipForward.name}`] = SkipForward;
-    hap_nodejs_1.Characteristic[`Community: ${SkipBackward.name}`] = SkipBackward;
-    hap_nodejs_1.Characteristic[`Community: ${ShuffleMode.name}`] = ShuffleMode;
-    hap_nodejs_1.Characteristic[`Community: ${RepeatMode.name}`] = RepeatMode;
-    hap_nodejs_1.Characteristic[`Community: ${PlaybackSpeed.name}`] = PlaybackSpeed;
-    hap_nodejs_1.Characteristic[`Community: ${MediaCurrentPosition.name}`] = MediaCurrentPosition;
-    hap_nodejs_1.Characteristic[`Community: ${MediaItemName.name}`] = MediaItemName;
-    hap_nodejs_1.Characteristic[`Community: ${MediaItemAlbumName.name}`] = MediaItemAlbumName;
-    hap_nodejs_1.Characteristic[`Community: ${MediaItemArtist.name}`] = MediaItemArtist;
-    hap_nodejs_1.Characteristic[`Community: ${MediaItemDuration.name}`] = MediaItemDuration;
-    hap_nodejs_1.Characteristic[`Community: ${StillImage.name}`] = StillImage;
-    hap_nodejs_1.Characteristic[`Community: ${MediaTypeIdentifier.name}`] = MediaTypeIdentifier;
-    hap_nodejs_1.Characteristic[`Community: ${MediaWidth.name}`] = MediaWidth;
-    hap_nodejs_1.Characteristic[`Community: ${MediaHeight.name}`] = MediaHeight;
-    hap_nodejs_1.Characteristic[`Community: ${Volts.name}`] = Volts;
-    hap_nodejs_1.Characteristic[`Community: ${Amperes.name}`] = Amperes;
-    hap_nodejs_1.Characteristic[`Community: ${Watts.name}`] = Watts;
-    hap_nodejs_1.Characteristic[`Community: ${VoltAmperes.name}`] = VoltAmperes;
-    hap_nodejs_1.Characteristic[`Community: ${KilowattHours.name}`] = KilowattHours;
-    hap_nodejs_1.Characteristic[`Community: ${KilowattVoltAmpereHour.name}`] = KilowattVoltAmpereHour;
-    hap_nodejs_1.Characteristic[`Community: ${BatteryLevel.name}`] = BatteryLevel;
-    hap_nodejs_1.Characteristic[`Community: ${EveAirQuality.name}`] = EveAirQuality;
-    hap_nodejs_1.Characteristic[`Community: ${EveOpenDuration.name}`] = EveOpenDuration;
-    hap_nodejs_1.Characteristic[`Community: ${EveClosedDuration.name}`] = EveClosedDuration;
-    hap_nodejs_1.Characteristic[`Community: ${EveLastAction.name}`] = EveLastAction;
-    hap_nodejs_1.Characteristic[`Community: ${EveTimesOpened.name}`] = EveTimesOpened;
-    hap_nodejs_1.Characteristic[`Community: ${EveResetTotal.name}`] = EveResetTotal;
-    hap_nodejs_1.Characteristic[`Community: ${AtmosphericPressureLevel.name}`] = AtmosphericPressureLevel;
-    hap_nodejs_1.Characteristic[`Community: ${NoiseLevel.name}`] = NoiseLevel;
-    hap_nodejs_1.Characteristic[`Community: ${AirFlow.name}`] = AirFlow;
-    hap_nodejs_1.Characteristic[`Community: ${NitrogenDioxideDetected.name}`] = NitrogenDioxideDetected;
-    hap_nodejs_1.Characteristic[`Community: ${NitrogenDioxideLevel.name}`] = NitrogenDioxideLevel;
-    hap_nodejs_1.Characteristic[`Community: ${NitrogenDioxidePeakLevel.name}`] = NitrogenDioxidePeakLevel;
-    hap_nodejs_1.Characteristic[`Community: ${OzoneDetected.name}`] = OzoneDetected;
-    hap_nodejs_1.Characteristic[`Community: ${OzoneLevel.name}`] = OzoneLevel;
-    hap_nodejs_1.Characteristic[`Community: ${OzonePeakLevel.name}`] = OzonePeakLevel;
-    hap_nodejs_1.Characteristic[`Community: ${SodiumDioxideDetected.name}`] = SodiumDioxideDetected;
-    hap_nodejs_1.Characteristic[`Community: ${SodiumDioxideLevel.name}`] = SodiumDioxideLevel;
-    hap_nodejs_1.Characteristic[`Community: ${SodiumDioxidePeakLevel.name}`] = SodiumDioxidePeakLevel;
-    hap_nodejs_1.Characteristic[`Community: ${VolatileOrganicCompoundDetected.name}`] = VolatileOrganicCompoundDetected;
-    hap_nodejs_1.Characteristic[`Community: ${VolatileOrganicCompoundLevel.name}`] = VolatileOrganicCompoundLevel;
-    hap_nodejs_1.Characteristic[`Community: ${VolatileOrganicCompoundPeakLevel.name}`] = VolatileOrganicCompoundPeakLevel;
-    hap_nodejs_1.Characteristic[`Community: ${NotificationCode.name}`] = NotificationCode;
-    hap_nodejs_1.Characteristic[`Community: ${NotificationText.name}`] = NotificationText;
-    hap_nodejs_1.Characteristic[`Community: ${LastEventTime.name}`] = LastEventTime;
-    hap_nodejs_1.Characteristic[`Community: ${DownloadSpeed.name}`] = DownloadSpeed;
-    hap_nodejs_1.Characteristic[`Community: ${UploadSpeed.name}`] = UploadSpeed;
-    hap_nodejs_1.Characteristic[`Community: ${Ping.name}`] = Ping;
-    hap_nodejs_1.Characteristic[`Community: ${Latency.name}`] = Latency;
-    hap_nodejs_1.Characteristic[`Community: ${DewPoint.name}`] = DewPoint;
-    hap_nodejs_1.Characteristic[`Community: ${InputVoltageAC.name}`] = InputVoltageAC;
-    hap_nodejs_1.Characteristic[`Community: ${OutputVoltageAC.name}`] = OutputVoltageAC;
-    hap_nodejs_1.Characteristic[`Community: ${BatteryVoltageDC.name}`] = BatteryVoltageDC;
-    hap_nodejs_1.Characteristic[`Community: ${UPSLoadPercent.name}`] = UPSLoadPercent;
-    hap_nodejs_1.Service[`Community: ${AudioDeviceService.name}`] = AudioDeviceService;
-    hap_nodejs_1.Service[`Community: ${PlaybackDeviceService.name}`] = PlaybackDeviceService;
-    hap_nodejs_1.Service[`Community: ${MediaInformationService.name}`] = MediaInformationService;
-    hap_nodejs_1.Service[`Community: ${StillImageService.name}`] = StillImageService;
-    hap_nodejs_1.Service[`Community: ${SecurityCameraService.name}`] = SecurityCameraService;
-    hap_nodejs_1.Service[`Community: ${AtmosphericPressureSensor.name}`] = AtmosphericPressureSensor;
-    hap_nodejs_1.Service[`Community: ${NoiseLevelSensor.name}`] = NoiseLevelSensor;
-    hap_nodejs_1.Service[`Community: ${AirFlowSensor.name}`] = AirFlowSensor;
-    hap_nodejs_1.Service[`Community: ${NitrogenDioxideSensor.name}`] = NitrogenDioxideSensor;
-    hap_nodejs_1.Service[`Community: ${OzoneSensor.name}`] = OzoneSensor;
-    hap_nodejs_1.Service[`Community: ${SodiumDioxideSensor.name}`] = SodiumDioxideSensor;
-    hap_nodejs_1.Service[`Community: ${VolatileOrganicCompoundSensor.name}`] = VolatileOrganicCompoundSensor;
-    hap_nodejs_1.Service[`Community: ${NotificationService.name}`] = NotificationService;
-    hapTypesImported = true;
-}
-class Timestamp extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Timestamp', 'FF000001-0000-1000-8000-135D67EC4377', {
-            format: "string" /* Formats.STRING */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.Timestamp = Timestamp;
-class AudioDataURL extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Audio URL', 'FF000002-0000-1000-8000-135D67EC4377', {
-            format: "string" /* Formats.STRING */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
-        });
-    }
-}
-exports.AudioDataURL = AudioDataURL;
-class VideoDataURL extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Video URL', 'FF000003-0000-1000-8000-135D67EC4377', {
-            format: "string" /* Formats.STRING */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
-        });
-    }
-}
-exports.VideoDataURL = VideoDataURL;
-class AudioVolume extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Audio Volume', '00001001-0000-1000-8000-135D67EC4377', {
-            format: "uint8" /* Formats.UINT8 */,
-            unit: "percentage" /* Units.PERCENTAGE */,
-            maxValue: 100,
-            minValue: 0,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.AudioVolume = AudioVolume;
-class Muting extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Muting', '00001002-0000-1000-8000-135D67EC4377', {
-            format: "uint8" /* Formats.UINT8 */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.Muting = Muting;
-class PlaybackState extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Playback State', '00002001-0000-1000-8000-135D67EC4377', {
-            format: "uint8" /* Formats.UINT8 */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.PlaybackState = PlaybackState;
-PlaybackState.PLAYING = 0;
-PlaybackState.PAUSED = 1;
-PlaybackState.STOPPED = 2;
-class SkipForward extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Skip Forward', '00002002-0000-1000-8000-135D67EC4377', {
-            format: "bool" /* Formats.BOOL */,
-            perms: ["pw" /* Perms.PAIRED_WRITE */],
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.SkipForward = SkipForward;
-class SkipBackward extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Skip Backward', '00002003-0000-1000-8000-135D67EC4377', {
-            format: "bool" /* Formats.BOOL */,
-            perms: ["pw" /* Perms.PAIRED_WRITE */],
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.SkipBackward = SkipBackward;
-class ShuffleMode extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Shuffle Mode', '00002004-0000-1000-8000-135D67EC4377', {
-            format: "uint8" /* Formats.UINT8 */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.ShuffleMode = ShuffleMode;
-//NOTE: If GROUP or SET is not supported, accessories should coerce to ALBUM.
-// If ALBUM is not supported, coerce to ITEM.
-// In general, it is recommended for apps to only assume OFF, ITEM, and ALBUM
-// are supported unless it is known that the accessory supports other settings.
-ShuffleMode.OFF = 0;
-//NOTE: INDIVIDUAL is deprecated.
-ShuffleMode.INDIVIDUAL = 1;
-ShuffleMode.ITEM = 1;
-ShuffleMode.GROUP = 2; // e.g., iTunes "Groupings"
-ShuffleMode.ALBUM = 3; // e.g., album or season
-ShuffleMode.SET = 4; // e.g., T.V. Series or album box set
-class RepeatMode extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Repeat Mode', '00002005-0000-1000-8000-135D67EC4377', {
-            format: "uint8" /* Formats.UINT8 */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.RepeatMode = RepeatMode;
-RepeatMode.OFF = 0;
-RepeatMode.ONE = 1;
-RepeatMode.ALL = 2;
-class PlaybackSpeed extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Playback Speed', '00002006-0000-1000-8000-135D67EC4377', {
-            format: "float" /* Formats.FLOAT */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.PlaybackSpeed = PlaybackSpeed;
-class MediaCurrentPosition extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Media Current Position', '00002007-0000-1000-8000-135D67EC4377', {
-            format: "float" /* Formats.FLOAT */, // In seconds
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */],
-        });
-    }
-}
-exports.MediaCurrentPosition = MediaCurrentPosition;
-class MediaItemName extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Media Name', '00003001-0000-1000-8000-135D67EC4377', {
-            format: "string" /* Formats.STRING */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */],
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.MediaItemName = MediaItemName;
-class MediaItemAlbumName extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Media Album Name', '00003002-0000-1000-8000-135D67EC4377', {
-            format: "string" /* Formats.STRING */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */],
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.MediaItemAlbumName = MediaItemAlbumName;
-class MediaItemArtist extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Media Artist', '00003003-0000-1000-8000-135D67EC4377', {
-            format: "string" /* Formats.STRING */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */],
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.MediaItemArtist = MediaItemArtist;
-class MediaItemDuration extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Media Duration', '00003005-0000-1000-8000-135D67EC4377', {
-            format: "float" /* Formats.FLOAT */, // In seconds
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.MediaItemDuration = MediaItemDuration;
-class StillImage extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Still Image', '00004001-0000-1000-8000-135D67EC4377', {
-            format: "data" /* Formats.DATA */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
-        });
-        this.value = this.getDefaultValue();
-    }
-}
-exports.StillImage = StillImage;
-// Also known as MIME type...
-class MediaTypeIdentifier extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Media Type Identifier', '00004002-0000-1000-8000-135D67EC4377', {
-            format: "string" /* Formats.STRING */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.MediaTypeIdentifier = MediaTypeIdentifier;
-class MediaWidth extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Media Width', '00004003-0000-1000-8000-135D67EC4377', {
-            format: "uint32" /* Formats.UINT32 */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
-        });
-        this.value = this.getDefaultValue();
-    }
-}
-exports.MediaWidth = MediaWidth;
-class MediaHeight extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Media Width', '00004004-0000-1000-8000-135D67EC4377', {
-            format: "uint32" /* Formats.UINT32 */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.MediaHeight = MediaHeight;
-// courtesy of https://gist.github.com/gomfunkel/b1a046d729757120907c
-class Volts extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Volts', 'E863F10A-079E-48FF-8F27-9C2605A29F52', {
-            format: "uint16" /* Formats.UINT16 */,
-            unit: 'V',
-            minValue: 0,
-            maxValue: 65535,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        this.value = this.getDefaultValue();
-    }
-}
-exports.Volts = Volts;
-class Amperes extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Amps', 'E863F126-079E-48FF-8F27-9C2605A29F52', {
-            format: "uint16" /* Formats.UINT16 */,
-            unit: "A",
-            minValue: 0,
-            maxValue: 65535,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        this.value = this.getDefaultValue();
-    }
-}
-exports.Amperes = Amperes;
-class Watts extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Consumption', 'E863F10D-079E-48FF-8F27-9C2605A29F52', {
-            format: "uint16" /* Formats.UINT16 */,
-            unit: 'W',
-            minValue: 0,
-            maxValue: 65535,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.Watts = Watts;
-class VoltAmperes extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Apparent Power', 'E863F110-079E-48FF-8F27-9C2605A29F52', {
-            format: "uint16" /* Formats.UINT16 */,
-            unit: 'VA',
-            minValue: 0,
-            maxValue: 65535,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        this.value = this.getDefaultValue();
-    }
-}
-exports.VoltAmperes = VoltAmperes;
-class KilowattHours extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52', {
-            format: "uint32" /* Formats.UINT32 */,
-            unit: "kWh",
-            minValue: 0,
-            maxValue: 65535,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.KilowattHours = KilowattHours;
-class KilowattVoltAmpereHour extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Apparent Energy', 'E863F127-079E-48FF-8F27-9C2605A29F52', {
-            format: "uint32" /* Formats.UINT32 */,
-            unit: "kVAh",
-            minValue: 0,
-            maxValue: 65535,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.KilowattVoltAmpereHour = KilowattVoltAmpereHour;
-class BatteryLevel extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Battery Level', 'E863F11B-079E-48FF-8F27-9C2605A29F52', {
-            format: "uint16" /* Formats.UINT16 */,
-            unit: "percentage" /* Units.PERCENTAGE */,
-            maxValue: 100,
-            minValue: 0,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */]
-        });
-    }
-}
-exports.BatteryLevel = BatteryLevel;
-class EveAirQuality extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Eve Air Quality', 'E863F10B-079E-48FF-8F27-9C2605A29F52', {
-            format: "uint16" /* Formats.UINT16 */,
-            unit: "ppm",
-            maxValue: 5000,
-            minValue: 0,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */],
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.EveAirQuality = EveAirQuality;
-// courtesy of https://github.com/ebaauw/homebridge-lib
-// i should probably submit a PR for everything here that isn't in that repo...
-class EveOpenDuration extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Eve Open Duration', 'E863F118-079E-48FF-8F27-9C2605A29F52', {
-            format: "uint32" /* Formats.UINT32 */,
-            unit: "seconds" /* Units.SECONDS */, // since last reset
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */, "pw" /* Perms.PAIRED_WRITE */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.EveOpenDuration = EveOpenDuration;
-class EveClosedDuration extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Eve Closed Duration', 'E863F119-079E-48FF-8F27-9C2605A29F52', {
-            format: "uint32" /* Formats.UINT32 */,
-            unit: "seconds" /* Units.SECONDS */, // since last reset
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */, "pw" /* Perms.PAIRED_WRITE */]
-        });
-    }
-}
-exports.EveClosedDuration = EveClosedDuration;
-class EveLastAction extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Eve Last Activation', 'E863F11A-079E-48FF-8F27-9C2605A29F52', {
-            format: "uint32" /* Formats.UINT32 */,
-            unit: "seconds" /* Units.SECONDS */, // since last reset
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.EveLastAction = EveLastAction;
-class EveTimesOpened extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Eve Times Opened', 'E863F129-079E-48FF-8F27-9C2605A29F52', {
-            format: "uint32" /* Formats.UINT32 */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-    }
-}
-exports.EveTimesOpened = EveTimesOpened;
-class EveResetTotal extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Eve Reset Total', 'E863F112-079E-48FF-8F27-9C2605A29F52', {
-            format: "uint32" /* Formats.UINT32 */,
-            unit: "seconds" /* Units.SECONDS */, // since 2001/01/01
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */, "pw" /* Perms.PAIRED_WRITE */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.EveResetTotal = EveResetTotal;
-// courtesy of https://github.com/robi-van-kinobi/homebridge-cubesensors
-class AtmosphericPressureLevel extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Barometric Pressure', '28FDA6BC-9C2A-4DEA-AAFD-B49DB6D155AB', {
-            format: "uint8" /* Formats.UINT8 */,
-            unit: "mbar",
-            minValue: 800,
-            maxValue: 1200,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-    }
-}
-exports.AtmosphericPressureLevel = AtmosphericPressureLevel;
-class NoiseLevel extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Noise Level', '2CD7B6FD-419A-4740-8995-E3BFE43735AB', {
-            format: "uint8" /* Formats.UINT8 */,
-            unit: "dB",
-            minValue: 0,
-            maxValue: 200,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.NoiseLevel = NoiseLevel;
-// courtesy of https://github.com/homespun/homebridge-platform-snmp
-class AirFlow extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Air Flow', '49C8AE5A-A3A5-41AB-BF1F-12D5654F9F41', {
-            format: "uint8" /* Formats.UINT8 */,
-            unit: "m/s",
-            minValue: 0,
-            maxValue: 135,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.AirFlow = AirFlow;
-class NitrogenDioxideDetected extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Nitrogen Dioxide Detected', 'D737B40A-3AF0-4316-950F-76090B98C5CF', {
-            format: "uint8" /* Formats.UINT8 */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.NitrogenDioxideDetected = NitrogenDioxideDetected;
-NitrogenDioxideDetected.NO2_LEVELS_NORMAL = 0;
-NitrogenDioxideDetected.NO2_LEVELS_ABNORMAL = 1;
-class NitrogenDioxideLevel extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Nitrogen Dioxide Level', 'B762A2AF-D9D0-4A79-814A-E9EBAB0ED290', {
-            format: "float" /* Formats.FLOAT */,
-            unit: "ppm",
-            minValue: 0,
-            maxValue: 1500,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.NitrogenDioxideLevel = NitrogenDioxideLevel;
-class NitrogenDioxidePeakLevel extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Nitrogen Dioxide Peak Level', 'B6594847-7B88-496C-A1A0-B7860F3D7601', {
-            format: "float" /* Formats.FLOAT */,
-            unit: "ppm",
-            minValue: 0,
-            maxValue: 1500,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.NitrogenDioxidePeakLevel = NitrogenDioxidePeakLevel;
-// courtesy of https://github.com/homespun/homebridge-platform-aqe
-class OzoneDetected extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Ozone Detected', '0168FA60-5CF4-4314-AA45-0F84E389A093', {
-            format: "uint8" /* Formats.UINT8 */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        this.value = this.getDefaultValue();
-    }
-}
-exports.OzoneDetected = OzoneDetected;
-OzoneDetected.O3_LEVELS_NORMAL = 0;
-OzoneDetected.O3_LEVELS_ABNORMAL = 1;
-class OzoneLevel extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Ozone Level', '03C17FD9-672E-42F5-8DD4-30C6822C739A', {
-            format: "float" /* Formats.FLOAT */,
-            unit: "ppb",
-            minValue: 0,
-            maxValue: 1500,
-            minStep: 0.01,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.OzoneLevel = OzoneLevel;
-class OzonePeakLevel extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Ozone Peak Level', '550EE1FF-FC66-4BB6-A1C1-4B0A07109AE3', {
-            format: "float" /* Formats.FLOAT */,
-            unit: "ppb",
-            minValue: 0,
-            maxValue: 1500,
-            minStep: 0.01,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.OzonePeakLevel = OzonePeakLevel;
-class SodiumDioxideDetected extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Sodium Dioxide Detected', '4D237DAB-1CB6-4D52-B446-4667F58F7D28', {
-            format: "uint8" /* Formats.UINT8 */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.SodiumDioxideDetected = SodiumDioxideDetected;
-SodiumDioxideDetected.SO2_LEVELS_NORMAL = 0;
-SodiumDioxideDetected.SO2_LEVELS_ABNORMAL = 1;
-class SodiumDioxideLevel extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Sodium Dioxide Level', '66C4D315-FBEF-470E-9434-B047679F1141', {
-            format: "float" /* Formats.FLOAT */,
-            unit: "ppb",
-            minValue: 0,
-            maxValue: 1500,
-            minStep: 0.01,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.SodiumDioxideLevel = SodiumDioxideLevel;
-class SodiumDioxidePeakLevel extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Sodium Dioxide Peak Level', '4CD6F648-2F92-43D8-86DF-0E8DE75E033B', {
-            format: "float" /* Formats.FLOAT */,
-            unit: "ppb",
-            minValue: 0,
-            maxValue: 1500,
-            minStep: 0.01,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.SodiumDioxidePeakLevel = SodiumDioxidePeakLevel;
-class VolatileOrganicCompoundDetected extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Volatile Organic Compound Detected', '65DBC0F5-C40B-4E04-ADED-DC70031B0B82', {
-            format: "uint8" /* Formats.UINT8 */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.VolatileOrganicCompoundDetected = VolatileOrganicCompoundDetected;
-VolatileOrganicCompoundDetected.VOC_LEVELS_NORMAL = 0;
-VolatileOrganicCompoundDetected.VOC_LEVELS_ABNORMAL = 1;
-class VolatileOrganicCompoundLevel extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Volatile Organic Compound Level', '35C4C797-193D-4998-879F-A08514E87897', {
-            format: "float" /* Formats.FLOAT */,
-            unit: "ppb",
-            minValue: 0,
-            maxValue: 1500,
-            minStep: 0.01,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.VolatileOrganicCompoundLevel = VolatileOrganicCompoundLevel;
-class VolatileOrganicCompoundPeakLevel extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Volatile Organic Compound Peak Level', 'A62CB784-1916-4BDF-B840-BDB9F8A264E9', {
-            format: "float" /* Formats.FLOAT */,
-            unit: "ppb",
-            minValue: 0,
-            maxValue: 1500,
-            minStep: 0.01,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.VolatileOrganicCompoundPeakLevel = VolatileOrganicCompoundPeakLevel;
-class NotificationCode extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Notification Code', '381C47A3-CB06-4177-8E3D-A1B4C22EB031', {
-            format: "uint8" /* Formats.UINT8 */,
-            maxValue: 255,
-            minValue: 0,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
-        });
-        this.value = 255;
-    }
-}
-exports.NotificationCode = NotificationCode;
-class NotificationText extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Notification Text', 'e244ca80-813e-423a-86bd-02f293b857a0', {
-            format: "string" /* Formats.STRING */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.NotificationText = NotificationText;
-// used by Elgato Eve, number of seconds since the epoch...
-class LastEventTime extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Last Event Time', 'E863F11A-079E-48FF-8F27-9C2605A29F52', {
-            format: "uint32" /* Formats.UINT32 */,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.LastEventTime = LastEventTime;
-// courtesy of https://github.com/SeydX/homebridge-broadband
-class DownloadSpeed extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Download Speed', 'DA70DA1F-DA72-4DB3-81C2-99F158A15A9A', {
-            format: "float" /* Formats.FLOAT */,
-            unit: 'Mbps',
-            maxValue: 1024,
-            minValue: 0,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.DownloadSpeed = DownloadSpeed;
-class UploadSpeed extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Upload Speed', 'AB74289E-D516-4A12-B2AE-1B32A74C035F', {
-            format: "float" /* Formats.FLOAT */,
-            unit: 'Mbps',
-            maxValue: 1024,
-            minValue: 0,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.UploadSpeed = UploadSpeed;
-class Ping extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Ping', 'CC65A09A-E052-410C-981D-C11BDE2C3F60', {
-            format: "int" /* Formats.INT */,
-            unit: 'ms',
-            maxValue: 999,
-            minValue: 0,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.Ping = Ping;
-class Latency extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Latency', '60EC80F9-F799-4E8E-B613-098E7EBCBB0B', {
-            format: "int" /* Formats.INT */,
-            unit: 'ms',
-            maxValue: 999,
-            minValue: 0,
-            minStep: 0.001,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.Latency = Latency;
-// https://github.com/naofireblade/homebridge-weather-plus
-class DewPoint extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Dew Point', '095c46e2-278e-4e3c-b9e7-364622a0f501', {
-            format: "float" /* Formats.FLOAT */,
-            unit: "celsius" /* Units.CELSIUS */,
-            maxValue: 50,
-            minValue: -50,
-            minStep: 0.1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.DewPoint = DewPoint;
-// courtesy of https://github.com/ToddGreenfield/homebridge-nut
-class InputVoltageAC extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Input Voltage AC', hap_nodejs_1.uuid.generate('CommunityTypes:usagedevice:InputVoltageAC'), 
-        // UUID.generate('CommunityTypes:usagedevice:InputVoltageAC'),
-        {
-            format: "float" /* Formats.FLOAT */,
-            unit: "V",
-            minValue: 0,
-            maxValue: 65535,
-            minStep: 0.01,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-    }
-}
-exports.InputVoltageAC = InputVoltageAC;
-class OutputVoltageAC extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Output Voltage AC', hap_nodejs_1.uuid.generate('CommunityTypes:usagedevice:OutputVoltageAC'), {
-            format: "float" /* Formats.FLOAT */,
-            unit: "V",
-            minValue: 0,
-            maxValue: 65535,
-            minStep: 0.01,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.OutputVoltageAC = OutputVoltageAC;
-class BatteryVoltageDC extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('Battery Voltage DC', hap_nodejs_1.uuid.generate('CommunityTypes:usagedevice:BatteryVoltageDC'), {
-            format: "float" /* Formats.FLOAT */,
-            unit: "V",
-            minValue: 0,
-            maxValue: 65535,
-            minStep: 0.01,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.BatteryVoltageDC = BatteryVoltageDC;
-class UPSLoadPercent extends hap_nodejs_1.Characteristic {
-    constructor() {
-        super('UPS Load', hap_nodejs_1.uuid.generate('CommunityTypes:usagedevice:UPSLoadPercent'), {
-            format: "uint8" /* Formats.UINT8 */,
-            unit: "percentage" /* Units.PERCENTAGE */,
-            minValue: 0,
-            maxValue: 100,
-            minStep: 1,
-            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
-        });
-        // this.value = this.getDefaultValue();
-    }
-}
-exports.UPSLoadPercent = UPSLoadPercent;
-// Services
-class AudioDeviceService extends hap_nodejs_1.Service {
-    constructor(displayName, subtype) {
-        super(displayName, '00000001-0000-1000-8000-135D67EC4377', subtype);
-        // Required Characteristics
-        this.addCharacteristic(AudioVolume);
-        // Optional Characteristics
-        this.addOptionalCharacteristic(Muting);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
-    }
-}
-exports.AudioDeviceService = AudioDeviceService;
-class PlaybackDeviceService extends hap_nodejs_1.Service {
-    constructor(displayName, subtype) {
-        super(displayName, '00000002-0000-1000-8000-135D67EC4377', subtype);
-        // Required Characteristics
-        this.addCharacteristic(PlaybackState);
-        // Optional Characteristics
-        this.addOptionalCharacteristic(SkipForward);
-        this.addOptionalCharacteristic(SkipBackward);
-        this.addOptionalCharacteristic(ShuffleMode);
-        this.addOptionalCharacteristic(RepeatMode);
-        this.addOptionalCharacteristic(PlaybackSpeed);
-        this.addOptionalCharacteristic(MediaCurrentPosition);
-        this.addOptionalCharacteristic(MediaItemName);
-        this.addOptionalCharacteristic(MediaItemAlbumName);
-        this.addOptionalCharacteristic(MediaItemArtist);
-        this.addOptionalCharacteristic(MediaItemDuration);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
-        // Artwork characteristics...would be better reported in a separate service?
-        this.addOptionalCharacteristic(StillImage);
-        this.addOptionalCharacteristic(MediaTypeIdentifier);
-        this.addOptionalCharacteristic(MediaWidth);
-        this.addOptionalCharacteristic(MediaHeight);
-    }
-}
-exports.PlaybackDeviceService = PlaybackDeviceService;
-// A media information service that has no playback controls, for e.g. DAB radio...
-class MediaInformationService extends hap_nodejs_1.Service {
-    constructor(displayName, subtype) {
-        super(displayName, '00000003-0000-1000-8000-135D67EC4377', subtype);
-        // Required Characteristics
-        this.addCharacteristic(MediaItemName);
-        // Optional Characteristics
-        this.addOptionalCharacteristic(MediaItemAlbumName);
-        this.addOptionalCharacteristic(MediaItemArtist);
-        this.addOptionalCharacteristic(MediaItemDuration);
-        this.addOptionalCharacteristic(MediaCurrentPosition);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
-        // Artwork characteristics...would be better reported in a separate service?
-        this.addOptionalCharacteristic(StillImage);
-        this.addOptionalCharacteristic(MediaTypeIdentifier);
-        this.addOptionalCharacteristic(MediaWidth);
-        this.addOptionalCharacteristic(MediaHeight);
-    }
-}
-exports.MediaInformationService = MediaInformationService;
-class StillImageService extends hap_nodejs_1.Service {
-    constructor(displayName, subtype) {
-        super(displayName, '00000004-0000-1000-8000-135D67EC4377', subtype);
-        // Required Characteristics
-        this.addCharacteristic(StillImage);
-        this.addCharacteristic(MediaTypeIdentifier);
-        // Optional Characteristics
-        this.addOptionalCharacteristic(MediaWidth);
-        this.addOptionalCharacteristic(MediaHeight);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
-    }
-}
-exports.StillImageService = StillImageService;
-class SecurityCameraService extends hap_nodejs_1.Service {
-    constructor(displayName, subtype) {
-        super(displayName, '00000005-0000-1000-8000-135D67EC4377', subtype);
-        // Required Characteristics
-        this.addCharacteristic(StillImage);
-        this.addCharacteristic(MediaTypeIdentifier);
-        // Optional Characteristics
-        this.addOptionalCharacteristic(Timestamp);
-        this.addOptionalCharacteristic(MediaWidth);
-        this.addOptionalCharacteristic(MediaHeight);
-        this.addOptionalCharacteristic(VideoDataURL);
-        this.addOptionalCharacteristic(AudioDataURL);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.MotionDetected);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusTampered);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
-    }
-}
-exports.SecurityCameraService = SecurityCameraService;
-// courtesy of https://github.com/robi-van-kinobi/homebridge-cubesensors
-class AtmosphericPressureSensor extends hap_nodejs_1.Service {
-    constructor(displayName, subtype) {
-        super(displayName, 'B77831FD-D66A-46A4-B66D-FD7EE8DFE3CE', subtype);
-        // Required Characteristics
-        this.addCharacteristic(AtmosphericPressureLevel);
-        // Optional Characteristics
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusActive);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusFault);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusLowBattery);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusTampered);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
-    }
-}
-exports.AtmosphericPressureSensor = AtmosphericPressureSensor;
-class NoiseLevelSensor extends hap_nodejs_1.Service {
-    constructor(displayName, subtype) {
-        super(displayName, '28FDA6BC-9C2A-4DEA-AAFD-B49DB6D155AB', subtype);
-        // Required Characteristics
-        this.addCharacteristic(NoiseLevel);
-        // Optional Characteristics
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusActive);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusFault);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusLowBattery);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusTampered);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
-    }
-}
-exports.NoiseLevelSensor = NoiseLevelSensor;
-// courtesy of https://github.com/homespun/homebridge-platform-snmp
-class AirFlowSensor extends hap_nodejs_1.Service {
-    constructor(displayName, subtype) {
-        super(displayName, 'AF5C192E-420F-4A13-AB67-B8F3968A4935', subtype);
-        // Required Characteristics
-        this.addCharacteristic(AirFlow);
-        // Optional Characteristics
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusActive);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusFault);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusLowBattery);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusTampered);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
-    }
-}
-exports.AirFlowSensor = AirFlowSensor;
-class NitrogenDioxideSensor extends hap_nodejs_1.Service {
-    constructor(displayName, subtype) {
-        super(displayName, '9F6B797D-D43B-4C88-9AA0-57018AB8A91E', subtype);
-        // Required Characteristics
-        this.addCharacteristic(NitrogenDioxideDetected);
-        // Optional Characteristics
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusActive);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusFault);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusLowBattery);
-        this.addOptionalCharacteristic(NitrogenDioxideLevel);
-        this.addOptionalCharacteristic(NitrogenDioxidePeakLevel);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusTampered);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
-    }
-}
-exports.NitrogenDioxideSensor = NitrogenDioxideSensor;
-// courtesy of https://github.com/homespun/homebridge-platform-aqe
-class OzoneSensor extends hap_nodejs_1.Service {
-    constructor(displayName, subtype) {
-        super(displayName, 'B91C2BD6-D071-4F49-A23B-20721AC6CCEB', subtype);
-        // Required Characteristics
-        this.addCharacteristic(OzoneDetected);
-        // Optional Characteristics
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusActive);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusFault);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusLowBattery);
-        this.addOptionalCharacteristic(OzoneLevel);
-        this.addOptionalCharacteristic(OzonePeakLevel);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusTampered);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
-    }
-}
-exports.OzoneSensor = OzoneSensor;
-class SodiumDioxideSensor extends hap_nodejs_1.Service {
-    constructor(displayName, subtype) {
-        super(displayName, 'FE7CFB1F-12D0-405D-86FD-7E268D65C453', subtype);
-        // Required Characteristics
-        this.addCharacteristic(SodiumDioxideDetected);
-        // Optional Characteristics
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusActive);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusFault);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusLowBattery);
-        this.addOptionalCharacteristic(SodiumDioxideLevel);
-        this.addOptionalCharacteristic(SodiumDioxidePeakLevel);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusTampered);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
-    }
-}
-exports.SodiumDioxideSensor = SodiumDioxideSensor;
-class VolatileOrganicCompoundSensor extends hap_nodejs_1.Service {
-    constructor(displayName, subtype) {
-        super(displayName, '776E34BC-1660-46EC-A33D-2DFE5B958699', subtype);
-        // Required Characteristics
-        this.addCharacteristic(VolatileOrganicCompoundDetected);
-        // Optional Characteristics
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusActive);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusFault);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusLowBattery);
-        this.addOptionalCharacteristic(VolatileOrganicCompoundLevel);
-        this.addOptionalCharacteristic(VolatileOrganicCompoundPeakLevel);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusTampered);
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
-    }
-}
-exports.VolatileOrganicCompoundSensor = VolatileOrganicCompoundSensor;
-class NotificationService extends hap_nodejs_1.Service {
-    constructor(displayName, subtype) {
-        super(displayName, '074D8CE9-5B4B-48D5-9990-D98850C2F3FE', subtype);
-        // Required Characteristics
-        this.addCharacteristic(NotificationCode);
-        this.addCharacteristic(NotificationText);
-        // Optional Characteristics
-        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
-        this.addOptionalCharacteristic(LastEventTime);
-    }
-}
-exports.NotificationService = NotificationService;
-
-
-/***/ }),
-
-/***/ "./yahka.functions/conversion.base.ts":
-/*!********************************************!*\
-  !*** ./yahka.functions/conversion.base.ts ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TIOBrokerConversionBase = void 0;
-const functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
-class TIOBrokerConversionBase extends functions_base_1.TYahkaFunctionBase {
-    constructor(adapter, logIdentifier = '') {
-        super(adapter, logIdentifier);
-    }
-    static castToNumber(value) {
-        if (value === undefined) {
-            return undefined;
-        }
-        if (typeof value !== 'number') {
-            return Number(value);
-        }
-        return value;
-    }
-    static castToBool(value) {
-        return !!value;
-    }
-    static parameterValueByName(parameters, name) {
-        let paramArray;
-        if (typeof parameters === 'object') {
-            paramArray = parameters;
-        }
-        else {
-            paramArray = JSON.parse(parameters);
-        }
-        if (paramArray === undefined) {
-            return undefined;
-        }
-        return paramArray[name];
-    }
-}
-exports.TIOBrokerConversionBase = TIOBrokerConversionBase;
-
-
-/***/ }),
-
-/***/ "./yahka.functions/conversion.map.ts":
-/*!*******************************************!*\
-  !*** ./yahka.functions/conversion.map.ts ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TIoBrokerConversion_Map = void 0;
-exports.isMultiStateParameter = isMultiStateParameter;
-const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
-function isMultiStateParameter(params) {
-    return 'mappings' in params;
-}
-class TIoBrokerConversion_Map extends conversion_base_1.TIOBrokerConversionBase {
-    static create(adapter, parameters) {
-        if (!isMultiStateParameter(parameters)) {
-            return undefined;
-        }
-        return new TIoBrokerConversion_Map(adapter, parameters);
-    }
-    constructor(adapter, parameters) {
-        super(adapter, 'TIoBrokerConversion_Map');
-        this.parameters = parameters;
-        this.mappingArrayToHomeKit = new Map();
-        this.mappingArrayToIOBroker = new Map();
-        this.jsonReplacer = (key, value) => String(value);
-        this.buildMappingArray();
-    }
-    buildMappingArray() {
-        for (let mapDef of this.parameters.mappings) {
-            let leftStr = JSON.stringify(mapDef.left, this.jsonReplacer);
-            let rightStr = JSON.stringify(mapDef.right, this.jsonReplacer);
-            this.mappingArrayToHomeKit.set(leftStr, mapDef.right);
-            this.mappingArrayToIOBroker.set(rightStr, mapDef.left);
-        }
-    }
-    toHomeKit(value) {
-        let ioValueStr = JSON.stringify(value, this.jsonReplacer);
-        return this.mappingArrayToHomeKit.get(ioValueStr);
-    }
-    toIOBroker(value) {
-        let hkValueStr = JSON.stringify(value, this.jsonReplacer);
-        return this.mappingArrayToIOBroker.get(hkValueStr);
-    }
-}
-exports.TIoBrokerConversion_Map = TIoBrokerConversion_Map;
-
-
-/***/ }),
-
-/***/ "./yahka.functions/functions.base.ts":
-/*!*******************************************!*\
-  !*** ./yahka.functions/functions.base.ts ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TYahkaFunctionBase = void 0;
-const yahka_logger_1 = __webpack_require__(/*! ../shared/yahka.logger */ "./shared/yahka.logger.ts");
-class TYahkaFunctionBase {
-    constructor(adapter, logIdentifier = '') {
-        this.adapter = adapter;
-        this.logIdentifier = logIdentifier;
-        this.subscriptionRequests = [];
-        this.stateCache = new Map();
-        this.log = new yahka_logger_1.YahkaLogger(this.adapter, this.logIdentifier);
-    }
-    addSubscriptionRequest(stateName) {
-        let subscriptionEvent = this.subscriptionEvent.bind(this, stateName);
-        this.subscriptionRequests.push({
-            subscriptionType: 'state',
-            subscriptionIdentifier: stateName,
-            subscriptionEvent: subscriptionEvent
-        });
-    }
-    shouldStateBeFiltered(stateName, ioState) {
-        return false;
-    }
-    readValueFromCache(stateName) {
-        if (this.stateCache.has(stateName)) {
-            return this.stateCache.get(stateName);
-        }
-        else {
-            return undefined;
-        }
-    }
-    updateCache(stateName, ioState) {
-        let needUpdate = false;
-        if (this.stateCache.has(stateName)) {
-            let curVal = this.stateCache.get(stateName);
-            needUpdate = (curVal === null || curVal === void 0 ? void 0 : curVal.val) !== (ioState === null || ioState === void 0 ? void 0 : ioState.val);
-        }
-        else {
-            needUpdate = true;
-        }
-        if (needUpdate)
-            this.stateCache.set(stateName, ioState);
-        return needUpdate;
-    }
-    subscriptionEvent(stateName, ioState, callback) {
-        this.log.debug(`change event from ioBroker via [${stateName}]${JSON.stringify(ioState)}`);
-        if (this.shouldStateBeFiltered(stateName, ioState)) {
-            this.log.debug('state was filtered - notification is canceled');
-            return;
-        }
-        let cacheChange = this.updateCache(stateName, ioState);
-        if (!cacheChange) {
-            this.log.debug('state value already in cache - notification is canceled');
-            return;
-        }
-        this.cacheChanged(stateName, callback);
-    }
-    cacheChanged(stateName, callback) {
-    }
-}
-exports.TYahkaFunctionBase = TYahkaFunctionBase;
-
-
-/***/ }),
-
-/***/ "./yahka.functions/iofunc.base.ts":
-/*!****************************************!*\
-  !*** ./yahka.functions/iofunc.base.ts ***!
-  \****************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TIoBrokerInOutFunction_StateBase = exports.TIoBrokerInOutFunctionBase = void 0;
-const functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
-class TIoBrokerInOutFunctionBase extends functions_base_1.TYahkaFunctionBase {
-    constructor() {
-        super(...arguments);
-        this.valueForHomeKit = undefined;
-        this.errorForHomeKit = null;
-    }
-    fromIOBroker(callback) {
-        this.log.debug(`fromIOBroker event - delivering cached value (${JSON.stringify(this.valueForHomeKit)})`);
-        callback(null, this.valueForHomeKit);
-    }
-    toIOBroker(plainIoValue, callback) {
-        this.log.debug(`writing state to ioBroker: ${JSON.stringify(plainIoValue)}`);
-        this.updateIOBrokerValue(plainIoValue, callback);
-    }
-    cacheChanged(stateName, callback) {
-        try {
-            this.valueForHomeKit = this.recalculateHomekitValues(stateName);
-            this.errorForHomeKit = null;
-        }
-        catch (e) {
-            this.errorForHomeKit = e;
-        }
-        if (this.valueForHomeKit != null)
-            callback(this.valueForHomeKit);
-    }
-    recalculateHomekitValues(stateName) {
-        // noop
-    }
-    updateIOBrokerValue(plainIoValue, callback) {
-        // to be filled in derived class
-    }
-}
-exports.TIoBrokerInOutFunctionBase = TIoBrokerInOutFunctionBase;
-class TIoBrokerInOutFunction_StateBase {
-    constructor(adapter, stateName, deferredTime = 0) {
-        this.adapter = adapter;
-        this.stateName = stateName;
-        this.deferredTime = deferredTime;
-        this.debounceTimer = null;
-        this.subscriptionRequests = [];
-        this.addSubscriptionRequest(stateName);
-    }
-    addSubscriptionRequest(stateName) {
-        let subscriptionEvent = this.subscriptionEvent.bind(this, stateName);
-        this.subscriptionRequests.push({
-            subscriptionType: 'state',
-            subscriptionIdentifier: stateName,
-            subscriptionEvent: subscriptionEvent
-        });
-    }
-    getValueOnRead(ioState) {
-        return ioState === null || ioState === void 0 ? void 0 : ioState.val;
-    }
-    getValueOnNotify(ioState) {
-        return ioState === null || ioState === void 0 ? void 0 : ioState.val;
-    }
-    toIOBroker(plainIoValue, callback) {
-        this.adapter.log.debug(`writing state to ioBroker [${this.stateName}]: ${JSON.stringify(plainIoValue)}`);
-        this.adapter.getForeignState(this.stateName, (error, ioState) => {
-            let value = this.getValueOnRead(ioState);
-            let valueChanged = value !== plainIoValue;
-            this.adapter.log.debug(`checking value change: ${JSON.stringify(value)} != ${JSON.stringify(plainIoValue)} = ${valueChanged}`);
-            if (valueChanged) {
-                this.adapter.setForeignState(this.stateName, plainIoValue, false, (error) => {
-                    if (error)
-                        this.adapter.log.error(`setForeignState error [${this.stateName}] to [${JSON.stringify(plainIoValue)}]: ${error}`);
-                    callback();
-                });
-            }
-            else {
-                callback();
-            }
-        });
-    }
-    fromIOBroker(callback) {
-        this.adapter.log.debug(`reading state from ioBroker [${this.stateName}]`);
-        this.adapter.getForeignState(this.stateName, (error, ioState) => {
-            this.adapter.log.debug(`read state from ioBroker [${this.stateName}]: ${JSON.stringify(ioState)}`);
-            if (error)
-                this.adapter.log.error(`... with error: ${error}`);
-            let value = this.getValueOnRead(ioState);
-            callback(error, value);
-        });
-    }
-    subscriptionEvent(stateName, ioState, callback) {
-        this.adapter.log.debug(`change event from ioBroker via [${this.stateName}]${JSON.stringify(ioState)}`);
-        let newValue = this.getValueOnNotify(ioState);
-        if (newValue != null)
-            this.executeCallback(callback, newValue);
-        else
-            this.adapter.log.debug('state was filtered - notification is canceled');
-    }
-    executeCallback(callback, plainIOValue) {
-        if (this.deferredTime > 0)
-            this.setupDeferredChangeEvent(callback, plainIOValue);
-        else
-            callback(plainIOValue);
-    }
-    setupDeferredChangeEvent(callback, plainIOValue) {
-        this.cancelDeferredChangeEvent();
-        this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback, plainIOValue), this.deferredTime);
-    }
-    cancelDeferredChangeEvent() {
-        clearTimeout(this.debounceTimer);
-        this.debounceTimer = null;
-    }
-    deferredChangeEvent(callback, plainIOValue) {
-        this.adapter.log.debug(`[${this.stateName}] firing deferred change event:${JSON.stringify(plainIOValue)}`);
-        callback(plainIOValue);
-    }
-}
-exports.TIoBrokerInOutFunction_StateBase = TIoBrokerInOutFunction_StateBase;
-
-
-/***/ }),
-
-/***/ "./yahka.functions/iofunc.homematic.dimmer.ts":
-/*!****************************************************!*\
-  !*** ./yahka.functions/iofunc.homematic.dimmer.ts ***!
-  \****************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = void 0;
-exports.isHomematic_Dimmer_Parameter = isHomematic_Dimmer_Parameter;
-const iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
-const yahka_utils_1 = __webpack_require__(/*! ../shared/yahka.utils */ "./shared/yahka.utils.ts");
-function isHomematic_Dimmer_Parameter(value) {
-    if (value === undefined || value === null || typeof value !== 'object') {
-        return false;
-    }
-    return (0, yahka_utils_1.propertyExists)(value, 'levelState');
-}
-class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends iofunc_base_1.TIoBrokerInOutFunctionBase {
-    static parseParameters(parameters) {
-        if (!isHomematic_Dimmer_Parameter(parameters)) {
-            return undefined;
-        }
-        return parameters;
-    }
-    constructor(adapter, functionName, parameters) {
-        super(adapter, `${functionName}[${parameters.levelState}]`);
-        this.parameters = parameters;
-        this.lastOnLevel = { val: undefined, ack: false, ts: undefined, lc: undefined, from: undefined };
-        this.addSubscriptionRequest(parameters.levelState);
-    }
-    cacheChanged(stateName, callback) {
-        // save level if we are switching off
-        if (stateName === this.parameters.levelState) {
-            const cacheValue = this.readValueFromCache(stateName);
-            if (parseFloat(cacheValue.val) > 0) {
-                this.lastOnLevel = cacheValue;
-            }
-        }
-        super.cacheChanged(stateName, callback);
-    }
-}
-exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = TIoBrokerInOutFunction_Homematic_Dimmer_Base;
-class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFunction_Homematic_Dimmer_Base {
-    static create(adapter, parameters) {
-        let params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
-        if (params === undefined) {
-            return undefined;
-        }
-        return new TIoBrokerInOutFunction_Homematic_Dimmer_On(adapter, params);
-    }
-    constructor(adapter, parameters) {
-        super(adapter, 'Homematic.Dimmer.On', parameters);
-        this.adapter = adapter;
-        this.parameters = parameters;
-    }
-    recalculateHomekitValues(stateName) {
-        let hkValue = this.stateCache.get(this.parameters.levelState);
-        return Boolean(parseFloat(hkValue === null || hkValue === void 0 ? void 0 : hkValue.val) > 0);
-    }
-    updateIOBrokerValue(plainIoValue, callback) {
-        setTimeout(() => this.executeIOBrokerValue(plainIoValue, callback), 50);
-    }
-    executeIOBrokerValue(plainIoValue, callback) {
-        var _a, _b;
-        const isSwitchingOn = Boolean(plainIoValue);
-        const stateName = this.parameters.levelState;
-        const newOnValue = (this.parameters.restoreToPreviousLevel ? (_a = this.lastOnLevel) === null || _a === void 0 ? void 0 : _a.val : this.parameters.defaultSwitchOnLevel) || this.parameters.defaultSwitchOnLevel || 100;
-        const newOffValue = 0;
-        const newValue = isSwitchingOn ? newOnValue : newOffValue;
-        if (isSwitchingOn && this.parameters.restoreToPreviousLevel) {
-            this.log.debug(`using previous level for switching on: ${JSON.stringify((_b = this.lastOnLevel) === null || _b === void 0 ? void 0 : _b.val)}`);
-        }
-        this.log.debug(`writing state to ioBroker [${stateName}]: ${JSON.stringify(newValue)}`);
-        this.adapter.getForeignState(stateName, (error, ioState) => {
-            let value = parseFloat(ioState === null || ioState === void 0 ? void 0 : ioState.val);
-            if (isSwitchingOn && value > 0) {
-                this.log.debug(`function should switch on but level is already not equal to 0: ${JSON.stringify(value)}`);
-                callback();
-                return;
-            }
-            let valueChanged = value !== newValue;
-            this.log.debug(`checking value change: ${JSON.stringify(value)} != ${JSON.stringify(newValue)} = ${valueChanged}`);
-            if (valueChanged) {
-                this.adapter.setForeignState(stateName, newValue, false, (error) => {
-                    if (error) {
-                        this.log.error(`setForeignState error [${stateName}] to [${JSON.stringify(newValue)}]: ${error}`);
-                        callback();
-                    }
-                    callback();
-                });
-            }
-            else {
-                callback();
-            }
-        });
-    }
-}
-exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = TIoBrokerInOutFunction_Homematic_Dimmer_On;
-class TIoBrokerInOutFunction_Homematic_Dimmer_Brightness extends TIoBrokerInOutFunction_Homematic_Dimmer_Base {
-    static create(adapter, parameters) {
-        let params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
-        if (params === undefined) {
-            return undefined;
-        }
-        return new TIoBrokerInOutFunction_Homematic_Dimmer_Brightness(adapter, params);
-    }
-    constructor(adapter, parameters) {
-        super(adapter, 'Homematic.Dimmer.Brightness', parameters);
-        this.adapter = adapter;
-        this.parameters = parameters;
-    }
-    recalculateHomekitValues(stateName) {
-        var _a;
-        let hkValue = this.stateCache.get(this.parameters.levelState);
-        return (hkValue === null || hkValue === void 0 ? void 0 : hkValue.val) == 0 ? (_a = this.lastOnLevel) === null || _a === void 0 ? void 0 : _a.val : hkValue === null || hkValue === void 0 ? void 0 : hkValue.val;
-    }
-    updateIOBrokerValue(plainIoValue, callback) {
-        const newValue = plainIoValue;
-        const stateName = this.parameters.levelState;
-        this.log.debug(`writing state to ioBroker [${stateName}]: ${JSON.stringify(newValue)}`);
-        this.adapter.getForeignState(stateName, (error, ioState) => {
-            let value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
-            let valueChanged = value !== newValue;
-            this.log.debug(`checking value change: ${JSON.stringify(value)} != ${JSON.stringify(newValue)} = ${valueChanged}`);
-            if (valueChanged) {
-                this.adapter.setForeignState(stateName, newValue, false, (error) => {
-                    if (error) {
-                        this.log.error(`setForeignState error [${stateName}] to [${JSON.stringify(newValue)}]: ${error}`);
-                        callback();
-                    }
-                    callback();
-                });
-            }
-            else {
-                callback();
-            }
-        });
-    }
-}
-exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = TIoBrokerInOutFunction_Homematic_Dimmer_Brightness;
-
-
-/***/ }),
-
-/***/ "./yahka.functions/iofunc.multi-state.ts":
-/*!***********************************************!*\
-  !*** ./yahka.functions/iofunc.multi-state.ts ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TIoBrokerInOutFunction_MultiState = void 0;
-exports.isMultiStateParameter = isMultiStateParameter;
-const iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
-function isMultiStateParameter(value) {
-    if (value === undefined || value === null || typeof value !== 'object') {
-        return false;
-    }
-    let propName = 'readState';
-    return (propName in value);
-}
-class TIoBrokerInOutFunction_MultiState extends iofunc_base_1.TIoBrokerInOutFunctionBase {
-    static parseParameters(parameters) {
-        if (Array.isArray(parameters)) {
-            return parameters.filter(isMultiStateParameter);
-        }
-        else if (typeof parameters === 'string') {
-            return [{ readState: parameters }];
-        }
-        else {
-            return undefined;
-        }
-    }
-    static create(adapter, parameters) {
-        let stateNames = TIoBrokerInOutFunction_MultiState.parseParameters(parameters);
-        if (stateNames === undefined) {
-            return undefined;
-        }
-        return new TIoBrokerInOutFunction_MultiState(adapter, stateNames);
-    }
-    constructor(adapter, stateProperties) {
-        super(adapter, 'TIoBrokerInOutFunctionMultiState');
-        this.adapter = adapter;
-        this.stateProperties = stateProperties;
-        for (let state of stateProperties) {
-            this.addSubscriptionRequest(state.readState);
-        }
-    }
-    recalculateHomekitValues(stateName) {
-        let hkValues = this.stateProperties.map((state) => { var _a; return (_a = this.stateCache.get(state.readState)) === null || _a === void 0 ? void 0 : _a.val; });
-        return hkValues.length === 1 ? hkValues[0] : hkValues;
-    }
-    updateSingleIOBrokerValue(state, newValue) {
-        if (newValue === undefined) {
-            return Promise.resolve();
-        }
-        return new Promise((resolve, reject) => {
-            let stateName = state.writeState || state.readState;
-            this.log.debug(`writing state to ioBroker [${stateName}]: ${JSON.stringify(newValue)}`);
-            this.adapter.setForeignState(stateName, newValue, false, (error) => {
-                if (error) {
-                    this.log.error(`setForeignState error [${stateName}] to [${JSON.stringify(newValue)}]: ${error}`);
-                    reject(error);
-                }
-                resolve();
-            });
-        });
-    }
-    updateIOBrokerValue(plainIoValue, callback) {
-        let ioValueArray = Array.isArray(plainIoValue) ? plainIoValue : [plainIoValue];
-        let promiseArray = this.stateProperties.map((state, index) => {
-            let newValueForThisState = ioValueArray[index];
-            return this.updateSingleIOBrokerValue(state, newValueForThisState);
-        });
-        Promise.all(promiseArray).then(() => {
-            this.log.debug('wrote all states successfully to ioBroker');
-            callback();
-        }).catch((e) => {
-            this.log.error(`could not write all states to ioBroker: ${JSON.stringify(e)}`);
-            callback();
-        });
-    }
-}
-exports.TIoBrokerInOutFunction_MultiState = TIoBrokerInOutFunction_MultiState;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  __extends,
+  __assign,
+  __rest,
+  __decorate,
+  __param,
+  __esDecorate,
+  __runInitializers,
+  __propKey,
+  __setFunctionName,
+  __metadata,
+  __awaiter,
+  __generator,
+  __createBinding,
+  __exportStar,
+  __values,
+  __read,
+  __spread,
+  __spreadArrays,
+  __spreadArray,
+  __await,
+  __asyncGenerator,
+  __asyncDelegator,
+  __asyncValues,
+  __makeTemplateObject,
+  __importStar,
+  __importDefault,
+  __classPrivateFieldGet,
+  __classPrivateFieldSet,
+  __classPrivateFieldIn,
+  __addDisposableResource,
+  __disposeResources,
+  __rewriteRelativeImportExtension,
+});
 
 
 /***/ }),
@@ -104993,6 +107550,7 @@ var isBoolean = __webpack_require__(/*! is-boolean-object */ "../node_modules/is
 var isSymbol = __webpack_require__(/*! is-symbol */ "../node_modules/is-symbol/index.js");
 var isBigInt = __webpack_require__(/*! is-bigint */ "../node_modules/is-bigint/index.js");
 
+/** @type {import('.')} */
 // eslint-disable-next-line consistent-return
 module.exports = function whichBoxedPrimitive(value) {
 	// eslint-disable-next-line eqeqeq
@@ -110316,178 +112874,4276 @@ module.exports = function whichTypedArray(value) {
 
 /***/ }),
 
-/***/ "jquery":
-/*!*************************!*\
-  !*** external "jQuery" ***!
-  \*************************/
-/***/ ((module) => {
+/***/ "./admin/admin.defaults.ts":
+/*!*********************************!*\
+  !*** ./admin/admin.defaults.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
-module.exports = jQuery;
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Defaults = void 0;
+var Defaults;
+(function (Defaults) {
+    Defaults.defaultCommandLine = {
+        stream: [
+            '-nostats',
+            '-nostdin',
+            '-y',
+            '-re',
+            '-i', '${source}',
+            '-an', '-sn', '-dn',
+            '-codec:v', '${codec}',
+            '-pix_fmt', 'yuv420p',
+            '-r', '${fps}',
+            '-f', 'rawvideo',
+            '-tune', 'zerolatency',
+            '-vf', 'scale=${width}:${height}',
+            '-b:v', '${bitrate}k',
+            '-bufsize', '${bitrate}k',
+            '-payload_type', '${payloadtype}',
+            '-ssrc', '${targetVideoSsrc}',
+            '-f', 'rtp',
+            '-srtp_out_suite', 'AES_CM_128_HMAC_SHA1_80',
+            '-srtp_out_params', '${videokey}',
+            'srtp://${targetAddress}:${targetVideoPort}?rtcpport=${targetVideoPort}&localrtcpport=${targetVideoPort}&pkt_size=${mtu}'
+        ],
+        streamAudio: [
+            '-vn', '-sn', '-dn',
+            '-codec:a',
+            'libfdk_aac',
+            '-profile:a',
+            'aac_eld',
+            '-flags',
+            '+global_header',
+            '-f',
+            'null',
+            '-ar',
+            '${samplerate}k',
+            '-b:a',
+            '${bitrate}k',
+            '-bufsize:a',
+            '${bitrate}k',
+            '-ac',
+            '${channel}',
+            '-payload_type',
+            '${payloadtype}',
+            '-ssrc',
+            '${targetAudioSsrc}',
+            '-f',
+            'rtp',
+            '-srtp_out_suite',
+            'AES_CM_128_HMAC_SHA1_80',
+            '-srtp_out_params',
+            '${audiokey}',
+            'srtp://${targetAddress}:${targetAudioPort}?rtcpport=${targetAudioPort}&localrtcpport=${targetAudioPort}&pkt_size=188'
+        ],
+        snapshot: [
+            '-re',
+            '-i', '${source}',
+            '-t', '1',
+            '-s', '${width}x${height}',
+            '-f', 'image2',
+            '-'
+        ]
+    };
+    Defaults.webcamCommandLine = {
+        stream: [
+            '-re',
+            '-f', 'dshow',
+            '-i', '${source}',
+            '-threads', '0',
+            '-vcodec', '${codec}',
+            '-an',
+            '-pix_fmt', 'yuv420p',
+            '-r', '${fps}',
+            '-f', 'rawvideo',
+            '-tune', 'zerolatency',
+            '-vf', 'scale=${width}:${height}',
+            '-b:v', '${bitrate}k',
+            '-bufsize', '${bitrate}k',
+            '-payload_type', '99',
+            '-ssrc', '${targetVideoSsrc}',
+            '-f', 'rtp',
+            '-srtp_out_suite', 'AES_CM_128_HMAC_SHA1_80',
+            '-srtp_out_params', '${videokey}',
+            'srtp://${targetAddress}:${targetVideoPort}?rtcpport=${targetVideoPort}&localrtcpport=${targetVideoPort}&pkt_size=1378'
+        ],
+        streamAudio: [],
+        snapshot: [
+            '-re',
+            '-f', 'dshow',
+            '-i', '${source}',
+            '-t', '1',
+            '-s', '${width}x${height}',
+            '-f', 'image2',
+            '-'
+        ],
+    };
+    Defaults.ffmpegCommandLines = {
+        default: Defaults.defaultCommandLine,
+        webcam: Defaults.webcamCommandLine
+    };
+})(Defaults || (exports.Defaults = Defaults = {}));
+
 
 /***/ }),
 
-/***/ "?690f":
-/*!*********************!*\
-  !*** net (ignored) ***!
-  \*********************/
-/***/ (() => {
+/***/ "./admin/admin.pageLoader.ts":
+/*!***********************************!*\
+  !*** ./admin/admin.pageLoader.ts ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, exports) => {
 
-/* (ignored) */
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.createTemplateElement = createTemplateElement;
+exports.createAndCloneTemplateElement = createAndCloneTemplateElement;
+function createTemplateElement(html) {
+    let template = document.createElement('template');
+    template.innerHTML = html;
+    return template;
+}
+function createAndCloneTemplateElement(html) {
+    let node = createTemplateElement(html);
+    return document.importNode(node.content, true);
+}
+
 
 /***/ }),
 
-/***/ "?219d":
-/*!*********************!*\
-  !*** net (ignored) ***!
-  \*********************/
-/***/ (() => {
+/***/ "./admin/admin.translation.ts":
+/*!************************************!*\
+  !*** ./admin/admin.translation.ts ***!
+  \************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-/* (ignored) */
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.translateFragment = translateFragment;
+const $ = __webpack_require__(/*! jquery */ "jquery");
+function translateFragment(fragment) {
+    const elements = fragment.querySelectorAll('.translate');
+    if (elements) {
+        for (let e = 0; e < elements.length; e++) {
+            let text = $(elements[e]).attr('data-lang');
+            if (!text) {
+                text = $(elements[e]).html();
+                $(elements[e]).attr('data-lang', text);
+            }
+            const transText = translateWord(text);
+            if (transText) {
+                $(elements[e]).html(transText);
+            }
+        }
+    }
+}
+
 
 /***/ }),
 
-/***/ "?d2b6":
+/***/ "./admin/admin.utils.ts":
+/*!******************************!*\
+  !*** ./admin/admin.utils.ts ***!
+  \******************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Utils = void 0;
+var Utils;
+(function (Utils) {
+    function getInputValue(input, emptyStringAsUndefined = true) {
+        if (input == null)
+            return undefined;
+        if ((input.type == 'checkbox') && ('checked' in input)) {
+            return input.checked;
+        }
+        if ('valueAsDate' in input) {
+            let dateValue = input.valueAsDate;
+            if (dateValue)
+                return dateValue;
+        }
+        if ('valueAsNumber' in input) {
+            let numValue = input.valueAsNumber;
+            if (!isNaN(numValue))
+                return numValue;
+        }
+        let stringValue = input.value;
+        if ((stringValue === '') && emptyStringAsUndefined) {
+            return undefined;
+        }
+        if (stringValue !== '') {
+            let strAsNumber = Number(stringValue);
+            if (!isNaN(strAsNumber)) {
+                return strAsNumber;
+            }
+        }
+        return stringValue;
+    }
+    Utils.getInputValue = getInputValue;
+    function getSelectInputValue(input, emptyStringAsUndefined = true) {
+        if (input == null)
+            return undefined;
+        let stringValue = input.value;
+        if ((stringValue === '') && emptyStringAsUndefined)
+            return undefined;
+        if (stringValue !== '') {
+            let strAsNumber = Number(stringValue);
+            if (!isNaN(strAsNumber))
+                return strAsNumber;
+        }
+        return stringValue;
+    }
+    Utils.getSelectInputValue = getSelectInputValue;
+    function setInputValue(input, value) {
+        if (input === undefined || input === null)
+            return;
+        if (input.type == 'checkbox') {
+            input.checked = Boolean(value);
+        }
+        else {
+            input.value = ((value !== undefined) && (value !== null)) ? value : '';
+        }
+    }
+    Utils.setInputValue = setInputValue;
+})(Utils || (exports.Utils = Utils = {}));
+
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.accessoryCategories.ts":
+/*!**************************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.accessoryCategories.ts ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const accessoryCategories = {
+    "1": {
+        "text": "Other",
+        "icon": "help"
+    },
+    "2": {
+        "text": "Bridge",
+        "icon": "settings_ethernet"
+    },
+    "3": {
+        "text": "Fan",
+        "icon": "mode_fan"
+    },
+    "4": {
+        "text": "Garage door opener",
+        "icon": "garage_door"
+    },
+    "5": {
+        "text": "Lightbulb",
+        "icon": "lightbulb"
+    },
+    "6": {
+        "text": "Door lock",
+        "icon": "lock"
+    },
+    "7": {
+        "text": "Outlet",
+        "icon": "power"
+    },
+    "8": {
+        "text": "Switch",
+        "icon": "toggle_off"
+    },
+    "9": {
+        "text": "Thermostat",
+        "icon": "thermostat"
+    },
+    "10": {
+        "text": "Sensor",
+        "icon": "sensors"
+    },
+    "11": {
+        "text": "Alarm system",
+        "icon": "siren"
+    },
+    "12": {
+        "text": "Door",
+        "icon": "door_front"
+    },
+    "13": {
+        "text": "Window",
+        "icon": "window"
+    },
+    "14": {
+        "text": "Window covering",
+        "icon": "blinds"
+    },
+    "15": {
+        "text": "Programmable switch",
+        "icon": "action_key"
+    },
+    "16": {
+        "text": "Range extender",
+        "icon": "settings_input_antenna"
+    },
+    "17": {
+        "text": "Camera",
+        "icon": "photo_camera"
+    },
+    "18": {
+        "text": "VIDEO_DOORBELL",
+        "icon": "video_camera_front"
+    },
+    "19": {
+        "text": "AIR_PURIFIER",
+        "icon": "air_purifier"
+    },
+    "20": {
+        "text": "AIR_HEATER",
+        "icon": "heat"
+    },
+    "21": {
+        "text": "AIR_CONDITIONER",
+        "icon": "hvac"
+    },
+    "22": {
+        "text": "AIR_HUMIDIFIER",
+        "icon": "humidity_mid"
+    },
+    "23": {
+        "text": "AIR_DEHUMIDIFIER",
+        "icon": "water_voc"
+    },
+    "24": {
+        "text": "APPLE_TV",
+        "icon": "tv"
+    },
+    "25": {
+        "text": "HOMEPOD",
+        "icon": "speaker"
+    },
+    "26": {
+        "text": "SPEAKER",
+        "icon": "speaker"
+    },
+    "27": {
+        "text": "AIRPORT",
+        "icon": "wifi_tethering"
+    },
+    "28": {
+        "text": "SPRINKLER",
+        "icon": "sprinkler"
+    },
+    "29": {
+        "text": "FAUCET",
+        "icon": "faucet"
+    },
+    "30": {
+        "text": "SHOWER_HEAD",
+        "icon": "shower"
+    },
+    "31": {
+        "text": "TELEVISION",
+        "icon": "tv"
+    },
+    "32": {
+        "text": "TARGET_CONTROLLER",
+        "icon": "sports_esports"
+    },
+    "33": {
+        "text": "ROUTER",
+        "icon": "router"
+    },
+    "34": {
+        "text": "AUDIO_RECEIVER",
+        "icon": "music_cast"
+    },
+    "35": {
+        "text": "TV_SET_TOP_BOX",
+        "icon": "audio_video_receiver"
+    },
+    "36": {
+        "text": "TV_STREAMING_STIC",
+        "icon": "cast"
+    }
+};
+exports["default"] = accessoryCategories;
+
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.base.ts":
+/*!***********************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.base.ts ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ConfigPageBuilder_Base = void 0;
+class ConfigPageBuilder_Base {
+    constructor(delegate) {
+        this.delegate = delegate;
+    }
+    refreshSimpleErrorElement(errorElement, validator) {
+        let errorVisible = false;
+        if (validator)
+            errorVisible = validator();
+        if (errorElement)
+            errorElement.classList.toggle('validationError', errorVisible);
+    }
+    fillSelectByEntryList(selectElement, selectListArray) {
+        for (let item of selectListArray) {
+            let optElem = document.createElement('option');
+            optElem.value = item.value;
+            optElem.text = item.text;
+            selectElement.add(optElem);
+        }
+    }
+    fillSelectByDict(selectElement, dictionary) {
+        for (let key in dictionary) {
+            let optElem = document.createElement('option');
+            optElem.value = key;
+            optElem.text = dictionary[key].text;
+            selectElement.add(optElem);
+        }
+    }
+    fillSelectByListEntries(selectElement, entries) {
+        if (!(selectElement instanceof HTMLSelectElement)) {
+            return;
+        }
+        if (entries === undefined)
+            return;
+        if (Array.isArray(entries))
+            this.fillSelectByEntryList(selectElement, entries);
+        else
+            this.fillSelectByDict(selectElement, entries);
+    }
+    fillSelectByArray(selectElement, stringlist) {
+        for (let itemName of stringlist) {
+            let optElem = document.createElement('option');
+            optElem.value = itemName;
+            optElem.text = itemName;
+            selectElement.add(optElem);
+        }
+    }
+}
+exports.ConfigPageBuilder_Base = ConfigPageBuilder_Base;
+
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.bridgeConfig.main.inc.html":
+/*!******************************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.bridgeConfig.main.inc.html ***!
+  \******************************************************************/
+/***/ ((module) => {
+
+module.exports = "<div class=\"card-inner-container\">\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <h5 class=\"translate\">Bridge Properties</h5>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Name</label>\n            <input type=\"text\" class=\"name\"/>\n            <div class=\"edit-hint translate\">\n                descriptive only - displayed in homekit apps. Changes are only recognized after readding the bridge in\n                the app.\n            </div>\n            <div class=\"errorpanel translate name_error\">\n                A device with this name already exists. Please change the name!\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Group</label>\n            <input type=\"text\" class=\"group\"/>\n            <div class=\"edit-hint translate\">\n                string to be used to group devices within Yahka. Has no effect to HomeKit!\n            </div>\n        </div>\n    </div>\n\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Manufacturer</label>\n            <input type=\"text\" class=\"manufacturer\"/>\n            <div class=\"edit-hint translate\">descriptive only - displayed in some homekit apps</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Model</label>\n            <input type=\"text\" class=\"model\"/>\n            <div class=\"edit-hint translate\">descriptive only - displayed in some homekit apps</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Serial</label>\n            <input type=\"text\" class=\"serial\"/>\n            <div class=\"edit-hint translate\">descriptive only - displayed in some homekit apps</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Firmware</label>\n            <input type=\"text\" class=\"firmware\" placeholder=\"leave empty to use Yahka Version\"/>\n            <div class=\"edit-hint translate\">descriptive only - displayed in some homekit apps</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Username</label>\n            <input type=\"text\" class=\"username\"/>\n            <div class=\"edit-hint translate\">\n                change\n                this if you have trouble with your bridge. needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8.\n                <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Pincode</label>\n            <input type=\"text\" class=\"pincode\"/>\n            <div class=\"edit-hint translate\">needs to be in the form of 123-45-678</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s8 input-field\">\n            <select class=\"interface\"></select>\n            <label>Interface</label>\n        </div>\n        <div class=\"col s4 input-field\">\n            <label class=\"translate\">Port</label>\n            <input min=\"0\" max=\"65535\" type=\"number\" class=\"port\"/>\n            <span class=\"edit-hint translate\">Port 0 = random free port assigned by the operation system (default)</span>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label>\n                <input type=\"checkbox\" class=\"useLegacyAdvertiser\"/>\n                <span class=\"translate\">Use Legacy Advertiser</span>\n            </label>\n            <span class=\"edit-hint translate\">true = use bonjour-hap instead of avahi</span>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label>\n                <input type=\"checkbox\" class=\"useCiaoAdvertiser\"/>\n                <span class=\"translate\">Use CIAO Advertiser</span>\n            </label>\n            <span class=\"edit-hint translate\">true = use ciao instead of avahi, if your bridge is not detected</span>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label>\n                <input type=\"checkbox\" class=\"verboseLogging\"/>\n                <span class=\"translate\">Verbose Logging</span>\n            </label>\n            <span class=\"edit-hint translate\">true = redirect hap-node logging to adapter logging</span>\n        </div>\n    </div>\n</div>";
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.bridgeConfig.ts":
+/*!*******************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.bridgeConfig.ts ***!
+  \*******************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ConfigPageBuilder_BridgeConfig = void 0;
+/// <reference path="../../typings/index.d.ts" />
+const hkBridge = __webpack_require__(/*! ../../shared/yahka.configuration */ "./shared/yahka.configuration.ts");
+const pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
+const admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const yahka_admin_1 = __webpack_require__(/*! ../yahka.admin */ "./admin/yahka.admin.ts");
+class ConfigPageBuilder_BridgeConfig extends pageBuilder_base_1.ConfigPageBuilder_Base {
+    constructor(delegate) {
+        super(delegate);
+        this.delegate = delegate;
+        this.addServiceAvailable = false;
+        this.removeDeviceAvailable = false;
+        this.duplicateDeviceAvailable = false;
+        this.bridgeConfigPanelTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.bridgeConfig.main.inc.html */ "./admin/pageBuilder/pageBuilder.bridgeConfig.main.inc.html"));
+    }
+    refresh(config, AFocusLastPanel, devicePanel) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!hkBridge.Configuration.isBridgeConfig(config)) {
+                return;
+            }
+            let bridgeConfigFragment = document.importNode(this.bridgeConfigPanelTemplate.content, true);
+            (0, admin_translation_1.translateFragment)(bridgeConfigFragment);
+            let inputHelper = (selector, propertyName, selectList, validator = undefined) => {
+                let input = bridgeConfigFragment.querySelector(selector);
+                let errorElement = bridgeConfigFragment.querySelector(selector + '_error');
+                this.fillSelectByListEntries(input, selectList);
+                let value = config[propertyName];
+                if (value !== undefined) {
+                    input.value = value;
+                }
+                else {
+                    input.value = '';
+                }
+                input.addEventListener('input', this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
+                input.addEventListener('change', this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
+                this.refreshSimpleErrorElement(errorElement, validator);
+            };
+            let checkboxHelper = (selector, propertyName, validator = undefined) => {
+                let input = bridgeConfigFragment.querySelector(selector);
+                let errorElement = bridgeConfigFragment.querySelector(`${selector}_error`);
+                const value = config[propertyName];
+                input.checked = value;
+                input.addEventListener('click', this.handleBridgeMetaDataChange.bind(this, config, propertyName, errorElement, validator));
+                this.refreshSimpleErrorElement(errorElement, validator);
+            };
+            inputHelper('.name', 'name', undefined, () => !this.delegate.deviceIsUnique(config));
+            inputHelper('.group', 'groupString');
+            inputHelper('.manufacturer', 'manufacturer');
+            inputHelper('.model', 'model');
+            inputHelper('.serial', 'serial');
+            inputHelper('.firmware', 'firmware');
+            inputHelper('.username', 'username');
+            inputHelper('.pincode', 'pincode');
+            inputHelper('.port', 'port');
+            let ipList = yield yahka_admin_1.ioBrokerInterfaceList;
+            let ipListForSelectBox = ipList
+                .filter((a) => a.family === 'ipv4')
+                .map((a) => {
+                return { value: a.address, text: a.name };
+            });
+            inputHelper('.interface', 'interface', ipListForSelectBox);
+            checkboxHelper('.useLegacyAdvertiser', 'useLegacyAdvertiser');
+            checkboxHelper('.useCiaoAdvertiser', 'useCiaoAdvertiser');
+            checkboxHelper('.verboseLogging', 'verboseLogging');
+            devicePanel.appendChild(bridgeConfigFragment);
+        });
+    }
+    styleListItem(listItem, deviceConfig) {
+        const actions = listItem.querySelector('.device-actions');
+        const duplicateButton = actions.querySelector('.yahka_duplicate_device');
+        const removeButton = actions.querySelector('.yahka_remove_device');
+        duplicateButton.classList.add('disabled');
+        removeButton.classList.add('disabled');
+        const listIcon = listItem.querySelector('.device-icon');
+        listIcon.innerHTML = 'settings_ethernet';
+        // actions.remove();
+        // let listIcon = listItem.querySelector('.list-icon');
+        // listIcon.className = 'list-icon icon mif-tree';
+        // listItem.classList.add('fg-grayDark');
+        return true;
+    }
+    handleBridgeMetaDataChange(bridgeConfig, propertyName, errorElement, validator, ev) {
+        let inputTarget = ev.currentTarget;
+        if (inputTarget.type == 'checkbox') {
+            bridgeConfig[propertyName] = inputTarget.checked;
+        }
+        else {
+            bridgeConfig[propertyName] = inputTarget.value;
+        }
+        this.refreshSimpleErrorElement(errorElement, validator);
+        this.delegate.refreshDeviceListEntry(bridgeConfig);
+        this.delegate.changeCallback();
+    }
+}
+exports.ConfigPageBuilder_BridgeConfig = ConfigPageBuilder_BridgeConfig;
+
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.customDevice.infoPanel.inc.html":
+/*!***********************************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.customDevice.infoPanel.inc.html ***!
+  \***********************************************************************/
+/***/ ((module) => {
+
+module.exports = "<div class=\"frame yahka_device_info_panel\">\n    <div class=\"card-inner-container\">\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <h5 class=\"translate\">Device Properties</h5>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <div class=\"switch\">\n                    <label>\n                        <span class=\"translate\">Enabled</span>\n                        <input class=\"enabledCharacteristic\" type=\"checkbox\">\n                        <span class=\"lever\"></span>\n                    </label>\n                </div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <label class=\"translate\">Name</label>\n                <input class=\"name\" type=\"text\">\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <label>Group</label>\n                <input type=\"text\" class=\"group\" />\n                <div class=\"edit-hint\">string to be used to group devices within Yahka. Has no effect to HomeKit!</div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <label class=\"translate\">Manufacturer</label>\n                <input type=\"text\" class=\"manufacturer\" />\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <input type=\"text\" class=\"model\" />\n                <label class=\"translate\">Model</label>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <input type=\"text\" class=\"serial\"/>\n                <label class=\"translate\">Serial</label>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <input type=\"text\" class=\"firmware\"/>\n                <label class=\"translate\">Firmware</label>\n            </div>\n        </div>\n\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <select class=\"category\"></select>\n                <label class=\"translate\">Category</label>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <label>\n                    <input type=\"checkbox\" class=\"publish_as_own_device\">\n                    <span class=\"translate\">Publish as own device</span>\n                </label>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <label class=\"translate\">Username</label>\n                <input type=\"text\" class=\"username\"/>\n                <div class=\"edit-hint translate\">needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b></div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <label class=\"translate\">Pincode</label>\n                <input type=\"text\" class=\"pincode\"/>\n                <div class=\"edit-hint translate\">needs to be in the form of 123-45-678</div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s8\">\n                <select class=\"interface\"></select>\n                <label class=\"translate\">Interface</label>\n            </div>\n            <div class=\"input-field col s4\">\n                <label>Port</label>\n                <input min=\"0\" max=\"65535\" type=\"number\" class=\"port\"/>\n                <div class=\"edit-hint translate\">Port 0 = random free port assigned by the operation system (default)</div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <label>\n                    <input type=\"checkbox\" class=\"useLegacyAdvertiser\"/>\n                    <span class=\"translate\">Use Legacy Advertiser</span>\n                </label>\n                <span class=\"edit-hint translate\">true = use bonjour-hap instead of avahi</span>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <label>\n                    <input type=\"checkbox\" class=\"useCiaoAdvertiser\"/>\n                    <span class=\"translate\">Use CIAO Advertiser</span>\n                </label>\n                <span class=\"edit-hint translate\">true = use ciao instead of avahi</span>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\" style=\"display: flex; flex-direction: column;\">\n                <div class=\"button-appendix\">\n                    <div class=\"input-field\">\n                        <label class=\"translate\">Availability state</label>\n                        <input class=\"stateSelectTarget availableStateIobState\" type=\"text\"/>\n                        <div class=\"edit-hint translate\">Empty = always available, otherwise iobroker state.</div>\n                    </div>\n                    <button type=\"button\" class=\"btn btn-small id-selector\">\n                        <span class=\"material-icons\">more_horiz</span>\n                    </button>\n                </div>\n            </div>\n        </div>\n    </div>\n    <ul class=\"collapsible yahka_service_container card-outer-container\">\n    </ul>\n    <div class=\"card-inner-container\">\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <button class=\"yahka_add_service btn\">Add Service</button>\n            </div>\n        </div>\n    </div>\n</div>";
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.customDevice.ts":
+/*!*******************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.customDevice.ts ***!
+  \*******************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ConfigPageBuilder_CustomDevice = void 0;
+/// <reference path="../../typings/index.d.ts" />
+const hkBridge = __webpack_require__(/*! ../../shared/yahka.configuration */ "./shared/yahka.configuration.ts");
+const pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
+const admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+const pageBuilder_servicePanel_1 = __webpack_require__(/*! ./pageBuilder.servicePanel */ "./admin/pageBuilder/pageBuilder.servicePanel.ts");
+const yahka_admin_1 = __webpack_require__(/*! ../yahka.admin */ "./admin/yahka.admin.ts");
+const pageBuilder_accessoryCategories_1 = __webpack_require__(/*! ./pageBuilder.accessoryCategories */ "./admin/pageBuilder/pageBuilder.accessoryCategories.ts");
+let accessoryCategories = pageBuilder_accessoryCategories_1.default;
+class ConfigPageBuilder_CustomDevice extends pageBuilder_base_1.ConfigPageBuilder_Base {
+    constructor(delegate) {
+        super(delegate);
+        this.delegate = delegate;
+        this.addServiceAvailable = true;
+        this.removeDeviceAvailable = true;
+        this.duplicateDeviceAvailable = true;
+        this.servicePanelBuilder = new pageBuilder_servicePanel_1.ConfigPageBuilder_ServicePanel(delegate);
+        this.deviceInfoPanelTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.customDevice.infoPanel.inc.html */ "./admin/pageBuilder/pageBuilder.customDevice.infoPanel.inc.html"));
+    }
+    refresh(config, AFocusLastPanel, devicePanel) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!hkBridge.Configuration.isDeviceConfig(config)) {
+                return;
+            }
+            let lastPane = yield this.buildDeviceInformationPanel(config, devicePanel);
+            const servicePanelContainer = devicePanel.querySelector('.yahka_service_container');
+            for (let serviceConfig of config.services) {
+                let servicePanel = this.servicePanelBuilder.createServicePanel(config.services, serviceConfig);
+                servicePanelContainer.appendChild(servicePanel);
+                lastPane = servicePanel;
+            }
+            if (AFocusLastPanel && lastPane) {
+                lastPane.scrollIntoView();
+                if (!lastPane.classList.contains('active')) {
+                    let heading = lastPane.querySelector('.heading');
+                    if (heading)
+                        heading.click();
+                }
+            }
+            const addServiceButton = devicePanel.querySelector('.yahka_add_service');
+            addServiceButton.addEventListener('click', () => {
+                if (!hkBridge.Configuration.isDeviceConfig(config) && !hkBridge.Configuration.isIPCameraConfig(config)) {
+                    return;
+                }
+                config.services.push({
+                    name: '',
+                    subType: '',
+                    type: '',
+                    characteristics: []
+                });
+                this.delegate.refreshDevicePanel(config, true);
+                this.delegate.changeCallback();
+            });
+        });
+    }
+    styleListItem(listItem, deviceConfig) {
+        if (!hkBridge.Configuration.isDeviceConfig(deviceConfig)) {
+            return false;
+        }
+        let iconName = 'mif-question';
+        let cat;
+        if (accessoryCategories !== undefined) {
+            if ((cat = accessoryCategories[deviceConfig.category])) {
+                iconName = cat['icon'];
+            }
+        }
+        let listIcon = listItem.querySelector('.device-icon');
+        listIcon.innerHTML = iconName;
+        listItem.classList.remove('yellow');
+        listItem.classList.remove('lighten-5');
+        if (false === deviceConfig.enabled) {
+            listItem.classList.add('yellow');
+            listItem.classList.add('lighten-5');
+        }
+        return true;
+    }
+    buildDeviceInformationPanel(deviceConfig, devicePane) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let devInfoFragment = document.importNode(this.deviceInfoPanelTemplate.content, true);
+            let devInfoPanel = devInfoFragment.querySelector('.yahka_device_info_panel');
+            (0, admin_translation_1.translateFragment)(devInfoFragment);
+            let inputHelper = (selector, propertyName, selectList, validator = undefined, checkDefault = true) => {
+                let input = devInfoPanel.querySelector(selector);
+                let errorElement = devInfoPanel.querySelector(`${selector}_error`);
+                this.fillSelectByListEntries(input, selectList);
+                let value = deviceConfig[propertyName];
+                if (input.type === 'checkbox') {
+                    input.checked = value === undefined ? checkDefault : value;
+                    input.addEventListener('change', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator));
+                }
+                else {
+                    admin_utils_1.Utils.setInputValue(input, value);
+                    input.addEventListener('input', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator));
+                    input.addEventListener('change', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator));
+                }
+                this.refreshSimpleErrorElement(errorElement, validator);
+            };
+            inputHelper('.name', 'name', undefined, () => !this.delegate.deviceIsUnique(deviceConfig));
+            inputHelper('.group', 'groupString');
+            inputHelper('.enabledCharacteristic', 'enabled');
+            inputHelper('.manufacturer', 'manufacturer');
+            inputHelper('.model', 'model');
+            inputHelper('.serial', 'serial');
+            inputHelper('.firmware', 'firmware');
+            inputHelper('.category', 'category', accessoryCategories);
+            inputHelper('.publish_as_own_device', 'publishAsOwnDevice', undefined, undefined, false);
+            inputHelper('.useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
+            inputHelper('.useCiaoAdvertiser', 'useCiaoAdvertiser', undefined, undefined, false);
+            inputHelper('.username', 'username');
+            inputHelper('.pincode', 'pincode');
+            inputHelper('.port', 'port');
+            inputHelper('.availableStateIobState', 'availableState');
+            let ipList = yield yahka_admin_1.ioBrokerInterfaceList;
+            const ipListForSelectBox = ipList
+                .filter((a) => a.family === 'ipv4')
+                .map((a) => {
+                return { value: a.address, text: a.name };
+            });
+            inputHelper('.interface', 'interface', ipListForSelectBox);
+            devicePane.appendChild(devInfoFragment);
+            return devInfoPanel;
+        });
+    }
+    handleDeviceMetaDataChange(deviceConfig, propertyName, errorElement, validator, ev) {
+        let inputTarget = ev.currentTarget;
+        const inputValue = inputTarget.type === 'checkbox' ? inputTarget.checked : inputTarget.value;
+        deviceConfig[propertyName] = inputValue;
+        this.refreshSimpleErrorElement(errorElement, validator);
+        this.delegate.refreshDeviceListEntry(deviceConfig);
+        this.delegate.changeCallback();
+    }
+}
+exports.ConfigPageBuilder_CustomDevice = ConfigPageBuilder_CustomDevice;
+
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.ipCam.main.inc.html":
+/*!***********************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.ipCam.main.inc.html ***!
+  \***********************************************************/
+/***/ ((module) => {
+
+module.exports = "<div class=\"frame\">\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <h5 class=\"translate\">Camera Properties</h5>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <div class=\"switch\">\n                <label>\n                    <span class=\"translate\">Enabled</span>\n                    <input class=\"enabled\" type=\"checkbox\">\n                    <span class=\"lever\"></span>\n                </label>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Device name</label>\n            <input class=\"name\" type=\"text\"/>\n            <div class=\"errorpanel translate name_error\">\n                A device with this name already exists. Please change the name!\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Group</label>\n            <input class=\"group\" type=\"text\"/>\n            <div class=\"edit-hint translate\">\n                string to be used to group devices within Yahka. Has no effect to HomeKit!\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Manufacturer</label>\n            <input type=\"text\" class=\"manufacturer\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\" >Model</label>\n            <input type=\"text\" class=\"model\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Serial</label>\n            <input type=\"text\" class=\"serial\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Firmware</label>\n            <input type=\"text\" class=\"firmware\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Username</label>\n            <input type=\"text\" class=\"username\"/>\n            <div class=\"edit-hint translate\">\n                needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the camera needs to be reconfigured in the HomeKit database</b>\n            </div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">Pincode</label>\n            <input type=\"text\" class=\"pincode\"/>\n            <span class=\"edit-hint translate\">needs to be in the form of 123-45-678</span>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s8\">\n            <select class=\"interface\"></select>\n            <label class=\"translate\">Interface</label>\n        </div>\n        <div class=\"input-field col s4\">\n            <label>Port</label>\n            <input min=\"0\" max=\"65535\" type=\"number\" class=\"port\"/>\n            <div class=\"edit-hint translate\">Port 0 = random free port assigned by the operation system (default)</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label>\n                <input type=\"checkbox\" class=\"useLegacyAdvertiser\"/>\n                <span class=\"translate\">Use Legacy Advertiser</span>\n            </label>\n            <span class=\"edit-hint translate\">true = use bonjour-hap instead of avahi</span>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label>\n                <input type=\"checkbox\" class=\"useCiaoAdvertiser\"/>\n                <span class=\"translate\">Use CIAO Advertiser</span>\n            </label>\n            <span class=\"edit-hint translate\">true = use ciao instead of avahi</span>\n        </div>\n    </div>\n</div>\n\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Stream Properties</span>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">Source</label>\n            <input type=\"text\" class=\"source\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">Codec</label>\n            <input type=\"text\" class=\"codec\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">Number of Streams</label>\n            <input type=\"text\" class=\"numberOfStreams\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">maxWidth</label>\n            <input type=\"text\" class=\"maxWidth\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">maxHeight</label>\n            <input type=\"text\" class=\"maxHeight\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">maxFPS</label>\n            <input type=\"text\" class=\"maxFPS\"/>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label>\n                <input type=\"checkbox\" class=\"enableAudio\"/>\n                <span class=\"translate\">Enable Audio</span>\n            </label>\n        </div>\n    </div>\n</div>\n<div class=\"frame\">\n    <div class=\"heading\">\n        <span class=\"translate\">Advanced Settings</span>\n    </div>\n\n    <div class=\"content\">\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <div class=\"row\">\n                    <div class=\"input-field col s12\">\n                        <textarea style=\"resize: vertical; height: 205px;\" class=\"flex-grow ffmpeg_snapshot\"></textarea>\n                        <label class=\"translate\" style=\"padding-bottom: 10px;\">FFMPEG Command Line - Snapshot:</label>\n                        <div class=\"errorpanel ffmpeg_snapshot_error\"></div>\n                        <a class=\"btn ffmpeg_snapshot_reset\" href=\"#\">\n                            <i class=\"material-icons left\">refresh</i> Reset to default\n                        </a>\n                        <div class=\"card-panel\">\n                            <span class=\"translate\">Available replacers:</span>\n                            <ul>\n                                <li>${source}</li>\n                                <li>${width}</li>\n                                <li>${height}</li>\n                            </ul>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <div class=\"row\">\n                    <div class=\"input-field col s12\">\n                        <textarea style=\"resize: vertical; height: 530px;\" class=\"flex-grow ffmpeg_stream\"></textarea>\n                        <label class=\"translate\">FFMPEG Command Line - Stream:</label>\n                        <div class=\"errorpanel ffmpeg_stream_error\"></div>\n                        <a class=\"btn ffmpeg_stream_reset\" href=\"#\">\n                            <i class=\"material-icons left\">refresh</i> Reset to default\n                        </a>\n                        <div class=\"card-panel\">\n                            <span class=\"translate\">Available replacers</span>\n                            <ul class=\"simple-list blue-bullet replace-list\">\n                                <li>${source}</li>\n                                <li>${codec}</li>\n                                <li>${fps}</li>\n                                <li>${width}</li>\n                                <li>${height}</li>\n                                <li>${bitrate}</li>\n                                <li>${payloadtype}</li>\n                                <li>${targetVideoSsrc}</li>\n                                <li>${videokey}</li>\n                                <li>${targetAddress}</li>\n                                <li>${targetVideoPort}</li>\n                                <li>${mtu}</li>\n                            </ul>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <div class=\"row\">\n                    <div class=\"input-field col s12\">\n                        <textarea style=\"resize: vertical; height: 530px;\" rows=8 class=\"ffmpeg_streamAudio\"></textarea>\n                        <label class=\"translate\">FFMPEG Command Line - Audio Stream:</label>\n                        <div class=\"errorpanel ffmpeg_streamAudio_error\"></div>\n                        <a class=\"btn ffmpeg_streamAudio_reset translate\" href=\"#\">\n                            <i class=\"material-icons left\">refresh</i> Reset to default\n                        </a>\n                        <div class=\"card-panel\">\n                            <span class=\"translate\">Available replacers</span>\n                            <ul class=\"simple-list blue-bullet replace-list\">\n                                <li>${source}</li>\n                                <li>${bitrate}</li>\n                                <li>${samplerate}</li>\n                                <li>${channel}</li>\n                                <li>${payloadtype}</li>\n                                <li>${targetAddress}</li>\n                                <li>${targetAudioPort}</li>\n                                <li>${targetAudioSsrc}</li>\n                                <li>${audiokey}</li>\n                            </ul>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n    <ul class=\"collapsible yahka_service_container card-outer-container\">\n    </ul>\n    <div class=\"card-inner-container\">\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <button class=\"yahka_add_service btn\">Add Service</button>\n            </div>\n        </div>\n    </div>\n</div>\n";
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.ipCam.ts":
+/*!************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.ipCam.ts ***!
+  \************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ConfigPageBuilder_IPCamera = void 0;
+/// <reference path="../../typings/index.d.ts" />
+const hkBridge = __webpack_require__(/*! ../../shared/yahka.configuration */ "./shared/yahka.configuration.ts");
+const pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
+const admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const yahka_admin_1 = __webpack_require__(/*! ../yahka.admin */ "./admin/yahka.admin.ts");
+const admin_defaults_1 = __webpack_require__(/*! ../admin.defaults */ "./admin/admin.defaults.ts");
+const pageBuilder_servicePanel_1 = __webpack_require__(/*! ./pageBuilder.servicePanel */ "./admin/pageBuilder/pageBuilder.servicePanel.ts");
+class ConfigPageBuilder_IPCamera extends pageBuilder_base_1.ConfigPageBuilder_Base {
+    constructor(delegate) {
+        super(delegate);
+        this.delegate = delegate;
+        this.addServiceAvailable = true;
+        this.removeDeviceAvailable = true;
+        this.duplicateDeviceAvailable = true;
+        this.servicePanelBuilder = new pageBuilder_servicePanel_1.ConfigPageBuilder_ServicePanel(delegate);
+        this.configPanelTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.ipCam.main.inc.html */ "./admin/pageBuilder/pageBuilder.ipCam.main.inc.html"));
+    }
+    refresh(config, AFocusLastPanel, devicePanel) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!hkBridge.Configuration.isIPCameraConfig(config)) {
+                return;
+            }
+            yield this.refreshCameraPanels(config, AFocusLastPanel, devicePanel);
+            this.refreshServicePanels(config, AFocusLastPanel, devicePanel);
+        });
+    }
+    refreshCameraPanels(config, AFocusLastPanel, devicePanel) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let configFragment = document.importNode(this.configPanelTemplate.content, true);
+            (0, admin_translation_1.translateFragment)(configFragment);
+            let inputHelper = (selector, propertyName, selectList, validator = undefined, checkDefault = true) => {
+                let input = configFragment.querySelector(selector);
+                let errorElement = configFragment.querySelector(selector + '_error');
+                this.fillSelectByListEntries(input, selectList);
+                let value = config[propertyName];
+                if (input.type === 'checkbox') {
+                    input.checked = value === undefined ? checkDefault : Boolean(value);
+                    input.addEventListener('change', this.handlePropertyChange.bind(this, config, propertyName, errorElement, validator));
+                }
+                else {
+                    if (value !== undefined) {
+                        input.value = value.toString();
+                    }
+                    else {
+                        input.value = '';
+                    }
+                    input.addEventListener('input', this.handlePropertyChange.bind(this, config, propertyName, errorElement, validator));
+                    input.addEventListener('change', this.handlePropertyChange.bind(this, config, propertyName, errorElement, validator));
+                }
+                this.refreshSimpleErrorElement(errorElement, validator);
+            };
+            let ffmpegHelper = (selector, propertyName) => {
+                let input = configFragment.querySelector(selector);
+                let inputErrorMsg = configFragment.querySelector(selector + '_error');
+                let value = config.ffmpegCommandLine[propertyName];
+                if (value !== undefined) {
+                    input.value = JSON.stringify(value, null, 2);
+                }
+                else {
+                    input.value = '';
+                }
+                input.addEventListener('input', this.handleffMpegPropertyChange.bind(this, config, propertyName, inputErrorMsg));
+                configFragment.querySelector(`${selector}_reset`).addEventListener('click', () => {
+                    input.value = JSON.stringify(admin_defaults_1.Defaults.ffmpegCommandLines.default[propertyName], null, 2);
+                    input.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+                    return true;
+                });
+            };
+            inputHelper('.enabled', 'enabled');
+            inputHelper('.name', 'name', undefined, () => !this.delegate.deviceIsUnique(config));
+            inputHelper('.group', 'groupString');
+            inputHelper('.manufacturer', 'manufacturer');
+            inputHelper('.model', 'model');
+            inputHelper('.serial', 'serial');
+            inputHelper('.firmware', 'firmware');
+            inputHelper('.username', 'username');
+            inputHelper('.pincode', 'pincode');
+            inputHelper('.port', 'port');
+            let ipList = yield yahka_admin_1.ioBrokerInterfaceList;
+            let ipListForSelectBox = ipList
+                .filter((a) => a.family === 'ipv4')
+                .map((a) => {
+                return { value: a.address, text: a.name };
+            });
+            inputHelper('.interface', 'interface', ipListForSelectBox);
+            inputHelper('.useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
+            inputHelper('.useCiaoAdvertiser', 'useCiaoAdvertiser', undefined, undefined, false);
+            inputHelper('.source', 'source');
+            inputHelper('.codec', 'codec');
+            inputHelper('.enableAudio', 'enableAudio', undefined, undefined, false);
+            inputHelper('.numberOfStreams', 'numberOfStreams');
+            inputHelper('.maxWidth', 'maxWidth');
+            inputHelper('.maxHeight', 'maxHeight');
+            inputHelper('.maxFPS', 'maxFPS');
+            ffmpegHelper('.ffmpeg_snapshot', 'snapshot');
+            ffmpegHelper('.ffmpeg_stream', 'stream');
+            ffmpegHelper('.ffmpeg_streamAudio', 'streamAudio');
+            const addServiceButton = configFragment.querySelector('.yahka_add_service');
+            addServiceButton.addEventListener('click', () => {
+                if (!hkBridge.Configuration.isIPCameraConfig(config)) {
+                    return;
+                }
+                config.services.push({
+                    name: '',
+                    subType: '',
+                    type: '',
+                    characteristics: []
+                });
+                this.delegate.refreshDevicePanel(config, true);
+                this.delegate.changeCallback();
+            });
+            devicePanel.appendChild(configFragment);
+        });
+    }
+    refreshServicePanels(config, AFocusLastPanel, devicePanel) {
+        var _a;
+        const servicePanelContainer = devicePanel.querySelector('.yahka_service_container');
+        let lastPane;
+        config.services = (_a = config.services) !== null && _a !== void 0 ? _a : [];
+        for (let serviceConfig of config.services) {
+            let servicePanel = this.servicePanelBuilder.createServicePanel(config.services, serviceConfig);
+            servicePanelContainer.appendChild(servicePanel);
+            lastPane = servicePanel;
+        }
+        if (AFocusLastPanel && lastPane) {
+            lastPane.scrollIntoView();
+            if (!lastPane.classList.contains('active')) {
+                let heading = lastPane.querySelector('.heading');
+                if (heading)
+                    heading.click();
+            }
+        }
+    }
+    styleListItem(listItem, deviceConfig) {
+        if (!hkBridge.Configuration.isIPCameraConfig(deviceConfig)) {
+            return false;
+        }
+        let listIcon = listItem.querySelector('.device-icon');
+        listIcon.innerHTML = 'camera_alt';
+        listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
+        listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
+        return true;
+    }
+    handlePropertyChange(config, propertyName, errorElement, validator, ev) {
+        let inputTarget = ev.currentTarget;
+        if (inputTarget.type == 'checkbox') {
+            config[propertyName] = inputTarget.checked;
+        }
+        else {
+            config[propertyName] = inputTarget.value;
+        }
+        this.refreshSimpleErrorElement(errorElement, validator);
+        this.delegate.refreshDeviceListEntry(config);
+        this.delegate.changeCallback();
+    }
+    displayExceptionHint(textArea, msgPanel, message) {
+        textArea.classList.toggle('validationError', message !== undefined);
+        msgPanel.classList.toggle('validationError', message !== undefined);
+        msgPanel.innerText = message;
+    }
+    handleffMpegPropertyChange(config, propertyName, inputErrorMsgPanel, ev) {
+        let inputTarget = ev.currentTarget;
+        try {
+            config.ffmpegCommandLine[propertyName] = JSON.parse(inputTarget.value);
+            this.displayExceptionHint(inputTarget, inputErrorMsgPanel, undefined);
+        }
+        catch (e) {
+            this.displayExceptionHint(inputTarget, inputErrorMsgPanel, e.message);
+        }
+        this.delegate.refreshDeviceListEntry(config);
+        this.delegate.changeCallback();
+    }
+}
+exports.ConfigPageBuilder_IPCamera = ConfigPageBuilder_IPCamera;
+
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.main.deviceListEntry.inc.html":
+/*!*********************************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.main.deviceListEntry.inc.html ***!
+  \*********************************************************************/
+/***/ ((module) => {
+
+module.exports = "<li class=\"collection-item\">\n    <div style=\"display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;\">\n        <div style=\"display: flex; gap: 10px;\">\n            <i class=\"device-icon material-symbols-outlined circle\">mode_fan</i>\n            <div style=\"display: flex; flex-direction: column\">\n                <span class=\"list-title\"></span>\n                <span class=\"device-type\"></span>\n            </div>\n        </div>\n        <div class=\"device-actions\" style=\"display: flex; flex-wrap: nowrap; gap: 4px;\">\n            <button class=\"edit-button btn waves-effect waves-light\">\n                <span class=\"translate\">Edit</span>\n            </button>\n            <button class=\"yahka_duplicate_device btn waves-effect waves-light\">\n                <span class=\"translate\">Duplicate</span>\n            </button>\n            <button class=\"yahka_remove_device btn waves-effect waves-light red\">\n                <span class=\"translate\">Remove</span>\n            </button>\n        </div>\n    </div>\n    <div class=\"collapsible-body\">\n    </div>\n</li>";
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.main.deviceListEntryGroup.inc.html":
+/*!**************************************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.main.deviceListEntryGroup.inc.html ***!
+  \**************************************************************************/
+/***/ ((module) => {
+
+module.exports = "<li>\n    <div class=\"collapsible-header\" style=\"display: flex; align-items: center\">\n        <span class=\"material-symbols-outlined\" style=\"font-size: 18px;\">expand_all</span>\n        <span class=\"group-name\"></span>\n    </div>\n    <div class=\"collapsible-body collapsible-body-container\">\n        <ul class=\"collection group-content\">\n        </ul>\n    </div>\n</li>";
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.main.ts":
+/*!***********************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.main.ts ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ioBroker_YahkaPageBuilder = void 0;
+/// <reference path="../../typings/index.d.ts" />
+const hkBridge = __webpack_require__(/*! ../../shared/yahka.configuration */ "./shared/yahka.configuration.ts");
+const $ = __webpack_require__(/*! jquery */ "jquery");
+const admin_defaults_1 = __webpack_require__(/*! ../admin.defaults */ "./admin/admin.defaults.ts");
+const pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
+const pageBuilder_customDevice_1 = __webpack_require__(/*! ./pageBuilder.customDevice */ "./admin/pageBuilder/pageBuilder.customDevice.ts");
+const pageBuilder_bridgeConfig_1 = __webpack_require__(/*! ./pageBuilder.bridgeConfig */ "./admin/pageBuilder/pageBuilder.bridgeConfig.ts");
+const pageBuilder_ipCam_1 = __webpack_require__(/*! ./pageBuilder.ipCam */ "./admin/pageBuilder/pageBuilder.ipCam.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+function generateRandomUsername() {
+    let usr = [];
+    for (let i = 0; i < 6; i++)
+        usr[i] = (`00${Math.floor((Math.random() * 256)).toString(16)}`).substr(-2);
+    return usr.join(':');
+}
+class ioBroker_YahkaPageBuilder {
+    constructor(_bridgeSettings, cameraConfigs, _changeCallback) {
+        this._bridgeSettings = _bridgeSettings;
+        this.cameraConfigs = cameraConfigs;
+        this._changeCallback = _changeCallback;
+        this.pageBuilders = new Map();
+        this._selectedDeviceConfig = undefined;
+        if (!_bridgeSettings.devices) {
+            _bridgeSettings.devices = [];
+        }
+        _bridgeSettings.configType = 'bridge';
+        this.deviceListHandler = new ioBroker_DeviceListHandler(this);
+        this.buttonHandler = new ioBroker_ButtonHandler(this, this.deviceListHandler);
+        this.pageBuilders.set('bridge', new pageBuilder_bridgeConfig_1.ConfigPageBuilder_BridgeConfig(this));
+        this.pageBuilders.set('customdevice', new pageBuilder_customDevice_1.ConfigPageBuilder_CustomDevice(this));
+        this.pageBuilders.set('ipcamera', new pageBuilder_ipCam_1.ConfigPageBuilder_IPCamera(this));
+        this.bootstrap();
+    }
+    refreshInputs() {
+        setTimeout(() => {
+            const devicePanel = document.querySelector('.yahka-edit-device-container');
+            const selectElements = devicePanel.querySelectorAll('select');
+            selectElements.forEach(selectElement => {
+                M.FormSelect.init(selectElement);
+            });
+            const collapsibleElements = document.querySelectorAll('.collapsible:not(.no-re-init)');
+            M.Collapsible.init(collapsibleElements, {
+                accordion: false
+            });
+            M.updateTextFields();
+            const textareaElements = document.querySelectorAll('.materialize-textarea');
+            textareaElements.forEach(textareaElement => {
+                M.textareaAutoResize(textareaElement);
+            });
+        }, 10);
+    }
+    bootstrap() {
+        let bridgeFrame = document.querySelector('#yahka_bridge_frame');
+        this.deviceListHandler.buildDeviceList(bridgeFrame);
+        this.buttonHandler.bindBridgeButtons(bridgeFrame);
+        return bridgeFrame;
+    }
+    rebuildDeviceList() {
+        let bridgeFrame = document.querySelector('#yahka_bridge_frame');
+        this.deviceListHandler.buildDeviceList(bridgeFrame);
+    }
+    deviceIsUnique(deviceConfig) {
+        let devList = this.deviceListHandler.getDeviceList();
+        return !devList.some((a) => (a.name == deviceConfig.name) && (a !== deviceConfig));
+    }
+    getPageBuilderByConfig(deviceConfig) {
+        if (deviceConfig === undefined) {
+            return undefined;
+        }
+        let configType = deviceConfig.configType;
+        if (configType === undefined) {
+            if (hkBridge.Configuration.isBridgeConfig(deviceConfig)) {
+                configType = 'bridge';
+            }
+            else if (hkBridge.Configuration.isDeviceConfig(deviceConfig)) {
+                configType = 'customdevice';
+            }
+        }
+        return this.pageBuilders.get(configType);
+    }
+    get bridgeSettings() {
+        return this._bridgeSettings;
+    }
+    get selectedDeviceConfig() {
+        return this._selectedDeviceConfig;
+    }
+    refreshDevicePanel(deviceConfig, AFocusLastPanel) {
+        let pageBuilder = this.getPageBuilderByConfig(deviceConfig);
+        const devicePanel = document.querySelector('.yahka-edit-device-container');
+        if (devicePanel.style.display == 'none') {
+            devicePanel.style.display = null;
+        }
+        if (devicePanel) {
+            devicePanel.innerHTML = '';
+        }
+        if (!pageBuilder) {
+            devicePanel.style.display = 'none';
+        }
+        if (pageBuilder) {
+            pageBuilder.refresh(deviceConfig, AFocusLastPanel, devicePanel);
+        }
+        this.refreshInputs();
+    }
+    setSelectedDeviceConfig(deviceConfig, AFocusLastPanel) {
+        this._selectedDeviceConfig = deviceConfig;
+        this.refreshDevicePanel(deviceConfig, AFocusLastPanel);
+    }
+    refreshSelectedDeviceConfig() {
+        this.setSelectedDeviceConfig(this._selectedDeviceConfig, false);
+    }
+    refreshDeviceListEntry(deviceConfig) {
+        this.deviceListHandler.refreshDeviceList();
+    }
+    changeCallback() {
+        return this._changeCallback();
+    }
+}
+exports.ioBroker_YahkaPageBuilder = ioBroker_YahkaPageBuilder;
+class ioBroker_DeviceListHandler extends pageBuilder_base_1.ConfigPageBuilder_Base {
+    constructor(delegate) {
+        super(delegate);
+        this.listEntryToConfigMap = new Map();
+        this.entryGroupMap = new Map();
+        this.deviceListEntryTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.main.deviceListEntry.inc.html */ "./admin/pageBuilder/pageBuilder.main.deviceListEntry.inc.html"));
+        this.deviceListEntryGroupTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.main.deviceListEntryGroup.inc.html */ "./admin/pageBuilder/pageBuilder.main.deviceListEntryGroup.inc.html"));
+    }
+    getDeviceList() {
+        let result = [this.delegate.bridgeSettings];
+        let devices = [];
+        if (this.delegate.bridgeSettings.devices)
+            devices = devices.concat(this.delegate.bridgeSettings.devices);
+        if (this.delegate.cameraConfigs)
+            devices = devices.concat(this.delegate.cameraConfigs);
+        return result.concat(devices.sort((a, b) => a.name.localeCompare(b.name)));
+    }
+    createDeviceListEntry(deviceConfig) {
+        let deviceEntry = document.importNode(this.deviceListEntryTemplate.content, true);
+        let listItem = deviceEntry.querySelector('.collection-item');
+        this.refreshDeviceListEntry(deviceConfig, listItem);
+        return deviceEntry;
+    }
+    buildDeviceList(bridgeFrame) {
+        let bridge = this.delegate.bridgeSettings;
+        let deviceList = bridgeFrame.querySelector('#yahka_deviceList');
+        deviceList.innerHTML = '';
+        this.listEntryToConfigMap.clear();
+        this.entryGroupMap.clear();
+        for (let deviceConfig of this.getDeviceList().sort((a, b) => { var _a; return (_a = a.name) === null || _a === void 0 ? void 0 : _a.localeCompare(b.name); })) {
+            const groupNode = this.getDeviceGroupNode(deviceList, deviceConfig);
+            let fragment = this.createDeviceListEntry(deviceConfig);
+            let node = fragment.querySelector('.collection-item');
+            this.listEntryToConfigMap.set(node, deviceConfig);
+            groupNode.appendChild(fragment);
+            const editButton = node.querySelector('.edit-button');
+            const removeButton = node.querySelector('.yahka_remove_device');
+            const duplicateButton = node.querySelector('.yahka_duplicate_device');
+            if (editButton) {
+                editButton.addEventListener('click', () => {
+                    this.delegate.setSelectedDeviceConfig(deviceConfig, false);
+                });
+            }
+            if (removeButton) {
+                removeButton.addEventListener('click', () => {
+                    if (hkBridge.Configuration.isIPCameraConfig(deviceConfig)) {
+                        let idx = this.delegate.cameraConfigs.indexOf(deviceConfig);
+                        if (idx > -1) {
+                            this.delegate.cameraConfigs.splice(idx, 1);
+                            this.delegate.changeCallback();
+                            this.delegate.setSelectedDeviceConfig(undefined, false);
+                            this.buildDeviceList(bridgeFrame);
+                            this.delegate.changeCallback();
+                        }
+                    }
+                    if (hkBridge.Configuration.isDeviceConfig(deviceConfig)) {
+                        let idx = bridge.devices.indexOf(deviceConfig);
+                        if (idx > -1) {
+                            bridge.devices.splice(idx, 1);
+                            this.delegate.changeCallback();
+                            this.delegate.setSelectedDeviceConfig(undefined, false);
+                            this.buildDeviceList(bridgeFrame);
+                            this.delegate.changeCallback();
+                        }
+                    }
+                });
+            }
+            if (duplicateButton) {
+                duplicateButton.addEventListener('click', () => {
+                    let copyOfDevice = $.extend(true, {}, deviceConfig);
+                    copyOfDevice.name = `${copyOfDevice.name} copy`;
+                    if (hkBridge.Configuration.isIPCameraConfig(copyOfDevice)) {
+                        copyOfDevice.serial = '';
+                        this.delegate.cameraConfigs.push(copyOfDevice);
+                    }
+                    else if (hkBridge.Configuration.isDeviceConfig(copyOfDevice)) {
+                        copyOfDevice.serial = '';
+                        bridge.devices.push(copyOfDevice);
+                    }
+                    else {
+                        return;
+                    }
+                    this.delegate.setSelectedDeviceConfig(copyOfDevice, true);
+                    this.buildDeviceList(bridgeFrame);
+                    this.delegate.changeCallback();
+                });
+            }
+        }
+        [...deviceList.children]
+            .sort((a, b) => { var _a; return (_a = a.innerText) === null || _a === void 0 ? void 0 : _a.localeCompare(b.innerText); })
+            .forEach(node => {
+            return deviceList.appendChild(node);
+        });
+    }
+    getDeviceGroupNode(deviceList, deviceConfig) {
+        const groupName = deviceConfig.groupString ? deviceConfig.groupString : '<no group>';
+        const dictIdentifier = groupName.toLocaleLowerCase();
+        const existingNode = this.entryGroupMap.get(dictIdentifier);
+        if (existingNode != null) {
+            return existingNode;
+        }
+        const fragment = document.importNode(this.deviceListEntryGroupTemplate.content, true);
+        const groupRootNode = fragment.querySelector('li');
+        const groupNameNode = fragment.querySelector('.group-name');
+        const groupContentNode = fragment.querySelector('.group-content');
+        groupNameNode.innerText = groupName;
+        this.entryGroupMap.set(dictIdentifier, groupContentNode);
+        deviceList.appendChild(groupRootNode);
+        return groupContentNode;
+    }
+    refreshDeviceList() {
+        this.listEntryToConfigMap.forEach((node, element) => this.refreshDeviceListEntry(node, element));
+    }
+    refreshDeviceListEntry(deviceConfig, listItem) {
+        if (!listItem)
+            return;
+        let pageBuilder = this.delegate.getPageBuilderByConfig(deviceConfig);
+        listItem.querySelector('.list-title').textContent = deviceConfig.name;
+        // listItem.classList.toggle('active', (deviceConfig === this.delegate.selectedDeviceConfig));
+        let stylingDone = false;
+        if (pageBuilder !== undefined) {
+            stylingDone = pageBuilder.styleListItem(listItem, deviceConfig);
+        }
+        listItem.classList.toggle('error', !this.delegate.deviceIsUnique(deviceConfig));
+        if (!stylingDone) {
+            let listIcon = listItem.querySelector('.device-icon');
+            listIcon.innerHTML = 'crop_free';
+        }
+    }
+    handleDeviceListClick(deviceNode) {
+        let deviceConfig = this.listEntryToConfigMap.get(deviceNode);
+        this.delegate.setSelectedDeviceConfig(deviceConfig, false);
+    }
+}
+class ioBroker_ButtonHandler extends pageBuilder_base_1.ConfigPageBuilder_Base {
+    constructor(delegate, deviceListHandler) {
+        super(delegate);
+        this.deviceListHandler = deviceListHandler;
+    }
+    bindBridgeButtons(bridgePane) {
+        let bridge = this.delegate.bridgeSettings;
+        let elem;
+        if (elem = bridgePane.querySelector('#yahka_add_device')) {
+            elem.addEventListener('click', (e) => {
+                e.preventDefault();
+                let newCustomDevice = {
+                    configType: 'customdevice',
+                    manufacturer: '',
+                    model: '',
+                    name: `<new device ${this.deviceListHandler.getDeviceList().length}>`,
+                    serial: '',
+                    firmware: '',
+                    enabled: true,
+                    category: 1,
+                    services: [],
+                    availableState: null
+                };
+                bridge.devices.push(newCustomDevice);
+                this.delegate.setSelectedDeviceConfig(newCustomDevice, true);
+                this.deviceListHandler.buildDeviceList(bridgePane);
+                this.delegate.changeCallback();
+            });
+        }
+        if (elem = bridgePane.querySelector('#yahka_add_camera')) {
+            elem.addEventListener('click', (e) => {
+                e.preventDefault();
+                let newIPCamera = {
+                    configType: 'ipcamera',
+                    ident: '',
+                    manufacturer: '',
+                    model: '',
+                    name: `<new camera ${this.deviceListHandler.getDeviceList().length}>`,
+                    serial: '',
+                    firmware: '',
+                    port: 0,
+                    username: generateRandomUsername(),
+                    pincode: '123-45-678',
+                    enabled: true,
+                    source: '',
+                    codec: 'libx264',
+                    maxWidth: 1920,
+                    maxHeight: 1080,
+                    maxFPS: 60,
+                    verboseLogging: false,
+                    numberOfStreams: undefined,
+                    ffmpegCommandLine: admin_defaults_1.Defaults.ffmpegCommandLines.default,
+                    enableAudio: false,
+                    devices: [],
+                    services: []
+                };
+                this.delegate.cameraConfigs.push(newIPCamera);
+                this.delegate.setSelectedDeviceConfig(newIPCamera, true);
+                this.deviceListHandler.buildDeviceList(bridgePane);
+                this.delegate.changeCallback();
+            });
+        }
+    }
+}
+
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.servicePanel.characteristic.propRow.inc.html":
+/*!************************************************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.servicePanel.characteristic.propRow.inc.html ***!
+  \************************************************************************************/
+/***/ ((module) => {
+
+module.exports = "<div class=\"input-field\">\n    <label id=\"propName\"></label>\n    <input type=\"text\" class=\"propValue\">\n</div>";
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.servicePanel.characteristicRow.inc.html":
+/*!*******************************************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.servicePanel.characteristicRow.inc.html ***!
+  \*******************************************************************************/
+/***/ ((module) => {
+
+module.exports = "<li>\n    <div class=\"collapsible-header\" style=\"gap: 10px; display: flex; justify-content: space-between; align-items: center;\">\n        <span class=\"yahka_characteristic_name\"></span>\n        <button type=\"button\" class=\"btn red icon-button yakha_delete_characteristic\">\n            <i class=\"material-icons\">close</i>\n        </button>\n    </div>\n    <div class=\"collapsible-body\">\n        <div class=\"row\">\n            <div class=\"col s12\">\n                <label>\n                    <input type=\"checkbox\" class=\"characteristic_enabled\"/>\n                    <span class=\"translate\">Enabled</span>\n                </label>\n            </div>\n        </div>\n        <div class=\"card-panel\">\n            <div class=\"row\">\n                <div class=\"col s12 characteristic_propertyTable_container\">\n                    <h6 class=\"translate\">Characteristic Properties</h6>\n                    <div class=\"editor-table characteristic_propertyTable\">\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <select class=\"characteristic_inoutfunction\"></select>\n                <label class=\"translate\">In-Out Data</label>\n            </div>\n            <div class=\"editor-container-cell inOut col s12 characteristic_inoutparams_container\">\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"input-field col s12\">\n                <select class=\"characteristic_conversionfunction\"></select>\n                <label class=\"translate\">Conversion</label>\n            </div>\n            <div class=\"editor-container-cell conversion col s12 characteristic_conversionparams_container\">\n            </div>\n        </div>\n    </div>\n</li>\n";
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.servicePanel.servicePanel.inc.html":
+/*!**************************************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.servicePanel.servicePanel.inc.html ***!
+  \**************************************************************************/
+/***/ ((module) => {
+
+module.exports = "<li class=\"yahka_service_panel\">\n    <div class=\"collapsible-header\" style=\"display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: bold;\">\n        <div>\n            <span class=\"translate\">Service: </span>\n            <span class=\"yahka_service_caption\"></span>\n        </div>\n        <button type=\"button\" class=\"btn-small red icon-button yakha_delete_service\">\n            <i class=\"material-icons\">clear</i>\n        </button>\n    </div>\n    <div class=\"content collapsible-body card-outer-container\">\n        <div class=\"card-inner-container\">\n            <div class=\"row\">\n                <div class=\"col s12\">\n                    <label>\n                        <input type=\"checkbox\" class=\"service_enabled\"/>\n                        <span class=\"translate\">Enabled</span>\n                    </label>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <label class=\"translate\">Service Name</label>\n                    <input class=\"full-size service_name\" type=\"text\" />\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <select class=\"full-size service_type\"></select>\n                    <label class=\"translate\">Service Type:</label>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <label class=\"translate\">Service Subtype</label>\n                    <input class=\"full-size service_subtype\" type=\"text\">\n                    <div class=\"translate edit-hint\">\n                        This is intended to use, if you have multiple services of the same type in an composed device.<br>\n                        For example, if you have a garage door with two different lights.\n                    </div>\n                </div>\n            </div>\n\n\n            <div class=\"row\">\n                <div class=\"col s12\">\n                    <label>\n                        <input type=\"checkbox\" class=\"service_isPrimary\"/>\n                        <span class=\"translate\">Primary Service</span>\n                    </label>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"col s12\">\n                    <label>\n                        <input type=\"checkbox\" class=\"service_isHidden\"/>\n                        <span class=\"translate\">Hidden Service</span>\n                    </label>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <select class=\"full-size service_link_to\"></select>\n                    <label class=\"translate\">Link to</label>\n                </div>\n            </div>\n\n            <div class=\"row\">\n                <div class=\"col s12\">\n                    <span class=\"translate\" style=\"font-size: 1.1rem;\">Characteristics</span>\n                </div>\n            </div>\n        </div>\n        <ul class=\"collapsible yahka_characteristic_table\">\n        </ul>\n\n        <div class=\"card-inner-container\">\n            <div class=\"row\">\n                <div class=\"col s12 button-appendix\">\n                    <div class=\"input-field\">\n                        <select class=\"full-size new_custom_characteristic\"></select>\n                        <label class=\"translate new_custom_characteristic\">Custom Characteristic</label>\n                    </div>\n                    <button type=\"button\" class=\"btn btn-small yahka_add_characteristic\">\n                        <span class=\"translate\">Add</span>\n                    </button>\n                </div>\n            </div>\n        </div>\n    </div>\n</li>\n";
+
+/***/ }),
+
+/***/ "./admin/pageBuilder/pageBuilder.servicePanel.ts":
+/*!*******************************************************!*\
+  !*** ./admin/pageBuilder/pageBuilder.servicePanel.ts ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ConfigPageBuilder_ServicePanel = void 0;
+const yahka_meta_generator_1 = __webpack_require__(/*! ../yahka.meta-generator */ "./admin/yahka.meta-generator.ts");
+const pageBuilder_base_1 = __webpack_require__(/*! ./pageBuilder.base */ "./admin/pageBuilder/pageBuilder.base.ts");
+const parameterEditor_factory_1 = __webpack_require__(/*! ../parameterEditor/parameterEditor.factory */ "./admin/parameterEditor/parameterEditor.factory.ts");
+const parameterEditor_null_1 = __webpack_require__(/*! ../parameterEditor/parameterEditor.null */ "./admin/parameterEditor/parameterEditor.null.ts");
+const admin_translation_1 = __webpack_require__(/*! ../admin.translation */ "./admin/admin.translation.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+let HAPServiceDictionary = (0, yahka_meta_generator_1.generateMetaDataDictionary)();
+class ConfigPageBuilder_ServicePanel extends pageBuilder_base_1.ConfigPageBuilder_Base {
+    constructor(delegate) {
+        super(delegate);
+        this.delegate = delegate;
+        this.deviceServicePanelTemplate = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.servicePanel.servicePanel.inc.html */ "./admin/pageBuilder/pageBuilder.servicePanel.servicePanel.inc.html"));
+        this.characteristicRow = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.servicePanel.characteristicRow.inc.html */ "./admin/pageBuilder/pageBuilder.servicePanel.characteristicRow.inc.html"));
+        this.characteristicPropRow = (0, admin_pageLoader_1.createTemplateElement)(__webpack_require__(/*! ./pageBuilder.servicePanel.characteristic.propRow.inc.html */ "./admin/pageBuilder/pageBuilder.servicePanel.characteristic.propRow.inc.html"));
+    }
+    createServicePanel(services, serviceConfig) {
+        let servicePanel = document.importNode(this.deviceServicePanelTemplate.content, true);
+        let frameNode = servicePanel.querySelector('.yahka_service_panel');
+        (0, admin_translation_1.translateFragment)(servicePanel);
+        let inputHelper = (selector, configName, selectList, eventHandler, defaultForCheckbox = true) => {
+            var _a;
+            let input = frameNode.querySelector(selector);
+            if (selectList != null) {
+                this.fillSelectByListEntries(input, selectList);
+            }
+            if (serviceConfig) {
+                admin_utils_1.Utils.setInputValue(input, serviceConfig[configName]);
+            }
+            if (input.type === 'checkbox') {
+                input.checked = (_a = serviceConfig[configName]) !== null && _a !== void 0 ? _a : defaultForCheckbox;
+                input.addEventListener('change', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
+            }
+            else if (eventHandler !== undefined) {
+                input.addEventListener('input', eventHandler);
+                input.addEventListener('change', eventHandler);
+            }
+            else {
+                input.addEventListener('input', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
+                input.addEventListener('change', this.handleServiceMetaDataChange.bind(this, serviceConfig, frameNode, configName));
+            }
+        };
+        this.refreshServicePanelCaption(serviceConfig, frameNode);
+        inputHelper('.service_enabled', 'enabled');
+        inputHelper('.service_isPrimary', 'isPrimary', undefined, undefined, false);
+        inputHelper('.service_isHidden', 'isHidden', undefined, undefined, false);
+        inputHelper('.service_name', 'name');
+        inputHelper('.service_type', 'type', Object.keys(HAPServiceDictionary.services).map(s => ({
+            text: s,
+            value: s
+        })), this.handleServiceTypeChange.bind(this, serviceConfig, frameNode));
+        inputHelper('.service_subtype', 'subType');
+        inputHelper('.service_link_to', 'linkTo', [{
+                text: '',
+                value: '',
+            }].concat(services.map((s) => ({
+            text: s.name,
+            value: s.name
+        }))));
+        inputHelper('.new_custom_characteristic', '', Object.entries(HAPServiceDictionary.characteristics)
+            .map(([key, c]) => ({
+            text: c.name,
+            value: key
+        }))
+            .sort((a, b) => { var _a, _b; return ((_a = a.text) !== null && _a !== void 0 ? _a : a.value).localeCompare((_b = b.text) !== null && _b !== void 0 ? _b : b.value); }), () => { });
+        this.buildCharacteristicTable(serviceConfig, frameNode);
+        // bind delete buttton
+        frameNode.querySelector('.yakha_delete_service').addEventListener('click', () => {
+            let idx = services.indexOf(serviceConfig);
+            if (idx > -1) {
+                services.splice(idx, 1);
+                this.delegate.changeCallback();
+                frameNode.parentNode.removeChild(frameNode);
+            }
+            this.delegate.refreshSelectedDeviceConfig();
+        });
+        frameNode.querySelector('.yahka_add_characteristic').addEventListener('click', this.addCustomCharacteristic.bind(this, serviceConfig, frameNode));
+        return frameNode;
+    }
+    refreshServicePanelCaption(serviceConfig, servicePanel) {
+        const captionElement = servicePanel.querySelector('.yahka_service_caption');
+        captionElement.textContent = `${serviceConfig.name}[${serviceConfig.type}]`;
+        if (true === serviceConfig.enabled) {
+            captionElement.classList.remove('grey-text');
+            return;
+        }
+        captionElement.classList.add('grey-text');
+    }
+    findHAPCharacteristic(serviceDef, characteristicName) {
+        if (!serviceDef)
+            return undefined;
+        const serviceChar = serviceDef.characteristics[characteristicName];
+        if (serviceChar != null)
+            return serviceChar;
+        return undefined;
+    }
+    findConfigCharacteristic(service, characteristicName) {
+        if (!service) {
+            return undefined;
+        }
+        for (let cfg of service.characteristics) {
+            if (cfg.name == characteristicName) {
+                return cfg;
+            }
+        }
+        return undefined;
+    }
+    isEmptyCharacteristic(charConfig) {
+        if (charConfig.customCharacteristic) {
+            return false;
+        }
+        if (charConfig === undefined) {
+            return true;
+        }
+        if (charConfig.name === '') {
+            return true;
+        }
+        if ((charConfig['inOutFunction'] === '') || (charConfig['inOutFunction'] === undefined)) {
+            return true;
+        }
+        return false;
+    }
+    removeCharacteristic(serviceConfig, charConfig) {
+        if (serviceConfig === undefined) {
+            return;
+        }
+        let idx = serviceConfig.characteristics.indexOf(charConfig);
+        if (idx > -1) {
+            serviceConfig.characteristics.splice(idx, 1);
+            this.delegate.changeCallback();
+        }
+    }
+    buildCharacteristicTable(serviceConfig, servicePanel) {
+        let serviceDef = HAPServiceDictionary.services[serviceConfig.type];
+        let createdCharacteristics = {};
+        for (let charConfig of serviceConfig.characteristics) {
+            let charDef = this.findHAPCharacteristic(serviceDef, charConfig.name);
+            if ((charDef === undefined) && (this.isEmptyCharacteristic(charConfig))) {
+                this.removeCharacteristic(serviceConfig, charConfig);
+                continue;
+            }
+            if (charDef == null) {
+                charDef = HAPServiceDictionary.characteristics[charConfig.name];
+            }
+            let charRow = this.createCharacteristicRow(charDef, serviceConfig, charConfig, servicePanel);
+            createdCharacteristics[charConfig.name] = [charConfig.name, charDef ? charDef.optional : false, charRow];
+        }
+        // add undefined characteristics
+        if (serviceDef) {
+            for (let charName in serviceDef.characteristics) {
+                if (createdCharacteristics[charName] === undefined) {
+                    let charDef = serviceDef.characteristics[charName];
+                    let charRow = this.createCharacteristicRow(charDef, serviceConfig, undefined, servicePanel);
+                    createdCharacteristics[charName] = [charName, charDef.optional, charRow];
+                }
+            }
+        }
+        let charRows = [];
+        for (let charRow in createdCharacteristics)
+            charRows.push(createdCharacteristics[charRow]);
+        charRows.sort((a, b) => {
+            if (a[1] != b[1])
+                return a[1] ? -1 : 1;
+            return a[0].localeCompare(b[0]);
+        });
+        let table = servicePanel.querySelector('.yahka_characteristic_table');
+        while (table.childElementCount > 0) { // first row is the header row
+            table.removeChild(table.lastElementChild);
+        }
+        for (let row of charRows) {
+            table.appendChild(row[2]);
+        }
+        this.delegate.refreshInputs();
+    }
+    getParameterEditor(functionName, valueChangeCallback, functionMap) {
+        if (!functionMap.has(functionName)) {
+            return new parameterEditor_null_1.ParameterEditor_Null(valueChangeCallback);
+        }
+        let factory = functionMap.get(functionName);
+        return factory(valueChangeCallback);
+    }
+    updateParameterEditor(functionName, parameterContainer, parameterValue, parameterChangeCallback, functionMap) {
+        let editor = this.getParameterEditor(functionName, parameterChangeCallback, functionMap);
+        if (editor == undefined)
+            return;
+        editor.refreshAndShow(parameterContainer, parameterValue);
+    }
+    createCharacteristicRow(charDef, serviceConfig, charConfig, servicePanel) {
+        var _a, _b;
+        let name = charConfig ? charConfig.name : charDef.name;
+        let enabled = charConfig ? charConfig.enabled : false;
+        let rowElement = document.importNode(this.characteristicRow.content, true);
+        (0, admin_translation_1.translateFragment)(rowElement);
+        let anchor = rowElement.querySelector('#anchor');
+        if (anchor != null) {
+            const anchorAttribute = document.createAttribute('x-yahka-anchor');
+            anchorAttribute.value = name;
+            anchor.attributes.setNamedItem(anchorAttribute);
+        }
+        const characteristicName = rowElement.querySelector('.yahka_characteristic_name');
+        let checkBox = rowElement.querySelector('.characteristic_enabled');
+        checkBox.checked = enabled;
+        checkBox.addEventListener('click', this.handleCharacteristicEnabledChange.bind(this, serviceConfig, name, characteristicName));
+        let delButton = rowElement.querySelector('.yakha_delete_characteristic');
+        delButton.addEventListener('click', () => {
+            const charConfig = this.findConfigCharacteristic(serviceConfig, name);
+            if (charConfig != null) {
+                charConfig.customCharacteristic = false;
+                this.removeCharacteristic(serviceConfig, charConfig);
+                this.buildCharacteristicTable(serviceConfig, servicePanel);
+            }
+        });
+        this.refreshEnabledClass(characteristicName, enabled);
+        this.refreshOptionalClass(characteristicName, (_a = charDef === null || charDef === void 0 ? void 0 : charDef.optional) !== null && _a !== void 0 ? _a : true);
+        this.refreshCustomClass(characteristicName, (_b = charConfig === null || charConfig === void 0 ? void 0 : charConfig.customCharacteristic) !== null && _b !== void 0 ? _b : false);
+        characteristicName.textContent = name;
+        let functionSelector = (selector, containerSelector, configName, parameterName, functionMap) => {
+            var _a;
+            let input = rowElement.querySelector(selector);
+            let container = rowElement.querySelector(containerSelector);
+            if (functionMap !== undefined) {
+                let mapKeys = [...functionMap.keys()];
+                this.fillSelectByArray(input, mapKeys);
+            }
+            let parameterValue = undefined;
+            if (charConfig) {
+                admin_utils_1.Utils.setInputValue(input, charConfig[configName]);
+                parameterValue = charConfig[parameterName];
+            }
+            let paramUpdateMethod = (newValue) => {
+                let charConfig = this.findConfigCharacteristic(serviceConfig, name);
+                if (charConfig === undefined) {
+                    charConfig = { name: name, enabled: false };
+                    serviceConfig.characteristics.push(charConfig);
+                }
+                charConfig[parameterName] = newValue;
+                this.delegate.changeCallback();
+            };
+            this.updateParameterEditor((_a = admin_utils_1.Utils.getSelectInputValue(input)) === null || _a === void 0 ? void 0 : _a.toString(), container, parameterValue, paramUpdateMethod, functionMap);
+            input.addEventListener('change', (e) => {
+                var _a;
+                this.handleCharacteristicInputChange(serviceConfig, name, configName, e);
+                let charConfig = this.findConfigCharacteristic(serviceConfig, name);
+                this.updateParameterEditor((_a = admin_utils_1.Utils.getSelectInputValue(input)) === null || _a === void 0 ? void 0 : _a.toString(), container, charConfig[parameterName], paramUpdateMethod, functionMap);
+                return false;
+            });
+            try {
+                M.FormSelect.init(input);
+            }
+            catch (error) {
+                // Just do nothing. M.FormSelect does seemingly not work, when element is not in DOM yet or invisible.
+            }
+        };
+        functionSelector('.characteristic_inoutfunction', '.characteristic_inoutparams_container', 'inOutFunction', 'inOutParameters', parameterEditor_factory_1.inoutFunctions);
+        functionSelector('.characteristic_conversionfunction', '.characteristic_conversionparams_container', 'conversionFunction', 'conversionParameters', parameterEditor_factory_1.convFunctions);
+        this.updateCharacteristicProperties(rowElement, serviceConfig, charDef, charConfig);
+        return rowElement;
+    }
+    updateCharacteristicProperties(rowElement, serviceConfig, charDef, charConfig) {
+        let charName = charConfig ? charConfig.name : charDef.name;
+        let propTable = rowElement.querySelector('.characteristic_propertyTable');
+        function transformValue(value) {
+            let result = value;
+            let isObject = false;
+            if (typeof result === 'object') {
+                result = JSON.stringify(result);
+                isObject = true;
+            }
+            return { asString: result, isObject: isObject };
+        }
+        if (charDef === null || charDef === void 0 ? void 0 : charDef.properties) {
+            for (let propertyName in charDef.properties) {
+                let propertyDefaultValue = transformValue(charDef.properties[propertyName]);
+                let propElement = document.importNode(this.characteristicPropRow.content, true);
+                let nameSpan = propElement.querySelector('#propName');
+                nameSpan.id = '';
+                nameSpan.textContent = propertyName;
+                let propInput = propElement.querySelector('.propValue');
+                propInput.id = propertyName;
+                propInput.placeholder = propertyDefaultValue.asString;
+                if (charConfig !== undefined) {
+                    if (charConfig.properties !== undefined) {
+                        if (charConfig.properties[propertyName] !== undefined) {
+                            let charValue = transformValue(charConfig.properties[propertyName]);
+                            admin_utils_1.Utils.setInputValue(propInput, charValue.asString);
+                        }
+                    }
+                }
+                nameSpan.classList.toggle('properties-defined', propInput.value != '');
+                propInput.addEventListener('input', this.handleCharacteristicPropertyChange.bind(this, serviceConfig, charName, propertyName, propertyDefaultValue.isObject));
+                propTable.appendChild(propElement);
+            }
+        }
+    }
+    refreshEnabledClass(row, enabled) {
+        row.classList.toggle('grey-text', !enabled);
+    }
+    refreshOptionalClass(row, optional) {
+        row.classList.toggle('optional-characteristic', optional);
+    }
+    refreshCustomClass(row, custom) {
+        row.classList.toggle('custom-characteristic', custom);
+    }
+    handleCharacteristicEnabledChange(serviceConfig, charName, charRow, ev) {
+        let charConfig = this.findConfigCharacteristic(serviceConfig, charName);
+        if (charConfig === undefined) {
+            charConfig = { name: charName, enabled: false };
+            serviceConfig.characteristics.push(charConfig);
+        }
+        let inputTarget = ev.currentTarget;
+        charConfig.enabled = inputTarget.checked;
+        this.refreshEnabledClass(charRow, charConfig.enabled);
+        this.delegate.changeCallback();
+    }
+    handleCharacteristicInputChange(serviceConfig, charName, attribute, ev) {
+        let charConfig = this.findConfigCharacteristic(serviceConfig, charName);
+        if (charConfig === undefined) {
+            charConfig = { name: charName, enabled: false };
+            serviceConfig.characteristics.push(charConfig);
+        }
+        let inputTarget = ev.currentTarget;
+        let inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
+        charConfig[attribute] = inputValue;
+        this.delegate.changeCallback();
+    }
+    handleCharacteristicPropertyChange(serviceConfig, charName, property, isObjectProperty, ev) {
+        let charConfig = this.findConfigCharacteristic(serviceConfig, charName);
+        if (charConfig === undefined) {
+            charConfig = { name: charName, enabled: false };
+            serviceConfig.characteristics.push(charConfig);
+        }
+        let inputTarget = ev.currentTarget;
+        let inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
+        if (charConfig.properties === undefined)
+            charConfig.properties = {};
+        if (inputValue !== undefined) {
+            if (isObjectProperty) {
+                try {
+                    charConfig.properties[property] = JSON.parse(inputValue);
+                }
+                catch (e) {
+                    console.log('parsing of', inputValue, ' failed with: ', e);
+                }
+            }
+            else {
+                charConfig.properties[property] = inputValue;
+            }
+        }
+        else {
+            delete charConfig.properties[property];
+        }
+        this.delegate.changeCallback();
+    }
+    handleServiceMetaDataChange(serviceConfig, servicePanel, attribute, ev) {
+        let inputTarget = ev.currentTarget;
+        let inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
+        serviceConfig[attribute] = inputValue;
+        this.refreshServicePanelCaption(serviceConfig, servicePanel);
+        this.delegate.changeCallback();
+    }
+    handleServiceTypeChange(serviceConfig, servicePanel, ev) {
+        let inputTarget = ev.currentTarget;
+        let inputValue = admin_utils_1.Utils.getInputValue(inputTarget);
+        serviceConfig.type = inputValue; //?.toString();
+        this.refreshServicePanelCaption(serviceConfig, servicePanel);
+        this.buildCharacteristicTable(serviceConfig, servicePanel);
+        this.delegate.changeCallback();
+    }
+    addCustomCharacteristic(serviceConfig, servicePanel) {
+        var _a;
+        const select = servicePanel.querySelector('.new_custom_characteristic');
+        const charName = (_a = admin_utils_1.Utils.getSelectInputValue(select)) === null || _a === void 0 ? void 0 : _a.toString();
+        const existingChar = serviceConfig.characteristics.find((c) => c.name === charName);
+        if (existingChar != null) {
+            this.setFocusToCharacteristic(servicePanel, charName);
+            return;
+        }
+        serviceConfig.characteristics.push({
+            name: charName,
+            enabled: true,
+            customCharacteristic: true
+        });
+        admin_utils_1.Utils.setInputValue(select, '');
+        this.buildCharacteristicTable(serviceConfig, servicePanel);
+        this.delegate.changeCallback();
+        this.setFocusToCharacteristic(servicePanel, charName);
+    }
+    setFocusToCharacteristic(servicePanel, name) {
+        const element = servicePanel.querySelector(`[x-yahka-anchor='${name}']`);
+        if (element == null) {
+            return;
+        }
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+exports.ConfigPageBuilder_ServicePanel = ConfigPageBuilder_ServicePanel;
+
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.Map.inc.html":
+/*!************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.Map.inc.html ***!
+  \************************************************************/
+/***/ ((module) => {
+
+module.exports = "<div class=\"editor-table\">\n    <div class=\"row padding5\">\n    </div>\n    <template id=\"mappingRow\">\n        <div class=\"card-panel\">\n            <div class=\"row\">\n                <div class=\"col s12\">\n                    <label>\n                        <input class=\"isSimpleValue\" type=\"checkbox\"/>\n                        <span class=\"translate\">is simple value</span>\n                    </label>\n                </div>\n                <div class=\"input-field col s12\">\n                    <label class=\"ioBrokerValue translate\">ioBroker Value</label>\n                    <input type=\"text\">\n                </div>\n                <div class=\"input-field col s12\">\n                    <label class=\"homekitValue translate\">HomeKit Value</label>\n                    <input type=\"text\">\n                </div>\n                <div class=\"col s12\">\n                    <button class=\"btn-flat moveUp\" type=\"button\"><i class=\"material-icons\">arrow_upward</i></button>\n                    <button class=\"btn-flat moveDown\" type=\"button\"><i class=\"material-icons\">arrow_downward</i></button>\n                    <button class=\"btn-flat delRow\" type=\"button\"><i class=\"material-icons\">delete</i></button>\n                </div>\n            </div>\n        </div>\n    </template>\n    <div id=\"lastRow\">\n        <button class=\"btn\" id=\"addRow\">\n            <span class=\"translate\">add new mapping</span>\n        </button>\n    </div>\n</div>\n";
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.base.ts":
+/*!*******************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.base.ts ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ParameterEditor = void 0;
+class ParameterEditor {
+    constructor(valueChangeCallback) {
+        this.valueChangeCallback = valueChangeCallback;
+    }
+    refreshAndShow(containerElement, withValue) {
+    }
+    removeChildren(parentNode) {
+        while (parentNode.firstChild) {
+            parentNode.removeChild(parentNode.firstChild);
+        }
+    }
+    buildNewParameterValue() {
+        return undefined;
+    }
+    valueChanged() {
+        this.valueChangeCallback(this.buildNewParameterValue());
+    }
+}
+exports.ParameterEditor = ParameterEditor;
+
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.const.inc.html":
+/*!**************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.const.inc.html ***!
+  \**************************************************************/
+/***/ ((module) => {
+
+module.exports = "<div class=\"editor-table\" id=\"yahka_characteristic_table\">\n    <div class=\"row\">\n        <div class=\"input-field col s12\">\n            <label class=\"translate\">Value</label>\n            <input type=\"text\" class=\"textfield\">\n        </div>\n    </div>\n</div>";
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.const.ts":
+/*!********************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.const.ts ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ParameterEditor_Const = void 0;
+const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+class ParameterEditor_Const extends parameterEditor_base_1.ParameterEditor {
+    constructor(valueChangeCallback) {
+        super(valueChangeCallback);
+        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.const.inc.html */ "./admin/parameterEditor/parameterEditor.const.inc.html"));
+        this.textField = this.templateNode.querySelector('#textfield');
+        this.textField.addEventListener('input', (ev) => this.valueChanged());
+    }
+    refreshAndShow(containerElement, parameterValue) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+        admin_utils_1.Utils.setInputValue(this.textField, parameterValue);
+    }
+    buildNewParameterValue() {
+        return admin_utils_1.Utils.getInputValue(this.textField);
+    }
+}
+exports.ParameterEditor_Const = ParameterEditor_Const;
+
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.conversionScript.inc.html":
+/*!*************************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.conversionScript.inc.html ***!
+  \*************************************************************************/
+/***/ ((module) => {
+
+module.exports = "<div class=\"edit-hint\">Explanation: use the variable <b>value</b> to access the sourcevalue. Example: <i>return value * 2;</i><br /></div>\n<div class=\"editor-table\" id=\"yahka_characteristic_table\">\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label class=\"translate\">To HomeKit:</label>\n            <div>function(value) {</div>\n            <div class=\"input-container full-width\">\n                <textarea id=\"toHomeKit\" rows=4></textarea>\n            </div>\n            <div>}</div>\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12\">\n            <label class=\"translate\">To IOBroker:</label>\n            <div>function(value) {</div>\n            <div class=\"input-container auto-height full-width\">\n                <textarea id=\"toIOBroker\" rows=4></textarea>\n            </div>\n            <div>}</div>\n        </div>\n    </div>\n</div>";
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.conversionScript.ts":
+/*!*******************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.conversionScript.ts ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ParameterEditor_ConversionScript = void 0;
+const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+class ParameterEditor_ConversionScript extends parameterEditor_base_1.ParameterEditor {
+    constructor(valueChangeCallback) {
+        super(valueChangeCallback);
+        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.conversionScript.inc.html */ "./admin/parameterEditor/parameterEditor.conversionScript.inc.html"));
+        this.txtToHomeKit = this.templateNode.querySelector('#toHomeKit');
+        this.txtToHomeKit.addEventListener('input', (ev) => this.valueChanged());
+        this.txtToIOBroker = this.templateNode.querySelector('#toIOBroker');
+        this.txtToIOBroker.addEventListener('input', (ev) => this.valueChanged());
+    }
+    refreshAndShow(containerElement, parameterValue) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+        if (parameterValue) {
+            admin_utils_1.Utils.setInputValue(this.txtToHomeKit, parameterValue['toHomeKit']);
+            admin_utils_1.Utils.setInputValue(this.txtToIOBroker, parameterValue['toIOBroker']);
+        }
+        else {
+            this.txtToHomeKit.value = '';
+            this.txtToIOBroker.value = '';
+        }
+    }
+    buildNewParameterValue() {
+        return {
+            'toHomeKit': admin_utils_1.Utils.getInputValue(this.txtToHomeKit),
+            'toIOBroker': admin_utils_1.Utils.getInputValue(this.txtToIOBroker)
+        };
+    }
+}
+exports.ParameterEditor_ConversionScript = ParameterEditor_ConversionScript;
+
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.factory.ts":
+/*!**********************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.factory.ts ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.convFunctions = exports.inoutFunctions = void 0;
+const parameterEditor_null_1 = __webpack_require__(/*! ./parameterEditor.null */ "./admin/parameterEditor/parameterEditor.null.ts");
+const parameterEditor_const_1 = __webpack_require__(/*! ./parameterEditor.const */ "./admin/parameterEditor/parameterEditor.const.ts");
+const parameterEditor_singleState_1 = __webpack_require__(/*! ./parameterEditor.singleState */ "./admin/parameterEditor/parameterEditor.singleState.ts");
+const parameterEditor_multiState_1 = __webpack_require__(/*! ./parameterEditor.multiState */ "./admin/parameterEditor/parameterEditor.multiState.ts");
+const parameterEditor_homematic_WindowCovering_TargetPosition_1 = __webpack_require__(/*! ./parameterEditor.homematic.WindowCovering.TargetPosition */ "./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.ts");
+const parameterEditor_scaleConversion_1 = __webpack_require__(/*! ./parameterEditor.scaleConversion */ "./admin/parameterEditor/parameterEditor.scaleConversion.ts");
+const parameterEditor_conversionScript_1 = __webpack_require__(/*! ./parameterEditor.conversionScript */ "./admin/parameterEditor/parameterEditor.conversionScript.ts");
+const parameterEditor_map_1 = __webpack_require__(/*! ./parameterEditor.map */ "./admin/parameterEditor/parameterEditor.map.ts");
+const parameterEditor_homematic_dimmer_1 = __webpack_require__(/*! ./parameterEditor.homematic.dimmer */ "./admin/parameterEditor/parameterEditor.homematic.dimmer.ts");
+exports.inoutFunctions = new Map([
+    ['', (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
+    ['const', (callback) => new parameterEditor_const_1.ParameterEditor_Const(callback)],
+    ['ioBroker.State', (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
+    ['ioBroker.MultiState', (callback) => new parameterEditor_multiState_1.ParameterEditor_MultiState(callback)],
+    ['ioBroker.State.Defered', (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
+    ['ioBroker.State.OnlyACK', (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
+    ['ioBroker.homematic.WindowCovering.TargetPosition', (callback) => new parameterEditor_homematic_WindowCovering_TargetPosition_1.ParameterEditor_HomeMaticWindowCoveringTargetPosition(callback)],
+    ['ioBroker.homematic.Dimmer.On', (callback) => new parameterEditor_homematic_dimmer_1.ParameterEditor_HomeMatic_Dimmer(callback, true)],
+    ['ioBroker.homematic.Dimmer.Brightness', (callback) => new parameterEditor_homematic_dimmer_1.ParameterEditor_HomeMatic_Dimmer(callback, false)]
+]);
+exports.convFunctions = new Map([
+    ['', (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
+    ['map', (callback) => new parameterEditor_map_1.ParameterEditor_Map(callback)],
+    ['hue', (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
+    ['level255', (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
+    ['passthrough', (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
+    ['inverse', (callback) => new parameterEditor_const_1.ParameterEditor_Const(callback)],
+    ['scaleInt', (callback) => new parameterEditor_scaleConversion_1.ParameterEditor_ScaleConversionEditor(callback)],
+    ['scaleFloat', (callback) => new parameterEditor_scaleConversion_1.ParameterEditor_ScaleConversionEditor(callback)],
+    ['round', (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
+    ['invert', (callback) => new parameterEditor_null_1.ParameterEditor_Null(callback)],
+    ['HomematicDirectionToHomekitPositionState', (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
+    ['HomematicControlModeToHomekitHeathingCoolingState', (callback) => new parameterEditor_singleState_1.ParameterEditor_SingleState(callback)],
+    ['script', (callback) => new parameterEditor_conversionScript_1.ParameterEditor_ConversionScript(callback)],
+]);
+
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.inc.html":
+/*!************************************************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.inc.html ***!
+  \************************************************************************************************/
+/***/ ((module) => {
+
+module.exports = "<div class=\"editor-table\">\n    <div class=\"button-appendix\">\n        <div class=\"input-field\">\n            <label class=\"translate\">Level Datapoint</label>\n            <input type=\"text\" class=\"level stateSelectTarget\">\n        </div>\n        <button type=\"button\" class=\"btn btn-small id-selector\">\n            <span class=\"material-icons\">more_horiz</span>\n        </button>\n    </div>\n    <div class=\"button-appendix\">\n        <div class=\"input-field\">\n            <label class=\"translate\">Working Datapoint</label>\n            <input type=\"text\" class=\"working stateSelectTarget\">\n        </div>\n        <button type=\"button\" class=\"btn btn-small id-selector\">\n            <span class=\"material-icons\">more_horiz</span>\n        </button>\n    </div>\n</div>";
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.ts":
+/*!******************************************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.ts ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ParameterEditor_HomeMaticWindowCoveringTargetPosition = void 0;
+const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+class ParameterEditor_HomeMaticWindowCoveringTargetPosition extends parameterEditor_base_1.ParameterEditor {
+    constructor(valueChangeCallback) {
+        super(valueChangeCallback);
+        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.homematic.WindowCovering.TargetPosition.inc.html */ "./admin/parameterEditor/parameterEditor.homematic.WindowCovering.TargetPosition.inc.html"));
+        this.txtLevel = this.templateNode.querySelector('.level');
+        this.txtLevel.addEventListener('input', (ev) => this.valueChanged());
+        this.txtWorking = this.templateNode.querySelector('.working');
+        this.txtWorking.addEventListener('input', (ev) => this.valueChanged());
+    }
+    refreshAndShow(containerElement, parameterValue) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+        try {
+            let p;
+            if (typeof parameterValue === 'string') {
+                p = [parameterValue];
+            }
+            else if (parameterValue instanceof Array) {
+                p = parameterValue;
+            }
+            else {
+                p = [];
+            }
+            admin_utils_1.Utils.setInputValue(this.txtLevel, (p.length >= 1) ? p[0] : '');
+            admin_utils_1.Utils.setInputValue(this.txtWorking, (p.length >= 2) ? p[1] : '');
+        }
+        catch (e) {
+            this.txtLevel.value = parameterValue;
+            this.txtWorking.value = '';
+        }
+    }
+    buildNewParameterValue() {
+        var _a;
+        const resultArray = [admin_utils_1.Utils.getInputValue(this.txtLevel).toString()];
+        if (this.txtWorking.value) {
+            resultArray.push((_a = admin_utils_1.Utils.getInputValue(this.txtWorking)) === null || _a === void 0 ? void 0 : _a.toString());
+        }
+        return resultArray;
+    }
+}
+exports.ParameterEditor_HomeMaticWindowCoveringTargetPosition = ParameterEditor_HomeMaticWindowCoveringTargetPosition;
+
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.homematic.dimmer.inc.html":
+/*!*************************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.homematic.dimmer.inc.html ***!
+  \*************************************************************************/
+/***/ ((module) => {
+
+module.exports = "<div class=\"editor-table\">\n    <div class=\"button-appendix\">\n        <div class=\"input-field\">\n            <label class=\"translate\">Level Datapoint</label>\n            <input type=\"text\" class=\"level stateSelectTarget\">\n        </div>\n        <button type=\"button\" class=\"btn btn-small id-selector\">\n            <span class=\"material-icons\">more_horiz</span>\n        </button>\n    </div>\n    <div class=\"extended-dimmer-properties\">\n        <label>\n            <input type=\"checkbox\" class=\"restoreToPreviousLevel\"/>\n            <span class=\"translate\">Restore level on switch on</span>\n        </label>\n    </div>\n    <div class=\"extended-dimmer-properties\">\n        <div class=\"input-field\">\n            <label class=\"translate\">Default level on switch on</label>\n            <input type=\"number\" class=\"defaultLevel\">\n        </div>\n    </div>\n</div>\n";
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.homematic.dimmer.ts":
+/*!*******************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.homematic.dimmer.ts ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ParameterEditor_HomeMatic_Dimmer = void 0;
+const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+const iofunc_homematic_dimmer_1 = __webpack_require__(/*! ../../yahka.functions/iofunc.homematic.dimmer */ "./yahka.functions/iofunc.homematic.dimmer.ts");
+class ParameterEditor_HomeMatic_Dimmer extends parameterEditor_base_1.ParameterEditor {
+    constructor(valueChangeCallback, showExtendedDimmerProps) {
+        super(valueChangeCallback);
+        this.showExtendedDimmerProps = showExtendedDimmerProps;
+        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.homematic.dimmer.inc.html */ "./admin/parameterEditor/parameterEditor.homematic.dimmer.inc.html"));
+        this.txtLevel = this.templateNode.querySelector('.level');
+        this.txtLevel.addEventListener('input', (ev) => this.valueChanged());
+        this.chkRestoreToPrevious = this.templateNode.querySelector('.restoreToPreviousLevel');
+        this.chkRestoreToPrevious.addEventListener('click', (ev) => this.valueChanged());
+        this.txtDefaultLevel = this.templateNode.querySelector('.defaultLevel');
+        this.txtDefaultLevel.addEventListener('input', (ev) => this.valueChanged());
+        if (!showExtendedDimmerProps) {
+            $(this.templateNode).find('.extended-dimmer-properties').hide();
+        }
+    }
+    refreshAndShow(containerElement, parameterValue) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+        if (parameterValue === undefined) {
+            return;
+        }
+        const params = iofunc_homematic_dimmer_1.TIoBrokerInOutFunction_Homematic_Dimmer_Base.parseParameters(parameterValue);
+        if (params === undefined) {
+            return;
+        }
+        admin_utils_1.Utils.setInputValue(this.txtLevel, params.levelState);
+        admin_utils_1.Utils.setInputValue(this.chkRestoreToPrevious, params.restoreToPreviousLevel);
+        admin_utils_1.Utils.setInputValue(this.txtDefaultLevel, params.defaultSwitchOnLevel);
+    }
+    buildNewParameterValue() {
+        var _a;
+        const result = {
+            levelState: (_a = admin_utils_1.Utils.getInputValue(this.txtLevel)) === null || _a === void 0 ? void 0 : _a.toString()
+        };
+        if (this.showExtendedDimmerProps) {
+            result.restoreToPreviousLevel = admin_utils_1.Utils.getInputValue(this.chkRestoreToPrevious);
+            result.defaultSwitchOnLevel = admin_utils_1.Utils.getInputValue(this.txtDefaultLevel);
+        }
+        return result;
+    }
+}
+exports.ParameterEditor_HomeMatic_Dimmer = ParameterEditor_HomeMatic_Dimmer;
+
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.map.ts":
+/*!******************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.map.ts ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ParameterEditor_Map = void 0;
+const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+const conversion_map_1 = __webpack_require__(/*! ../../yahka.functions/conversion.map */ "./yahka.functions/conversion.map.ts");
+const util_1 = __webpack_require__(/*! util */ "../node_modules/util/util.js");
+class ParameterEditor_Map extends parameterEditor_base_1.ParameterEditor {
+    constructor(valueChangeCallback) {
+        super(valueChangeCallback);
+        this.stateRows = [];
+        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.Map.inc.html */ "./admin/parameterEditor/parameterEditor.Map.inc.html"));
+        this.stateTemplate = this.templateNode.querySelector('#mappingRow');
+        this.lastRow = this.templateNode.querySelector('#lastRow');
+        let addRow = this.templateNode.querySelector('#addRow');
+        addRow.addEventListener('click', this.addRowClicked.bind(this));
+    }
+    createRow(item) {
+        let importedRow = document.importNode(this.stateTemplate.content, true);
+        let myRow = this.lastRow.parentElement.insertBefore(importedRow.firstElementChild, this.lastRow);
+        this.stateRows.push(myRow);
+        let leftField = myRow.querySelector('.ioBrokerValue');
+        leftField.addEventListener('input', (ev) => this.valueChanged());
+        let leftCheck = myRow.querySelector('.isSimpleValue');
+        leftCheck.addEventListener('input', (ev) => this.valueChanged());
+        let rightField = myRow.querySelector('.homekitValue');
+        rightField.addEventListener('input', (ev) => this.valueChanged());
+        myRow.querySelector('.delRow').addEventListener('click', () => {
+            myRow.remove();
+            this.stateRows = this.stateRows.filter(row => row != myRow);
+            this.valueChanged();
+        });
+        myRow.querySelector('.moveUp').addEventListener('click', () => {
+            let myIndex = this.stateRows.indexOf(myRow);
+            let prevIndex = myIndex - 1;
+            if (prevIndex < 0) {
+                return;
+            }
+            let prevRow = this.stateRows[prevIndex];
+            this.stateRows[prevIndex] = myRow;
+            this.stateRows[myIndex] = prevRow;
+            this.lastRow.parentElement.insertBefore(myRow, prevRow);
+            this.valueChanged();
+        });
+        myRow.querySelector('.moveDown').addEventListener('click', () => {
+            let myIndex = this.stateRows.indexOf(myRow);
+            let nextIndex = myIndex + 1;
+            if ((myIndex < 0) || (nextIndex >= this.stateRows.length)) {
+                return;
+            }
+            let nextRow = this.stateRows[nextIndex];
+            this.stateRows[nextIndex] = myRow;
+            this.stateRows[myIndex] = nextRow;
+            this.lastRow.parentElement.insertBefore(nextRow, myRow);
+            this.valueChanged();
+        });
+        if (item === undefined)
+            return myRow;
+        if ((0, util_1.isObject)(item.left)) {
+            admin_utils_1.Utils.setInputValue(leftField, JSON.stringify(item.left));
+            leftCheck.checked = false;
+        }
+        else {
+            admin_utils_1.Utils.setInputValue(leftField, item.left);
+            leftCheck.checked = true;
+        }
+        admin_utils_1.Utils.setInputValue(rightField, item.right);
+    }
+    addRowClicked() {
+        this.createRow(undefined);
+        return false;
+    }
+    refreshAndShow(containerElement, parameterValue) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+        if (parameterValue === undefined) {
+            return;
+        }
+        if (!(0, conversion_map_1.isMultiStateParameter)(parameterValue)) {
+            return;
+        }
+        parameterValue.mappings.forEach(item => this.createRow(item));
+    }
+    buildNewParameterValue() {
+        return {
+            mappings: this.stateRows.map((row) => {
+                let ioValue = row.querySelector('.ioBrokerValue');
+                let isSimpleValue = row.querySelector('.isSimpleValue');
+                let leftValue = admin_utils_1.Utils.getInputValue(ioValue);
+                let hkValue = row.querySelector('.homekitValue');
+                return {
+                    left: isSimpleValue.checked ? leftValue === null || leftValue === void 0 ? void 0 : leftValue.toString() : JSON.parse(leftValue === null || leftValue === void 0 ? void 0 : leftValue.toString()),
+                    right: admin_utils_1.Utils.getInputValue(hkValue),
+                };
+            }),
+        };
+    }
+}
+exports.ParameterEditor_Map = ParameterEditor_Map;
+
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.multiState.inc.html":
+/*!*******************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.multiState.inc.html ***!
+  \*******************************************************************/
+/***/ ((module) => {
+
+module.exports = "<div class=\"editor-table\">\n    <template class=\"stateRow\">\n        <div class=\"card-panel\">\n            <div class=\"button-appendix\">\n                <div class=\"input-field\" style=\"flex-grow: 1\">\n                    <label>Read</label>\n                    <input type=\"text\" class=\"readState stateSelectTarget\">\n                </div>\n                <button type=\"button\" class=\"btn btn-small id-selector\">\n                    <span class=\"material-icons\">more_horiz</span>\n                </button>\n            </div>\n            <div class=\"button-appendix\">\n                <div class=\"input-field\">\n                    <label>Write</label>\n                    <input type=\"text\" class=\"writeState stateSelectTarget\">\n                    <div class=\"edit-hint translate\">leave empty to use read-state</div>\n                </div>\n                <button type=\"button\" class=\"btn btn-small id-selector\">\n                    <span class=\"material-icons\">more_horiz</span>\n                </button>\n            </div>\n            <div>\n                <button class=\"btn-flat moveUp\" type=\"button\"><i class=\"material-icons\">arrow_upward</i></button>\n                <button class=\"btn-flat moveDown\" type=\"button\"><i class=\"material-icons\">arrow_downward</i></button>\n                <button class=\"btn-flat delRow\" type=\"button\"><i class=\"material-icons\">delete</i></button>\n            </div>\n        </div>\n    </template>\n    <div class=\"lastRow\">\n        <button class=\"btn addRow\"><span class=\"translate\">Add new state</span></button>\n    </div>\n</div>\n";
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.multiState.ts":
+/*!*************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.multiState.ts ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ParameterEditor_MultiState = void 0;
+const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+const iofunc_multi_state_1 = __webpack_require__(/*! ../../yahka.functions/iofunc.multi-state */ "./yahka.functions/iofunc.multi-state.ts");
+class ParameterEditor_MultiState extends parameterEditor_base_1.ParameterEditor {
+    constructor(valueChangeCallback) {
+        super(valueChangeCallback);
+        this.stateRows = [];
+        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.multiState.inc.html */ "./admin/parameterEditor/parameterEditor.multiState.inc.html"));
+        this.stateTemplate = this.templateNode.querySelector('.stateRow');
+        this.lastRow = this.templateNode.querySelector('.lastRow');
+        let addRow = this.templateNode.querySelector('.addRow');
+        addRow.addEventListener('click', this.addRowClicked.bind(this));
+    }
+    createRow(item) {
+        let importedRow = document.importNode(this.stateTemplate.content, true);
+        let myRow = this.lastRow.parentElement.insertBefore(importedRow.firstElementChild, this.lastRow);
+        this.stateRows.push(myRow);
+        let readField = myRow.querySelector('.readState');
+        readField.addEventListener('input', (ev) => this.valueChanged());
+        let writeField = myRow.querySelector('.writeState');
+        writeField.addEventListener('input', (ev) => this.valueChanged());
+        myRow.querySelector('.delRow').addEventListener('click', () => {
+            myRow.remove();
+            this.stateRows = this.stateRows.filter(row => row != myRow);
+            this.valueChanged();
+        });
+        myRow.querySelector('.moveUp').addEventListener('click', () => {
+            let myIndex = this.stateRows.indexOf(myRow);
+            let prevIndex = myIndex - 1;
+            if (prevIndex < 0) {
+                return;
+            }
+            let prevRow = this.stateRows[prevIndex];
+            this.stateRows[prevIndex] = myRow;
+            this.stateRows[myIndex] = prevRow;
+            this.lastRow.parentElement.insertBefore(myRow, prevRow);
+            this.valueChanged();
+        });
+        myRow.querySelector('.moveDown').addEventListener('click', () => {
+            let myIndex = this.stateRows.indexOf(myRow);
+            let nextIndex = myIndex + 1;
+            if ((myIndex < 0) || (nextIndex >= this.stateRows.length)) {
+                return;
+            }
+            let nextRow = this.stateRows[nextIndex];
+            this.stateRows[nextIndex] = myRow;
+            this.stateRows[myIndex] = nextRow;
+            this.lastRow.parentElement.insertBefore(nextRow, myRow);
+            this.valueChanged();
+        });
+        if (item === undefined)
+            return myRow;
+        admin_utils_1.Utils.setInputValue(readField, item.readState);
+        admin_utils_1.Utils.setInputValue(writeField, item.writeState);
+    }
+    addRowClicked() {
+        this.createRow(undefined);
+        return false;
+    }
+    refreshAndShow(containerElement, parameterValue) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+        if (parameterValue === undefined) {
+            return;
+        }
+        const params = iofunc_multi_state_1.TIoBrokerInOutFunction_MultiState.parseParameters(parameterValue);
+        if (params === undefined) {
+            return;
+        }
+        params.forEach(item => this.createRow(item));
+    }
+    buildNewParameterValue() {
+        return this.stateRows.map((row) => {
+            var _a, _b;
+            const readField = row.querySelector('.readState');
+            const writeField = row.querySelector('.writeState');
+            return {
+                readState: (_a = admin_utils_1.Utils.getInputValue(readField)) === null || _a === void 0 ? void 0 : _a.toString(),
+                writeState: (_b = admin_utils_1.Utils.getInputValue(writeField)) === null || _b === void 0 ? void 0 : _b.toString(),
+            };
+        });
+    }
+}
+exports.ParameterEditor_MultiState = ParameterEditor_MultiState;
+
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.null.ts":
+/*!*******************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.null.ts ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ParameterEditor_Null = void 0;
+const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+class ParameterEditor_Null extends parameterEditor_base_1.ParameterEditor {
+    refreshAndShow(containerElement, parameterValue) {
+        this.removeChildren(containerElement);
+        this.lastParamValue = parameterValue;
+    }
+    buildNewParameterValue() {
+        return this.lastParamValue;
+    }
+}
+exports.ParameterEditor_Null = ParameterEditor_Null;
+
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.scaleConversion.inc.html":
+/*!************************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.scaleConversion.inc.html ***!
+  \************************************************************************/
+/***/ ((module) => {
+
+module.exports = "<!-- <div>Explanation: <br/>\n        $value is mapped to HomeKit with:  (homekitMin + ((homekitMax - homekitMin) / (ioBrokerMax - ioBrokerMin)) * ($value - ioBrokerMin))</br>\n        $value is mapped to ioBroker with: (ioBrokerMin + ((ioBrokerMax - ioBrokerMin) / (homeKitMax - homeKitMin)) * ($value - homeKitMin))\n    </div> -->\n<div class=\"editor-table\">\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <span class=\"translate\">HomeKit Minimum</span>\n            <input type=\"number\" class=\"hkMin\">\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">HomeKit Maximum</label>\n            <input type=\"number\" class=\"hkMax\">\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">ioBroker Minimum</label>\n            <input type=\"number\" class=\"ioMin\">\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col s12 input-field\">\n            <label class=\"translate\">ioBroker Maximum</label>\n            <input type=\"number\" class=\"ioMax\">\n        </div>\n    </div>\n</div>\n";
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.scaleConversion.ts":
+/*!******************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.scaleConversion.ts ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ParameterEditor_ScaleConversionEditor = void 0;
+const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+class ParameterEditor_ScaleConversionEditor extends parameterEditor_base_1.ParameterEditor {
+    constructor(valueChangeCallback) {
+        super(valueChangeCallback);
+        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.scaleConversion.inc.html */ "./admin/parameterEditor/parameterEditor.scaleConversion.inc.html"));
+        this.txtHKMin = this.templateNode.querySelector('.hkMin');
+        this.txtHKMin.addEventListener('input', (ev) => this.valueChanged());
+        this.txtHKMax = this.templateNode.querySelector('.hkMax');
+        this.txtHKMax.addEventListener('input', (ev) => this.valueChanged());
+        this.txtIOBrokerMin = this.templateNode.querySelector('.ioMin');
+        this.txtIOBrokerMin.addEventListener('input', (ev) => this.valueChanged());
+        this.txtIOBrokerMax = this.templateNode.querySelector('.ioMax');
+        this.txtIOBrokerMax.addEventListener('input', (ev) => this.valueChanged());
+    }
+    refreshAndShow(containerElement, parameterValue) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+        let parameterArray = undefined;
+        if (typeof parameterValue === 'object') {
+            parameterArray = parameterValue;
+        }
+        else {
+            try {
+                parameterArray = JSON.parse(parameterValue);
+            }
+            catch (e) {
+                admin_utils_1.Utils.setInputValue(this.txtHKMin, parameterValue);
+                return;
+            }
+        }
+        admin_utils_1.Utils.setInputValue(this.txtHKMin, parameterArray['homekit.min']);
+        admin_utils_1.Utils.setInputValue(this.txtHKMax, parameterArray['homekit.max']);
+        admin_utils_1.Utils.setInputValue(this.txtIOBrokerMin, parameterArray['iobroker.min']);
+        admin_utils_1.Utils.setInputValue(this.txtIOBrokerMax, parameterArray['iobroker.max']);
+    }
+    buildNewParameterValue() {
+        return {
+            'homekit.min': admin_utils_1.Utils.getInputValue(this.txtHKMin),
+            'homekit.max': admin_utils_1.Utils.getInputValue(this.txtHKMax),
+            'iobroker.min': admin_utils_1.Utils.getInputValue(this.txtIOBrokerMin),
+            'iobroker.max': admin_utils_1.Utils.getInputValue(this.txtIOBrokerMax)
+        };
+    }
+}
+exports.ParameterEditor_ScaleConversionEditor = ParameterEditor_ScaleConversionEditor;
+
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.singleState.inc.html":
+/*!********************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.singleState.inc.html ***!
+  \********************************************************************/
+/***/ ((module) => {
+
+module.exports = "<div class=\"button-appendix\">\n    <div class=\"input-field\">\n        <label class=\"translate\">State</label>\n        <input id=\"textfield\" type=\"text\" class=\"stateSelectTarget\">\n    </div>\n    <button type=\"button\" class=\"btn btn-small id-selector\">\n        <span class=\"material-icons\">more_horiz</span>\n    </button>\n</div>";
+
+/***/ }),
+
+/***/ "./admin/parameterEditor/parameterEditor.singleState.ts":
+/*!**************************************************************!*\
+  !*** ./admin/parameterEditor/parameterEditor.singleState.ts ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ParameterEditor_SingleState = void 0;
+const parameterEditor_base_1 = __webpack_require__(/*! ./parameterEditor.base */ "./admin/parameterEditor/parameterEditor.base.ts");
+const admin_pageLoader_1 = __webpack_require__(/*! ../admin.pageLoader */ "./admin/admin.pageLoader.ts");
+const admin_utils_1 = __webpack_require__(/*! ../admin.utils */ "./admin/admin.utils.ts");
+class ParameterEditor_SingleState extends parameterEditor_base_1.ParameterEditor {
+    constructor(valueChangeCallback) {
+        super(valueChangeCallback);
+        this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.singleState.inc.html */ "./admin/parameterEditor/parameterEditor.singleState.inc.html"));
+        this.textField = this.templateNode.querySelector('#textfield');
+        this.textField.addEventListener('input', (ev) => this.valueChanged());
+    }
+    refreshAndShow(containerElement, parameterValue) {
+        this.removeChildren(containerElement);
+        containerElement.appendChild(this.templateNode);
+        admin_utils_1.Utils.setInputValue(this.textField, parameterValue);
+    }
+    buildNewParameterValue() {
+        return admin_utils_1.Utils.getInputValue(this.textField);
+    }
+}
+exports.ParameterEditor_SingleState = ParameterEditor_SingleState;
+
+
+/***/ }),
+
+/***/ "./admin/yahka.admin.ts":
+/*!******************************!*\
+  !*** ./admin/yahka.admin.ts ***!
+  \******************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ioBroker_YahkaAdmin = exports.ioBrokerInterfaceList = void 0;
+/// <reference path="../typings/index.d.ts" />
+const pageBuilder_main_1 = __webpack_require__(/*! ./pageBuilder/pageBuilder.main */ "./admin/pageBuilder/pageBuilder.main.ts");
+let resolveMethodForSettingsLoader;
+const ioBrokerSettingsLoaded = new Promise((resolve, reject) => {
+    resolveMethodForSettingsLoader = resolve;
+});
+exports.ioBrokerInterfaceList = new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
+    yield ioBrokerSettingsLoaded;
+    getIPs((ipList) => {
+        resolve(ipList);
+    });
+}));
+class ioBroker_YahkaAdmin {
+    loadSettings(settingsObject, onChangeCallback) {
+        this.settings = settingsObject;
+        if (settingsObject.cameras === undefined) {
+            settingsObject.cameras = [];
+        }
+        if (resolveMethodForSettingsLoader !== undefined) {
+            resolveMethodForSettingsLoader();
+        }
+        resolveMethodForSettingsLoader = undefined;
+        this.pageBuilder = new pageBuilder_main_1.ioBroker_YahkaPageBuilder(this.settings.bridge, this.settings.cameras, onChangeCallback);
+        onChangeCallback(false);
+    }
+    saveSettings(callback) {
+        this.pageBuilder.rebuildDeviceList();
+        callback(this.settings);
+    }
+}
+exports.ioBroker_YahkaAdmin = ioBroker_YahkaAdmin;
+
+
+/***/ }),
+
+/***/ "./admin/yahka.meta-generator.ts":
+/*!***************************************!*\
+  !*** ./admin/yahka.meta-generator.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.generateMetaDataDictionary = generateMetaDataDictionary;
+const hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "../node_modules/hap-nodejs/dist/index.js");
+const yahka_community_types_1 = __webpack_require__(/*! ../yahka.community.types */ "./yahka.community.types.ts");
+(0, yahka_community_types_1.importHAPCommunityTypesAndFixes)();
+function generateMetaDataDictionary() {
+    let availableServices = Object.keys(hap_nodejs_1.Service);
+    let availableCharacteristics = Object.keys(hap_nodejs_1.Characteristic);
+    const services = buildServiceDictionary(availableServices, availableCharacteristics);
+    const characteristics = buildCharacteristicDictionary(availableCharacteristics);
+    return {
+        services,
+        characteristics,
+    };
+}
+function createCharacteristicDescriber(name, optional, char) {
+    return {
+        uuid: char === null || char === void 0 ? void 0 : char.UUID,
+        name: name,
+        displayName: char === null || char === void 0 ? void 0 : char.displayName,
+        optional: optional,
+        properties: char === null || char === void 0 ? void 0 : char.props,
+    };
+}
+function buildServiceDictionary(availableServices, availableCharacteristics) {
+    const serviceDictionary = {};
+    const serviceExclusionList = ['super_', 'serialize', 'deserialize'];
+    let charDictionary = {};
+    for (let charName of availableCharacteristics) {
+        if (charName === 'super_') {
+            continue;
+        }
+        charDictionary[hap_nodejs_1.Characteristic[charName].UUID] = charName;
+    }
+    for (let serviceName of availableServices) {
+        if (serviceExclusionList.includes(serviceName)) {
+            continue;
+        }
+        let serviceDescriptor = {
+            type: serviceName,
+            characteristics: {},
+        };
+        let serviceInstance = new hap_nodejs_1.Service[serviceName]('', '');
+        for (let char of serviceInstance.characteristics) {
+            let charName = charDictionary[char.UUID];
+            if (charName === undefined) {
+                continue;
+            }
+            serviceDescriptor.characteristics[charName] = createCharacteristicDescriber(charName, false, char);
+        }
+        for (let char of serviceInstance.optionalCharacteristics) {
+            let charName = charDictionary[char.UUID];
+            if (charName === undefined) {
+                continue;
+            }
+            serviceDescriptor.characteristics[charName] = createCharacteristicDescriber(charName, true, char);
+        }
+        serviceDictionary[serviceName] = serviceDescriptor;
+    }
+    return serviceDictionary;
+}
+function buildCharacteristicDictionary(availableCharacteristics) {
+    const characteristicExclusionList = [
+        'super_',
+        'Formats',
+        'Units',
+        'Perms',
+        'serialize',
+        'deserialize',
+    ];
+    const characteristicDictionary = {};
+    for (let charName of availableCharacteristics) {
+        if (characteristicExclusionList.includes(charName)) {
+            continue;
+        }
+        let charInstance = new hap_nodejs_1.Characteristic[charName]();
+        characteristicDictionary[charName] = createCharacteristicDescriber(charName, true, charInstance);
+    }
+    return characteristicDictionary;
+}
+
+
+/***/ }),
+
+/***/ "./shared/yahka.configuration.ts":
+/*!***************************************!*\
+  !*** ./shared/yahka.configuration.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Configuration = void 0;
+var Configuration;
+(function (Configuration) {
+    function isBridgeConfig(config) {
+        if (config === undefined || config === null || typeof config !== 'object') {
+            return false;
+        }
+        return config.configType === 'bridge';
+    }
+    Configuration.isBridgeConfig = isBridgeConfig;
+    function isDeviceConfig(config) {
+        if (config === undefined || config === null || typeof config !== 'object') {
+            return false;
+        }
+        return config.configType === 'customdevice' || config.services !== undefined;
+    }
+    Configuration.isDeviceConfig = isDeviceConfig;
+    function isIPCameraConfig(config) {
+        if (config === undefined || config === null || typeof config !== 'object') {
+            return false;
+        }
+        return config.configType === 'ipcamera';
+    }
+    Configuration.isIPCameraConfig = isIPCameraConfig;
+})(Configuration || (exports.Configuration = Configuration = {}));
+
+
+/***/ }),
+
+/***/ "./shared/yahka.logger.ts":
+/*!********************************!*\
+  !*** ./shared/yahka.logger.ts ***!
+  \********************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.YahkaLogger = void 0;
+class YahkaLogger {
+    constructor(adapter, logIdentifier) {
+        this.adapter = adapter;
+        this.logIdentifier = logIdentifier;
+    }
+    debug(message) {
+        return this.adapter.log.debug(`[${this.logIdentifier}] ${message}`);
+    }
+    info(message) {
+        return this.adapter.log.info(`[${this.logIdentifier}] ${message}`);
+    }
+    warn(message) {
+        return this.adapter.log.warn(`[${this.logIdentifier}] ${message}`);
+    }
+    error(message) {
+        return this.adapter.log.error(`[${this.logIdentifier}] ${message}`);
+    }
+}
+exports.YahkaLogger = YahkaLogger;
+
+
+/***/ }),
+
+/***/ "./shared/yahka.utils.ts":
 /*!*******************************!*\
-  !*** child_process (ignored) ***!
+  !*** ./shared/yahka.utils.ts ***!
   \*******************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, exports) => {
 
-/* (ignored) */
+"use strict";
 
-/***/ }),
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.propertyExists = propertyExists;
+function propertyExists(object, property) {
+    return property in object;
+}
 
-/***/ "?7867":
-/*!***********************!*\
-  !*** dgram (ignored) ***!
-  \***********************/
-/***/ (() => {
-
-/* (ignored) */
 
 /***/ }),
 
-/***/ "?84bc":
-/*!*********************!*\
-  !*** net (ignored) ***!
-  \*********************/
-/***/ (() => {
+/***/ "./yahka.community.types.ts":
+/*!**********************************!*\
+  !*** ./yahka.community.types.ts ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-/* (ignored) */
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.NotificationText = exports.NotificationCode = exports.VolatileOrganicCompoundPeakLevel = exports.VolatileOrganicCompoundLevel = exports.VolatileOrganicCompoundDetected = exports.SodiumDioxidePeakLevel = exports.SodiumDioxideLevel = exports.SodiumDioxideDetected = exports.OzonePeakLevel = exports.OzoneLevel = exports.OzoneDetected = exports.NitrogenDioxidePeakLevel = exports.NitrogenDioxideLevel = exports.NitrogenDioxideDetected = exports.AirFlow = exports.NoiseLevel = exports.AtmosphericPressureLevel = exports.EveResetTotal = exports.EveTimesOpened = exports.EveLastAction = exports.EveClosedDuration = exports.EveOpenDuration = exports.EveAirQuality = exports.BatteryLevel = exports.KilowattVoltAmpereHour = exports.KilowattHours = exports.VoltAmperes = exports.Watts = exports.Amperes = exports.Volts = exports.MediaHeight = exports.MediaWidth = exports.MediaTypeIdentifier = exports.StillImage = exports.MediaItemDuration = exports.MediaItemArtist = exports.MediaItemAlbumName = exports.MediaItemName = exports.MediaCurrentPosition = exports.PlaybackSpeed = exports.RepeatMode = exports.ShuffleMode = exports.SkipBackward = exports.SkipForward = exports.PlaybackState = exports.Muting = exports.AudioVolume = exports.VideoDataURL = exports.AudioDataURL = exports.Timestamp = void 0;
+exports.NotificationService = exports.VolatileOrganicCompoundSensor = exports.SodiumDioxideSensor = exports.OzoneSensor = exports.NitrogenDioxideSensor = exports.AirFlowSensor = exports.NoiseLevelSensor = exports.AtmosphericPressureSensor = exports.SecurityCameraService = exports.StillImageService = exports.MediaInformationService = exports.PlaybackDeviceService = exports.AudioDeviceService = exports.UPSLoadPercent = exports.BatteryVoltageDC = exports.OutputVoltageAC = exports.InputVoltageAC = exports.DewPoint = exports.Latency = exports.Ping = exports.UploadSpeed = exports.DownloadSpeed = exports.LastEventTime = void 0;
+exports.importHAPCommunityTypesAndFixes = importHAPCommunityTypesAndFixes;
+const hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "../node_modules/hap-nodejs/dist/index.js");
+let hapTypesImported = false;
+function importHAPCommunityTypesAndFixes() {
+    if (hapTypesImported) {
+        return;
+    }
+    hap_nodejs_1.Characteristic[`Community: ${Timestamp.name}`] = Timestamp;
+    hap_nodejs_1.Characteristic[`Community: ${AudioDataURL.name}`] = AudioDataURL;
+    hap_nodejs_1.Characteristic[`Community: ${VideoDataURL.name}`] = VideoDataURL;
+    hap_nodejs_1.Characteristic[`Community: ${AudioVolume.name}`] = AudioVolume;
+    hap_nodejs_1.Characteristic[`Community: ${Muting.name}`] = Muting;
+    hap_nodejs_1.Characteristic[`Community: ${PlaybackState.name}`] = PlaybackState;
+    hap_nodejs_1.Characteristic[`Community: ${SkipForward.name}`] = SkipForward;
+    hap_nodejs_1.Characteristic[`Community: ${SkipBackward.name}`] = SkipBackward;
+    hap_nodejs_1.Characteristic[`Community: ${ShuffleMode.name}`] = ShuffleMode;
+    hap_nodejs_1.Characteristic[`Community: ${RepeatMode.name}`] = RepeatMode;
+    hap_nodejs_1.Characteristic[`Community: ${PlaybackSpeed.name}`] = PlaybackSpeed;
+    hap_nodejs_1.Characteristic[`Community: ${MediaCurrentPosition.name}`] = MediaCurrentPosition;
+    hap_nodejs_1.Characteristic[`Community: ${MediaItemName.name}`] = MediaItemName;
+    hap_nodejs_1.Characteristic[`Community: ${MediaItemAlbumName.name}`] = MediaItemAlbumName;
+    hap_nodejs_1.Characteristic[`Community: ${MediaItemArtist.name}`] = MediaItemArtist;
+    hap_nodejs_1.Characteristic[`Community: ${MediaItemDuration.name}`] = MediaItemDuration;
+    hap_nodejs_1.Characteristic[`Community: ${StillImage.name}`] = StillImage;
+    hap_nodejs_1.Characteristic[`Community: ${MediaTypeIdentifier.name}`] = MediaTypeIdentifier;
+    hap_nodejs_1.Characteristic[`Community: ${MediaWidth.name}`] = MediaWidth;
+    hap_nodejs_1.Characteristic[`Community: ${MediaHeight.name}`] = MediaHeight;
+    hap_nodejs_1.Characteristic[`Community: ${Volts.name}`] = Volts;
+    hap_nodejs_1.Characteristic[`Community: ${Amperes.name}`] = Amperes;
+    hap_nodejs_1.Characteristic[`Community: ${Watts.name}`] = Watts;
+    hap_nodejs_1.Characteristic[`Community: ${VoltAmperes.name}`] = VoltAmperes;
+    hap_nodejs_1.Characteristic[`Community: ${KilowattHours.name}`] = KilowattHours;
+    hap_nodejs_1.Characteristic[`Community: ${KilowattVoltAmpereHour.name}`] = KilowattVoltAmpereHour;
+    hap_nodejs_1.Characteristic[`Community: ${BatteryLevel.name}`] = BatteryLevel;
+    hap_nodejs_1.Characteristic[`Community: ${EveAirQuality.name}`] = EveAirQuality;
+    hap_nodejs_1.Characteristic[`Community: ${EveOpenDuration.name}`] = EveOpenDuration;
+    hap_nodejs_1.Characteristic[`Community: ${EveClosedDuration.name}`] = EveClosedDuration;
+    hap_nodejs_1.Characteristic[`Community: ${EveLastAction.name}`] = EveLastAction;
+    hap_nodejs_1.Characteristic[`Community: ${EveTimesOpened.name}`] = EveTimesOpened;
+    hap_nodejs_1.Characteristic[`Community: ${EveResetTotal.name}`] = EveResetTotal;
+    hap_nodejs_1.Characteristic[`Community: ${AtmosphericPressureLevel.name}`] = AtmosphericPressureLevel;
+    hap_nodejs_1.Characteristic[`Community: ${NoiseLevel.name}`] = NoiseLevel;
+    hap_nodejs_1.Characteristic[`Community: ${AirFlow.name}`] = AirFlow;
+    hap_nodejs_1.Characteristic[`Community: ${NitrogenDioxideDetected.name}`] = NitrogenDioxideDetected;
+    hap_nodejs_1.Characteristic[`Community: ${NitrogenDioxideLevel.name}`] = NitrogenDioxideLevel;
+    hap_nodejs_1.Characteristic[`Community: ${NitrogenDioxidePeakLevel.name}`] = NitrogenDioxidePeakLevel;
+    hap_nodejs_1.Characteristic[`Community: ${OzoneDetected.name}`] = OzoneDetected;
+    hap_nodejs_1.Characteristic[`Community: ${OzoneLevel.name}`] = OzoneLevel;
+    hap_nodejs_1.Characteristic[`Community: ${OzonePeakLevel.name}`] = OzonePeakLevel;
+    hap_nodejs_1.Characteristic[`Community: ${SodiumDioxideDetected.name}`] = SodiumDioxideDetected;
+    hap_nodejs_1.Characteristic[`Community: ${SodiumDioxideLevel.name}`] = SodiumDioxideLevel;
+    hap_nodejs_1.Characteristic[`Community: ${SodiumDioxidePeakLevel.name}`] = SodiumDioxidePeakLevel;
+    hap_nodejs_1.Characteristic[`Community: ${VolatileOrganicCompoundDetected.name}`] = VolatileOrganicCompoundDetected;
+    hap_nodejs_1.Characteristic[`Community: ${VolatileOrganicCompoundLevel.name}`] = VolatileOrganicCompoundLevel;
+    hap_nodejs_1.Characteristic[`Community: ${VolatileOrganicCompoundPeakLevel.name}`] = VolatileOrganicCompoundPeakLevel;
+    hap_nodejs_1.Characteristic[`Community: ${NotificationCode.name}`] = NotificationCode;
+    hap_nodejs_1.Characteristic[`Community: ${NotificationText.name}`] = NotificationText;
+    hap_nodejs_1.Characteristic[`Community: ${LastEventTime.name}`] = LastEventTime;
+    hap_nodejs_1.Characteristic[`Community: ${DownloadSpeed.name}`] = DownloadSpeed;
+    hap_nodejs_1.Characteristic[`Community: ${UploadSpeed.name}`] = UploadSpeed;
+    hap_nodejs_1.Characteristic[`Community: ${Ping.name}`] = Ping;
+    hap_nodejs_1.Characteristic[`Community: ${Latency.name}`] = Latency;
+    hap_nodejs_1.Characteristic[`Community: ${DewPoint.name}`] = DewPoint;
+    hap_nodejs_1.Characteristic[`Community: ${InputVoltageAC.name}`] = InputVoltageAC;
+    hap_nodejs_1.Characteristic[`Community: ${OutputVoltageAC.name}`] = OutputVoltageAC;
+    hap_nodejs_1.Characteristic[`Community: ${BatteryVoltageDC.name}`] = BatteryVoltageDC;
+    hap_nodejs_1.Characteristic[`Community: ${UPSLoadPercent.name}`] = UPSLoadPercent;
+    hap_nodejs_1.Service[`Community: ${AudioDeviceService.name}`] = AudioDeviceService;
+    hap_nodejs_1.Service[`Community: ${PlaybackDeviceService.name}`] = PlaybackDeviceService;
+    hap_nodejs_1.Service[`Community: ${MediaInformationService.name}`] = MediaInformationService;
+    hap_nodejs_1.Service[`Community: ${StillImageService.name}`] = StillImageService;
+    hap_nodejs_1.Service[`Community: ${SecurityCameraService.name}`] = SecurityCameraService;
+    hap_nodejs_1.Service[`Community: ${AtmosphericPressureSensor.name}`] = AtmosphericPressureSensor;
+    hap_nodejs_1.Service[`Community: ${NoiseLevelSensor.name}`] = NoiseLevelSensor;
+    hap_nodejs_1.Service[`Community: ${AirFlowSensor.name}`] = AirFlowSensor;
+    hap_nodejs_1.Service[`Community: ${NitrogenDioxideSensor.name}`] = NitrogenDioxideSensor;
+    hap_nodejs_1.Service[`Community: ${OzoneSensor.name}`] = OzoneSensor;
+    hap_nodejs_1.Service[`Community: ${SodiumDioxideSensor.name}`] = SodiumDioxideSensor;
+    hap_nodejs_1.Service[`Community: ${VolatileOrganicCompoundSensor.name}`] = VolatileOrganicCompoundSensor;
+    hap_nodejs_1.Service[`Community: ${NotificationService.name}`] = NotificationService;
+    hapTypesImported = true;
+}
+class Timestamp extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Timestamp', 'FF000001-0000-1000-8000-135D67EC4377', {
+            format: "string" /* Formats.STRING */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.Timestamp = Timestamp;
+class AudioDataURL extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Audio URL', 'FF000002-0000-1000-8000-135D67EC4377', {
+            format: "string" /* Formats.STRING */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
+        });
+    }
+}
+exports.AudioDataURL = AudioDataURL;
+class VideoDataURL extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Video URL', 'FF000003-0000-1000-8000-135D67EC4377', {
+            format: "string" /* Formats.STRING */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
+        });
+    }
+}
+exports.VideoDataURL = VideoDataURL;
+class AudioVolume extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Audio Volume', '00001001-0000-1000-8000-135D67EC4377', {
+            format: "uint8" /* Formats.UINT8 */,
+            unit: "percentage" /* Units.PERCENTAGE */,
+            maxValue: 100,
+            minValue: 0,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.AudioVolume = AudioVolume;
+class Muting extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Muting', '00001002-0000-1000-8000-135D67EC4377', {
+            format: "uint8" /* Formats.UINT8 */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.Muting = Muting;
+class PlaybackState extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Playback State', '00002001-0000-1000-8000-135D67EC4377', {
+            format: "uint8" /* Formats.UINT8 */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.PlaybackState = PlaybackState;
+PlaybackState.PLAYING = 0;
+PlaybackState.PAUSED = 1;
+PlaybackState.STOPPED = 2;
+class SkipForward extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Skip Forward', '00002002-0000-1000-8000-135D67EC4377', {
+            format: "bool" /* Formats.BOOL */,
+            perms: ["pw" /* Perms.PAIRED_WRITE */],
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.SkipForward = SkipForward;
+class SkipBackward extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Skip Backward', '00002003-0000-1000-8000-135D67EC4377', {
+            format: "bool" /* Formats.BOOL */,
+            perms: ["pw" /* Perms.PAIRED_WRITE */],
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.SkipBackward = SkipBackward;
+class ShuffleMode extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Shuffle Mode', '00002004-0000-1000-8000-135D67EC4377', {
+            format: "uint8" /* Formats.UINT8 */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.ShuffleMode = ShuffleMode;
+//NOTE: If GROUP or SET is not supported, accessories should coerce to ALBUM.
+// If ALBUM is not supported, coerce to ITEM.
+// In general, it is recommended for apps to only assume OFF, ITEM, and ALBUM
+// are supported unless it is known that the accessory supports other settings.
+ShuffleMode.OFF = 0;
+//NOTE: INDIVIDUAL is deprecated.
+ShuffleMode.INDIVIDUAL = 1;
+ShuffleMode.ITEM = 1;
+ShuffleMode.GROUP = 2; // e.g., iTunes "Groupings"
+ShuffleMode.ALBUM = 3; // e.g., album or season
+ShuffleMode.SET = 4; // e.g., T.V. Series or album box set
+class RepeatMode extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Repeat Mode', '00002005-0000-1000-8000-135D67EC4377', {
+            format: "uint8" /* Formats.UINT8 */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.RepeatMode = RepeatMode;
+RepeatMode.OFF = 0;
+RepeatMode.ONE = 1;
+RepeatMode.ALL = 2;
+class PlaybackSpeed extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Playback Speed', '00002006-0000-1000-8000-135D67EC4377', {
+            format: "float" /* Formats.FLOAT */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */],
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.PlaybackSpeed = PlaybackSpeed;
+class MediaCurrentPosition extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Media Current Position', '00002007-0000-1000-8000-135D67EC4377', {
+            format: "float" /* Formats.FLOAT */, // In seconds
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */],
+        });
+    }
+}
+exports.MediaCurrentPosition = MediaCurrentPosition;
+class MediaItemName extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Media Name', '00003001-0000-1000-8000-135D67EC4377', {
+            format: "string" /* Formats.STRING */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */],
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.MediaItemName = MediaItemName;
+class MediaItemAlbumName extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Media Album Name', '00003002-0000-1000-8000-135D67EC4377', {
+            format: "string" /* Formats.STRING */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */],
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.MediaItemAlbumName = MediaItemAlbumName;
+class MediaItemArtist extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Media Artist', '00003003-0000-1000-8000-135D67EC4377', {
+            format: "string" /* Formats.STRING */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */],
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.MediaItemArtist = MediaItemArtist;
+class MediaItemDuration extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Media Duration', '00003005-0000-1000-8000-135D67EC4377', {
+            format: "float" /* Formats.FLOAT */, // In seconds
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.MediaItemDuration = MediaItemDuration;
+class StillImage extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Still Image', '00004001-0000-1000-8000-135D67EC4377', {
+            format: "data" /* Formats.DATA */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
+        });
+        this.value = this.getDefaultValue();
+    }
+}
+exports.StillImage = StillImage;
+// Also known as MIME type...
+class MediaTypeIdentifier extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Media Type Identifier', '00004002-0000-1000-8000-135D67EC4377', {
+            format: "string" /* Formats.STRING */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.MediaTypeIdentifier = MediaTypeIdentifier;
+class MediaWidth extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Media Width', '00004003-0000-1000-8000-135D67EC4377', {
+            format: "uint32" /* Formats.UINT32 */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
+        });
+        this.value = this.getDefaultValue();
+    }
+}
+exports.MediaWidth = MediaWidth;
+class MediaHeight extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Media Width', '00004004-0000-1000-8000-135D67EC4377', {
+            format: "uint32" /* Formats.UINT32 */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.MediaHeight = MediaHeight;
+// courtesy of https://gist.github.com/gomfunkel/b1a046d729757120907c
+class Volts extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Volts', 'E863F10A-079E-48FF-8F27-9C2605A29F52', {
+            format: "uint16" /* Formats.UINT16 */,
+            unit: 'V',
+            minValue: 0,
+            maxValue: 65535,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        this.value = this.getDefaultValue();
+    }
+}
+exports.Volts = Volts;
+class Amperes extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Amps', 'E863F126-079E-48FF-8F27-9C2605A29F52', {
+            format: "uint16" /* Formats.UINT16 */,
+            unit: "A",
+            minValue: 0,
+            maxValue: 65535,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        this.value = this.getDefaultValue();
+    }
+}
+exports.Amperes = Amperes;
+class Watts extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Consumption', 'E863F10D-079E-48FF-8F27-9C2605A29F52', {
+            format: "uint16" /* Formats.UINT16 */,
+            unit: 'W',
+            minValue: 0,
+            maxValue: 65535,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.Watts = Watts;
+class VoltAmperes extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Apparent Power', 'E863F110-079E-48FF-8F27-9C2605A29F52', {
+            format: "uint16" /* Formats.UINT16 */,
+            unit: 'VA',
+            minValue: 0,
+            maxValue: 65535,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        this.value = this.getDefaultValue();
+    }
+}
+exports.VoltAmperes = VoltAmperes;
+class KilowattHours extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52', {
+            format: "uint32" /* Formats.UINT32 */,
+            unit: "kWh",
+            minValue: 0,
+            maxValue: 65535,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.KilowattHours = KilowattHours;
+class KilowattVoltAmpereHour extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Apparent Energy', 'E863F127-079E-48FF-8F27-9C2605A29F52', {
+            format: "uint32" /* Formats.UINT32 */,
+            unit: "kVAh",
+            minValue: 0,
+            maxValue: 65535,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.KilowattVoltAmpereHour = KilowattVoltAmpereHour;
+class BatteryLevel extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Battery Level', 'E863F11B-079E-48FF-8F27-9C2605A29F52', {
+            format: "uint16" /* Formats.UINT16 */,
+            unit: "percentage" /* Units.PERCENTAGE */,
+            maxValue: 100,
+            minValue: 0,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */]
+        });
+    }
+}
+exports.BatteryLevel = BatteryLevel;
+class EveAirQuality extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Eve Air Quality', 'E863F10B-079E-48FF-8F27-9C2605A29F52', {
+            format: "uint16" /* Formats.UINT16 */,
+            unit: "ppm",
+            maxValue: 5000,
+            minValue: 0,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */],
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.EveAirQuality = EveAirQuality;
+// courtesy of https://github.com/ebaauw/homebridge-lib
+// i should probably submit a PR for everything here that isn't in that repo...
+class EveOpenDuration extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Eve Open Duration', 'E863F118-079E-48FF-8F27-9C2605A29F52', {
+            format: "uint32" /* Formats.UINT32 */,
+            unit: "seconds" /* Units.SECONDS */, // since last reset
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */, "pw" /* Perms.PAIRED_WRITE */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.EveOpenDuration = EveOpenDuration;
+class EveClosedDuration extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Eve Closed Duration', 'E863F119-079E-48FF-8F27-9C2605A29F52', {
+            format: "uint32" /* Formats.UINT32 */,
+            unit: "seconds" /* Units.SECONDS */, // since last reset
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */, "pw" /* Perms.PAIRED_WRITE */]
+        });
+    }
+}
+exports.EveClosedDuration = EveClosedDuration;
+class EveLastAction extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Eve Last Activation', 'E863F11A-079E-48FF-8F27-9C2605A29F52', {
+            format: "uint32" /* Formats.UINT32 */,
+            unit: "seconds" /* Units.SECONDS */, // since last reset
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.EveLastAction = EveLastAction;
+class EveTimesOpened extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Eve Times Opened', 'E863F129-079E-48FF-8F27-9C2605A29F52', {
+            format: "uint32" /* Formats.UINT32 */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+    }
+}
+exports.EveTimesOpened = EveTimesOpened;
+class EveResetTotal extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Eve Reset Total', 'E863F112-079E-48FF-8F27-9C2605A29F52', {
+            format: "uint32" /* Formats.UINT32 */,
+            unit: "seconds" /* Units.SECONDS */, // since 2001/01/01
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */, "pw" /* Perms.PAIRED_WRITE */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.EveResetTotal = EveResetTotal;
+// courtesy of https://github.com/robi-van-kinobi/homebridge-cubesensors
+class AtmosphericPressureLevel extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Barometric Pressure', '28FDA6BC-9C2A-4DEA-AAFD-B49DB6D155AB', {
+            format: "uint8" /* Formats.UINT8 */,
+            unit: "mbar",
+            minValue: 800,
+            maxValue: 1200,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+    }
+}
+exports.AtmosphericPressureLevel = AtmosphericPressureLevel;
+class NoiseLevel extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Noise Level', '2CD7B6FD-419A-4740-8995-E3BFE43735AB', {
+            format: "uint8" /* Formats.UINT8 */,
+            unit: "dB",
+            minValue: 0,
+            maxValue: 200,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.NoiseLevel = NoiseLevel;
+// courtesy of https://github.com/homespun/homebridge-platform-snmp
+class AirFlow extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Air Flow', '49C8AE5A-A3A5-41AB-BF1F-12D5654F9F41', {
+            format: "uint8" /* Formats.UINT8 */,
+            unit: "m/s",
+            minValue: 0,
+            maxValue: 135,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.AirFlow = AirFlow;
+class NitrogenDioxideDetected extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Nitrogen Dioxide Detected', 'D737B40A-3AF0-4316-950F-76090B98C5CF', {
+            format: "uint8" /* Formats.UINT8 */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.NitrogenDioxideDetected = NitrogenDioxideDetected;
+NitrogenDioxideDetected.NO2_LEVELS_NORMAL = 0;
+NitrogenDioxideDetected.NO2_LEVELS_ABNORMAL = 1;
+class NitrogenDioxideLevel extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Nitrogen Dioxide Level', 'B762A2AF-D9D0-4A79-814A-E9EBAB0ED290', {
+            format: "float" /* Formats.FLOAT */,
+            unit: "ppm",
+            minValue: 0,
+            maxValue: 1500,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.NitrogenDioxideLevel = NitrogenDioxideLevel;
+class NitrogenDioxidePeakLevel extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Nitrogen Dioxide Peak Level', 'B6594847-7B88-496C-A1A0-B7860F3D7601', {
+            format: "float" /* Formats.FLOAT */,
+            unit: "ppm",
+            minValue: 0,
+            maxValue: 1500,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.NitrogenDioxidePeakLevel = NitrogenDioxidePeakLevel;
+// courtesy of https://github.com/homespun/homebridge-platform-aqe
+class OzoneDetected extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Ozone Detected', '0168FA60-5CF4-4314-AA45-0F84E389A093', {
+            format: "uint8" /* Formats.UINT8 */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        this.value = this.getDefaultValue();
+    }
+}
+exports.OzoneDetected = OzoneDetected;
+OzoneDetected.O3_LEVELS_NORMAL = 0;
+OzoneDetected.O3_LEVELS_ABNORMAL = 1;
+class OzoneLevel extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Ozone Level', '03C17FD9-672E-42F5-8DD4-30C6822C739A', {
+            format: "float" /* Formats.FLOAT */,
+            unit: "ppb",
+            minValue: 0,
+            maxValue: 1500,
+            minStep: 0.01,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.OzoneLevel = OzoneLevel;
+class OzonePeakLevel extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Ozone Peak Level', '550EE1FF-FC66-4BB6-A1C1-4B0A07109AE3', {
+            format: "float" /* Formats.FLOAT */,
+            unit: "ppb",
+            minValue: 0,
+            maxValue: 1500,
+            minStep: 0.01,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.OzonePeakLevel = OzonePeakLevel;
+class SodiumDioxideDetected extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Sodium Dioxide Detected', '4D237DAB-1CB6-4D52-B446-4667F58F7D28', {
+            format: "uint8" /* Formats.UINT8 */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.SodiumDioxideDetected = SodiumDioxideDetected;
+SodiumDioxideDetected.SO2_LEVELS_NORMAL = 0;
+SodiumDioxideDetected.SO2_LEVELS_ABNORMAL = 1;
+class SodiumDioxideLevel extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Sodium Dioxide Level', '66C4D315-FBEF-470E-9434-B047679F1141', {
+            format: "float" /* Formats.FLOAT */,
+            unit: "ppb",
+            minValue: 0,
+            maxValue: 1500,
+            minStep: 0.01,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.SodiumDioxideLevel = SodiumDioxideLevel;
+class SodiumDioxidePeakLevel extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Sodium Dioxide Peak Level', '4CD6F648-2F92-43D8-86DF-0E8DE75E033B', {
+            format: "float" /* Formats.FLOAT */,
+            unit: "ppb",
+            minValue: 0,
+            maxValue: 1500,
+            minStep: 0.01,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.SodiumDioxidePeakLevel = SodiumDioxidePeakLevel;
+class VolatileOrganicCompoundDetected extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Volatile Organic Compound Detected', '65DBC0F5-C40B-4E04-ADED-DC70031B0B82', {
+            format: "uint8" /* Formats.UINT8 */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.VolatileOrganicCompoundDetected = VolatileOrganicCompoundDetected;
+VolatileOrganicCompoundDetected.VOC_LEVELS_NORMAL = 0;
+VolatileOrganicCompoundDetected.VOC_LEVELS_ABNORMAL = 1;
+class VolatileOrganicCompoundLevel extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Volatile Organic Compound Level', '35C4C797-193D-4998-879F-A08514E87897', {
+            format: "float" /* Formats.FLOAT */,
+            unit: "ppb",
+            minValue: 0,
+            maxValue: 1500,
+            minStep: 0.01,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.VolatileOrganicCompoundLevel = VolatileOrganicCompoundLevel;
+class VolatileOrganicCompoundPeakLevel extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Volatile Organic Compound Peak Level', 'A62CB784-1916-4BDF-B840-BDB9F8A264E9', {
+            format: "float" /* Formats.FLOAT */,
+            unit: "ppb",
+            minValue: 0,
+            maxValue: 1500,
+            minStep: 0.01,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.VolatileOrganicCompoundPeakLevel = VolatileOrganicCompoundPeakLevel;
+class NotificationCode extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Notification Code', '381C47A3-CB06-4177-8E3D-A1B4C22EB031', {
+            format: "uint8" /* Formats.UINT8 */,
+            maxValue: 255,
+            minValue: 0,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "pw" /* Perms.PAIRED_WRITE */, "ev" /* Perms.NOTIFY */]
+        });
+        this.value = 255;
+    }
+}
+exports.NotificationCode = NotificationCode;
+class NotificationText extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Notification Text', 'e244ca80-813e-423a-86bd-02f293b857a0', {
+            format: "string" /* Formats.STRING */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.NotificationText = NotificationText;
+// used by Elgato Eve, number of seconds since the epoch...
+class LastEventTime extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Last Event Time', 'E863F11A-079E-48FF-8F27-9C2605A29F52', {
+            format: "uint32" /* Formats.UINT32 */,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.LastEventTime = LastEventTime;
+// courtesy of https://github.com/SeydX/homebridge-broadband
+class DownloadSpeed extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Download Speed', 'DA70DA1F-DA72-4DB3-81C2-99F158A15A9A', {
+            format: "float" /* Formats.FLOAT */,
+            unit: 'Mbps',
+            maxValue: 1024,
+            minValue: 0,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.DownloadSpeed = DownloadSpeed;
+class UploadSpeed extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Upload Speed', 'AB74289E-D516-4A12-B2AE-1B32A74C035F', {
+            format: "float" /* Formats.FLOAT */,
+            unit: 'Mbps',
+            maxValue: 1024,
+            minValue: 0,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.UploadSpeed = UploadSpeed;
+class Ping extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Ping', 'CC65A09A-E052-410C-981D-C11BDE2C3F60', {
+            format: "int" /* Formats.INT */,
+            unit: 'ms',
+            maxValue: 999,
+            minValue: 0,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.Ping = Ping;
+class Latency extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Latency', '60EC80F9-F799-4E8E-B613-098E7EBCBB0B', {
+            format: "int" /* Formats.INT */,
+            unit: 'ms',
+            maxValue: 999,
+            minValue: 0,
+            minStep: 0.001,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.Latency = Latency;
+// https://github.com/naofireblade/homebridge-weather-plus
+class DewPoint extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Dew Point', '095c46e2-278e-4e3c-b9e7-364622a0f501', {
+            format: "float" /* Formats.FLOAT */,
+            unit: "celsius" /* Units.CELSIUS */,
+            maxValue: 50,
+            minValue: -50,
+            minStep: 0.1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.DewPoint = DewPoint;
+// courtesy of https://github.com/ToddGreenfield/homebridge-nut
+class InputVoltageAC extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Input Voltage AC', hap_nodejs_1.uuid.generate('CommunityTypes:usagedevice:InputVoltageAC'), 
+        // UUID.generate('CommunityTypes:usagedevice:InputVoltageAC'),
+        {
+            format: "float" /* Formats.FLOAT */,
+            unit: "V",
+            minValue: 0,
+            maxValue: 65535,
+            minStep: 0.01,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+    }
+}
+exports.InputVoltageAC = InputVoltageAC;
+class OutputVoltageAC extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Output Voltage AC', hap_nodejs_1.uuid.generate('CommunityTypes:usagedevice:OutputVoltageAC'), {
+            format: "float" /* Formats.FLOAT */,
+            unit: "V",
+            minValue: 0,
+            maxValue: 65535,
+            minStep: 0.01,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.OutputVoltageAC = OutputVoltageAC;
+class BatteryVoltageDC extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('Battery Voltage DC', hap_nodejs_1.uuid.generate('CommunityTypes:usagedevice:BatteryVoltageDC'), {
+            format: "float" /* Formats.FLOAT */,
+            unit: "V",
+            minValue: 0,
+            maxValue: 65535,
+            minStep: 0.01,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.BatteryVoltageDC = BatteryVoltageDC;
+class UPSLoadPercent extends hap_nodejs_1.Characteristic {
+    constructor() {
+        super('UPS Load', hap_nodejs_1.uuid.generate('CommunityTypes:usagedevice:UPSLoadPercent'), {
+            format: "uint8" /* Formats.UINT8 */,
+            unit: "percentage" /* Units.PERCENTAGE */,
+            minValue: 0,
+            maxValue: 100,
+            minStep: 1,
+            perms: ["pr" /* Perms.PAIRED_READ */, "ev" /* Perms.NOTIFY */]
+        });
+        // this.value = this.getDefaultValue();
+    }
+}
+exports.UPSLoadPercent = UPSLoadPercent;
+// Services
+class AudioDeviceService extends hap_nodejs_1.Service {
+    constructor(displayName, subtype) {
+        super(displayName, '00000001-0000-1000-8000-135D67EC4377', subtype);
+        // Required Characteristics
+        this.addCharacteristic(AudioVolume);
+        // Optional Characteristics
+        this.addOptionalCharacteristic(Muting);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
+    }
+}
+exports.AudioDeviceService = AudioDeviceService;
+class PlaybackDeviceService extends hap_nodejs_1.Service {
+    constructor(displayName, subtype) {
+        super(displayName, '00000002-0000-1000-8000-135D67EC4377', subtype);
+        // Required Characteristics
+        this.addCharacteristic(PlaybackState);
+        // Optional Characteristics
+        this.addOptionalCharacteristic(SkipForward);
+        this.addOptionalCharacteristic(SkipBackward);
+        this.addOptionalCharacteristic(ShuffleMode);
+        this.addOptionalCharacteristic(RepeatMode);
+        this.addOptionalCharacteristic(PlaybackSpeed);
+        this.addOptionalCharacteristic(MediaCurrentPosition);
+        this.addOptionalCharacteristic(MediaItemName);
+        this.addOptionalCharacteristic(MediaItemAlbumName);
+        this.addOptionalCharacteristic(MediaItemArtist);
+        this.addOptionalCharacteristic(MediaItemDuration);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
+        // Artwork characteristics...would be better reported in a separate service?
+        this.addOptionalCharacteristic(StillImage);
+        this.addOptionalCharacteristic(MediaTypeIdentifier);
+        this.addOptionalCharacteristic(MediaWidth);
+        this.addOptionalCharacteristic(MediaHeight);
+    }
+}
+exports.PlaybackDeviceService = PlaybackDeviceService;
+// A media information service that has no playback controls, for e.g. DAB radio...
+class MediaInformationService extends hap_nodejs_1.Service {
+    constructor(displayName, subtype) {
+        super(displayName, '00000003-0000-1000-8000-135D67EC4377', subtype);
+        // Required Characteristics
+        this.addCharacteristic(MediaItemName);
+        // Optional Characteristics
+        this.addOptionalCharacteristic(MediaItemAlbumName);
+        this.addOptionalCharacteristic(MediaItemArtist);
+        this.addOptionalCharacteristic(MediaItemDuration);
+        this.addOptionalCharacteristic(MediaCurrentPosition);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
+        // Artwork characteristics...would be better reported in a separate service?
+        this.addOptionalCharacteristic(StillImage);
+        this.addOptionalCharacteristic(MediaTypeIdentifier);
+        this.addOptionalCharacteristic(MediaWidth);
+        this.addOptionalCharacteristic(MediaHeight);
+    }
+}
+exports.MediaInformationService = MediaInformationService;
+class StillImageService extends hap_nodejs_1.Service {
+    constructor(displayName, subtype) {
+        super(displayName, '00000004-0000-1000-8000-135D67EC4377', subtype);
+        // Required Characteristics
+        this.addCharacteristic(StillImage);
+        this.addCharacteristic(MediaTypeIdentifier);
+        // Optional Characteristics
+        this.addOptionalCharacteristic(MediaWidth);
+        this.addOptionalCharacteristic(MediaHeight);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
+    }
+}
+exports.StillImageService = StillImageService;
+class SecurityCameraService extends hap_nodejs_1.Service {
+    constructor(displayName, subtype) {
+        super(displayName, '00000005-0000-1000-8000-135D67EC4377', subtype);
+        // Required Characteristics
+        this.addCharacteristic(StillImage);
+        this.addCharacteristic(MediaTypeIdentifier);
+        // Optional Characteristics
+        this.addOptionalCharacteristic(Timestamp);
+        this.addOptionalCharacteristic(MediaWidth);
+        this.addOptionalCharacteristic(MediaHeight);
+        this.addOptionalCharacteristic(VideoDataURL);
+        this.addOptionalCharacteristic(AudioDataURL);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.MotionDetected);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusTampered);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
+    }
+}
+exports.SecurityCameraService = SecurityCameraService;
+// courtesy of https://github.com/robi-van-kinobi/homebridge-cubesensors
+class AtmosphericPressureSensor extends hap_nodejs_1.Service {
+    constructor(displayName, subtype) {
+        super(displayName, 'B77831FD-D66A-46A4-B66D-FD7EE8DFE3CE', subtype);
+        // Required Characteristics
+        this.addCharacteristic(AtmosphericPressureLevel);
+        // Optional Characteristics
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusActive);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusFault);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusLowBattery);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusTampered);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
+    }
+}
+exports.AtmosphericPressureSensor = AtmosphericPressureSensor;
+class NoiseLevelSensor extends hap_nodejs_1.Service {
+    constructor(displayName, subtype) {
+        super(displayName, '28FDA6BC-9C2A-4DEA-AAFD-B49DB6D155AB', subtype);
+        // Required Characteristics
+        this.addCharacteristic(NoiseLevel);
+        // Optional Characteristics
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusActive);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusFault);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusLowBattery);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusTampered);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
+    }
+}
+exports.NoiseLevelSensor = NoiseLevelSensor;
+// courtesy of https://github.com/homespun/homebridge-platform-snmp
+class AirFlowSensor extends hap_nodejs_1.Service {
+    constructor(displayName, subtype) {
+        super(displayName, 'AF5C192E-420F-4A13-AB67-B8F3968A4935', subtype);
+        // Required Characteristics
+        this.addCharacteristic(AirFlow);
+        // Optional Characteristics
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusActive);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusFault);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusLowBattery);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusTampered);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
+    }
+}
+exports.AirFlowSensor = AirFlowSensor;
+class NitrogenDioxideSensor extends hap_nodejs_1.Service {
+    constructor(displayName, subtype) {
+        super(displayName, '9F6B797D-D43B-4C88-9AA0-57018AB8A91E', subtype);
+        // Required Characteristics
+        this.addCharacteristic(NitrogenDioxideDetected);
+        // Optional Characteristics
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusActive);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusFault);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusLowBattery);
+        this.addOptionalCharacteristic(NitrogenDioxideLevel);
+        this.addOptionalCharacteristic(NitrogenDioxidePeakLevel);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusTampered);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
+    }
+}
+exports.NitrogenDioxideSensor = NitrogenDioxideSensor;
+// courtesy of https://github.com/homespun/homebridge-platform-aqe
+class OzoneSensor extends hap_nodejs_1.Service {
+    constructor(displayName, subtype) {
+        super(displayName, 'B91C2BD6-D071-4F49-A23B-20721AC6CCEB', subtype);
+        // Required Characteristics
+        this.addCharacteristic(OzoneDetected);
+        // Optional Characteristics
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusActive);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusFault);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusLowBattery);
+        this.addOptionalCharacteristic(OzoneLevel);
+        this.addOptionalCharacteristic(OzonePeakLevel);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusTampered);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
+    }
+}
+exports.OzoneSensor = OzoneSensor;
+class SodiumDioxideSensor extends hap_nodejs_1.Service {
+    constructor(displayName, subtype) {
+        super(displayName, 'FE7CFB1F-12D0-405D-86FD-7E268D65C453', subtype);
+        // Required Characteristics
+        this.addCharacteristic(SodiumDioxideDetected);
+        // Optional Characteristics
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusActive);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusFault);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusLowBattery);
+        this.addOptionalCharacteristic(SodiumDioxideLevel);
+        this.addOptionalCharacteristic(SodiumDioxidePeakLevel);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusTampered);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
+    }
+}
+exports.SodiumDioxideSensor = SodiumDioxideSensor;
+class VolatileOrganicCompoundSensor extends hap_nodejs_1.Service {
+    constructor(displayName, subtype) {
+        super(displayName, '776E34BC-1660-46EC-A33D-2DFE5B958699', subtype);
+        // Required Characteristics
+        this.addCharacteristic(VolatileOrganicCompoundDetected);
+        // Optional Characteristics
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusActive);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusFault);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusLowBattery);
+        this.addOptionalCharacteristic(VolatileOrganicCompoundLevel);
+        this.addOptionalCharacteristic(VolatileOrganicCompoundPeakLevel);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.StatusTampered);
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
+    }
+}
+exports.VolatileOrganicCompoundSensor = VolatileOrganicCompoundSensor;
+class NotificationService extends hap_nodejs_1.Service {
+    constructor(displayName, subtype) {
+        super(displayName, '074D8CE9-5B4B-48D5-9990-D98850C2F3FE', subtype);
+        // Required Characteristics
+        this.addCharacteristic(NotificationCode);
+        this.addCharacteristic(NotificationText);
+        // Optional Characteristics
+        this.addOptionalCharacteristic(hap_nodejs_1.Characteristic.Name);
+        this.addOptionalCharacteristic(LastEventTime);
+    }
+}
+exports.NotificationService = NotificationService;
+
 
 /***/ }),
 
-/***/ "?ed7f":
-/*!********************!*\
-  !*** os (ignored) ***!
-  \********************/
-/***/ (() => {
+/***/ "./yahka.functions/conversion.base.ts":
+/*!********************************************!*\
+  !*** ./yahka.functions/conversion.base.ts ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-/* (ignored) */
+"use strict";
 
-/***/ }),
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.TIOBrokerConversionBase = void 0;
+const functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
+class TIOBrokerConversionBase extends functions_base_1.TYahkaFunctionBase {
+    constructor(adapter, logIdentifier = '') {
+        super(adapter, logIdentifier);
+    }
+    static castToNumber(value) {
+        if (value === undefined) {
+            return undefined;
+        }
+        if (typeof value !== 'number') {
+            return Number(value);
+        }
+        return value;
+    }
+    static castToBool(value) {
+        return !!value;
+    }
+    static parameterValueByName(parameters, name) {
+        let paramArray;
+        if (typeof parameters === 'object') {
+            paramArray = parameters;
+        }
+        else {
+            paramArray = JSON.parse(parameters);
+        }
+        if (paramArray === undefined) {
+            return undefined;
+        }
+        return paramArray[name];
+    }
+}
+exports.TIOBrokerConversionBase = TIOBrokerConversionBase;
 
-/***/ "?9b7d":
-/*!********************!*\
-  !*** fs (ignored) ***!
-  \********************/
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ "?4391":
-/*!*********************!*\
-  !*** net (ignored) ***!
-  \*********************/
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ "?36ef":
-/*!*******************************!*\
-  !*** child_process (ignored) ***!
-  \*******************************/
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ "?ae96":
-/*!*********************!*\
-  !*** net (ignored) ***!
-  \*********************/
-/***/ (() => {
-
-/* (ignored) */
 
 /***/ }),
 
-/***/ "?2f9f":
-/*!********************!*\
-  !*** os (ignored) ***!
-  \********************/
-/***/ (() => {
+/***/ "./yahka.functions/conversion.map.ts":
+/*!*******************************************!*\
+  !*** ./yahka.functions/conversion.map.ts ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-/* (ignored) */
+"use strict";
 
-/***/ }),
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.TIoBrokerConversion_Map = void 0;
+exports.isMultiStateParameter = isMultiStateParameter;
+const conversion_base_1 = __webpack_require__(/*! ./conversion.base */ "./yahka.functions/conversion.base.ts");
+function isMultiStateParameter(params) {
+    return 'mappings' in params;
+}
+class TIoBrokerConversion_Map extends conversion_base_1.TIOBrokerConversionBase {
+    static create(adapter, parameters) {
+        if (!isMultiStateParameter(parameters)) {
+            return undefined;
+        }
+        return new TIoBrokerConversion_Map(adapter, parameters);
+    }
+    constructor(adapter, parameters) {
+        super(adapter, 'TIoBrokerConversion_Map');
+        this.parameters = parameters;
+        this.mappingArrayToHomeKit = new Map();
+        this.mappingArrayToIOBroker = new Map();
+        this.jsonReplacer = (key, value) => String(value);
+        this.buildMappingArray();
+    }
+    buildMappingArray() {
+        for (let mapDef of this.parameters.mappings) {
+            let leftStr = JSON.stringify(mapDef.left, this.jsonReplacer);
+            let rightStr = JSON.stringify(mapDef.right, this.jsonReplacer);
+            this.mappingArrayToHomeKit.set(leftStr, mapDef.right);
+            this.mappingArrayToIOBroker.set(rightStr, mapDef.left);
+        }
+    }
+    toHomeKit(value) {
+        let ioValueStr = JSON.stringify(value, this.jsonReplacer);
+        return this.mappingArrayToHomeKit.get(ioValueStr);
+    }
+    toIOBroker(value) {
+        let hkValueStr = JSON.stringify(value, this.jsonReplacer);
+        return this.mappingArrayToIOBroker.get(hkValueStr);
+    }
+}
+exports.TIoBrokerConversion_Map = TIoBrokerConversion_Map;
 
-/***/ "?2dc6":
-/*!************************!*\
-  !*** buffer (ignored) ***!
-  \************************/
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ "?0699":
-/*!************************!*\
-  !*** buffer (ignored) ***!
-  \************************/
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ "?91ed":
-/*!********************!*\
-  !*** os (ignored) ***!
-  \********************/
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ "?5e5e":
-/*!*********************!*\
-  !*** net (ignored) ***!
-  \*********************/
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ "?a5d0":
-/*!********************!*\
-  !*** os (ignored) ***!
-  \********************/
-/***/ (() => {
-
-/* (ignored) */
 
 /***/ }),
 
-/***/ "?1357":
+/***/ "./yahka.functions/functions.base.ts":
+/*!*******************************************!*\
+  !*** ./yahka.functions/functions.base.ts ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.TYahkaFunctionBase = void 0;
+const yahka_logger_1 = __webpack_require__(/*! ../shared/yahka.logger */ "./shared/yahka.logger.ts");
+class TYahkaFunctionBase {
+    constructor(adapter, logIdentifier = '') {
+        this.adapter = adapter;
+        this.logIdentifier = logIdentifier;
+        this.subscriptionRequests = [];
+        this.stateCache = new Map();
+        this.log = new yahka_logger_1.YahkaLogger(this.adapter, this.logIdentifier);
+    }
+    addSubscriptionRequest(stateName) {
+        let subscriptionEvent = this.subscriptionEvent.bind(this, stateName);
+        this.subscriptionRequests.push({
+            subscriptionType: 'state',
+            subscriptionIdentifier: stateName,
+            subscriptionEvent: subscriptionEvent
+        });
+    }
+    shouldStateBeFiltered(stateName, ioState) {
+        return false;
+    }
+    readValueFromCache(stateName) {
+        if (this.stateCache.has(stateName)) {
+            return this.stateCache.get(stateName);
+        }
+        else {
+            return undefined;
+        }
+    }
+    updateCache(stateName, ioState) {
+        let needUpdate = false;
+        if (this.stateCache.has(stateName)) {
+            let curVal = this.stateCache.get(stateName);
+            needUpdate = (curVal === null || curVal === void 0 ? void 0 : curVal.val) !== (ioState === null || ioState === void 0 ? void 0 : ioState.val);
+        }
+        else {
+            needUpdate = true;
+        }
+        if (needUpdate)
+            this.stateCache.set(stateName, ioState);
+        return needUpdate;
+    }
+    subscriptionEvent(stateName, ioState, callback) {
+        this.log.debug(`change event from ioBroker via [${stateName}]${JSON.stringify(ioState)}`);
+        if (this.shouldStateBeFiltered(stateName, ioState)) {
+            this.log.debug('state was filtered - notification is canceled');
+            return;
+        }
+        let cacheChange = this.updateCache(stateName, ioState);
+        if (!cacheChange) {
+            this.log.debug('state value already in cache - notification is canceled');
+            return;
+        }
+        this.cacheChanged(stateName, callback);
+    }
+    cacheChanged(stateName, callback) {
+    }
+}
+exports.TYahkaFunctionBase = TYahkaFunctionBase;
+
+
+/***/ }),
+
+/***/ "./yahka.functions/iofunc.base.ts":
+/*!****************************************!*\
+  !*** ./yahka.functions/iofunc.base.ts ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.TIoBrokerInOutFunction_StateBase = exports.TIoBrokerInOutFunctionBase = void 0;
+const functions_base_1 = __webpack_require__(/*! ./functions.base */ "./yahka.functions/functions.base.ts");
+class TIoBrokerInOutFunctionBase extends functions_base_1.TYahkaFunctionBase {
+    constructor() {
+        super(...arguments);
+        this.valueForHomeKit = undefined;
+        this.errorForHomeKit = null;
+    }
+    fromIOBroker(callback) {
+        this.log.debug(`fromIOBroker event - delivering cached value (${JSON.stringify(this.valueForHomeKit)})`);
+        callback(null, this.valueForHomeKit);
+    }
+    toIOBroker(plainIoValue, callback) {
+        this.log.debug(`writing state to ioBroker: ${JSON.stringify(plainIoValue)}`);
+        this.updateIOBrokerValue(plainIoValue, callback);
+    }
+    cacheChanged(stateName, callback) {
+        try {
+            this.valueForHomeKit = this.recalculateHomekitValues(stateName);
+            this.errorForHomeKit = null;
+        }
+        catch (e) {
+            this.errorForHomeKit = e;
+        }
+        if (this.valueForHomeKit != null)
+            callback(this.valueForHomeKit);
+    }
+    recalculateHomekitValues(stateName) {
+        // noop
+    }
+    updateIOBrokerValue(plainIoValue, callback) {
+        // to be filled in derived class
+    }
+}
+exports.TIoBrokerInOutFunctionBase = TIoBrokerInOutFunctionBase;
+class TIoBrokerInOutFunction_StateBase {
+    constructor(adapter, stateName, deferredTime = 0) {
+        this.adapter = adapter;
+        this.stateName = stateName;
+        this.deferredTime = deferredTime;
+        this.debounceTimer = null;
+        this.subscriptionRequests = [];
+        this.addSubscriptionRequest(stateName);
+    }
+    addSubscriptionRequest(stateName) {
+        let subscriptionEvent = this.subscriptionEvent.bind(this, stateName);
+        this.subscriptionRequests.push({
+            subscriptionType: 'state',
+            subscriptionIdentifier: stateName,
+            subscriptionEvent: subscriptionEvent
+        });
+    }
+    getValueOnRead(ioState) {
+        return ioState === null || ioState === void 0 ? void 0 : ioState.val;
+    }
+    getValueOnNotify(ioState) {
+        return ioState === null || ioState === void 0 ? void 0 : ioState.val;
+    }
+    toIOBroker(plainIoValue, callback) {
+        this.adapter.log.debug(`writing state to ioBroker [${this.stateName}]: ${JSON.stringify(plainIoValue)}`);
+        this.adapter.getForeignState(this.stateName, (error, ioState) => {
+            let value = this.getValueOnRead(ioState);
+            let valueChanged = value !== plainIoValue;
+            this.adapter.log.debug(`checking value change: ${JSON.stringify(value)} != ${JSON.stringify(plainIoValue)} = ${valueChanged}`);
+            if (valueChanged) {
+                this.adapter.setForeignState(this.stateName, plainIoValue, false, (error) => {
+                    if (error)
+                        this.adapter.log.error(`setForeignState error [${this.stateName}] to [${JSON.stringify(plainIoValue)}]: ${error}`);
+                    callback();
+                });
+            }
+            else {
+                callback();
+            }
+        });
+    }
+    fromIOBroker(callback) {
+        this.adapter.log.debug(`reading state from ioBroker [${this.stateName}]`);
+        this.adapter.getForeignState(this.stateName, (error, ioState) => {
+            this.adapter.log.debug(`read state from ioBroker [${this.stateName}]: ${JSON.stringify(ioState)}`);
+            if (error)
+                this.adapter.log.error(`... with error: ${error}`);
+            let value = this.getValueOnRead(ioState);
+            callback(error, value);
+        });
+    }
+    subscriptionEvent(stateName, ioState, callback) {
+        this.adapter.log.debug(`change event from ioBroker via [${this.stateName}]${JSON.stringify(ioState)}`);
+        let newValue = this.getValueOnNotify(ioState);
+        if (newValue != null)
+            this.executeCallback(callback, newValue);
+        else
+            this.adapter.log.debug('state was filtered - notification is canceled');
+    }
+    executeCallback(callback, plainIOValue) {
+        if (this.deferredTime > 0)
+            this.setupDeferredChangeEvent(callback, plainIOValue);
+        else
+            callback(plainIOValue);
+    }
+    setupDeferredChangeEvent(callback, plainIOValue) {
+        this.cancelDeferredChangeEvent();
+        this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback, plainIOValue), this.deferredTime);
+    }
+    cancelDeferredChangeEvent() {
+        clearTimeout(this.debounceTimer);
+        this.debounceTimer = null;
+    }
+    deferredChangeEvent(callback, plainIOValue) {
+        this.adapter.log.debug(`[${this.stateName}] firing deferred change event:${JSON.stringify(plainIOValue)}`);
+        callback(plainIOValue);
+    }
+}
+exports.TIoBrokerInOutFunction_StateBase = TIoBrokerInOutFunction_StateBase;
+
+
+/***/ }),
+
+/***/ "./yahka.functions/iofunc.homematic.dimmer.ts":
+/*!****************************************************!*\
+  !*** ./yahka.functions/iofunc.homematic.dimmer.ts ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = void 0;
+exports.isHomematic_Dimmer_Parameter = isHomematic_Dimmer_Parameter;
+const iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
+const yahka_utils_1 = __webpack_require__(/*! ../shared/yahka.utils */ "./shared/yahka.utils.ts");
+function isHomematic_Dimmer_Parameter(value) {
+    if (value === undefined || value === null || typeof value !== 'object') {
+        return false;
+    }
+    return (0, yahka_utils_1.propertyExists)(value, 'levelState');
+}
+class TIoBrokerInOutFunction_Homematic_Dimmer_Base extends iofunc_base_1.TIoBrokerInOutFunctionBase {
+    static parseParameters(parameters) {
+        if (!isHomematic_Dimmer_Parameter(parameters)) {
+            return undefined;
+        }
+        return parameters;
+    }
+    constructor(adapter, functionName, parameters) {
+        super(adapter, `${functionName}[${parameters.levelState}]`);
+        this.parameters = parameters;
+        this.lastOnLevel = { val: undefined, ack: false, ts: undefined, lc: undefined, from: undefined };
+        this.addSubscriptionRequest(parameters.levelState);
+    }
+    cacheChanged(stateName, callback) {
+        // save level if we are switching off
+        if (stateName === this.parameters.levelState) {
+            const cacheValue = this.readValueFromCache(stateName);
+            if (parseFloat(cacheValue.val) > 0) {
+                this.lastOnLevel = cacheValue;
+            }
+        }
+        super.cacheChanged(stateName, callback);
+    }
+}
+exports.TIoBrokerInOutFunction_Homematic_Dimmer_Base = TIoBrokerInOutFunction_Homematic_Dimmer_Base;
+class TIoBrokerInOutFunction_Homematic_Dimmer_On extends TIoBrokerInOutFunction_Homematic_Dimmer_Base {
+    static create(adapter, parameters) {
+        let params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
+        if (params === undefined) {
+            return undefined;
+        }
+        return new TIoBrokerInOutFunction_Homematic_Dimmer_On(adapter, params);
+    }
+    constructor(adapter, parameters) {
+        super(adapter, 'Homematic.Dimmer.On', parameters);
+        this.adapter = adapter;
+        this.parameters = parameters;
+    }
+    recalculateHomekitValues(stateName) {
+        let hkValue = this.stateCache.get(this.parameters.levelState);
+        return Boolean(parseFloat(hkValue === null || hkValue === void 0 ? void 0 : hkValue.val) > 0);
+    }
+    updateIOBrokerValue(plainIoValue, callback) {
+        setTimeout(() => this.executeIOBrokerValue(plainIoValue, callback), 50);
+    }
+    executeIOBrokerValue(plainIoValue, callback) {
+        var _a, _b;
+        const isSwitchingOn = Boolean(plainIoValue);
+        const stateName = this.parameters.levelState;
+        const newOnValue = (this.parameters.restoreToPreviousLevel ? (_a = this.lastOnLevel) === null || _a === void 0 ? void 0 : _a.val : this.parameters.defaultSwitchOnLevel) || this.parameters.defaultSwitchOnLevel || 100;
+        const newOffValue = 0;
+        const newValue = isSwitchingOn ? newOnValue : newOffValue;
+        if (isSwitchingOn && this.parameters.restoreToPreviousLevel) {
+            this.log.debug(`using previous level for switching on: ${JSON.stringify((_b = this.lastOnLevel) === null || _b === void 0 ? void 0 : _b.val)}`);
+        }
+        this.log.debug(`writing state to ioBroker [${stateName}]: ${JSON.stringify(newValue)}`);
+        this.adapter.getForeignState(stateName, (error, ioState) => {
+            let value = parseFloat(ioState === null || ioState === void 0 ? void 0 : ioState.val);
+            if (isSwitchingOn && value > 0) {
+                this.log.debug(`function should switch on but level is already not equal to 0: ${JSON.stringify(value)}`);
+                callback();
+                return;
+            }
+            let valueChanged = value !== newValue;
+            this.log.debug(`checking value change: ${JSON.stringify(value)} != ${JSON.stringify(newValue)} = ${valueChanged}`);
+            if (valueChanged) {
+                this.adapter.setForeignState(stateName, newValue, false, (error) => {
+                    if (error) {
+                        this.log.error(`setForeignState error [${stateName}] to [${JSON.stringify(newValue)}]: ${error}`);
+                        callback();
+                    }
+                    callback();
+                });
+            }
+            else {
+                callback();
+            }
+        });
+    }
+}
+exports.TIoBrokerInOutFunction_Homematic_Dimmer_On = TIoBrokerInOutFunction_Homematic_Dimmer_On;
+class TIoBrokerInOutFunction_Homematic_Dimmer_Brightness extends TIoBrokerInOutFunction_Homematic_Dimmer_Base {
+    static create(adapter, parameters) {
+        let params = TIoBrokerInOutFunction_Homematic_Dimmer_On.parseParameters(parameters);
+        if (params === undefined) {
+            return undefined;
+        }
+        return new TIoBrokerInOutFunction_Homematic_Dimmer_Brightness(adapter, params);
+    }
+    constructor(adapter, parameters) {
+        super(adapter, 'Homematic.Dimmer.Brightness', parameters);
+        this.adapter = adapter;
+        this.parameters = parameters;
+    }
+    recalculateHomekitValues(stateName) {
+        var _a;
+        let hkValue = this.stateCache.get(this.parameters.levelState);
+        return (hkValue === null || hkValue === void 0 ? void 0 : hkValue.val) == 0 ? (_a = this.lastOnLevel) === null || _a === void 0 ? void 0 : _a.val : hkValue === null || hkValue === void 0 ? void 0 : hkValue.val;
+    }
+    updateIOBrokerValue(plainIoValue, callback) {
+        const newValue = plainIoValue;
+        const stateName = this.parameters.levelState;
+        this.log.debug(`writing state to ioBroker [${stateName}]: ${JSON.stringify(newValue)}`);
+        this.adapter.getForeignState(stateName, (error, ioState) => {
+            let value = ioState === null || ioState === void 0 ? void 0 : ioState.val;
+            let valueChanged = value !== newValue;
+            this.log.debug(`checking value change: ${JSON.stringify(value)} != ${JSON.stringify(newValue)} = ${valueChanged}`);
+            if (valueChanged) {
+                this.adapter.setForeignState(stateName, newValue, false, (error) => {
+                    if (error) {
+                        this.log.error(`setForeignState error [${stateName}] to [${JSON.stringify(newValue)}]: ${error}`);
+                        callback();
+                    }
+                    callback();
+                });
+            }
+            else {
+                callback();
+            }
+        });
+    }
+}
+exports.TIoBrokerInOutFunction_Homematic_Dimmer_Brightness = TIoBrokerInOutFunction_Homematic_Dimmer_Brightness;
+
+
+/***/ }),
+
+/***/ "./yahka.functions/iofunc.multi-state.ts":
+/*!***********************************************!*\
+  !*** ./yahka.functions/iofunc.multi-state.ts ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.TIoBrokerInOutFunction_MultiState = void 0;
+exports.isMultiStateParameter = isMultiStateParameter;
+const iofunc_base_1 = __webpack_require__(/*! ./iofunc.base */ "./yahka.functions/iofunc.base.ts");
+function isMultiStateParameter(value) {
+    if (value === undefined || value === null || typeof value !== 'object') {
+        return false;
+    }
+    let propName = 'readState';
+    return (propName in value);
+}
+class TIoBrokerInOutFunction_MultiState extends iofunc_base_1.TIoBrokerInOutFunctionBase {
+    static parseParameters(parameters) {
+        if (Array.isArray(parameters)) {
+            return parameters.filter(isMultiStateParameter);
+        }
+        else if (typeof parameters === 'string') {
+            return [{ readState: parameters }];
+        }
+        else {
+            return undefined;
+        }
+    }
+    static create(adapter, parameters) {
+        let stateNames = TIoBrokerInOutFunction_MultiState.parseParameters(parameters);
+        if (stateNames === undefined) {
+            return undefined;
+        }
+        return new TIoBrokerInOutFunction_MultiState(adapter, stateNames);
+    }
+    constructor(adapter, stateProperties) {
+        super(adapter, 'TIoBrokerInOutFunctionMultiState');
+        this.adapter = adapter;
+        this.stateProperties = stateProperties;
+        for (let state of stateProperties) {
+            this.addSubscriptionRequest(state.readState);
+        }
+    }
+    recalculateHomekitValues(stateName) {
+        let hkValues = this.stateProperties.map((state) => { var _a; return (_a = this.stateCache.get(state.readState)) === null || _a === void 0 ? void 0 : _a.val; });
+        return hkValues.length === 1 ? hkValues[0] : hkValues;
+    }
+    updateSingleIOBrokerValue(state, newValue) {
+        if (newValue === undefined) {
+            return Promise.resolve();
+        }
+        return new Promise((resolve, reject) => {
+            let stateName = state.writeState || state.readState;
+            this.log.debug(`writing state to ioBroker [${stateName}]: ${JSON.stringify(newValue)}`);
+            this.adapter.setForeignState(stateName, newValue, false, (error) => {
+                if (error) {
+                    this.log.error(`setForeignState error [${stateName}] to [${JSON.stringify(newValue)}]: ${error}`);
+                    reject(error);
+                }
+                resolve();
+            });
+        });
+    }
+    updateIOBrokerValue(plainIoValue, callback) {
+        let ioValueArray = Array.isArray(plainIoValue) ? plainIoValue : [plainIoValue];
+        let promiseArray = this.stateProperties.map((state, index) => {
+            let newValueForThisState = ioValueArray[index];
+            return this.updateSingleIOBrokerValue(state, newValueForThisState);
+        });
+        Promise.all(promiseArray).then(() => {
+            this.log.debug('wrote all states successfully to ioBroker');
+            callback();
+        }).catch((e) => {
+            this.log.error(`could not write all states to ioBroker: ${JSON.stringify(e)}`);
+            callback();
+        });
+    }
+}
+exports.TIoBrokerInOutFunction_MultiState = TIoBrokerInOutFunction_MultiState;
+
+
+/***/ }),
+
+/***/ "?050b":
 /*!************************!*\
   !*** crypto (ignored) ***!
   \************************/
@@ -110497,27 +117153,7 @@ module.exports = jQuery;
 
 /***/ }),
 
-/***/ "?c26a":
-/*!************************!*\
-  !*** buffer (ignored) ***!
-  \************************/
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ "?6ef6":
-/*!************************!*\
-  !*** buffer (ignored) ***!
-  \************************/
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ "?5b1d":
+/***/ "?0699":
 /*!************************!*\
   !*** buffer (ignored) ***!
   \************************/
@@ -110537,10 +117173,170 @@ module.exports = jQuery;
 
 /***/ }),
 
+/***/ "?0ce5":
+/*!***********************!*\
+  !*** dgram (ignored) ***!
+  \***********************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "?0e86":
+/*!********************!*\
+  !*** os (ignored) ***!
+  \********************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "?1357":
+/*!************************!*\
+  !*** crypto (ignored) ***!
+  \************************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "?219d":
+/*!*********************!*\
+  !*** net (ignored) ***!
+  \*********************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "?2dc6":
+/*!************************!*\
+  !*** buffer (ignored) ***!
+  \************************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "?2f9f":
+/*!********************!*\
+  !*** os (ignored) ***!
+  \********************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "?36ef":
+/*!*******************************!*\
+  !*** child_process (ignored) ***!
+  \*******************************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "?38b3":
+/*!************************!*\
+  !*** buffer (ignored) ***!
+  \************************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "?432f":
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "?4391":
+/*!*********************!*\
+  !*** net (ignored) ***!
+  \*********************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "?5401":
+/*!********************!*\
+  !*** fs (ignored) ***!
+  \********************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "?5b1d":
+/*!************************!*\
+  !*** buffer (ignored) ***!
+  \************************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "?5d67":
+/*!*********************!*\
+  !*** url (ignored) ***!
+  \*********************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "?5e5e":
+/*!*********************!*\
+  !*** net (ignored) ***!
+  \*********************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "?690f":
+/*!*********************!*\
+  !*** net (ignored) ***!
+  \*********************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
 /***/ "?6a60":
 /*!*********************!*\
   !*** net (ignored) ***!
   \*********************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "?6ef6":
+/*!************************!*\
+  !*** buffer (ignored) ***!
+  \************************/
 /***/ (() => {
 
 /* (ignored) */
@@ -110557,9 +117353,19 @@ module.exports = jQuery;
 
 /***/ }),
 
-/***/ "?c326":
+/***/ "?7867":
+/*!***********************!*\
+  !*** dgram (ignored) ***!
+  \***********************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "?7beb":
 /*!**********************!*\
-  !*** http (ignored) ***!
+  !*** util (ignored) ***!
   \**********************/
 /***/ (() => {
 
@@ -110567,7 +117373,7 @@ module.exports = jQuery;
 
 /***/ }),
 
-/***/ "?b3c7":
+/***/ "?84bc":
 /*!*********************!*\
   !*** net (ignored) ***!
   \*********************/
@@ -110597,37 +117403,7 @@ module.exports = jQuery;
 
 /***/ }),
 
-/***/ "?d677":
-/*!************************!*\
-  !*** buffer (ignored) ***!
-  \************************/
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ "?e612":
-/*!********************!*\
-  !*** fs (ignored) ***!
-  \********************/
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ "?0ce5":
-/*!***********************!*\
-  !*** dgram (ignored) ***!
-  \***********************/
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ "?0e86":
+/***/ "?91ed":
 /*!********************!*\
   !*** os (ignored) ***!
   \********************/
@@ -110637,7 +117413,7 @@ module.exports = jQuery;
 
 /***/ }),
 
-/***/ "?5401":
+/***/ "?9b7d":
 /*!********************!*\
   !*** fs (ignored) ***!
   \********************/
@@ -110647,37 +117423,17 @@ module.exports = jQuery;
 
 /***/ }),
 
-/***/ "?d91c":
-/*!********************************!*\
-  !*** ./util.inspect (ignored) ***!
-  \********************************/
+/***/ "?a5d0":
+/*!********************!*\
+  !*** os (ignored) ***!
+  \********************/
 /***/ (() => {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ "?38b3":
-/*!************************!*\
-  !*** buffer (ignored) ***!
-  \************************/
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ "?432f":
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ "?af24":
+/***/ "?a687":
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
@@ -110697,7 +117453,17 @@ module.exports = jQuery;
 
 /***/ }),
 
-/***/ "?a687":
+/***/ "?ae96":
+/*!*********************!*\
+  !*** net (ignored) ***!
+  \*********************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "?af24":
 /*!**********************!*\
   !*** util (ignored) ***!
   \**********************/
@@ -110707,19 +117473,19 @@ module.exports = jQuery;
 
 /***/ }),
 
-/***/ "?7beb":
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
+/***/ "?b3c7":
+/*!*********************!*\
+  !*** net (ignored) ***!
+  \*********************/
 /***/ (() => {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ "?050b":
+/***/ "?c26a":
 /*!************************!*\
-  !*** crypto (ignored) ***!
+  !*** buffer (ignored) ***!
   \************************/
 /***/ (() => {
 
@@ -110727,2458 +117493,74 @@ module.exports = jQuery;
 
 /***/ }),
 
-/***/ "../node_modules/@homebridge/long/umd/index.js":
-/*!*****************************************************!*\
-  !*** ../node_modules/@homebridge/long/umd/index.js ***!
-  \*****************************************************/
-/***/ ((module, exports, __webpack_require__) => {
+/***/ "?c326":
+/*!**********************!*\
+  !*** http (ignored) ***!
+  \**********************/
+/***/ (() => {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// GENERATED FILE. DO NOT EDIT.
-var Long = (function(exports) {
-  "use strict";
-  
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = void 0;
-  
-  /**
-   * @license
-   * Copyright 2009 The Closure Library Authors
-   * Copyright 2020 Daniel Wirtz / The long.js Authors.
-   *
-   * Licensed under the Apache License, Version 2.0 (the "License");
-   * you may not use this file except in compliance with the License.
-   * You may obtain a copy of the License at
-   *
-   *     http://www.apache.org/licenses/LICENSE-2.0
-   *
-   * Unless required by applicable law or agreed to in writing, software
-   * distributed under the License is distributed on an "AS IS" BASIS,
-   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   * See the License for the specific language governing permissions and
-   * limitations under the License.
-   *
-   * SPDX-License-Identifier: Apache-2.0
-   */
-  // WebAssembly optimizations to do native i64 multiplication and divide
-  var wasm = null;
-  
-  try {
-    if ((__webpack_require__(/*! os */ "?2f9f").cpus)().find(cpu => cpus.model.toLowerCase().includes("armv6"))) {
-      throw new Error("Workaround for V8 crashing on ARMv6 platform when using WASM");
-    }
-  
-    wasm = new WebAssembly.Instance(new WebAssembly.Module(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 13, 2, 96, 0, 1, 127, 96, 4, 127, 127, 127, 127, 1, 127, 3, 7, 6, 0, 1, 1, 1, 1, 1, 6, 6, 1, 127, 1, 65, 0, 11, 7, 50, 6, 3, 109, 117, 108, 0, 1, 5, 100, 105, 118, 95, 115, 0, 2, 5, 100, 105, 118, 95, 117, 0, 3, 5, 114, 101, 109, 95, 115, 0, 4, 5, 114, 101, 109, 95, 117, 0, 5, 8, 103, 101, 116, 95, 104, 105, 103, 104, 0, 0, 10, 191, 1, 6, 4, 0, 35, 0, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 126, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 127, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 128, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 129, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11, 36, 1, 1, 126, 32, 0, 173, 32, 1, 173, 66, 32, 134, 132, 32, 2, 173, 32, 3, 173, 66, 32, 134, 132, 130, 34, 4, 66, 32, 135, 167, 36, 0, 32, 4, 167, 11])), {}).exports;
-  } catch (e) {// no wasm support :(
-  }
-  /**
-   * Constructs a 64 bit two's-complement integer, given its low and high 32 bit values as *signed* integers.
-   *  See the from* functions below for more convenient ways of constructing Longs.
-   * @exports Long
-   * @class A Long class for representing a 64 bit two's-complement integer value.
-   * @param {number} low The low (signed) 32 bits of the long
-   * @param {number} high The high (signed) 32 bits of the long
-   * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
-   * @constructor
-   */
-  
-  
-  function Long(low, high, unsigned) {
-    /**
-     * The low 32 bits as a signed value.
-     * @type {number}
-     */
-    this.low = low | 0;
-    /**
-     * The high 32 bits as a signed value.
-     * @type {number}
-     */
-  
-    this.high = high | 0;
-    /**
-     * Whether unsigned or not.
-     * @type {boolean}
-     */
-  
-    this.unsigned = !!unsigned;
-  } // The internal representation of a long is the two given signed, 32-bit values.
-  // We use 32-bit pieces because these are the size of integers on which
-  // Javascript performs bit-operations.  For operations like addition and
-  // multiplication, we split each number into 16 bit pieces, which can easily be
-  // multiplied within Javascript's floating-point representation without overflow
-  // or change in sign.
-  //
-  // In the algorithms below, we frequently reduce the negative case to the
-  // positive case by negating the input(s) and then post-processing the result.
-  // Note that we must ALWAYS check specially whether those values are MIN_VALUE
-  // (-2^63) because -MIN_VALUE == MIN_VALUE (since 2^63 cannot be represented as
-  // a positive number, it overflows back into a negative).  Not handling this
-  // case would often result in infinite recursion.
-  //
-  // Common constant values ZERO, ONE, NEG_ONE, etc. are defined below the from*
-  // methods on which they depend.
-  
-  /**
-   * An indicator used to reliably determine if an object is a Long or not.
-   * @type {boolean}
-   * @const
-   * @private
-   */
-  
-  
-  Long.prototype.__isLong__;
-  Object.defineProperty(Long.prototype, "__isLong__", {
-    value: true
-  });
-  /**
-   * @function
-   * @param {*} obj Object
-   * @returns {boolean}
-   * @inner
-   */
-  
-  function isLong(obj) {
-    return (obj && obj["__isLong__"]) === true;
-  }
-  /**
-   * @function
-   * @param {*} value number
-   * @returns {number}
-   * @inner
-   */
-  
-  
-  function ctz32(value) {
-    var c = Math.clz32(value & -value);
-    return value ? 31 - c : c;
-  }
-  /**
-   * Tests if the specified object is a Long.
-   * @function
-   * @param {*} obj Object
-   * @returns {boolean}
-   */
-  
-  
-  Long.isLong = isLong;
-  /**
-   * A cache of the Long representations of small integer values.
-   * @type {!Object}
-   * @inner
-   */
-  
-  var INT_CACHE = {};
-  /**
-   * A cache of the Long representations of small unsigned integer values.
-   * @type {!Object}
-   * @inner
-   */
-  
-  var UINT_CACHE = {};
-  /**
-   * @param {number} value
-   * @param {boolean=} unsigned
-   * @returns {!Long}
-   * @inner
-   */
-  
-  function fromInt(value, unsigned) {
-    var obj, cachedObj, cache;
-  
-    if (unsigned) {
-      value >>>= 0;
-  
-      if (cache = 0 <= value && value < 256) {
-        cachedObj = UINT_CACHE[value];
-        if (cachedObj) return cachedObj;
-      }
-  
-      obj = fromBits(value, 0, true);
-      if (cache) UINT_CACHE[value] = obj;
-      return obj;
-    } else {
-      value |= 0;
-  
-      if (cache = -128 <= value && value < 128) {
-        cachedObj = INT_CACHE[value];
-        if (cachedObj) return cachedObj;
-      }
-  
-      obj = fromBits(value, value < 0 ? -1 : 0, false);
-      if (cache) INT_CACHE[value] = obj;
-      return obj;
-    }
-  }
-  /**
-   * Returns a Long representing the given 32 bit integer value.
-   * @function
-   * @param {number} value The 32 bit integer in question
-   * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
-   * @returns {!Long} The corresponding Long value
-   */
-  
-  
-  Long.fromInt = fromInt;
-  /**
-   * @param {number} value
-   * @param {boolean=} unsigned
-   * @returns {!Long}
-   * @inner
-   */
-  
-  function fromNumber(value, unsigned) {
-    if (isNaN(value)) return unsigned ? UZERO : ZERO;
-  
-    if (unsigned) {
-      if (value < 0) return UZERO;
-      if (value >= TWO_PWR_64_DBL) return MAX_UNSIGNED_VALUE;
-    } else {
-      if (value <= -TWO_PWR_63_DBL) return MIN_VALUE;
-      if (value + 1 >= TWO_PWR_63_DBL) return MAX_VALUE;
-    }
-  
-    if (value < 0) return fromNumber(-value, unsigned).neg();
-    return fromBits(value % TWO_PWR_32_DBL | 0, value / TWO_PWR_32_DBL | 0, unsigned);
-  }
-  /**
-   * Returns a Long representing the given value, provided that it is a finite number. Otherwise, zero is returned.
-   * @function
-   * @param {number} value The number in question
-   * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
-   * @returns {!Long} The corresponding Long value
-   */
-  
-  
-  Long.fromNumber = fromNumber;
-  /**
-   * @param {number} lowBits
-   * @param {number} highBits
-   * @param {boolean=} unsigned
-   * @returns {!Long}
-   * @inner
-   */
-  
-  function fromBits(lowBits, highBits, unsigned) {
-    return new Long(lowBits, highBits, unsigned);
-  }
-  /**
-   * Returns a Long representing the 64 bit integer that comes by concatenating the given low and high bits. Each is
-   *  assumed to use 32 bits.
-   * @function
-   * @param {number} lowBits The low 32 bits
-   * @param {number} highBits The high 32 bits
-   * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
-   * @returns {!Long} The corresponding Long value
-   */
-  
-  
-  Long.fromBits = fromBits;
-  /**
-   * @function
-   * @param {number} base
-   * @param {number} exponent
-   * @returns {number}
-   * @inner
-   */
-  
-  var pow_dbl = Math.pow; // Used 4 times (4*8 to 15+4)
-  
-  /**
-   * @param {string} str
-   * @param {(boolean|number)=} unsigned
-   * @param {number=} radix
-   * @returns {!Long}
-   * @inner
-   */
-  
-  function fromString(str, unsigned, radix) {
-    if (str.length === 0) throw Error('empty string');
-  
-    if (typeof unsigned === 'number') {
-      // For goog.math.long compatibility
-      radix = unsigned;
-      unsigned = false;
-    } else {
-      unsigned = !!unsigned;
-    }
-  
-    if (str === "NaN" || str === "Infinity" || str === "+Infinity" || str === "-Infinity") return unsigned ? UZERO : ZERO;
-    radix = radix || 10;
-    if (radix < 2 || 36 < radix) throw RangeError('radix');
-    var p;
-    if ((p = str.indexOf('-')) > 0) throw Error('interior hyphen');else if (p === 0) {
-      return fromString(str.substring(1), unsigned, radix).neg();
-    } // Do several (8) digits each time through the loop, so as to
-    // minimize the calls to the very expensive emulated div.
-  
-    var radixToPower = fromNumber(pow_dbl(radix, 8));
-    var result = ZERO;
-  
-    for (var i = 0; i < str.length; i += 8) {
-      var size = Math.min(8, str.length - i),
-          value = parseInt(str.substring(i, i + size), radix);
-  
-      if (size < 8) {
-        var power = fromNumber(pow_dbl(radix, size));
-        result = result.mul(power).add(fromNumber(value));
-      } else {
-        result = result.mul(radixToPower);
-        result = result.add(fromNumber(value));
-      }
-    }
-  
-    result.unsigned = unsigned;
-    return result;
-  }
-  /**
-   * Returns a Long representation of the given string, written using the specified radix.
-   * @function
-   * @param {string} str The textual representation of the Long
-   * @param {(boolean|number)=} unsigned Whether unsigned or not, defaults to signed
-   * @param {number=} radix The radix in which the text is written (2-36), defaults to 10
-   * @returns {!Long} The corresponding Long value
-   */
-  
-  
-  Long.fromString = fromString;
-  /**
-   * @function
-   * @param {!Long|number|string|!{low: number, high: number, unsigned: boolean}} val
-   * @param {boolean=} unsigned
-   * @returns {!Long}
-   * @inner
-   */
-  
-  function fromValue(val, unsigned) {
-    if (typeof val === 'number') return fromNumber(val, unsigned);
-    if (typeof val === 'string') return fromString(val, unsigned); // Throws for non-objects, converts non-instanceof Long:
-  
-    return fromBits(val.low, val.high, typeof unsigned === 'boolean' ? unsigned : val.unsigned);
-  }
-  /**
-   * Converts the specified value to a Long using the appropriate from* function for its type.
-   * @function
-   * @param {!Long|number|string|!{low: number, high: number, unsigned: boolean}} val Value
-   * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
-   * @returns {!Long}
-   */
-  
-  
-  Long.fromValue = fromValue; // NOTE: the compiler should inline these constant values below and then remove these variables, so there should be
-  // no runtime penalty for these.
-  
-  /**
-   * @type {number}
-   * @const
-   * @inner
-   */
-  
-  var TWO_PWR_16_DBL = 1 << 16;
-  /**
-   * @type {number}
-   * @const
-   * @inner
-   */
-  
-  var TWO_PWR_24_DBL = 1 << 24;
-  /**
-   * @type {number}
-   * @const
-   * @inner
-   */
-  
-  var TWO_PWR_32_DBL = TWO_PWR_16_DBL * TWO_PWR_16_DBL;
-  /**
-   * @type {number}
-   * @const
-   * @inner
-   */
-  
-  var TWO_PWR_64_DBL = TWO_PWR_32_DBL * TWO_PWR_32_DBL;
-  /**
-   * @type {number}
-   * @const
-   * @inner
-   */
-  
-  var TWO_PWR_63_DBL = TWO_PWR_64_DBL / 2;
-  /**
-   * @type {!Long}
-   * @const
-   * @inner
-   */
-  
-  var TWO_PWR_24 = fromInt(TWO_PWR_24_DBL);
-  /**
-   * @type {!Long}
-   * @inner
-   */
-  
-  var ZERO = fromInt(0);
-  /**
-   * Signed zero.
-   * @type {!Long}
-   */
-  
-  Long.ZERO = ZERO;
-  /**
-   * @type {!Long}
-   * @inner
-   */
-  
-  var UZERO = fromInt(0, true);
-  /**
-   * Unsigned zero.
-   * @type {!Long}
-   */
-  
-  Long.UZERO = UZERO;
-  /**
-   * @type {!Long}
-   * @inner
-   */
-  
-  var ONE = fromInt(1);
-  /**
-   * Signed one.
-   * @type {!Long}
-   */
-  
-  Long.ONE = ONE;
-  /**
-   * @type {!Long}
-   * @inner
-   */
-  
-  var UONE = fromInt(1, true);
-  /**
-   * Unsigned one.
-   * @type {!Long}
-   */
-  
-  Long.UONE = UONE;
-  /**
-   * @type {!Long}
-   * @inner
-   */
-  
-  var NEG_ONE = fromInt(-1);
-  /**
-   * Signed negative one.
-   * @type {!Long}
-   */
-  
-  Long.NEG_ONE = NEG_ONE;
-  /**
-   * @type {!Long}
-   * @inner
-   */
-  
-  var MAX_VALUE = fromBits(0xFFFFFFFF | 0, 0x7FFFFFFF | 0, false);
-  /**
-   * Maximum signed value.
-   * @type {!Long}
-   */
-  
-  Long.MAX_VALUE = MAX_VALUE;
-  /**
-   * @type {!Long}
-   * @inner
-   */
-  
-  var MAX_UNSIGNED_VALUE = fromBits(0xFFFFFFFF | 0, 0xFFFFFFFF | 0, true);
-  /**
-   * Maximum unsigned value.
-   * @type {!Long}
-   */
-  
-  Long.MAX_UNSIGNED_VALUE = MAX_UNSIGNED_VALUE;
-  /**
-   * @type {!Long}
-   * @inner
-   */
-  
-  var MIN_VALUE = fromBits(0, 0x80000000 | 0, false);
-  /**
-   * Minimum signed value.
-   * @type {!Long}
-   */
-  
-  Long.MIN_VALUE = MIN_VALUE;
-  /**
-   * @alias Long.prototype
-   * @inner
-   */
-  
-  var LongPrototype = Long.prototype;
-  /**
-   * Converts the Long to a 32 bit integer, assuming it is a 32 bit integer.
-   * @this {!Long}
-   * @returns {number}
-   */
-  
-  LongPrototype.toInt = function toInt() {
-    return this.unsigned ? this.low >>> 0 : this.low;
-  };
-  /**
-   * Converts the Long to a the nearest floating-point representation of this value (double, 53 bit mantissa).
-   * @this {!Long}
-   * @returns {number}
-   */
-  
-  
-  LongPrototype.toNumber = function toNumber() {
-    if (this.unsigned) return (this.high >>> 0) * TWO_PWR_32_DBL + (this.low >>> 0);
-    return this.high * TWO_PWR_32_DBL + (this.low >>> 0);
-  };
-  /**
-   * Converts the Long to a string written in the specified radix.
-   * @this {!Long}
-   * @param {number=} radix Radix (2-36), defaults to 10
-   * @returns {string}
-   * @override
-   * @throws {RangeError} If `radix` is out of range
-   */
-  
-  
-  LongPrototype.toString = function toString(radix) {
-    radix = radix || 10;
-    if (radix < 2 || 36 < radix) throw RangeError('radix');
-    if (this.isZero()) return '0';
-  
-    if (this.isNegative()) {
-      // Unsigned Longs are never negative
-      if (this.eq(MIN_VALUE)) {
-        // We need to change the Long value before it can be negated, so we remove
-        // the bottom-most digit in this base and then recurse to do the rest.
-        var radixLong = fromNumber(radix),
-            div = this.div(radixLong),
-            rem1 = div.mul(radixLong).sub(this);
-        return div.toString(radix) + rem1.toInt().toString(radix);
-      } else return '-' + this.neg().toString(radix);
-    } // Do several (6) digits each time through the loop, so as to
-    // minimize the calls to the very expensive emulated div.
-  
-  
-    var radixToPower = fromNumber(pow_dbl(radix, 6), this.unsigned),
-        rem = this;
-    var result = '';
-  
-    while (true) {
-      var remDiv = rem.div(radixToPower),
-          intval = rem.sub(remDiv.mul(radixToPower)).toInt() >>> 0,
-          digits = intval.toString(radix);
-      rem = remDiv;
-      if (rem.isZero()) return digits + result;else {
-        while (digits.length < 6) digits = '0' + digits;
-  
-        result = '' + digits + result;
-      }
-    }
-  };
-  /**
-   * Gets the high 32 bits as a signed integer.
-   * @this {!Long}
-   * @returns {number} Signed high bits
-   */
-  
-  
-  LongPrototype.getHighBits = function getHighBits() {
-    return this.high;
-  };
-  /**
-   * Gets the high 32 bits as an unsigned integer.
-   * @this {!Long}
-   * @returns {number} Unsigned high bits
-   */
-  
-  
-  LongPrototype.getHighBitsUnsigned = function getHighBitsUnsigned() {
-    return this.high >>> 0;
-  };
-  /**
-   * Gets the low 32 bits as a signed integer.
-   * @this {!Long}
-   * @returns {number} Signed low bits
-   */
-  
-  
-  LongPrototype.getLowBits = function getLowBits() {
-    return this.low;
-  };
-  /**
-   * Gets the low 32 bits as an unsigned integer.
-   * @this {!Long}
-   * @returns {number} Unsigned low bits
-   */
-  
-  
-  LongPrototype.getLowBitsUnsigned = function getLowBitsUnsigned() {
-    return this.low >>> 0;
-  };
-  /**
-   * Gets the number of bits needed to represent the absolute value of this Long.
-   * @this {!Long}
-   * @returns {number}
-   */
-  
-  
-  LongPrototype.getNumBitsAbs = function getNumBitsAbs() {
-    if (this.isNegative()) // Unsigned Longs are never negative
-      return this.eq(MIN_VALUE) ? 64 : this.neg().getNumBitsAbs();
-    var val = this.high != 0 ? this.high : this.low;
-  
-    for (var bit = 31; bit > 0; bit--) if ((val & 1 << bit) != 0) break;
-  
-    return this.high != 0 ? bit + 33 : bit + 1;
-  };
-  /**
-   * Tests if this Long's value equals zero.
-   * @this {!Long}
-   * @returns {boolean}
-   */
-  
-  
-  LongPrototype.isZero = function isZero() {
-    return this.high === 0 && this.low === 0;
-  };
-  /**
-   * Tests if this Long's value equals zero. This is an alias of {@link Long#isZero}.
-   * @returns {boolean}
-   */
-  
-  
-  LongPrototype.eqz = LongPrototype.isZero;
-  /**
-   * Tests if this Long's value is negative.
-   * @this {!Long}
-   * @returns {boolean}
-   */
-  
-  LongPrototype.isNegative = function isNegative() {
-    return !this.unsigned && this.high < 0;
-  };
-  /**
-   * Tests if this Long's value is positive or zero.
-   * @this {!Long}
-   * @returns {boolean}
-   */
-  
-  
-  LongPrototype.isPositive = function isPositive() {
-    return this.unsigned || this.high >= 0;
-  };
-  /**
-   * Tests if this Long's value is odd.
-   * @this {!Long}
-   * @returns {boolean}
-   */
-  
-  
-  LongPrototype.isOdd = function isOdd() {
-    return (this.low & 1) === 1;
-  };
-  /**
-   * Tests if this Long's value is even.
-   * @this {!Long}
-   * @returns {boolean}
-   */
-  
-  
-  LongPrototype.isEven = function isEven() {
-    return (this.low & 1) === 0;
-  };
-  /**
-   * Tests if this Long's value equals the specified's.
-   * @this {!Long}
-   * @param {!Long|number|string} other Other value
-   * @returns {boolean}
-   */
-  
-  
-  LongPrototype.equals = function equals(other) {
-    if (!isLong(other)) other = fromValue(other);
-    if (this.unsigned !== other.unsigned && this.high >>> 31 === 1 && other.high >>> 31 === 1) return false;
-    return this.high === other.high && this.low === other.low;
-  };
-  /**
-   * Tests if this Long's value equals the specified's. This is an alias of {@link Long#equals}.
-   * @function
-   * @param {!Long|number|string} other Other value
-   * @returns {boolean}
-   */
-  
-  
-  LongPrototype.eq = LongPrototype.equals;
-  /**
-   * Tests if this Long's value differs from the specified's.
-   * @this {!Long}
-   * @param {!Long|number|string} other Other value
-   * @returns {boolean}
-   */
-  
-  LongPrototype.notEquals = function notEquals(other) {
-    return !this.eq(
-    /* validates */
-    other);
-  };
-  /**
-   * Tests if this Long's value differs from the specified's. This is an alias of {@link Long#notEquals}.
-   * @function
-   * @param {!Long|number|string} other Other value
-   * @returns {boolean}
-   */
-  
-  
-  LongPrototype.neq = LongPrototype.notEquals;
-  /**
-   * Tests if this Long's value differs from the specified's. This is an alias of {@link Long#notEquals}.
-   * @function
-   * @param {!Long|number|string} other Other value
-   * @returns {boolean}
-   */
-  
-  LongPrototype.ne = LongPrototype.notEquals;
-  /**
-   * Tests if this Long's value is less than the specified's.
-   * @this {!Long}
-   * @param {!Long|number|string} other Other value
-   * @returns {boolean}
-   */
-  
-  LongPrototype.lessThan = function lessThan(other) {
-    return this.comp(
-    /* validates */
-    other) < 0;
-  };
-  /**
-   * Tests if this Long's value is less than the specified's. This is an alias of {@link Long#lessThan}.
-   * @function
-   * @param {!Long|number|string} other Other value
-   * @returns {boolean}
-   */
-  
-  
-  LongPrototype.lt = LongPrototype.lessThan;
-  /**
-   * Tests if this Long's value is less than or equal the specified's.
-   * @this {!Long}
-   * @param {!Long|number|string} other Other value
-   * @returns {boolean}
-   */
-  
-  LongPrototype.lessThanOrEqual = function lessThanOrEqual(other) {
-    return this.comp(
-    /* validates */
-    other) <= 0;
-  };
-  /**
-   * Tests if this Long's value is less than or equal the specified's. This is an alias of {@link Long#lessThanOrEqual}.
-   * @function
-   * @param {!Long|number|string} other Other value
-   * @returns {boolean}
-   */
-  
-  
-  LongPrototype.lte = LongPrototype.lessThanOrEqual;
-  /**
-   * Tests if this Long's value is less than or equal the specified's. This is an alias of {@link Long#lessThanOrEqual}.
-   * @function
-   * @param {!Long|number|string} other Other value
-   * @returns {boolean}
-   */
-  
-  LongPrototype.le = LongPrototype.lessThanOrEqual;
-  /**
-   * Tests if this Long's value is greater than the specified's.
-   * @this {!Long}
-   * @param {!Long|number|string} other Other value
-   * @returns {boolean}
-   */
-  
-  LongPrototype.greaterThan = function greaterThan(other) {
-    return this.comp(
-    /* validates */
-    other) > 0;
-  };
-  /**
-   * Tests if this Long's value is greater than the specified's. This is an alias of {@link Long#greaterThan}.
-   * @function
-   * @param {!Long|number|string} other Other value
-   * @returns {boolean}
-   */
-  
-  
-  LongPrototype.gt = LongPrototype.greaterThan;
-  /**
-   * Tests if this Long's value is greater than or equal the specified's.
-   * @this {!Long}
-   * @param {!Long|number|string} other Other value
-   * @returns {boolean}
-   */
-  
-  LongPrototype.greaterThanOrEqual = function greaterThanOrEqual(other) {
-    return this.comp(
-    /* validates */
-    other) >= 0;
-  };
-  /**
-   * Tests if this Long's value is greater than or equal the specified's. This is an alias of {@link Long#greaterThanOrEqual}.
-   * @function
-   * @param {!Long|number|string} other Other value
-   * @returns {boolean}
-   */
-  
-  
-  LongPrototype.gte = LongPrototype.greaterThanOrEqual;
-  /**
-   * Tests if this Long's value is greater than or equal the specified's. This is an alias of {@link Long#greaterThanOrEqual}.
-   * @function
-   * @param {!Long|number|string} other Other value
-   * @returns {boolean}
-   */
-  
-  LongPrototype.ge = LongPrototype.greaterThanOrEqual;
-  /**
-   * Compares this Long's value with the specified's.
-   * @this {!Long}
-   * @param {!Long|number|string} other Other value
-   * @returns {number} 0 if they are the same, 1 if the this is greater and -1
-   *  if the given one is greater
-   */
-  
-  LongPrototype.compare = function compare(other) {
-    if (!isLong(other)) other = fromValue(other);
-    if (this.eq(other)) return 0;
-    var thisNeg = this.isNegative(),
-        otherNeg = other.isNegative();
-    if (thisNeg && !otherNeg) return -1;
-    if (!thisNeg && otherNeg) return 1; // At this point the sign bits are the same
-  
-    if (!this.unsigned) return this.sub(other).isNegative() ? -1 : 1; // Both are positive if at least one is unsigned
-  
-    return other.high >>> 0 > this.high >>> 0 || other.high === this.high && other.low >>> 0 > this.low >>> 0 ? -1 : 1;
-  };
-  /**
-   * Compares this Long's value with the specified's. This is an alias of {@link Long#compare}.
-   * @function
-   * @param {!Long|number|string} other Other value
-   * @returns {number} 0 if they are the same, 1 if the this is greater and -1
-   *  if the given one is greater
-   */
-  
-  
-  LongPrototype.comp = LongPrototype.compare;
-  /**
-   * Negates this Long's value.
-   * @this {!Long}
-   * @returns {!Long} Negated Long
-   */
-  
-  LongPrototype.negate = function negate() {
-    if (!this.unsigned && this.eq(MIN_VALUE)) return MIN_VALUE;
-    return this.not().add(ONE);
-  };
-  /**
-   * Negates this Long's value. This is an alias of {@link Long#negate}.
-   * @function
-   * @returns {!Long} Negated Long
-   */
-  
-  
-  LongPrototype.neg = LongPrototype.negate;
-  /**
-   * Returns the sum of this and the specified Long.
-   * @this {!Long}
-   * @param {!Long|number|string} addend Addend
-   * @returns {!Long} Sum
-   */
-  
-  LongPrototype.add = function add(addend) {
-    if (!isLong(addend)) addend = fromValue(addend); // Divide each number into 4 chunks of 16 bits, and then sum the chunks.
-  
-    var a48 = this.high >>> 16;
-    var a32 = this.high & 0xFFFF;
-    var a16 = this.low >>> 16;
-    var a00 = this.low & 0xFFFF;
-    var b48 = addend.high >>> 16;
-    var b32 = addend.high & 0xFFFF;
-    var b16 = addend.low >>> 16;
-    var b00 = addend.low & 0xFFFF;
-    var c48 = 0,
-        c32 = 0,
-        c16 = 0,
-        c00 = 0;
-    c00 += a00 + b00;
-    c16 += c00 >>> 16;
-    c00 &= 0xFFFF;
-    c16 += a16 + b16;
-    c32 += c16 >>> 16;
-    c16 &= 0xFFFF;
-    c32 += a32 + b32;
-    c48 += c32 >>> 16;
-    c32 &= 0xFFFF;
-    c48 += a48 + b48;
-    c48 &= 0xFFFF;
-    return fromBits(c16 << 16 | c00, c48 << 16 | c32, this.unsigned);
-  };
-  /**
-   * Returns the difference of this and the specified Long.
-   * @this {!Long}
-   * @param {!Long|number|string} subtrahend Subtrahend
-   * @returns {!Long} Difference
-   */
-  
-  
-  LongPrototype.subtract = function subtract(subtrahend) {
-    if (!isLong(subtrahend)) subtrahend = fromValue(subtrahend);
-    return this.add(subtrahend.neg());
-  };
-  /**
-   * Returns the difference of this and the specified Long. This is an alias of {@link Long#subtract}.
-   * @function
-   * @param {!Long|number|string} subtrahend Subtrahend
-   * @returns {!Long} Difference
-   */
-  
-  
-  LongPrototype.sub = LongPrototype.subtract;
-  /**
-   * Returns the product of this and the specified Long.
-   * @this {!Long}
-   * @param {!Long|number|string} multiplier Multiplier
-   * @returns {!Long} Product
-   */
-  
-  LongPrototype.multiply = function multiply(multiplier) {
-    if (this.isZero()) return this;
-    if (!isLong(multiplier)) multiplier = fromValue(multiplier); // use wasm support if present
-  
-    if (wasm) {
-      var low = wasm["mul"](this.low, this.high, multiplier.low, multiplier.high);
-      return fromBits(low, wasm["get_high"](), this.unsigned);
-    }
-  
-    if (multiplier.isZero()) return this.unsigned ? UZERO : ZERO;
-    if (this.eq(MIN_VALUE)) return multiplier.isOdd() ? MIN_VALUE : ZERO;
-    if (multiplier.eq(MIN_VALUE)) return this.isOdd() ? MIN_VALUE : ZERO;
-  
-    if (this.isNegative()) {
-      if (multiplier.isNegative()) return this.neg().mul(multiplier.neg());else return this.neg().mul(multiplier).neg();
-    } else if (multiplier.isNegative()) return this.mul(multiplier.neg()).neg(); // If both longs are small, use float multiplication
-  
-  
-    if (this.lt(TWO_PWR_24) && multiplier.lt(TWO_PWR_24)) return fromNumber(this.toNumber() * multiplier.toNumber(), this.unsigned); // Divide each long into 4 chunks of 16 bits, and then add up 4x4 products.
-    // We can skip products that would overflow.
-  
-    var a48 = this.high >>> 16;
-    var a32 = this.high & 0xFFFF;
-    var a16 = this.low >>> 16;
-    var a00 = this.low & 0xFFFF;
-    var b48 = multiplier.high >>> 16;
-    var b32 = multiplier.high & 0xFFFF;
-    var b16 = multiplier.low >>> 16;
-    var b00 = multiplier.low & 0xFFFF;
-    var c48 = 0,
-        c32 = 0,
-        c16 = 0,
-        c00 = 0;
-    c00 += a00 * b00;
-    c16 += c00 >>> 16;
-    c00 &= 0xFFFF;
-    c16 += a16 * b00;
-    c32 += c16 >>> 16;
-    c16 &= 0xFFFF;
-    c16 += a00 * b16;
-    c32 += c16 >>> 16;
-    c16 &= 0xFFFF;
-    c32 += a32 * b00;
-    c48 += c32 >>> 16;
-    c32 &= 0xFFFF;
-    c32 += a16 * b16;
-    c48 += c32 >>> 16;
-    c32 &= 0xFFFF;
-    c32 += a00 * b32;
-    c48 += c32 >>> 16;
-    c32 &= 0xFFFF;
-    c48 += a48 * b00 + a32 * b16 + a16 * b32 + a00 * b48;
-    c48 &= 0xFFFF;
-    return fromBits(c16 << 16 | c00, c48 << 16 | c32, this.unsigned);
-  };
-  /**
-   * Returns the product of this and the specified Long. This is an alias of {@link Long#multiply}.
-   * @function
-   * @param {!Long|number|string} multiplier Multiplier
-   * @returns {!Long} Product
-   */
-  
-  
-  LongPrototype.mul = LongPrototype.multiply;
-  /**
-   * Returns this Long divided by the specified. The result is signed if this Long is signed or
-   *  unsigned if this Long is unsigned.
-   * @this {!Long}
-   * @param {!Long|number|string} divisor Divisor
-   * @returns {!Long} Quotient
-   */
-  
-  LongPrototype.divide = function divide(divisor) {
-    if (!isLong(divisor)) divisor = fromValue(divisor);
-    if (divisor.isZero()) throw Error('division by zero'); // use wasm support if present
-  
-    if (wasm) {
-      // guard against signed division overflow: the largest
-      // negative number / -1 would be 1 larger than the largest
-      // positive number, due to two's complement.
-      if (!this.unsigned && this.high === -0x80000000 && divisor.low === -1 && divisor.high === -1) {
-        // be consistent with non-wasm code path
-        return this;
-      }
-  
-      var low = (this.unsigned ? wasm["div_u"] : wasm["div_s"])(this.low, this.high, divisor.low, divisor.high);
-      return fromBits(low, wasm["get_high"](), this.unsigned);
-    }
-  
-    if (this.isZero()) return this.unsigned ? UZERO : ZERO;
-    var approx, rem, res;
-  
-    if (!this.unsigned) {
-      // This section is only relevant for signed longs and is derived from the
-      // closure library as a whole.
-      if (this.eq(MIN_VALUE)) {
-        if (divisor.eq(ONE) || divisor.eq(NEG_ONE)) return MIN_VALUE; // recall that -MIN_VALUE == MIN_VALUE
-        else if (divisor.eq(MIN_VALUE)) return ONE;else {
-          // At this point, we have |other| >= 2, so |this/other| < |MIN_VALUE|.
-          var halfThis = this.shr(1);
-          approx = halfThis.div(divisor).shl(1);
-  
-          if (approx.eq(ZERO)) {
-            return divisor.isNegative() ? ONE : NEG_ONE;
-          } else {
-            rem = this.sub(divisor.mul(approx));
-            res = approx.add(rem.div(divisor));
-            return res;
-          }
-        }
-      } else if (divisor.eq(MIN_VALUE)) return this.unsigned ? UZERO : ZERO;
-  
-      if (this.isNegative()) {
-        if (divisor.isNegative()) return this.neg().div(divisor.neg());
-        return this.neg().div(divisor).neg();
-      } else if (divisor.isNegative()) return this.div(divisor.neg()).neg();
-  
-      res = ZERO;
-    } else {
-      // The algorithm below has not been made for unsigned longs. It's therefore
-      // required to take special care of the MSB prior to running it.
-      if (!divisor.unsigned) divisor = divisor.toUnsigned();
-      if (divisor.gt(this)) return UZERO;
-      if (divisor.gt(this.shru(1))) // 15 >>> 1 = 7 ; with divisor = 8 ; true
-        return UONE;
-      res = UZERO;
-    } // Repeat the following until the remainder is less than other:  find a
-    // floating-point that approximates remainder / other *from below*, add this
-    // into the result, and subtract it from the remainder.  It is critical that
-    // the approximate value is less than or equal to the real value so that the
-    // remainder never becomes negative.
-  
-  
-    rem = this;
-  
-    while (rem.gte(divisor)) {
-      // Approximate the result of division. This may be a little greater or
-      // smaller than the actual value.
-      approx = Math.max(1, Math.floor(rem.toNumber() / divisor.toNumber())); // We will tweak the approximate result by changing it in the 48-th digit or
-      // the smallest non-fractional digit, whichever is larger.
-  
-      var log2 = Math.ceil(Math.log(approx) / Math.LN2),
-          delta = log2 <= 48 ? 1 : pow_dbl(2, log2 - 48),
-          // Decrease the approximation until it is smaller than the remainder.  Note
-      // that if it is too large, the product overflows and is negative.
-      approxRes = fromNumber(approx),
-          approxRem = approxRes.mul(divisor);
-  
-      while (approxRem.isNegative() || approxRem.gt(rem)) {
-        approx -= delta;
-        approxRes = fromNumber(approx, this.unsigned);
-        approxRem = approxRes.mul(divisor);
-      } // We know the answer can't be zero... and actually, zero would cause
-      // infinite recursion since we would make no progress.
-  
-  
-      if (approxRes.isZero()) approxRes = ONE;
-      res = res.add(approxRes);
-      rem = rem.sub(approxRem);
-    }
-  
-    return res;
-  };
-  /**
-   * Returns this Long divided by the specified. This is an alias of {@link Long#divide}.
-   * @function
-   * @param {!Long|number|string} divisor Divisor
-   * @returns {!Long} Quotient
-   */
-  
-  
-  LongPrototype.div = LongPrototype.divide;
-  /**
-   * Returns this Long modulo the specified.
-   * @this {!Long}
-   * @param {!Long|number|string} divisor Divisor
-   * @returns {!Long} Remainder
-   */
-  
-  LongPrototype.modulo = function modulo(divisor) {
-    if (!isLong(divisor)) divisor = fromValue(divisor); // use wasm support if present
-  
-    if (wasm) {
-      var low = (this.unsigned ? wasm["rem_u"] : wasm["rem_s"])(this.low, this.high, divisor.low, divisor.high);
-      return fromBits(low, wasm["get_high"](), this.unsigned);
-    }
-  
-    return this.sub(this.div(divisor).mul(divisor));
-  };
-  /**
-   * Returns this Long modulo the specified. This is an alias of {@link Long#modulo}.
-   * @function
-   * @param {!Long|number|string} divisor Divisor
-   * @returns {!Long} Remainder
-   */
-  
-  
-  LongPrototype.mod = LongPrototype.modulo;
-  /**
-   * Returns this Long modulo the specified. This is an alias of {@link Long#modulo}.
-   * @function
-   * @param {!Long|number|string} divisor Divisor
-   * @returns {!Long} Remainder
-   */
-  
-  LongPrototype.rem = LongPrototype.modulo;
-  /**
-   * Returns the bitwise NOT of this Long.
-   * @this {!Long}
-   * @returns {!Long}
-   */
-  
-  LongPrototype.not = function not() {
-    return fromBits(~this.low, ~this.high, this.unsigned);
-  };
-  /**
-   * Returns count leading zeros of this Long.
-   * @this {!Long}
-   * @returns {!number}
-   */
-  
-  
-  LongPrototype.countLeadingZeros = function countLeadingZeros() {
-    return this.high ? Math.clz32(this.high) : Math.clz32(this.low) + 32;
-  };
-  /**
-   * Returns count leading zeros. This is an alias of {@link Long#countLeadingZeros}.
-   * @function
-   * @param {!Long}
-   * @returns {!number}
-   */
-  
-  
-  LongPrototype.clz = LongPrototype.countLeadingZeros;
-  /**
-   * Returns count trailing zeros of this Long.
-   * @this {!Long}
-   * @returns {!number}
-   */
-  
-  LongPrototype.countTrailingZeros = function countTrailingZeros() {
-    return this.low ? ctz32(this.low) : ctz32(this.high) + 32;
-  };
-  /**
-   * Returns count trailing zeros. This is an alias of {@link Long#countTrailingZeros}.
-   * @function
-   * @param {!Long}
-   * @returns {!number}
-   */
-  
-  
-  LongPrototype.ctz = LongPrototype.countTrailingZeros;
-  /**
-   * Returns the bitwise AND of this Long and the specified.
-   * @this {!Long}
-   * @param {!Long|number|string} other Other Long
-   * @returns {!Long}
-   */
-  
-  LongPrototype.and = function and(other) {
-    if (!isLong(other)) other = fromValue(other);
-    return fromBits(this.low & other.low, this.high & other.high, this.unsigned);
-  };
-  /**
-   * Returns the bitwise OR of this Long and the specified.
-   * @this {!Long}
-   * @param {!Long|number|string} other Other Long
-   * @returns {!Long}
-   */
-  
-  
-  LongPrototype.or = function or(other) {
-    if (!isLong(other)) other = fromValue(other);
-    return fromBits(this.low | other.low, this.high | other.high, this.unsigned);
-  };
-  /**
-   * Returns the bitwise XOR of this Long and the given one.
-   * @this {!Long}
-   * @param {!Long|number|string} other Other Long
-   * @returns {!Long}
-   */
-  
-  
-  LongPrototype.xor = function xor(other) {
-    if (!isLong(other)) other = fromValue(other);
-    return fromBits(this.low ^ other.low, this.high ^ other.high, this.unsigned);
-  };
-  /**
-   * Returns this Long with bits shifted to the left by the given amount.
-   * @this {!Long}
-   * @param {number|!Long} numBits Number of bits
-   * @returns {!Long} Shifted Long
-   */
-  
-  
-  LongPrototype.shiftLeft = function shiftLeft(numBits) {
-    if (isLong(numBits)) numBits = numBits.toInt();
-    if ((numBits &= 63) === 0) return this;else if (numBits < 32) return fromBits(this.low << numBits, this.high << numBits | this.low >>> 32 - numBits, this.unsigned);else return fromBits(0, this.low << numBits - 32, this.unsigned);
-  };
-  /**
-   * Returns this Long with bits shifted to the left by the given amount. This is an alias of {@link Long#shiftLeft}.
-   * @function
-   * @param {number|!Long} numBits Number of bits
-   * @returns {!Long} Shifted Long
-   */
-  
-  
-  LongPrototype.shl = LongPrototype.shiftLeft;
-  /**
-   * Returns this Long with bits arithmetically shifted to the right by the given amount.
-   * @this {!Long}
-   * @param {number|!Long} numBits Number of bits
-   * @returns {!Long} Shifted Long
-   */
-  
-  LongPrototype.shiftRight = function shiftRight(numBits) {
-    if (isLong(numBits)) numBits = numBits.toInt();
-    if ((numBits &= 63) === 0) return this;else if (numBits < 32) return fromBits(this.low >>> numBits | this.high << 32 - numBits, this.high >> numBits, this.unsigned);else return fromBits(this.high >> numBits - 32, this.high >= 0 ? 0 : -1, this.unsigned);
-  };
-  /**
-   * Returns this Long with bits arithmetically shifted to the right by the given amount. This is an alias of {@link Long#shiftRight}.
-   * @function
-   * @param {number|!Long} numBits Number of bits
-   * @returns {!Long} Shifted Long
-   */
-  
-  
-  LongPrototype.shr = LongPrototype.shiftRight;
-  /**
-   * Returns this Long with bits logically shifted to the right by the given amount.
-   * @this {!Long}
-   * @param {number|!Long} numBits Number of bits
-   * @returns {!Long} Shifted Long
-   */
-  
-  LongPrototype.shiftRightUnsigned = function shiftRightUnsigned(numBits) {
-    if (isLong(numBits)) numBits = numBits.toInt();
-    if ((numBits &= 63) === 0) return this;
-    if (numBits < 32) return fromBits(this.low >>> numBits | this.high << 32 - numBits, this.high >>> numBits, this.unsigned);
-    if (numBits === 32) return fromBits(this.high, 0, this.unsigned);
-    return fromBits(this.high >>> numBits - 32, 0, this.unsigned);
-  };
-  /**
-   * Returns this Long with bits logically shifted to the right by the given amount. This is an alias of {@link Long#shiftRightUnsigned}.
-   * @function
-   * @param {number|!Long} numBits Number of bits
-   * @returns {!Long} Shifted Long
-   */
-  
-  
-  LongPrototype.shru = LongPrototype.shiftRightUnsigned;
-  /**
-   * Returns this Long with bits logically shifted to the right by the given amount. This is an alias of {@link Long#shiftRightUnsigned}.
-   * @function
-   * @param {number|!Long} numBits Number of bits
-   * @returns {!Long} Shifted Long
-   */
-  
-  LongPrototype.shr_u = LongPrototype.shiftRightUnsigned;
-  /**
-   * Returns this Long with bits rotated to the left by the given amount.
-   * @this {!Long}
-   * @param {number|!Long} numBits Number of bits
-   * @returns {!Long} Rotated Long
-   */
-  
-  LongPrototype.rotateLeft = function rotateLeft(numBits) {
-    var b;
-    if (isLong(numBits)) numBits = numBits.toInt();
-    if ((numBits &= 63) === 0) return this;
-    if (numBits === 32) return fromBits(this.high, this.low, this.unsigned);
-  
-    if (numBits < 32) {
-      b = 32 - numBits;
-      return fromBits(this.low << numBits | this.high >>> b, this.high << numBits | this.low >>> b, this.unsigned);
-    }
-  
-    numBits -= 32;
-    b = 32 - numBits;
-    return fromBits(this.high << numBits | this.low >>> b, this.low << numBits | this.high >>> b, this.unsigned);
-  };
-  /**
-   * Returns this Long with bits rotated to the left by the given amount. This is an alias of {@link Long#rotateLeft}.
-   * @function
-   * @param {number|!Long} numBits Number of bits
-   * @returns {!Long} Rotated Long
-   */
-  
-  
-  LongPrototype.rotl = LongPrototype.rotateLeft;
-  /**
-   * Returns this Long with bits rotated to the right by the given amount.
-   * @this {!Long}
-   * @param {number|!Long} numBits Number of bits
-   * @returns {!Long} Rotated Long
-   */
-  
-  LongPrototype.rotateRight = function rotateRight(numBits) {
-    var b;
-    if (isLong(numBits)) numBits = numBits.toInt();
-    if ((numBits &= 63) === 0) return this;
-    if (numBits === 32) return fromBits(this.high, this.low, this.unsigned);
-  
-    if (numBits < 32) {
-      b = 32 - numBits;
-      return fromBits(this.high << b | this.low >>> numBits, this.low << b | this.high >>> numBits, this.unsigned);
-    }
-  
-    numBits -= 32;
-    b = 32 - numBits;
-    return fromBits(this.low << b | this.high >>> numBits, this.high << b | this.low >>> numBits, this.unsigned);
-  };
-  /**
-   * Returns this Long with bits rotated to the right by the given amount. This is an alias of {@link Long#rotateRight}.
-   * @function
-   * @param {number|!Long} numBits Number of bits
-   * @returns {!Long} Rotated Long
-   */
-  
-  
-  LongPrototype.rotr = LongPrototype.rotateRight;
-  /**
-   * Converts this Long to signed.
-   * @this {!Long}
-   * @returns {!Long} Signed long
-   */
-  
-  LongPrototype.toSigned = function toSigned() {
-    if (!this.unsigned) return this;
-    return fromBits(this.low, this.high, false);
-  };
-  /**
-   * Converts this Long to unsigned.
-   * @this {!Long}
-   * @returns {!Long} Unsigned long
-   */
-  
-  
-  LongPrototype.toUnsigned = function toUnsigned() {
-    if (this.unsigned) return this;
-    return fromBits(this.low, this.high, true);
-  };
-  /**
-   * Converts this Long to its byte representation.
-   * @param {boolean=} le Whether little or big endian, defaults to big endian
-   * @this {!Long}
-   * @returns {!Array.<number>} Byte representation
-   */
-  
-  
-  LongPrototype.toBytes = function toBytes(le) {
-    return le ? this.toBytesLE() : this.toBytesBE();
-  };
-  /**
-   * Converts this Long to its little endian byte representation.
-   * @this {!Long}
-   * @returns {!Array.<number>} Little endian byte representation
-   */
-  
-  
-  LongPrototype.toBytesLE = function toBytesLE() {
-    var hi = this.high,
-        lo = this.low;
-    return [lo & 0xff, lo >>> 8 & 0xff, lo >>> 16 & 0xff, lo >>> 24, hi & 0xff, hi >>> 8 & 0xff, hi >>> 16 & 0xff, hi >>> 24];
-  };
-  /**
-   * Converts this Long to its big endian byte representation.
-   * @this {!Long}
-   * @returns {!Array.<number>} Big endian byte representation
-   */
-  
-  
-  LongPrototype.toBytesBE = function toBytesBE() {
-    var hi = this.high,
-        lo = this.low;
-    return [hi >>> 24, hi >>> 16 & 0xff, hi >>> 8 & 0xff, hi & 0xff, lo >>> 24, lo >>> 16 & 0xff, lo >>> 8 & 0xff, lo & 0xff];
-  };
-  /**
-   * Creates a Long from its byte representation.
-   * @param {!Array.<number>} bytes Byte representation
-   * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
-   * @param {boolean=} le Whether little or big endian, defaults to big endian
-   * @returns {Long} The corresponding Long value
-   */
-  
-  
-  Long.fromBytes = function fromBytes(bytes, unsigned, le) {
-    return le ? Long.fromBytesLE(bytes, unsigned) : Long.fromBytesBE(bytes, unsigned);
-  };
-  /**
-   * Creates a Long from its little endian byte representation.
-   * @param {!Array.<number>} bytes Little endian byte representation
-   * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
-   * @returns {Long} The corresponding Long value
-   */
-  
-  
-  Long.fromBytesLE = function fromBytesLE(bytes, unsigned) {
-    return new Long(bytes[0] | bytes[1] << 8 | bytes[2] << 16 | bytes[3] << 24, bytes[4] | bytes[5] << 8 | bytes[6] << 16 | bytes[7] << 24, unsigned);
-  };
-  /**
-   * Creates a Long from its big endian byte representation.
-   * @param {!Array.<number>} bytes Big endian byte representation
-   * @param {boolean=} unsigned Whether unsigned or not, defaults to signed
-   * @returns {Long} The corresponding Long value
-   */
-  
-  
-  Long.fromBytesBE = function fromBytesBE(bytes, unsigned) {
-    return new Long(bytes[4] << 24 | bytes[5] << 16 | bytes[6] << 8 | bytes[7], bytes[0] << 24 | bytes[1] << 16 | bytes[2] << 8 | bytes[3], unsigned);
-  };
-  
-  var _default = Long;
-  exports.default = _default;
-  return "default" in exports ? exports.default : exports;
-})({});
-if (true) !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function() { return Long; }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-else {}
-
+/* (ignored) */
 
 /***/ }),
 
-/***/ "../node_modules/@leichtgewicht/ip-codec/index.cjs":
-/*!*********************************************************!*\
-  !*** ../node_modules/@leichtgewicht/ip-codec/index.cjs ***!
-  \*********************************************************/
-/***/ ((module, exports) => {
+/***/ "?d2b6":
+/*!*******************************!*\
+  !*** child_process (ignored) ***!
+  \*******************************/
+/***/ (() => {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// GENERATED FILE. DO NOT EDIT.
-var ipCodec = (function(exports) {
-  "use strict";
-  
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.decode = decode;
-  exports.encode = encode;
-  exports.familyOf = familyOf;
-  exports.name = void 0;
-  exports.sizeOf = sizeOf;
-  exports.v6 = exports.v4 = void 0;
-  const v4Regex = /^(\d{1,3}\.){3,3}\d{1,3}$/;
-  const v4Size = 4;
-  const v6Regex = /^(::)?(((\d{1,3}\.){3}(\d{1,3}){1})?([0-9a-f]){0,4}:{0,2}){1,8}(::)?$/i;
-  const v6Size = 16;
-  const v4 = {
-    name: 'v4',
-    size: v4Size,
-    isFormat: ip => v4Regex.test(ip),
-  
-    encode(ip, buff, offset) {
-      offset = ~~offset;
-      buff = buff || new Uint8Array(offset + v4Size);
-      const max = ip.length;
-      let n = 0;
-  
-      for (let i = 0; i < max;) {
-        const c = ip.charCodeAt(i++);
-  
-        if (c === 46) {
-          // "."
-          buff[offset++] = n;
-          n = 0;
-        } else {
-          n = n * 10 + (c - 48);
-        }
-      }
-  
-      buff[offset] = n;
-      return buff;
-    },
-  
-    decode(buff, offset) {
-      offset = ~~offset;
-      return `${buff[offset++]}.${buff[offset++]}.${buff[offset++]}.${buff[offset]}`;
-    }
-  
-  };
-  exports.v4 = v4;
-  const v6 = {
-    name: 'v6',
-    size: v6Size,
-    isFormat: ip => ip.length > 0 && v6Regex.test(ip),
-  
-    encode(ip, buff, offset) {
-      offset = ~~offset;
-      let end = offset + v6Size;
-      let fill = -1;
-      let hexN = 0;
-      let decN = 0;
-      let prevColon = true;
-      let useDec = false;
-      buff = buff || new Uint8Array(offset + v6Size); // Note: This algorithm needs to check if the offset
-      // could exceed the buffer boundaries as it supports
-      // non-standard compliant encodings that may go beyond
-      // the boundary limits. if (offset < end) checks should
-      // not be necessary...
-  
-      for (let i = 0; i < ip.length; i++) {
-        let c = ip.charCodeAt(i);
-  
-        if (c === 58) {
-          // :
-          if (prevColon) {
-            if (fill !== -1) {
-              // Not Standard! (standard doesn't allow multiple ::)
-              // We need to treat
-              if (offset < end) buff[offset] = 0;
-              if (offset < end - 1) buff[offset + 1] = 0;
-              offset += 2;
-            } else if (offset < end) {
-              // :: in the middle
-              fill = offset;
-            }
-          } else {
-            // : ends the previous number
-            if (useDec === true) {
-              // Non-standard! (ipv4 should be at end only)
-              // A ipv4 address should not be found anywhere else but at
-              // the end. This codec also support putting characters
-              // after the ipv4 address..
-              if (offset < end) buff[offset] = decN;
-              offset++;
-            } else {
-              if (offset < end) buff[offset] = hexN >> 8;
-              if (offset < end - 1) buff[offset + 1] = hexN & 0xff;
-              offset += 2;
-            }
-  
-            hexN = 0;
-            decN = 0;
-          }
-  
-          prevColon = true;
-          useDec = false;
-        } else if (c === 46) {
-          // . indicates IPV4 notation
-          if (offset < end) buff[offset] = decN;
-          offset++;
-          decN = 0;
-          hexN = 0;
-          prevColon = false;
-          useDec = true;
-        } else {
-          prevColon = false;
-  
-          if (c >= 97) {
-            c -= 87; // a-f ... 97~102 -87 => 10~15
-          } else if (c >= 65) {
-            c -= 55; // A-F ... 65~70 -55 => 10~15
-          } else {
-            c -= 48; // 0-9 ... starting from charCode 48
-  
-            decN = decN * 10 + c;
-          } // We don't know yet if its a dec or hex number
-  
-  
-          hexN = (hexN << 4) + c;
-        }
-      }
-  
-      if (prevColon === false) {
-        // Commiting last number
-        if (useDec === true) {
-          if (offset < end) buff[offset] = decN;
-          offset++;
-        } else {
-          if (offset < end) buff[offset] = hexN >> 8;
-          if (offset < end - 1) buff[offset + 1] = hexN & 0xff;
-          offset += 2;
-        }
-      } else if (fill === 0) {
-        // Not Standard! (standard doesn't allow multiple ::)
-        // This means that a : was found at the start AND end which means the
-        // end needs to be treated as 0 entry...
-        if (offset < end) buff[offset] = 0;
-        if (offset < end - 1) buff[offset + 1] = 0;
-        offset += 2;
-      } else if (fill !== -1) {
-        // Non-standard! (standard doens't allow multiple ::)
-        // Here we find that there has been a :: somewhere in the middle
-        // and the end. To treat the end with priority we need to move all
-        // written data two bytes to the right.
-        offset += 2;
-  
-        for (let i = Math.min(offset - 1, end - 1); i >= fill + 2; i--) {
-          buff[i] = buff[i - 2];
-        }
-  
-        buff[fill] = 0;
-        buff[fill + 1] = 0;
-        fill = offset;
-      }
-  
-      if (fill !== offset && fill !== -1) {
-        // Move the written numbers to the end while filling the everything
-        // "fill" to the bytes with zeros.
-        if (offset > end - 2) {
-          // Non Standard support, when the cursor exceeds bounds.
-          offset = end - 2;
-        }
-  
-        while (end > fill) {
-          buff[--end] = offset < end && offset > fill ? buff[--offset] : 0;
-        }
-      } else {
-        // Fill the rest with zeros
-        while (offset < end) {
-          buff[offset++] = 0;
-        }
-      }
-  
-      return buff;
-    },
-  
-    decode(buff, offset) {
-      offset = ~~offset;
-      let result = '';
-  
-      for (let i = 0; i < v6Size; i += 2) {
-        if (i !== 0) {
-          result += ':';
-        }
-  
-        result += (buff[offset + i] << 8 | buff[offset + i + 1]).toString(16);
-      }
-  
-      return result.replace(/(^|:)0(:0)*:0(:|$)/, '$1::$3').replace(/:{3,4}/, '::');
-    }
-  
-  };
-  exports.v6 = v6;
-  const name = 'ip';
-  exports.name = name;
-  
-  function sizeOf(ip) {
-    if (v4.isFormat(ip)) return v4.size;
-    if (v6.isFormat(ip)) return v6.size;
-    throw Error(`Invalid ip address: ${ip}`);
-  }
-  
-  function familyOf(string) {
-    return sizeOf(string) === v4.size ? 1 : 2;
-  }
-  
-  function encode(ip, buff, offset) {
-    offset = ~~offset;
-    const size = sizeOf(ip);
-  
-    if (typeof buff === 'function') {
-      buff = buff(offset + size);
-    }
-  
-    if (size === v4.size) {
-      return v4.encode(ip, buff, offset);
-    }
-  
-    return v6.encode(ip, buff, offset);
-  }
-  
-  function decode(buff, offset, length) {
-    offset = ~~offset;
-    length = length || buff.length - offset;
-  
-    if (length === v4.size) {
-      return v4.decode(buff, offset, length);
-    }
-  
-    if (length === v6.size) {
-      return v6.decode(buff, offset, length);
-    }
-  
-    throw Error(`Invalid buffer size needs to be ${v4.size} for v4 or ${v6.size} for v6.`);
-  }
-  return "default" in exports ? exports.default : exports;
-})({});
-if (true) !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function() { return ipCodec; }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-else {}
-
+/* (ignored) */
 
 /***/ }),
 
-/***/ "../node_modules/available-typed-arrays/index.js":
-/*!*******************************************************!*\
-  !*** ../node_modules/available-typed-arrays/index.js ***!
-  \*******************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ "?d677":
+/*!************************!*\
+  !*** buffer (ignored) ***!
+  \************************/
+/***/ (() => {
 
-"use strict";
-
-
-var possibleNames = __webpack_require__(/*! possible-typed-array-names */ "../node_modules/possible-typed-array-names/index.js");
-
-var g = typeof globalThis === 'undefined' ? __webpack_require__.g : globalThis;
-
-/** @type {import('.')} */
-module.exports = function availableTypedArrays() {
-	var /** @type {ReturnType<typeof availableTypedArrays>} */ out = [];
-	for (var i = 0; i < possibleNames.length; i++) {
-		if (typeof g[possibleNames[i]] === 'function') {
-			// @ts-expect-error
-			out[out.length] = possibleNames[i];
-		}
-	}
-	return out;
-};
-
+/* (ignored) */
 
 /***/ }),
 
-/***/ "../node_modules/es-get-iterator/index.js":
-/*!************************************************!*\
-  !*** ../node_modules/es-get-iterator/index.js ***!
-  \************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ "?d91c":
+/*!********************************!*\
+  !*** ./util.inspect (ignored) ***!
+  \********************************/
+/***/ (() => {
 
-"use strict";
-/* provided dependency */ var process = __webpack_require__(/*! process/browser */ "../node_modules/process/browser.js");
-
-
-/* eslint global-require: 0 */
-// the code is structured this way so that bundlers can
-// alias out `has-symbols` to `() => true` or `() => false` if your target
-// environments' Symbol capabilities are known, and then use
-// dead code elimination on the rest of this module.
-//
-// Similarly, `isarray` can be aliased to `Array.isArray` if
-// available in all target environments.
-
-var isArguments = __webpack_require__(/*! is-arguments */ "../node_modules/is-arguments/index.js");
-var getStopIterationIterator = __webpack_require__(/*! stop-iteration-iterator */ "../node_modules/stop-iteration-iterator/index.js");
-
-if (__webpack_require__(/*! has-symbols */ "../node_modules/has-symbols/index.js")() || __webpack_require__(/*! has-symbols/shams */ "../node_modules/has-symbols/shams.js")()) {
-	var $iterator = Symbol.iterator;
-	// Symbol is available natively or shammed
-	// natively:
-	//  - Chrome >= 38
-	//  - Edge 12-14?, Edge >= 15 for sure
-	//  - FF >= 36
-	//  - Safari >= 9
-	//  - node >= 0.12
-	module.exports = function getIterator(iterable) {
-		// alternatively, `iterable[$iterator]?.()`
-		if (iterable != null && typeof iterable[$iterator] !== 'undefined') {
-			return iterable[$iterator]();
-		}
-		if (isArguments(iterable)) {
-			// arguments objects lack Symbol.iterator
-			// - node 0.12
-			return Array.prototype[$iterator].call(iterable);
-		}
-	};
-} else {
-	// Symbol is not available, native or shammed
-	var isArray = __webpack_require__(/*! isarray */ "../node_modules/isarray/index.js");
-	var isString = __webpack_require__(/*! is-string */ "../node_modules/is-string/index.js");
-	var GetIntrinsic = __webpack_require__(/*! get-intrinsic */ "../node_modules/get-intrinsic/index.js");
-	var $Map = GetIntrinsic('%Map%', true);
-	var $Set = GetIntrinsic('%Set%', true);
-	var callBound = __webpack_require__(/*! call-bind/callBound */ "../node_modules/call-bind/callBound.js");
-	var $arrayPush = callBound('Array.prototype.push');
-	var $charCodeAt = callBound('String.prototype.charCodeAt');
-	var $stringSlice = callBound('String.prototype.slice');
-
-	var advanceStringIndex = function advanceStringIndex(S, index) {
-		var length = S.length;
-		if ((index + 1) >= length) {
-			return index + 1;
-		}
-
-		var first = $charCodeAt(S, index);
-		if (first < 0xD800 || first > 0xDBFF) {
-			return index + 1;
-		}
-
-		var second = $charCodeAt(S, index + 1);
-		if (second < 0xDC00 || second > 0xDFFF) {
-			return index + 1;
-		}
-
-		return index + 2;
-	};
-
-	var getArrayIterator = function getArrayIterator(arraylike) {
-		var i = 0;
-		return {
-			next: function next() {
-				var done = i >= arraylike.length;
-				var value;
-				if (!done) {
-					value = arraylike[i];
-					i += 1;
-				}
-				return {
-					done: done,
-					value: value
-				};
-			}
-		};
-	};
-
-	var getNonCollectionIterator = function getNonCollectionIterator(iterable, noPrimordialCollections) {
-		if (isArray(iterable) || isArguments(iterable)) {
-			return getArrayIterator(iterable);
-		}
-		if (isString(iterable)) {
-			var i = 0;
-			return {
-				next: function next() {
-					var nextIndex = advanceStringIndex(iterable, i);
-					var value = $stringSlice(iterable, i, nextIndex);
-					i = nextIndex;
-					return {
-						done: nextIndex > iterable.length,
-						value: value
-					};
-				}
-			};
-		}
-
-		// es6-shim and es-shims' es-map use a string "_es6-shim iterator_" property on different iterables, such as MapIterator.
-		if (noPrimordialCollections && typeof iterable['_es6-shim iterator_'] !== 'undefined') {
-			return iterable['_es6-shim iterator_']();
-		}
-	};
-
-	if (!$Map && !$Set) {
-		// the only language iterables are Array, String, arguments
-		// - Safari <= 6.0
-		// - Chrome < 38
-		// - node < 0.12
-		// - FF < 13
-		// - IE < 11
-		// - Edge < 11
-
-		module.exports = function getIterator(iterable) {
-			if (iterable != null) {
-				return getNonCollectionIterator(iterable, true);
-			}
-		};
-	} else {
-		// either Map or Set are available, but Symbol is not
-		// - es6-shim on an ES5 browser
-		// - Safari 6.2 (maybe 6.1?)
-		// - FF v[13, 36)
-		// - IE 11
-		// - Edge 11
-		// - Safari v[6, 9)
-
-		var isMap = __webpack_require__(/*! is-map */ "../node_modules/is-map/index.js");
-		var isSet = __webpack_require__(/*! is-set */ "../node_modules/is-set/index.js");
-
-		// Firefox >= 27, IE 11, Safari 6.2 - 9, Edge 11, es6-shim in older envs, all have forEach
-		var $mapForEach = callBound('Map.prototype.forEach', true);
-		var $setForEach = callBound('Set.prototype.forEach', true);
-		if (typeof process === 'undefined' || !process.versions || !process.versions.node) { // "if is not node"
-
-			// Firefox 17 - 26 has `.iterator()`, whose iterator `.next()` either
-			// returns a value, or throws a StopIteration object. These browsers
-			// do not have any other mechanism for iteration.
-			var $mapIterator = callBound('Map.prototype.iterator', true);
-			var $setIterator = callBound('Set.prototype.iterator', true);
-		}
-		// Firefox 27-35, and some older es6-shim versions, use a string "@@iterator" property
-		// this returns a proper iterator object, so we should use it instead of forEach.
-		// newer es6-shim versions use a string "_es6-shim iterator_" property.
-		var $mapAtAtIterator = callBound('Map.prototype.@@iterator', true) || callBound('Map.prototype._es6-shim iterator_', true);
-		var $setAtAtIterator = callBound('Set.prototype.@@iterator', true) || callBound('Set.prototype._es6-shim iterator_', true);
-
-		var getCollectionIterator = function getCollectionIterator(iterable) {
-			if (isMap(iterable)) {
-				if ($mapIterator) {
-					return getStopIterationIterator($mapIterator(iterable));
-				}
-				if ($mapAtAtIterator) {
-					return $mapAtAtIterator(iterable);
-				}
-				if ($mapForEach) {
-					var entries = [];
-					$mapForEach(iterable, function (v, k) {
-						$arrayPush(entries, [k, v]);
-					});
-					return getArrayIterator(entries);
-				}
-			}
-			if (isSet(iterable)) {
-				if ($setIterator) {
-					return getStopIterationIterator($setIterator(iterable));
-				}
-				if ($setAtAtIterator) {
-					return $setAtAtIterator(iterable);
-				}
-				if ($setForEach) {
-					var values = [];
-					$setForEach(iterable, function (v) {
-						$arrayPush(values, v);
-					});
-					return getArrayIterator(values);
-				}
-			}
-		};
-
-		module.exports = function getIterator(iterable) {
-			return getCollectionIterator(iterable) || getNonCollectionIterator(iterable);
-		};
-	}
-}
-
+/* (ignored) */
 
 /***/ }),
 
-/***/ "../node_modules/tslib/tslib.es6.mjs":
-/*!*******************************************!*\
-  !*** ../node_modules/tslib/tslib.es6.mjs ***!
-  \*******************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+/***/ "?e612":
+/*!********************!*\
+  !*** fs (ignored) ***!
+  \********************/
+/***/ (() => {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   __addDisposableResource: () => (/* binding */ __addDisposableResource),
-/* harmony export */   __assign: () => (/* binding */ __assign),
-/* harmony export */   __asyncDelegator: () => (/* binding */ __asyncDelegator),
-/* harmony export */   __asyncGenerator: () => (/* binding */ __asyncGenerator),
-/* harmony export */   __asyncValues: () => (/* binding */ __asyncValues),
-/* harmony export */   __await: () => (/* binding */ __await),
-/* harmony export */   __awaiter: () => (/* binding */ __awaiter),
-/* harmony export */   __classPrivateFieldGet: () => (/* binding */ __classPrivateFieldGet),
-/* harmony export */   __classPrivateFieldIn: () => (/* binding */ __classPrivateFieldIn),
-/* harmony export */   __classPrivateFieldSet: () => (/* binding */ __classPrivateFieldSet),
-/* harmony export */   __createBinding: () => (/* binding */ __createBinding),
-/* harmony export */   __decorate: () => (/* binding */ __decorate),
-/* harmony export */   __disposeResources: () => (/* binding */ __disposeResources),
-/* harmony export */   __esDecorate: () => (/* binding */ __esDecorate),
-/* harmony export */   __exportStar: () => (/* binding */ __exportStar),
-/* harmony export */   __extends: () => (/* binding */ __extends),
-/* harmony export */   __generator: () => (/* binding */ __generator),
-/* harmony export */   __importDefault: () => (/* binding */ __importDefault),
-/* harmony export */   __importStar: () => (/* binding */ __importStar),
-/* harmony export */   __makeTemplateObject: () => (/* binding */ __makeTemplateObject),
-/* harmony export */   __metadata: () => (/* binding */ __metadata),
-/* harmony export */   __param: () => (/* binding */ __param),
-/* harmony export */   __propKey: () => (/* binding */ __propKey),
-/* harmony export */   __read: () => (/* binding */ __read),
-/* harmony export */   __rest: () => (/* binding */ __rest),
-/* harmony export */   __runInitializers: () => (/* binding */ __runInitializers),
-/* harmony export */   __setFunctionName: () => (/* binding */ __setFunctionName),
-/* harmony export */   __spread: () => (/* binding */ __spread),
-/* harmony export */   __spreadArray: () => (/* binding */ __spreadArray),
-/* harmony export */   __spreadArrays: () => (/* binding */ __spreadArrays),
-/* harmony export */   __values: () => (/* binding */ __values),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/******************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-/* global Reflect, Promise, SuppressedError, Symbol */
-
-var extendStatics = function(d, b) {
-  extendStatics = Object.setPrototypeOf ||
-      ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-      function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-  return extendStatics(d, b);
-};
-
-function __extends(d, b) {
-  if (typeof b !== "function" && b !== null)
-      throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-  extendStatics(d, b);
-  function __() { this.constructor = d; }
-  d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-}
-
-var __assign = function() {
-  __assign = Object.assign || function __assign(t) {
-      for (var s, i = 1, n = arguments.length; i < n; i++) {
-          s = arguments[i];
-          for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-      return t;
-  }
-  return __assign.apply(this, arguments);
-}
-
-function __rest(s, e) {
-  var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-      t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function")
-      for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-          if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-              t[p[i]] = s[p[i]];
-      }
-  return t;
-}
-
-function __decorate(decorators, target, key, desc) {
-  var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-  if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-  else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-  return c > 3 && r && Object.defineProperty(target, key, r), r;
-}
-
-function __param(paramIndex, decorator) {
-  return function (target, key) { decorator(target, key, paramIndex); }
-}
-
-function __esDecorate(ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
-  function accept(f) { if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected"); return f; }
-  var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
-  var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
-  var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
-  var _, done = false;
-  for (var i = decorators.length - 1; i >= 0; i--) {
-      var context = {};
-      for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
-      for (var p in contextIn.access) context.access[p] = contextIn.access[p];
-      context.addInitializer = function (f) { if (done) throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
-      var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
-      if (kind === "accessor") {
-          if (result === void 0) continue;
-          if (result === null || typeof result !== "object") throw new TypeError("Object expected");
-          if (_ = accept(result.get)) descriptor.get = _;
-          if (_ = accept(result.set)) descriptor.set = _;
-          if (_ = accept(result.init)) initializers.unshift(_);
-      }
-      else if (_ = accept(result)) {
-          if (kind === "field") initializers.unshift(_);
-          else descriptor[key] = _;
-      }
-  }
-  if (target) Object.defineProperty(target, contextIn.name, descriptor);
-  done = true;
-};
-
-function __runInitializers(thisArg, initializers, value) {
-  var useValue = arguments.length > 2;
-  for (var i = 0; i < initializers.length; i++) {
-      value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
-  }
-  return useValue ? value : void 0;
-};
-
-function __propKey(x) {
-  return typeof x === "symbol" ? x : "".concat(x);
-};
-
-function __setFunctionName(f, name, prefix) {
-  if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
-  return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
-};
-
-function __metadata(metadataKey, metadataValue) {
-  if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
-}
-
-function __awaiter(thisArg, _arguments, P, generator) {
-  function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-  return new (P || (P = Promise))(function (resolve, reject) {
-      function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-      function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-      function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-      step((generator = generator.apply(thisArg, _arguments || [])).next());
-  });
-}
-
-function __generator(thisArg, body) {
-  var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-  return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-  function verb(n) { return function (v) { return step([n, v]); }; }
-  function step(op) {
-      if (f) throw new TypeError("Generator is already executing.");
-      while (g && (g = 0, op[0] && (_ = 0)), _) try {
-          if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-          if (y = 0, t) op = [op[0] & 2, t.value];
-          switch (op[0]) {
-              case 0: case 1: t = op; break;
-              case 4: _.label++; return { value: op[1], done: false };
-              case 5: _.label++; y = op[1]; op = [0]; continue;
-              case 7: op = _.ops.pop(); _.trys.pop(); continue;
-              default:
-                  if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                  if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                  if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                  if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                  if (t[2]) _.ops.pop();
-                  _.trys.pop(); continue;
-          }
-          op = body.call(thisArg, _);
-      } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-      if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-  }
-}
-
-var __createBinding = Object.create ? (function(o, m, k, k2) {
-  if (k2 === undefined) k2 = k;
-  var desc = Object.getOwnPropertyDescriptor(m, k);
-  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-  }
-  Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-  if (k2 === undefined) k2 = k;
-  o[k2] = m[k];
-});
-
-function __exportStar(m, o) {
-  for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
-}
-
-function __values(o) {
-  var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-  if (m) return m.call(o);
-  if (o && typeof o.length === "number") return {
-      next: function () {
-          if (o && i >= o.length) o = void 0;
-          return { value: o && o[i++], done: !o };
-      }
-  };
-  throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-}
-
-function __read(o, n) {
-  var m = typeof Symbol === "function" && o[Symbol.iterator];
-  if (!m) return o;
-  var i = m.call(o), r, ar = [], e;
-  try {
-      while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-  }
-  catch (error) { e = { error: error }; }
-  finally {
-      try {
-          if (r && !r.done && (m = i["return"])) m.call(i);
-      }
-      finally { if (e) throw e.error; }
-  }
-  return ar;
-}
-
-/** @deprecated */
-function __spread() {
-  for (var ar = [], i = 0; i < arguments.length; i++)
-      ar = ar.concat(__read(arguments[i]));
-  return ar;
-}
-
-/** @deprecated */
-function __spreadArrays() {
-  for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-  for (var r = Array(s), k = 0, i = 0; i < il; i++)
-      for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-          r[k] = a[j];
-  return r;
-}
-
-function __spreadArray(to, from, pack) {
-  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-      if (ar || !(i in from)) {
-          if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-          ar[i] = from[i];
-      }
-  }
-  return to.concat(ar || Array.prototype.slice.call(from));
-}
-
-function __await(v) {
-  return this instanceof __await ? (this.v = v, this) : new __await(v);
-}
-
-function __asyncGenerator(thisArg, _arguments, generator) {
-  if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-  var g = generator.apply(thisArg, _arguments || []), i, q = [];
-  return i = {}, verb("next"), verb("throw"), verb("return", awaitReturn), i[Symbol.asyncIterator] = function () { return this; }, i;
-  function awaitReturn(f) { return function (v) { return Promise.resolve(v).then(f, reject); }; }
-  function verb(n, f) { if (g[n]) { i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; if (f) i[n] = f(i[n]); } }
-  function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
-  function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
-  function fulfill(value) { resume("next", value); }
-  function reject(value) { resume("throw", value); }
-  function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
-}
-
-function __asyncDelegator(o) {
-  var i, p;
-  return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
-  function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: false } : f ? f(v) : v; } : f; }
-}
-
-function __asyncValues(o) {
-  if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-  var m = o[Symbol.asyncIterator], i;
-  return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
-  function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
-  function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
-}
-
-function __makeTemplateObject(cooked, raw) {
-  if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
-  return cooked;
-};
-
-var __setModuleDefault = Object.create ? (function(o, v) {
-  Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-  o["default"] = v;
-};
-
-function __importStar(mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-  __setModuleDefault(result, mod);
-  return result;
-}
-
-function __importDefault(mod) {
-  return (mod && mod.__esModule) ? mod : { default: mod };
-}
-
-function __classPrivateFieldGet(receiver, state, kind, f) {
-  if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-  return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-}
-
-function __classPrivateFieldSet(receiver, state, value, kind, f) {
-  if (kind === "m") throw new TypeError("Private method is not writable");
-  if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-  return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-}
-
-function __classPrivateFieldIn(state, receiver) {
-  if (receiver === null || (typeof receiver !== "object" && typeof receiver !== "function")) throw new TypeError("Cannot use 'in' operator on non-object");
-  return typeof state === "function" ? receiver === state : state.has(receiver);
-}
-
-function __addDisposableResource(env, value, async) {
-  if (value !== null && value !== void 0) {
-    if (typeof value !== "object" && typeof value !== "function") throw new TypeError("Object expected.");
-    var dispose, inner;
-    if (async) {
-      if (!Symbol.asyncDispose) throw new TypeError("Symbol.asyncDispose is not defined.");
-      dispose = value[Symbol.asyncDispose];
-    }
-    if (dispose === void 0) {
-      if (!Symbol.dispose) throw new TypeError("Symbol.dispose is not defined.");
-      dispose = value[Symbol.dispose];
-      if (async) inner = dispose;
-    }
-    if (typeof dispose !== "function") throw new TypeError("Object not disposable.");
-    if (inner) dispose = function() { try { inner.call(this); } catch (e) { return Promise.reject(e); } };
-    env.stack.push({ value: value, dispose: dispose, async: async });
-  }
-  else if (async) {
-    env.stack.push({ async: true });
-  }
-  return value;
-}
-
-var _SuppressedError = typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
-  var e = new Error(message);
-  return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
-};
-
-function __disposeResources(env) {
-  function fail(e) {
-    env.error = env.hasError ? new _SuppressedError(e, env.error, "An error was suppressed during disposal.") : e;
-    env.hasError = true;
-  }
-  function next() {
-    while (env.stack.length) {
-      var rec = env.stack.pop();
-      try {
-        var result = rec.dispose && rec.dispose.call(rec.value);
-        if (rec.async) return Promise.resolve(result).then(next, function(e) { fail(e); return next(); });
-      }
-      catch (e) {
-          fail(e);
-      }
-    }
-    if (env.hasError) throw env.error;
-  }
-  return next();
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  __extends,
-  __assign,
-  __rest,
-  __decorate,
-  __param,
-  __metadata,
-  __awaiter,
-  __generator,
-  __createBinding,
-  __exportStar,
-  __values,
-  __read,
-  __spread,
-  __spreadArrays,
-  __spreadArray,
-  __await,
-  __asyncGenerator,
-  __asyncDelegator,
-  __asyncValues,
-  __makeTemplateObject,
-  __importStar,
-  __importDefault,
-  __classPrivateFieldGet,
-  __classPrivateFieldSet,
-  __classPrivateFieldIn,
-  __addDisposableResource,
-  __disposeResources,
-});
-
+/* (ignored) */
 
 /***/ }),
 
-/***/ "../node_modules/@homebridge/ciao/package.json":
-/*!*****************************************************!*\
-  !*** ../node_modules/@homebridge/ciao/package.json ***!
-  \*****************************************************/
+/***/ "?ed7f":
+/*!********************!*\
+  !*** os (ignored) ***!
+  \********************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ "jquery":
+/*!*************************!*\
+  !*** external "jQuery" ***!
+  \*************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"name":"@homebridge/ciao","version":"1.3.1","description":"ciao is a RFC 6763 compliant dns-sd library, advertising on multicast dns (RFC 6762) implemented in plain Typescript/JavaScript","main":"lib/index.js","types":"lib/index.d.ts","maintainers":["Andreas Bauer <mail@anderl-bauer.de>"],"author":"Andreas Bauer <mail@anderl-bauer.de>","homepage":"https://github.com/homebridge/ciao","license":"MIT","scripts":{"clean":"rimraf lib && rimraf coverage","lint":"eslint \'src/**/*.{js,ts,json}\'","lint-docs":"typedoc --emit none","build":"npm run clean && tsc","test":"jest","test-coverage":"jest --coverage","docs":"typedoc","prepublishOnly":"npm run build","postpublish":"npm run clean","preversion":"npm run lint","version":"npm run docs && git add docs"},"bin":{"ciao-bcs":"lib/bonjour-conformance-testing.js"},"keywords":["ciao","rfc-6762","rfc-6763","multicast-dns","dns-sd","bonjour","zeroconf","zero-configuration","mdns","mdns-sd","service-discovery"],"repository":{"type":"git","url":"git+https://github.com/homebridge/ciao.git"},"bugs":{"url":"https://github.com/homebridge/ciao/issues"},"engines":{"node":"^18 || ^20 || ^22"},"files":["lib","types","README.md","LICENSE","package.json"],"dependencies":{"debug":"^4.3.6","fast-deep-equal":"^3.1.3","source-map-support":"^0.5.21","tslib":"^2.6.3"},"devDependencies":{"@types/debug":"^4.1.12","@types/jest":"^29.5.12","@types/node":"^22.1.0","@types/source-map-support":"^0.5.10","@typescript-eslint/eslint-plugin":"^8.0.1","@typescript-eslint/parser":"^8.0.1","eslint":"^8.57.0","jest":"^29.7.0","rimraf":"^6.0.1","ts-jest":"^29.2.4","ts-node":"^10.9.2","typedoc":"^0.26.5","typescript":"^5.5.4"}}');
-
-/***/ }),
-
-/***/ "../node_modules/@homebridge/dbus-native/lib/header-signature.json":
-/*!*************************************************************************!*\
-  !*** ../node_modules/@homebridge/dbus-native/lib/header-signature.json ***!
-  \*************************************************************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = /*#__PURE__*/JSON.parse('[{"type":"a","child":[{"type":"(","child":[{"type":"y","child":[]},{"type":"v","child":[]}]}]}]');
-
-/***/ }),
-
-/***/ "../node_modules/browserify-aes/modes/list.json":
-/*!******************************************************!*\
-  !*** ../node_modules/browserify-aes/modes/list.json ***!
-  \******************************************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"aes-128-ecb":{"cipher":"AES","key":128,"iv":0,"mode":"ECB","type":"block"},"aes-192-ecb":{"cipher":"AES","key":192,"iv":0,"mode":"ECB","type":"block"},"aes-256-ecb":{"cipher":"AES","key":256,"iv":0,"mode":"ECB","type":"block"},"aes-128-cbc":{"cipher":"AES","key":128,"iv":16,"mode":"CBC","type":"block"},"aes-192-cbc":{"cipher":"AES","key":192,"iv":16,"mode":"CBC","type":"block"},"aes-256-cbc":{"cipher":"AES","key":256,"iv":16,"mode":"CBC","type":"block"},"aes128":{"cipher":"AES","key":128,"iv":16,"mode":"CBC","type":"block"},"aes192":{"cipher":"AES","key":192,"iv":16,"mode":"CBC","type":"block"},"aes256":{"cipher":"AES","key":256,"iv":16,"mode":"CBC","type":"block"},"aes-128-cfb":{"cipher":"AES","key":128,"iv":16,"mode":"CFB","type":"stream"},"aes-192-cfb":{"cipher":"AES","key":192,"iv":16,"mode":"CFB","type":"stream"},"aes-256-cfb":{"cipher":"AES","key":256,"iv":16,"mode":"CFB","type":"stream"},"aes-128-cfb8":{"cipher":"AES","key":128,"iv":16,"mode":"CFB8","type":"stream"},"aes-192-cfb8":{"cipher":"AES","key":192,"iv":16,"mode":"CFB8","type":"stream"},"aes-256-cfb8":{"cipher":"AES","key":256,"iv":16,"mode":"CFB8","type":"stream"},"aes-128-cfb1":{"cipher":"AES","key":128,"iv":16,"mode":"CFB1","type":"stream"},"aes-192-cfb1":{"cipher":"AES","key":192,"iv":16,"mode":"CFB1","type":"stream"},"aes-256-cfb1":{"cipher":"AES","key":256,"iv":16,"mode":"CFB1","type":"stream"},"aes-128-ofb":{"cipher":"AES","key":128,"iv":16,"mode":"OFB","type":"stream"},"aes-192-ofb":{"cipher":"AES","key":192,"iv":16,"mode":"OFB","type":"stream"},"aes-256-ofb":{"cipher":"AES","key":256,"iv":16,"mode":"OFB","type":"stream"},"aes-128-ctr":{"cipher":"AES","key":128,"iv":16,"mode":"CTR","type":"stream"},"aes-192-ctr":{"cipher":"AES","key":192,"iv":16,"mode":"CTR","type":"stream"},"aes-256-ctr":{"cipher":"AES","key":256,"iv":16,"mode":"CTR","type":"stream"},"aes-128-gcm":{"cipher":"AES","key":128,"iv":12,"mode":"GCM","type":"auth"},"aes-192-gcm":{"cipher":"AES","key":192,"iv":12,"mode":"GCM","type":"auth"},"aes-256-gcm":{"cipher":"AES","key":256,"iv":12,"mode":"GCM","type":"auth"}}');
-
-/***/ }),
-
-/***/ "../node_modules/browserify-sign/browser/algorithms.json":
-/*!***************************************************************!*\
-  !*** ../node_modules/browserify-sign/browser/algorithms.json ***!
-  \***************************************************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"sha224WithRSAEncryption":{"sign":"rsa","hash":"sha224","id":"302d300d06096086480165030402040500041c"},"RSA-SHA224":{"sign":"ecdsa/rsa","hash":"sha224","id":"302d300d06096086480165030402040500041c"},"sha256WithRSAEncryption":{"sign":"rsa","hash":"sha256","id":"3031300d060960864801650304020105000420"},"RSA-SHA256":{"sign":"ecdsa/rsa","hash":"sha256","id":"3031300d060960864801650304020105000420"},"sha384WithRSAEncryption":{"sign":"rsa","hash":"sha384","id":"3041300d060960864801650304020205000430"},"RSA-SHA384":{"sign":"ecdsa/rsa","hash":"sha384","id":"3041300d060960864801650304020205000430"},"sha512WithRSAEncryption":{"sign":"rsa","hash":"sha512","id":"3051300d060960864801650304020305000440"},"RSA-SHA512":{"sign":"ecdsa/rsa","hash":"sha512","id":"3051300d060960864801650304020305000440"},"RSA-SHA1":{"sign":"rsa","hash":"sha1","id":"3021300906052b0e03021a05000414"},"ecdsa-with-SHA1":{"sign":"ecdsa","hash":"sha1","id":""},"sha256":{"sign":"ecdsa","hash":"sha256","id":""},"sha224":{"sign":"ecdsa","hash":"sha224","id":""},"sha384":{"sign":"ecdsa","hash":"sha384","id":""},"sha512":{"sign":"ecdsa","hash":"sha512","id":""},"DSA-SHA":{"sign":"dsa","hash":"sha1","id":""},"DSA-SHA1":{"sign":"dsa","hash":"sha1","id":""},"DSA":{"sign":"dsa","hash":"sha1","id":""},"DSA-WITH-SHA224":{"sign":"dsa","hash":"sha224","id":""},"DSA-SHA224":{"sign":"dsa","hash":"sha224","id":""},"DSA-WITH-SHA256":{"sign":"dsa","hash":"sha256","id":""},"DSA-SHA256":{"sign":"dsa","hash":"sha256","id":""},"DSA-WITH-SHA384":{"sign":"dsa","hash":"sha384","id":""},"DSA-SHA384":{"sign":"dsa","hash":"sha384","id":""},"DSA-WITH-SHA512":{"sign":"dsa","hash":"sha512","id":""},"DSA-SHA512":{"sign":"dsa","hash":"sha512","id":""},"DSA-RIPEMD160":{"sign":"dsa","hash":"rmd160","id":""},"ripemd160WithRSA":{"sign":"rsa","hash":"rmd160","id":"3021300906052b2403020105000414"},"RSA-RIPEMD160":{"sign":"rsa","hash":"rmd160","id":"3021300906052b2403020105000414"},"md5WithRSAEncryption":{"sign":"rsa","hash":"md5","id":"3020300c06082a864886f70d020505000410"},"RSA-MD5":{"sign":"rsa","hash":"md5","id":"3020300c06082a864886f70d020505000410"}}');
-
-/***/ }),
-
-/***/ "../node_modules/browserify-sign/browser/curves.json":
-/*!***********************************************************!*\
-  !*** ../node_modules/browserify-sign/browser/curves.json ***!
-  \***********************************************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"1.3.132.0.10":"secp256k1","1.3.132.0.33":"p224","1.2.840.10045.3.1.1":"p192","1.2.840.10045.3.1.7":"p256","1.3.132.0.34":"p384","1.3.132.0.35":"p521"}');
-
-/***/ }),
-
-/***/ "../node_modules/diffie-hellman/lib/primes.json":
-/*!******************************************************!*\
-  !*** ../node_modules/diffie-hellman/lib/primes.json ***!
-  \******************************************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"modp1":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a63a3620ffffffffffffffff"},"modp2":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece65381ffffffffffffffff"},"modp5":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca237327ffffffffffffffff"},"modp14":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aacaa68ffffffffffffffff"},"modp15":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a93ad2caffffffffffffffff"},"modp16":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a92108011a723c12a787e6d788719a10bdba5b2699c327186af4e23c1a946834b6150bda2583e9ca2ad44ce8dbbbc2db04de8ef92e8efc141fbecaa6287c59474e6bc05d99b2964fa090c3a2233ba186515be7ed1f612970cee2d7afb81bdd762170481cd0069127d5b05aa993b4ea988d8fddc186ffb7dc90a6c08f4df435c934063199ffffffffffffffff"},"modp17":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a92108011a723c12a787e6d788719a10bdba5b2699c327186af4e23c1a946834b6150bda2583e9ca2ad44ce8dbbbc2db04de8ef92e8efc141fbecaa6287c59474e6bc05d99b2964fa090c3a2233ba186515be7ed1f612970cee2d7afb81bdd762170481cd0069127d5b05aa993b4ea988d8fddc186ffb7dc90a6c08f4df435c93402849236c3fab4d27c7026c1d4dcb2602646dec9751e763dba37bdf8ff9406ad9e530ee5db382f413001aeb06a53ed9027d831179727b0865a8918da3edbebcf9b14ed44ce6cbaced4bb1bdb7f1447e6cc254b332051512bd7af426fb8f401378cd2bf5983ca01c64b92ecf032ea15d1721d03f482d7ce6e74fef6d55e702f46980c82b5a84031900b1c9e59e7c97fbec7e8f323a97a7e36cc88be0f1d45b7ff585ac54bd407b22b4154aacc8f6d7ebf48e1d814cc5ed20f8037e0a79715eef29be32806a1d58bb7c5da76f550aa3d8a1fbff0eb19ccb1a313d55cda56c9ec2ef29632387fe8d76e3c0468043e8f663f4860ee12bf2d5b0b7474d6e694f91e6dcc4024ffffffffffffffff"},"modp18":{"gen":"02","prime":"ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a92108011a723c12a787e6d788719a10bdba5b2699c327186af4e23c1a946834b6150bda2583e9ca2ad44ce8dbbbc2db04de8ef92e8efc141fbecaa6287c59474e6bc05d99b2964fa090c3a2233ba186515be7ed1f612970cee2d7afb81bdd762170481cd0069127d5b05aa993b4ea988d8fddc186ffb7dc90a6c08f4df435c93402849236c3fab4d27c7026c1d4dcb2602646dec9751e763dba37bdf8ff9406ad9e530ee5db382f413001aeb06a53ed9027d831179727b0865a8918da3edbebcf9b14ed44ce6cbaced4bb1bdb7f1447e6cc254b332051512bd7af426fb8f401378cd2bf5983ca01c64b92ecf032ea15d1721d03f482d7ce6e74fef6d55e702f46980c82b5a84031900b1c9e59e7c97fbec7e8f323a97a7e36cc88be0f1d45b7ff585ac54bd407b22b4154aacc8f6d7ebf48e1d814cc5ed20f8037e0a79715eef29be32806a1d58bb7c5da76f550aa3d8a1fbff0eb19ccb1a313d55cda56c9ec2ef29632387fe8d76e3c0468043e8f663f4860ee12bf2d5b0b7474d6e694f91e6dbe115974a3926f12fee5e438777cb6a932df8cd8bec4d073b931ba3bc832b68d9dd300741fa7bf8afc47ed2576f6936ba424663aab639c5ae4f5683423b4742bf1c978238f16cbe39d652de3fdb8befc848ad922222e04a4037c0713eb57a81a23f0c73473fc646cea306b4bcbc8862f8385ddfa9d4b7fa2c087e879683303ed5bdd3a062b3cf5b3a278a66d2a13f83f44f82ddf310ee074ab6a364597e899a0255dc164f31cc50846851df9ab48195ded7ea1b1d510bd7ee74d73faf36bc31ecfa268359046f4eb879f924009438b481c6cd7889a002ed5ee382bc9190da6fc026e479558e4475677e9aa9e3050e2765694dfc81f56e880b96e7160c980dd98edd3dfffffffffffffffff"}}');
-
-/***/ }),
-
-/***/ "../node_modules/elliptic/package.json":
-/*!*********************************************!*\
-  !*** ../node_modules/elliptic/package.json ***!
-  \*********************************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"name":"elliptic","version":"6.5.6","description":"EC cryptography","main":"lib/elliptic.js","files":["lib"],"scripts":{"lint":"eslint lib test","lint:fix":"npm run lint -- --fix","unit":"istanbul test _mocha --reporter=spec test/index.js","test":"npm run lint && npm run unit","version":"grunt dist && git add dist/"},"repository":{"type":"git","url":"git@github.com:indutny/elliptic"},"keywords":["EC","Elliptic","curve","Cryptography"],"author":"Fedor Indutny <fedor@indutny.com>","license":"MIT","bugs":{"url":"https://github.com/indutny/elliptic/issues"},"homepage":"https://github.com/indutny/elliptic","devDependencies":{"brfs":"^2.0.2","coveralls":"^3.1.0","eslint":"^7.6.0","grunt":"^1.2.1","grunt-browserify":"^5.3.0","grunt-cli":"^1.3.2","grunt-contrib-connect":"^3.0.0","grunt-contrib-copy":"^1.0.0","grunt-contrib-uglify":"^5.0.0","grunt-mocha-istanbul":"^5.0.2","grunt-saucelabs":"^9.0.1","istanbul":"^0.4.5","mocha":"^8.0.1"},"dependencies":{"bn.js":"^4.11.9","brorand":"^1.1.0","hash.js":"^1.0.0","hmac-drbg":"^1.0.1","inherits":"^2.0.4","minimalistic-assert":"^1.0.1","minimalistic-crypto-utils":"^1.0.1"}}');
-
-/***/ }),
-
-/***/ "../node_modules/hap-nodejs/package.json":
-/*!***********************************************!*\
-  !*** ../node_modules/hap-nodejs/package.json ***!
-  \***********************************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"name":"hap-nodejs","version":"1.1.0","description":"HAP-NodeJS is a Node.js implementation of HomeKit Accessory Server.","main":"dist/index.js","types":"dist/index.d.ts","maintainers":["Andreas Bauer <mail@anderl-bauer.de>"],"author":"Khaos Tian <khaos.tian@gmail.com> (https://tz.is/)","homepage":"https://github.com/homebridge/HAP-NodeJS","license":"Apache-2.0","scripts":{"check":"npm install && npm outdated","clean":"rimraf dist && rimraf coverage","lint":"eslint \'src/**/*.{js,ts,json}\'","build":"rimraf dist && tsc && node .github/node-persist-ignore.js","prepublishOnly":"npm run build","postpublish":"npm run clean","test":"jest","test-coverage":"jest --coverage","start":"node dist/BridgedCore.js","docs":"typedoc","lint-docs":"typedoc --emit none --treatWarningsAsErrors"},"keywords":["hap-nodejs","hap","homekit","homekit-accessory-protocol","homekit-server","homekit-protocol","homekit-device","homekit-accessory","hap-server","homekit-support","siri"],"repository":{"type":"git","url":"git+https://github.com/homebridge/HAP-NodeJS.git"},"bugs":{"url":"https://github.com/homebridge/HAP-NodeJS/issues"},"engines":{"node":"^18 || ^20"},"files":["README.md","LICENSE","dist","@types"],"dependencies":{"@homebridge/ciao":"^1.3.0","@homebridge/dbus-native":"^0.6.0","bonjour-hap":"^3.8.0","debug":"^4.3.5","fast-srp-hap":"^2.0.4","futoin-hkdf":"^1.5.3","node-persist":"^0.0.12","source-map-support":"^0.5.21","tslib":"^2.6.3","tweetnacl":"^1.0.3"},"devDependencies":{"@types/debug":"^4.1.12","@types/escape-html":"^1.0.4","@types/jest":"^29.5.12","@types/node":"^20.14.11","@types/plist":"^3.0.5","@typescript-eslint/eslint-plugin":"^7.16.1","@typescript-eslint/parser":"^7.16.1","axios":"^1.7.2","commander":"^12.1.0","escape-html":"^1.0.3","eslint":"^8.57.0","http-parser-js":"^0.5.8","jest":"^29.7.0","rimraf":"^6.0.1","semver":"^7.6.3","simple-plist":"^1.4.0-0","ts-jest":"^29.2.3","ts-node":"^10.9.2","typedoc":"^0.26.5","typescript":"^5.5.3"}}');
-
-/***/ }),
-
-/***/ "../node_modules/parse-asn1/aesid.json":
-/*!*********************************************!*\
-  !*** ../node_modules/parse-asn1/aesid.json ***!
-  \*********************************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"2.16.840.1.101.3.4.1.1":"aes-128-ecb","2.16.840.1.101.3.4.1.2":"aes-128-cbc","2.16.840.1.101.3.4.1.3":"aes-128-ofb","2.16.840.1.101.3.4.1.4":"aes-128-cfb","2.16.840.1.101.3.4.1.21":"aes-192-ecb","2.16.840.1.101.3.4.1.22":"aes-192-cbc","2.16.840.1.101.3.4.1.23":"aes-192-ofb","2.16.840.1.101.3.4.1.24":"aes-192-cfb","2.16.840.1.101.3.4.1.41":"aes-256-ecb","2.16.840.1.101.3.4.1.42":"aes-256-cbc","2.16.840.1.101.3.4.1.43":"aes-256-ofb","2.16.840.1.101.3.4.1.44":"aes-256-cfb"}');
+module.exports = jQuery;
 
 /***/ })
 

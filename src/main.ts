@@ -27,26 +27,21 @@
  *
  */
 
-/* jshint -W097 */
-/* jshint strict: false */
-/* jslint node: true */
-'use strict';
-import debug = require('debug');
+import * as debug from 'debug';
 debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 
 // you have to require the utils module and call adapter function
-import * as utils from '@iobroker/adapter-core';
-import * as hkAdapter from './yahka.ioBroker-adapter';
+import { Adapter, getAbsoluteDefaultDataDir } from '@iobroker/adapter-core';
+import { TIOBrokerAdapter } from './yahka.ioBroker-adapter';
 require('./yahka.functions/functions.import');
 
-let yahkaAdapter: hkAdapter.TIOBrokerAdapter;
 function startAdapter(options: any = {}) {
-	const ioAdapter = utils.Adapter({name: 'yahka', systemConfig: true});
-    yahkaAdapter = new hkAdapter.TIOBrokerAdapter(ioAdapter, utils.getAbsoluteDefaultDataDir());
+	const ioAdapter = Adapter({ ...options, name: 'yahka', systemConfig: true });
+
+    new TIOBrokerAdapter(ioAdapter, getAbsoluteDefaultDataDir());
+
     return ioAdapter;
 }
-
-// ...
 
 if (module && module.parent) {
 	// Export startAdapter in compact mode

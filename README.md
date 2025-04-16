@@ -84,7 +84,7 @@ You have to install the pam-devel package:
 - Remove: `del bonjoursdksetup.exe`
 - Set: `set BONJOUR_SDK_HOME=C:\Program Files\Bonjour SDK`
 
-And after that install yahka adapter.
+And after that, install yahka adapter.
 
 ## Some words about HomeKit
 The architecture of HomeKit is as follows:
@@ -186,10 +186,11 @@ This repo includes one submodule, so before building you need to also close/init
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
-### 1.1.0 (2025-01-14)
-* (tarikweiss) Updated github build file. Try testing build-process with github.
+### 1.1.0 (2025-04-16)
+* (tarikweiss) Updated GitHub build file. Try testing a build-process with GitHub.
 * Updated design to be more responsive
 * Restructured code a bit
+* (@GermanBluefox) Updated packages
 
 ### 1.0.9 (2024-09-08)
 * Corrected Admin GUI
@@ -203,7 +204,7 @@ This repo includes one submodule, so before building you need to also close/init
 
 ### 1.0.4 (2024-08-12)
 * (Apollon77) Important: js-controller 5.0 is required at least
-* (tarikweiss) Rewrote community types from submodule (js) to typescript
+* (tarikweiss) Rewrote community types from submodule (js) to TypeScript
 * (tarikweiss) Added the ability to set an ioBroker state for the availability indication in HomeKit
 
 ### 1.0.3 (2023-03-29)

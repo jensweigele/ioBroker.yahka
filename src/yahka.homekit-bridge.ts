@@ -9,7 +9,8 @@ import {
 } from 'hap-nodejs';
 import { YahkaServiceInitializer } from './yahka.homekit-service';
 import { IHomeKitBridgeBindingFactory, ILogger } from './yahka.interfaces';
-const pjson = require('../package.json');
+import { readFileSync } from 'node:fs';
+const pjson = JSON.parse(readFileSync(`${__dirname}/package.json`).toString());
 
 importHAPCommunityTypesAndFixes();
 

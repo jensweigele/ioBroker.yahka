@@ -9,6 +9,7 @@
 /***/ ((module, exports, __webpack_require__) => {
 
 /* module decorator */ module = __webpack_require__.nmd(module);
+
 /**
  *
  * iobroker.yahka adapter
@@ -37,24 +38,18 @@
  *  }
  *
  */
-/* jshint -W097 */
-/* jshint strict: false */
-/* jslint node: true */
-
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const debug = __webpack_require__(/*! debug */ "debug");
 debug.enable('EventedHTTPServer,HAPServer,Accessory,AccessoryLoader');
 // you have to require the utils module and call adapter function
-const utils = __webpack_require__(/*! @iobroker/adapter-core */ "@iobroker/adapter-core");
-const hkAdapter = __webpack_require__(/*! ./yahka.ioBroker-adapter */ "./yahka.ioBroker-adapter.ts");
+const adapter_core_1 = __webpack_require__(/*! @iobroker/adapter-core */ "@iobroker/adapter-core");
+const yahka_ioBroker_adapter_1 = __webpack_require__(/*! ./yahka.ioBroker-adapter */ "./yahka.ioBroker-adapter.ts");
 __webpack_require__(/*! ./yahka.functions/functions.import */ "./yahka.functions/functions.import.ts");
-let yahkaAdapter;
 function startAdapter(options = {}) {
-    const ioAdapter = utils.Adapter({ name: 'yahka', systemConfig: true });
-    yahkaAdapter = new hkAdapter.TIOBrokerAdapter(ioAdapter, utils.getAbsoluteDefaultDataDir());
+    const ioAdapter = (0, adapter_core_1.Adapter)(Object.assign(Object.assign({}, options), { name: 'yahka', systemConfig: true }));
+    new yahka_ioBroker_adapter_1.TIOBrokerAdapter(ioAdapter, (0, adapter_core_1.getAbsoluteDefaultDataDir)());
     return ioAdapter;
 }
-// ...
 if (module && module.parent) {
     // Export startAdapter in compact mode
     module.exports = startAdapter;
@@ -2319,7 +2314,8 @@ const util = __webpack_require__(/*! node:util */ "node:util");
 const yahka_community_types_1 = __webpack_require__(/*! ./yahka.community.types */ "./yahka.community.types.ts");
 const hap_nodejs_1 = __webpack_require__(/*! hap-nodejs */ "hap-nodejs");
 const yahka_homekit_service_1 = __webpack_require__(/*! ./yahka.homekit-service */ "./yahka.homekit-service.ts");
-const pjson = __webpack_require__(/*! ../package.json */ "../package.json");
+const node_fs_1 = __webpack_require__(/*! node:fs */ "node:fs");
+const pjson = JSON.parse((0, node_fs_1.readFileSync)(`${__dirname}/package.json`).toString());
 (0, yahka_community_types_1.importHAPCommunityTypesAndFixes)();
 class THomeKitBridge {
     constructor(config, FBridgeFactory, FLogger) {
@@ -3233,6 +3229,16 @@ module.exports = require("node:child_process");
 
 /***/ }),
 
+/***/ "node:fs":
+/*!**************************!*\
+  !*** external "node:fs" ***!
+  \**************************/
+/***/ ((module) => {
+
+module.exports = require("node:fs");
+
+/***/ }),
+
 /***/ "node:path":
 /*!****************************!*\
   !*** external "node:path" ***!
@@ -3250,16 +3256,6 @@ module.exports = require("node:path");
 /***/ ((module) => {
 
 module.exports = require("node:util");
-
-/***/ }),
-
-/***/ "../package.json":
-/*!***********************!*\
-  !*** ../package.json ***!
-  \***********************/
-/***/ ((module) => {
-
-module.exports = /*#__PURE__*/JSON.parse('{"name":"iobroker.yahka","version":"1.1.0","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},{"name":"Tarik Weiss","email":"kontakt@tarikweiss.de"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"engines":{"node":">=18.0.0"},"dependencies":{"@iobroker/adapter-core":"^3.1.6","debug":"^4.3.6","dev-null":"^0.1.1","hap-nodejs":"1.1.0","ip":"^2.0.1","macaddress":"0.5.3"},"devDependencies":{"@alcalzone/release-script":"^3.8.0","@alcalzone/release-script-plugin-iobroker":"^3.7.2","@alcalzone/release-script-plugin-license":"^3.7.0","@iobroker/adapter-dev":"^1.3.0","@iobroker/types":"^6.0.11","@types/jquery":"^3.5.30","@types/materialize-css":"^1.0.14","@types/node":"^22.5.1","assert":"^2.1.0","buffer":"^6.0.3","chai":"^4.5.0","crypto-browserify":"^3.12.0","html-webpack-plugin":"^5.6.0","mocha":"^10.7.3","path-browserify":"^1.0.1","process":"^0.11.10","raw-loader":"^4.0.2","stream-browserify":"^3.0.0","timers":"^0.1.1","ts-loader":"^9.5.1","typescript":"^5.5.4","webpack":"^5.94.0","webpack-cli":"^5.1.4","webpack-node-externals":"^3.0.0","xml2js":"^0.6.2"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","files":["admin/","main.js","main.js.map","LICENSE","README.md","io-package.json","hap-nodejs-community-types/"],"scripts":{"test":"node node_modules/mocha/bin/mocha --exit","build":"node tasks","_prepublishOnly":"node tasks","release":"release-script","release-patch":"release-script patch --yes","release-minor":"release-script minor --yes","release-major":"release-script major --yes","setupDev":"dev-server setup","startDev":"dev-server watch --no-start"}}');
 
 /***/ })
 
