@@ -24,21 +24,21 @@ export class ParameterEditor_Map extends ParameterEditor {
         let myRow = this.lastRow.parentElement.insertBefore(importedRow.firstElementChild, this.lastRow);
         this.stateRows.push(myRow);
 
-        let leftField = <HTMLInputElement>myRow.querySelector('#ioBrokerValue');
+        let leftField = <HTMLInputElement>myRow.querySelector('.ioBrokerValue');
         leftField.addEventListener('input', (ev) => this.valueChanged());
-        let leftCheck = <HTMLInputElement>myRow.querySelector('#isSimpleValue');
+        let leftCheck = <HTMLInputElement>myRow.querySelector('.isSimpleValue');
         leftCheck.addEventListener('input', (ev) => this.valueChanged());
 
-        let rightField = <HTMLInputElement>myRow.querySelector('#homekitValue');
+        let rightField = <HTMLInputElement>myRow.querySelector('.homekitValue');
         rightField.addEventListener('input', (ev) => this.valueChanged());
 
-        myRow.querySelector('#delRow').addEventListener('click', () => {
+        myRow.querySelector('.delRow').addEventListener('click', () => {
             myRow.remove();
             this.stateRows = this.stateRows.filter(row => row != myRow);
             this.valueChanged();
         });
 
-        myRow.querySelector('#moveUp').addEventListener('click', () => {
+        myRow.querySelector('.moveUp').addEventListener('click', () => {
             let myIndex = this.stateRows.indexOf(myRow);
             let prevIndex = myIndex - 1;
             if (prevIndex < 0) {
@@ -52,7 +52,7 @@ export class ParameterEditor_Map extends ParameterEditor {
             this.valueChanged();
         });
 
-        myRow.querySelector('#moveDown').addEventListener('click', () => {
+        myRow.querySelector('.moveDown').addEventListener('click', () => {
             let myIndex = this.stateRows.indexOf(myRow);
             let nextIndex = myIndex + 1;
             if ((myIndex < 0) || (nextIndex >= this.stateRows.length)) {
@@ -103,10 +103,10 @@ export class ParameterEditor_Map extends ParameterEditor {
     protected buildNewParameterValue(): any {
         return {
             mappings: this.stateRows.map((row): IIoBrokerConversion_MapEntry => {
-                let ioValue = <HTMLInputElement>row.querySelector('#ioBrokerValue');
-                let isSimpleValue = <HTMLInputElement>row.querySelector('#isSimpleValue');
+                let ioValue = <HTMLInputElement>row.querySelector('.ioBrokerValue');
+                let isSimpleValue = <HTMLInputElement>row.querySelector('.isSimpleValue');
                 let leftValue = Utils.getInputValue(ioValue);
-                let hkValue = <HTMLInputElement>row.querySelector('#homekitValue');
+                let hkValue = <HTMLInputElement>row.querySelector('.homekitValue');
                 return {
                     left: isSimpleValue.checked ? leftValue?.toString() : JSON.parse(leftValue?.toString()),
                     right: Utils.getInputValue(hkValue),

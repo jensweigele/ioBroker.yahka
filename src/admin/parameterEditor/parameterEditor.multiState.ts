@@ -12,9 +12,9 @@ export class ParameterEditor_MultiState extends ParameterEditor {
         super(valueChangeCallback);
         this.templateNode = createAndCloneTemplateElement(require('./parameterEditor.multiState.inc.html'));
 
-        this.stateTemplate = this.templateNode.querySelector('#stateRow');
-        this.lastRow = this.templateNode.querySelector('#lastRow')
-        let addRow = this.templateNode.querySelector('#addRow');
+        this.stateTemplate = this.templateNode.querySelector('.stateRow');
+        this.lastRow = this.templateNode.querySelector('.lastRow')
+        let addRow = this.templateNode.querySelector('.addRow');
         addRow.addEventListener('click', this.addRowClicked.bind(this));
     }
 
@@ -23,19 +23,19 @@ export class ParameterEditor_MultiState extends ParameterEditor {
         let myRow = this.lastRow.parentElement.insertBefore(importedRow.firstElementChild, this.lastRow);
         this.stateRows.push(myRow);
 
-        let readField = <HTMLInputElement>myRow.querySelector('#readState');
+        let readField = <HTMLInputElement>myRow.querySelector('.readState');
         readField.addEventListener('input', (ev) => this.valueChanged());
 
-        let writeField = <HTMLInputElement>myRow.querySelector('#writeState');
+        let writeField = <HTMLInputElement>myRow.querySelector('.writeState');
         writeField.addEventListener('input', (ev) => this.valueChanged());
 
-        myRow.querySelector('#delRow').addEventListener('click', () => {
+        myRow.querySelector('.delRow').addEventListener('click', () => {
             myRow.remove();
             this.stateRows = this.stateRows.filter(row => row != myRow);
             this.valueChanged();
         });
 
-        myRow.querySelector('#moveUp').addEventListener('click', () => {
+        myRow.querySelector('.moveUp').addEventListener('click', () => {
             let myIndex = this.stateRows.indexOf(myRow);
             let prevIndex = myIndex - 1;
             if (prevIndex < 0) {
@@ -49,7 +49,7 @@ export class ParameterEditor_MultiState extends ParameterEditor {
             this.valueChanged();
         });
 
-        myRow.querySelector('#moveDown').addEventListener('click', () => {
+        myRow.querySelector('.moveDown').addEventListener('click', () => {
             let myIndex = this.stateRows.indexOf(myRow);
             let nextIndex = myIndex + 1;
             if ((myIndex < 0) || (nextIndex >= this.stateRows.length)) {
@@ -92,8 +92,8 @@ export class ParameterEditor_MultiState extends ParameterEditor {
 
     protected buildNewParameterValue(): any {
         return this.stateRows.map((row): TIoBrokerInOutFunction_MultiStateParameter => {
-            const readField = <HTMLInputElement>row.querySelector('#readState');
-            const writeField = <HTMLInputElement>row.querySelector('#writeState');
+            const readField = <HTMLInputElement>row.querySelector('.readState');
+            const writeField = <HTMLInputElement>row.querySelector('.writeState');
             return {
                 readState: Utils.getInputValue(readField)?.toString(),
                 writeState: Utils.getInputValue(writeField)?.toString(),

@@ -1865,7 +1865,7 @@ class TIoBrokerInOutFunction_StateBase {
     }
     setupDeferredChangeEvent(callback, plainIOValue) {
         this.cancelDeferredChangeEvent();
-        this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback, plainIOValue), 150);
+        this.debounceTimer = setTimeout(this.deferredChangeEvent.bind(this, callback, plainIOValue), this.deferredTime);
     }
     cancelDeferredChangeEvent() {
         clearTimeout(this.debounceTimer);
@@ -2713,16 +2713,16 @@ class THomeKitIPCamera {
                         };
                         ffmpegCommand = ffmpegCommand.concat(this.camConfig.ffmpegCommandLine.streamAudio.map((s) => s.replace(/\$\{(.*?)}/g, (_, word) => params[word])));
                     }
-                    // this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
+                    this.FLogger.debug("Stream run: ffmpeg " + ffmpegCommand.join(' '));
                     let ffmpeg = (0, node_child_process_1.spawn)('ffmpeg', ffmpegCommand, { env: process.env });
                     let started = false;
-                    ffmpeg.stderr.on('data', ( /* data: Buffer */) => {
+                    ffmpeg.stderr.on('data', (data) => {
                         if (!started) {
                             started = true;
                             this.FLogger.debug('FFMPEG: received first frame');
                             callback(); // do not forget to execute callback once set up
                         }
-                        //this.FLogger.debug("FFMPEG:" + data.toString('utf8'));
+                        this.FLogger.debug("FFMPEG:" + data.toString('utf8'));
                     });
                     ffmpeg.on('error', (error) => {
                         this.FLogger.error(`[Video] Failed to start video stream: ${error.message}`);
@@ -3259,7 +3259,7 @@ module.exports = require("node:util");
   \***********************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"name":"iobroker.yahka","version":"1.0.8","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"engines":{"node":">=18.0.0"},"dependencies":{"@iobroker/adapter-core":"^3.1.6","debug":"^4.3.6","dev-null":"^0.1.1","hap-nodejs":"1.1.0","ip":"^2.0.1","macaddress":"0.5.3"},"devDependencies":{"@alcalzone/release-script":"^3.8.0","@alcalzone/release-script-plugin-iobroker":"^3.7.2","@alcalzone/release-script-plugin-license":"^3.7.0","@iobroker/adapter-dev":"^1.3.0","@iobroker/types":"^6.0.11","@types/jquery":"^3.5.30","@types/node":"^22.5.1","assert":"^2.1.0","buffer":"^6.0.3","chai":"^4.5.0","crypto-browserify":"^3.12.0","html-webpack-plugin":"^5.6.0","mocha":"^10.7.3","path-browserify":"^1.0.1","process":"^0.11.10","raw-loader":"^4.0.2","stream-browserify":"^3.0.0","timers":"^0.1.1","ts-loader":"^9.5.1","typescript":"^5.5.4","webpack":"^5.94.0","webpack-cli":"^5.1.4","webpack-node-externals":"^3.0.0","xml2js":"^0.6.2"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","files":["admin/","main.js","main.js.map","LICENSE","README.md","io-package.json","hap-nodejs-community-types/"],"scripts":{"test":"node node_modules/mocha/bin/mocha --exit","build":"node tasks","_prepublishOnly":"node tasks","release":"release-script","release-patch":"release-script patch --yes","release-minor":"release-script minor --yes","release-major":"release-script major --yes","setupDev":"dev-server setup","startDev":"dev-server watch --no-start"}}');
+module.exports = /*#__PURE__*/JSON.parse('{"name":"iobroker.yahka","version":"1.1.0","description":"ioBroker HomeKit Adapter","author":{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},"contributors":[{"name":"Jens Weigele","email":"iobroker.yahka@gmail.com"},{"name":"Tarik Weiss","email":"kontakt@tarikweiss.de"}],"homepage":"https://github.com/jensweigele/ioBroker.yahka","license":"MIT","keywords":["ioBroker","iobroker.yahka","Smart Home","home automation","siri","homekit"],"repository":{"type":"git","url":"https://github.com/jensweigele/ioBroker.yahka"},"engines":{"node":">=18.0.0"},"dependencies":{"@iobroker/adapter-core":"^3.1.6","debug":"^4.3.6","dev-null":"^0.1.1","hap-nodejs":"1.1.0","ip":"^2.0.1","macaddress":"0.5.3"},"devDependencies":{"@alcalzone/release-script":"^3.8.0","@alcalzone/release-script-plugin-iobroker":"^3.7.2","@alcalzone/release-script-plugin-license":"^3.7.0","@iobroker/adapter-dev":"^1.3.0","@iobroker/types":"^6.0.11","@types/jquery":"^3.5.30","@types/materialize-css":"^1.0.14","@types/node":"^22.5.1","assert":"^2.1.0","buffer":"^6.0.3","chai":"^4.5.0","crypto-browserify":"^3.12.0","html-webpack-plugin":"^5.6.0","mocha":"^10.7.3","path-browserify":"^1.0.1","process":"^0.11.10","raw-loader":"^4.0.2","stream-browserify":"^3.0.0","timers":"^0.1.1","ts-loader":"^9.5.1","typescript":"^5.5.4","webpack":"^5.94.0","webpack-cli":"^5.1.4","webpack-node-externals":"^3.0.0","xml2js":"^0.6.2"},"bugs":{"url":"https://github.com/jensweigele/ioBroker.yahka/issues"},"readmeFilename":"README.md","main":"main.js","files":["admin/","main.js","main.js.map","LICENSE","README.md","io-package.json","hap-nodejs-community-types/"],"scripts":{"test":"node node_modules/mocha/bin/mocha --exit","build":"node tasks","_prepublishOnly":"node tasks","release":"release-script","release-patch":"release-script patch --yes","release-minor":"release-script minor --yes","release-major":"release-script major --yes","setupDev":"dev-server setup","startDev":"dev-server watch --no-start"}}');
 
 /***/ })
 

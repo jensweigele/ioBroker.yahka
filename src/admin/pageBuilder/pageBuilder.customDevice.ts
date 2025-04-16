@@ -1,20 +1,21 @@
 /// <reference path="../../typings/index.d.ts" />
 import * as hkBridge from '../../shared/yahka.configuration';
-import { IDictionary } from '../../shared/yahka.configuration';
-import { ISelectListEntry } from '../admin.config';
-import { ConfigPageBuilder_Base, IConfigPageBuilder, IConfigPageBuilderDelegate, TValidatorFunction } from './pageBuilder.base';
-import { translateFragment } from '../admin.translation';
-import { createTemplateElement } from '../admin.pageLoader';
-import { Utils } from '../admin.utils';
-import { ConfigPageBuilder_ServicePanel } from './pageBuilder.servicePanel';
-import { ioBrokerInterfaceList } from '../yahka.admin';
+import {IDictionary} from '../../shared/yahka.configuration';
+import {ISelectListEntry} from '../admin.config';
+import {
+    ConfigPageBuilder_Base,
+    IConfigPageBuilder,
+    IConfigPageBuilderDelegate,
+    TValidatorFunction
+} from './pageBuilder.base';
+import {translateFragment} from '../admin.translation';
+import {createTemplateElement} from '../admin.pageLoader';
+import {Utils} from '../admin.utils';
+import {ConfigPageBuilder_ServicePanel} from './pageBuilder.servicePanel';
+import {ioBrokerInterfaceList} from '../yahka.admin';
+import PageBuilderAccessoryCategories from "./pageBuilder.accessoryCategories";
 
-declare function getObject(id: string, callback: (error: any, object: any) => void);
-
-let accessoryCategories: IDictionary<ISelectListEntry> = {};
-getObject('yahka.meta._accessoryCategories', (_, object) => {
-    accessoryCategories = object.native;
-});
+let accessoryCategories: IDictionary<ISelectListEntry> = PageBuilderAccessoryCategories;
 
 export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base implements IConfigPageBuilder {
     public addServiceAvailable: boolean = true;
@@ -34,9 +35,10 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
         }
 
         let lastPane: HTMLElement = await this.buildDeviceInformationPanel(config, devicePanel);
+        const servicePanelContainer = devicePanel.querySelector('.yahka_service_container');
         for (let serviceConfig of config.services) {
             let servicePanel = this.servicePanelBuilder.createServicePanel(config.services, serviceConfig);
-            devicePanel.appendChild(servicePanel);
+            servicePanelContainer.appendChild(servicePanel);
             lastPane = servicePanel;
         }
 
@@ -47,29 +49,53 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
                 if (heading) heading.click();
             }
         }
+
+        const addServiceButton = devicePanel.querySelector<HTMLButtonElement>('.yahka_add_service');
+        addServiceButton.addEventListener('click', () => {
+            if (!hkBridge.Configuration.isDeviceConfig(config) && !hkBridge.Configuration.isIPCameraConfig(config)) {
+                return;
+            }
+
+            config.services.push({
+                name: '',
+                subType: '',
+                type: '',
+                characteristics: []
+            });
+
+            this.delegate.refreshDevicePanel(config, true);
+            this.delegate.changeCallback();
+        });
     }
 
     public styleListItem(listItem: HTMLElement, deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean {
         if (!hkBridge.Configuration.isDeviceConfig(deviceConfig)) {
             return false;
         }
-        let iconClass = 'mif-question';
+        let iconName = 'mif-question';
         let cat: ISelectListEntry;
         if (accessoryCategories !== undefined) {
-            if ((cat = accessoryCategories[deviceConfig.category])) iconClass = cat['icon'];
+            if ((cat = accessoryCategories[deviceConfig.category])) {
+                iconName = cat['icon'];
+            }
         }
-        let listIcon = listItem.querySelector('.list-icon');
-        listIcon.className = '';
-        listIcon.classList.add('list-icon', 'icon', iconClass);
+        let listIcon = listItem.querySelector('.device-icon');
+        listIcon.innerHTML = iconName;
 
-        listItem.classList.toggle('fg-grayLight', !deviceConfig.enabled);
-        listItem.classList.toggle('fg-grayDark', deviceConfig.enabled);
+        listItem.classList.remove('yellow');
+        listItem.classList.remove('lighten-5');
+
+        if (false === deviceConfig.enabled) {
+            listItem.classList.add('yellow');
+            listItem.classList.add('lighten-5');
+        }
+
         return true;
     }
 
     private async buildDeviceInformationPanel(deviceConfig: hkBridge.Configuration.IDeviceConfig, devicePane: HTMLElement): Promise<HTMLElement> {
         let devInfoFragment = <DocumentFragment>document.importNode(this.deviceInfoPanelTemplate.content, true);
-        let devInfoPanel = <HTMLElement>devInfoFragment.querySelector('#yahka_device_info_panel');
+        let devInfoPanel = <HTMLElement>devInfoFragment.querySelector('.yahka_device_info_panel');
         translateFragment(devInfoFragment);
 
         let inputHelper = (
@@ -91,32 +117,33 @@ export class ConfigPageBuilder_CustomDevice extends ConfigPageBuilder_Base imple
             } else {
                 Utils.setInputValue(input, value);
                 input.addEventListener('input', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator));
+                input.addEventListener('change', this.handleDeviceMetaDataChange.bind(this, deviceConfig, propertyName, errorElement, validator));
             }
             this.refreshSimpleErrorElement(errorElement, validator);
         };
 
-        inputHelper('#name', 'name', undefined, () => !this.delegate.deviceIsUnique(deviceConfig));
-        inputHelper('#group', 'groupString');
-        inputHelper('#enabled', 'enabled');
-        inputHelper('#manufacturer', 'manufacturer');
-        inputHelper('#model', 'model');
-        inputHelper('#serial', 'serial');
-        inputHelper('#firmware', 'firmware');
-        inputHelper('#category', 'category', accessoryCategories);
-        inputHelper('#publish_as_own_device', 'publishAsOwnDevice', undefined, undefined, false);
-        inputHelper('#useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
-        inputHelper('#useCiaoAdvertiser', 'useCiaoAdvertiser', undefined, undefined, false);
-        inputHelper('#username', 'username');
-        inputHelper('#pincode', 'pincode');
-        inputHelper('#port', 'port');
-        inputHelper('#availableStateIobState', 'availableState');
+        inputHelper('.name', 'name', undefined, () => !this.delegate.deviceIsUnique(deviceConfig));
+        inputHelper('.group', 'groupString');
+        inputHelper('.enabledCharacteristic', 'enabled');
+        inputHelper('.manufacturer', 'manufacturer');
+        inputHelper('.model', 'model');
+        inputHelper('.serial', 'serial');
+        inputHelper('.firmware', 'firmware');
+        inputHelper('.category', 'category', accessoryCategories);
+        inputHelper('.publish_as_own_device', 'publishAsOwnDevice', undefined, undefined, false);
+        inputHelper('.useLegacyAdvertiser', 'useLegacyAdvertiser', undefined, undefined, false);
+        inputHelper('.useCiaoAdvertiser', 'useCiaoAdvertiser', undefined, undefined, false);
+        inputHelper('.username', 'username');
+        inputHelper('.pincode', 'pincode');
+        inputHelper('.port', 'port');
+        inputHelper('.availableStateIobState', 'availableState');
         let ipList = await ioBrokerInterfaceList;
         const ipListForSelectBox = ipList
             .filter((a) => a.family === 'ipv4')
             .map((a) => {
                 return { value: a.address, text: a.name };
             });
-        inputHelper('#interface', 'interface', ipListForSelectBox);
+        inputHelper('.interface', 'interface', ipListForSelectBox);
 
         devicePane.appendChild(devInfoFragment);
         return devInfoPanel;

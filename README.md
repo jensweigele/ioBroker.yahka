@@ -17,7 +17,7 @@ Before you can install the Adapter, you have to some packages (for Linux):
 Just hit the "+" button behind "Homekit yahka adapter" in the ioBroker Admin Panel on the "Adapter" page.
 
 ## Install the latest **Beta**
-If you want to be on the edge and test the latest beta, you could install the adapter via a GitHub url.
+If you want to be on the edge and test the latest beta, you could install the adapter via the ioBroker beta repository.
 
 (Sometimes an additional upload (e.g. `iobroker upload yahka`) and adapter restart is necessary)
 
@@ -186,6 +186,11 @@ This repo includes one submodule, so before building you need to also close/init
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
+### 1.1.0 (2025-01-14)
+* (tarikweiss) Updated github build file. Try testing build-process with github.
+* Updated design to be more responsive
+* Restructured code a bit
+
 ### 1.0.9 (2024-09-08)
 * Corrected Admin GUI
 
@@ -329,7 +334,7 @@ This repo includes one submodule, so before building you need to also close/init
 ## License
 The MIT License (MIT)
 
-Copyright (c) 2016-2024 Jens Weigele (iobroker.yahka@gmail.com)
+Copyright (c) 2016-2025 Jens Weigele (iobroker.yahka@gmail.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

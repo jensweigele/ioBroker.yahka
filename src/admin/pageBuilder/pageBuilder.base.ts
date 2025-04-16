@@ -1,6 +1,6 @@
 import * as hkBridge from '../../shared/yahka.configuration';
-import { IDictionary } from '../../shared/yahka.configuration';
-import { ISelectListEntry } from '../admin.config';
+import {IDictionary} from '../../shared/yahka.configuration';
+import {ISelectListEntry} from '../admin.config';
 
 export type TValidatorFunction = () => boolean;
 export interface IConfigPageBuilder {
@@ -23,6 +23,7 @@ export interface IConfigPageBuilderDelegate {
     deviceIsUnique(deviceConfig: hkBridge.Configuration.IBaseConfigNode): boolean;
 
     getPageBuilderByConfig(deviceConfig: hkBridge.Configuration.IBaseConfigNode): IConfigPageBuilder;
+    refreshInputs();
 }
 
 export class ConfigPageBuilder_Base {

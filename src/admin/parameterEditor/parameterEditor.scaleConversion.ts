@@ -11,13 +11,13 @@ export class ParameterEditor_ScaleConversionEditor extends ParameterEditor {
     constructor(valueChangeCallback: IParameterEditorDelegate) {
         super(valueChangeCallback);
         this.templateNode = createAndCloneTemplateElement(require('./parameterEditor.scaleConversion.inc.html'));
-        this.txtHKMin = this.templateNode.querySelector('#hkMin');
+        this.txtHKMin = this.templateNode.querySelector('.hkMin');
         this.txtHKMin.addEventListener('input', (ev) => this.valueChanged());
-        this.txtHKMax = this.templateNode.querySelector('#hkMax');
+        this.txtHKMax = this.templateNode.querySelector('.hkMax');
         this.txtHKMax.addEventListener('input', (ev) => this.valueChanged());
-        this.txtIOBrokerMin = this.templateNode.querySelector('#ioMin');
+        this.txtIOBrokerMin = this.templateNode.querySelector('.ioMin');
         this.txtIOBrokerMin.addEventListener('input', (ev) => this.valueChanged());
-        this.txtIOBrokerMax = this.templateNode.querySelector('#ioMax');
+        this.txtIOBrokerMax = this.templateNode.querySelector('.ioMax');
         this.txtIOBrokerMax.addEventListener('input', (ev) => this.valueChanged());
     }
 

@@ -1,4 +1,24 @@
-<div class="list device-entry">
-    <span class="icon list-icon"></span>
-    <span class="list-title"> </span>
-</div>
+<li class="collection-item">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+        <div style="display: flex; gap: 10px;">
+            <i class="device-icon material-symbols-outlined circle">mode_fan</i>
+            <div style="display: flex; flex-direction: column">
+                <span class="list-title"></span>
+                <span class="device-type"></span>
+            </div>
+        </div>
+        <div class="device-actions" style="display: flex; flex-wrap: nowrap; gap: 4px;">
+            <button class="edit-button btn waves-effect waves-light">
+                <span class="translate">Edit</span>
+            </button>
+            <button class="yahka_duplicate_device btn waves-effect waves-light">
+                <span class="translate">Duplicate</span>
+            </button>
+            <button class="yahka_remove_device btn waves-effect waves-light red">
+                <span class="translate">Remove</span>
+            </button>
+        </div>
+    </div>
+    <div class="collapsible-body">
+    </div>
+</li>

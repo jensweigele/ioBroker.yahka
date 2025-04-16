@@ -1,33 +1,23 @@
 <div class="editor-table">
-    <div class="row">
-        <div class="cell">
-            <span class="translate">Level Datapoint:</span>
+    <div class="button-appendix">
+        <div class="input-field">
+            <label class="translate">Level Datapoint</label>
+            <input type="text" class="level stateSelectTarget">
         </div>
-        <div class="cell">
-            <div class="input-container full-width">
-                <input id="level" type="text" class="stateSelectTarget"></input>
-                <button class="input-control button id-selector"><span class="mif-more-horiz"></span></button>
-            </div>
-        </div>
+        <button type="button" class="btn btn-small id-selector">
+            <span class="material-icons">more_horiz</span>
+        </button>
     </div>
-    <div class="row extended-dimmer-properties">
-        <div class="cell">
-            <span class="translate">Restore level on switch on:</span>
-        </div>
-        <div class="cell">
-            <div class="input-container full-width">
-                <input type="checkbox" id="restoreToPreviousLevel" />
-            </div>
-        </div>
+    <div class="extended-dimmer-properties">
+        <label>
+            <input type="checkbox" class="restoreToPreviousLevel"/>
+            <span class="translate">Restore level on switch on</span>
+        </label>
     </div>
-    <div class="row extended-dimmer-properties">
-        <div class="cell">
-            <span class="translate">Default level on switch on:</span>
-        </div>
-        <div class="cell">
-            <div class="input-container full-width">
-                <input type="number" id="defaultLevel" class="full-width"></input>
-            </div>
+    <div class="extended-dimmer-properties">
+        <div class="input-field">
+            <label class="translate">Default level on switch on</label>
+            <input type="number" class="defaultLevel">
         </div>
     </div>
 </div>

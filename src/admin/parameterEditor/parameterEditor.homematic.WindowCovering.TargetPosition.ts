@@ -9,9 +9,9 @@ export class ParameterEditor_HomeMaticWindowCoveringTargetPosition extends Param
     constructor(valueChangeCallback: IParameterEditorDelegate) {
         super(valueChangeCallback);
         this.templateNode = createAndCloneTemplateElement(require('./parameterEditor.homematic.WindowCovering.TargetPosition.inc.html'));
-        this.txtLevel = this.templateNode.querySelector('#level');
+        this.txtLevel = this.templateNode.querySelector('.level');
         this.txtLevel.addEventListener('input', (ev) => this.valueChanged());
-        this.txtWorking = this.templateNode.querySelector('#working');
+        this.txtWorking = this.templateNode.querySelector('.working');
         this.txtWorking.addEventListener('input', (ev) => this.valueChanged());
     }
 
