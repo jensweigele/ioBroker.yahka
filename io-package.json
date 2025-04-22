@@ -1,9 +1,9 @@
 {
   "common": {
     "name": "yahka",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "news": {
-      "1.1.0": {
+      "1.1.1": {
         "en": "Updated github build file. Try testing build-process with github.\nUpdated design to be more responsive\nRestructured code a bit",
         "de": "Aktualisierte github build-Datei. Testen Sie Build-Prozess mit github.\nAktualisiertes Design, um ansprechender zu sein\nRestrukturierter Code ein bisschen",
         "ru": "Обновленный файл github build. Попробуйте тестировать сборочный процесс с помощью github.\nОбновленный дизайн, чтобы быть более отзывчивым\nРеструктурированный код немного",
