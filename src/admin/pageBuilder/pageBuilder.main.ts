@@ -108,17 +108,27 @@ export class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
     public refreshDevicePanel(deviceConfig: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean) {
         let pageBuilder = this.getPageBuilderByConfig(deviceConfig);
 
-        const devicePanel = document.querySelector<HTMLElement>('.yahka-edit-device-container');
-        if (devicePanel.style.display == 'none') {
-            devicePanel.style.display = null;
+        const modalElement = document.querySelector('#modal-yahka-edit-device-container');
+
+        let modal = M.Modal.getInstance(modalElement);
+
+        if (undefined === modal) {
+            modal = M.Modal.init(modalElement, {});
+
+            const closeButton = modalElement.querySelector('.modal-close');
+            closeButton.addEventListener('click', () => {
+                this.rebuildDeviceList()
+            })
         }
+
+        const devicePanel = document.querySelector<HTMLElement>('.yahka-edit-device-container');
 
         if (devicePanel) {
             devicePanel.innerHTML = '';
         }
 
-        if (!pageBuilder) {
-            devicePanel.style.display = 'none';
+        if (!modal.isOpen) {
+            modal.open()
         }
 
         if (pageBuilder) {
@@ -130,7 +140,10 @@ export class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
 
     public setSelectedDeviceConfig(deviceConfig: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean) {
         this._selectedDeviceConfig = deviceConfig;
-        this.refreshDevicePanel(deviceConfig, AFocusLastPanel);
+
+        if (undefined !== deviceConfig) {
+            this.refreshDevicePanel(deviceConfig, AFocusLastPanel);
+        }
     }
 
     public refreshSelectedDeviceConfig() {
