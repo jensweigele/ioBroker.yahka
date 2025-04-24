@@ -186,6 +186,12 @@ This repo includes one submodule, so before building you need to also close/init
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
+
+### **WORK IN PROGRESS**
+* (tarikweiss) Modalized views for adding/editing devices
+* Fixed issues with collapsible when closing modal
+* Fixed various adapter checker issues. Thanks to @mcm1957
+
 ### 1.1.1 (2025-04-16)
 * (tarikweiss) Updated GitHub build file. Try testing a build-process with GitHub.
 * Updated design to be more responsive
