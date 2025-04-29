@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "yahka",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "news": {
+      "1.1.2": {
+        "en": "Modalized views for adding/editing devices\nFixed issues with collapsible when closing modal\nFixed various adapter checker issues. Thanks to @mcm1957",
+        "de": "Modifizierte Ansichten zum Hinzufügen/Bearbeiten von Geräten\nProbleme mit dem Zusammenklappbaren beim Schließen des Modals behoben\nVerschiedene Probleme mit der Adapterprüfung behoben. Danke an @mcm1957",
+        "ru": "Модифицированные представления для добавления/редактирования устройств\nИсправлены проблемы со сворачиванием при закрытии модального окна\nИсправлены различные проблемы с проверкой адаптера. Спасибо @mcm1957",
+        "pt": "Visualizações modalizadas para adicionar/editar dispositivos\nProblemas corrigidos com o recolhível ao fechar o modal\nCorrigimos vários problemas com o verificador de adaptadores. Obrigado a @mcm1957",
+        "nl": "Gemodaliseerde weergaven voor het toevoegen/bewerken van apparaten\nProblemen met inklapbaar venster opgelost bij het sluiten van het modale venster\nDiverse problemen met de adapterchecker opgelost. Dank aan @mcm1957",
+        "fr": "Vues modales pour l'ajout/la modification d'appareils\nProblèmes résolus avec la réductible lors de la fermeture de la modale\nCorrection de divers problèmes de vérification d'adaptateur. Merci à @mcm1957.",
+        "it": "Viste modali per l'aggiunta/modifica dei dispositivi\nRisolti i problemi con la chiusura della finestra modale\nRisolti vari problemi con il controllo degli adattatori. Grazie a @mcm1957",
+        "es": "Vistas modalizadas para agregar/editar dispositivos\nSe corrigieron problemas con el elemento colapsable al cerrar el modal.\nSe solucionaron varios problemas con el comprobador de adaptadores. Gracias a @mcm1957.",
+        "pl": "Widoki modalne do dodawania/edytowania urządzeń\nNaprawiono problemy z możliwością zwijania podczas zamykania okna modalnego\nNaprawiono różne problemy z adapterem. Dzięki @mcm1957",
+        "uk": "Модалізовані подання для додавання/редагування пристроїв\nВиправлено проблеми зі згортанням під час закриття модального вікна\nВиправлено різні проблеми з перевіркою адаптерів. Дякую @mcm1957",
+        "zh-cn": "用于添加/编辑设备的模态视图\n修复关闭模式时可折叠的问题\n修复了适配器检查器中的多个问题。感谢@mcm1957"
+      },
       "1.1.1": {
         "en": "Updated github build file. Try testing build-process with github.\nUpdated design to be more responsive\nRestructured code a bit",
         "de": "Aktualisierte github build-Datei. Testen Sie Build-Prozess mit github.\nAktualisiertes Design, um ansprechender zu sein\nRestrukturierter Code ein bisschen",
