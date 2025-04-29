@@ -108,17 +108,27 @@ export class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
     public refreshDevicePanel(deviceConfig: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean) {
         let pageBuilder = this.getPageBuilderByConfig(deviceConfig);
 
-        const devicePanel = document.querySelector<HTMLElement>('.yahka-edit-device-container');
-        if (devicePanel.style.display == 'none') {
-            devicePanel.style.display = null;
+        const modalElement = document.querySelector('#modal-yahka-edit-device-container');
+
+        let modal = M.Modal.getInstance(modalElement);
+
+        if (undefined === modal) {
+            modal = M.Modal.init(modalElement, {});
+
+            const closeButton = modalElement.querySelector('.modal-close');
+            closeButton.addEventListener('click', () => {
+                this.rebuildDeviceList()
+            })
         }
+
+        const devicePanel = document.querySelector<HTMLElement>('.yahka-edit-device-container');
 
         if (devicePanel) {
             devicePanel.innerHTML = '';
         }
 
-        if (!pageBuilder) {
-            devicePanel.style.display = 'none';
+        if (!modal.isOpen) {
+            modal.open()
         }
 
         if (pageBuilder) {
@@ -130,7 +140,10 @@ export class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
 
     public setSelectedDeviceConfig(deviceConfig: hkBridge.Configuration.IBaseConfigNode, AFocusLastPanel: boolean) {
         this._selectedDeviceConfig = deviceConfig;
-        this.refreshDevicePanel(deviceConfig, AFocusLastPanel);
+
+        if (undefined !== deviceConfig) {
+            this.refreshDevicePanel(deviceConfig, AFocusLastPanel);
+        }
     }
 
     public refreshSelectedDeviceConfig() {
@@ -181,9 +194,14 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
     buildDeviceList(bridgeFrame: HTMLElement) {
         let bridge = this.delegate.bridgeSettings;
         let deviceList = bridgeFrame.querySelector('#yahka_deviceList');
-        deviceList.innerHTML = '';
+
+        let groupBodies = deviceList.querySelectorAll('.group-content');
+
+        groupBodies.forEach(groupBody => {
+            groupBody.innerHTML = '';
+        });
+
         this.listEntryToConfigMap.clear();
-        this.entryGroupMap.clear();
 
         for (let deviceConfig of this.getDeviceList().sort((a, b) => a.name?.localeCompare(b.name))) {
             const groupNode = this.getDeviceGroupNode(deviceList, deviceConfig);
@@ -252,6 +270,16 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
             .forEach(node => {
                 return deviceList.appendChild(node);
             });
+
+        const groupEntries = deviceList.querySelectorAll<HTMLElement>('li[data-group-name]');
+        groupEntries.forEach((groupEntry: HTMLElement) => {
+            const groupBody = groupEntry.querySelector('.group-content');
+
+            if (groupBody.innerHTML.trim() == '') {
+                this.entryGroupMap.delete(groupEntry.dataset.groupName)
+                groupEntry.remove();
+            }
+        });
     }
 
     private getDeviceGroupNode(deviceList: Element, deviceConfig: hkBridge.Configuration.IBaseConfigNode): HTMLElement {
@@ -266,6 +294,7 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
         const groupRootNode     = (<HTMLElement>fragment.querySelector('li'));
         const groupNameNode     = (<HTMLElement>fragment.querySelector('.group-name'));
         const groupContentNode  = (<HTMLElement>fragment.querySelector('.group-content'));
+        groupRootNode.dataset.groupName = dictIdentifier
         groupNameNode.innerText = groupName;
         this.entryGroupMap.set(dictIdentifier, groupContentNode);
         deviceList.appendChild(groupRootNode);

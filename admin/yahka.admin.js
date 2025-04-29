@@ -110358,15 +110358,21 @@ class ioBroker_YahkaPageBuilder {
     }
     refreshDevicePanel(deviceConfig, AFocusLastPanel) {
         let pageBuilder = this.getPageBuilderByConfig(deviceConfig);
-        const devicePanel = document.querySelector('.yahka-edit-device-container');
-        if (devicePanel.style.display == 'none') {
-            devicePanel.style.display = null;
+        const modalElement = document.querySelector('#modal-yahka-edit-device-container');
+        let modal = M.Modal.getInstance(modalElement);
+        if (undefined === modal) {
+            modal = M.Modal.init(modalElement, {});
+            const closeButton = modalElement.querySelector('.modal-close');
+            closeButton.addEventListener('click', () => {
+                this.rebuildDeviceList();
+            });
         }
+        const devicePanel = document.querySelector('.yahka-edit-device-container');
         if (devicePanel) {
             devicePanel.innerHTML = '';
         }
-        if (!pageBuilder) {
-            devicePanel.style.display = 'none';
+        if (!modal.isOpen) {
+            modal.open();
         }
         if (pageBuilder) {
             pageBuilder.refresh(deviceConfig, AFocusLastPanel, devicePanel);
@@ -110375,7 +110381,9 @@ class ioBroker_YahkaPageBuilder {
     }
     setSelectedDeviceConfig(deviceConfig, AFocusLastPanel) {
         this._selectedDeviceConfig = deviceConfig;
-        this.refreshDevicePanel(deviceConfig, AFocusLastPanel);
+        if (undefined !== deviceConfig) {
+            this.refreshDevicePanel(deviceConfig, AFocusLastPanel);
+        }
     }
     refreshSelectedDeviceConfig() {
         this.setSelectedDeviceConfig(this._selectedDeviceConfig, false);
@@ -110414,9 +110422,11 @@ class ioBroker_DeviceListHandler extends pageBuilder_base_1.ConfigPageBuilder_Ba
     buildDeviceList(bridgeFrame) {
         let bridge = this.delegate.bridgeSettings;
         let deviceList = bridgeFrame.querySelector('#yahka_deviceList');
-        deviceList.innerHTML = '';
+        let groupBodies = deviceList.querySelectorAll('.group-content');
+        groupBodies.forEach(groupBody => {
+            groupBody.innerHTML = '';
+        });
         this.listEntryToConfigMap.clear();
-        this.entryGroupMap.clear();
         for (let deviceConfig of this.getDeviceList().sort((a, b) => { var _a; return (_a = a.name) === null || _a === void 0 ? void 0 : _a.localeCompare(b.name); })) {
             const groupNode = this.getDeviceGroupNode(deviceList, deviceConfig);
             let fragment = this.createDeviceListEntry(deviceConfig);
@@ -110481,6 +110491,14 @@ class ioBroker_DeviceListHandler extends pageBuilder_base_1.ConfigPageBuilder_Ba
             .forEach(node => {
             return deviceList.appendChild(node);
         });
+        const groupEntries = deviceList.querySelectorAll('li[data-group-name]');
+        groupEntries.forEach((groupEntry) => {
+            const groupBody = groupEntry.querySelector('.group-content');
+            if (groupBody.innerHTML.trim() == '') {
+                this.entryGroupMap.delete(groupEntry.dataset.groupName);
+                groupEntry.remove();
+            }
+        });
     }
     getDeviceGroupNode(deviceList, deviceConfig) {
         const groupName = deviceConfig.groupString ? deviceConfig.groupString : '<no group>';
@@ -110493,6 +110511,7 @@ class ioBroker_DeviceListHandler extends pageBuilder_base_1.ConfigPageBuilder_Ba
         const groupRootNode = fragment.querySelector('li');
         const groupNameNode = fragment.querySelector('.group-name');
         const groupContentNode = fragment.querySelector('.group-content');
+        groupRootNode.dataset.groupName = dictIdentifier;
         groupNameNode.innerText = groupName;
         this.entryGroupMap.set(dictIdentifier, groupContentNode);
         deviceList.appendChild(groupRootNode);

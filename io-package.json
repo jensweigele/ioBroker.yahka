@@ -95,9 +95,9 @@
         "zh-cn": "我们确保控制的7兼容性\n表格"
       }
     },
-    "title": "Homekit",
     "titleLang": {
-      "en": "Homekit YAHKA"
+      "en": "Homekit YAHKA",
+      "de": "HomeKit YAHKA"
     },
     "desc": {
       "en": "yet another Homekit adapter",
@@ -128,7 +128,6 @@
     "readme": "https://github.com/jensweigele/ioBroker.yahka/blob/master/README.md",
     "loglevel": "info",
     "type": "iot-systems",
-    "materialize": true,
     "compact": true,
     "connectionType": "local",
     "dataSource": "push",
@@ -140,7 +139,12 @@
     },
     "dependencies": [
       {
-        "js-controller": ">=5.0.0"
+        "js-controller": ">=5.0.19"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=6.0.0"
       }
     ],
     "authors": [
@@ -148,7 +152,10 @@
         "name": "Jens Weigele",
         "email": "iobroker.yahka@gmail.com"
       }
-    ]
+    ],
+    "adminUI": {
+      "config": "materialize"
+    }
   },
   "native": {
     "firstTimeInitialized": false,
