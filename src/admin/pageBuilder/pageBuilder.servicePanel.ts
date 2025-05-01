@@ -233,6 +233,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
         if (editor == undefined)
             return;
         editor.refreshAndShow(parameterContainer, parameterValue);
+        translateFragment(parameterContainer);
     }
 
     private createCharacteristicRow(charDef: IHAPCharacteristicDefintion, serviceConfig: hkBridge.Configuration.IServiceConfig, charConfig: hkBridge.Configuration.ICharacteristicConfig, servicePanel: HTMLElement): DocumentFragment {
@@ -284,6 +285,8 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
                 Utils.setInputValue(input, charConfig[configName]);
                 parameterValue = charConfig[parameterName];
             }
+
+            console.log(selector, parameterName, charConfig, parameterValue);
 
             let paramUpdateMethod = (newValue) => {
                 let charConfig = this.findConfigCharacteristic(serviceConfig, name);

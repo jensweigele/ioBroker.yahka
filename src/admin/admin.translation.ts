@@ -18,4 +18,14 @@ export function translateFragment(fragment) {
             }
         }
     }
+
+    const placeholders = fragment.querySelectorAll('[data-translate-placeholder]');
+    placeholders.forEach(placeholder => {
+        const translated = translateWord(placeholder.placeholder);
+        placeholder.placeholder = translated ? translated : placeholder.placeholder;
+    })
+}
+
+export function translateInternal(text: string): string | undefined {
+    return translateWord(text);
 }

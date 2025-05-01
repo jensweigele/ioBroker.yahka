@@ -20,13 +20,14 @@
             <div class="input-field col s12">
                 <label class="translate">Name</label>
                 <input class="name" type="text">
+                <div class="errorpanel translate name_error">A device with this name already exists. Please change the name!</div>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <label>Group</label>
+                <label class="translate">Group</label>
                 <input type="text" class="group" />
-                <div class="edit-hint">string to be used to group devices within Yahka. Has no effect to HomeKit!</div>
+                <div class="edit-hint translate">String to be used to group devices within Yahka. Has no effect to HomeKit!</div>
             </div>
         </div>
         <div class="row">
@@ -72,7 +73,7 @@
             <div class="input-field col s12">
                 <label class="translate">Username</label>
                 <input type="text" class="username"/>
-                <div class="edit-hint translate">needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b></div>
+                <div class="edit-hint translate">needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the device needs to be reconfigured in the HomeKit database</b></div>
             </div>
         </div>
         <div class="row">
@@ -131,7 +132,7 @@
     <div class="card-inner-container">
         <div class="row">
             <div class="col s12">
-                <button class="yahka_add_service btn">Add Service</button>
+                <button class="yahka_add_service btn translate">Add Service</button>
             </div>
         </div>
     </div>

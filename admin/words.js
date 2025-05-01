@@ -79,7 +79,7 @@ systemDictionary = {
         "ru"   : "Отмена",
         "zh-cn": "取消"
     },
-    "Category"                                                                                                                                                                                                    : {
+    "Category"                                                                                                                                                                                                     : {
         "en"   : "Categeory",
         "de"   : "Kategorie",
         "ru"   : "Категория",
@@ -127,13 +127,13 @@ systemDictionary = {
         "ru"   : "Devices",
         "zh-cn": "设备"
     },
-    "Duplicate"                                                                                                                                                                                             : {
+    "Duplicate"                                                                                                                                                                                                    : {
         "en"   : "Duplicate",
         "de"   : "Duplizieren",
         "ru"   : "Duplicate",
         "zh-cn": "复制设备"
     },
-    "Edit": {
+    "Edit"                                                                                                                                                                                                         : {
         "en": "Edit",
         "de": "Bearbeiten",
         "ru": "Редактирование",
@@ -240,7 +240,7 @@ systemDictionary = {
         "ru"   : "Properties and Services",
         "zh-cn": "属性和服务"
     },
-    "Remove"                                                                                                                                                                                                : {
+    "Remove"                                                                                                                                                                                                       : {
         "en"   : "Remove",
         "de"   : "Entfernen",
         "ru"   : "Удалить",
@@ -264,6 +264,10 @@ systemDictionary = {
         "ru"   : "Выбрать",
         "zh-cn": "选择"
     },
+    "Group"                                                                                                                                                                                                        : {
+        "en": "Group",
+        "de": "Gruppe",
+    },
     "Select ID"                                                                                                                                                                                                    : {
         "en"   : "Select ID",
         "de"   : "ID Auswählen",
@@ -278,7 +282,7 @@ systemDictionary = {
     },
     "Serial"                                                                                                                                                                                                       : {
         "en"   : "Serial",
-        "de"   : "Serial",
+        "de"   : "Seriennummer",
         "ru"   : "Номер",
         "zh-cn": "串号："
     },
@@ -300,7 +304,7 @@ systemDictionary = {
         "ru"   : "Наименование услуги",
         "zh-cn": "服务名称："
     },
-    "Service"                                                                                                                                                                                                    : {
+    "Service"                                                                                                                                                                                                      : {
         "en"   : "Service",
         "de"   : "Service",
         "ru"   : "Обслуживание: ",
@@ -344,13 +348,13 @@ systemDictionary = {
     },
     "descriptive only - displayed in homekit apps. Changes are only recognized after readding the bridge in the app."                                                                                              : {
         "en"   : "descriptive only - displayed in homekit apps. Changes are only recognized after re-adding the bridge in the app.",
-        "de"   : "Nur beschreibend - Ist in der Start-Anwendungen angezeigt. Die Änderungen Werden erst nach dem erneuten Bridge-Hinzufügen in der Anwendung erfasst.",
+        "de"   : "Nur beschreibend - Wird in HomeKit-Apps angezeigt. Die Änderungen Werden erst nach dem erneuten Hinzufügen der Bridge in der App erfasst.",
         "ru"   : "Только описательные - отображаются в приложениях для дома. Изменения распознаются только после повторного добавления хаба в приложении.",
         "zh-cn": "仅描述 - 显示在homekit应用程序中。只有在应用程序中重新添加网桥后才能识别更改。"
     },
     "descriptive only - displayed in some homekit apps"                                                                                                                                                            : {
         "en"   : "descriptive only - displayed in some homekit apps",
-        "de"   : "Nur beschreibend - in einigen HomeKit Apps angezeigt",
+        "de"   : "Nur beschreibend - in einigen HomeKit-Apps angezeigt",
         "ru"   : "Только описательные - Отображается в некоторых приложениях для дома",
         "zh-cn": "仅描述 - 显示在一些homekit应用程序中"
     },
@@ -392,7 +396,7 @@ systemDictionary = {
     },
     "change this if you have trouble with your bridge. needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b>": {
         "en"   : "Change this if you have trouble with your bridge. needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b>",
-        "de"   : "Ändern Sie das, wenn Sie Probleme mit Ihrer Brücke haben. muss in Form einer mac-Adresse vorliegen, z.B.: d8:be:54:e7:06:f8. <b>Nach Änderung dieses Feldes muss die Brücke in der HomeKit-Datenbank </b> neu konfiguriert werden",
+        "de"   : "Ändern Sie das, wenn Sie Probleme mit Ihrer Bridge haben. Muss in Form einer MAC-Adresse vorliegen, z.B.: d8:be:54:e7:06:f8. <b>Nach Änderung dieses Feldes muss die Bridge in HomeKit neu konfiguriert werden</b>",
         "ru"   : "Измените это, если у вас возникли проблемы с вашим мостом. нужно быть в форме мака адреса, например: d8:be:54:e7:06:f8. <b>После изменения этого поля, мост должен быть переконфигурирован в базе данных HomeKit</b>",
         "pt"   : "Mude isto se tiver problemas com a ponte. precisa estar em forma de um endereço mac, por exemplo: d8:be:54:e7:06:f8. <b>Após mudar este campo, a ponte precisa ser reconfigurada no banco de dados HomeKit</b>",
         "nl"   : "Verander dit als je problemen hebt met je brug. De brug moet worden verzocht in de database van HomeKitb",
@@ -403,11 +407,13 @@ systemDictionary = {
         "uk"   : "Змініть це, якщо у вас є труднощі з вашим мостом. потрібно бути у вигляді mac адреси, наприклад, d8:be:54:e7:06:f8. <b>After змінює цей поле, міст повинен бути переналаштуваний в базі даних HomeKit</b>",
         "zh-cn": "如果你与你的桥梁有麻烦,那就发生了变化。 需采取小额地址的形式,例如: d8:be:54:e7:06:f8. <b> 改变这一领域的桥梁,需要在家库特数据库中重新配置桥梁。"
     },
+    "needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the device needs to be reconfigured in the HomeKit database</b>"                                                  : {
+        "en": "Change this if you have trouble with your bridge. needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b>",
+        "de": "Muss in Form einer MAC-Adresse sein, z.B.: d8:be:54:e7:06:f8. <b>Nach Änderung dieses Feldes muss das Gerät in HomeKit neu konfiguriert werden</b>",
+    },
     "needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the camera needs to be reconfigured in the HomeKit database</b>"                                                  : {
-        "en"   : "needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the camera needs to be reconfigured in the HomeKit database</b>",
-        "de"   : "Muss in Form einer Mac-Adresse sein, z. B.: d8:be:54:e7:06:f8. <b> Nach dem Ändern dieses Feldes muss die Kamera Geräte in der HomeKit-Datenbank </b> rekonfiguriert werden",
-        "ru"   : "Должен быть в виде MAC-адреса, например: d8:be:54:e7:06:f8. <b>After changing this field, the camera needs to be reconfigured in the HomeKit database</b>",
-        "zh-cn": "需要采用mac地址的形式，例如：d8:be:54:e7:06:f8。 <b>更改此字段后，需要在HomeKit数据库中重新配置相机</b>"
+        "en": "needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the camera needs to be reconfigured in the HomeKit database</b>",
+        "de": "Muss in Form einer MAC-Adresse sein, z.B.: d8:be:54:e7:06:f8. <b>Nach Änderung dieses Feldes muss die Kamera in HomeKit neu konfiguriert werden</b>",
     },
     "needs to be in the form of 123-45-678"                                                                                                                                                                        : {
         "en"   : "needs to be in the form of 123-45-678",
@@ -415,10 +421,74 @@ systemDictionary = {
         "ru"   : "Должен быть в формате 123-45-678",
         "zh-cn": "需要采取123-45-678的形式"
     },
+    "true = use bonjour-hap instead of avahi"                                                                                                                                                                      : {
+        "en": "true = use bonjour-hap instead of avahi",
+        "de": "Aktiv = Nutze bonjour-hap an Stelle von Avahi",
+    },
+    "true = use ciao instead of avahi"                                                                                                                                                                             : {
+        "en": "true = use ciao instead of avahi",
+        "de": "Aktiv = Nutze CIAO an Stelle von Avahi",
+    },
     "true = redirect hap-node logging to adapter logging"                                                                                                                                                          : {
         "en"   : "true = redirect hap-node logging to adapter logging",
-        "de"   : "True = Umleitung der HAP-Knoten-Protokollierung auf die Adapterprotokollierung",
+        "de"   : "Aktiv = Umleitung der HAP-NodeJS-Protokollierung auf die Adapterprotokollierung",
         "ru"   : "True = переадресация сообщений hap-node в адаптер",
         "zh-cn": "true = 将hap-node日志记录重定向到适配器日志记录"
     },
+    "String to be used to group devices within Yahka. Has no effect to HomeKit!"                                                                                                                                   : {
+        "en": "String to be used to group devices within Yahka. Has no effect to HomeKit!",
+        "de": "Zeichenkette, welche innerhalb von Yahka für die Gruppierung von Geräten verwendet wird. Hat keine Auswirkungen in HomeKit!"
+    },
+    "__NO_GROUP_NAME__"                                                                                                                                                                                            : {
+        "en": "no configured group",
+        "de": "keine zugeordnete Gruppe"
+    },
+    "leave empty to use Yahka Version"                                                                                                                                                                             : {
+        "en": "Leave empty to use Yahka version",
+        "de": "Leerlassen um Yahka-Version zu verwenden",
+    },
+    "Availability state"                                                                                                                                                                                           : {
+        "en": "Availability state",
+        "de": "Verfügbarkeits-State",
+    },
+    "Empty = always available, otherwise iobroker state."                                                                                                                                                          : {
+        "en": "Indicates availability in a HomeKit app (device may be shown as unavailable). Empty = always available, otherwise ioBroker state.",
+        "de": "Zeigt die Verfügbarkeit innerhalb einer HomeKit-App an (Geräte wird möglicherweise als nicht verfügbar angezeigt). Leer = immer verfügbar, andernfalls ioBroker state."
+    },
+    "Publish as own device"                                                                                                                                                                                        : {
+        "en": "Publish as own device",
+        "de": "Als eigenständiges Gerät veröffentlichen"
+    },
+    "Verbose Logging"                                                                                                                                                                                              : {
+        "en": "Verbose Logging",
+        "de": "Ausführliches Logging"
+    },
+    "Use Legacy Advertiser"                                                                                                                                                                                        : {
+        "en": "Use Legacy Advertiser",
+        "de": "Veraltetes Advertising nutzen",
+    },
+    "Use CIAO Advertiser"                                                                                                                                                                                          : {
+        "en": "Use CIAO Advertiser",
+        "de": "CIAO Advertising nutzen",
+    },
+    "Close"                                                                                                                                                                                                        : {
+        "en": "Close",
+        "de": "Schließen",
+    },
+    "Camera Properties"                                                                                                                                                                                            : {
+        "en": "Camera Properties",
+        "de": "Kameraeigenschaften",
+    },
+    "Enable Audio"                                                                                                                                                                                                 : {
+        "en": "Enable Audio",
+        "de": "Audio aktivieren",
+    },
+    "Reset to default"                                                                                                                                                                                             : {
+        "en": "Reset to default",
+        "de": "Auf Standard zurücksetzen"
+    },
+    "add new mapping"                                                                                                                                                                                              : {
+        "en": "Add new mapping",
+        "de": "Neue Zuordnung hinzufügen"
+    }
 };
