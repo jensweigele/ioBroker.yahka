@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "yahka",
-    "version": "1.1.2",
+    "version": "1.1.3",
     "news": {
+      "1.1.3": {
+        "en": "Fixed various translation issues\nFixed value saving for conversion of type \"map\"\nFixed error message, when a device has a duplicate name",
+        "de": "Verschiedene Übersetzungsprobleme behoben\nFestwertspeicherung für Konvertierung vom Typ „Map“\nFehlermeldung behoben, wenn ein Gerät einen doppelten Namen hat",
+        "ru": "Исправлены различные проблемы перевода.\nИсправлено сохранение значения для преобразования типа «карта»\nИсправлено сообщение об ошибке, когда устройство имеет дублирующееся имя",
+        "pt": "Corrigidos vários problemas de tradução\nEconomia de valor fixo para conversão do tipo \"mapa\"\nMensagem de erro corrigida quando um dispositivo tem um nome duplicado",
+        "nl": "Diverse vertaalproblemen opgelost\nVaste waarde opslaan voor conversie van type \"kaart\"\nVaste foutmelding, wanneer een apparaat een dubbele naam heeft",
+        "fr": "Correction de divers problèmes de traduction\nValeur fixe enregistrée pour la conversion de type « carte »\nMessage d'erreur corrigé lorsqu'un appareil a un nom en double",
+        "it": "Risolti vari problemi di traduzione\nSalvataggio del valore fisso per la conversione del tipo \"mappa\"\nMessaggio di errore corretto, quando un dispositivo ha un nome duplicato",
+        "es": "Se corrigieron varios problemas de traducción.\nSe ha corregido el guardado de valores para la conversión del tipo \"mapa\".\nMensaje de error corregido, cuando un dispositivo tiene un nombre duplicado",
+        "pl": "Naprawiono różne problemy z tłumaczeniem\nNaprawiono zapisywanie wartości dla konwersji typu „mapa”\nNaprawiono komunikat o błędzie, gdy urządzenie miało zduplikowaną nazwę",
+        "uk": "Виправлено різні проблеми з перекладом\nВиправлено збереження значення для перетворення типу \"map\"\nВиправлено повідомлення про помилку, коли пристрій має дублікат назви",
+        "zh-cn": "修复了各种翻译问题\n固定值保存用于“map”类型的转换\n修复了当设备名称重复时出现的错误消息"
+      },
       "1.1.2": {
         "en": "Modalized views for adding/editing devices\nFixed issues with collapsible when closing modal\nFixed various adapter checker issues. Thanks to @mcm1957",
         "de": "Modifizierte Ansichten zum Hinzufügen/Bearbeiten von Geräten\nProbleme mit dem Zusammenklappbaren beim Schließen des Modals behoben\nVerschiedene Probleme mit der Adapterprüfung behoben. Danke an @mcm1957",

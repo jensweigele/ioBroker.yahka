@@ -187,7 +187,7 @@ This repo includes one submodule, so before building you need to also close/init
 -->
 ## Changelog
 
-**WORK IN PROGRESS**
+### 1.1.3 (2025-05-03)
 * (tarikweiss) Fixed various translation issues
 * Fixed value saving for conversion of type "map"
 * Fixed error message, when a device has a duplicate name
