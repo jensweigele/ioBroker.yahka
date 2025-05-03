@@ -187,6 +187,11 @@ This repo includes one submodule, so before building you need to also close/init
 -->
 ## Changelog
 
+**WORK IN PROGRESS**
+* (tarikweiss) Fixed various translation issues
+* Fixed value saving for conversion of type "map"
+* Fixed error message, when a device has a duplicate name
+
 ### 1.1.2 (2025-04-29)
 * (tarikweiss) Modalized views for adding/editing devices
 * Fixed issues with collapsible when closing modal
