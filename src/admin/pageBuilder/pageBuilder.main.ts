@@ -7,6 +7,7 @@ import {ConfigPageBuilder_CustomDevice} from './pageBuilder.customDevice';
 import {ConfigPageBuilder_BridgeConfig} from './pageBuilder.bridgeConfig';
 import {ConfigPageBuilder_IPCamera} from './pageBuilder.ipCam';
 import {createTemplateElement} from '../admin.pageLoader';
+import {translateFragment, translateInternal} from "../admin.translation";
 
 function generateRandomUsername(): string {
     let usr = [];
@@ -280,10 +281,12 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
                 groupEntry.remove();
             }
         });
+
+        translateFragment(deviceList);
     }
 
     private getDeviceGroupNode(deviceList: Element, deviceConfig: hkBridge.Configuration.IBaseConfigNode): HTMLElement {
-        const groupName      = deviceConfig.groupString ? deviceConfig.groupString : '<no group>';
+        const groupName      = deviceConfig.groupString ? deviceConfig.groupString : translateInternal('__NO_GROUP_NAME__');
         const dictIdentifier = groupName.toLocaleLowerCase();
         const existingNode   = this.entryGroupMap.get(dictIdentifier);
         if (existingNode != null) {
@@ -296,6 +299,9 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
         const groupContentNode  = (<HTMLElement>fragment.querySelector('.group-content'));
         groupRootNode.dataset.groupName = dictIdentifier
         groupNameNode.innerText = groupName;
+        if (!deviceConfig.groupString) {
+            groupNameNode.innerHTML = `<span class="disabled-text">${groupName}</span>`;
+        }
         this.entryGroupMap.set(dictIdentifier, groupContentNode);
         deviceList.appendChild(groupRootNode);
         return groupContentNode;

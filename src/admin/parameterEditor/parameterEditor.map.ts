@@ -27,7 +27,7 @@ export class ParameterEditor_Map extends ParameterEditor {
         let leftField = <HTMLInputElement>myRow.querySelector('.ioBrokerValue');
         leftField.addEventListener('input', (ev) => this.valueChanged());
         let leftCheck = <HTMLInputElement>myRow.querySelector('.isSimpleValue');
-        leftCheck.addEventListener('input', (ev) => this.valueChanged());
+        leftCheck.addEventListener('change', (ev) => this.valueChanged());
 
         let rightField = <HTMLInputElement>myRow.querySelector('.homekitValue');
         rightField.addEventListener('input', (ev) => this.valueChanged());
@@ -97,6 +97,8 @@ export class ParameterEditor_Map extends ParameterEditor {
             return;
         }
 
+        console.log(parameterValue);
+
         parameterValue.mappings.forEach(item => this.createRow(item));
     }
 
@@ -107,6 +109,7 @@ export class ParameterEditor_Map extends ParameterEditor {
                 let isSimpleValue = <HTMLInputElement>row.querySelector('.isSimpleValue');
                 let leftValue = Utils.getInputValue(ioValue);
                 let hkValue = <HTMLInputElement>row.querySelector('.homekitValue');
+                console.log(ioValue, isSimpleValue, leftValue, hkValue);
                 return {
                     left: isSimpleValue.checked ? leftValue?.toString() : JSON.parse(leftValue?.toString()),
                     right: Utils.getInputValue(hkValue),

@@ -7,7 +7,7 @@ import { ConfigPageBuilder_Base, IConfigPageBuilderDelegate } from './pageBuilde
 import { IParameterEditorDelegate, IParameterEditor } from '../parameterEditor/parameterEditor.base';
 import { ParameterEditorFactory, inoutFunctions, convFunctions } from '../parameterEditor/parameterEditor.factory';
 import { ParameterEditor_Null } from '../parameterEditor/parameterEditor.null';
-import { translateFragment } from '../admin.translation';
+import {translateFragment, translateInternal} from '../admin.translation';
 import { createTemplateElement } from '../admin.pageLoader';
 import { Utils } from '../admin.utils';
 
@@ -233,6 +233,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
         if (editor == undefined)
             return;
         editor.refreshAndShow(parameterContainer, parameterValue);
+        translateFragment(parameterContainer);
     }
 
     private createCharacteristicRow(charDef: IHAPCharacteristicDefintion, serviceConfig: hkBridge.Configuration.IServiceConfig, charConfig: hkBridge.Configuration.ICharacteristicConfig, servicePanel: HTMLElement): DocumentFragment {
@@ -284,6 +285,8 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
                 Utils.setInputValue(input, charConfig[configName]);
                 parameterValue = charConfig[parameterName];
             }
+
+            console.log(selector, parameterName, charConfig, parameterValue);
 
             let paramUpdateMethod = (newValue) => {
                 let charConfig = this.findConfigCharacteristic(serviceConfig, name);
@@ -345,7 +348,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
                 let propElement = <DocumentFragment>document.importNode(this.characteristicPropRow.content, true);
                 let nameSpan = propElement.querySelector('#propName');
                 nameSpan.id = '';
-                nameSpan.textContent = propertyName;
+                nameSpan.textContent = translateInternal(("CHAR_PROP_" + propertyName).toUpperCase());
 
                 let propInput = <HTMLInputElement>propElement.querySelector('.propValue')
                 propInput.id = propertyName;

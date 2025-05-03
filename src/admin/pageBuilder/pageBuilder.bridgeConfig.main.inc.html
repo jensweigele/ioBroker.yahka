@@ -8,22 +8,15 @@
         <div class="col s12 input-field">
             <label class="translate">Name</label>
             <input type="text" class="name"/>
-            <div class="edit-hint translate">
-                descriptive only - displayed in homekit apps. Changes are only recognized after readding the bridge in
-                the app.
-            </div>
-            <div class="errorpanel translate name_error">
-                A device with this name already exists. Please change the name!
-            </div>
+            <div class="edit-hint translate">descriptive only - displayed in homekit apps. Changes are only recognized after readding the bridge in the app.</div>
+            <div class="errorpanel translate name_error">A device with this name already exists. Please change the name!</div>
         </div>
     </div>
     <div class="row">
         <div class="col s12 input-field">
             <label class="translate">Group</label>
             <input type="text" class="group"/>
-            <div class="edit-hint translate">
-                string to be used to group devices within Yahka. Has no effect to HomeKit!
-            </div>
+            <div class="edit-hint translate">String to be used to group devices within Yahka. Has no effect to HomeKit!</div>
         </div>
     </div>
 
@@ -51,7 +44,7 @@
     <div class="row">
         <div class="col s12 input-field">
             <label class="translate">Firmware</label>
-            <input type="text" class="firmware" placeholder="leave empty to use Yahka Version"/>
+            <input type="text" class="firmware" data-translate-placeholder placeholder="leave empty to use Yahka Version"/>
             <div class="edit-hint translate">descriptive only - displayed in some homekit apps</div>
         </div>
     </div>
@@ -59,11 +52,7 @@
         <div class="col s12 input-field">
             <label class="translate">Username</label>
             <input type="text" class="username"/>
-            <div class="edit-hint translate">
-                change
-                this if you have trouble with your bridge. needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8.
-                <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b>
-            </div>
+            <div class="edit-hint translate">change this if you have trouble with your bridge. needs to be in form of a mac address, e.g: d8:be:54:e7:06:f8. <b>After changing this field, the bridge needs to be reconfigured in the HomeKit database</b></div>
         </div>
     </div>
     <div class="row">
@@ -81,7 +70,7 @@
         <div class="col s4 input-field">
             <label class="translate">Port</label>
             <input min="0" max="65535" type="number" class="port"/>
-            <span class="edit-hint translate">Port 0 = random free port assigned by the operation system (default)</span>
+            <span class="edit-hint translate">0 = random free port assigned by the operation system (default)</span>
         </div>
     </div>
     <div class="row">
@@ -99,7 +88,7 @@
                 <input type="checkbox" class="useCiaoAdvertiser"/>
                 <span class="translate">Use CIAO Advertiser</span>
             </label>
-            <span class="edit-hint translate">true = use ciao instead of avahi, if your bridge is not detected</span>
+            <span class="edit-hint translate">true = use ciao instead of avahi</span>
         </div>
     </div>
     <div class="row">
