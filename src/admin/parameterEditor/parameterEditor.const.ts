@@ -8,7 +8,7 @@ export class ParameterEditor_Const extends ParameterEditor {
     constructor(valueChangeCallback: IParameterEditorDelegate) {
         super(valueChangeCallback);
         this.templateNode = createAndCloneTemplateElement(require('./parameterEditor.const.inc.html'));
-        this.textField = this.templateNode.querySelector('#textfield');
+        this.textField = this.templateNode.querySelector('.textfield');
         this.textField.addEventListener('input', (ev) => this.valueChanged());
     }
 

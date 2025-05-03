@@ -111135,7 +111135,7 @@ class ParameterEditor_Const extends parameterEditor_base_1.ParameterEditor {
     constructor(valueChangeCallback) {
         super(valueChangeCallback);
         this.templateNode = (0, admin_pageLoader_1.createAndCloneTemplateElement)(__webpack_require__(/*! ./parameterEditor.const.inc.html */ "./admin/parameterEditor/parameterEditor.const.inc.html"));
-        this.textField = this.templateNode.querySelector('#textfield');
+        this.textField = this.templateNode.querySelector('.textfield');
         this.textField.addEventListener('input', (ev) => this.valueChanged());
     }
     refreshAndShow(containerElement, parameterValue) {
