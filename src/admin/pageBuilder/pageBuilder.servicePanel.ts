@@ -7,7 +7,7 @@ import { ConfigPageBuilder_Base, IConfigPageBuilderDelegate } from './pageBuilde
 import { IParameterEditorDelegate, IParameterEditor } from '../parameterEditor/parameterEditor.base';
 import { ParameterEditorFactory, inoutFunctions, convFunctions } from '../parameterEditor/parameterEditor.factory';
 import { ParameterEditor_Null } from '../parameterEditor/parameterEditor.null';
-import { translateFragment } from '../admin.translation';
+import {translateFragment, translateInternal} from '../admin.translation';
 import { createTemplateElement } from '../admin.pageLoader';
 import { Utils } from '../admin.utils';
 
@@ -348,7 +348,7 @@ export class ConfigPageBuilder_ServicePanel extends ConfigPageBuilder_Base {
                 let propElement = <DocumentFragment>document.importNode(this.characteristicPropRow.content, true);
                 let nameSpan = propElement.querySelector('#propName');
                 nameSpan.id = '';
-                nameSpan.textContent = propertyName;
+                nameSpan.textContent = translateInternal(("CHAR_PROP_" + propertyName).toUpperCase());
 
                 let propInput = <HTMLInputElement>propElement.querySelector('.propValue')
                 propInput.id = propertyName;

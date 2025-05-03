@@ -288,7 +288,7 @@ systemDictionary = {
     },
     "Service Subtype"                                                                                                                                                                                              : {
         "en"   : "Service Subtype",
-        "de"   : "Service Subtyp",
+        "de"   : "Service-Untertyp",
         "ru"   : "Сервисный подтип",
         "zh-cn": "服务子类型："
     },
@@ -298,9 +298,9 @@ systemDictionary = {
         "ru"   : "Тип Обслуживания",
         "zh-cn": "服务类型："
     },
-    "Service name"                                                                                                                                                                                                 : {
-        "en"   : "Service name",
-        "de"   : "Dienstname",
+    "Service Name"                                                                                                                                                                                                 : {
+        "en"   : "Service Name",
+        "de"   : "Service-Name",
         "ru"   : "Наименование услуги",
         "zh-cn": "服务名称："
     },
@@ -490,5 +490,69 @@ systemDictionary = {
     "add new mapping"                                                                                                                                                                                              : {
         "en": "Add new mapping",
         "de": "Neue Zuordnung hinzufügen"
+    },
+    "Custom Characteristic"                                                                                                                                                                                        : {
+        "en": "Custom Characteristic",
+        "de": "Benutzerdefinierte Charakteristik",
+    },
+    "Characteristics"                                                                                                                                                                                              : {
+        "en": "Characteristics",
+        "de": "Charakteristiken",
+    },
+    "Add"                                                                                                                                                                                                          : {
+        "en": "Add",
+        "de": "Hinzufügen"
+    },
+    "CHAR_PROP_FORMAT"                                                                                                                                                                                             : {
+        "en": "Format",
+        "de": "Format",
+    },
+    "CHAR_PROP_PERMS"                                                                                                                                                                                              : {
+        "en": "Permissions",
+        "de": "Berechtigungen",
+    },
+    "CHAR_PROP_UNIT"                                                                                                                                                                                               : {
+        "en": "Unit",
+        "de": "Einheit",
+    },
+    "CHAR_PROP_MINVALUE"                                                                                                                                                                                           : {
+        "en": "Minimal value",
+        "de": "Minimaler Wert",
+    },
+    "CHAR_PROP_MAXVALUE"                                                                                                                                                                                           : {
+        "en": "Maximal value",
+        "de": "Maximaler Wert",
+    },
+    "CHAR_PROP_MINSTEP"                                                                                                                                                                                            : {
+        "en": "Minimal step value",
+        "de": "Minimaler Schritt-Wert",
+    },
+    "CHAR_PROP_MAXLEN"                                                                                                                                                                                             : {
+        "en": "Maximal length",
+        "de": "Maximale Länge"
+    },
+    "Characteristic Properties"                                                                                                                                                                                    : {
+        "en": "Characteristic Properties",
+        "de": "Charakter-Eigenschaften",
+    },
+    "Conversion"                                                                                                                                                                                                   : {
+        "en": "Conversion",
+        "de": "Konvertierung"
+    },
+    "EXPLANATION_SCRIPT_CONVERT"                                                                                                                                                                                   : {
+        "en": "Explanation: use the variable <b><code>value</code></b> to access the sourcevalue. Example: <code>return value * 2;</code>",
+        "de": "Erklärung: Nutzen Sie die Variable <b><code>value</code></b> um auf den ursprünglichen Wert zuzugreifen. Beispiel: <code>return value * 2</code>"
+    },
+    "To HomeKit"                                                                                                                                                                                                   : {
+        "en": "To HomeKit",
+        "de": "Zu HomeKit",
+    },
+    "To IOBroker"                                                                                                                                                                                                  : {
+        "en": "To ioBroker",
+        "de": "Zu ioBroker",
+    },
+    "State"                                                                                                                                                                                                        : {
+        "en": "State",
+        "de": "State",
     }
 };
