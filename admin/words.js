@@ -554,5 +554,21 @@ systemDictionary = {
     "State"                                                                                                                                                                                                        : {
         "en": "State",
         "de": "State",
+    },
+    "Search"                                                                                                                                                                                                       : {
+        "en": "Search",
+        "de": "Suche",
+    },
+    "NO_DEVICES_FOUND": {
+        "en": "No devices found.",
+        "de": "Keine Geräte gefunden.",
+    },
+    "EXPAND_ALL_GROUPS_BUTTON": {
+        "en": "Expand all groups",
+        "de": "Alle Gruppen aufklappen",
+    },
+    "COLLAPSE_ALL_GROUPS_BUTTON": {
+        "en": "Collapse all groups",
+        "de": "Alle Gruppen einklappen",
     }
 };

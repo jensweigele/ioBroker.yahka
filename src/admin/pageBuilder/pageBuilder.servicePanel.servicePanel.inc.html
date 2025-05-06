@@ -11,51 +11,15 @@
     <div class="content collapsible-body card-outer-container">
         <div class="card-inner-container">
             <div class="row">
-                <div class="col s12">
+                <div class="col s12" style="display: flex; flex-direction: row; gap: 30px; flex-wrap: wrap">
                     <label>
                         <input type="checkbox" class="service_enabled"/>
                         <span class="translate">Enabled</span>
                     </label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s12">
-                    <label class="translate">Service Name</label>
-                    <input class="full-size service_name" type="text" />
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s12">
-                    <select class="full-size service_type"></select>
-                    <label class="translate">Service Type</label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s12">
-                    <label class="translate">Service Subtype</label>
-                    <input class="full-size service_subtype" type="text">
-                    <div class="translate edit-hint">
-                        This is intended to use, if you have multiple services of the same type in an composed device.<br>
-                        For example, if you have a garage door with two different lights.
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col s12">
                     <label>
                         <input type="checkbox" class="service_isPrimary"/>
                         <span class="translate">Primary Service</span>
                     </label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col s12">
                     <label>
                         <input type="checkbox" class="service_isHidden"/>
                         <span class="translate">Hidden Service</span>
@@ -64,6 +28,22 @@
             </div>
 
             <div class="row">
+                <div class="input-field col s12 m6 l4">
+                    <label class="translate">Service Name</label>
+                    <input class="full-size service_name" type="text" />
+                </div>
+                <div class="input-field col s12 m6 l4">
+                    <select class="full-size service_type"></select>
+                    <label class="translate">Service Type</label>
+                </div>
+                <div class="input-field col s12 m6 l4">
+                    <label class="translate">Service Subtype</label>
+                    <input class="full-size service_subtype" type="text">
+                    <div class="translate edit-hint">
+                        This is intended to use, if you have multiple services of the same type in an composed device.<br>
+                        For example, if you have a garage door with two different lights.
+                    </div>
+                </div>
                 <div class="input-field col s12">
                     <select class="full-size service_link_to"></select>
                     <label class="translate">Link to</label>
@@ -76,7 +56,7 @@
                 </div>
             </div>
         </div>
-        <ul class="collapsible yahka_characteristic_table">
+        <ul class="collapsible yahka_characteristic_table dense-cards">
         </ul>
 
         <div class="card-inner-container">

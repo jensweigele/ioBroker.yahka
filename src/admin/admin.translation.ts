@@ -12,7 +12,8 @@ export function translateFragment(fragment) {
                 $(elements[e]).attr('data-lang', text);
             }
 
-            const transText = translateWord(text);
+
+            const transText = translateInternal(text);
             if (transText) {
                 $(elements[e]).html(transText);
             }
@@ -21,7 +22,7 @@ export function translateFragment(fragment) {
 
     const placeholders = fragment.querySelectorAll('[data-translate-placeholder]');
     placeholders.forEach(placeholder => {
-        const translated = translateWord(placeholder.placeholder);
+        const translated = translateInternal(placeholder.placeholder);
         placeholder.placeholder = translated ? translated : placeholder.placeholder;
     })
 }
