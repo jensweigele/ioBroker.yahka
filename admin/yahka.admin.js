@@ -110255,7 +110255,7 @@ exports.ConfigPageBuilder_IPCamera = ConfigPageBuilder_IPCamera;
   \*********************************************************************/
 /***/ ((module) => {
 
-module.exports = "<li class=\"collection-item\" style=\" background-color: #f0f0f0;\">\n    <div class=\"row\" style=\"margin-bottom: 0 !important;\">\n        <div class=\"col s12 m6\" style=\"display: flex; flex-direction: row; align-items: center; gap: 5px; padding-top: 5px; padding-bottom: 5px\">\n            <i class=\"device-icon material-symbols-outlined circle\">mode_fan</i>\n            <div style=\"display: flex; flex-direction: column\">\n                <span class=\"list-title\"></span>\n                <span class=\"device-type\"></span>\n            </div>\n        </div>\n        <div class=\"device-actions col s12 m6\" style=\"display: flex; flex-wrap: wrap; gap: 4px; justify-content: end\">\n            <button class=\"edit-button btn waves-effect waves-light\">\n                <span class=\"translate\">Edit</span>\n            </button>\n            <button class=\"yahka_duplicate_device btn waves-effect waves-light\">\n                <span class=\"translate\">Duplicate</span>\n            </button>\n            <button class=\"yahka_remove_device btn waves-effect waves-light red\">\n                <span class=\"translate\">Remove</span>\n            </button>\n        </div>\n    </div>\n    <div class=\"collapsible-body\">\n    </div>\n</li>";
+module.exports = "<li class=\"collection-item\" style=\" background-color: #f0f0f0;\">\n    <div style=\"display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between\">\n        <div style=\"display: flex; flex-direction: row; align-items: center; gap: 5px; padding-top: 5px; padding-bottom: 5px\">\n            <i class=\"device-icon material-symbols-outlined circle\">mode_fan</i>\n            <div style=\"display: flex; flex-direction: column\">\n                <span class=\"list-title\"></span>\n                <span class=\"device-type\"></span>\n            </div>\n        </div>\n        <div class=\"device-actions\" style=\"display: flex; flex-wrap: nowrap; gap: 4px; justify-content: end\">\n            <button class=\"edit-button btn waves-effect waves-light\">\n                <span class=\"material-symbols-outlined\">edit</span>\n                <span class=\"hide-on-small-only translate\">Edit</span>\n            </button>\n            <button class=\"yahka_duplicate_device btn waves-effect waves-light\">\n                <span class=\"material-symbols-outlined\">content_copy</span>\n                <span class=\"hide-on-small-only translate\">Duplicate</span>\n            </button>\n            <button class=\"yahka_remove_device btn waves-effect waves-light red\">\n                <span class=\"material-symbols-outlined\">delete</span>\n                <span class=\"hide-on-small-only translate\">Remove</span>\n            </button>\n        </div>\n    </div>\n    <div class=\"collapsible-body\">\n    </div>\n</li>";
 
 /***/ }),
 
@@ -110447,14 +110447,13 @@ class ioBroker_DeviceListHandler extends pageBuilder_base_1.ConfigPageBuilder_Ba
         for (let deviceConfig of this.getDeviceList().sort((a, b) => { var _a; return (_a = a.name) === null || _a === void 0 ? void 0 : _a.localeCompare(b.name); })) {
             const searchValue = currentSearch.value.toLowerCase().replace(' ', '');
             const searchOptimizedName = deviceConfig.name.toLowerCase().replace(' ', '');
-            if (!searchOptimizedName.includes(searchValue)) {
-                continue;
-            }
+            const hide = !searchOptimizedName.includes(searchValue);
             const groupNode = this.getDeviceGroupNode(deviceList, deviceConfig);
             let fragment = this.createDeviceListEntry(deviceConfig);
             let node = fragment.querySelector('.collection-item');
             this.listEntryToConfigMap.set(node, deviceConfig);
             groupNode.appendChild(fragment);
+            node.classList.toggle('hide-element', hide);
             const editButton = node.querySelector('.edit-button');
             const removeButton = node.querySelector('.yahka_remove_device');
             const duplicateButton = node.querySelector('.yahka_duplicate_device');
@@ -110529,12 +110528,21 @@ class ioBroker_DeviceListHandler extends pageBuilder_base_1.ConfigPageBuilder_Ba
                 this.entryGroupMap.delete(groupEntry.dataset.groupName);
                 groupEntry.remove();
             }
+            let hideGroup = true;
+            groupBody
+                .querySelectorAll('li')
+                .forEach(childElement => {
+                if (!childElement.classList.contains('hide-element')) {
+                    hideGroup = false;
+                }
+            });
+            groupEntry.classList.toggle('hide-element', hideGroup);
         });
         const noDeviceElement = deviceList.querySelector('.no-device-element');
         if (noDeviceElement !== null) {
             noDeviceElement.remove();
         }
-        if (deviceList.children.length == 0) {
+        if (deviceList.querySelectorAll('li[data-group-name]:not(.hide-element)').length == 0) {
             const noDeviceElement = document.createElement('div');
             noDeviceElement.classList.add('no-device-element');
             noDeviceElement.style.fontSize = '0.9em';

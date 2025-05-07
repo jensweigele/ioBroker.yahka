@@ -1,21 +1,24 @@
 <li class="collection-item" style=" background-color: #f0f0f0;">
-    <div class="row" style="margin-bottom: 0 !important;">
-        <div class="col s12 m6" style="display: flex; flex-direction: row; align-items: center; gap: 5px; padding-top: 5px; padding-bottom: 5px">
+    <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between">
+        <div style="display: flex; flex-direction: row; align-items: center; gap: 5px; padding-top: 5px; padding-bottom: 5px">
             <i class="device-icon material-symbols-outlined circle">mode_fan</i>
             <div style="display: flex; flex-direction: column">
                 <span class="list-title"></span>
                 <span class="device-type"></span>
             </div>
         </div>
-        <div class="device-actions col s12 m6" style="display: flex; flex-wrap: wrap; gap: 4px; justify-content: end">
+        <div class="device-actions" style="display: flex; flex-wrap: nowrap; gap: 4px; justify-content: end">
             <button class="edit-button btn waves-effect waves-light">
-                <span class="translate">Edit</span>
+                <span class="material-symbols-outlined">edit</span>
+                <span class="hide-on-small-only translate">Edit</span>
             </button>
             <button class="yahka_duplicate_device btn waves-effect waves-light">
-                <span class="translate">Duplicate</span>
+                <span class="material-symbols-outlined">content_copy</span>
+                <span class="hide-on-small-only translate">Duplicate</span>
             </button>
             <button class="yahka_remove_device btn waves-effect waves-light red">
-                <span class="translate">Remove</span>
+                <span class="material-symbols-outlined">delete</span>
+                <span class="hide-on-small-only translate">Remove</span>
             </button>
         </div>
     </div>

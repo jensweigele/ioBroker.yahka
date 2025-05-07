@@ -290,3 +290,7 @@ textarea.validationError {
 .adapter-body {
     overflow: auto !important;
 }
+
+.hide-element {
+    display: none;
+}

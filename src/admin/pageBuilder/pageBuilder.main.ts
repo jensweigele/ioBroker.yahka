@@ -220,15 +220,15 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
             const searchValue         = currentSearch.value.toLowerCase().replace(' ', '');
             const searchOptimizedName = deviceConfig.name.toLowerCase().replace(' ', '');
 
-            if (!searchOptimizedName.includes(searchValue)) {
-                continue;
-            }
+            const hide = !searchOptimizedName.includes(searchValue);
 
             const groupNode = this.getDeviceGroupNode(deviceList, deviceConfig);
             let fragment    = this.createDeviceListEntry(deviceConfig);
             let node        = (<HTMLElement>fragment.querySelector('.collection-item'));
             this.listEntryToConfigMap.set(node, deviceConfig);
             groupNode.appendChild(fragment);
+
+            node.classList.toggle('hide-element', hide);
 
             const editButton = node.querySelector<HTMLButtonElement>('.edit-button');
             const removeButton = node.querySelector<HTMLButtonElement>('.yahka_remove_device');
@@ -310,6 +310,18 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
                 this.entryGroupMap.delete(groupEntry.dataset.groupName)
                 groupEntry.remove();
             }
+
+            let hideGroup = true;
+
+            groupBody
+                .querySelectorAll<HTMLElement>('li')
+                .forEach(childElement => {
+                    if (!childElement.classList.contains('hide-element')) {
+                        hideGroup = false;
+                    }
+                });
+
+            groupEntry.classList.toggle('hide-element', hideGroup);
         });
 
         const noDeviceElement = deviceList.querySelector('.no-device-element');
@@ -317,7 +329,7 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
             noDeviceElement.remove();
         }
 
-        if (deviceList.children.length == 0) {
+        if (deviceList.querySelectorAll<HTMLElement>('li[data-group-name]:not(.hide-element)').length == 0) {
             const noDeviceElement = document.createElement('div');
             noDeviceElement.classList.add('no-device-element');
             noDeviceElement.style.fontSize        = '0.9em';
