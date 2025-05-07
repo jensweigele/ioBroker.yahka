@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "yahka",
-    "version": "1.1.3",
+    "version": "1.1.4",
     "news": {
+      "1.1.4": {
+        "en": "Improved the design and the ordering of elements, depending on screen size\nAdded the search bar for a device list\nAdded the expand/collapse buttons for a device list\nImproved the distinguishing of device and group in a device list",
+        "de": "Verbessertes Design und Anordnung der Elemente je nach Bildschirmgröße\nSuchleiste für eine Geräteliste hinzugefügt\nSchaltflächen zum Erweitern/Reduzieren einer Geräteliste hinzugefügt\nVerbesserte Unterscheidung von Gerät und Gruppe in einer Geräteliste",
+        "ru": "Улучшен дизайн и порядок элементов в зависимости от размера экрана.\nДобавлена строка поиска для списка устройств\nДобавлены кнопки развернуть/свернуть список устройств.\nУлучшено различение устройств и групп в списке устройств.",
+        "pt": "Melhorou o design e a ordenação dos elementos, dependendo do tamanho da tela\nAdicionada a barra de pesquisa para uma lista de dispositivos\nAdicionados botões de expandir/recolher para uma lista de dispositivos\nMelhorou a distinção entre dispositivo e grupo em uma lista de dispositivos",
+        "nl": "Het ontwerp en de volgorde van elementen zijn verbeterd, afhankelijk van de schermgrootte\nZoekbalk voor een apparatenlijst toegevoegd\nDe uitvouw-/samenvouwknoppen voor een apparatenlijst zijn toegevoegd\nHet onderscheid tussen apparaat en groep in een apparatenlijst is verbeterd",
+        "fr": "Amélioration de la conception et de l'ordre des éléments, en fonction de la taille de l'écran\nAjout de la barre de recherche pour une liste d'appareils\nAjout des boutons développer/réduire pour une liste d'appareils\nAmélioration de la distinction entre l'appareil et le groupe dans une liste d'appareils",
+        "it": "Migliorato il design e l'ordinamento degli elementi, a seconda delle dimensioni dello schermo\nAggiunta la barra di ricerca per un elenco di dispositivi\nAggiunti i pulsanti espandi/contrai per un elenco di dispositivi\nMigliorata la distinzione tra dispositivo e gruppo in un elenco di dispositivi",
+        "es": "Se mejoró el diseño y el orden de los elementos, dependiendo del tamaño de la pantalla.\nSe agregó la barra de búsqueda para una lista de dispositivos.\nSe agregaron los botones expandir/contraer para una lista de dispositivos\nSe mejoró la distinción entre dispositivos y grupos en una lista de dispositivos.",
+        "pl": "Ulepszono projekt i kolejność elementów w zależności od rozmiaru ekranu\nDodano pasek wyszukiwania dla listy urządzeń\nDodano przyciski rozwijania/zwijania dla listy urządzeń\nPoprawiono rozróżnianie urządzeń i grup na liście urządzeń",
+        "uk": "Покращено дизайн та порядок елементів залежно від розміру екрана\nДодано рядок пошуку для списку пристроїв\nДодано кнопки розгортання/згортання для списку пристроїв\nПокращено розрізнення пристрою та групи у списку пристроїв",
+        "zh-cn": "根据屏幕尺寸改进元素的设计和排序\n添加了设备列表的搜索栏\n添加了设备列表的展开/折叠按钮\n改进了设备列表中设备和组的区分"
+      },
       "1.1.3": {
         "en": "Fixed various translation issues\nFixed value saving for conversion of type \"map\"\nFixed error message, when a device has a duplicate name",
         "de": "Verschiedene Übersetzungsprobleme behoben\nFestwertspeicherung für Konvertierung vom Typ „Map“\nFehlermeldung behoben, wenn ein Gerät einen doppelten Namen hat",
