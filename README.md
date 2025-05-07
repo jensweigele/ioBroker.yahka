@@ -187,6 +187,12 @@ This repo includes one submodule, so before building you need to also close/init
 -->
 ## Changelog
 
+### **WORK IN PROGRESS**
+* (tarikweiss) Improved design and order of elements, depending on screen size
+* Added search bar for device list
+* Added expand/collapse buttons for device list
+* Improved distinguishing of device and group in device list
+
 ### 1.1.3 (2025-05-03)
 * (tarikweiss) Fixed various translation issues
 * Fixed value saving for conversion of type "map"

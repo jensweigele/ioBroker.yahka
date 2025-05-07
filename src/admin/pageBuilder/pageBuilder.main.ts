@@ -66,6 +66,8 @@ export class ioBroker_YahkaPageBuilder implements IConfigPageBuilderDelegate {
         this.deviceListHandler.buildDeviceList(bridgeFrame);
         this.buttonHandler.bindBridgeButtons(bridgeFrame);
 
+        translateFragment(bridgeFrame);
+
         return bridgeFrame;
     }
 
@@ -171,6 +173,14 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
         super(delegate);
         this.deviceListEntryTemplate = createTemplateElement(require('./pageBuilder.main.deviceListEntry.inc.html'));
         this.deviceListEntryGroupTemplate = createTemplateElement(require('./pageBuilder.main.deviceListEntryGroup.inc.html'));
+
+        const currentSearch = document.querySelector<HTMLInputElement>('#device-search');
+
+        currentSearch.addEventListener('keyup', () => {
+            let bridgeFrame = <HTMLElement>document.querySelector('#yahka_bridge_frame');
+
+            this.buildDeviceList(bridgeFrame);
+        })
     }
 
 
@@ -204,12 +214,21 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
 
         this.listEntryToConfigMap.clear();
 
+        const currentSearch = document.querySelector<HTMLInputElement>('#device-search');
+
         for (let deviceConfig of this.getDeviceList().sort((a, b) => a.name?.localeCompare(b.name))) {
+            const searchValue         = currentSearch.value.toLowerCase().replace(' ', '');
+            const searchOptimizedName = deviceConfig.name.toLowerCase().replace(' ', '');
+
+            const hide = !searchOptimizedName.includes(searchValue);
+
             const groupNode = this.getDeviceGroupNode(deviceList, deviceConfig);
             let fragment    = this.createDeviceListEntry(deviceConfig);
             let node        = (<HTMLElement>fragment.querySelector('.collection-item'));
             this.listEntryToConfigMap.set(node, deviceConfig);
             groupNode.appendChild(fragment);
+
+            node.classList.toggle('hide-element', hide);
 
             const editButton = node.querySelector<HTMLButtonElement>('.edit-button');
             const removeButton = node.querySelector<HTMLButtonElement>('.yahka_remove_device');
@@ -249,7 +268,7 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
 
             if (duplicateButton) {
                 duplicateButton.addEventListener('click', () => {
-                    let copyOfDevice = $.extend(true, {}, deviceConfig)
+                    let copyOfDevice  = $.extend(true, {}, deviceConfig)
                     copyOfDevice.name = `${copyOfDevice.name} copy`
                     if (hkBridge.Configuration.isIPCameraConfig(copyOfDevice)) {
                         copyOfDevice.serial = '';
@@ -268,6 +287,17 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
         }
         [...deviceList.children]
             .sort((a: HTMLElement, b: HTMLElement) => a.innerText?.localeCompare(b.innerText))
+            .sort((a: HTMLElement, b: HTMLElement) => {
+                if (a.dataset.hasNoGroup == '1') {
+                    return -1;
+                }
+
+                if (b.dataset.hasNoGroup == '1') {
+                    return 1;
+                }
+
+                return 0;
+            })
             .forEach(node => {
                 return deviceList.appendChild(node);
             });
@@ -280,7 +310,35 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
                 this.entryGroupMap.delete(groupEntry.dataset.groupName)
                 groupEntry.remove();
             }
+
+            let hideGroup = true;
+
+            groupBody
+                .querySelectorAll<HTMLElement>('li')
+                .forEach(childElement => {
+                    if (!childElement.classList.contains('hide-element')) {
+                        hideGroup = false;
+                    }
+                });
+
+            groupEntry.classList.toggle('hide-element', hideGroup);
         });
+
+        const noDeviceElement = deviceList.querySelector('.no-device-element');
+        if (noDeviceElement !== null) {
+            noDeviceElement.remove();
+        }
+
+        if (deviceList.querySelectorAll<HTMLElement>('li[data-group-name]:not(.hide-element)').length == 0) {
+            const noDeviceElement = document.createElement('div');
+            noDeviceElement.classList.add('no-device-element');
+            noDeviceElement.style.fontSize        = '0.9em';
+            noDeviceElement.style.padding         = '1rem';
+            noDeviceElement.style.backgroundColor = '#fff';
+            noDeviceElement.innerHTML             = translateInternal('NO_DEVICES_FOUND');
+
+            deviceList.appendChild(noDeviceElement);
+        }
 
         translateFragment(deviceList);
     }
@@ -300,7 +358,8 @@ class ioBroker_DeviceListHandler extends ConfigPageBuilder_Base {
         groupRootNode.dataset.groupName = dictIdentifier
         groupNameNode.innerText = groupName;
         if (!deviceConfig.groupString) {
-            groupNameNode.innerHTML = `<span class="disabled-text">${groupName}</span>`;
+            groupRootNode.dataset.hasNoGroup = '1';
+            groupNameNode.innerHTML          = `<span class="disabled-text">${groupName}</span>`;
         }
         this.entryGroupMap.set(dictIdentifier, groupContentNode);
         deviceList.appendChild(groupRootNode);

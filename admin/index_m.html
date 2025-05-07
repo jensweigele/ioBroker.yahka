@@ -138,35 +138,71 @@
         <div class="container-fluid flex-grow" id="yahka_bridge_frame">
             <div class="row">
                 <div class="col s12 left" style="margin-top: 20px;">
-                    <div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
                         <button class="btn" id="yahka_add_device">
-                            <span class="material-icons">add</span>
+                            <span class="material-symbols-outlined">add</span>
                             <span class="translate">Add Device</span>
                         </button>
                         <button class="btn" id="yahka_add_camera">
-                            <span class="material-icons">add</span>
+                            <span class="material-symbols-outlined">add</span>
                             <span class="translate">Add Camera</span>
                         </button>
+                    </div>
+                </div>
+                <div class="col s12">
+                    <div class="input-field">
+                        <input data-translate-placeholder id="device-search" type="text" placeholder="Search" style="color: white">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col s12">
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <button class="btn" id="yahka_expand_all">
+                            <span class="material-symbols-outlined">expand_all</span>
+                            <span class="translate hide-on-small-only">EXPAND_ALL_GROUPS_BUTTON</span>
+                        </button>
+                        <button class="btn" id="yahka_collapse_all">
+                            <span class="material-symbols-outlined">collapse_all</span>
+                            <span class="translate hide-on-small-only">COLLAPSE_ALL_GROUPS_BUTTON</span>
+                        </button>
+                    </div>
                     <ul class="collapsible no-re-init" id="yahka_deviceList">
                     </ul>
                 </div>
             </div>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
-                    var elems = document.querySelectorAll('#yahka_deviceList');
-                    M.Collapsible.init(elems);
+                    const deviceList  = document.querySelector('#yahka_deviceList');
+                    const collapsible = M.Collapsible.init(deviceList, {
+                        accordion: false
+                    });
+
+                    const expandButton   = document.querySelector('#yahka_expand_all');
+                    const collapseButton = document.querySelector('#yahka_collapse_all');
+
+                    expandButton.addEventListener('click', () => {
+                        const collapsibleHeaders = deviceList.querySelectorAll('ul');
+
+                        collapsibleHeaders.forEach((element, index) => {
+                            collapsible.open(index);
+                        });
+                    });
+
+                    collapseButton.addEventListener('click', () => {
+                        const collapsibleHeaders = deviceList.querySelectorAll('ul');
+
+                        collapsibleHeaders.forEach((element, index) => {
+                            collapsible.close(index);
+                        });
+                    });
                 });
             </script>
         </div>
 
         <!-- Modal Structure -->
-        <div id="modal-yahka-edit-device-container" class="modal modal-fixed-footer">
-            <div class="modal-content yahka-edit-device-container">
+        <div id="modal-yahka-edit-device-container" class="modal modal-fixed-footer custom-modal">
+            <div class="modal-content yahka-edit-device-container" style="height: calc(100% - 112px) !important;">
             </div>
             <div class="modal-footer">
                 <a href="#!" class="modal-close waves-effect btn-flat translate">Close</a>
