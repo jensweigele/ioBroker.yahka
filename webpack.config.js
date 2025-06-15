@@ -27,12 +27,17 @@ let backendConfig = {
   }
 };
 
+const ReplaceInFileWebpackPlugin = require('replace-in-file-webpack-plugin');
+
 let frontendConfig = {
   context: path.resolve(__dirname, 'src'),
   target: 'web',
   mode: 'development',
   entry: {
     'yahka.admin': './admin/yahka.admin.ts'
+  },
+  infrastructureLogging: {
+    level: 'verbose',
   },
   module: {
     rules: [{
@@ -70,7 +75,8 @@ let frontendConfig = {
   },
   devtool: 'source-map',
   externals: {
-    jquery: 'jQuery'
+    jquery: 'jQuery',
+    'node:fs': 'common node:fs'
   },
   output: {
     library: 'yahkaAdmin',
@@ -78,6 +84,30 @@ let frontendConfig = {
     path: path.resolve(__dirname, 'admin/')
   },
   plugins: [
+    new ReplaceInFileWebpackPlugin([
+      {
+        dir: 'admin',
+        files: ['yahka.admin.js'],
+        rules: [
+          {
+            search: /__webpack_require__\(\/\*! node:fs \*\/ "node:fs"\)/g,
+            replace: 'null'
+          },
+          {
+            search: /module\.exports = node:fs;/g,
+            replace: ''
+          },
+          {
+            search: 'const packageJson = JSON.parse((0, node_fs_1.readFileSync)(/*require.resolve*/(/*! ../../../package.json */ "../node_modules/hap-nodejs/package.json"), "utf-8"));',
+            replace: 'const packageJson = __webpack_require__(/*! ../package.json */ "../node_modules/hap-nodejs/package.json");'
+          },
+          {
+            search: 'const packageJson = JSON.parse((0, node_fs_1.readFileSync)(/*require.resolve*/(/*! ../package.json */ "../node_modules/hap-nodejs/package.json"), "utf-8"));',
+            replace: 'const packageJson = __webpack_require__(/*! ../package.json */ "../node_modules/hap-nodejs/package.json");'
+          }
+        ]
+      }
+    ]),
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
     }),
@@ -95,8 +125,7 @@ let frontendConfig = {
     new webpack.NormalModuleReplacementPlugin(
       /lib\/util\/hapCrypto\.js/,
       path.resolve(__dirname, 'src/AccessoryLoaderForBrowser.js')
-    )
-
+    ),
   ]
 };
 
