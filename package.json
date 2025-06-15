@@ -37,7 +37,7 @@
     "@iobroker/adapter-core": "^3.2.3",
     "debug": "^4.4.0",
     "dev-null": "^0.1.1",
-    "hap-nodejs": "1.1.0",
+    "hap-nodejs": "1.1.2",
     "ip": "^2.0.1",
     "macaddress": "0.5.3"
   },
@@ -59,6 +59,7 @@
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
     "raw-loader": "^4.0.2",
+    "replace-in-file-webpack-plugin": "^1.0.6",
     "stream-browserify": "^3.0.0",
     "timers": "^0.1.1",
     "ts-loader": "^9.5.2",

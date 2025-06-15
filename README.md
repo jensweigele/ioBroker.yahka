@@ -187,6 +187,9 @@ This repo includes one submodule, so before building you need to also close/init
 -->
 ## Changelog
 
+### **WORK IN PROGRESS**
+* (tarikweiss) Updated version of hap-nodejs library to be compatible with Node 22.
+
 ### 1.1.4 (2025-05-07)
 * (tarikweiss) Improved design and order of elements, depending on screen size
 * Added search bar for a device list

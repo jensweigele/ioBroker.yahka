@@ -48219,6 +48219,7 @@ const tslib_1 = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es
 __webpack_require__(/*! source-map-support/register */ "../node_modules/source-map-support/register.js"); // registering node-source-map-support for typescript stack traces
 __webpack_require__(/*! ./lib/definitions */ "../node_modules/hap-nodejs/dist/lib/definitions/index.js"); // must be loaded before Characteristic and Service class
 const debug_1 = tslib_1.__importDefault(__webpack_require__(/*! debug */ "../node_modules/debug/src/browser.js"));
+const node_fs_1 = null;
 /**
  * @group Utils
  */
@@ -48256,7 +48257,8 @@ const debug = (0, debug_1.default)("HAP-NodeJS:Advertiser");
 function HAPLibraryVersion() {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const packageJson = __webpack_require__(/*! ../package.json */ "../node_modules/hap-nodejs/package.json");
-    return packageJson.version;
+    const { version } = packageJson;
+    return version;
 }
 function printInit() {
     debug("Initializing HAP-NodeJS v%s ...", HAPLibraryVersion());
@@ -49217,9 +49219,12 @@ class Accessory extends events_1.EventEmitter {
     }
     handleInitialPairSetupFinished(username, publicKey, callback) {
         debug("[%s] Paired with client %s", this.displayName, username);
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this._accessoryInfo && this._accessoryInfo.addPairedClient(username, publicKey, 1 /* PermissionTypes.ADMIN */);
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this._accessoryInfo && this._accessoryInfo.save();
         // update our advertisement, so it can pick up on the paired status of AccessoryInfo
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this._advertiser && this._advertiser.updateAdvertisement();
         callback();
         this.emit("paired" /* AccessoryEventTypes.PAIRED */);
@@ -49261,6 +49266,7 @@ class Accessory extends events_1.EventEmitter {
         this._accessoryInfo.save();
         callback(0); // first of all ensure the pairing is removed before we advertise availability again
         if (!this._accessoryInfo.paired()) {
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             this._advertiser && this._advertiser.updateAdvertisement();
             this.emit("unpaired" /* AccessoryEventTypes.UNPAIRED */);
             this.handleAccessoryUnpairedForControllers();
@@ -49778,6 +49784,7 @@ class Accessory extends events_1.EventEmitter {
             });
         });
         // also save controller which didn't get initialized (could lead to service duplication if we throw that data away)
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         accessory.serializedControllers && Object.entries(accessory.serializedControllers).forEach(([id, serviceMap]) => {
             controllers.push({
                 type: id,
@@ -50320,6 +50327,7 @@ class AvahiAdvertiser extends events_1.EventEmitter {
         try {
             try {
                 await messageBusConnectionResult(bus);
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
             }
             catch (error) {
                 debug("Avahi/DBus classified unavailable due to missing dbus interface!");
@@ -50328,6 +50336,7 @@ class AvahiAdvertiser extends events_1.EventEmitter {
             try {
                 const version = await this.avahiInvoke(bus, "/", "Server", "GetVersionString");
                 debug("Detected Avahi over DBus interface running version '%s'.", version);
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
             }
             catch (error) {
                 debug("Avahi/DBus classified unavailable due to missing avahi interface!");
@@ -50462,6 +50471,7 @@ class ResolvedAdvertiser extends events_1.EventEmitter {
         try {
             try {
                 await messageBusConnectionResult(bus);
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
             }
             catch (error) {
                 debug("systemd-resolved/DBus classified unavailable due to missing dbus interface!");
@@ -50474,6 +50484,7 @@ class ResolvedAdvertiser extends events_1.EventEmitter {
                     signature: "isit",
                 });
                 debug("Detected systemd-resolved over DBus interface running version.");
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
             }
             catch (error) {
                 debug("systemd-resolved/DBus classified unavailable due to missing systemd-resolved interface!");
@@ -54357,10 +54368,12 @@ class RTPStreamManagement {
     }
     streamingIsDisabled(callback) {
         if (!this.service.getCharacteristic(Characteristic_1.Characteristic.Active).value) {
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             callback && callback(new hapStatusError_1.HapStatusError(-70412 /* HAPStatus.NOT_ALLOWED_IN_CURRENT_STATE */));
             return true;
         }
         if (this.disabledThroughOperatingMode?.()) {
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             callback && callback(new hapStatusError_1.HapStatusError(-70412 /* HAPStatus.NOT_ALLOWED_IN_CURRENT_STATE */));
             return true;
         }
@@ -57327,7 +57340,7 @@ const CameraController_1 = __webpack_require__(/*! ./CameraController */ "../nod
  * and would collide otherwise.
  * As the possibility exists, both the CameraController and DoorbellController are written to support migration
  * from one to another. Meaning a serialized CameraController can be initialized as a DoorbellController
- * (on startup in {@link initWithServices}) and vice versa.
+ * (on startup in {@link Controller.initWithServices}) and vice versa.
  *
  * @group Doorbell
  */
@@ -60477,6 +60490,7 @@ class DataStreamConnection extends events_1.EventEmitter {
             frame.plaintextPayload = hapCrypto.chacha20_poly1305_decryptAndVerify(key, this.controllerToAccessoryNonceBuffer, frame.header, frame.cipheredPayload, frame.authTag);
             this.controllerToAccessoryNonce++; // we had a successful encryption, increment the nonce
             return true;
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         }
         catch (error) {
             // frame decryption or authentication failed. Could happen when our guess for a PreparedDataStreamSession is wrong
@@ -66422,10 +66436,11 @@ const tweetnacl_1 = tslib_1.__importDefault(__webpack_require__(/*! tweetnacl */
 const util_1 = tslib_1.__importDefault(__webpack_require__(/*! util */ "../node_modules/util/util.js"));
 const eventedhttp_1 = __webpack_require__(/*! ../util/eventedhttp */ "../node_modules/hap-nodejs/dist/lib/util/eventedhttp.js");
 const HAPStorage_1 = __webpack_require__(/*! ./HAPStorage */ "../node_modules/hap-nodejs/dist/lib/model/HAPStorage.js");
+const node_fs_1 = null;
 function getVersion() {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const packageJson = __webpack_require__(/*! ../../../package.json */ "../node_modules/hap-nodejs/package.json");
-    return packageJson.version;
+    const packageJson = __webpack_require__(/*! ../package.json */ "../node_modules/hap-nodejs/package.json");
+    const { version } = packageJson;
+    return version;
 }
 /**
  * @group Model
@@ -66836,6 +66851,7 @@ class ControllerStorage {
         }
         this.initialized = true;
         // storing data into our local controllerData Record
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         data && data.forEach(saved => this.controllerData[saved.type] = saved.controllerData);
         const restoredControllers = [];
         this.trackedControllers.forEach(controller => {
@@ -67276,7 +67292,7 @@ exports.checkName = checkName;
  */
 function checkName(displayName, name, value) {
     // Ensure the string starts and ends with a Unicode letter or number and allow any combination of letters, numbers, spaces, and apostrophes in the middle.
-    if (typeof value === "string" && !(new RegExp(/^[\p{L}\p{N}][\p{L}\p{N} ']*[\p{L}\p{N}]$/u)).test(value)) {
+    if (typeof value === "string" && !(new RegExp(/^[\p{L}\p{N}][\p{L}\p{N}\u2019 '.,-]*[\p{L}\p{N}\u2019]$/u)).test(value)) {
         console.warn("HAP-NodeJS WARNING: The accessory '" + displayName + "' has an invalid '" + name + "' characteristic ('" + value + "'). Please use only " +
             "alphanumeric, space, and apostrophe characters. Ensure it starts and ends with an alphabetic or numeric character, and avoid emojis. This may prevent " +
             "the accessory from being added in the Home App or cause unresponsiveness.");
@@ -68640,7 +68656,7 @@ exports.once = once;
  *
  * @group Utils
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 function once(func) {
     let called = false;
     return ((...args) => {
@@ -68676,7 +68692,6 @@ function PromiseTimeout(timeout) {
         setTimeout(() => resolve(), timeout);
     });
 }
-// eslint-disable-next-line @typescript-eslint/ban-types
 function awaitEventOnce(element, event, timeout = 5000) {
     return new Promise((resolve, reject) => {
         // eslint-disable-next-line prefer-const
@@ -68805,7 +68820,7 @@ function numericUpperBound(format) {
         case "uint32" /* Formats.UINT32 */:
             return 4294967295;
         case "uint64" /* Formats.UINT64 */:
-            // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
+            // eslint-disable-next-line no-loss-of-precision
             return 18446744073709551615; // don't get fooled, javascript uses 18446744073709552000 here
         default:
             throw new Error("Unable to determine numeric lower bound for " + format);
@@ -69288,7 +69303,7 @@ var ResourceRequestType;
 /***/ ((module) => {
 
 "use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"name":"hap-nodejs","version":"1.1.0","description":"HAP-NodeJS is a Node.js implementation of HomeKit Accessory Server.","main":"dist/index.js","types":"dist/index.d.ts","maintainers":["Andreas Bauer <mail@anderl-bauer.de>"],"author":"Khaos Tian <khaos.tian@gmail.com> (https://tz.is/)","homepage":"https://github.com/homebridge/HAP-NodeJS","license":"Apache-2.0","scripts":{"check":"npm install && npm outdated","clean":"rimraf dist && rimraf coverage","lint":"eslint \'src/**/*.{js,ts,json}\'","build":"rimraf dist && tsc && node .github/node-persist-ignore.js","prepublishOnly":"npm run build","postpublish":"npm run clean","test":"jest","test-coverage":"jest --coverage","start":"node dist/BridgedCore.js","docs":"typedoc","lint-docs":"typedoc --emit none --treatWarningsAsErrors"},"keywords":["hap-nodejs","hap","homekit","homekit-accessory-protocol","homekit-server","homekit-protocol","homekit-device","homekit-accessory","hap-server","homekit-support","siri"],"repository":{"type":"git","url":"git+https://github.com/homebridge/HAP-NodeJS.git"},"bugs":{"url":"https://github.com/homebridge/HAP-NodeJS/issues"},"engines":{"node":"^18 || ^20"},"files":["README.md","LICENSE","dist","@types"],"dependencies":{"@homebridge/ciao":"^1.3.0","@homebridge/dbus-native":"^0.6.0","bonjour-hap":"^3.8.0","debug":"^4.3.5","fast-srp-hap":"^2.0.4","futoin-hkdf":"^1.5.3","node-persist":"^0.0.12","source-map-support":"^0.5.21","tslib":"^2.6.3","tweetnacl":"^1.0.3"},"devDependencies":{"@types/debug":"^4.1.12","@types/escape-html":"^1.0.4","@types/jest":"^29.5.12","@types/node":"^20.14.11","@types/plist":"^3.0.5","@typescript-eslint/eslint-plugin":"^7.16.1","@typescript-eslint/parser":"^7.16.1","axios":"^1.7.2","commander":"^12.1.0","escape-html":"^1.0.3","eslint":"^8.57.0","http-parser-js":"^0.5.8","jest":"^29.7.0","rimraf":"^6.0.1","semver":"^7.6.3","simple-plist":"^1.4.0-0","ts-jest":"^29.2.3","ts-node":"^10.9.2","typedoc":"^0.26.5","typescript":"^5.5.3"}}');
+module.exports = /*#__PURE__*/JSON.parse('{"name":"hap-nodejs","version":"1.1.2","description":"HAP-NodeJS is a Node.js implementation of HomeKit Accessory Server.","main":"dist/index.js","types":"dist/index.d.ts","maintainers":["Andreas Bauer <mail@anderl-bauer.de>"],"author":"Khaos Tian <khaos.tian@gmail.com> (https://tz.is/)","homepage":"https://github.com/homebridge/HAP-NodeJS","license":"Apache-2.0","scripts":{"check":"npm install && npm outdated","clean":"rimraf dist && rimraf coverage","lint":"eslint \'src/**/*.{js,ts,json}\'","build":"rimraf dist && tsc && node .github/node-persist-ignore.js","prepublishOnly":"npm run build","postpublish":"npm run clean","test":"jest","test-coverage":"jest --coverage","start":"node dist/BridgedCore.js","docs":"typedoc","lint-docs":"typedoc --emit none --treatWarningsAsErrors"},"keywords":["hap-nodejs","hap","homekit","homekit-accessory-protocol","homekit-server","homekit-protocol","homekit-device","homekit-accessory","hap-server","homekit-support","siri"],"repository":{"type":"git","url":"git+https://github.com/homebridge/HAP-NodeJS.git"},"bugs":{"url":"https://github.com/homebridge/HAP-NodeJS/issues"},"engines":{"node":"^18 || ^20 || ^22"},"files":["README.md","LICENSE","dist","@types"],"dependencies":{"@homebridge/ciao":"^1.3.1","@homebridge/dbus-native":"^0.6.0","bonjour-hap":"^3.9.0","debug":"^4.4.0","fast-srp-hap":"^2.0.4","futoin-hkdf":"^1.5.3","node-persist":"^0.0.12","source-map-support":"^0.5.21","tslib":"^2.8.1","tweetnacl":"^1.0.3"},"devDependencies":{"@types/debug":"^4.1.12","@types/escape-html":"^1.0.4","@types/jest":"^29.5.14","@types/node":"^22.13.1","@types/plist":"^3.0.5","@typescript-eslint/eslint-plugin":"^8.24.0","@typescript-eslint/parser":"^8.24.0","axios":"^1.7.9","commander":"^12.1.0","escape-html":"^1.0.3","eslint":"^8.57.0","http-parser-js":"^0.5.9","jest":"^29.7.0","rimraf":"^6.0.1","semver":"^7.7.1","simple-plist":"^1.4.0-0","ts-jest":"^29.2.5","ts-node":"^10.9.2","typedoc":"^0.27.7","typescript":"^5.7.3"}}');
 
 /***/ }),
 
@@ -110672,7 +110687,7 @@ class ioBroker_ButtonHandler extends pageBuilder_base_1.ConfigPageBuilder_Base {
   \************************************************************************************/
 /***/ ((module) => {
 
-module.exports = "<div class=\"input-field\">\n    <label id=\"propName\"></label>\n    <input type=\"text\" class=\"propValue\">\n</div>";
+module.exports = "<div class=\"input-field col s12 m6 l4\">\n    <label id=\"propName\"></label>\n    <input type=\"text\" class=\"propValue\">\n</div>";
 
 /***/ }),
 
@@ -114030,6 +114045,17 @@ exports.TIoBrokerInOutFunction_MultiState = TIoBrokerInOutFunction_MultiState;
 
 "use strict";
 module.exports = jQuery;
+
+/***/ }),
+
+/***/ "node:fs":
+/*!**************************!*\
+  !*** external "node:fs" ***!
+  \**************************/
+/***/ ((module) => {
+
+"use strict";
+
 
 /***/ })
 
