@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "yahka",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "news": {
+      "1.1.5": {
+        "en": "Updated version of hap-nodejs library to be compatible with Node 22.",
+        "de": "Aktualisierte Version der hap-nodejs-Bibliothek für die Kompatibilität mit Node 22.",
+        "ru": "Обновленная версия библиотеки hap-nodejs для совместимости с Node 22.",
+        "pt": "Versão atualizada da biblioteca hap-nodejs para ser compatível com o Node 22.",
+        "nl": "Bijgewerkte versie van de hap-nodejs-bibliotheek die compatibel is met Node 22.",
+        "fr": "Version mise à jour de la bibliothèque hap-nodejs pour être compatible avec Node 22.",
+        "it": "Versione aggiornata della libreria hap-nodejs per renderla compatibile con Node 22.",
+        "es": "Versión actualizada de la biblioteca hap-nodejs para que sea compatible con Node 22.",
+        "pl": "Zaktualizowana wersja biblioteki hap-nodejs, zapewniająca kompatybilność z Node 22.",
+        "uk": "Оновлена версія бібліотеки hap-nodejs для сумісності з Node 22.",
+        "zh-cn": "更新 hap-nodejs 库的版本以与 Node 22 兼容。"
+      },
       "1.1.4": {
         "en": "Improved the design and the ordering of elements, depending on screen size\nAdded the search bar for a device list\nAdded the expand/collapse buttons for a device list\nImproved the distinguishing of device and group in a device list",
         "de": "Verbessertes Design und Anordnung der Elemente je nach Bildschirmgröße\nSuchleiste für eine Geräteliste hinzugefügt\nSchaltflächen zum Erweitern/Reduzieren einer Geräteliste hinzugefügt\nVerbesserte Unterscheidung von Gerät und Gruppe in einer Geräteliste",
