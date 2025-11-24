@@ -55,7 +55,7 @@
     "assert": "^2.1.0",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.1",
-    "html-webpack-plugin": "^5.6.4",
+    "html-webpack-plugin": "^5.6.5",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
     "raw-loader": "^4.0.2",
