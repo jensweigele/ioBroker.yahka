@@ -187,6 +187,9 @@ This repo includes one submodule, so before building you need to also close/init
 -->
 ## Changelog
 
+### **WORK IN PROGRESS**
+- (copilot) Adapter requires node.js >= 22 now
+
 ### 1.1.6 (2025-11-11)
 * (mcm1957) Standard test environment has been added.
 * (tarikweiss) Re-Added ability to have 2-column layout in yahka admin.
