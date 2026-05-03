@@ -358,6 +358,8 @@ This repo includes one submodule, so before building you need to also close/init
 ### 0.5.0 (2016-10-05)
 * (jw) initial release
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 The MIT License (MIT)
 
