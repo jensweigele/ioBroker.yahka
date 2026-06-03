@@ -1,4 +1,5 @@
 {
+    "extends": "@tsconfig/node20/tsconfig.json",
     "compilerOptions": {
         "target": "es6",
         "downlevelIteration": true,
