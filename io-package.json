@@ -198,8 +198,7 @@
     "dataSource": "push",
     "osDependencies": {
       "linux": [
-        "libavahi-compat-libdnssd-dev",
-        "pam-devel"
+        "libavahi-compat-libdnssd-dev"
       ]
     },
     "dependencies": [
